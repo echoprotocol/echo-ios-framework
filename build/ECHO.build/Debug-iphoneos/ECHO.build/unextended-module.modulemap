@@ -1,0 +1,10 @@
+framework module ECHO {
+  umbrella header "ECHO.h"
+
+  export *
+  module * { export * }
+}
+
+module ECHO.__Swift {
+    exclude header "ECHO-Swift.h"
+}

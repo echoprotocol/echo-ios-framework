@@ -1,0 +1,11 @@
+framework module ECHO {
+  umbrella header "ECHO.h"
+
+  export *
+  module * { export * }
+}
+
+module ECHO.Swift {
+    header "ECHO-Swift.h"
+    requires objc
+}

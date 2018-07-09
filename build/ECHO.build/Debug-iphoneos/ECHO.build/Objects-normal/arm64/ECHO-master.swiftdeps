@@ -1,0 +1,5 @@
+version: "Apple Swift version 4.1.2 (swiftlang-902.0.54 clang-902.0.39.2)"
+options: "cf8dec37872f4b01967b11a6a1937eb6"
+build_time: [1531144584, 465227000]
+inputs:
+  "/Users/nikitafedorenko/ECHO-lib/ECHO/AlameWater.swift": [9223372036, 854775807]
