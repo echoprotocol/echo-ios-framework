@@ -38,6 +38,13 @@
 		B3CA703820F4A72C00511F6A /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3CA703720F4A72C00511F6A /* Error.swift */; };
 		B3CA703A20F4A7C300511F6A /* UserAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3CA703920F4A7C300511F6A /* UserAccount.swift */; };
 		B3CA703C20F4AA3700511F6A /* HistoryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3CA703B20F4AA3700511F6A /* HistoryItem.swift */; };
+		B3CA704020F4FB0200511F6A /* JsonSerializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3CA703F20F4FB0200511F6A /* JsonSerializable.swift */; };
+		B3CA704220F502BE00511F6A /* SocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3CA704120F502BE00511F6A /* SocketOperation.swift */; };
+		B3CA704520F532BE00511F6A /* BaseSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3CA704420F532BE00511F6A /* BaseSocketOperation.swift */; };
+		B3CA704720F532E600511F6A /* AccessSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3CA704620F532E600511F6A /* AccessSocketOperation.swift */; };
+		B3CA704920F5358400511F6A /* BlockDataSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3CA704820F5358400511F6A /* BlockDataSocketOperation.swift */; };
+		B3CA704B20F5363F00511F6A /* FullAccountSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3CA704A20F5363F00511F6A /* FullAccountSocketOperation.swift */; };
+		B3CA704D20F53A4500511F6A /* GetAccountHistorySocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3CA704C20F53A4500511F6A /* GetAccountHistorySocketOperation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -80,6 +87,13 @@
 		B3CA703720F4A72C00511F6A /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
 		B3CA703920F4A7C300511F6A /* UserAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccount.swift; sourceTree = "<group>"; };
 		B3CA703B20F4AA3700511F6A /* HistoryItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryItem.swift; sourceTree = "<group>"; };
+		B3CA703F20F4FB0200511F6A /* JsonSerializable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonSerializable.swift; sourceTree = "<group>"; };
+		B3CA704120F502BE00511F6A /* SocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketOperation.swift; sourceTree = "<group>"; };
+		B3CA704420F532BE00511F6A /* BaseSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSocketOperation.swift; sourceTree = "<group>"; };
+		B3CA704620F532E600511F6A /* AccessSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessSocketOperation.swift; sourceTree = "<group>"; };
+		B3CA704820F5358400511F6A /* BlockDataSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockDataSocketOperation.swift; sourceTree = "<group>"; };
+		B3CA704A20F5363F00511F6A /* FullAccountSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullAccountSocketOperation.swift; sourceTree = "<group>"; };
+		B3CA704C20F53A4500511F6A /* GetAccountHistorySocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAccountHistorySocketOperation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -234,14 +248,29 @@
 		B3CA703D20F4CA1500511F6A /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				B3CA704320F532AA00511F6A /* SocketOperation */,
 				B35F15A920F3ABAE000CE3EA /* ObjectType.swift */,
 				B3B04C6020F3B2CE003BBD9E /* GrapheneObject.swift */,
 				B3CA701D20F49C6800511F6A /* ReslutHandler.swift */,
 				B3CA703720F4A72C00511F6A /* Error.swift */,
 				B3CA703920F4A7C300511F6A /* UserAccount.swift */,
 				B3CA703B20F4AA3700511F6A /* HistoryItem.swift */,
+				B3CA703F20F4FB0200511F6A /* JsonSerializable.swift */,
 			);
 			path = Classes;
+			sourceTree = "<group>";
+		};
+		B3CA704320F532AA00511F6A /* SocketOperation */ = {
+			isa = PBXGroup;
+			children = (
+				B3CA704120F502BE00511F6A /* SocketOperation.swift */,
+				B3CA704420F532BE00511F6A /* BaseSocketOperation.swift */,
+				B3CA704620F532E600511F6A /* AccessSocketOperation.swift */,
+				B3CA704820F5358400511F6A /* BlockDataSocketOperation.swift */,
+				B3CA704A20F5363F00511F6A /* FullAccountSocketOperation.swift */,
+				B3CA704C20F53A4500511F6A /* GetAccountHistorySocketOperation.swift */,
+			);
+			path = SocketOperation;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -358,9 +387,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B3CA704220F502BE00511F6A /* SocketOperation.swift in Sources */,
 				B3CA702A20F4A44900511F6A /* InformationFacade.swift in Sources */,
+				B3CA704720F532E600511F6A /* AccessSocketOperation.swift in Sources */,
+				B3CA704020F4FB0200511F6A /* JsonSerializable.swift in Sources */,
 				B3CA702820F4A43000511F6A /* AuthentificationFacade.swift in Sources */,
+				B3CA704520F532BE00511F6A /* BaseSocketOperation.swift in Sources */,
 				B3CA702020F4A3A900511F6A /* ECHO.swift in Sources */,
+				B3CA704D20F53A4500511F6A /* GetAccountHistorySocketOperation.swift in Sources */,
 				B3B04C6120F3B2CE003BBD9E /* GrapheneObject.swift in Sources */,
 				B3CA703A20F4A7C300511F6A /* UserAccount.swift in Sources */,
 				B3CA703C20F4AA3700511F6A /* HistoryItem.swift in Sources */,
@@ -368,7 +402,9 @@
 				B3CA703020F4A46E00511F6A /* FeeFacade.swift in Sources */,
 				B3CA701E20F49C6800511F6A /* ReslutHandler.swift in Sources */,
 				B3CA702C20F4A45400511F6A /* TransactionFacade.swift in Sources */,
+				B3CA704B20F5363F00511F6A /* FullAccountSocketOperation.swift in Sources */,
 				B3CA703820F4A72C00511F6A /* Error.swift in Sources */,
+				B3CA704920F5358400511F6A /* BlockDataSocketOperation.swift in Sources */,
 				B35F15AA20F3ABAE000CE3EA /* ObjectType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
