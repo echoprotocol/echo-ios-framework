@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum ObjectTypes: Int {
+enum ObjectType: Int {
     case base = 1
     case account
     case asset
@@ -41,21 +41,14 @@ enum ObjectTypes: Int {
     case budgetRecord
     case specialAuthority
     case contract
-}
-
-class ObjectType {
     
-    var type: ObjectTypes!
-    
-    class func withType(_ type: ObjectTypes) -> ObjectType? {
-        let newType = ObjectType()
-        newType.type = type
-        return newType
+    func getGenericObjectId() -> String? {
+        return "\(getSpace()).\(rawValue).0"
     }
     
     func getSpace() -> Int {
         var space: Int
-        switch type {
+        switch self {
         case .base,
              .account,
              .asset,
@@ -89,12 +82,5 @@ class ObjectType {
             space = 1
         }
         return space
-    }
-    
-    func getType() -> Int {
-        return type.rawValue
-    }
-    func getGenericObjectId() -> String? {
-        return "\(getSpace()).\(getType()).0"
     }
 }

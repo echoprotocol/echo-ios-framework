@@ -32,83 +32,90 @@ class GrapheneObject {
         return "\(space).\(type).\(instance)"
     }
     
-    // swiftlint:disable function_body_length
     func getType() -> ObjectType? {
         switch space {
         case protocolSpace:
-            switch type {
-            case 1:
-                return ObjectType.withType(.base)
-            case 2:
-                return ObjectType.withType(.account)
-            case 3:
-                return ObjectType.withType(.asset)
-            case 4:
-                return ObjectType.withType(.forceSettlement)
-            case 5:
-                return ObjectType.withType(.committeeMember)
-            case 6:
-                return ObjectType.withType(.witness)
-            case 7:
-                return ObjectType.withType(.limitOrder)
-            case 8:
-                return ObjectType.withType(.callOrder)
-            case 9:
-                return ObjectType.withType(.custom)
-            case 10:
-                return ObjectType.withType(.proposal)
-            case 11:
-                return ObjectType.withType(.operationHistory)
-            case 12:
-                return ObjectType.withType(.withdrawPermission)
-            case 13:
-                return ObjectType.withType(.vestingBalance)
-            case 14:
-                return ObjectType.withType(.worker)
-            case 15:
-                return ObjectType.withType(.balance)
-            case 16:
-                return ObjectType.withType(.contract)
-            default:
-                break
-            }
+            return getProtocolType(type: type)
         case implementationSpace:
-            switch type {
-            case 0:
-                return ObjectType.withType(.globalProperty)
-            case 1:
-                return ObjectType.withType(.dynamicGlobalProperty)
-            case 3:
-                return ObjectType.withType(.assetDynamicData)
-            case 4:
-                return ObjectType.withType(.assetBitassetData)
-            case 5:
-                return ObjectType.withType(.accountBalance)
-            case 6:
-                return ObjectType.withType(.accountStatistics)
-            case 7:
-                return ObjectType.withType(.transaction)
-            case 8:
-                return ObjectType.withType(.blockSummary)
-            case 9:
-                return ObjectType.withType(.accountTransactionHistory)
-            case 10:
-                return ObjectType.withType(.blindedBalance)
-            case 11:
-                return ObjectType.withType(.chainProperty)
-            case 12:
-                return ObjectType.withType(.witnessSchedule)
-            case 13:
-                return ObjectType.withType(.budgetRecord)
-            case 14:
-                return ObjectType.withType(.specialAuthority)
-            default:
-                break
-            }
+            return getImplementationType(type: type)
         default:
-            break
+            return nil
         }
-        return nil
     }
-    // swiftlint:enable function_body_length
+    
+    fileprivate func getProtocolType(type: Int) -> ObjectType? {
+        
+        switch type {
+        case 1:
+            return .base
+        case 2:
+            return .account
+        case 3:
+            return .asset
+        case 4:
+            return .forceSettlement
+        case 5:
+            return .committeeMember
+        case 6:
+            return .witness
+        case 7:
+            return .limitOrder
+        case 8:
+            return .callOrder
+        case 9:
+            return .custom
+        case 10:
+            return .proposal
+        case 11:
+            return .operationHistory
+        case 12:
+            return .withdrawPermission
+        case 13:
+            return .vestingBalance
+        case 14:
+            return .worker
+        case 15:
+            return .balance
+        case 16:
+            return .contract
+        default:
+            return nil
+        }
+    }
+    
+    fileprivate func getImplementationType(type: Int) -> ObjectType? {
+        
+        switch type {
+        case 0:
+            return .globalProperty
+        case 1:
+            return .dynamicGlobalProperty
+        case 3:
+            return .assetDynamicData
+        case 4:
+            return .assetBitassetData
+        case 5:
+            return .accountBalance
+        case 6:
+            return .accountStatistics
+        case 7:
+            return .transaction
+        case 8:
+            return .blockSummary
+        case 9:
+            return .accountTransactionHistory
+        case 10:
+            return .blindedBalance
+        case 11:
+            return .chainProperty
+        case 12:
+            return .witnessSchedule
+        case 13:
+            return .budgetRecord
+        case 14:
+            return .specialAuthority
+        default:
+            return nil
+        }
+    }
 }
