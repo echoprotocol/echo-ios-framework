@@ -137,12 +137,7 @@
 				B3CA703220F4A4B600511F6A /* Core Components */,
 				B3CA703120F4A4B000511F6A /* Services */,
 				B3CA702320F4A3EB00511F6A /* Interface */,
-				B35F15A920F3ABAE000CE3EA /* ObjectType.swift */,
-				B3B04C6020F3B2CE003BBD9E /* GrapheneObject.swift */,
-				B3CA701D20F49C6800511F6A /* ReslutHandler.swift */,
-				B3CA703720F4A72C00511F6A /* Error.swift */,
-				B3CA703920F4A7C300511F6A /* UserAccount.swift */,
-				B3CA703B20F4AA3700511F6A /* HistoryItem.swift */,
+				B3CA703D20F4CA1500511F6A /* Classes */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -234,6 +229,19 @@
 			children = (
 			);
 			path = Implementations;
+			sourceTree = "<group>";
+		};
+		B3CA703D20F4CA1500511F6A /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				B35F15A920F3ABAE000CE3EA /* ObjectType.swift */,
+				B3B04C6020F3B2CE003BBD9E /* GrapheneObject.swift */,
+				B3CA701D20F49C6800511F6A /* ReslutHandler.swift */,
+				B3CA703720F4A72C00511F6A /* Error.swift */,
+				B3CA703920F4A7C300511F6A /* UserAccount.swift */,
+				B3CA703B20F4AA3700511F6A /* HistoryItem.swift */,
+			);
+			path = Classes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
