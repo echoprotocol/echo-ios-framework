@@ -23,10 +23,21 @@
 
 /* Begin PBXBuildFile section */
 		B31CB1A520F3772C00FA5532 /* ECHO.h in Headers */ = {isa = PBXBuildFile; fileRef = B31CB1A320F3772C00FA5532 /* ECHO.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		B31CB1AC20F3777200FA5532 /* AlameWater.swift in Sources */ = {isa = PBXBuildFile; fileRef = B31CB1AB20F3777200FA5532 /* AlameWater.swift */; };
 		B356019420F38CB50097FD38 /* BitcoinKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = B356019320F38CB50097FD38 /* BitcoinKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B356019620F38D170097FD38 /* BitcoinKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B356019320F38CB50097FD38 /* BitcoinKit.framework */; };
 		B356019920F38D380097FD38 /* BitcoinKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = B356019320F38CB50097FD38 /* BitcoinKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B35F15AA20F3ABAE000CE3EA /* ObjectType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35F15A920F3ABAE000CE3EA /* ObjectType.swift */; };
+		B3B04C6120F3B2CE003BBD9E /* GrapheneObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B04C6020F3B2CE003BBD9E /* GrapheneObject.swift */; };
+		B3CA701E20F49C6800511F6A /* ReslutHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3CA701D20F49C6800511F6A /* ReslutHandler.swift */; };
+		B3CA702020F4A3A900511F6A /* ECHO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3CA701F20F4A3A900511F6A /* ECHO.swift */; };
+		B3CA702820F4A43000511F6A /* AuthentificationFacade.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3CA702720F4A43000511F6A /* AuthentificationFacade.swift */; };
+		B3CA702A20F4A44900511F6A /* InformationFacade.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3CA702920F4A44900511F6A /* InformationFacade.swift */; };
+		B3CA702C20F4A45400511F6A /* TransactionFacade.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3CA702B20F4A45400511F6A /* TransactionFacade.swift */; };
+		B3CA702E20F4A46200511F6A /* SubscriptionFacade.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3CA702D20F4A46200511F6A /* SubscriptionFacade.swift */; };
+		B3CA703020F4A46E00511F6A /* FeeFacade.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3CA702F20F4A46E00511F6A /* FeeFacade.swift */; };
+		B3CA703820F4A72C00511F6A /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3CA703720F4A72C00511F6A /* Error.swift */; };
+		B3CA703A20F4A7C300511F6A /* UserAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3CA703920F4A7C300511F6A /* UserAccount.swift */; };
+		B3CA703C20F4AA3700511F6A /* HistoryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3CA703B20F4AA3700511F6A /* HistoryItem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -56,8 +67,19 @@
 		B31CB1A020F3772C00FA5532 /* ECHO.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ECHO.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B31CB1A320F3772C00FA5532 /* ECHO.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ECHO.h; sourceTree = "<group>"; };
 		B31CB1A420F3772C00FA5532 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B31CB1AB20F3777200FA5532 /* AlameWater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlameWater.swift; sourceTree = "<group>"; };
 		B356019320F38CB50097FD38 /* BitcoinKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BitcoinKit.framework; sourceTree = "<group>"; };
+		B35F15A920F3ABAE000CE3EA /* ObjectType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectType.swift; sourceTree = "<group>"; };
+		B3B04C6020F3B2CE003BBD9E /* GrapheneObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrapheneObject.swift; sourceTree = "<group>"; };
+		B3CA701D20F49C6800511F6A /* ReslutHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReslutHandler.swift; sourceTree = "<group>"; };
+		B3CA701F20F4A3A900511F6A /* ECHO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ECHO.swift; sourceTree = "<group>"; };
+		B3CA702720F4A43000511F6A /* AuthentificationFacade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthentificationFacade.swift; sourceTree = "<group>"; };
+		B3CA702920F4A44900511F6A /* InformationFacade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationFacade.swift; sourceTree = "<group>"; };
+		B3CA702B20F4A45400511F6A /* TransactionFacade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionFacade.swift; sourceTree = "<group>"; };
+		B3CA702D20F4A46200511F6A /* SubscriptionFacade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionFacade.swift; sourceTree = "<group>"; };
+		B3CA702F20F4A46E00511F6A /* FeeFacade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeeFacade.swift; sourceTree = "<group>"; };
+		B3CA703720F4A72C00511F6A /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
+		B3CA703920F4A7C300511F6A /* UserAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccount.swift; sourceTree = "<group>"; };
+		B3CA703B20F4AA3700511F6A /* HistoryItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,9 +114,10 @@
 		B31CB1A220F3772C00FA5532 /* ECHO */ = {
 			isa = PBXGroup;
 			children = (
+				B3CA702120F4A3CA00511F6A /* Core */,
 				B31CB1A320F3772C00FA5532 /* ECHO.h */,
 				B31CB1A420F3772C00FA5532 /* Info.plist */,
-				B31CB1AB20F3777200FA5532 /* AlameWater.swift */,
+				B3CA702220F4A3D200511F6A /* Supports Files */,
 			);
 			path = ECHO;
 			sourceTree = "<group>";
@@ -105,6 +128,112 @@
 				B356019320F38CB50097FD38 /* BitcoinKit.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B3CA702120F4A3CA00511F6A /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				B3CA702420F4A3F800511F6A /* Facades */,
+				B3CA703220F4A4B600511F6A /* Core Components */,
+				B3CA703120F4A4B000511F6A /* Services */,
+				B3CA702320F4A3EB00511F6A /* Interface */,
+				B35F15A920F3ABAE000CE3EA /* ObjectType.swift */,
+				B3B04C6020F3B2CE003BBD9E /* GrapheneObject.swift */,
+				B3CA701D20F49C6800511F6A /* ReslutHandler.swift */,
+				B3CA703720F4A72C00511F6A /* Error.swift */,
+				B3CA703920F4A7C300511F6A /* UserAccount.swift */,
+				B3CA703B20F4AA3700511F6A /* HistoryItem.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		B3CA702220F4A3D200511F6A /* Supports Files */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Supports Files";
+			sourceTree = "<group>";
+		};
+		B3CA702320F4A3EB00511F6A /* Interface */ = {
+			isa = PBXGroup;
+			children = (
+				B3CA701F20F4A3A900511F6A /* ECHO.swift */,
+			);
+			path = Interface;
+			sourceTree = "<group>";
+		};
+		B3CA702420F4A3F800511F6A /* Facades */ = {
+			isa = PBXGroup;
+			children = (
+				B3CA702520F4A40600511F6A /* Implementations */,
+				B3CA702620F4A41300511F6A /* Protocols */,
+			);
+			path = Facades;
+			sourceTree = "<group>";
+		};
+		B3CA702520F4A40600511F6A /* Implementations */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Implementations;
+			sourceTree = "<group>";
+		};
+		B3CA702620F4A41300511F6A /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				B3CA702720F4A43000511F6A /* AuthentificationFacade.swift */,
+				B3CA702920F4A44900511F6A /* InformationFacade.swift */,
+				B3CA702B20F4A45400511F6A /* TransactionFacade.swift */,
+				B3CA702D20F4A46200511F6A /* SubscriptionFacade.swift */,
+				B3CA702F20F4A46E00511F6A /* FeeFacade.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		B3CA703120F4A4B000511F6A /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				B3CA703520F4A4F200511F6A /* Implementations */,
+				B3CA703420F4A4E600511F6A /* Protocols */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		B3CA703220F4A4B600511F6A /* Core Components */ = {
+			isa = PBXGroup;
+			children = (
+				B3CA703620F4A4F700511F6A /* Implementations */,
+				B3CA703320F4A4DC00511F6A /* Protocols */,
+			);
+			path = "Core Components";
+			sourceTree = "<group>";
+		};
+		B3CA703320F4A4DC00511F6A /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		B3CA703420F4A4E600511F6A /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		B3CA703520F4A4F200511F6A /* Implementations */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Implementations;
+			sourceTree = "<group>";
+		};
+		B3CA703620F4A4F700511F6A /* Implementations */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Implementations;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -221,7 +350,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B31CB1AC20F3777200FA5532 /* AlameWater.swift in Sources */,
+				B3CA702A20F4A44900511F6A /* InformationFacade.swift in Sources */,
+				B3CA702820F4A43000511F6A /* AuthentificationFacade.swift in Sources */,
+				B3CA702020F4A3A900511F6A /* ECHO.swift in Sources */,
+				B3B04C6120F3B2CE003BBD9E /* GrapheneObject.swift in Sources */,
+				B3CA703A20F4A7C300511F6A /* UserAccount.swift in Sources */,
+				B3CA703C20F4AA3700511F6A /* HistoryItem.swift in Sources */,
+				B3CA702E20F4A46200511F6A /* SubscriptionFacade.swift in Sources */,
+				B3CA703020F4A46E00511F6A /* FeeFacade.swift in Sources */,
+				B3CA701E20F49C6800511F6A /* ReslutHandler.swift in Sources */,
+				B3CA702C20F4A45400511F6A /* TransactionFacade.swift in Sources */,
+				B3CA703820F4A72C00511F6A /* Error.swift in Sources */,
+				B35F15AA20F3ABAE000CE3EA /* ObjectType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
