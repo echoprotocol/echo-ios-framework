@@ -15,20 +15,6 @@ struct FullAccountSocketOperation: SocketOperation {
     var accountsIds: [String]
     var shoudSubscribe: Bool
     
-    init(accountsIds: [String],
-         subscribe: Bool,
-         method: SocketOperationType,
-         operationId: Int,
-         completion: @escaping Completion<OperationResult<Any>>) {
-        
-        self.accountsIds = accountsIds
-        self.shoudSubscribe = subscribe
-        self.method = method
-        self.operationId = operationId
-        self.apiId = 1
-        self.completion = completion
-    }
-    
     func createParameters() -> [Any] {
         let array: [Any] = [apiId,
                             SocketOperationKeys.fullAccount.rawValue,

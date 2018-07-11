@@ -6,33 +6,40 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
-//struct GetAccountHistorySocketOperation: SocketOperation {
-//    
-//    var method: SocketOperationType
-//    var operationId: Int
-//    var apiId: Int
-//    var completion: Completion<OperationResult<Any>>
-//    var accountsIds: [String]
-//    var shoudSubscribe: Bool
-//    
-//    init(accountsIds: [String],
-//         subscribe: Bool,
-//         method: SocketOperationType,
-//         operationId: Int,
-//         completion: @escaping Completion<OperationResult<Any>>) {
-//        
-//        self.accountsIds = accountsIds
-//        self.shoudSubscribe = subscribe
-//        self.method = method
-//        self.operationId = operationId
-//        self.apiId = 1
-//        self.completion = completion
-//    }
-//    
-//    func createParameters() -> [Any] {
-//        let array: [Any] = [apiId,
-//                            SocketOperationKeys.fullAccount.rawValue,
-//                            [accountsIds, shoudSubscribe]]
-//        return array
-//    }
-//}
+struct GetAccountHistorySocketOperation: SocketOperation {
+    
+    var method: SocketOperationType
+    var operationId: Int
+    var apiId: Int
+    var completion: Completion<OperationResult<Any>>
+    var accountId: String
+    var stopId: String
+    var limit: Int
+    var startId: String
+    
+    init(method: SocketOperationType,
+         operationId: Int,
+         apiId: Int,
+         accountId: String,
+         stopId: String = "1.11.0",
+         limit: Int = 100,
+         startId: String = "1.11.0",
+         completion: @escaping Completion<OperationResult<Any>>) {
+        
+        self.method = method
+        self.operationId = operationId
+        self.apiId = apiId
+        self.accountId = accountId
+        self.stopId = stopId
+        self.startId = startId
+        self.limit = limit
+        self.completion = completion
+    }
+    
+    func createParameters() -> [Any] {
+        let array: [Any] = [apiId,
+                            SocketOperationKeys.accountHistory.rawValue,
+                            [accountId, stopId, limit, startId]]
+        return array
+    }
+}
