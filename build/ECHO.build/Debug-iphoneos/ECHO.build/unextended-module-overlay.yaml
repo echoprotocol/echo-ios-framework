@@ -3,7 +3,7 @@
   'case-sensitive': 'false',
   'roots': [{
     'type': 'directory',
-    'name': '/Users/nikitafedorenko/Library/Developer/Xcode/DerivedData/ECHO-bzwkpymzxgptgehiirllbzcfngtz/Build/Products/Debug-iphoneos/ECHO.framework/Modules'
+    'name': '/Users/nikitafedorenko/Library/Developer/Xcode/DerivedData/ECHO-gsodbueopmkrbbaznhzqiukoowby/Build/Products/Debug-iphoneos/ECHO.framework/Modules'
     'contents': [{
       'type': 'file',
       'name': 'module.modulemap',

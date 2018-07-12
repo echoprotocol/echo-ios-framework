@@ -6,7 +6,15 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
-class ECHO {
+import SocketIO
+
+public class ECHO {
     
-    init(settings: Settings) { }
+    var socketCore: SocketCoreComponent
+
+    public init() {
+        let socketCore = SocketCoreComponentImp()
+        socketCore.connect(toUrl: "https://testnet-walletapi.qtum.org")
+        self.socketCore = socketCore
+    }
 }

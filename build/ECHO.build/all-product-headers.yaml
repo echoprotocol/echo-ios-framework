@@ -4,12 +4,12 @@
   'roots': [
     {
       'type': 'directory',
-      'name': "/Users/nikitafedorenko/Library/Developer/Xcode/DerivedData/ECHO-bzwkpymzxgptgehiirllbzcfngtz/Build/Products/Debug-iphonesimulator/ECHO.framework/Headers",
+      'name': "/Users/nikitafedorenko/Library/Developer/Xcode/DerivedData/ECHO-gsodbueopmkrbbaznhzqiukoowby/Build/Products/Debug-iphonesimulator/ECHO.framework/Headers",
       'contents': [
         {
           'type': 'file',
           'name': "ECHO-Swift.h",
-          'external-contents': "/Users/nikitafedorenko/Library/Developer/Xcode/DerivedData/ECHO-bzwkpymzxgptgehiirllbzcfngtz/Build/Products/Debug-iphonesimulator/ECHO.framework/Headers/ECHO-Swift.h"
+          'external-contents': "/Users/nikitafedorenko/Library/Developer/Xcode/DerivedData/ECHO-gsodbueopmkrbbaznhzqiukoowby/Build/Products/Debug-iphonesimulator/ECHO.framework/Headers/ECHO-Swift.h"
         },
         {
           'type': 'file',
@@ -20,7 +20,7 @@
     },
     {
       'type': 'directory',
-      'name': "/Users/nikitafedorenko/Library/Developer/Xcode/DerivedData/ECHO-bzwkpymzxgptgehiirllbzcfngtz/Build/Products/Debug-iphonesimulator/ECHO.framework/Modules",
+      'name': "/Users/nikitafedorenko/Library/Developer/Xcode/DerivedData/ECHO-gsodbueopmkrbbaznhzqiukoowby/Build/Products/Debug-iphonesimulator/ECHO.framework/Modules",
       'contents': [
         {
           'type': 'file',
