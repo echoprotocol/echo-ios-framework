@@ -44,7 +44,7 @@ enum OperationCodingKeys: String, CodingKey {
 
 extension SocketOperation {
 
-    func toJSON() -> Any {
+    func toJSON() -> Any? {
 
         let dictionary: [AnyHashable: Any] = [OperationCodingKeys.method: method.rawValue,
                                               OperationCodingKeys.id: operationId,
@@ -53,9 +53,9 @@ extension SocketOperation {
         return dictionary
     }
 
-    func toJSON() -> String {
+    func toJSON() -> String? {
 
-        let json: Any = toJSON()
+        let json: Any? = toJSON()
         let jsonString = (json as?  [AnyHashable: Any])
             .flatMap { try? JSONSerialization.data(withJSONObject: $0, options: [])}
             .flatMap { String(data: $0, encoding: .utf8)}

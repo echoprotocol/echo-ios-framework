@@ -6,7 +6,7 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
-enum AccessSocketOperationType : String {
+enum AccessSocketOperationType: String {
     case login
     case database
     case networkBroadcast = "network_broadcast"
