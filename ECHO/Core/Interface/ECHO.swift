@@ -7,4 +7,6 @@
 //
 
 class ECHO {
+    
+    init(settings: Settings) { }
 }

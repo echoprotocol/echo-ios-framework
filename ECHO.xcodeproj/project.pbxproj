@@ -27,6 +27,9 @@
 		B356019620F38D170097FD38 /* BitcoinKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B356019320F38CB50097FD38 /* BitcoinKit.framework */; };
 		B356019920F38D380097FD38 /* BitcoinKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = B356019320F38CB50097FD38 /* BitcoinKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B35F15AA20F3ABAE000CE3EA /* ObjectType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35F15A920F3ABAE000CE3EA /* ObjectType.swift */; };
+		B370BB5920F7623F004C4A26 /* SettingsConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B370BB5820F7623F004C4A26 /* SettingsConfigurator.swift */; };
+		B370BB5B20F76853004C4A26 /* SocketMessenger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B370BB5A20F76853004C4A26 /* SocketMessenger.swift */; };
+		B370BB5D20F768B1004C4A26 /* CryptoCoreComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B370BB5C20F768B1004C4A26 /* CryptoCoreComponent.swift */; };
 		B38596EA20F5ECBA00B55E59 /* GetAssetsSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38596E920F5ECBA00B55E59 /* GetAssetsSocketOperation.swift */; };
 		B38596EC20F5ED6000B55E59 /* GetBlockSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38596EB20F5ED6000B55E59 /* GetBlockSocketOperation.swift */; };
 		B38596EE20F5ED9A00B55E59 /* GetChainIdSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38596ED20F5ED9A00B55E59 /* GetChainIdSocketOperation.swift */; };
@@ -89,6 +92,9 @@
 		B31CB1A420F3772C00FA5532 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B356019320F38CB50097FD38 /* BitcoinKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BitcoinKit.framework; sourceTree = "<group>"; };
 		B35F15A920F3ABAE000CE3EA /* ObjectType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectType.swift; sourceTree = "<group>"; };
+		B370BB5820F7623F004C4A26 /* SettingsConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsConfigurator.swift; sourceTree = "<group>"; };
+		B370BB5A20F76853004C4A26 /* SocketMessenger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketMessenger.swift; sourceTree = "<group>"; };
+		B370BB5C20F768B1004C4A26 /* CryptoCoreComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoCoreComponent.swift; sourceTree = "<group>"; };
 		B38596E920F5ECBA00B55E59 /* GetAssetsSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAssetsSocketOperation.swift; sourceTree = "<group>"; };
 		B38596EB20F5ED6000B55E59 /* GetBlockSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetBlockSocketOperation.swift; sourceTree = "<group>"; };
 		B38596ED20F5ED9A00B55E59 /* GetChainIdSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetChainIdSocketOperation.swift; sourceTree = "<group>"; };
@@ -193,6 +199,7 @@
 			isa = PBXGroup;
 			children = (
 				B3CA701F20F4A3A900511F6A /* ECHO.swift */,
+				B370BB5820F7623F004C4A26 /* SettingsConfigurator.swift */,
 			);
 			path = Interface;
 			sourceTree = "<group>";
@@ -287,6 +294,8 @@
 				B38596FD20F6009A00B55E59 /* Asset.swift */,
 				B385970120F620B700B55E59 /* AssetOptions.swift */,
 				B385970320F6270000B55E59 /* ECHOObject.swift */,
+				B370BB5A20F76853004C4A26 /* SocketMessenger.swift */,
+				B370BB5C20F768B1004C4A26 /* CryptoCoreComponent.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -426,6 +435,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B370BB5D20F768B1004C4A26 /* CryptoCoreComponent.swift in Sources */,
+				B370BB5920F7623F004C4A26 /* SettingsConfigurator.swift in Sources */,
 				B3CA704220F502BE00511F6A /* SocketOperation.swift in Sources */,
 				B385970420F6270000B55E59 /* ECHOObject.swift in Sources */,
 				B3CA702A20F4A44900511F6A /* InformationFacade.swift in Sources */,
@@ -436,6 +447,7 @@
 				B3CA702020F4A3A900511F6A /* ECHO.swift in Sources */,
 				B3CA704D20F53A4500511F6A /* GetAccountHistorySocketOperation.swift in Sources */,
 				B38596FA20F6003500B55E59 /* AssetAmount.swift in Sources */,
+				B370BB5B20F76853004C4A26 /* SocketMessenger.swift in Sources */,
 				B38596EE20F5ED9A00B55E59 /* GetChainIdSocketOperation.swift in Sources */,
 				B3B04C6120F3B2CE003BBD9E /* GrapheneObject.swift in Sources */,
 				B38596EC20F5ED6000B55E59 /* GetBlockSocketOperation.swift in Sources */,
