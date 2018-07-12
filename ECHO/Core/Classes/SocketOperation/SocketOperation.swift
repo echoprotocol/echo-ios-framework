@@ -36,30 +36,30 @@ protocol SocketOperation: JSONCodable {
     func createParameters() -> [Any]
 }
 
-struct OperationConstants {
-    static let socketOperationMethodKey = "method"
-    static let socketOperationParamsKey = "params"
-    static let socketOperationIdKey = "id"
+enum OperationCodingKeys: String, CodingKey {
+    case method
+    case params
+    case id
 }
 
 extension SocketOperation {
-    
+
     func toJSON() -> Any {
-        
-        let dictionary: [AnyHashable: Any] = [OperationConstants.socketOperationMethodKey: method.rawValue,
-                                              OperationConstants.socketOperationIdKey: operationId,
-                                              OperationConstants.socketOperationParamsKey: createParameters()]
+
+        let dictionary: [AnyHashable: Any] = [OperationCodingKeys.method: method.rawValue,
+                                              OperationCodingKeys.id: operationId,
+                                              OperationCodingKeys.params: createParameters()]
 
         return dictionary
     }
-    
+
     func toJSON() -> String {
-        
+
         let json: Any = toJSON()
         let jsonString = (json as?  [AnyHashable: Any])
             .flatMap { try? JSONSerialization.data(withJSONObject: $0, options: [])}
             .flatMap { String(data: $0, encoding: .utf8)}
-        
+
         return jsonString ?? ""
     }
 }

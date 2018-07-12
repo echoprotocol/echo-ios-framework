@@ -6,7 +6,7 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
-struct BaseSocketOperation: SocketOperation {
+struct BaseSocketOperation: SocketOperation, Codable {
     
     var method: SocketOperationType
     var operationId: Int
