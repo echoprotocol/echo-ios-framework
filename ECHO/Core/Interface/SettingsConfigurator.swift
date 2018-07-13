@@ -6,18 +6,22 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
-struct APIOption: OptionSet {
+public struct APIOption: OptionSet {
     
-    let rawValue: Int
+    public let rawValue: Int
     
-    static let database  = APIOption(rawValue: 1 << 0)
-    static let accountHistory = APIOption(rawValue: 1 << 1)
-    static let crypto  = APIOption(rawValue: 1 << 2)
-    static let networkBroadcast  = APIOption(rawValue: 1 << 3)
-    static let networkNodes  = APIOption(rawValue: 1 << 4)
+    public init(rawValue: Int) {
+        self.rawValue = rawValue
+    }
+    
+    static public let database  = APIOption(rawValue: 1 << 0)
+    static public let accountHistory = APIOption(rawValue: 1 << 1)
+    static public let crypto  = APIOption(rawValue: 1 << 2)
+    static public let networkBroadcast  = APIOption(rawValue: 1 << 3)
+    static public let networkNodes  = APIOption(rawValue: 1 << 4)
 }
 
-class Configurator {
+public class Configurator {
     var url: String = ""
     var socketMessenger: SocketMessenger = SocketMessengerImp() 
     var cryproComponent: CryptoCoreComponent = CryptoCoreComponentImp()
@@ -31,9 +35,9 @@ public class Settings {
     let cryproComponent: CryptoCoreComponent
     let apiOptions: APIOption
 
-    typealias BuildConfiguratorClosure = (Configurator) -> Void
+    public typealias BuildConfiguratorClosure = (Configurator) -> Void
     
-    init(build: BuildConfiguratorClosure = {_ in }) {
+    public init(build: BuildConfiguratorClosure = {_ in }) {
         
         let configurator = Configurator()
         build(configurator)
