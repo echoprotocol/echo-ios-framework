@@ -1,0 +1,19 @@
+#!/usr/bin/env sh
+
+if ! command -v carthage > /dev/null; then
+  printf 'Carthage is not installed.\n'
+  printf 'See https://github.com/Carthage/Carthage for install instructions.\n'
+  exit 1
+fi
+
+carthage update --platform ios --use-submodules 
+for D in ./Carthage/Checkouts/*; do
+  if [ -d "${D}" ]; then
+    find $D -type d -name \*.xcodeproj -print0 |
+      while IFS= read -r -d $'\0' folder; do
+        sed -i '' 's/ENABLE_BITCODE = YES;//g' $folder/project.pbxproj
+      done
+    fi
+done
+
+carthage build --platform ios

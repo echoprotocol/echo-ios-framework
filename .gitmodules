@@ -1,0 +1,4 @@
+[submodule "Carthage/Checkouts/socket.io-client-swift"]
+	url = https://github.com/socketio/socket.io-client-swift.git
+[submodule "Carthage/Checkouts/Starscream"]
+	url = https://github.com/daltoniam/Starscream.git
