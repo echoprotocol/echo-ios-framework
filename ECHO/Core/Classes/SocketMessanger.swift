@@ -12,7 +12,7 @@ enum SocketConnectionState {
     case notConnected, connected, connecting, reconnecting, disconnected, connectionFailed
 }
 
-protocol SocketCoreComponent {
+protocol SocketMessenger {
     
     var state: SocketConnectionState { get }
     var onConnect: (() -> ())? {get set}

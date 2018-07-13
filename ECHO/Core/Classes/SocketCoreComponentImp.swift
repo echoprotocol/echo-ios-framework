@@ -9,7 +9,7 @@
 import Foundation
 import SocketIO
 
-final class SocketCoreComponentImp: SocketCoreComponent {
+final class SocketMessengerImp: SocketMessenger {
     
     var state: SocketConnectionState = .notConnected
     var onConnect: (() -> ())?

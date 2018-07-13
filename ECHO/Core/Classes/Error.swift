@@ -7,5 +7,5 @@
 //
 
 public enum ECHOError: Swift.Error {
-    
+    case undefined
 }

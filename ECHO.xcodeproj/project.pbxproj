@@ -42,9 +42,11 @@
 		B385970420F6270000B55E59 /* ECHOObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B385970320F6270000B55E59 /* ECHOObject.swift */; };
 		B3A7AA2E20F88BBF002D569D /* SocketIO.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = B3A8BF5C20F7D8790041A1D7 /* SocketIO.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B3A7AA2F20F88BD5002D569D /* Starscream.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = B3A8BF6A20F7DB9E0041A1D7 /* Starscream.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B3A7AA4920F8C247002D569D /* RevilSocketApiFacade.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A7AA4820F8C247002D569D /* RevilSocketApiFacade.swift */; };
+		B3A7AA4B20F8C32C002D569D /* RevialFacadeImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A7AA4A20F8C32C002D569D /* RevialFacadeImp.swift */; };
 		B3A8BF5D20F7D8790041A1D7 /* SocketIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3A8BF5C20F7D8790041A1D7 /* SocketIO.framework */; };
 		B3A8BF6120F7DA3B0041A1D7 /* SocketCoreComponentImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A8BF6020F7DA3B0041A1D7 /* SocketCoreComponentImp.swift */; };
-		B3A8BF6320F7DA4F0041A1D7 /* SocketCoreComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A8BF6220F7DA4F0041A1D7 /* SocketCoreComponent.swift */; };
+		B3A8BF6320F7DA4F0041A1D7 /* SocketMessanger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A8BF6220F7DA4F0041A1D7 /* SocketMessanger.swift */; };
 		B3A8BF6B20F7DB9E0041A1D7 /* Starscream.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3A8BF6A20F7DB9E0041A1D7 /* Starscream.framework */; };
 		B3B04C6120F3B2CE003BBD9E /* GrapheneObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B04C6020F3B2CE003BBD9E /* GrapheneObject.swift */; };
 		B3CA701E20F49C6800511F6A /* ReslutHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3CA701D20F49C6800511F6A /* ReslutHandler.swift */; };
@@ -111,9 +113,11 @@
 		B38596FD20F6009A00B55E59 /* Asset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Asset.swift; sourceTree = "<group>"; };
 		B385970120F620B700B55E59 /* AssetOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetOptions.swift; sourceTree = "<group>"; };
 		B385970320F6270000B55E59 /* ECHOObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ECHOObject.swift; sourceTree = "<group>"; };
+		B3A7AA4820F8C247002D569D /* RevilSocketApiFacade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevilSocketApiFacade.swift; sourceTree = "<group>"; };
+		B3A7AA4A20F8C32C002D569D /* RevialFacadeImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevialFacadeImp.swift; sourceTree = "<group>"; };
 		B3A8BF5C20F7D8790041A1D7 /* SocketIO.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SocketIO.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3A8BF6020F7DA3B0041A1D7 /* SocketCoreComponentImp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketCoreComponentImp.swift; sourceTree = "<group>"; };
-		B3A8BF6220F7DA4F0041A1D7 /* SocketCoreComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketCoreComponent.swift; sourceTree = "<group>"; };
+		B3A8BF6220F7DA4F0041A1D7 /* SocketMessanger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketMessanger.swift; sourceTree = "<group>"; };
 		B3A8BF6A20F7DB9E0041A1D7 /* Starscream.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Starscream.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3B04C6020F3B2CE003BBD9E /* GrapheneObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrapheneObject.swift; sourceTree = "<group>"; };
 		B3CA701D20F49C6800511F6A /* ReslutHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReslutHandler.swift; sourceTree = "<group>"; };
@@ -226,6 +230,7 @@
 		B3CA702520F4A40600511F6A /* Implementations */ = {
 			isa = PBXGroup;
 			children = (
+				B3A7AA4A20F8C32C002D569D /* RevialFacadeImp.swift */,
 			);
 			path = Implementations;
 			sourceTree = "<group>";
@@ -238,6 +243,7 @@
 				B3CA702B20F4A45400511F6A /* TransactionFacade.swift */,
 				B3CA702D20F4A46200511F6A /* SubscriptionFacade.swift */,
 				B3CA702F20F4A46E00511F6A /* FeeFacade.swift */,
+				B3A7AA4820F8C247002D569D /* RevilSocketApiFacade.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -306,7 +312,7 @@
 				B385970320F6270000B55E59 /* ECHOObject.swift */,
 				B370BB5A20F76853004C4A26 /* SocketMessenger.swift */,
 				B370BB5C20F768B1004C4A26 /* CryptoCoreComponent.swift */,
-				B3A8BF6220F7DA4F0041A1D7 /* SocketCoreComponent.swift */,
+				B3A8BF6220F7DA4F0041A1D7 /* SocketMessanger.swift */,
 				B3A8BF6020F7DA3B0041A1D7 /* SocketCoreComponentImp.swift */,
 			);
 			path = Classes;
@@ -464,6 +470,7 @@
 				B3B04C6120F3B2CE003BBD9E /* GrapheneObject.swift in Sources */,
 				B38596EC20F5ED6000B55E59 /* GetBlockSocketOperation.swift in Sources */,
 				B38596FE20F6009A00B55E59 /* Asset.swift in Sources */,
+				B3A7AA4B20F8C32C002D569D /* RevialFacadeImp.swift in Sources */,
 				B38596F820F5F54100B55E59 /* SetSubscribeCallbackSocketOperation.swift in Sources */,
 				B38596F020F5EDCD00B55E59 /* GetContractResultSocketOperation.swift in Sources */,
 				B3CA703A20F4A7C300511F6A /* UserAccount.swift in Sources */,
@@ -477,10 +484,11 @@
 				B385970220F620B700B55E59 /* AssetOptions.swift in Sources */,
 				B38596F420F5EE5C00B55E59 /* KeyReferencesSocketOperation.swift in Sources */,
 				B3CA703820F4A72C00511F6A /* Error.swift in Sources */,
+				B3A7AA4920F8C247002D569D /* RevilSocketApiFacade.swift in Sources */,
 				B3A8BF6120F7DA3B0041A1D7 /* SocketCoreComponentImp.swift in Sources */,
 				B3CA704920F5358400511F6A /* BlockDataSocketOperation.swift in Sources */,
 				B38596EA20F5ECBA00B55E59 /* GetAssetsSocketOperation.swift in Sources */,
-				B3A8BF6320F7DA4F0041A1D7 /* SocketCoreComponent.swift in Sources */,
+				B3A8BF6320F7DA4F0041A1D7 /* SocketMessanger.swift in Sources */,
 				B38596FC20F6005500B55E59 /* Price.swift in Sources */,
 				B38596F220F5EE1400B55E59 /* GetObjectsSocketOperation.swift in Sources */,
 				B35F15AA20F3ABAE000CE3EA /* ObjectType.swift in Sources */,

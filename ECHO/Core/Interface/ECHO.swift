@@ -10,11 +10,13 @@ import SocketIO
 
 public class ECHO {
     
-    var socketCore: SocketCoreComponent
+    var revilFacade: RevialApiFacade
 
-    public init() {
-        let socketCore = SocketCoreComponentImp()
-        socketCore.connect(toUrl: "https://testnet-walletapi.qtum.org")
-        self.socketCore = socketCore
+    public init(settings: Settings) {
+        revilFacade = RevialFacadeImp(messanger: settings.socketMessenger, url: settings.url, options: settings.apiOptions)
+    }
+    
+    public func start(completion: @escaping Completion<Bool>) {
+        revilFacade.revilApi(completion: completion)
     }
 }
