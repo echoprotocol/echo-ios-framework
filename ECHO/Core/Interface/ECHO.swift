@@ -6,8 +6,6 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
-import SocketIO
-
 public class ECHO {
     
     var revilFacade: RevialApiFacade

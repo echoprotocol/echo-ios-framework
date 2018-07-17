@@ -31,14 +31,9 @@ class SocketCoreComponentImp: SocketCoreComponent {
             completion(result)
         }
         
-        messenger.onFailedConnection = {
-            let error = Result<Bool, ECHOError>(error: ECHOError.undefined)
-            completion(error)
-        }
-        
         messenger.connect(toUrl: url)
         
-        messenger.on(event: "") { (result) in
+        messenger.onText = { (result) in
             print(result)
         }
     }
@@ -53,6 +48,6 @@ class SocketCoreComponentImp: SocketCoreComponent {
             return
         }
         
-        messenger.emit(event: jsonString, items: [])
+        messenger.write(jsonString)
     }
 }

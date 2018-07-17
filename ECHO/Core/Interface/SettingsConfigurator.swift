@@ -22,7 +22,7 @@ public struct APIOption: OptionSet {
 }
 
 public class Configurator {
-    var url: String = ""
+    var url: String = "wss://node.testnet.bitshares.eu/"
     var socketMessenger: SocketMessenger = SocketMessengerImp() 
     var cryproComponent: CryptoCoreComponent = CryptoCoreComponentImp()
     var apiOptions: APIOption = [.database, .accountHistory, .crypto, .networkBroadcast, .networkNodes]

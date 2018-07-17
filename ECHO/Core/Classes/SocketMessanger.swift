@@ -17,11 +17,10 @@ protocol SocketMessenger {
     var state: SocketConnectionState { get }
     var onConnect: (() -> ())? {get set}
     var onDisconnect: (() -> ())? {get set}
-    var onFailedConnection: (() -> ())? {get set}
+    var onText: ((String) -> ())? {get set}
     
     func connect(toUrl: String)
     func disconnect()
     
-    func on(event: String, callback: @escaping ([Any]) -> () )
-    func emit(event: String, items: [Any])
+    func write(_ string: String)
 }

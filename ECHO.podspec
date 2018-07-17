@@ -13,5 +13,6 @@ Pod::Spec.new do |spec|
   spec.platform     = :ios
   spec.ios.deployment_target = "9.0"
 
-  spec.dependency "Socket.IO-Client-Swift", '~> 13.2.0'
+  spec.dependency "Starscream", '~> 3.0.2'
+  
 end

@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import SocketIO
+import Starscream
 
 final class SocketMessengerImp: SocketMessenger {
     
@@ -15,15 +15,11 @@ final class SocketMessengerImp: SocketMessenger {
     var onConnect: (() -> ())?
     var onReconnect: (() -> ())?
     var onDisconnect: (() -> ())?
-    var onFailedConnection: (() -> ())?
+    var onText: ((String) -> ())?
     
     var timeout: Double = 3
     
-    var manager: SocketManager?
-    
-    var socket: SocketIOClient? {
-        return manager?.defaultSocket
-    }
+    var socket: WebSocket?
     
     var workingQueue: OperationQueue = {
         var queue = OperationQueue()
@@ -49,38 +45,23 @@ final class SocketMessengerImp: SocketMessenger {
                 
                 let semaphore = DispatchSemaphore(value: 0)
 
-                let manager = SocketManager(socketURL: url, config: [.log(true), .forcePolling(true)])
-                let socket = manager.defaultSocket
-                strongSelf.manager = manager
+                let socket = WebSocket(url: url)
+                strongSelf.socket = socket
                 strongSelf.state = .connecting
                 
-                socket.on(clientEvent: .connect, callback: { [weak self, weak semaphore] (_, _) in
+                socket.onConnect = { [weak self, weak semaphore] in
                     self?.state = .connected
                     self?.onConnect?()
                     semaphore?.signal()
-                })
-
-                socket.on(clientEvent: .disconnect, callback: { [weak self] (_, _) in
+                }
+                
+                socket.onDisconnect = { [weak self] (error: Error?) in
                     self?.state = .disconnected
                     self?.onDisconnect?()
-                })
+                }
                 
-                socket.on(clientEvent: .error, callback: { [weak self, weak semaphore] (_, _) in
-                    self?.state = .connectionFailed
-                    self?.onFailedConnection?()
-                    semaphore?.signal()
-                })
-                
-                socket.on(clientEvent: .reconnect, callback: { [weak self] (_, _) in
-                    self?.state = .connected
-                    self?.onReconnect?()
-                })
-                
-                socket.connect(timeoutAfter: strongSelf.timeout, withHandler: { [weak semaphore] in
-                    self?.state = .connectionFailed
-                    self?.onFailedConnection?()
-                    semaphore?.signal()
-                })
+                socket.onText = strongSelf.onText
+                socket.connect()
                 
                 _ = semaphore.wait(timeout: .distantFuture)
             }
@@ -109,7 +90,7 @@ final class SocketMessengerImp: SocketMessenger {
         workingQueue.addOperation(operation)
     }
     
-    func on(event: String, callback: @escaping ([Any]) -> () ) {
+    func write(_ string: String) {
 
         let operation: BlockOperation = BlockOperation()
         
@@ -123,29 +104,7 @@ final class SocketMessengerImp: SocketMessenger {
                 return
             }
             
-            socket.on(event, callback: { (data, _) in
-                callback(data)
-            })
-        }
-        
-        workingQueue.addOperation(operation)
-    }
-    
-    func emit(event: String, items: [Any]) {
-        
-        let operation: BlockOperation = BlockOperation()
-        
-        operation.addExecutionBlock { [weak self, weak operation] in
-            
-            if let operation = operation, operation.isCancelled {
-                return
-            }
-            
-            guard let socket = self?.socket else {
-                return
-            }
-            
-            socket.emit(event, with: items)
+            socket.write(string: string)
         }
         
         workingQueue.addOperation(operation)
