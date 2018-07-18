@@ -45,11 +45,11 @@ public class ECHO: AuthentificationFacade {
     
     // MARK: AuthentificationFacade
     
-    public func login(name: String, password: String, completion: (Result<UserAccount, ECHOError>) -> Void) {
+    public func login(name: String, password: String, completion: @escaping (Result<UserAccount, ECHOError>) -> Void) {
         authentificationFacade.login(name: name, password: password, completion: completion)
     }
     
-    public func changePassword(old: String, new: String, name: String, completion: (Result<UserAccount, ECHOError>) -> Void) {
+    public func changePassword(old: String, new: String, name: String, completion: @escaping (Result<UserAccount, ECHOError>) -> Void) {
         authentificationFacade.changePassword(old: old, new: new, name: name, completion: completion)
     }
 }

@@ -23,7 +23,7 @@ class Options: Decodable {
     var votes = [Any]()
     var extensions = [Any]()
     
-    required init(from decoder:Decoder) throws {
+    required init(from decoder: Decoder) throws {
         
         let values = try decoder.container(keyedBy: OptionsCodingKeys.self)
         memoKey = try values.decode(String.self, forKey: .memoKey)

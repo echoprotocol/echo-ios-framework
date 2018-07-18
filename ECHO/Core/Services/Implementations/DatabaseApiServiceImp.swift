@@ -16,7 +16,11 @@ class DatabaseApiServiceImp: DatabaseApiService, ApiIdentifireHolder {
     
     func getFullAccount(nameOrIds: [String], completion: @escaping Completion<UserAccount>) {
         
-        let operation = FullAccountSocketOperation(method: .call, operationId: socketCore.nextOperationId(), apiId: apiIdentifire, accountsIds: nameOrIds, shoudSubscribe: false) { (result) in
+        let operation = FullAccountSocketOperation(method: .call,
+                                                   operationId: socketCore.nextOperationId(),
+                                                   apiId: apiIdentifire,
+                                                   accountsIds: nameOrIds,
+                                                   shoudSubscribe: false) { (result) in
             switch result {
             case .success(let userAccount):
                 let result = Result<UserAccount, ECHOError>(value: userAccount)

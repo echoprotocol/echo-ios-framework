@@ -5,7 +5,6 @@
 //  Created by Fedorenko Nikita on 18.07.2018.
 //
 
-
 class Account: GrapheneObject, Decodable {
     
     enum AccountCodingKeys: String, CodingKey {
@@ -36,7 +35,7 @@ class Account: GrapheneObject, Decodable {
     var active: Authority
     var options: Options
     
-    required init(from decoder:Decoder) throws {
+    required init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: AccountCodingKeys.self)
         let id = try values.decode(String.self, forKey: .id)
         membershiExperationDate = try values.decode(String.self, forKey: .membershiExperationDate)

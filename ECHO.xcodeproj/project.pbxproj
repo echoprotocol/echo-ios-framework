@@ -22,7 +22,6 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		B30CACEB20FF74840048E33E /* Starscream.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B30CACEA20FF74840048E33E /* Starscream.framework */; };
 		B30CACFA20FF74C80048E33E /* NetworkNodesApiServiceImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30CACEE20FF74C70048E33E /* NetworkNodesApiServiceImp.swift */; };
 		B30CACFB20FF74C80048E33E /* NetworkBroadcastApiServiceImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30CACEF20FF74C70048E33E /* NetworkBroadcastApiServiceImp.swift */; };
 		B30CACFC20FF74C80048E33E /* AccountHistoryApiServiceImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30CACF020FF74C70048E33E /* AccountHistoryApiServiceImp.swift */; };
@@ -34,6 +33,13 @@
 		B30CAD0220FF74C80048E33E /* DatabaseApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30CACF720FF74C70048E33E /* DatabaseApiService.swift */; };
 		B30CAD0320FF74C80048E33E /* NetworkNodesApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30CACF820FF74C70048E33E /* NetworkNodesApiService.swift */; };
 		B30CAD0420FF74C80048E33E /* ApiIdentifireHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30CACF920FF74C70048E33E /* ApiIdentifireHolder.swift */; };
+		B30CAD1720FFD5790048E33E /* AccountBalance.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30CAD1520FFD5790048E33E /* AccountBalance.swift */; };
+		B30CAD1820FFD5790048E33E /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30CAD1620FFD5790048E33E /* Account.swift */; };
+		B30CAD1A20FFD58E0048E33E /* Options.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30CAD1920FFD58E0048E33E /* Options.swift */; };
+		B30CAD1C20FFD5A10048E33E /* Authority.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30CAD1B20FFD5A10048E33E /* Authority.swift */; };
+		B30CAD1E20FFD5CE0048E33E /* Collection+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30CAD1D20FFD5CE0048E33E /* Collection+Extension.swift */; };
+		B30CAD2020FFD5DB0048E33E /* AuthentificationFacadeImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30CAD1F20FFD5DB0048E33E /* AuthentificationFacadeImp.swift */; };
+		B30CAD2820FFF9E70048E33E /* ECHOKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30CAD2720FFF9E70048E33E /* ECHOKeychain.swift */; };
 		B31CB1A520F3772C00FA5532 /* ECHO.h in Headers */ = {isa = PBXBuildFile; fileRef = B31CB1A320F3772C00FA5532 /* ECHO.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B35F15AA20F3ABAE000CE3EA /* ObjectType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35F15A920F3ABAE000CE3EA /* ObjectType.swift */; };
 		B370BB5920F7623F004C4A26 /* SettingsConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B370BB5820F7623F004C4A26 /* SettingsConfigurator.swift */; };
@@ -110,6 +116,13 @@
 		B30CACF720FF74C70048E33E /* DatabaseApiService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseApiService.swift; sourceTree = "<group>"; };
 		B30CACF820FF74C70048E33E /* NetworkNodesApiService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkNodesApiService.swift; sourceTree = "<group>"; };
 		B30CACF920FF74C70048E33E /* ApiIdentifireHolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiIdentifireHolder.swift; sourceTree = "<group>"; };
+		B30CAD1520FFD5790048E33E /* AccountBalance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountBalance.swift; sourceTree = "<group>"; };
+		B30CAD1620FFD5790048E33E /* Account.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
+		B30CAD1920FFD58E0048E33E /* Options.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Options.swift; sourceTree = "<group>"; };
+		B30CAD1B20FFD5A10048E33E /* Authority.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Authority.swift; sourceTree = "<group>"; };
+		B30CAD1D20FFD5CE0048E33E /* Collection+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Collection+Extension.swift"; sourceTree = "<group>"; };
+		B30CAD1F20FFD5DB0048E33E /* AuthentificationFacadeImp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthentificationFacadeImp.swift; sourceTree = "<group>"; };
+		B30CAD2720FFF9E70048E33E /* ECHOKeychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ECHOKeychain.swift; sourceTree = "<group>"; };
 		B31CB1A020F3772C00FA5532 /* ECHO.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ECHO.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B31CB1A320F3772C00FA5532 /* ECHO.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ECHO.h; sourceTree = "<group>"; };
 		B31CB1A420F3772C00FA5532 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -162,7 +175,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B30CACEB20FF74840048E33E /* Starscream.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -283,6 +295,7 @@
 		B3CA702520F4A40600511F6A /* Implementations */ = {
 			isa = PBXGroup;
 			children = (
+				B30CAD1F20FFD5DB0048E33E /* AuthentificationFacadeImp.swift */,
 				B3A7AA4A20F8C32C002D569D /* RevialFacadeImp.swift */,
 			);
 			path = Implementations;
@@ -353,6 +366,12 @@
 				B3CA704320F532AA00511F6A /* SocketOperation */,
 				B35F15A920F3ABAE000CE3EA /* ObjectType.swift */,
 				B3B04C6020F3B2CE003BBD9E /* GrapheneObject.swift */,
+				B30CAD1620FFD5790048E33E /* Account.swift */,
+				B30CAD1920FFD58E0048E33E /* Options.swift */,
+				B30CAD2720FFF9E70048E33E /* ECHOKeychain.swift */,
+				B30CAD1520FFD5790048E33E /* AccountBalance.swift */,
+				B30CAD1D20FFD5CE0048E33E /* Collection+Extension.swift */,
+				B30CAD1B20FFD5A10048E33E /* Authority.swift */,
 				B3CA701D20F49C6800511F6A /* ReslutHandler.swift */,
 				B3CA703720F4A72C00511F6A /* Error.swift */,
 				B3CA703920F4A7C300511F6A /* UserAccount.swift */,
@@ -507,6 +526,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B370BB5D20F768B1004C4A26 /* CryptoCoreComponent.swift in Sources */,
+				B30CAD1820FFD5790048E33E /* Account.swift in Sources */,
 				B30CACFF20FF74C80048E33E /* AccountHistoryApiService.swift in Sources */,
 				B30CAD0320FF74C80048E33E /* NetworkNodesApiService.swift in Sources */,
 				B370BB5920F7623F004C4A26 /* SettingsConfigurator.swift in Sources */,
@@ -532,8 +552,11 @@
 				B3A7AA4B20F8C32C002D569D /* RevialFacadeImp.swift in Sources */,
 				B38596F820F5F54100B55E59 /* SetSubscribeCallbackSocketOperation.swift in Sources */,
 				B38596F020F5EDCD00B55E59 /* GetContractResultSocketOperation.swift in Sources */,
+				B30CAD2020FFD5DB0048E33E /* AuthentificationFacadeImp.swift in Sources */,
 				B3CA703A20F4A7C300511F6A /* UserAccount.swift in Sources */,
 				B3CA703C20F4AA3700511F6A /* HistoryItem.swift in Sources */,
+				B30CAD1A20FFD58E0048E33E /* Options.swift in Sources */,
+				B30CAD1720FFD5790048E33E /* AccountBalance.swift in Sources */,
 				B30CAD0120FF74C80048E33E /* CryptoApiService.swift in Sources */,
 				B38596F620F5EEAC00B55E59 /* RequiredFeeSocketOperation.swift in Sources */,
 				B3CA702E20F4A46200511F6A /* SubscriptionFacade.swift in Sources */,
@@ -547,9 +570,12 @@
 				B3CA703820F4A72C00511F6A /* Error.swift in Sources */,
 				B3A7AA4920F8C247002D569D /* RevilSocketApiFacade.swift in Sources */,
 				B30CACFB20FF74C80048E33E /* NetworkBroadcastApiServiceImp.swift in Sources */,
+				B30CAD1E20FFD5CE0048E33E /* Collection+Extension.swift in Sources */,
 				B3A8BF6120F7DA3B0041A1D7 /* SocketCoreComponentImp.swift in Sources */,
 				B3CA704920F5358400511F6A /* BlockDataSocketOperation.swift in Sources */,
 				B30CAD0420FF74C80048E33E /* ApiIdentifireHolder.swift in Sources */,
+				B30CAD2820FFF9E70048E33E /* ECHOKeychain.swift in Sources */,
+				B30CAD1C20FFD5A10048E33E /* Authority.swift in Sources */,
 				B38596EA20F5ECBA00B55E59 /* GetAssetsSocketOperation.swift in Sources */,
 				B3A8BF6320F7DA4F0041A1D7 /* SocketMessanger.swift in Sources */,
 				B30CACFE20FF74C80048E33E /* DatabaseApiServiceImp.swift in Sources */,
@@ -696,6 +722,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)/ECHO/Frameworks",
 				);
 				INFOPLIST_FILE = ECHO/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -728,6 +755,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)/ECHO/Frameworks",
 				);
 				INFOPLIST_FILE = ECHO/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";

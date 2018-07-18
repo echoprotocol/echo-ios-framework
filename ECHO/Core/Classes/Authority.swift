@@ -19,7 +19,7 @@ class Authority: Decodable {
     var keyAuths: [[IntOrString]]
     var addressAuths: [Any] = [Any]()
     
-    required init(from decoder:Decoder) throws {
+    required init(from decoder: Decoder) throws {
         
         let values = try decoder.container(keyedBy: AuthorityCodingKeys.self)
         weightThreshold = try values.decode(Int.self, forKey: .weightThreshold)
