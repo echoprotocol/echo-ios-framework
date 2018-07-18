@@ -11,7 +11,7 @@ struct KeyReferencesSocketOperation: SocketOperation {
     var method: SocketOperationType
     var operationId: Int
     var apiId: Int
-    var completion: Completion<OperationResult<Any>>
+    var completion: Completion<Any>
     var publicKey: String
     
     func createParameters() -> [Any] {
@@ -19,5 +19,9 @@ struct KeyReferencesSocketOperation: SocketOperation {
                             SocketOperationKeys.keyReference.rawValue,
                             [[publicKey]]]
         return array
+    }
+    
+    func complete(json: [String: Any]) {
+        
     }
 }

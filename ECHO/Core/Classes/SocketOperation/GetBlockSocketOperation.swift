@@ -8,10 +8,11 @@
 
 struct GetBlockSocketOperation: SocketOperation {
     
+    typealias Result = Bool
     var method: SocketOperationType
     var operationId: Int
     var apiId: Int
-    var completion: Completion<OperationResult<Any>>
+    var completion: Completion<Any>
     var blockNumber: Int
     
     func createParameters() -> [Any] {
@@ -19,5 +20,9 @@ struct GetBlockSocketOperation: SocketOperation {
                             SocketOperationKeys.block.rawValue,
                             [blockNumber]]
         return array
+    }
+    
+    func complete(json: [String: Any]) {
+        
     }
 }

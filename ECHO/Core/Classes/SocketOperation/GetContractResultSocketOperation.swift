@@ -11,7 +11,7 @@ struct GetContractResultSocketOperation: SocketOperation {
     var method: SocketOperationType
     var operationId: Int
     var apiId: Int
-    var completion: Completion<OperationResult<Any>>
+    var completion: Completion<Any>
     var resultId: String
     
     func createParameters() -> [Any] {
@@ -19,5 +19,9 @@ struct GetContractResultSocketOperation: SocketOperation {
                             SocketOperationKeys.contractResult.rawValue,
                             [resultId]]
         return array
+    }
+    
+    func complete(json: [String: Any]) {
+        
     }
 }

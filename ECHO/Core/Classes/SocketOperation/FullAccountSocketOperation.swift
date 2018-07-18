@@ -11,7 +11,7 @@ struct FullAccountSocketOperation: SocketOperation {
     var method: SocketOperationType
     var operationId: Int
     var apiId: Int
-    var completion: Completion<OperationResult<Any>>
+    var completion: Completion<Any>
     var accountsIds: [String]
     var shoudSubscribe: Bool
     
@@ -20,5 +20,9 @@ struct FullAccountSocketOperation: SocketOperation {
                             SocketOperationKeys.fullAccount.rawValue,
                             [accountsIds, shoudSubscribe]]
         return array
+    }
+    
+    func complete(json: [String: Any]) {
+        
     }
 }

@@ -22,6 +22,18 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		B30CACEB20FF74840048E33E /* Starscream.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B30CACEA20FF74840048E33E /* Starscream.framework */; };
+		B30CACFA20FF74C80048E33E /* NetworkNodesApiServiceImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30CACEE20FF74C70048E33E /* NetworkNodesApiServiceImp.swift */; };
+		B30CACFB20FF74C80048E33E /* NetworkBroadcastApiServiceImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30CACEF20FF74C70048E33E /* NetworkBroadcastApiServiceImp.swift */; };
+		B30CACFC20FF74C80048E33E /* AccountHistoryApiServiceImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30CACF020FF74C70048E33E /* AccountHistoryApiServiceImp.swift */; };
+		B30CACFD20FF74C80048E33E /* CryptoApiServiceImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30CACF120FF74C70048E33E /* CryptoApiServiceImp.swift */; };
+		B30CACFE20FF74C80048E33E /* DatabaseApiServiceImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30CACF220FF74C70048E33E /* DatabaseApiServiceImp.swift */; };
+		B30CACFF20FF74C80048E33E /* AccountHistoryApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30CACF420FF74C70048E33E /* AccountHistoryApiService.swift */; };
+		B30CAD0020FF74C80048E33E /* NetworkBroadcastApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30CACF520FF74C70048E33E /* NetworkBroadcastApiService.swift */; };
+		B30CAD0120FF74C80048E33E /* CryptoApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30CACF620FF74C70048E33E /* CryptoApiService.swift */; };
+		B30CAD0220FF74C80048E33E /* DatabaseApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30CACF720FF74C70048E33E /* DatabaseApiService.swift */; };
+		B30CAD0320FF74C80048E33E /* NetworkNodesApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30CACF820FF74C70048E33E /* NetworkNodesApiService.swift */; };
+		B30CAD0420FF74C80048E33E /* ApiIdentifireHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30CACF920FF74C70048E33E /* ApiIdentifireHolder.swift */; };
 		B31CB1A520F3772C00FA5532 /* ECHO.h in Headers */ = {isa = PBXBuildFile; fileRef = B31CB1A320F3772C00FA5532 /* ECHO.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B35F15AA20F3ABAE000CE3EA /* ObjectType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35F15A920F3ABAE000CE3EA /* ObjectType.swift */; };
 		B370BB5920F7623F004C4A26 /* SettingsConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B370BB5820F7623F004C4A26 /* SettingsConfigurator.swift */; };
@@ -40,8 +52,6 @@
 		B38596FE20F6009A00B55E59 /* Asset.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38596FD20F6009A00B55E59 /* Asset.swift */; };
 		B385970220F620B700B55E59 /* AssetOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B385970120F620B700B55E59 /* AssetOptions.swift */; };
 		B385970420F6270000B55E59 /* ECHOObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B385970320F6270000B55E59 /* ECHOObject.swift */; };
-		B3A7AA2E20F88BBF002D569D /* SocketIO.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = B3A8BF5C20F7D8790041A1D7 /* SocketIO.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		B3A7AA2F20F88BD5002D569D /* Starscream.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = B3A8BF6A20F7DB9E0041A1D7 /* Starscream.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B3A7AA4920F8C247002D569D /* RevilSocketApiFacade.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A7AA4820F8C247002D569D /* RevilSocketApiFacade.swift */; };
 		B3A7AA4B20F8C32C002D569D /* RevialFacadeImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A7AA4A20F8C32C002D569D /* RevialFacadeImp.swift */; };
 		B3A8BF6120F7DA3B0041A1D7 /* SocketCoreComponentImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A8BF6020F7DA3B0041A1D7 /* SocketCoreComponentImp.swift */; };
@@ -82,14 +92,24 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				B3A7AA2F20F88BD5002D569D /* Starscream.framework in CopyFiles */,
-				B3A7AA2E20F88BBF002D569D /* SocketIO.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		B30CACEA20FF74840048E33E /* Starscream.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Starscream.framework; path = Carthage/Build/iOS/Starscream.framework; sourceTree = "<group>"; };
+		B30CACEE20FF74C70048E33E /* NetworkNodesApiServiceImp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkNodesApiServiceImp.swift; sourceTree = "<group>"; };
+		B30CACEF20FF74C70048E33E /* NetworkBroadcastApiServiceImp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkBroadcastApiServiceImp.swift; sourceTree = "<group>"; };
+		B30CACF020FF74C70048E33E /* AccountHistoryApiServiceImp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountHistoryApiServiceImp.swift; sourceTree = "<group>"; };
+		B30CACF120FF74C70048E33E /* CryptoApiServiceImp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CryptoApiServiceImp.swift; sourceTree = "<group>"; };
+		B30CACF220FF74C70048E33E /* DatabaseApiServiceImp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseApiServiceImp.swift; sourceTree = "<group>"; };
+		B30CACF420FF74C70048E33E /* AccountHistoryApiService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountHistoryApiService.swift; sourceTree = "<group>"; };
+		B30CACF520FF74C70048E33E /* NetworkBroadcastApiService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkBroadcastApiService.swift; sourceTree = "<group>"; };
+		B30CACF620FF74C70048E33E /* CryptoApiService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CryptoApiService.swift; sourceTree = "<group>"; };
+		B30CACF720FF74C70048E33E /* DatabaseApiService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseApiService.swift; sourceTree = "<group>"; };
+		B30CACF820FF74C70048E33E /* NetworkNodesApiService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkNodesApiService.swift; sourceTree = "<group>"; };
+		B30CACF920FF74C70048E33E /* ApiIdentifireHolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiIdentifireHolder.swift; sourceTree = "<group>"; };
 		B31CB1A020F3772C00FA5532 /* ECHO.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ECHO.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B31CB1A320F3772C00FA5532 /* ECHO.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ECHO.h; sourceTree = "<group>"; };
 		B31CB1A420F3772C00FA5532 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -142,12 +162,47 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B30CACEB20FF74840048E33E /* Starscream.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B30CACEC20FF74C70048E33E /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				B30CACED20FF74C70048E33E /* Implementations */,
+				B30CACF320FF74C70048E33E /* Protocols */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		B30CACED20FF74C70048E33E /* Implementations */ = {
+			isa = PBXGroup;
+			children = (
+				B30CACEE20FF74C70048E33E /* NetworkNodesApiServiceImp.swift */,
+				B30CACEF20FF74C70048E33E /* NetworkBroadcastApiServiceImp.swift */,
+				B30CACF020FF74C70048E33E /* AccountHistoryApiServiceImp.swift */,
+				B30CACF120FF74C70048E33E /* CryptoApiServiceImp.swift */,
+				B30CACF220FF74C70048E33E /* DatabaseApiServiceImp.swift */,
+			);
+			path = Implementations;
+			sourceTree = "<group>";
+		};
+		B30CACF320FF74C70048E33E /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				B30CACF420FF74C70048E33E /* AccountHistoryApiService.swift */,
+				B30CACF520FF74C70048E33E /* NetworkBroadcastApiService.swift */,
+				B30CACF620FF74C70048E33E /* CryptoApiService.swift */,
+				B30CACF720FF74C70048E33E /* DatabaseApiService.swift */,
+				B30CACF820FF74C70048E33E /* NetworkNodesApiService.swift */,
+				B30CACF920FF74C70048E33E /* ApiIdentifireHolder.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
 		B31CB19620F3772C00FA5532 = {
 			isa = PBXGroup;
 			children = (
@@ -180,6 +235,7 @@
 			isa = PBXGroup;
 			children = (
 				B3A8BF6A20F7DB9E0041A1D7 /* Starscream.framework */,
+				B30CACEA20FF74840048E33E /* Starscream.framework */,
 				B3A8BF5C20F7D8790041A1D7 /* SocketIO.framework */,
 				B356019320F38CB50097FD38 /* BitcoinKit.framework */,
 			);
@@ -189,6 +245,7 @@
 		B3CA702120F4A3CA00511F6A /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				B30CACEC20FF74C70048E33E /* Services */,
 				B3CA702420F4A3F800511F6A /* Facades */,
 				B3CA703220F4A4B600511F6A /* Core Components */,
 				B3CA703120F4A4B000511F6A /* Services */,
@@ -450,18 +507,24 @@
 			buildActionMask = 2147483647;
 			files = (
 				B370BB5D20F768B1004C4A26 /* CryptoCoreComponent.swift in Sources */,
+				B30CACFF20FF74C80048E33E /* AccountHistoryApiService.swift in Sources */,
+				B30CAD0320FF74C80048E33E /* NetworkNodesApiService.swift in Sources */,
 				B370BB5920F7623F004C4A26 /* SettingsConfigurator.swift in Sources */,
 				B3CA704220F502BE00511F6A /* SocketOperation.swift in Sources */,
 				B385970420F6270000B55E59 /* ECHOObject.swift in Sources */,
 				B3CA702A20F4A44900511F6A /* InformationFacade.swift in Sources */,
 				B3CA704720F532E600511F6A /* AccessSocketOperation.swift in Sources */,
+				B30CACFA20FF74C80048E33E /* NetworkNodesApiServiceImp.swift in Sources */,
 				B3CA704020F4FB0200511F6A /* ECHOSerializable.swift in Sources */,
 				B3CA702820F4A43000511F6A /* AuthentificationFacade.swift in Sources */,
 				B3CA704520F532BE00511F6A /* BaseSocketOperation.swift in Sources */,
 				B3CA702020F4A3A900511F6A /* ECHO.swift in Sources */,
 				B3CA704D20F53A4500511F6A /* GetAccountHistorySocketOperation.swift in Sources */,
 				B38596FA20F6003500B55E59 /* AssetAmount.swift in Sources */,
+				B30CAD0020FF74C80048E33E /* NetworkBroadcastApiService.swift in Sources */,
+				B30CACFD20FF74C80048E33E /* CryptoApiServiceImp.swift in Sources */,
 				B370BB5B20F76853004C4A26 /* SocketMessenger.swift in Sources */,
+				B30CACFC20FF74C80048E33E /* AccountHistoryApiServiceImp.swift in Sources */,
 				B38596EE20F5ED9A00B55E59 /* GetChainIdSocketOperation.swift in Sources */,
 				B3B04C6120F3B2CE003BBD9E /* GrapheneObject.swift in Sources */,
 				B38596EC20F5ED6000B55E59 /* GetBlockSocketOperation.swift in Sources */,
@@ -471,6 +534,7 @@
 				B38596F020F5EDCD00B55E59 /* GetContractResultSocketOperation.swift in Sources */,
 				B3CA703A20F4A7C300511F6A /* UserAccount.swift in Sources */,
 				B3CA703C20F4AA3700511F6A /* HistoryItem.swift in Sources */,
+				B30CAD0120FF74C80048E33E /* CryptoApiService.swift in Sources */,
 				B38596F620F5EEAC00B55E59 /* RequiredFeeSocketOperation.swift in Sources */,
 				B3CA702E20F4A46200511F6A /* SubscriptionFacade.swift in Sources */,
 				B3CA703020F4A46E00511F6A /* FeeFacade.swift in Sources */,
@@ -478,13 +542,17 @@
 				B3CA702C20F4A45400511F6A /* TransactionFacade.swift in Sources */,
 				B3CA704B20F5363F00511F6A /* FullAccountSocketOperation.swift in Sources */,
 				B385970220F620B700B55E59 /* AssetOptions.swift in Sources */,
+				B30CAD0220FF74C80048E33E /* DatabaseApiService.swift in Sources */,
 				B38596F420F5EE5C00B55E59 /* KeyReferencesSocketOperation.swift in Sources */,
 				B3CA703820F4A72C00511F6A /* Error.swift in Sources */,
 				B3A7AA4920F8C247002D569D /* RevilSocketApiFacade.swift in Sources */,
+				B30CACFB20FF74C80048E33E /* NetworkBroadcastApiServiceImp.swift in Sources */,
 				B3A8BF6120F7DA3B0041A1D7 /* SocketCoreComponentImp.swift in Sources */,
 				B3CA704920F5358400511F6A /* BlockDataSocketOperation.swift in Sources */,
+				B30CAD0420FF74C80048E33E /* ApiIdentifireHolder.swift in Sources */,
 				B38596EA20F5ECBA00B55E59 /* GetAssetsSocketOperation.swift in Sources */,
 				B3A8BF6320F7DA4F0041A1D7 /* SocketMessanger.swift in Sources */,
+				B30CACFE20FF74C80048E33E /* DatabaseApiServiceImp.swift in Sources */,
 				B38596FC20F6005500B55E59 /* Price.swift in Sources */,
 				B38596F220F5EE1400B55E59 /* GetObjectsSocketOperation.swift in Sources */,
 				B35F15AA20F3ABAE000CE3EA /* ObjectType.swift in Sources */,
@@ -625,6 +693,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = ECHO/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -653,6 +725,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = ECHO/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;

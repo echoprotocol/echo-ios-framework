@@ -47,3 +47,18 @@ public class Settings {
         apiOptions = configurator.apiOptions
     }
 }
+
+class ServiceLocator {
+    
+    private var registry: [String: Any] = [:]
+    
+    func registerService<T>(service: T, path: String = "") {
+        let key = "\(T.self)" + path
+        registry[key] = service
+    }
+    
+    func tryGetService<T>(path: String = "") -> T? {
+        let key = "\(T.self)" + path
+        return registry[key] as? T
+    }
+}

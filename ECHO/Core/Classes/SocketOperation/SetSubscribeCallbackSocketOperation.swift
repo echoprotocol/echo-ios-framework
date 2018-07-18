@@ -11,7 +11,7 @@ struct SetSubscribeCallbackSocketOperation: SocketOperation {
     var method: SocketOperationType
     var operationId: Int
     var apiId: Int
-    var completion: Completion<OperationResult<Any>>
+    var completion: Completion<Any>
     var needClearFilter: Bool
     
     func createParameters() -> [Any] {
@@ -19,5 +19,9 @@ struct SetSubscribeCallbackSocketOperation: SocketOperation {
                             SocketOperationKeys.subscribeCallback.rawValue,
                             [operationId, [needClearFilter]]]
         return array
+    }
+    
+    func complete(json: [String: Any]) {
+        
     }
 }

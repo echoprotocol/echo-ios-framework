@@ -11,12 +11,16 @@ struct GetChainIdSocketOperation: SocketOperation {
     var method: SocketOperationType
     var operationId: Int
     var apiId: Int
-    var completion: Completion<OperationResult<Any>>
+    var completion: Completion<Any>
     
     func createParameters() -> [Any] {
         let array: [Any] = [apiId,
                             SocketOperationKeys.chainId.rawValue,
                             []]
         return array
+    }
+    
+    func complete(json: [String: Any]) {
+        
     }
 }

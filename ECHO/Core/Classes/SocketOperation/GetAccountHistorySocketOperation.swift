@@ -11,7 +11,7 @@ struct GetAccountHistorySocketOperation: SocketOperation {
     var method: SocketOperationType
     var operationId: Int
     var apiId: Int
-    var completion: Completion<OperationResult<Any>>
+    var completion: Completion<Any>
     var accountId: String
     var stopId: String
     var limit: Int
@@ -24,7 +24,7 @@ struct GetAccountHistorySocketOperation: SocketOperation {
          stopId: String = "1.11.0",
          limit: Int = 100,
          startId: String = "1.11.0",
-         completion: @escaping Completion<OperationResult<Any>>) {
+         completion: @escaping Completion<Any>) {
         
         self.method = method
         self.operationId = operationId
@@ -41,5 +41,9 @@ struct GetAccountHistorySocketOperation: SocketOperation {
                             SocketOperationKeys.accountHistory.rawValue,
                             [accountId, stopId, limit, startId]]
         return array
+    }
+    
+    func complete(json: [String: Any]) {
+        
     }
 }

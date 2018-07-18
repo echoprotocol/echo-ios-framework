@@ -11,7 +11,23 @@ public class ECHO {
     var revilFacade: RevialApiFacade
 
     public init(settings: Settings) {
-        revilFacade = RevialFacadeImp(messanger: settings.socketMessenger, url: settings.url, options: settings.apiOptions)
+        
+        let databaseService = DatabaseApiServiceImp()
+        let cryptoService = CryptoApiServiceImp()
+        let networkBroadcastService = NetworkBroadcastApiServiceImp()
+        let historyService = AccountHistoryApiServiceImp()
+        let networkNodesSetvice = NetworkNodesApiServiceImp()
+        
+        let revialServices = RevialFacadeServices(databaseService: databaseService,
+                                                  cryptoService: cryptoService,
+                                                  historyService: historyService,
+                                                  networkBroadcastService: networkBroadcastService,
+                                                  networkNodesService: networkNodesSetvice)
+        
+        revilFacade = RevialFacadeImp(messanger: settings.socketMessenger,
+                                      url: settings.url,
+                                      options: settings.apiOptions,
+                                      services: revialServices)
     }
     
     public func start(completion: @escaping Completion<Bool>) {

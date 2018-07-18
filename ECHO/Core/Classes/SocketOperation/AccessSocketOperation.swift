@@ -10,6 +10,7 @@ enum AccessSocketOperationType: String {
     case login
     case database
     case networkBroadcast = "network_broadcast"
+    case networkNodes = "network_nodes"
     case history
     case crypto
 }
@@ -19,13 +20,13 @@ struct AccessSocketOperation: SocketOperation {
     var method: SocketOperationType
     var operationId: Int
     var apiId: Int
-    var completion: Completion<OperationResult<Any>>
+    var completion: Completion<Int>
     var type: AccessSocketOperationType
     
     init(type: AccessSocketOperationType,
          method: SocketOperationType,
          operationId: Int,
-         completion: @escaping Completion<OperationResult<Any>>) {
+         completion: @escaping Completion<Int>) {
         
         self.type = type
         self.method = method
@@ -45,8 +46,22 @@ struct AccessSocketOperation: SocketOperation {
         switch type {
         case .login:
             return ["", ""]
-        case .crypto, .history, .database, .networkBroadcast:
+        case .crypto, .history, .database, .networkBroadcast, .networkNodes:
             return []
         }
+    }
+    
+    func complete(json: [String: Any]) {
+        
+        debugPrint(json)
+
+        guard let resultId = json["result"] as? Int else {
+            let result = Result<Int, ECHOError>(error: ECHOError.undefined)
+            completion(result)
+            return
+        }
+        
+        let result = Result<Int, ECHOError>(value: resultId)
+        completion(result)
     }
 }

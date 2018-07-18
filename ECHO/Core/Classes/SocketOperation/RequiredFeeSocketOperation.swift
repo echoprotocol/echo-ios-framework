@@ -11,7 +11,7 @@ struct RequiredFeeSocketOperation: SocketOperation {
     var method: SocketOperationType
     var operationId: Int
     var apiId: Int
-    var completion: Completion<OperationResult<Any>>
+    var completion: Completion<Any>
     var publicKey: String
     var operations: [Any]
     var assetId: String
@@ -21,5 +21,9 @@ struct RequiredFeeSocketOperation: SocketOperation {
                             SocketOperationKeys.requiredFee.rawValue,
                             [operationId, assetId]]
         return array
+    }
+    
+    func complete(json: [String: Any]) {
+        
     }
 }

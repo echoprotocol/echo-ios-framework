@@ -10,7 +10,8 @@ protocol RevialApiFacade {
     
     init(messanger: SocketMessenger,
          url: String,
-         options: APIOption)
+         options: APIOption,
+         services: RevialFacadeServices)
     
     func revilApi(completion: @escaping Completion<Bool>)
 }

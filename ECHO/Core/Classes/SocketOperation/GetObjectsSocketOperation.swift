@@ -11,7 +11,7 @@ struct GetObjectsSocketOperation: SocketOperation {
     var method: SocketOperationType
     var operationId: Int
     var apiId: Int
-    var completion: Completion<OperationResult<Any>>
+    var completion: Completion<Any>
     var identifiers: [String]
     
     func createParameters() -> [Any] {
@@ -19,5 +19,9 @@ struct GetObjectsSocketOperation: SocketOperation {
                             SocketOperationKeys.object.rawValue,
                             [identifiers]]
         return array
+    }
+    
+    func complete(json: [String: Any]) {
+        
     }
 }

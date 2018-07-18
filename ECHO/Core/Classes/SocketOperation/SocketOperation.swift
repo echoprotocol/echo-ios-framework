@@ -32,8 +32,8 @@ protocol SocketOperation: JSONCodable {
     var method: SocketOperationType { get }
     var operationId: Int { get }
     var apiId: Int { get }
-    var completion: Completion<OperationResult<Any>> { get }
     func createParameters() -> [Any]
+    func complete(json: [String: Any])
 }
 
 enum OperationCodingKeys: String, CodingKey {
@@ -46,9 +46,9 @@ extension SocketOperation {
 
     func toJSON() -> Any? {
 
-        let dictionary: [AnyHashable: Any] = [OperationCodingKeys.method: method.rawValue,
-                                              OperationCodingKeys.id: operationId,
-                                              OperationCodingKeys.params: createParameters()]
+        let dictionary: [AnyHashable: Any] = [OperationCodingKeys.method.rawValue: method.rawValue,
+                                              OperationCodingKeys.id.rawValue: operationId,
+                                              OperationCodingKeys.params.rawValue: createParameters()]
 
         return dictionary
     }
@@ -60,6 +60,6 @@ extension SocketOperation {
             .flatMap { try? JSONSerialization.data(withJSONObject: $0, options: [])}
             .flatMap { String(data: $0, encoding: .utf8)}
 
-        return jsonString ?? ""
+        return jsonString 
     }
 }
