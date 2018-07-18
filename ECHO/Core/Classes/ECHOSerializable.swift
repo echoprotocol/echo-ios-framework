@@ -43,3 +43,34 @@ protocol BytesEncodable: Encodable {
 }
 
 protocol ECHOCodable: JSONCodable, BytesCodable { }
+
+typealias IntOrStrings = [IntOrString]
+
+enum IntOrString: Codable {
+    
+    case integer(Int)
+    case string(String)
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if let value = try? container.decode(Int.self) {
+            self = .integer(value)
+            return
+        }
+        if let value = try? container.decode(String.self) {
+            self = .string(value)
+            return
+        }
+        throw DecodingError.typeMismatch(IntOrString.self, DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Wrong type for IntOrString"))
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        switch self {
+        case .integer(let x):
+            try container.encode(x)
+        case .string(let x):
+            try container.encode(x)
+        }
+    }
+}

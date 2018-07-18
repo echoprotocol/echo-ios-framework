@@ -7,4 +7,5 @@
 
 protocol CryptoApiService {
     
+    init(socketCore: SocketCoreComponent)
 }

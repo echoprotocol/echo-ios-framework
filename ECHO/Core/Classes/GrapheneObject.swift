@@ -6,9 +6,9 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
-class GrapheneObject {
+public class GrapheneObject {
     
-    var idString = ""
+    var idString: String 
     var space: Int = 0
     var type: Int = 0
     var instance: Int = 0

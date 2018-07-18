@@ -7,4 +7,10 @@
 
 class NetworkNodesApiServiceImp: NetworkNodesApiService, ApiIdentifireHolder {
     var apiIdentifire: Int = 0
+    
+    let socketCore: SocketCoreComponent
+    
+    required init(socketCore: SocketCoreComponent) {
+        self.socketCore = socketCore
+    }
 }

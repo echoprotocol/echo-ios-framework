@@ -7,4 +7,6 @@
 
 protocol DatabaseApiService {
     
+    init(socketCore: SocketCoreComponent)
+    func getFullAccount(nameOrIds: [String], completion: @escaping Completion<UserAccount>)
 }

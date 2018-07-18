@@ -7,4 +7,5 @@
 
 protocol NetworkBroadcastApiService {
     
+    init(socketCore: SocketCoreComponent)
 }

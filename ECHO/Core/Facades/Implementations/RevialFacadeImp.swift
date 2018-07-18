@@ -24,12 +24,11 @@ class RevialFacadeImp: RevialApiFacade {
     
     let dispatchGroup = DispatchGroup()
     
-    required init(messanger: SocketMessenger,
-                  url: String,
+    required init(socketCore: SocketCoreComponent,
                   options: APIOption,
                   services: RevialFacadeServices) {
         apiOptions = options
-        socketCore = SocketCoreComponentImp(messanger: messanger, url: url)
+        self.socketCore = socketCore
         self.services = services
     }
     

@@ -6,7 +6,7 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
-protocol AuthentificationFacade {
+public protocol AuthentificationFacade {
     func login(name: String, password: String, completion: Completion<UserAccount>)
     func changePassword(old: String, new: String, name: String, completion: Completion<UserAccount>)
 }

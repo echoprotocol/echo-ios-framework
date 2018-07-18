@@ -8,8 +8,7 @@
 
 protocol RevialApiFacade {
     
-    init(messanger: SocketMessenger,
-         url: String,
+    init(socketCore: SocketCoreComponent,
          options: APIOption,
          services: RevialFacadeServices)
     

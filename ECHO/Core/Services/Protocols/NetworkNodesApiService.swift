@@ -6,5 +6,5 @@
 //
 
 protocol NetworkNodesApiService {
-    
+    init(socketCore: SocketCoreComponent)
 }

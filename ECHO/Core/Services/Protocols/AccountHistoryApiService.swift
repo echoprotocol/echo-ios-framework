@@ -7,4 +7,5 @@
 
 protocol AccountHistoryApiService {
     
+    init(socketCore: SocketCoreComponent)
 }
