@@ -6,11 +6,13 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
-public class ECHO: AuthentificationFacade {
+public typealias InterfaceFacades = AuthentificationFacade & InformationFacade
+
+public class ECHO: InterfaceFacades  {
     
     var revilFacade: RevialApiFacade
 //    var subscriptionFacade: SubscriptionFacade
-//    var informationFacade: InformationFacade
+    var informationFacade: InformationFacade
 //    var feeFacade: FeeFacade
     var authentificationFacade: AuthentificationFacade
 
@@ -34,9 +36,10 @@ public class ECHO: AuthentificationFacade {
                                       services: revialServices)
         
         let authServices = AuthentificationFacadeServices(databaseService: databaseService)
-        
         authentificationFacade = AuthentificationFacadeImp(services: authServices)
         
+        let informationServices = InformationFacadeServices(databaseService: databaseService)
+        informationFacade = InformationFacadeImp(services: informationServices)
     }
     
     public func start(completion: @escaping Completion<Bool>) {
@@ -45,11 +48,25 @@ public class ECHO: AuthentificationFacade {
     
     // MARK: AuthentificationFacade
     
-    public func login(name: String, password: String, completion: @escaping (Result<UserAccount, ECHOError>) -> Void) {
+    public func login(name: String, password: String, completion: @escaping Completion<UserAccount>) {
         authentificationFacade.login(name: name, password: password, completion: completion)
     }
     
-    public func changePassword(old: String, new: String, name: String, completion: @escaping (Result<UserAccount, ECHOError>) -> Void) {
+    public func changePassword(old: String, new: String, name: String, completion: @escaping Completion<UserAccount>){
         authentificationFacade.changePassword(old: old, new: new, name: name, completion: completion)
+    }
+    
+    // MARK: AuthentificationFacade
+    
+    public func getAccount(nameOrID: String, completion: @escaping Completion<Account>) {
+        informationFacade.getAccount(nameOrID: nameOrID, completion: completion)
+    }
+    
+    public func isAccauntReserved(nameOrID: String, completion: @escaping Completion<Bool>) {
+        informationFacade.isAccauntReserved(nameOrID: nameOrID, completion: completion)
+    }
+    
+    public func getBalance(nameOrID: String, asset: String?, completion: @escaping Completion<[AccountBalance]>) {
+        informationFacade.getBalance(nameOrID: nameOrID, asset: asset, completion: completion)
     }
 }
