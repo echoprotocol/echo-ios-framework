@@ -8,16 +8,16 @@
 
 import Foundation
 
-enum SocketConnectionState {
+public enum SocketConnectionState {
     case notConnected, connected, connecting, reconnecting, disconnected, connectionFailed
 }
 
-protocol SocketMessenger {
+public protocol SocketMessenger {
     
     var state: SocketConnectionState { get }
-    var onConnect: (() -> ())? {get set}
-    var onDisconnect: (() -> ())? {get set}
-    var onText: ((String) -> ())? {get set}
+    var onConnect: (() -> ())? { get set }
+    var onDisconnect: (() -> ())? { get set }
+    var onText: ((String) -> ())? { get set }
     
     func connect(toUrl: String)
     func disconnect()

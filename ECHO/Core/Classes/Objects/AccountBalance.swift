@@ -5,7 +5,6 @@
 //  Created by Fedorenko Nikita on 18.07.2018.
 //
 
-
 public class AccountBalance: GrapheneObject, Decodable {
     
     enum AccountBalanceCodingKeys: String, CodingKey {

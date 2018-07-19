@@ -22,18 +22,18 @@ public struct APIOption: OptionSet {
 }
 
 public class Configurator {
-    var url: String = "wss://node.testnet.bitshares.eu/"
-    var socketMessenger: SocketMessenger = SocketMessengerImp() 
-    var cryproComponent: CryptoCoreComponent = CryptoCoreComponentImp()
-    var apiOptions: APIOption = [.database, .accountHistory, .crypto, .networkBroadcast, .networkNodes]
+    public var url: String = "wss://node.testnet.bitshares.eu/"
+    public var socketMessenger: SocketMessenger = SocketMessengerImp()
+    public var cryproComponent: CryptoCoreComponent = CryptoCoreComponentImp()
+    public var apiOptions: APIOption = [.database, .accountHistory, .crypto, .networkBroadcast, .networkNodes]
 }
 
 public class Settings {
     
-    let url: String
-    let socketMessenger: SocketMessenger
-    let cryproComponent: CryptoCoreComponent
-    let apiOptions: APIOption
+    public let url: String
+    public let socketMessenger: SocketMessenger
+    public let cryproComponent: CryptoCoreComponent
+    public let apiOptions: APIOption
 
     public typealias BuildConfiguratorClosure = (Configurator) -> Void
     

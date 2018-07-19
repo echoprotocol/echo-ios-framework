@@ -9,4 +9,5 @@ protocol DatabaseApiService {
     
     init(socketCore: SocketCoreComponent)
     func getFullAccount(nameOrIds: [String], completion: @escaping Completion<UserAccount>)
+    func getBlockData(completion: @escaping Completion<BlockData>)
 }

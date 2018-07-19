@@ -8,7 +8,7 @@
 
 public typealias InterfaceFacades = AuthentificationFacade & InformationFacade
 
-public class ECHO: InterfaceFacades  {
+public class ECHO: InterfaceFacades {
     
     var revilFacade: RevialApiFacade
 //    var subscriptionFacade: SubscriptionFacade
@@ -52,7 +52,7 @@ public class ECHO: InterfaceFacades  {
         authentificationFacade.login(name: name, password: password, completion: completion)
     }
     
-    public func changePassword(old: String, new: String, name: String, completion: @escaping Completion<UserAccount>){
+    public func changePassword(old: String, new: String, name: String, completion: @escaping Completion<UserAccount>) {
         authentificationFacade.changePassword(old: old, new: new, name: name, completion: completion)
     }
     

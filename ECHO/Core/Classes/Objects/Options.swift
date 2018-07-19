@@ -5,7 +5,7 @@
 //  Created by Fedorenko Nikita on 18.07.2018.
 //
 
-class Options: Decodable {
+public struct Options: Decodable {
     
     enum OptionsCodingKeys: String, CodingKey {
         case memoKey = "memo_key"
@@ -16,14 +16,14 @@ class Options: Decodable {
         case extensions
     }
     
-    var memoKey: String
-    var votingAccount: String
-    var numWitness: Int
-    var numCommittee: Int
-    var votes = [Any]()
-    var extensions = [Any]()
+    public var memoKey: String
+    public var votingAccount: String
+    public var numWitness: Int
+    public var numCommittee: Int
+    public var votes = [Any]()
+    public var extensions = [Any]()
     
-    required init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         
         let values = try decoder.container(keyedBy: OptionsCodingKeys.self)
         memoKey = try values.decode(String.self, forKey: .memoKey)

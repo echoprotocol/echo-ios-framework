@@ -6,7 +6,7 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
-public class UserAccount: Decodable {
+public struct UserAccount: Decodable {
     
     enum UserAccountCodingKeys: String, CodingKey {
         case account
@@ -16,7 +16,7 @@ public class UserAccount: Decodable {
     var account: Account
     var balances: [AccountBalance]
     
-    required public init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         
         let values = try decoder.container(keyedBy: UserAccountCodingKeys.self)
         account = try values.decode(Account.self, forKey: .account)

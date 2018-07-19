@@ -20,17 +20,20 @@ class DatabaseApiServiceImp: DatabaseApiService, ApiIdentifireHolder {
                                                    operationId: socketCore.nextOperationId(),
                                                    apiId: apiIdentifire,
                                                    accountsIds: nameOrIds,
-                                                   shoudSubscribe: false) { (result) in
-            switch result {
-            case .success(let userAccount):
-                let result = Result<UserAccount, ECHOError>(value: userAccount)
-                completion(result)
-            case .failure(let error):
-                let result = Result<UserAccount, ECHOError>(error: error)
-                completion(result)
-            }
-        }
+                                                   shoudSubscribe: false,
+                                                   completion: completion) 
         
         socketCore.send(operation: operation)
     }
+    
+    func getBlockData(completion: @escaping Completion<BlockData>) {
+        
+        let operation = BlockDataSocketOperation(method: .call,
+                                                 operationId: socketCore.nextOperationId(),
+                                                 apiId: apiIdentifire,
+                                                 completion: completion)
+        
+        socketCore.send(operation: operation)
+    }
+
 }

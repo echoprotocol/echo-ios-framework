@@ -46,12 +46,12 @@ protocol ECHOCodable: JSONCodable, BytesCodable { }
 
 typealias IntOrStrings = [IntOrString]
 
-enum IntOrString: Codable, Equatable {
+public enum IntOrString: Codable, Equatable {
     
     case integer(Int)
     case string(String)
     
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let value = try? container.decode(Int.self) {
             self = .integer(value)
@@ -66,7 +66,7 @@ enum IntOrString: Codable, Equatable {
                                                                debugDescription: "Wrong type for IntOrString"))
     }
     
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         switch self {
         case .integer(let value):

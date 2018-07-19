@@ -5,7 +5,7 @@
 //  Created by Fedorenko Nikita on 18.07.2018.
 //
 
-public class Account: GrapheneObject, Decodable {
+public struct Account: ECHOObject, Decodable {
     
     enum AccountCodingKeys: String, CodingKey {
         case id
@@ -23,21 +23,22 @@ public class Account: GrapheneObject, Decodable {
         case statistics
     }
     
-    var membershiExperationDate: String
-    var registrarId: String
-    var referrerId: String
-    var lifetimeReferrer: String
-    var networkFeePercentage: Int
-    var lifetimeReferrerFeePercentage: Int
-    var referrerRewardsPercentage: Int
-    var name: String
-    var owner: Authority
-    var active: Authority
-    var options: Options
+    public var id: String
+    public var membershiExperationDate: String
+    public var registrarId: String
+    public var referrerId: String
+    public var lifetimeReferrer: String
+    public var networkFeePercentage: Int
+    public var lifetimeReferrerFeePercentage: Int
+    public var referrerRewardsPercentage: Int
+    public var name: String
+    public var owner: Authority
+    public var active: Authority
+    public var options: Options
     
-    required public init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: AccountCodingKeys.self)
-        let id = try values.decode(String.self, forKey: .id)
+        id = try values.decode(String.self, forKey: .id)
         membershiExperationDate = try values.decode(String.self, forKey: .membershiExperationDate)
         registrarId = try values.decode(String.self, forKey: .registrar)
         referrerId = try values.decode(String.self, forKey: .referrer)
@@ -49,6 +50,5 @@ public class Account: GrapheneObject, Decodable {
         owner = try values.decode(Authority.self, forKey: .owner)
         active = try values.decode(Authority.self, forKey: .active)
         options = try values.decode(Options.self, forKey: .options)
-        super.init(string: id)
     }
 }

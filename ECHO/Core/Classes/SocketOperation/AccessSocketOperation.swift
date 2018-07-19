@@ -53,8 +53,6 @@ struct AccessSocketOperation: SocketOperation {
     
     func complete(json: [String: Any]) {
         
-        debugPrint(json)
-
         guard let resultId = json["result"] as? Int else {
             let result = Result<Int, ECHOError>(error: ECHOError.undefined)
             completion(result)

@@ -47,9 +47,8 @@ class AuthentificationFacadeImp: AuthentificationFacade {
             return false
         }
         
-        let key = "TEST" + keychain.publicKey()
-        let matches = account.account.owner.keyAuths.compactMap{ $0.first(where: {$0 == IntOrString.string(key)}) }
+        let key = "TEST" + keychain.publicAddress()
+        let matches = account.account.owner.keyAuths.compactMap { $0.first(where: {$0 == IntOrString.string(key)}) }
         return matches.count > 0
     }
 }
-

@@ -7,11 +7,6 @@
 
 import BitcoinKit
 
-public enum KeychainType: String {
-    case owner
-    case active
-}
-
 public class ECHOKeychain {
     
     let privateKey: PrivateKey
@@ -25,20 +20,22 @@ public class ECHOKeychain {
     public convenience init?(name: String, password: String, type: KeychainType) {
         
         let seed = "\(name)" + "\(type.rawValue)" + "\(password)"
-        
-        if let decoded = seed.data(using: .utf8) {
-            let seedData = Crypto.sha256(decoded)
+
+        let seedData = seed.data(using: .utf8)
+            .flatMap { Crypto.sha256($0) }
+
+        if let seedData = seedData {
             self.init(seed: seedData)
         } else {
             return nil
         }
+
     }
     
-    func publicKey() -> String {
+    func publicAddress() -> String {
         var publicKey = BitcoinKitInternal.computePublicKey(fromPrivateKey: raw, compression: true)
         let checkSum = Crypto.ripemd160(publicKey).prefix(4)
         publicKey.append(checkSum)
         return Base58.encode(publicKey)
     }
 }
-

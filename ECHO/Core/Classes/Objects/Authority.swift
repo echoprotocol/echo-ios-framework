@@ -5,7 +5,7 @@
 //  Created by Fedorenko Nikita on 18.07.2018.
 //
 
-class Authority: Decodable {
+public struct Authority: Decodable {
     
     enum AuthorityCodingKeys: String, CodingKey {
         case weightThreshold = "weight_threshold"
@@ -14,12 +14,12 @@ class Authority: Decodable {
         case addressAuths = "address_auths"
     }
     
-    var weightThreshold: Int
-    var accountAuths: [Account]
-    var keyAuths: [[IntOrString]]
-    var addressAuths: [Any] = [Any]()
+    public var weightThreshold: Int
+    public var accountAuths: [Account]
+    public var keyAuths: [[IntOrString]]
+    public var addressAuths: [Any] = [Any]()
     
-    required init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         
         let values = try decoder.container(keyedBy: AuthorityCodingKeys.self)
         weightThreshold = try values.decode(Int.self, forKey: .weightThreshold)
