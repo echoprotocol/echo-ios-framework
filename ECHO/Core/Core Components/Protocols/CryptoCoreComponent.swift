@@ -7,7 +7,7 @@
 //
 
 public protocol CryptoCoreComponent {
-    func generatePublicKey(withPrivateKey privateKeyData: Data?, compression isCompression: Bool) -> Data
+    func generatePublicKey(withPrivateKey privateKeyData: Data, compression isCompression: Bool) -> Data
     func sha256(_ data: Data) -> Data
     func ripemd160(_ data: Data) -> Data
     func sign(_ hash: Data, privateKey: Data) throws -> Data
@@ -15,7 +15,7 @@ public protocol CryptoCoreComponent {
 
 class CryptoCoreComponentImp: CryptoCoreComponent {
     
-    public func generatePublicKey(withPrivateKey privateKeyData: Data?, compression isCompression: Bool) -> Data {
+    public func generatePublicKey(withPrivateKey privateKeyData: Data, compression isCompression: Bool) -> Data {
         return Data()
     }
     
