@@ -17,11 +17,11 @@ class AddressKeysContainer {
     var activeKeychain: ECHOKeychain
     var memoKeychain: ECHOKeychain
 
-    init?(login: String, password: String) {
+    init?(login: String, password: String, core: CryptoCoreComponent) {
         
-        guard let ownerKeychain = ECHOKeychain(name: login, password: password, type: .owner),
-            let activeKeychain = ECHOKeychain(name: login, password: password, type: .active),
-            let memoKeychain = ECHOKeychain(name: login, password: password, type: .memo) else {
+        guard let ownerKeychain = ECHOKeychain(name: login, password: password, type: .owner, core: core),
+            let activeKeychain = ECHOKeychain(name: login, password: password, type: .active, core: core),
+            let memoKeychain = ECHOKeychain(name: login, password: password, type: .memo, core: core) else {
                 return nil
         }
         

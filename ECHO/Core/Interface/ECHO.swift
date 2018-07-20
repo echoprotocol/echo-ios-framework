@@ -36,7 +36,7 @@ public class ECHO: InterfaceFacades {
                                       services: revialServices)
         
         let authServices = AuthentificationFacadeServices(databaseService: databaseService)
-        authentificationFacade = AuthentificationFacadeImp(services: authServices)
+        authentificationFacade = AuthentificationFacadeImp(services: authServices, core: settings.cryproComponent)
         
         let informationServices = InformationFacadeServices(databaseService: databaseService)
         informationFacade = InformationFacadeImp(services: informationServices)

@@ -12,9 +12,11 @@ struct AuthentificationFacadeServices {
 class AuthentificationFacadeImp: AuthentificationFacade {
     
     var services: AuthentificationFacadeServices
+    var core: CryptoCoreComponent
     
-    init(services: AuthentificationFacadeServices) {
+    init(services: AuthentificationFacadeServices, core: CryptoCoreComponent) {
         self.services = services
+        self.core = core
     }
     
     func login(name: String, password: String, completion: @escaping Completion<UserAccount>) {
@@ -43,7 +45,7 @@ class AuthentificationFacadeImp: AuthentificationFacade {
     }
     
     fileprivate func checkAccount(account: UserAccount, name: String, password: String) -> Bool {
-        guard let keychain = ECHOKeychain(name: name, password: password, type: .owner)  else {
+        guard let keychain = ECHOKeychain(name: name, password: password, type: .owner, core: core)  else {
             return false
         }
         
