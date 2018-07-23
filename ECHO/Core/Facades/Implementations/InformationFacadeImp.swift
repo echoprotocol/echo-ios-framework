@@ -19,7 +19,7 @@ class InformationFacadeImp: InformationFacade {
     
     func getAccount(nameOrID: String, completion: @escaping Completion<Account>) {
         
-        services.databaseService.getFullAccount(nameOrIds: [nameOrID]) { (result) in
+        services.databaseService.getFullAccount(nameOrIds: [nameOrID], shoudSubscribe: false) { (result) in
             switch result {
             case .success(let userAccount):
                 let result = Result<Account, ECHOError>(value: userAccount.account)
@@ -33,7 +33,7 @@ class InformationFacadeImp: InformationFacade {
     
     func isAccauntReserved(nameOrID: String, completion: @escaping Completion<Bool>) {
         
-        services.databaseService.getFullAccount(nameOrIds: [nameOrID]) { (result) in
+        services.databaseService.getFullAccount(nameOrIds: [nameOrID], shoudSubscribe: false) { (result) in
             switch result {
             case .success(_):
                 let result = Result<Bool, ECHOError>(value: true)
@@ -47,7 +47,7 @@ class InformationFacadeImp: InformationFacade {
     
     func getBalance(nameOrID: String, asset: String?, completion: @escaping Completion<[AccountBalance]>) {
         
-        services.databaseService.getFullAccount(nameOrIds: [nameOrID]) { (result) in
+        services.databaseService.getFullAccount(nameOrIds: [nameOrID], shoudSubscribe: false) { (result) in
             switch result {
             case .success(let userAccount):
                 

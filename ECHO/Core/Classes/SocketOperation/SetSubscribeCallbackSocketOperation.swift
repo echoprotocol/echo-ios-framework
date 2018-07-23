@@ -11,17 +11,26 @@ struct SetSubscribeCallbackSocketOperation: SocketOperation {
     var method: SocketOperationType
     var operationId: Int
     var apiId: Int
-    var completion: Completion<Any>
     var needClearFilter: Bool
+    var completion: Completion<Bool>
     
     func createParameters() -> [Any] {
         let array: [Any] = [apiId,
                             SocketOperationKeys.subscribeCallback.rawValue,
-                            [operationId, [needClearFilter]]]
+                            [operationId, needClearFilter]]
         return array
     }
     
     func complete(json: [String: Any]) {
         
+        let result = json["result"]
+        
+        if let _ = result {
+            let result = Result<Bool, ECHOError>(value: true)
+            completion(result)
+        } else {
+            let result = Result<Bool, ECHOError>(value: false)
+            completion(result)
+        }
     }
 }

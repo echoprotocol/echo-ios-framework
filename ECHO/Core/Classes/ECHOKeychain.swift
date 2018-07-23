@@ -7,8 +7,8 @@
 
 public class ECHOKeychain {
     
-    let raw: Data
-    let core: CryptoCoreComponent
+    public let raw: Data
+    public let core: CryptoCoreComponent
     
     public init(seed: Data, core: CryptoCoreComponent) {
         raw = seed

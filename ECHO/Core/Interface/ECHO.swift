@@ -6,12 +6,12 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
-public typealias InterfaceFacades = AuthentificationFacade & InformationFacade
+public typealias InterfaceFacades = AuthentificationFacade & InformationFacade & SubscriptionFacade
 
 public class ECHO: InterfaceFacades {
     
     var revilFacade: RevialApiFacade
-//    var subscriptionFacade: SubscriptionFacade
+    var subscriptionFacade: SubscriptionFacade
     var informationFacade: InformationFacade
 //    var feeFacade: FeeFacade
     var authentificationFacade: AuthentificationFacade
@@ -40,10 +40,28 @@ public class ECHO: InterfaceFacades {
         
         let informationServices = InformationFacadeServices(databaseService: databaseService)
         informationFacade = InformationFacadeImp(services: informationServices)
+        
+        let subscriptionServices = SubscriptionServices(databaseService: databaseService)
+        subscriptionFacade = SubscriptionFacadeImp(services: subscriptionServices,
+                                                   socketCore: socketCore)
     }
     
     public func start(completion: @escaping Completion<Bool>) {
         revilFacade.revilApi(completion: completion)
+    }
+    
+    // MARK: SubscriptionFacade
+    
+    public func subscribeToAccount(nameOrId: String, delegate: SubscribeAccountDelegate) {
+        subscriptionFacade.subscribeToAccount(nameOrId: nameOrId, delegate: delegate)
+    }
+    
+    public func unsubscribeToAccount(nameOrId: String, delegate: SubscribeAccountDelegate) {
+        unsubscribeToAccount(nameOrId: nameOrId, delegate: delegate)
+    }
+    
+    public func unsubscribeAll(completion: Completion<Bool>) {
+        unsubscribeAll(completion: completion)
     }
     
     // MARK: AuthentificationFacade

@@ -14,13 +14,13 @@ class DatabaseApiServiceImp: DatabaseApiService, ApiIdentifireHolder {
         self.socketCore = socketCore
     }
     
-    func getFullAccount(nameOrIds: [String], completion: @escaping Completion<UserAccount>) {
+    func getFullAccount(nameOrIds: [String], shoudSubscribe: Bool, completion: @escaping Completion<UserAccount>) {
         
         let operation = FullAccountSocketOperation(method: .call,
                                                    operationId: socketCore.nextOperationId(),
                                                    apiId: apiIdentifire,
                                                    accountsIds: nameOrIds,
-                                                   shoudSubscribe: false,
+                                                   shoudSubscribe: shoudSubscribe,
                                                    completion: completion) 
         
         socketCore.send(operation: operation)
@@ -35,5 +35,13 @@ class DatabaseApiServiceImp: DatabaseApiService, ApiIdentifireHolder {
         
         socketCore.send(operation: operation)
     }
-
+    
+    func setSubscribeCallback(completion: @escaping Completion<Bool>) {
+        let operation = SetSubscribeCallbackSocketOperation(method: .call,
+                                                            operationId: socketCore.nextOperationId(),
+                                                            apiId: apiIdentifire,
+                                                            needClearFilter: false,
+                                                            completion: completion)
+        socketCore.send(operation: operation)
+    }
 }

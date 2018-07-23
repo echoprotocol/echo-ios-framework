@@ -6,8 +6,12 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
-protocol SubscriptionFacade {
-    func subscribeToAccount(nameOrId: String, delegate: Any)
-    func unsubscribeToAccount(nameOrId: String, delegate: Any)
+public protocol SubscribeAccountDelegate: class {
+    func didUpdateAccount(userAccount: UserAccount)
+}
+
+public protocol SubscriptionFacade {
+    func subscribeToAccount(nameOrId: String, delegate: SubscribeAccountDelegate)
+    func unsubscribeToAccount(nameOrId: String, delegate: SubscribeAccountDelegate)
     func unsubscribeAll(completion: Completion<Bool>)
 }

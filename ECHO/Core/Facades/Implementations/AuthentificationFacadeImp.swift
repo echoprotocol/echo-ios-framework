@@ -21,7 +21,7 @@ class AuthentificationFacadeImp: AuthentificationFacade {
     
     func login(name: String, password: String, completion: @escaping Completion<UserAccount>) {
         
-        services.databaseService.getFullAccount(nameOrIds: [name]) { [weak self] (result) in
+        services.databaseService.getFullAccount(nameOrIds: [name], shoudSubscribe: false) { [weak self] (result) in
             switch result {
             case .success(let userAccount):
                 
@@ -40,11 +40,10 @@ class AuthentificationFacadeImp: AuthentificationFacade {
         }
     }
     
-    func changePassword(old: String, new: String, name: String, completion: @escaping Completion<UserAccount>) {
-        
-    }
+    func changePassword(old: String, new: String, name: String, completion: @escaping Completion<UserAccount>) { }
     
     fileprivate func checkAccount(account: UserAccount, name: String, password: String) -> Bool {
+        
         guard let keychain = ECHOKeychain(name: name, password: password, type: .owner, core: core)  else {
             return false
         }
@@ -52,5 +51,9 @@ class AuthentificationFacadeImp: AuthentificationFacade {
         let key = "TEST" + keychain.publicAddress()
         let matches = account.account.owner.keyAuths.compactMap { $0.first(where: {$0 == IntOrString.string(key)}) }
         return matches.count > 0
+    }
+    
+    fileprivate func changePassword(account: UserAccount, old: String, new: String, name: String, completion: @escaping Completion<UserAccount> ) {
+        
     }
 }

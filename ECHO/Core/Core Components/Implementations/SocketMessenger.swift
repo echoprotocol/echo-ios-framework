@@ -13,6 +13,7 @@ protocol SocketCoreComponent {
     func disconnect()
     func send(operation: SocketOperation)
     func nextOperationId() -> Int
+    var onMessage: (([String: Any]) -> ())? { get set }
 }
 
 class SocketCoreComponentImp: SocketCoreComponent {
@@ -21,6 +22,7 @@ class SocketCoreComponentImp: SocketCoreComponent {
     let url: String
     var operationsMap = [Int: SocketOperation]()
     var currentOperationId: Int = 0
+    var onMessage: (([String: Any]) -> ())?
     
     required init(messanger: SocketMessenger, url: String) {
         self.messenger = messanger
@@ -63,11 +65,13 @@ class SocketCoreComponentImp: SocketCoreComponent {
     
     fileprivate func handleMessage(_ string: String) {
         
-        print(string)
-        
+        debugPrint(string)
+                
         guard let json = converToJSON(string) else {
             return
         }
+        
+        onMessage?(json)
         
         guard let operationId = json["id"] as? Int else {
             return
