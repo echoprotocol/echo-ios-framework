@@ -49,12 +49,10 @@ struct GetAccountHistorySocketOperation: SocketOperation {
 
         operations?.forEach {
             
-            if let operationInfo = $0["op"] {
-                
-            } else {
-                
+            if let operationNumber = ($0["op"] as? [Any])
+                .flatMap({ $0[safe: 0] as? Int }) {
+                mapItem(operationId: operationNumber, json: $0)
             }
-
         }
     }
     
