@@ -14,8 +14,7 @@ class SubscriptionFacadeImp: SubscriptionFacade {
     var services: SubscriptionServices
     var socketCore: SocketCoreComponent
     
-    var subscribers = [String: SubscribeAccountDelegate]()
-    
+    var subscribers = [String: NSPointerArray]()
     init(services: SubscriptionServices,
          socketCore: SocketCoreComponent) {
         self.services = services
@@ -29,23 +28,23 @@ class SubscriptionFacadeImp: SubscriptionFacade {
         }
         
         services.databaseService.setSubscribeCallback { [weak self] (_) in
-            self?.getAccountWithSubscription(nameOrId: nameOrId, delegate: delegate)
+            self?.getUserIdAndSetSubscriber(nameOrId: nameOrId, delegate: delegate)
         }
     }
     
     func unsubscribeToAccount(nameOrId: String, delegate: SubscribeAccountDelegate) {
-        subscribers[nameOrId] = nil
+        subscribers[nameOrId] = NSPointerArray()
     }
     
     func unsubscribeAll(completion: Completion<Bool>) {
-        subscribers = [String: SubscribeAccountDelegate]()
+        subscribers = [String: NSPointerArray]()
     }
     
-    fileprivate func getAccountWithSubscription(nameOrId: String, delegate: SubscribeAccountDelegate) {
+    fileprivate func getUserIdAndSetSubscriber(nameOrId: String, delegate: SubscribeAccountDelegate) {
         
         services.databaseService.getFullAccount(nameOrIds: [nameOrId], shoudSubscribe: true) { [weak self] (result) in
             if let userAccount = try? result.dematerialize() {
-                self?.subscribers[userAccount.account.id] = delegate
+                self?.addDelegate(id: userAccount.account.id, delegate: delegate)
             }
         }
     }
@@ -60,16 +59,45 @@ class SubscriptionFacadeImp: SubscriptionFacade {
             .flatMap { try? JSONDecoder().decode(Statistics.self, from: $0) }
         
         if let result = result {
-            getAccountAndNotify(id: result.owner)
+            getAccountAdnNotify(id: result.owner)
         }
     }
     
-    fileprivate func getAccountAndNotify(id: String) {
+    fileprivate func getAccountAdnNotify(id: String) {
         
         services.databaseService.getFullAccount(nameOrIds: [id], shoudSubscribe: true) { [weak self] (result) in
             if let userAccount = try? result.dematerialize() {
-                let subscriber = self?.subscribers[id]
-                subscriber?.didUpdateAccount(userAccount: userAccount)
+                self?.notifyDelegatesForUser(id: id, userAccount: userAccount)
+            }
+        }
+    }
+    
+    fileprivate func addDelegate(id: String, delegate: SubscribeAccountDelegate) {
+        
+        let delegates: NSPointerArray
+        
+        if let settedDelegates = subscribers[id] {
+            delegates = settedDelegates
+        } else {
+            delegates = NSPointerArray()
+        }
+        
+        delegates.addObject(delegate)
+        subscribers[id] = delegates
+    }
+    
+    fileprivate func notifyDelegatesForUser(id: String, userAccount: UserAccount) {
+        
+        guard let delegates = subscribers[id] else {
+            return
+        }
+       
+        delegates.compact()
+        
+        for index in 0..<delegates.count {
+            
+            if let delegate = delegates.object(at: index) as? SubscribeAccountDelegate {
+                delegate.didUpdateAccount(userAccount: userAccount)
             }
         }
     }

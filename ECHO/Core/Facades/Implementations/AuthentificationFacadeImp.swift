@@ -19,7 +19,7 @@ class AuthentificationFacadeImp: AuthentificationFacade {
         self.core = core
     }
     
-    func login(name: String, password: String, completion: @escaping Completion<UserAccount>) {
+    func isOwnedBy(name: String, password: String, completion: @escaping Completion<UserAccount>) {
         
         services.databaseService.getFullAccount(nameOrIds: [name], shoudSubscribe: false) { [weak self] (result) in
             switch result {
@@ -40,7 +40,9 @@ class AuthentificationFacadeImp: AuthentificationFacade {
         }
     }
     
-    func changePassword(old: String, new: String, name: String, completion: @escaping Completion<UserAccount>) { }
+    func changePassword(old: String, new: String, name: String, completion: @escaping Completion<UserAccount>) {
+        preconditionFailure("Implementation requred")
+    }
     
     fileprivate func checkAccount(account: UserAccount, name: String, password: String) -> Bool {
         
@@ -54,6 +56,6 @@ class AuthentificationFacadeImp: AuthentificationFacade {
     }
     
     fileprivate func changePassword(account: UserAccount, old: String, new: String, name: String, completion: @escaping Completion<UserAccount> ) {
-        
+        preconditionFailure("Implementation requred")
     }
 }

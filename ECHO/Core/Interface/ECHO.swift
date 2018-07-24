@@ -13,7 +13,6 @@ public class ECHO: InterfaceFacades {
     var revilFacade: RevialApiFacade
     var subscriptionFacade: SubscriptionFacade
     var informationFacade: InformationFacade
-//    var feeFacade: FeeFacade
     var authentificationFacade: AuthentificationFacade
 
     public init(settings: Settings) {
@@ -38,7 +37,8 @@ public class ECHO: InterfaceFacades {
         let authServices = AuthentificationFacadeServices(databaseService: databaseService)
         authentificationFacade = AuthentificationFacadeImp(services: authServices, core: settings.cryproComponent)
         
-        let informationServices = InformationFacadeServices(databaseService: databaseService)
+        let informationServices = InformationFacadeServices(databaseService: databaseService,
+                                                            historyService: historyService)
         informationFacade = InformationFacadeImp(services: informationServices)
         
         let subscriptionServices = SubscriptionServices(databaseService: databaseService)
@@ -66,15 +66,15 @@ public class ECHO: InterfaceFacades {
     
     // MARK: AuthentificationFacade
     
-    public func login(name: String, password: String, completion: @escaping Completion<UserAccount>) {
-        authentificationFacade.login(name: name, password: password, completion: completion)
+    public func isOwnedBy(name: String, password: String, completion: @escaping Completion<UserAccount>) {
+        authentificationFacade.isOwnedBy(name: name, password: password, completion: completion)
     }
     
     public func changePassword(old: String, new: String, name: String, completion: @escaping Completion<UserAccount>) {
         authentificationFacade.changePassword(old: old, new: new, name: name, completion: completion)
     }
     
-    // MARK: AuthentificationFacade
+    // MARK: InformationFacade
     
     public func getAccount(nameOrID: String, completion: @escaping Completion<Account>) {
         informationFacade.getAccount(nameOrID: nameOrID, completion: completion)
@@ -87,4 +87,9 @@ public class ECHO: InterfaceFacades {
     public func getBalance(nameOrID: String, asset: String?, completion: @escaping Completion<[AccountBalance]>) {
         informationFacade.getBalance(nameOrID: nameOrID, asset: asset, completion: completion)
     }
+    
+    public func getAccountHistroy(id: String, startId: String, stopId: String, limit: Int, completion: @escaping Completion<[Any]>) {
+        informationFacade.getAccountHistroy(id: id, startId: startId, stopId: stopId, limit: limit, completion: completion)
+    }
+
 }

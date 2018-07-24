@@ -7,6 +7,6 @@
 //
 
 public protocol AuthentificationFacade {
-    func login(name: String, password: String, completion: @escaping Completion<UserAccount>)
+    func isOwnedBy(name: String, password: String, completion: @escaping Completion<UserAccount>)
     func changePassword(old: String, new: String, name: String, completion: @escaping Completion<UserAccount>)
 }

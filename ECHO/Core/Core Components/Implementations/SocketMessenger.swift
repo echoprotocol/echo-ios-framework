@@ -64,9 +64,7 @@ class SocketCoreComponentImp: SocketCoreComponent {
     }
     
     fileprivate func handleMessage(_ string: String) {
-        
-        debugPrint(string)
-                
+                        
         guard let json = converToJSON(string) else {
             return
         }

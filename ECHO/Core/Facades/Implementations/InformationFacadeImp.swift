@@ -7,6 +7,7 @@
 
 struct InformationFacadeServices {
     var databaseService: DatabaseApiService
+    var historyService: AccountHistoryApiService
 }
 
 class InformationFacadeImp: InformationFacade {
@@ -66,5 +67,9 @@ class InformationFacadeImp: InformationFacade {
                 completion(result)
             }
         }
+    }
+    
+    func getAccountHistroy(id: String, startId: String, stopId: String, limit: Int, completion: @escaping Completion<[Any]>) {
+        services.historyService.getAccountHistory(id: id, startId: startId, stopId: stopId, limit: limit, completion: completion)
     }
 }

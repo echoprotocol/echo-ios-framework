@@ -13,4 +13,22 @@ class AccountHistoryApiServiceImp: AccountHistoryApiService, ApiIdentifireHolder
     required init(socketCore: SocketCoreComponent) {
         self.socketCore = socketCore
     }
+    
+    func getAccountHistory(id: String,
+                           startId: String,
+                           stopId: String,
+                           limit: Int,
+                           completion: @escaping Completion<[Any]>) {
+        
+        let operation = GetAccountHistorySocketOperation(method: .call,
+                                                         operationId: socketCore.nextOperationId(),
+                                                         apiId: apiIdentifire,
+                                                         accountId: id,
+                                                         stopId: stopId,
+                                                         limit: limit,
+                                                         startId: startId,
+                                                         completion: completion)
+        
+        socketCore.send(operation: operation)
+    }
 }

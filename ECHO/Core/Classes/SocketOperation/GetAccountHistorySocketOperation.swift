@@ -11,7 +11,7 @@ struct GetAccountHistorySocketOperation: SocketOperation {
     var method: SocketOperationType
     var operationId: Int
     var apiId: Int
-    var completion: Completion<Any>
+    var completion: Completion<[Any]>
     var accountId: String
     var stopId: String
     var limit: Int
@@ -24,7 +24,7 @@ struct GetAccountHistorySocketOperation: SocketOperation {
          stopId: String = "1.11.0",
          limit: Int = 100,
          startId: String = "1.11.0",
-         completion: @escaping Completion<Any>) {
+         completion: @escaping Completion<[Any]>) {
         
         self.method = method
         self.operationId = operationId
@@ -44,6 +44,21 @@ struct GetAccountHistorySocketOperation: SocketOperation {
     }
     
     func complete(json: [String: Any]) {
+        
+        let operations = (json["result"] as? [[String: Any]])
+
+        operations?.forEach {
+            
+            if let operationInfo = $0["op"] {
+                
+            } else {
+                
+            }
+
+        }
+    }
+    
+    fileprivate func mapItem(operationId: Int, json: [String: Any]) {
         
     }
 }

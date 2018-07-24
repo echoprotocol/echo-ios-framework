@@ -8,4 +8,10 @@
 protocol AccountHistoryApiService {
     
     init(socketCore: SocketCoreComponent)
+    
+    func getAccountHistory(id: String,
+                           startId: String,
+                           stopId: String,
+                           limit: Int,
+                           completion: @escaping Completion<[Any]>)
 }
