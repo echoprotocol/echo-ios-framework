@@ -6,11 +6,11 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
-protocol RevialApiFacade {
+protocol RevealApiFacade {
     
     init(socketCore: SocketCoreComponent,
          options: APIOption,
-         services: RevialFacadeServices)
+         services: RevealFacadeServices)
     
-    func revilApi(completion: @escaping Completion<Bool>)
+    func revealApi(completion: @escaping Completion<Bool>)
 }

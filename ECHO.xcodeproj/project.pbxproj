@@ -65,7 +65,7 @@
 		B39A7C0B2105F5F7003CC14D /* SubscriptionFacadeImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39A7C0A2105F5F6003CC14D /* SubscriptionFacadeImp.swift */; };
 		B39A7C0D2105F601003CC14D /* Statistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39A7C0C2105F601003CC14D /* Statistics.swift */; };
 		B3A7AA4920F8C247002D569D /* RevilSocketApiFacade.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A7AA4820F8C247002D569D /* RevilSocketApiFacade.swift */; };
-		B3A7AA4B20F8C32C002D569D /* RevialFacadeImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A7AA4A20F8C32C002D569D /* RevialFacadeImp.swift */; };
+		B3A7AA4B20F8C32C002D569D /* RevealFacadeImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A7AA4A20F8C32C002D569D /* RevealFacadeImp.swift */; };
 		B3A8BF6120F7DA3B0041A1D7 /* SocketCoreComponentImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A8BF6020F7DA3B0041A1D7 /* SocketCoreComponentImp.swift */; };
 		B3A8BF6320F7DA4F0041A1D7 /* SocketMessanger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A8BF6220F7DA4F0041A1D7 /* SocketMessanger.swift */; };
 		B3B04C6120F3B2CE003BBD9E /* GrapheneObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B04C6020F3B2CE003BBD9E /* GrapheneObject.swift */; };
@@ -156,7 +156,7 @@
 		B39A7C0A2105F5F6003CC14D /* SubscriptionFacadeImp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionFacadeImp.swift; sourceTree = "<group>"; };
 		B39A7C0C2105F601003CC14D /* Statistics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Statistics.swift; sourceTree = "<group>"; };
 		B3A7AA4820F8C247002D569D /* RevilSocketApiFacade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevilSocketApiFacade.swift; sourceTree = "<group>"; };
-		B3A7AA4A20F8C32C002D569D /* RevialFacadeImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevialFacadeImp.swift; sourceTree = "<group>"; };
+		B3A7AA4A20F8C32C002D569D /* RevealFacadeImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevealFacadeImp.swift; sourceTree = "<group>"; };
 		B3A8BF6020F7DA3B0041A1D7 /* SocketCoreComponentImp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketCoreComponentImp.swift; sourceTree = "<group>"; };
 		B3A8BF6220F7DA4F0041A1D7 /* SocketMessanger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketMessanger.swift; sourceTree = "<group>"; };
 		B3B04C6020F3B2CE003BBD9E /* GrapheneObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrapheneObject.swift; sourceTree = "<group>"; };
@@ -325,7 +325,7 @@
 				B39A7C0A2105F5F6003CC14D /* SubscriptionFacadeImp.swift */,
 				B348D09C21011EBC00C29AE4 /* InformationFacadeImp.swift */,
 				B30CAD1F20FFD5DB0048E33E /* AuthentificationFacadeImp.swift */,
-				B3A7AA4A20F8C32C002D569D /* RevialFacadeImp.swift */,
+				B3A7AA4A20F8C32C002D569D /* RevealFacadeImp.swift */,
 			);
 			path = Implementations;
 			sourceTree = "<group>";
@@ -547,7 +547,7 @@
 				B38596EC20F5ED6000B55E59 /* GetBlockSocketOperation.swift in Sources */,
 				B38596FE20F6009A00B55E59 /* Asset.swift in Sources */,
 				B39A7C0B2105F5F7003CC14D /* SubscriptionFacadeImp.swift in Sources */,
-				B3A7AA4B20F8C32C002D569D /* RevialFacadeImp.swift in Sources */,
+				B3A7AA4B20F8C32C002D569D /* RevealFacadeImp.swift in Sources */,
 				B38596F820F5F54100B55E59 /* SetSubscribeCallbackSocketOperation.swift in Sources */,
 				B39A7C0D2105F601003CC14D /* Statistics.swift in Sources */,
 				B38596F020F5EDCD00B55E59 /* GetContractResultSocketOperation.swift in Sources */,

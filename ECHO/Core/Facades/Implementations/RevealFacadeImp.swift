@@ -1,12 +1,12 @@
 //
-//  RevialFacadeImp.swift
+//  RevealFacadeImp.swift
 //  ECHO
 //
 //  Created by Fedorenko Nikita on 13.07.2018.
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
-struct RevialFacadeServices {
+struct RevealFacadeServices {
     var databaseService: ApiIdentifireHolder
     var cryptoService: ApiIdentifireHolder
     var historyService: ApiIdentifireHolder
@@ -14,11 +14,11 @@ struct RevialFacadeServices {
     var networkNodesService: ApiIdentifireHolder
 }
 
-class RevialFacadeImp: RevialApiFacade {
+class RevealFacadeImp: RevealApiFacade {
     
     var socketCore: SocketCoreComponent
     var apiOptions: APIOption
-    var services: RevialFacadeServices
+    var services: RevealFacadeServices
     fileprivate var error: ECHOError?
     var registrationCompletion: Completion<Bool>?
     
@@ -26,13 +26,13 @@ class RevialFacadeImp: RevialApiFacade {
     
     required init(socketCore: SocketCoreComponent,
                   options: APIOption,
-                  services: RevialFacadeServices) {
+                  services: RevealFacadeServices) {
         apiOptions = options
         self.socketCore = socketCore
         self.services = services
     }
     
-    func revilApi(completion: @escaping Completion<Bool>) {
+    func revealApi(completion: @escaping Completion<Bool>) {
         
         registrationCompletion = completion
         

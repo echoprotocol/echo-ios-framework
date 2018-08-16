@@ -10,7 +10,7 @@ public typealias InterfaceFacades = AuthentificationFacade & InformationFacade &
 
 public class ECHO: InterfaceFacades {
     
-    var revilFacade: RevialApiFacade
+    var revealFacade: RevealApiFacade
     var subscriptionFacade: SubscriptionFacade
     var informationFacade: InformationFacade
     var authentificationFacade: AuthentificationFacade
@@ -24,15 +24,15 @@ public class ECHO: InterfaceFacades {
         let historyService = AccountHistoryApiServiceImp(socketCore: socketCore)
         let networkNodesSetvice = NetworkNodesApiServiceImp(socketCore: socketCore)
         
-        let revialServices = RevialFacadeServices(databaseService: databaseService,
+        let revealServices = RevealFacadeServices(databaseService: databaseService,
                                                   cryptoService: cryptoService,
                                                   historyService: historyService,
                                                   networkBroadcastService: networkBroadcastService,
                                                   networkNodesService: networkNodesSetvice)
         
-        revilFacade = RevialFacadeImp(socketCore: socketCore,
+        revealFacade = RevealFacadeImp(socketCore: socketCore,
                                       options: settings.apiOptions,
-                                      services: revialServices)
+                                      services: revealServices)
         
         let authServices = AuthentificationFacadeServices(databaseService: databaseService)
         authentificationFacade = AuthentificationFacadeImp(services: authServices, core: settings.cryproComponent)
@@ -47,7 +47,7 @@ public class ECHO: InterfaceFacades {
     }
     
     public func start(completion: @escaping Completion<Bool>) {
-        revilFacade.revilApi(completion: completion)
+        revealFacade.revealApi(completion: completion)
     }
     
     // MARK: SubscriptionFacade
