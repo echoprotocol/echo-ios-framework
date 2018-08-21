@@ -18,7 +18,7 @@ class AccountHistoryApiServiceImp: AccountHistoryApiService, ApiIdentifireHolder
                            startId: String,
                            stopId: String,
                            limit: Int,
-                           completion: @escaping Completion<[Any]>) {
+                           completion: @escaping Completion<[HistoryItem]>) {
         
         let operation = GetAccountHistorySocketOperation(method: .call,
                                                          operationId: socketCore.nextOperationId(),

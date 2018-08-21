@@ -11,7 +11,7 @@ struct GetAccountHistorySocketOperation: SocketOperation {
     var method: SocketOperationType
     var operationId: Int
     var apiId: Int
-    var completion: Completion<[Any]>
+    var completion: Completion<[HistoryItem]>
     var accountId: String
     var stopId: String
     var limit: Int
@@ -24,7 +24,7 @@ struct GetAccountHistorySocketOperation: SocketOperation {
          stopId: String = "1.11.0",
          limit: Int = 100,
          startId: String = "1.11.0",
-         completion: @escaping Completion<[Any]>) {
+         completion: @escaping Completion<[HistoryItem]>) {
         
         self.method = method
         self.operationId = operationId
@@ -37,6 +37,7 @@ struct GetAccountHistorySocketOperation: SocketOperation {
     }
     
     func createParameters() -> [Any] {
+        
         let array: [Any] = [apiId,
                             SocketOperationKeys.accountHistory.rawValue,
                             [accountId, stopId, limit, startId]]
@@ -45,18 +46,16 @@ struct GetAccountHistorySocketOperation: SocketOperation {
     
     func complete(json: [String: Any]) {
         
-        let operations = (json["result"] as? [[String: Any]])
-
-        operations?.forEach {
-            
-            if let operationNumber = ($0["op"] as? [Any])
-                .flatMap({ $0[safe: 0] as? Int }) {
-                mapItem(operationId: operationNumber, json: $0)
-            }
-        }
-    }
-    
-    fileprivate func mapItem(operationId: Int, json: [String: Any]) {
+        let result = (json["result"] as? [[String: Any]])
+            .flatMap { try? JSONSerialization.data(withJSONObject: $0, options: []) }
+            .flatMap { try? JSONDecoder().decode([HistoryItem].self, from: $0) }
+            .flatMap { Result<[HistoryItem], ECHOError>(value: $0) }
         
+        if let result = result {
+            completion(result)
+        } else {
+            let result = Result<[HistoryItem], ECHOError>(error: ECHOError.undefined)
+            completion(result)
+        }
     }
 }

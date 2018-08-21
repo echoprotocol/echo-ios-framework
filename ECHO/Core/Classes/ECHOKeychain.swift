@@ -27,7 +27,6 @@ public class ECHOKeychain {
         } else {
             return nil
         }
-
     }
     
     func publicAddress() -> String {

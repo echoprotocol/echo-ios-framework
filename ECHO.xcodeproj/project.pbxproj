@@ -87,6 +87,18 @@
 		B3CA704920F5358400511F6A /* BlockDataSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3CA704820F5358400511F6A /* BlockDataSocketOperation.swift */; };
 		B3CA704B20F5363F00511F6A /* FullAccountSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3CA704A20F5363F00511F6A /* FullAccountSocketOperation.swift */; };
 		B3CA704D20F53A4500511F6A /* GetAccountHistorySocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3CA704C20F53A4500511F6A /* GetAccountHistorySocketOperation.swift */; };
+		D01BF7D0212AB00700917DB8 /* Vote.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01BF7CF212AB00700917DB8 /* Vote.swift */; };
+		D01BF7D2212ABE4E00917DB8 /* OptionalValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01BF7D1212ABE4E00917DB8 /* OptionalValue.swift */; };
+		D01BF7D4212AC7FE00917DB8 /* AccountAuthority.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01BF7D3212AC7FE00917DB8 /* AccountAuthority.swift */; };
+		D01BF7D6212AC81000917DB8 /* AddressAuthority.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01BF7D5212AC81000917DB8 /* AddressAuthority.swift */; };
+		D01BF7D8212AE77B00917DB8 /* BitassetOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01BF7D7212AE77B00917DB8 /* BitassetOptions.swift */; };
+		D0B6A0C62126B26D00A78E4B /* BaseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B6A0C52126B26D00A78E4B /* BaseOperation.swift */; };
+		D0B6A0C82126B39100A78E4B /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B6A0C72126B39100A78E4B /* Extensions.swift */; };
+		D0B6A0CA2126BA9300A78E4B /* OperationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B6A0C92126BA9300A78E4B /* OperationType.swift */; };
+		D0B6A0CC2126CB5800A78E4B /* AccountCreateOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B6A0CB2126CB5800A78E4B /* AccountCreateOperation.swift */; };
+		D0B6A0CE2126CD5500A78E4B /* AccountOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B6A0CD2126CD5500A78E4B /* AccountOptions.swift */; };
+		D0B6A0D02126CDD100A78E4B /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B6A0CF2126CDD100A78E4B /* Address.swift */; };
+		D0B6A0D22126EE3600A78E4B /* Data+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B6A0D12126EE3600A78E4B /* Data+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -179,6 +191,18 @@
 		B3CA704820F5358400511F6A /* BlockDataSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockDataSocketOperation.swift; sourceTree = "<group>"; };
 		B3CA704A20F5363F00511F6A /* FullAccountSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullAccountSocketOperation.swift; sourceTree = "<group>"; };
 		B3CA704C20F53A4500511F6A /* GetAccountHistorySocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAccountHistorySocketOperation.swift; sourceTree = "<group>"; };
+		D01BF7CF212AB00700917DB8 /* Vote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vote.swift; sourceTree = "<group>"; };
+		D01BF7D1212ABE4E00917DB8 /* OptionalValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionalValue.swift; sourceTree = "<group>"; };
+		D01BF7D3212AC7FE00917DB8 /* AccountAuthority.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountAuthority.swift; sourceTree = "<group>"; };
+		D01BF7D5212AC81000917DB8 /* AddressAuthority.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressAuthority.swift; sourceTree = "<group>"; };
+		D01BF7D7212AE77B00917DB8 /* BitassetOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitassetOptions.swift; sourceTree = "<group>"; };
+		D0B6A0C52126B26D00A78E4B /* BaseOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseOperation.swift; sourceTree = "<group>"; };
+		D0B6A0C72126B39100A78E4B /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		D0B6A0C92126BA9300A78E4B /* OperationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationType.swift; sourceTree = "<group>"; };
+		D0B6A0CB2126CB5800A78E4B /* AccountCreateOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCreateOperation.swift; sourceTree = "<group>"; };
+		D0B6A0CD2126CD5500A78E4B /* AccountOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountOptions.swift; sourceTree = "<group>"; };
+		D0B6A0CF2126CDD100A78E4B /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
+		D0B6A0D12126EE3600A78E4B /* Data+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -257,21 +281,29 @@
 		B348D09E21011FCC00C29AE4 /* Objects */ = {
 			isa = PBXGroup;
 			children = (
-				B39A7C0C2105F601003CC14D /* Statistics.swift */,
-				B35F15A920F3ABAE000CE3EA /* ObjectType.swift */,
-				B3B04C6020F3B2CE003BBD9E /* GrapheneObject.swift */,
-				B348D09A21011E9C00C29AE4 /* BlockInformation.swift */,
 				B30CAD1620FFD5790048E33E /* Account.swift */,
-				B30CAD1920FFD58E0048E33E /* Options.swift */,
+				D01BF7D3212AC7FE00917DB8 /* AccountAuthority.swift */,
 				B30CAD1520FFD5790048E33E /* AccountBalance.swift */,
-				B30CAD1B20FFD5A10048E33E /* Authority.swift */,
-				B3CA703920F4A7C300511F6A /* UserAccount.swift */,
-				B3CA703B20F4AA3700511F6A /* HistoryItem.swift */,
-				B38596F920F6003500B55E59 /* AssetAmount.swift */,
-				B38596FB20F6005500B55E59 /* Price.swift */,
+				D0B6A0CD2126CD5500A78E4B /* AccountOptions.swift */,
+				D0B6A0CF2126CDD100A78E4B /* Address.swift */,
+				D01BF7D5212AC81000917DB8 /* AddressAuthority.swift */,
 				B38596FD20F6009A00B55E59 /* Asset.swift */,
+				B38596F920F6003500B55E59 /* AssetAmount.swift */,
 				B385970120F620B700B55E59 /* AssetOptions.swift */,
+				B30CAD1B20FFD5A10048E33E /* Authority.swift */,
+				D01BF7D7212AE77B00917DB8 /* BitassetOptions.swift */,
+				B348D09A21011E9C00C29AE4 /* BlockInformation.swift */,
 				B385970320F6270000B55E59 /* ECHOObject.swift */,
+				D0B6A0C72126B39100A78E4B /* Extensions.swift */,
+				B3B04C6020F3B2CE003BBD9E /* GrapheneObject.swift */,
+				B3CA703B20F4AA3700511F6A /* HistoryItem.swift */,
+				B35F15A920F3ABAE000CE3EA /* ObjectType.swift */,
+				D01BF7D1212ABE4E00917DB8 /* OptionalValue.swift */,
+				B30CAD1920FFD58E0048E33E /* Options.swift */,
+				B38596FB20F6005500B55E59 /* Price.swift */,
+				B39A7C0C2105F601003CC14D /* Statistics.swift */,
+				D01BF7CF212AB00700917DB8 /* Vote.swift */,
+				B3CA703920F4A7C300511F6A /* UserAccount.swift */,
 			);
 			path = Objects;
 			sourceTree = "<group>";
@@ -375,6 +407,8 @@
 		B3CA703D20F4CA1500511F6A /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				D01BF7CE212AAFA800917DB8 /* Extensions */,
+				D0B6A0C42126B20900A78E4B /* Operation */,
 				B348D09E21011FCC00C29AE4 /* Objects */,
 				B3CA704320F532AA00511F6A /* SocketOperation */,
 				B348D09821011E7C00C29AE4 /* AddressKeysContainer.swift */,
@@ -384,7 +418,6 @@
 				B348D0AB210207ED00C29AE4 /* Encoding.swift */,
 				B3965B172125954200029585 /* PointerArray.swift */,
 				B3CA703F20F4FB0200511F6A /* ECHOSerializable.swift */,
-				B3965B152125952700029585 /* Collection+Extension.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -408,6 +441,25 @@
 				B38596F720F5F54100B55E59 /* SetSubscribeCallbackSocketOperation.swift */,
 			);
 			path = SocketOperation;
+			sourceTree = "<group>";
+		};
+		D01BF7CE212AAFA800917DB8 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				B3965B152125952700029585 /* Collection+Extension.swift */,
+				D0B6A0D12126EE3600A78E4B /* Data+Extension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		D0B6A0C42126B20900A78E4B /* Operation */ = {
+			isa = PBXGroup;
+			children = (
+				D0B6A0C52126B26D00A78E4B /* BaseOperation.swift */,
+				D0B6A0C92126BA9300A78E4B /* OperationType.swift */,
+				D0B6A0CB2126CB5800A78E4B /* AccountCreateOperation.swift */,
+			);
+			path = Operation;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -524,6 +576,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0B6A0D02126CDD100A78E4B /* Address.swift in Sources */,
 				B370BB5D20F768B1004C4A26 /* CryptoCoreComponent.swift in Sources */,
 				B30CAD1820FFD5790048E33E /* Account.swift in Sources */,
 				B30CACFF20FF74C80048E33E /* AccountHistoryApiService.swift in Sources */,
@@ -533,6 +586,7 @@
 				B385970420F6270000B55E59 /* ECHOObject.swift in Sources */,
 				B3CA702A20F4A44900511F6A /* InformationFacade.swift in Sources */,
 				B348D09921011E7C00C29AE4 /* AddressKeysContainer.swift in Sources */,
+				D0B6A0C62126B26D00A78E4B /* BaseOperation.swift in Sources */,
 				B3CA704720F532E600511F6A /* AccessSocketOperation.swift in Sources */,
 				B30CACFA20FF74C80048E33E /* NetworkNodesApiServiceImp.swift in Sources */,
 				B3CA704020F4FB0200511F6A /* ECHOSerializable.swift in Sources */,
@@ -544,6 +598,9 @@
 				B38596FA20F6003500B55E59 /* AssetAmount.swift in Sources */,
 				B30CAD0020FF74C80048E33E /* NetworkBroadcastApiService.swift in Sources */,
 				B30CACFD20FF74C80048E33E /* CryptoApiServiceImp.swift in Sources */,
+				D0B6A0CC2126CB5800A78E4B /* AccountCreateOperation.swift in Sources */,
+				D01BF7D8212AE77B00917DB8 /* BitassetOptions.swift in Sources */,
+				D0B6A0CE2126CD5500A78E4B /* AccountOptions.swift in Sources */,
 				B370BB5B20F76853004C4A26 /* SocketMessenger.swift in Sources */,
 				B30CACFC20FF74C80048E33E /* AccountHistoryApiServiceImp.swift in Sources */,
 				B38596EE20F5ED9A00B55E59 /* GetChainIdSocketOperation.swift in Sources */,
@@ -554,6 +611,8 @@
 				B3A7AA4B20F8C32C002D569D /* RevealFacadeImp.swift in Sources */,
 				B38596F820F5F54100B55E59 /* SetSubscribeCallbackSocketOperation.swift in Sources */,
 				B39A7C0D2105F601003CC14D /* Statistics.swift in Sources */,
+				D0B6A0C82126B39100A78E4B /* Extensions.swift in Sources */,
+				D01BF7D4212AC7FE00917DB8 /* AccountAuthority.swift in Sources */,
 				B38596F020F5EDCD00B55E59 /* GetContractResultSocketOperation.swift in Sources */,
 				B30CAD2020FFD5DB0048E33E /* AuthentificationFacadeImp.swift in Sources */,
 				B348D0AC210207ED00C29AE4 /* Encoding.swift in Sources */,
@@ -562,16 +621,21 @@
 				B3CA703C20F4AA3700511F6A /* HistoryItem.swift in Sources */,
 				B30CAD1A20FFD58E0048E33E /* Options.swift in Sources */,
 				B30CAD1720FFD5790048E33E /* AccountBalance.swift in Sources */,
+				D01BF7D0212AB00700917DB8 /* Vote.swift in Sources */,
 				B30CAD0120FF74C80048E33E /* CryptoApiService.swift in Sources */,
+				D0B6A0D22126EE3600A78E4B /* Data+Extension.swift in Sources */,
+				D01BF7D6212AC81000917DB8 /* AddressAuthority.swift in Sources */,
 				B38596F620F5EEAC00B55E59 /* RequiredFeeSocketOperation.swift in Sources */,
 				B3CA702E20F4A46200511F6A /* SubscriptionFacade.swift in Sources */,
 				B3CA703020F4A46E00511F6A /* FeeFacade.swift in Sources */,
 				B3965B162125952700029585 /* Collection+Extension.swift in Sources */,
+				D0B6A0CA2126BA9300A78E4B /* OperationType.swift in Sources */,
 				B3CA701E20F49C6800511F6A /* ReslutHandler.swift in Sources */,
 				B3CA702C20F4A45400511F6A /* TransactionFacade.swift in Sources */,
 				B3CA704B20F5363F00511F6A /* FullAccountSocketOperation.swift in Sources */,
 				B385970220F620B700B55E59 /* AssetOptions.swift in Sources */,
 				B30CAD0220FF74C80048E33E /* DatabaseApiService.swift in Sources */,
+				D01BF7D2212ABE4E00917DB8 /* OptionalValue.swift in Sources */,
 				B38596F420F5EE5C00B55E59 /* KeyReferencesSocketOperation.swift in Sources */,
 				B3CA703820F4A72C00511F6A /* Error.swift in Sources */,
 				B3A7AA4920F8C247002D569D /* RevilSocketApiFacade.swift in Sources */,

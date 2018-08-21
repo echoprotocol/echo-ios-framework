@@ -22,18 +22,18 @@ public struct APIOption: OptionSet {
 }
 
 public class Configurator {
-    public var url: String = "wss://node.testnet.bitshares.eu/"
     public var socketMessenger: SocketMessenger = SocketMessengerImp()
     public var cryproComponent: CryptoCoreComponent = CryptoCoreComponentImp()
-    public var apiOptions: APIOption = [.database, .accountHistory, .crypto, .networkBroadcast, .networkNodes]
+    public var apiOptions: APIOption = [.database, .accountHistory, .networkBroadcast, .crypto, .networkNodes]
+    public var network: Netwotk = Netwotk(url: "wss://echo-devnet-node.pixelplex.io/", prefix: NetworkPrefix.echo)
 }
 
 public class Settings {
     
-    public let url: String
     public let socketMessenger: SocketMessenger
     public let cryproComponent: CryptoCoreComponent
     public let apiOptions: APIOption
+    public let network: Netwotk
 
     public typealias BuildConfiguratorClosure = (Configurator) -> Void
     
@@ -41,10 +41,27 @@ public class Settings {
         
         let configurator = Configurator()
         build(configurator)
-        url = configurator.url
+        network = configurator.network
         socketMessenger = configurator.socketMessenger
         cryproComponent = configurator.cryproComponent
         apiOptions = configurator.apiOptions
+    }
+}
+
+public enum NetworkPrefix: String {
+    case echo = "ECHO"
+    case bitshares = "GPH"
+    case bitsharesTestnet = "TEST"
+}
+
+public class Netwotk {
+    
+    public let url: String
+    public let prefix: NetworkPrefix
+    
+    init(url: String, prefix: NetworkPrefix) {
+        self.prefix = prefix
+        self.url = url
     }
 }
 
