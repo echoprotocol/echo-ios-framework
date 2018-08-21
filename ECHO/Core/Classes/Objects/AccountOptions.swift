@@ -17,7 +17,7 @@ struct AccountOptions: ECHOCodable, Decodable {
         case extensions
     }
     
-    var memo: Address?
+    let memo: Address
     var votingAccount: Account
     var witnessCount: Int = 0
     var committeeCount: Int = 0
@@ -55,7 +55,7 @@ struct AccountOptions: ECHOCodable, Decodable {
             }
         }
         
-        let dictionary: [AnyHashable: Any?] = [AccountOptionsCodingKeys.memo.rawValue: memo?.addressString,
+        let dictionary: [AnyHashable: Any?] = [AccountOptionsCodingKeys.memo.rawValue: memo.addressString,
                                                AccountOptionsCodingKeys.committee.rawValue: committeeCount,
                                                AccountOptionsCodingKeys.witness.rawValue: witnessCount,
                                                AccountOptionsCodingKeys.votingAccount.rawValue: votingAccount.id,
@@ -65,21 +65,7 @@ struct AccountOptions: ECHOCodable, Decodable {
         return dictionary
     }
     
-    func toJSON() -> String? {
-        
-        let json: Any? = toJSON()
-        let jsonString = (json as?  [AnyHashable: Any?])
-            .flatMap { try? JSONSerialization.data(withJSONObject: $0, options: [])}
-            .flatMap { String(data: $0, encoding: .utf8)}
-        
-        return jsonString
-    }
-    
     func toData() -> Data? {
-        
-        guard let memo = memo else {
-            return Data.init(count: 1)
-        }
         
         var data = Data()
         data.append(1)

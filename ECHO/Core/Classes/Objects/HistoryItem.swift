@@ -20,10 +20,10 @@ public struct HistoryItem: Decodable {
     var id: String
     var operation: BaseOperation?
     var timestamp: Date?
-    var blockNum: Int = -1
-    var trxInBlock: Int = -1
-    var opInTrx: Int = -1
-    var virtualOp: Int = -1
+    let blockNum: Int
+    let trxInBlock: Int
+    let opInTrx: Int
+    let virtualOp: Int
     
     public init(from decoder: Decoder) throws {
         

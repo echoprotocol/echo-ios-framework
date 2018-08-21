@@ -24,20 +24,20 @@ public struct BlockData: ECHOObject, Decodable {
         case witnessBudget = "witness_budget"
     }
     
-    public var id: String
-    public var accountsRegisteredThisInterval: Int
-    public var currentAslot: Int
-    public var currentWitness: String
-    public var dynamicFlags: Int
-    public var headBlockId: String
-    public var headBlockNumber: Int
-    public var lastBudgetTime: String
-    public var lastIrreversibleBlockNum: Int
-    public var nextMaintenanceTime: String
-    public var recentSlotsFilled: String
-    public var recentlyMissedCount: Int
-    public var time: String
-    public var witnessBudget: Int
+    public let id: String
+    public let accountsRegisteredThisInterval: Int
+    public let currentAslot: Int
+    public let currentWitness: String
+    public let dynamicFlags: Int
+    public let headBlockId: String
+    public let headBlockNumber: Int
+    public let lastBudgetTime: String
+    public let lastIrreversibleBlockNum: Int
+    public let nextMaintenanceTime: String
+    public let recentSlotsFilled: String
+    public let recentlyMissedCount: Int
+    public let time: String
+    public let witnessBudget: Int
     
     public init(from decoder: Decoder) throws {
         

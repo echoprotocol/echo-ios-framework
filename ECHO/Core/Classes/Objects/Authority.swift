@@ -14,10 +14,10 @@ public struct Authority: ECHOCodable, Decodable {
         case extensions
     }
     
-    public var weightThreshold: Int
-    public var accountAuths: [AccountAuthority]
-    public var keyAuths: [AddressAuthority]
-    public var extensions = Extensions()
+    public let weightThreshold: Int
+    public let accountAuths: [AccountAuthority]
+    public let keyAuths: [AddressAuthority]
+    public let extensions = Extensions()
     
     public init(from decoder: Decoder) throws {
         
@@ -75,15 +75,5 @@ public struct Authority: ECHOCodable, Decodable {
                                                AuthorityCodingKeys.extensions.rawValue: extensions.toJSON()]
         
         return dictionary
-    }
-    
-    func toJSON() -> String? {
-        
-        let json: Any? = toJSON()
-        let jsonString = (json as?  [AnyHashable: Any?])
-            .flatMap { try? JSONSerialization.data(withJSONObject: $0, options: [])}
-            .flatMap { String(data: $0, encoding: .utf8)}
-        
-        return jsonString
     }
 }

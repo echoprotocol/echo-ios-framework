@@ -19,15 +19,15 @@ public struct Statistics: ECHOObject, Decodable {
         case totalOps = "total_ops"
     }
     
-    public var id: String
-    public var lifetimeFeesPaid: Int
-    public var mostRecentOp: String
-    public var owner: String
-    public var pendingFees: Int
-    public var pendingVestedFees: Int
-    public var removedOps: Int
-    public var totalCoreInOrders: Int
-    public var totalOps: Int
+    public let id: String
+    public let lifetimeFeesPaid: Int
+    public let mostRecentOp: String
+    public let owner: String
+    public let pendingFees: Int
+    public let pendingVestedFees: Int
+    public let removedOps: Int
+    public let totalCoreInOrders: Int
+    public let totalOps: Int
     
     public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: StatisticsCodingKeys.self)

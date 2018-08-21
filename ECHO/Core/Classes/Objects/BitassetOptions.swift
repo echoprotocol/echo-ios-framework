@@ -18,13 +18,13 @@ struct BitassetOptions: ECHOCodable, Decodable {
         case extensions
     }
     
-    var feedLifetimeSec: Int = -1
-    var minimumFeeds: Int = 0
-    var forceSettlementDelaySec: Int = -1
-    var forceSettlementOffsetPercent: Int = -1
-    var maximumForceSettlementVolume: Int = -1
-    var shortBackingAsset: String
-    var extensions: Extensions = Extensions()
+    let feedLifetimeSec: Int
+    let minimumFeeds: Int
+    let forceSettlementDelaySec: Int
+    let forceSettlementOffsetPercent: Int
+    let maximumForceSettlementVolume: Int
+    let shortBackingAsset: String
+    let extensions: Extensions = Extensions()
     
     public init(from decoder: Decoder) throws {
         
@@ -50,16 +50,6 @@ struct BitassetOptions: ECHOCodable, Decodable {
                                                BitassetOptionsCodingKeys.extensions.rawValue: extensions.toJSON()]
         
         return dictionary
-    }
-    
-    func toJSON() -> String? {
-        
-        let json: Any? = toJSON()
-        let jsonString = (json as?  [AnyHashable: Any?])
-            .flatMap { try? JSONSerialization.data(withJSONObject: $0, options: []) }
-            .flatMap { String(data: $0, encoding: .utf8) }
-        
-        return jsonString
     }
     
     func toData() -> Data? {

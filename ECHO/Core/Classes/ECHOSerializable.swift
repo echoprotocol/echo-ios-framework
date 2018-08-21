@@ -13,12 +13,7 @@ protocol JSONDecodable {
     func toObject<T>(from data: Data, type: T.Type) -> T? where T: Decodable
 }
 
-protocol JSONEncodable {
-    func toJSON() -> Any?
-    func toJSON() -> String?
-}
-
-extension JSONEncodable {
+extension JSONDecodable {
     
     func toObject<T>(from string: String, type: T.Type) -> T? where T: Decodable {
         let object = string.data(using: .utf8)
@@ -32,11 +27,27 @@ extension JSONEncodable {
     }
 }
 
+protocol JSONEncodable {
+    func toJSON() -> Any?
+    func toJSON() -> String?
+}
+
+extension JSONEncodable {
+    
+    func toJSON() -> String? {
+        
+        let json: Any? = toJSON()
+        let jsonString = (json as?  [AnyHashable: Any?])
+            .flatMap { try? JSONSerialization.data(withJSONObject: $0, options: [])}
+            .flatMap { String(data: $0, encoding: .utf8)}
+        
+        return jsonString
+    }
+}
+
 protocol BytesCodable: BytesDecodable, BytesEncodable { }
 
-protocol BytesDecodable {
-
-}
+protocol BytesDecodable { }
 
 protocol BytesEncodable {
     func toData() -> Data?

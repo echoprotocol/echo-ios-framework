@@ -13,8 +13,8 @@ struct Price: ECHOCodable, Decodable {
         case quote
     }
     
-    var base: AssetAmount
-    var quote: AssetAmount
+    let base: AssetAmount
+    let quote: AssetAmount
     
     public init(from decoder: Decoder) throws {
         
@@ -24,16 +24,6 @@ struct Price: ECHOCodable, Decodable {
     }
     
     // MARK: ECHOCodable
-    
-    func toJSON() -> String? {
-        
-        let json: Any? = toJSON()
-        let jsonString = (json as?  [AnyHashable: Any?])
-            .flatMap { try? JSONSerialization.data(withJSONObject: $0, options: [])}
-            .flatMap { String(data: $0, encoding: .utf8)}
-        
-        return jsonString
-    }
     
     func toJSON() -> Any? {
         

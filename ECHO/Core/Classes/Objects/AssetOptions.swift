@@ -23,18 +23,18 @@ struct AssetOptions: ECHOCodable, Decodable {
         case blacklistMarkets = "blacklist_markets"
     }
     
-    var maxSupply: UInt
-    var marketFeePercent: Int
-    var maxMarketFee: UInt
-    var issuerPermissions: Int
-    var flags: Int
+    let maxSupply: UInt
+    let marketFeePercent: Int
+    let maxMarketFee: UInt
+    let issuerPermissions: Int
+    let flags: Int
     var coreExchangeRate = [Price]()
-    var description: String?
-    var whitelistAuthorities = Set<Account>()
-    var blacklistAuthorities = Set<Account>()
-    var whitelistMarkets = Set<Account>()
-    var blacklistMarkets = Set<Account>()
-    var extensions = Extensions()
+    let description: String?
+    let whitelistAuthorities: Set<Account>
+    let blacklistAuthorities: Set<Account>
+    let whitelistMarkets: Set<Account>
+    let blacklistMarkets: Set<Account>
+    let extensions = Extensions()
     
     init(from decoder: Decoder) throws {
         
@@ -92,16 +92,6 @@ struct AssetOptions: ECHOCodable, Decodable {
                                                AssetCodingKeys.extensions.rawValue: extensions.toJSON()]
         
         return dictionary
-    }
-    
-    func toJSON() -> String? {
-        
-        let json: Any? = toJSON()
-        let jsonString = (json as?  [AnyHashable: Any?])
-            .flatMap { try? JSONSerialization.data(withJSONObject: $0, options: [])}
-            .flatMap { String(data: $0, encoding: .utf8)}
-        
-        return jsonString
     }
     
     func toData() -> Data? {

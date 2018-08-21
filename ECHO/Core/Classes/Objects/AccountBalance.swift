@@ -14,9 +14,9 @@ public class AccountBalance: GrapheneObject, Decodable {
         case balance
     }
     
-    var assetType: String
-    var owner: String
-    var balance: Int
+    let assetType: String
+    let owner: String
+    let balance: Int
 
     required public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: AccountBalanceCodingKeys.self)

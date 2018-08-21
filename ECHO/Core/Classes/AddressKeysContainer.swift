@@ -13,9 +13,9 @@ public enum KeychainType: String {
 
 class AddressKeysContainer {
     
-    var ownerKeychain: ECHOKeychain
-    var activeKeychain: ECHOKeychain
-    var memoKeychain: ECHOKeychain
+    let ownerKeychain: ECHOKeychain
+    let activeKeychain: ECHOKeychain
+    let memoKeychain: ECHOKeychain
 
     init?(login: String, password: String, core: CryptoCoreComponent) {
         

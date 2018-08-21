@@ -10,13 +10,13 @@ import Foundation
 
 public struct AccountAuthority: ECHOCodable, Decodable {
     
-    public var account: Account
-    public var value: Int
+    public let account: Account
+    public let value: Int
     
     public init(from decoder: Decoder) throws {
         
-        self.value = 0
-        self.account = Account(String())
+        var aValue = 0
+        var aAccount = Account(String())
         
         let value = try decoder.singleValueContainer()
         let decodedValue = try value.decode([IntOrString].self)
@@ -24,24 +24,17 @@ public struct AccountAuthority: ECHOCodable, Decodable {
         for intOrString in decodedValue {
             switch intOrString {
             case let .integer(intValue):
-                self.value = intValue
+                aValue = intValue
             case let .string(stringValue):
-                self.account = Account(stringValue)
+                aAccount = Account(stringValue)
             }
         }
+        
+        self.value = aValue
+        self.account = aAccount
     }
     
     // MARK: ECHOCodable
-    
-    func toJSON() -> String? {
-        
-        let json: Any? = toJSON()
-        let jsonString = (json as?  [AnyHashable: Any?])
-            .flatMap { try? JSONSerialization.data(withJSONObject: $0, options: [])}
-            .flatMap { String(data: $0, encoding: .utf8)}
-        
-        return jsonString
-    }
     
     func toJSON() -> Any? {
         

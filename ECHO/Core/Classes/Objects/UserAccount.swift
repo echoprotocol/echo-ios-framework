@@ -13,8 +13,8 @@ public struct UserAccount: Decodable {
         case balances
     }
     
-    var account: Account
-    var balances: [AccountBalance]
+    let account: Account
+    let balances: [AccountBalance]
     
     public init(from decoder: Decoder) throws {
         

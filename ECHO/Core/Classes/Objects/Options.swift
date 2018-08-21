@@ -16,12 +16,12 @@ public struct Options: Decodable {
         case extensions
     }
     
-    public var memoKey: String
-    public var votingAccount: String
-    public var numWitness: Int
-    public var numCommittee: Int
-    public var votes = [Any]()
-    public var extensions = [Any]()
+    public let memoKey: String
+    public let votingAccount: String
+    public let numWitness: Int
+    public let numCommittee: Int
+    public let votes = [Any]()
+    public let extensions = [Any]()
     
     public init(from decoder: Decoder) throws {
         

@@ -13,8 +13,8 @@ struct AssetAmount: ECHOCodable, Decodable {
         case assetId = "asset_id"
     }
     
-    var amount: UInt
-    var asset: Asset
+    let amount: UInt
+    let asset: Asset
     
     init(from decoder: Decoder) throws {
         
@@ -32,16 +32,6 @@ struct AssetAmount: ECHOCodable, Decodable {
                                                AssetAmountCodingKeys.assetId.rawValue: asset.id]
         
         return dictionary
-    }
-    
-    func toJSON() -> String? {
-        
-        let json: Any? = toJSON()
-        let jsonString = (json as?  [AnyHashable: Any?])
-            .flatMap { try? JSONSerialization.data(withJSONObject: $0, options: [])}
-            .flatMap { String(data: $0, encoding: .utf8)}
-        
-        return jsonString
     }
     
     func toData() -> Data? {
