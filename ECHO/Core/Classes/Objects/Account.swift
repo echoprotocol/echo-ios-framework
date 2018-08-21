@@ -23,18 +23,18 @@ public struct Account: ECHOObject, Decodable {
         case statistics
     }
     
-    public var id: String
-    public var membershiExperationDate: String
-    public var registrarId: String
-    public var referrerId: String
-    public var lifetimeReferrer: String
-    public var networkFeePercentage: Int
-    public var lifetimeReferrerFeePercentage: Int
-    public var referrerRewardsPercentage: Int
-    public var name: String
-    public var owner: Authority
-    public var active: Authority
-    public var options: Options
+    public let id: String
+    public let membershiExperationDate: String
+    public let registrarId: String
+    public let referrerId: String
+    public let lifetimeReferrer: String
+    public let networkFeePercentage: Int
+    public let lifetimeReferrerFeePercentage: Int
+    public let referrerRewardsPercentage: Int
+    public let name: String
+    public let owner: Authority
+    public let active: Authority
+    public let options: Options
     
     public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: AccountCodingKeys.self)

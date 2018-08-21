@@ -89,6 +89,7 @@
 		B3CA704920F5358400511F6A /* BlockDataSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3CA704820F5358400511F6A /* BlockDataSocketOperation.swift */; };
 		B3CA704B20F5363F00511F6A /* FullAccountSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3CA704A20F5363F00511F6A /* FullAccountSocketOperation.swift */; };
 		B3CA704D20F53A4500511F6A /* GetAccountHistorySocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3CA704C20F53A4500511F6A /* GetAccountHistorySocketOperation.swift */; };
+		B3D1C54D212C63E400D1A7E6 /* JsonDecodingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D1C54C212C63E400D1A7E6 /* JsonDecodingTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -194,6 +195,7 @@
 		B3CA704820F5358400511F6A /* BlockDataSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockDataSocketOperation.swift; sourceTree = "<group>"; };
 		B3CA704A20F5363F00511F6A /* FullAccountSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullAccountSocketOperation.swift; sourceTree = "<group>"; };
 		B3CA704C20F53A4500511F6A /* GetAccountHistorySocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAccountHistorySocketOperation.swift; sourceTree = "<group>"; };
+		B3D1C54C212C63E400D1A7E6 /* JsonDecodingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonDecodingTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -312,6 +314,7 @@
 		B3BF6B86212C2501000CC414 /* ECHOTests */ = {
 			isa = PBXGroup;
 			children = (
+				B3D1C54C212C63E400D1A7E6 /* JsonDecodingTests.swift */,
 				B3BF6B87212C2501000CC414 /* ECHOTests.swift */,
 				B3BF6B89212C2501000CC414 /* Info.plist */,
 			);
@@ -659,6 +662,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B3D1C54D212C63E400D1A7E6 /* JsonDecodingTests.swift in Sources */,
 				B3BF6B88212C2501000CC414 /* ECHOTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
