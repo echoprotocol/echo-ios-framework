@@ -6,7 +6,7 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
-protocol SocketCoreComponent {
+protocol SocketCoreComponent: class {
     
     init(messanger: SocketMessenger, url: String)
     func connect(options: APIOption, completion: @escaping Completion<Bool>)
@@ -18,7 +18,7 @@ protocol SocketCoreComponent {
 
 class SocketCoreComponentImp: SocketCoreComponent {
     
-    var messenger: SocketMessenger
+    let messenger: SocketMessenger
     let url: String
     var operationsMap = [Int: SocketOperation]()
     var currentOperationId: Int = 0

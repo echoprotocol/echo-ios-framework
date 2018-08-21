@@ -12,7 +12,7 @@ public enum SocketConnectionState {
     case notConnected, connected, connecting, reconnecting, disconnected, connectionFailed
 }
 
-public protocol SocketMessenger {
+public protocol SocketMessenger: class {
     
     var state: SocketConnectionState { get }
     var onConnect: (() -> ())? { get set }

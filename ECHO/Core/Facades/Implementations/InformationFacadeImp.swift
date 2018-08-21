@@ -12,7 +12,7 @@ struct InformationFacadeServices {
 
 class InformationFacadeImp: InformationFacade {
     
-    var services: InformationFacadeServices
+    let services: InformationFacadeServices
     
     init(services: InformationFacadeServices) {
         self.services = services

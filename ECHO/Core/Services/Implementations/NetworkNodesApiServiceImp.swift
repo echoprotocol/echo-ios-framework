@@ -6,6 +6,7 @@
 //
 
 class NetworkNodesApiServiceImp: NetworkNodesApiService, ApiIdentifireHolder {
+    
     var apiIdentifire: Int = 0
     
     let socketCore: SocketCoreComponent

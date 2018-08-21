@@ -6,13 +6,13 @@
 //
 
 struct AuthentificationFacadeServices {
-    var databaseService: DatabaseApiService
+    let databaseService: DatabaseApiService
 }
 
 class AuthentificationFacadeImp: AuthentificationFacade {
     
-    var services: AuthentificationFacadeServices
-    var core: CryptoCoreComponent
+    let services: AuthentificationFacadeServices
+    let core: CryptoCoreComponent
     
     init(services: AuthentificationFacadeServices, core: CryptoCoreComponent) {
         self.services = services

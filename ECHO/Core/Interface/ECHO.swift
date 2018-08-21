@@ -10,10 +10,10 @@ public typealias InterfaceFacades = AuthentificationFacade & InformationFacade &
 
 public class ECHO: InterfaceFacades {
     
-    var revealFacade: RevealApiFacade
-    var subscriptionFacade: SubscriptionFacade
-    var informationFacade: InformationFacade
-    var authentificationFacade: AuthentificationFacade
+    let revealFacade: RevealApiFacade
+    let subscriptionFacade: SubscriptionFacade
+    let informationFacade: InformationFacade
+    let authentificationFacade: AuthentificationFacade
 
     public init(settings: Settings) {
 

@@ -11,10 +11,10 @@ struct SubscriptionServices {
 
 class SubscriptionFacadeImp: SubscriptionFacade {
     
-    var services: SubscriptionServices
-    var socketCore: SocketCoreComponent
-    
+    let services: SubscriptionServices
+    let socketCore: SocketCoreComponent
     var subscribers = [String: NSPointerArray]()
+    
     init(services: SubscriptionServices,
          socketCore: SocketCoreComponent) {
         self.services = services
