@@ -1,3 +1,2 @@
 github "daltoniam/Starscream" "3.0.5"
-github "kishikawakatsumi/BitcoinKit" "v0.1.2"
-github "socketio/socket.io-client-swift" "v13.2.1"
+github "socketio/socket.io-client-swift" "v13.3.0"
