@@ -45,7 +45,7 @@ class JsonDecodingTests: XCTestCase {
                           "id": "2.5.24807",
                           "owner": "1.2.23240",
                           "maintenance_flag": false,
-                          "balance": "10035186229",
+                          "balance": 10035186229,
                           "asset_type": "1.3.0"
                         }
                       ],
@@ -124,7 +124,7 @@ class JsonDecodingTests: XCTestCase {
                             "id": "2.5.24807",
                             "owner": "1.2.23240",
                             "maintenance_flag": false,
-                            "balance": "10035186229",
+                            "balance": 10035186229,
                             "asset_type": "1.3.0"
                             }
                             """

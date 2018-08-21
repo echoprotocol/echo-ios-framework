@@ -80,10 +80,6 @@ class RevealFacadeImp: RevealApiFacade {
     
     fileprivate func registerAPIs(_ dispatchGroup: DispatchGroup, options: APIOption) {
         
-        if options.contains(.crypto) {
-            registerCryptoApi(group: dispatchGroup)
-        }
-        
         if options.contains(.database) {
             registerDatabaseoApi(group: dispatchGroup)
         }
@@ -92,12 +88,16 @@ class RevealFacadeImp: RevealApiFacade {
             registerNetworkBroadcastApi(group: dispatchGroup)
         }
         
-        if options.contains(.networkNodes) {
-            registerNetworkNodesApi(group: dispatchGroup)
-        }
-        
         if options.contains(.accountHistory) {
             registerHistoryApi(group: dispatchGroup)
+        }
+        
+        if options.contains(.crypto) {
+            registerCryptoApi(group: dispatchGroup)
+        }
+        
+        if options.contains(.networkNodes) {
+            registerNetworkNodesApi(group: dispatchGroup)
         }
     }
     

@@ -50,9 +50,14 @@ class AuthentificationFacadeImp: AuthentificationFacade {
             return false
         }
         
-        let key = "TEST" + keychain.publicAddress()
-        let matches = account.account.owner.keyAuths.compactMap { $0.first(where: {$0 == IntOrString.string(key)}) }
-        return matches.count > 0
+        let key = "ECHO" + keychain.publicAddress()
+        let matches = account.account.owner?.keyAuths.compactMap { $0.address.addressString == key }
+        
+        if let matches = matches {
+            return matches.count > 0
+        }
+        
+        return false
     }
     
     fileprivate func changePassword(account: UserAccount, old: String, new: String, name: String, completion: @escaping Completion<UserAccount> ) {

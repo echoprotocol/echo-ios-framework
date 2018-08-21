@@ -32,7 +32,7 @@ class InformationFacadeImp: InformationFacade {
         }
     }
     
-    func isAccauntReserved(nameOrID: String, completion: @escaping Completion<Bool>) {
+    func isAccountReserved(nameOrID: String, completion: @escaping Completion<Bool>) {
         
         services.databaseService.getFullAccount(nameOrIds: [nameOrID], shoudSubscribe: false) { (result) in
             switch result {
@@ -69,7 +69,7 @@ class InformationFacadeImp: InformationFacade {
         }
     }
     
-    func getAccountHistroy(id: String, startId: String, stopId: String, limit: Int, completion: @escaping Completion<[Any]>) {
+    func getAccountHistroy(id: String, startId: String, stopId: String, limit: Int, completion: @escaping Completion<[HistoryItem]>) {
         services.historyService.getAccountHistory(id: id, startId: startId, stopId: stopId, limit: limit, completion: completion)
     }
 }

@@ -38,7 +38,7 @@ protocol BytesDecodable {
 
 }
 
-protocol BytesEncodable: Encodable {
+protocol BytesEncodable {
     func toData() -> Data?
 }
 

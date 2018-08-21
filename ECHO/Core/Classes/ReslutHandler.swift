@@ -27,7 +27,7 @@ public enum Result<T, Error: Swift.Error>: CustomStringConvertible, CustomDebugS
         self = .failure(error)
     }
     
-    /// Constructs a result from an `Optional`, failing with `Error` if `nil`.
+    /// Constructs a result from an `OptionalValue`, failing with `Error` if `nil`.
     public init(_ value: T?, failWith: @autoclosure () -> Error) {
         self = value.map(Result.success) ?? .failure(failWith())
     }

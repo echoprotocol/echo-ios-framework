@@ -13,5 +13,5 @@ protocol AccountHistoryApiService {
                            startId: String,
                            stopId: String,
                            limit: Int,
-                           completion: @escaping Completion<[Any]>)
+                           completion: @escaping Completion<[HistoryItem]>)
 }

@@ -16,14 +16,14 @@ public class AccountBalance: GrapheneObject, Decodable {
     
     var assetType: String
     var owner: String
-    var balance: String
+    var balance: Int
 
     required public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: AccountBalanceCodingKeys.self)
         let id = try values.decode(String.self, forKey: .id)
         assetType = try values.decode(String.self, forKey: .assetType)
         owner = try values.decode(String.self, forKey: .owner)
-        balance = try values.decode(String.self, forKey: .balance)
+        balance = try values.decode(Int.self, forKey: .balance)
         super.init(string: id)
     }
 }

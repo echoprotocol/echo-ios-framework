@@ -17,7 +17,7 @@ public class ECHO: InterfaceFacades {
 
     public init(settings: Settings) {
 
-        let socketCore = SocketCoreComponentImp(messanger: settings.socketMessenger, url: settings.url)
+        let socketCore = SocketCoreComponentImp(messanger: settings.socketMessenger, url: settings.network.url)
         let databaseService = DatabaseApiServiceImp(socketCore: socketCore)
         let cryptoService = CryptoApiServiceImp(socketCore: socketCore)
         let networkBroadcastService = NetworkBroadcastApiServiceImp(socketCore: socketCore)
@@ -80,15 +80,15 @@ public class ECHO: InterfaceFacades {
         informationFacade.getAccount(nameOrID: nameOrID, completion: completion)
     }
     
-    public func isAccauntReserved(nameOrID: String, completion: @escaping Completion<Bool>) {
-        informationFacade.isAccauntReserved(nameOrID: nameOrID, completion: completion)
+    public func isAccountReserved(nameOrID: String, completion: @escaping Completion<Bool>) {
+        informationFacade.isAccountReserved(nameOrID: nameOrID, completion: completion)
     }
     
     public func getBalance(nameOrID: String, asset: String?, completion: @escaping Completion<[AccountBalance]>) {
         informationFacade.getBalance(nameOrID: nameOrID, asset: asset, completion: completion)
     }
     
-    public func getAccountHistroy(id: String, startId: String, stopId: String, limit: Int, completion: @escaping Completion<[Any]>) {
+    public func getAccountHistroy(id: String, startId: String, stopId: String, limit: Int, completion: @escaping Completion<[HistoryItem]>) {
         informationFacade.getAccountHistroy(id: id, startId: startId, stopId: stopId, limit: limit, completion: completion)
     }
 
