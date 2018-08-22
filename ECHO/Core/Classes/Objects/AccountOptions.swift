@@ -65,16 +65,6 @@ struct AccountOptions: ECHOCodable, Decodable {
         return dictionary
     }
     
-    func toJSON() -> String? {
-        
-        let json: Any? = toJSON()
-        let jsonString = (json as?  [AnyHashable: Any?])
-            .flatMap { try? JSONSerialization.data(withJSONObject: $0, options: [])}
-            .flatMap { String(data: $0, encoding: .utf8)}
-        
-        return jsonString
-    }
-    
     func toData() -> Data? {
         
         guard let memo = memo else {
