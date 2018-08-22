@@ -25,7 +25,7 @@ public class Configurator {
     public var socketMessenger: SocketMessenger = SocketMessengerImp()
     public var cryproComponent: CryptoCoreComponent = CryptoCoreComponentImp()
     public var apiOptions: APIOption = [.database, .accountHistory, .networkBroadcast, .crypto, .networkNodes]
-    public var network: Netwotk = Netwotk(url: "wss://echo-devnet-node.pixelplex.io/", prefix: NetworkPrefix.echo)
+    public var network: Network = Network(url: "wss://echo-devnet-node.pixelplex.io/", prefix: NetworkPrefix.echo)
 }
 
 public class Settings {
@@ -33,7 +33,7 @@ public class Settings {
     public let socketMessenger: SocketMessenger
     public let cryproComponent: CryptoCoreComponent
     public let apiOptions: APIOption
-    public let network: Netwotk
+    public let network: Network
 
     public typealias BuildConfiguratorClosure = (Configurator) -> Void
     
@@ -54,7 +54,7 @@ public enum NetworkPrefix: String {
     case bitsharesTestnet = "TEST"
 }
 
-public class Netwotk {
+public class Network {
     
     public let url: String
     public let prefix: NetworkPrefix

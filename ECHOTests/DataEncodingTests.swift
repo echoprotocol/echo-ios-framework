@@ -118,4 +118,26 @@ class DataEncodingTests: XCTestCase {
         //assert
         XCTAssertEqual(data.hex, "01")
     }
+    
+    func testBase58_1() {
+    
+        //assert
+        XCTAssertEqual(Base58.decode("1EVEDmVcV7iPvTkaw2gk89yVcCzPzaS6B7").hex, "0093f051563b089897cb430602a7c35cd93b3cc8e9dfac9a96")
+        XCTAssertEqual(Base58.decode("11ujQcjgoMNmbmcBkk8CXLWQy8ZerMtuN").hex, "00002c048b88f56727538eadb2a81cfc350355ee4c466740d9")
+        XCTAssertEqual(Base58.decode("111oeV7wjVNCQttqY63jLFsg817aMEmTw").hex, "000000abdda9e604c965f5a2fe8c082b14fafecdc39102f5b2")
+    }
+    
+    func testBase58_2() {
+        
+        //arrange
+        let original = Data(hex: "00010966776006953D5567439E5E39F86A0D273BEED61967F6")!
+        
+        //act
+        let encoded = Base58.encode(original)
+        let decoded = Base58.decode(encoded)
+
+        //assert
+        XCTAssertEqual(encoded, "16UwLL9Risc3QfPqBUvKofHmBQ7wMtjvM")
+        XCTAssertEqual(decoded.hex, original.hex)
+    }
 }

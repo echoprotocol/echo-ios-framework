@@ -91,6 +91,13 @@
 		B3D1C57A212C9D4900D1A7E6 /* JsonDecodingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D1C579212C9D4900D1A7E6 /* JsonDecodingTests.swift */; };
 		B3D1C57C212D4D8100D1A7E6 /* DataEncodingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D1C57B212D4D8100D1A7E6 /* DataEncodingTests.swift */; };
 		B3D1C57E212D94B500D1A7E6 /* BinaryConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D1C57D212D94B500D1A7E6 /* BinaryConvertible.swift */; };
+		B3D1C582212DA10400D1A7E6 /* FullAccountStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D1C581212DA10400D1A7E6 /* FullAccountStub.swift */; };
+		B3D1C584212DA5A500D1A7E6 /* AccountBalanceStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D1C583212DA5A500D1A7E6 /* AccountBalanceStub.swift */; };
+		B3D1C586212DA63500D1A7E6 /* AccountStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D1C585212DA63500D1A7E6 /* AccountStub.swift */; };
+		B3D1C588212DA67300D1A7E6 /* AuthorityStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D1C587212DA67300D1A7E6 /* AuthorityStub.swift */; };
+		B3D1C58A212DA6B000D1A7E6 /* StatisticStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D1C589212DA6B000D1A7E6 /* StatisticStub.swift */; };
+		B3D1C58C212DA6E700D1A7E6 /* OptionsStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D1C58B212DA6E700D1A7E6 /* OptionsStub.swift */; };
+		B3D1C58E212DA92500D1A7E6 /* JsonEncodingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D1C58D212DA92500D1A7E6 /* JsonEncodingTests.swift */; };
 		D01BF7D0212AB00700917DB8 /* Vote.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01BF7CF212AB00700917DB8 /* Vote.swift */; };
 		D01BF7D2212ABE4E00917DB8 /* OptionalValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01BF7D1212ABE4E00917DB8 /* OptionalValue.swift */; };
 		D01BF7D4212AC7FE00917DB8 /* AccountAuthority.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01BF7D3212AC7FE00917DB8 /* AccountAuthority.swift */; };
@@ -216,6 +223,13 @@
 		B3D1C579212C9D4900D1A7E6 /* JsonDecodingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonDecodingTests.swift; sourceTree = "<group>"; };
 		B3D1C57B212D4D8100D1A7E6 /* DataEncodingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataEncodingTests.swift; sourceTree = "<group>"; };
 		B3D1C57D212D94B500D1A7E6 /* BinaryConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinaryConvertible.swift; sourceTree = "<group>"; };
+		B3D1C581212DA10400D1A7E6 /* FullAccountStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullAccountStub.swift; sourceTree = "<group>"; };
+		B3D1C583212DA5A500D1A7E6 /* AccountBalanceStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountBalanceStub.swift; sourceTree = "<group>"; };
+		B3D1C585212DA63500D1A7E6 /* AccountStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountStub.swift; sourceTree = "<group>"; };
+		B3D1C587212DA67300D1A7E6 /* AuthorityStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorityStub.swift; sourceTree = "<group>"; };
+		B3D1C589212DA6B000D1A7E6 /* StatisticStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticStub.swift; sourceTree = "<group>"; };
+		B3D1C58B212DA6E700D1A7E6 /* OptionsStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsStub.swift; sourceTree = "<group>"; };
+		B3D1C58D212DA92500D1A7E6 /* JsonEncodingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonEncodingTests.swift; sourceTree = "<group>"; };
 		D01BF7CF212AB00700917DB8 /* Vote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vote.swift; sourceTree = "<group>"; };
 		D01BF7D1212ABE4E00917DB8 /* OptionalValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionalValue.swift; sourceTree = "<group>"; };
 		D01BF7D3212AC7FE00917DB8 /* AccountAuthority.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountAuthority.swift; sourceTree = "<group>"; };
@@ -488,11 +502,26 @@
 		B3D1C562212C9CCA00D1A7E6 /* ECHOTests */ = {
 			isa = PBXGroup;
 			children = (
+				B3D1C57F212DA09500D1A7E6 /* Stubs */,
+				B3D1C58D212DA92500D1A7E6 /* JsonEncodingTests.swift */,
 				B3D1C57B212D4D8100D1A7E6 /* DataEncodingTests.swift */,
 				B3D1C579212C9D4900D1A7E6 /* JsonDecodingTests.swift */,
 				B3D1C565212C9CCA00D1A7E6 /* Info.plist */,
 			);
 			path = ECHOTests;
+			sourceTree = "<group>";
+		};
+		B3D1C57F212DA09500D1A7E6 /* Stubs */ = {
+			isa = PBXGroup;
+			children = (
+				B3D1C581212DA10400D1A7E6 /* FullAccountStub.swift */,
+				B3D1C583212DA5A500D1A7E6 /* AccountBalanceStub.swift */,
+				B3D1C585212DA63500D1A7E6 /* AccountStub.swift */,
+				B3D1C587212DA67300D1A7E6 /* AuthorityStub.swift */,
+				B3D1C589212DA6B000D1A7E6 /* StatisticStub.swift */,
+				B3D1C58B212DA6E700D1A7E6 /* OptionsStub.swift */,
+			);
+			path = Stubs;
 			sourceTree = "<group>";
 		};
 		D01BF7CE212AAFA800917DB8 /* Extensions */ = {
@@ -754,7 +783,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B3D1C584212DA5A500D1A7E6 /* AccountBalanceStub.swift in Sources */,
+				B3D1C586212DA63500D1A7E6 /* AccountStub.swift in Sources */,
+				B3D1C58A212DA6B000D1A7E6 /* StatisticStub.swift in Sources */,
+				B3D1C58E212DA92500D1A7E6 /* JsonEncodingTests.swift in Sources */,
+				B3D1C582212DA10400D1A7E6 /* FullAccountStub.swift in Sources */,
+				B3D1C588212DA67300D1A7E6 /* AuthorityStub.swift in Sources */,
 				B3D1C57C212D4D8100D1A7E6 /* DataEncodingTests.swift in Sources */,
+				B3D1C58C212DA6E700D1A7E6 /* OptionsStub.swift in Sources */,
 				B3D1C57A212C9D4900D1A7E6 /* JsonDecodingTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
