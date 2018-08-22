@@ -19,16 +19,4 @@ extension BaseOperation {
     func getId() -> Int {
         return type.rawValue
     }
-    
-    func toJSON() -> Any? {
-        return [Any]()
-    }
-    
-    func toJSON() -> String? {
-        return nil
-    }
-    
-    func toData() -> Data? {
-        return nil
-    }
 }

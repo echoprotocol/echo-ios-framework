@@ -69,6 +69,10 @@ struct OperationDecoder {
         
         switch type {
         case .accountCreateOperation: return decode(AccountCreateOperation.self, container: container)
+        case .accountUpdateOperation: return decode(AccountUpdateOperation.self, container: container)
+        case .transferOperation: return decode(TransferOperation.self, container: container)
+        case .assetCreateOperation: return decode(CreateAssetOperation.self, container: container)
+        case .assetIssueOperation: return decode(IssueAssetOperation.self, container: container)
         default: return nil
         }
     }

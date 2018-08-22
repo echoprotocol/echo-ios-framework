@@ -8,7 +8,7 @@
 
 struct AssetOptions: ECHOCodable, Decodable {
     
-    enum AssetCodingKeys: String, CodingKey {
+    enum AssetOptionsCodingKeys: String, CodingKey {
         case maxSupply = "max_supply"
         case marketFeePercent = "market_fee_percent"
         case maxMarketFee = "max_market_fee"
@@ -38,7 +38,7 @@ struct AssetOptions: ECHOCodable, Decodable {
     
     init(from decoder: Decoder) throws {
         
-        let values = try decoder.container(keyedBy: AssetCodingKeys.self)
+        let values = try decoder.container(keyedBy: AssetOptionsCodingKeys.self)
         maxSupply = try values.decode(UInt.self, forKey: .maxSupply)
         marketFeePercent = try values.decode(Int.self, forKey: .marketFeePercent)
         maxMarketFee = try values.decode(UInt.self, forKey: .maxMarketFee)
@@ -78,18 +78,18 @@ struct AssetOptions: ECHOCodable, Decodable {
             blacklistMarketsArray.append($0.id)
         }
         
-        let dictionary: [AnyHashable: Any?] = [AssetCodingKeys.maxSupply.rawValue: maxSupply,
-                                               AssetCodingKeys.marketFeePercent.rawValue: marketFeePercent,
-                                               AssetCodingKeys.maxMarketFee.rawValue: maxMarketFee,
-                                               AssetCodingKeys.issuerPermissions.rawValue: issuerPermissions,
-                                               AssetCodingKeys.flags.rawValue: flags,
-                                               AssetCodingKeys.coreExchangRate.rawValue: coreExchangeRate[safe: 0]?.toJSON(),
-                                               AssetCodingKeys.whitelistAuthorities.rawValue: whitelistAuthoritiesArray,
-                                               AssetCodingKeys.blacklistAuthorities.rawValue: blacklistAuthoritiesArray,
-                                               AssetCodingKeys.whitelistMarkets.rawValue: whitelistMarketsArray,
-                                               AssetCodingKeys.blacklistMarkets.rawValue: blacklistMarketsArray,
-                                               AssetCodingKeys.description.rawValue: description ?? "",
-                                               AssetCodingKeys.extensions.rawValue: extensions.toJSON()]
+        let dictionary: [AnyHashable: Any?] = [AssetOptionsCodingKeys.maxSupply.rawValue: maxSupply,
+                                               AssetOptionsCodingKeys.marketFeePercent.rawValue: marketFeePercent,
+                                               AssetOptionsCodingKeys.maxMarketFee.rawValue: maxMarketFee,
+                                               AssetOptionsCodingKeys.issuerPermissions.rawValue: issuerPermissions,
+                                               AssetOptionsCodingKeys.flags.rawValue: flags,
+                                               AssetOptionsCodingKeys.coreExchangRate.rawValue: coreExchangeRate[safe: 0]?.toJSON(),
+                                               AssetOptionsCodingKeys.whitelistAuthorities.rawValue: whitelistAuthoritiesArray,
+                                               AssetOptionsCodingKeys.blacklistAuthorities.rawValue: blacklistAuthoritiesArray,
+                                               AssetOptionsCodingKeys.whitelistMarkets.rawValue: whitelistMarketsArray,
+                                               AssetOptionsCodingKeys.blacklistMarkets.rawValue: blacklistMarketsArray,
+                                               AssetOptionsCodingKeys.description.rawValue: description ?? "",
+                                               AssetOptionsCodingKeys.extensions.rawValue: extensions.toJSON()]
         
         return dictionary
     }

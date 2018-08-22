@@ -73,7 +73,7 @@ public struct Account: ECHOObject, ECHOCodable, Decodable, Hashable {
     // MARK: ECHOCodable
     
     func toJSON() -> Any? {
-        return nil
+        return id
     }
     
     func toJSON() -> String? {

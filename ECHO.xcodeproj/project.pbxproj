@@ -96,6 +96,12 @@
 		D01BF7D4212AC7FE00917DB8 /* AccountAuthority.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01BF7D3212AC7FE00917DB8 /* AccountAuthority.swift */; };
 		D01BF7D6212AC81000917DB8 /* AddressAuthority.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01BF7D5212AC81000917DB8 /* AddressAuthority.swift */; };
 		D01BF7D8212AE77B00917DB8 /* BitassetOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01BF7D7212AE77B00917DB8 /* BitassetOptions.swift */; };
+		D094703E212D3ECC00B55A37 /* TransferOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D094703D212D3ECC00B55A37 /* TransferOperation.swift */; };
+		D0947040212D3FEE00B55A37 /* Memo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D094703F212D3FEE00B55A37 /* Memo.swift */; };
+		D0947042212D5E2D00B55A37 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0947041212D5E2D00B55A37 /* String+Extension.swift */; };
+		D0947048212D931800B55A37 /* AccountUpdateOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0947047212D931800B55A37 /* AccountUpdateOperation.swift */; };
+		D094704A212D932500B55A37 /* CreateAssetOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0947049212D932500B55A37 /* CreateAssetOperation.swift */; };
+		D094704C212D9C7400B55A37 /* IssueAssetOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D094704B212D9C7400B55A37 /* IssueAssetOperation.swift */; };
 		D0B6A0C62126B26D00A78E4B /* BaseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B6A0C52126B26D00A78E4B /* BaseOperation.swift */; };
 		D0B6A0C82126B39100A78E4B /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B6A0C72126B39100A78E4B /* Extensions.swift */; };
 		D0B6A0CA2126BA9300A78E4B /* OperationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B6A0C92126BA9300A78E4B /* OperationType.swift */; };
@@ -215,6 +221,12 @@
 		D01BF7D3212AC7FE00917DB8 /* AccountAuthority.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountAuthority.swift; sourceTree = "<group>"; };
 		D01BF7D5212AC81000917DB8 /* AddressAuthority.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressAuthority.swift; sourceTree = "<group>"; };
 		D01BF7D7212AE77B00917DB8 /* BitassetOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitassetOptions.swift; sourceTree = "<group>"; };
+		D094703D212D3ECC00B55A37 /* TransferOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferOperation.swift; sourceTree = "<group>"; };
+		D094703F212D3FEE00B55A37 /* Memo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Memo.swift; sourceTree = "<group>"; };
+		D0947041212D5E2D00B55A37 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
+		D0947047212D931800B55A37 /* AccountUpdateOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountUpdateOperation.swift; sourceTree = "<group>"; };
+		D0947049212D932500B55A37 /* CreateAssetOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateAssetOperation.swift; sourceTree = "<group>"; };
+		D094704B212D9C7400B55A37 /* IssueAssetOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueAssetOperation.swift; sourceTree = "<group>"; };
 		D0B6A0C52126B26D00A78E4B /* BaseOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseOperation.swift; sourceTree = "<group>"; };
 		D0B6A0C72126B39100A78E4B /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		D0B6A0C92126BA9300A78E4B /* OperationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationType.swift; sourceTree = "<group>"; };
@@ -326,6 +338,7 @@
 				D0B6A0C72126B39100A78E4B /* Extensions.swift */,
 				B3B04C6020F3B2CE003BBD9E /* GrapheneObject.swift */,
 				B3CA703B20F4AA3700511F6A /* HistoryItem.swift */,
+				D094703F212D3FEE00B55A37 /* Memo.swift */,
 				B35F15A920F3ABAE000CE3EA /* ObjectType.swift */,
 				D01BF7D1212ABE4E00917DB8 /* OptionalValue.swift */,
 				B30CAD1920FFD58E0048E33E /* Options.swift */,
@@ -488,6 +501,7 @@
 				B3965B152125952700029585 /* Collection+Extension.swift */,
 				D0B6A0D12126EE3600A78E4B /* Data+Extension.swift */,
 				B3D1C57D212D94B500D1A7E6 /* BinaryConvertible.swift */,
+				D0947041212D5E2D00B55A37 /* String+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -495,9 +509,13 @@
 		D0B6A0C42126B20900A78E4B /* Operation */ = {
 			isa = PBXGroup;
 			children = (
-				D0B6A0C52126B26D00A78E4B /* BaseOperation.swift */,
-				D0B6A0C92126BA9300A78E4B /* OperationType.swift */,
 				D0B6A0CB2126CB5800A78E4B /* AccountCreateOperation.swift */,
+				D0947047212D931800B55A37 /* AccountUpdateOperation.swift */,
+				D0B6A0C52126B26D00A78E4B /* BaseOperation.swift */,
+				D0947049212D932500B55A37 /* CreateAssetOperation.swift */,
+				D094704B212D9C7400B55A37 /* IssueAssetOperation.swift */,
+				D0B6A0C92126BA9300A78E4B /* OperationType.swift */,
+				D094703D212D3ECC00B55A37 /* TransferOperation.swift */,
 			);
 			path = Operation;
 			sourceTree = "<group>";
@@ -654,9 +672,11 @@
 				B370BB5920F7623F004C4A26 /* SettingsConfigurator.swift in Sources */,
 				B3CA704220F502BE00511F6A /* SocketOperation.swift in Sources */,
 				B385970420F6270000B55E59 /* ECHOObject.swift in Sources */,
+				D0947048212D931800B55A37 /* AccountUpdateOperation.swift in Sources */,
 				B3CA702A20F4A44900511F6A /* InformationFacade.swift in Sources */,
 				B348D09921011E7C00C29AE4 /* AddressKeysContainer.swift in Sources */,
 				D0B6A0C62126B26D00A78E4B /* BaseOperation.swift in Sources */,
+				D094703E212D3ECC00B55A37 /* TransferOperation.swift in Sources */,
 				B3CA704720F532E600511F6A /* AccessSocketOperation.swift in Sources */,
 				B30CACFA20FF74C80048E33E /* NetworkNodesApiServiceImp.swift in Sources */,
 				B3CA704020F4FB0200511F6A /* ECHOSerializable.swift in Sources */,
@@ -688,9 +708,11 @@
 				B30CAD2020FFD5DB0048E33E /* AuthentificationFacadeImp.swift in Sources */,
 				B348D0AC210207ED00C29AE4 /* Encoding.swift in Sources */,
 				B348D09D21011EBD00C29AE4 /* InformationFacadeImp.swift in Sources */,
+				D0947042212D5E2D00B55A37 /* String+Extension.swift in Sources */,
 				B3CA703A20F4A7C300511F6A /* UserAccount.swift in Sources */,
 				B3CA703C20F4AA3700511F6A /* HistoryItem.swift in Sources */,
 				B30CAD1A20FFD58E0048E33E /* Options.swift in Sources */,
+				D094704A212D932500B55A37 /* CreateAssetOperation.swift in Sources */,
 				B30CAD1720FFD5790048E33E /* AccountBalance.swift in Sources */,
 				D01BF7D0212AB00700917DB8 /* Vote.swift in Sources */,
 				B30CAD0120FF74C80048E33E /* CryptoApiService.swift in Sources */,
@@ -719,8 +741,10 @@
 				B30CAD1C20FFD5A10048E33E /* Authority.swift in Sources */,
 				B38596EA20F5ECBA00B55E59 /* GetAssetsSocketOperation.swift in Sources */,
 				B3A8BF6320F7DA4F0041A1D7 /* SocketMessanger.swift in Sources */,
+				D094704C212D9C7400B55A37 /* IssueAssetOperation.swift in Sources */,
 				B30CACFE20FF74C80048E33E /* DatabaseApiServiceImp.swift in Sources */,
 				B38596FC20F6005500B55E59 /* Price.swift in Sources */,
+				D0947040212D3FEE00B55A37 /* Memo.swift in Sources */,
 				B38596F220F5EE1400B55E59 /* GetObjectsSocketOperation.swift in Sources */,
 				B35F15AA20F3ABAE000CE3EA /* ObjectType.swift in Sources */,
 			);

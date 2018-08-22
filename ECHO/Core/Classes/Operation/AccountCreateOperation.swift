@@ -22,17 +22,17 @@ struct AccountCreateOperation: BaseOperation {
         case fee
     }
     
-    var type: OperationType
-    var extensions: Extensions = Extensions()
+    let type: OperationType
+    let extensions: Extensions = Extensions()
     
-    var name: String
-    var registrar: String
-    var referrer: String
-    var referrerPercent: Int = 0
-    var owner: OptionalValue<Authority>
-    var active: OptionalValue<Authority>
-    var options: OptionalValue<AccountOptions>
-    var fee: AssetAmount
+    let name: String
+    let registrar: String
+    let referrer: String
+    let referrerPercent: Int = 0
+    let owner: OptionalValue<Authority>
+    let active: OptionalValue<Authority>
+    let options: OptionalValue<AccountOptions>
+    let fee: AssetAmount
     
     init(from decoder: Decoder) throws {
         
@@ -53,21 +53,6 @@ struct AccountCreateOperation: BaseOperation {
         options = OptionalValue(optionsValue)
         
         fee = try values.decode(AssetAmount.self, forKey: .fee)
-    }
-    
-    mutating func setOwner(_ owner: Authority) {
-        
-        self.owner = OptionalValue(owner)
-    }
-    
-    mutating func setActive(_ active: Authority) {
-        
-        self.active = OptionalValue(active)
-    }
-    
-    mutating func setOptions(_ options: AccountOptions) {
-        
-        self.options = OptionalValue(options)
     }
     
     // MARK: ECHOCodable
@@ -97,16 +82,6 @@ struct AccountCreateOperation: BaseOperation {
         }
         
         return array
-    }
-    
-    func toJSON() -> String? {
-        
-        let json: Any? = toJSON()
-        let jsonString = (json as? [Any])
-            .flatMap { try? JSONSerialization.data(withJSONObject: $0, options: []) }
-            .flatMap { String(data: $0, encoding: .utf8) }
-        
-        return jsonString
     }
     
     func toData() -> Data? {
