@@ -89,6 +89,8 @@
 		B3CA704D20F53A4500511F6A /* GetAccountHistorySocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3CA704C20F53A4500511F6A /* GetAccountHistorySocketOperation.swift */; };
 		B3D1C566212C9CCA00D1A7E6 /* ECHO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B31CB1A020F3772C00FA5532 /* ECHO.framework */; };
 		B3D1C57A212C9D4900D1A7E6 /* JsonDecodingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D1C579212C9D4900D1A7E6 /* JsonDecodingTests.swift */; };
+		B3D1C57C212D4D8100D1A7E6 /* DataEncodingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D1C57B212D4D8100D1A7E6 /* DataEncodingTests.swift */; };
+		B3D1C57E212D94B500D1A7E6 /* BinaryConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D1C57D212D94B500D1A7E6 /* BinaryConvertible.swift */; };
 		D01BF7D0212AB00700917DB8 /* Vote.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01BF7CF212AB00700917DB8 /* Vote.swift */; };
 		D01BF7D2212ABE4E00917DB8 /* OptionalValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01BF7D1212ABE4E00917DB8 /* OptionalValue.swift */; };
 		D01BF7D4212AC7FE00917DB8 /* AccountAuthority.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01BF7D3212AC7FE00917DB8 /* AccountAuthority.swift */; };
@@ -206,6 +208,8 @@
 		B3D1C561212C9CCA00D1A7E6 /* ECHOTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ECHOTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3D1C565212C9CCA00D1A7E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B3D1C579212C9D4900D1A7E6 /* JsonDecodingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonDecodingTests.swift; sourceTree = "<group>"; };
+		B3D1C57B212D4D8100D1A7E6 /* DataEncodingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataEncodingTests.swift; sourceTree = "<group>"; };
+		B3D1C57D212D94B500D1A7E6 /* BinaryConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinaryConvertible.swift; sourceTree = "<group>"; };
 		D01BF7CF212AB00700917DB8 /* Vote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vote.swift; sourceTree = "<group>"; };
 		D01BF7D1212ABE4E00917DB8 /* OptionalValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionalValue.swift; sourceTree = "<group>"; };
 		D01BF7D3212AC7FE00917DB8 /* AccountAuthority.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountAuthority.swift; sourceTree = "<group>"; };
@@ -471,6 +475,7 @@
 		B3D1C562212C9CCA00D1A7E6 /* ECHOTests */ = {
 			isa = PBXGroup;
 			children = (
+				B3D1C57B212D4D8100D1A7E6 /* DataEncodingTests.swift */,
 				B3D1C579212C9D4900D1A7E6 /* JsonDecodingTests.swift */,
 				B3D1C565212C9CCA00D1A7E6 /* Info.plist */,
 			);
@@ -482,6 +487,7 @@
 			children = (
 				B3965B152125952700029585 /* Collection+Extension.swift */,
 				D0B6A0D12126EE3600A78E4B /* Data+Extension.swift */,
+				B3D1C57D212D94B500D1A7E6 /* BinaryConvertible.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -667,6 +673,7 @@
 				D0B6A0CE2126CD5500A78E4B /* AccountOptions.swift in Sources */,
 				B370BB5B20F76853004C4A26 /* SocketMessenger.swift in Sources */,
 				B30CACFC20FF74C80048E33E /* AccountHistoryApiServiceImp.swift in Sources */,
+				B3D1C57E212D94B500D1A7E6 /* BinaryConvertible.swift in Sources */,
 				B38596EE20F5ED9A00B55E59 /* GetChainIdSocketOperation.swift in Sources */,
 				B3B04C6120F3B2CE003BBD9E /* GrapheneObject.swift in Sources */,
 				B38596EC20F5ED6000B55E59 /* GetBlockSocketOperation.swift in Sources */,
@@ -723,6 +730,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B3D1C57C212D4D8100D1A7E6 /* DataEncodingTests.swift in Sources */,
 				B3D1C57A212C9D4900D1A7E6 /* JsonDecodingTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

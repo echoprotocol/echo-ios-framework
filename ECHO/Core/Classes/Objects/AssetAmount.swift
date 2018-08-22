@@ -41,8 +41,8 @@ struct AssetAmount: ECHOCodable, Decodable {
         }
         
         var data = Data()
-        data.append(optional: Data.fromUIntLikeUnsignedByteArray(assetInstance))
-        data.append(optional: Data.fromInt64(amount))
+        data += Data.fromUIntLikeUnsignedByteArray(assetInstance)
+        data += Data.fromUint64(amount)
         return data
     }
 }

@@ -97,9 +97,9 @@ struct AssetOptions: ECHOCodable, Decodable {
     func toData() -> Data? {
         
         var data = Data()
-        data.append(optional: Data.fromInt64(maxSupply))
+        data.append(optional: Data.fromUint64(maxSupply))
         data.append(optional: Data.fromInt16(marketFeePercent))
-        data.append(optional: Data.fromInt64(maxMarketFee))
+        data.append(optional: Data.fromUint64(maxMarketFee))
         data.append(optional: Data.fromInt16(issuerPermissions))
         data.append(optional: Data.fromInt16(flags))
         data.append(optional: coreExchangeRate[safe: 0]?.toData())
