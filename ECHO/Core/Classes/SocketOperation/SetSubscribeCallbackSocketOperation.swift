@@ -23,13 +23,21 @@ struct SetSubscribeCallbackSocketOperation: SocketOperation {
     
     func complete(json: [String: Any]) {
         
-        let result = json["result"]
-        
-        if let _ = result {
-            let result = Result<Bool, ECHOError>(value: true)
-            completion(result)
-        } else {
-            let result = Result<Bool, ECHOError>(value: false)
+        do {
+            let data = try JSONSerialization.data(withJSONObject: json, options: [])
+            let response = try JSONDecoder().decode(ECHOResponse.self, from: data)
+            
+            switch response.response {
+            case .error(let error):
+                let result = Result<Bool, ECHOError>(error: ECHOError.internalError(error.message))
+                completion(result)
+            case .result(_):
+                
+                let result = Result<Bool, ECHOError>(value: true)
+                completion(result)
+            }
+        } catch {
+            let result = Result<Bool, ECHOError>(error: ECHOError.encodableMapping)
             completion(result)
         }
     }

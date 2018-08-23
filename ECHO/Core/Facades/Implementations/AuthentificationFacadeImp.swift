@@ -29,7 +29,7 @@ class AuthentificationFacadeImp: AuthentificationFacade {
                     let result = Result<UserAccount, ECHOError>(value: userAccount)
                     completion(result)
                 } else {
-                    let result = Result<UserAccount, ECHOError>(error: ECHOError.undefined)
+                    let result = Result<UserAccount, ECHOError>(error: ECHOError.invalidCredentials)
                     completion(result)
                 }
 

@@ -39,6 +39,8 @@
 		B30CAD1C20FFD5A10048E33E /* Authority.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30CAD1B20FFD5A10048E33E /* Authority.swift */; };
 		B30CAD2020FFD5DB0048E33E /* AuthentificationFacadeImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30CAD1F20FFD5DB0048E33E /* AuthentificationFacadeImp.swift */; };
 		B30CAD2820FFF9E70048E33E /* ECHOKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30CAD2720FFF9E70048E33E /* ECHOKeychain.swift */; };
+		B30FE903212ECD780009BF57 /* ECHOResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30FE902212ECD780009BF57 /* ECHOResponse.swift */; };
+		B30FE905212ECDAD0009BF57 /* Codable+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30FE904212ECDAD0009BF57 /* Codable+Extension.swift */; };
 		B31CB1A520F3772C00FA5532 /* ECHO.h in Headers */ = {isa = PBXBuildFile; fileRef = B31CB1A320F3772C00FA5532 /* ECHO.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B348D09921011E7C00C29AE4 /* AddressKeysContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B348D09821011E7C00C29AE4 /* AddressKeysContainer.swift */; };
 		B348D09B21011E9D00C29AE4 /* BlockInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B348D09A21011E9C00C29AE4 /* BlockInformation.swift */; };
@@ -168,6 +170,8 @@
 		B30CAD1B20FFD5A10048E33E /* Authority.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Authority.swift; sourceTree = "<group>"; };
 		B30CAD1F20FFD5DB0048E33E /* AuthentificationFacadeImp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthentificationFacadeImp.swift; sourceTree = "<group>"; };
 		B30CAD2720FFF9E70048E33E /* ECHOKeychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ECHOKeychain.swift; sourceTree = "<group>"; };
+		B30FE902212ECD780009BF57 /* ECHOResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ECHOResponse.swift; sourceTree = "<group>"; };
+		B30FE904212ECDAD0009BF57 /* Codable+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Codable+Extension.swift"; sourceTree = "<group>"; };
 		B31CB1A020F3772C00FA5532 /* ECHO.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ECHO.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B31CB1A320F3772C00FA5532 /* ECHO.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ECHO.h; sourceTree = "<group>"; };
 		B31CB1A420F3772C00FA5532 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -303,6 +307,14 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
+		B30FE901212ECD780009BF57 /* Responce */ = {
+			isa = PBXGroup;
+			children = (
+				B30FE902212ECD780009BF57 /* ECHOResponse.swift */,
+			);
+			path = Responce;
+			sourceTree = "<group>";
+		};
 		B31CB19620F3772C00FA5532 = {
 			isa = PBXGroup;
 			children = (
@@ -336,6 +348,7 @@
 		B348D09E21011FCC00C29AE4 /* Objects */ = {
 			isa = PBXGroup;
 			children = (
+				B30FE901212ECD780009BF57 /* Responce */,
 				B30CAD1620FFD5790048E33E /* Account.swift */,
 				D01BF7D3212AC7FE00917DB8 /* AccountAuthority.swift */,
 				B30CAD1520FFD5790048E33E /* AccountBalance.swift */,
@@ -527,6 +540,7 @@
 		D01BF7CE212AAFA800917DB8 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				B30FE904212ECDAD0009BF57 /* Codable+Extension.swift */,
 				B3965B152125952700029585 /* Collection+Extension.swift */,
 				D0B6A0D12126EE3600A78E4B /* Data+Extension.swift */,
 				B3D1C57D212D94B500D1A7E6 /* BinaryConvertible.swift */,
@@ -760,11 +774,13 @@
 				D01BF7D2212ABE4E00917DB8 /* OptionalValue.swift in Sources */,
 				B38596F420F5EE5C00B55E59 /* KeyReferencesSocketOperation.swift in Sources */,
 				B3CA703820F4A72C00511F6A /* Error.swift in Sources */,
+				B30FE903212ECD780009BF57 /* ECHOResponse.swift in Sources */,
 				B3A7AA4920F8C247002D569D /* RevilSocketApiFacade.swift in Sources */,
 				B30CACFB20FF74C80048E33E /* NetworkBroadcastApiServiceImp.swift in Sources */,
 				B348D09B21011E9D00C29AE4 /* BlockInformation.swift in Sources */,
 				B3A8BF6120F7DA3B0041A1D7 /* SocketCoreComponentImp.swift in Sources */,
 				B3CA704920F5358400511F6A /* BlockDataSocketOperation.swift in Sources */,
+				B30FE905212ECDAD0009BF57 /* Codable+Extension.swift in Sources */,
 				B30CAD0420FF74C80048E33E /* ApiIdentifireHolder.swift in Sources */,
 				B30CAD2820FFF9E70048E33E /* ECHOKeychain.swift in Sources */,
 				B30CAD1C20FFD5A10048E33E /* Authority.swift in Sources */,
