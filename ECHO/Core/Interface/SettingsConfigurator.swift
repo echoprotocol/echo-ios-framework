@@ -23,7 +23,7 @@ public struct APIOption: OptionSet {
 
 public class Configurator {
     public var socketMessenger: SocketMessenger = SocketMessengerImp()
-    public var cryproComponent: CryptoCoreComponent = CryptoCoreComponentImp()
+    public var cryproComponent: CryptoCoreComponent = CryptoCoreImp()
     public var apiOptions: APIOption = [.database, .accountHistory, .networkBroadcast, .crypto, .networkNodes]
     public var network: Network = Network(url: "wss://echo-devnet-node.pixelplex.io/", prefix: NetworkPrefix.echo)
 }

@@ -46,6 +46,12 @@
 		B30FE90C212F2AE70009BF57 /* AccountSocketRequestStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30FE90B212F2AE70009BF57 /* AccountSocketRequestStub.swift */; };
 		B30FE90E212F2DAE0009BF57 /* FakeSocketCoreComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30FE90D212F2DAE0009BF57 /* FakeSocketCoreComponentTests.swift */; };
 		B313B8C1212FF9850052B266 /* ECHOInterfaceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B313B8C0212FF9850052B266 /* ECHOInterfaceTests.swift */; };
+		B313B8D32130411D0052B266 /* Internal.m in Sources */ = {isa = PBXBuildFile; fileRef = B313B8D22130411D0052B266 /* Internal.m */; };
+		B313B8D5213041250052B266 /* Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = B313B8D4213041250052B266 /* Internal.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		B313B8DA213044390052B266 /* ECHO.modulemap in CopyFiles */ = {isa = PBXBuildFile; fileRef = B313B8D9213044390052B266 /* ECHO.modulemap */; };
+		B313B8DD21305A080052B266 /* Crypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = B313B8DB21305A080052B266 /* Crypto.swift */; };
+		B313B8DE21305A080052B266 /* EllipticCurveEncrypterSecp256k1.swift in Sources */ = {isa = PBXBuildFile; fileRef = B313B8DC21305A080052B266 /* EllipticCurveEncrypterSecp256k1.swift */; };
+		B313B8E021305DAE0052B266 /* CryptoCoreImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B313B8DF21305DAE0052B266 /* CryptoCoreImp.swift */; };
 		B31CB1A520F3772C00FA5532 /* ECHO.h in Headers */ = {isa = PBXBuildFile; fileRef = B31CB1A320F3772C00FA5532 /* ECHO.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B348D09921011E7C00C29AE4 /* AddressKeysContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B348D09821011E7C00C29AE4 /* AddressKeysContainer.swift */; };
 		B348D09B21011E9D00C29AE4 /* BlockInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B348D09A21011E9C00C29AE4 /* BlockInformation.swift */; };
@@ -142,6 +148,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				B313B8DA213044390052B266 /* ECHO.modulemap in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -182,6 +189,12 @@
 		B30FE90B212F2AE70009BF57 /* AccountSocketRequestStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSocketRequestStub.swift; sourceTree = "<group>"; };
 		B30FE90D212F2DAE0009BF57 /* FakeSocketCoreComponentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeSocketCoreComponentTests.swift; sourceTree = "<group>"; };
 		B313B8C0212FF9850052B266 /* ECHOInterfaceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ECHOInterfaceTests.swift; sourceTree = "<group>"; };
+		B313B8D22130411D0052B266 /* Internal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Internal.m; path = ECHO/Core/Crypto/Internal.m; sourceTree = SOURCE_ROOT; };
+		B313B8D4213041250052B266 /* Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Internal.h; path = ECHO/Core/Crypto/Internal.h; sourceTree = SOURCE_ROOT; };
+		B313B8D9213044390052B266 /* ECHO.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = ECHO.modulemap; sourceTree = "<group>"; };
+		B313B8DB21305A080052B266 /* Crypto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Crypto.swift; path = ECHO/Core/Crypto/Crypto.swift; sourceTree = SOURCE_ROOT; };
+		B313B8DC21305A080052B266 /* EllipticCurveEncrypterSecp256k1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EllipticCurveEncrypterSecp256k1.swift; path = ECHO/Core/Crypto/EllipticCurveEncrypterSecp256k1.swift; sourceTree = SOURCE_ROOT; };
+		B313B8DF21305DAE0052B266 /* CryptoCoreImp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CryptoCoreImp.swift; sourceTree = "<group>"; };
 		B31CB1A020F3772C00FA5532 /* ECHO.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ECHO.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B31CB1A320F3772C00FA5532 /* ECHO.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ECHO.h; sourceTree = "<group>"; };
 		B31CB1A420F3772C00FA5532 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -333,6 +346,19 @@
 			path = SocketRequestsStubs;
 			sourceTree = "<group>";
 		};
+		B313B8CD21303EF80052B266 /* Crypto */ = {
+			isa = PBXGroup;
+			children = (
+				B313B8DF21305DAE0052B266 /* CryptoCoreImp.swift */,
+				B313B8DB21305A080052B266 /* Crypto.swift */,
+				B313B8DC21305A080052B266 /* EllipticCurveEncrypterSecp256k1.swift */,
+				B313B8D4213041250052B266 /* Internal.h */,
+				B313B8D22130411D0052B266 /* Internal.m */,
+			);
+			name = Crypto;
+			path = "New Group";
+			sourceTree = "<group>";
+		};
 		B31CB19620F3772C00FA5532 = {
 			isa = PBXGroup;
 			children = (
@@ -406,6 +432,7 @@
 		B3CA702120F4A3CA00511F6A /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				B313B8CD21303EF80052B266 /* Crypto */,
 				B30CACEC20FF74C70048E33E /* Services */,
 				B3CA702420F4A3F800511F6A /* Facades */,
 				B3CA703220F4A4B600511F6A /* Core Components */,
@@ -418,6 +445,7 @@
 		B3CA702220F4A3D200511F6A /* Supports Files */ = {
 			isa = PBXGroup;
 			children = (
+				B313B8D9213044390052B266 /* ECHO.modulemap */,
 			);
 			path = "Supports Files";
 			sourceTree = "<group>";
@@ -594,6 +622,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B31CB1A520F3772C00FA5532 /* ECHO.h in Headers */,
+				B313B8D5213041250052B266 /* Internal.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -758,12 +787,15 @@
 				D01BF7D8212AE77B00917DB8 /* BitassetOptions.swift in Sources */,
 				D0B6A0CE2126CD5500A78E4B /* AccountOptions.swift in Sources */,
 				B370BB5B20F76853004C4A26 /* SocketMessenger.swift in Sources */,
+				B313B8D32130411D0052B266 /* Internal.m in Sources */,
+				B313B8E021305DAE0052B266 /* CryptoCoreImp.swift in Sources */,
 				B30CACFC20FF74C80048E33E /* AccountHistoryApiServiceImp.swift in Sources */,
 				B3D1C57E212D94B500D1A7E6 /* BinaryConvertible.swift in Sources */,
 				B38596EE20F5ED9A00B55E59 /* GetChainIdSocketOperation.swift in Sources */,
 				B3B04C6120F3B2CE003BBD9E /* GrapheneObject.swift in Sources */,
 				B38596EC20F5ED6000B55E59 /* GetBlockSocketOperation.swift in Sources */,
 				B38596FE20F6009A00B55E59 /* Asset.swift in Sources */,
+				B313B8DE21305A080052B266 /* EllipticCurveEncrypterSecp256k1.swift in Sources */,
 				B39A7C0B2105F5F7003CC14D /* SubscriptionFacadeImp.swift in Sources */,
 				B3A7AA4B20F8C32C002D569D /* RevealFacadeImp.swift in Sources */,
 				B38596F820F5F54100B55E59 /* SetSubscribeCallbackSocketOperation.swift in Sources */,
@@ -804,6 +836,7 @@
 				B3A8BF6120F7DA3B0041A1D7 /* SocketCoreComponentImp.swift in Sources */,
 				B3CA704920F5358400511F6A /* BlockDataSocketOperation.swift in Sources */,
 				B30FE905212ECDAD0009BF57 /* Codable+Extension.swift in Sources */,
+				B313B8DD21305A080052B266 /* Crypto.swift in Sources */,
 				B30CAD0420FF74C80048E33E /* ApiIdentifireHolder.swift in Sources */,
 				B30CAD2820FFF9E70048E33E /* ECHOKeychain.swift in Sources */,
 				B30CAD1C20FFD5A10048E33E /* Authority.swift in Sources */,
@@ -902,7 +935,9 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				LIBRARY_SEARCH_PATHS = "";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -959,7 +994,9 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				LIBRARY_SEARCH_PATHS = "";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -985,6 +1022,10 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/Libraries/secp256k1/include",
+					"$(SRCROOT)/Libraries/openssl/include",
+				);
 				INFOPLIST_FILE = ECHO/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -993,9 +1034,15 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(SRCROOT)/Libraries/secp256k1/lib",
+					"$(SRCROOT)/Libraries/openssl/lib",
+				);
+				MODULEMAP_FILE = "/Users/nikitafedorenko/ECHO-lib/ECHO/Supports Files/ECHO.modulemap";
 				PRODUCT_BUNDLE_IDENTIFIER = com.pixelplex.ECHO;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/Libraries $(SRCROOT)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1017,6 +1064,10 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/Libraries/secp256k1/include",
+					"$(SRCROOT)/Libraries/openssl/include",
+				);
 				INFOPLIST_FILE = ECHO/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -1025,9 +1076,15 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(SRCROOT)/Libraries/secp256k1/lib",
+					"$(SRCROOT)/Libraries/openssl/lib",
+				);
+				MODULEMAP_FILE = "/Users/nikitafedorenko/ECHO-lib/ECHO/Supports Files/ECHO.modulemap";
 				PRODUCT_BUNDLE_IDENTIFIER = com.pixelplex.ECHO;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/Libraries $(SRCROOT)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1058,6 +1115,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = Q7Q43CUMWT;
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ECHOTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1066,8 +1124,11 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
+				LIBRARY_SEARCH_PATHS = "";
+				MODULEMAP_FILE = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.pixelplex.ECHOTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1078,6 +1139,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = Q7Q43CUMWT;
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ECHOTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1086,8 +1148,11 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
+				LIBRARY_SEARCH_PATHS = "";
+				MODULEMAP_FILE = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.pixelplex.ECHOTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
