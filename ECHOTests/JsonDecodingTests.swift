@@ -82,4 +82,16 @@ class JsonDecodingTests: XCTestCase {
         //assert
         XCTAssertNotNil(object)
     }
+    
+    func testHistoryDecode() {
+        
+        //arrange
+        let testAccountJson = FullHistoryStub().initialJson
+        //act
+        let object = testAccountJson.data(using: .utf8)
+            .flatMap {try? JSONDecoder().decode([HistoryItem].self, from: $0)}
+        
+        //assert
+        XCTAssertNotNil(object)
+    }
 }

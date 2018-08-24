@@ -10,7 +10,7 @@ enum AccessSocketOperationType: String {
     case login
     case database
     case networkBroadcast = "network_broadcast"
-    case networkNodes = "network_nodes"
+    case networkNodes = "network_node"
     case history
     case crypto
 }

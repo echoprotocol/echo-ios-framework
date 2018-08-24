@@ -41,6 +41,11 @@
 		B30CAD2820FFF9E70048E33E /* ECHOKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30CAD2720FFF9E70048E33E /* ECHOKeychain.swift */; };
 		B30FE903212ECD780009BF57 /* ECHOResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30FE902212ECD780009BF57 /* ECHOResponse.swift */; };
 		B30FE905212ECDAD0009BF57 /* Codable+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30FE904212ECDAD0009BF57 /* Codable+Extension.swift */; };
+		B30FE907212EFA0D0009BF57 /* FullHistoryStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30FE906212EFA0D0009BF57 /* FullHistoryStub.swift */; };
+		B30FE909212F1AEA0009BF57 /* SocketMessengerStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30FE908212F1AEA0009BF57 /* SocketMessengerStub.swift */; };
+		B30FE90C212F2AE70009BF57 /* AccountSocketRequestStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30FE90B212F2AE70009BF57 /* AccountSocketRequestStub.swift */; };
+		B30FE90E212F2DAE0009BF57 /* FakeSocketCoreComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30FE90D212F2DAE0009BF57 /* FakeSocketCoreComponentTests.swift */; };
+		B313B8C1212FF9850052B266 /* ECHOInterfaceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B313B8C0212FF9850052B266 /* ECHOInterfaceTests.swift */; };
 		B31CB1A520F3772C00FA5532 /* ECHO.h in Headers */ = {isa = PBXBuildFile; fileRef = B31CB1A320F3772C00FA5532 /* ECHO.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B348D09921011E7C00C29AE4 /* AddressKeysContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B348D09821011E7C00C29AE4 /* AddressKeysContainer.swift */; };
 		B348D09B21011E9D00C29AE4 /* BlockInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B348D09A21011E9C00C29AE4 /* BlockInformation.swift */; };
@@ -172,6 +177,11 @@
 		B30CAD2720FFF9E70048E33E /* ECHOKeychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ECHOKeychain.swift; sourceTree = "<group>"; };
 		B30FE902212ECD780009BF57 /* ECHOResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ECHOResponse.swift; sourceTree = "<group>"; };
 		B30FE904212ECDAD0009BF57 /* Codable+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Codable+Extension.swift"; sourceTree = "<group>"; };
+		B30FE906212EFA0D0009BF57 /* FullHistoryStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullHistoryStub.swift; sourceTree = "<group>"; };
+		B30FE908212F1AEA0009BF57 /* SocketMessengerStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketMessengerStub.swift; sourceTree = "<group>"; };
+		B30FE90B212F2AE70009BF57 /* AccountSocketRequestStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSocketRequestStub.swift; sourceTree = "<group>"; };
+		B30FE90D212F2DAE0009BF57 /* FakeSocketCoreComponentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeSocketCoreComponentTests.swift; sourceTree = "<group>"; };
+		B313B8C0212FF9850052B266 /* ECHOInterfaceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ECHOInterfaceTests.swift; sourceTree = "<group>"; };
 		B31CB1A020F3772C00FA5532 /* ECHO.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ECHO.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B31CB1A320F3772C00FA5532 /* ECHO.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ECHO.h; sourceTree = "<group>"; };
 		B31CB1A420F3772C00FA5532 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -313,6 +323,14 @@
 				B30FE902212ECD780009BF57 /* ECHOResponse.swift */,
 			);
 			path = Responce;
+			sourceTree = "<group>";
+		};
+		B30FE90A212F2ABB0009BF57 /* SocketRequestsStubs */ = {
+			isa = PBXGroup;
+			children = (
+				B30FE90B212F2AE70009BF57 /* AccountSocketRequestStub.swift */,
+			);
+			path = SocketRequestsStubs;
 			sourceTree = "<group>";
 		};
 		B31CB19620F3772C00FA5532 = {
@@ -519,6 +537,8 @@
 				B3D1C58D212DA92500D1A7E6 /* JsonEncodingTests.swift */,
 				B3D1C57B212D4D8100D1A7E6 /* DataEncodingTests.swift */,
 				B3D1C579212C9D4900D1A7E6 /* JsonDecodingTests.swift */,
+				B30FE90D212F2DAE0009BF57 /* FakeSocketCoreComponentTests.swift */,
+				B313B8C0212FF9850052B266 /* ECHOInterfaceTests.swift */,
 				B3D1C565212C9CCA00D1A7E6 /* Info.plist */,
 			);
 			path = ECHOTests;
@@ -527,12 +547,15 @@
 		B3D1C57F212DA09500D1A7E6 /* Stubs */ = {
 			isa = PBXGroup;
 			children = (
+				B30FE90A212F2ABB0009BF57 /* SocketRequestsStubs */,
 				B3D1C581212DA10400D1A7E6 /* FullAccountStub.swift */,
 				B3D1C583212DA5A500D1A7E6 /* AccountBalanceStub.swift */,
 				B3D1C585212DA63500D1A7E6 /* AccountStub.swift */,
 				B3D1C587212DA67300D1A7E6 /* AuthorityStub.swift */,
 				B3D1C589212DA6B000D1A7E6 /* StatisticStub.swift */,
 				B3D1C58B212DA6E700D1A7E6 /* OptionsStub.swift */,
+				B30FE906212EFA0D0009BF57 /* FullHistoryStub.swift */,
+				B30FE908212F1AEA0009BF57 /* SocketMessengerStub.swift */,
 			);
 			path = Stubs;
 			sourceTree = "<group>";
@@ -802,11 +825,16 @@
 				B3D1C584212DA5A500D1A7E6 /* AccountBalanceStub.swift in Sources */,
 				B3D1C586212DA63500D1A7E6 /* AccountStub.swift in Sources */,
 				B3D1C58A212DA6B000D1A7E6 /* StatisticStub.swift in Sources */,
+				B30FE909212F1AEA0009BF57 /* SocketMessengerStub.swift in Sources */,
 				B3D1C58E212DA92500D1A7E6 /* JsonEncodingTests.swift in Sources */,
 				B3D1C582212DA10400D1A7E6 /* FullAccountStub.swift in Sources */,
+				B30FE907212EFA0D0009BF57 /* FullHistoryStub.swift in Sources */,
 				B3D1C588212DA67300D1A7E6 /* AuthorityStub.swift in Sources */,
 				B3D1C57C212D4D8100D1A7E6 /* DataEncodingTests.swift in Sources */,
 				B3D1C58C212DA6E700D1A7E6 /* OptionsStub.swift in Sources */,
+				B30FE90C212F2AE70009BF57 /* AccountSocketRequestStub.swift in Sources */,
+				B30FE90E212F2DAE0009BF57 /* FakeSocketCoreComponentTests.swift in Sources */,
+				B313B8C1212FF9850052B266 /* ECHOInterfaceTests.swift in Sources */,
 				B3D1C57A212C9D4900D1A7E6 /* JsonDecodingTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

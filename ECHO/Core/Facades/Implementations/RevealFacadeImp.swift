@@ -181,7 +181,7 @@ class RevealFacadeImp: RevealApiFacade {
     fileprivate func registerNetworkNodesApi(group: DispatchGroup) {
         group.enter()
         
-        let operation = AccessSocketOperation(type: .networkBroadcast,
+        let operation = AccessSocketOperation(type: .networkNodes,
                                               method: .call,
                                               operationId: socketCore.nextOperationId()) { [weak self] (result) in
             
