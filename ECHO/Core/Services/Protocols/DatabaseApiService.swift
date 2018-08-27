@@ -8,8 +8,8 @@
 protocol DatabaseApiService {
     
     init(socketCore: SocketCoreComponent)
-    func getFullAccount(nameOrIds: [String], shoudSubscribe: Bool, completion: @escaping Completion<UserAccount>) 
+    func getFullAccount(nameOrIds: [String], shoudSubscribe: Bool, completion: @escaping Completion<[UserAccount]>) 
     func getBlockData(completion: @escaping Completion<BlockData>)
+    func getBlock(blockNumber: Int, completion: @escaping Completion<Block>)
     func setSubscribeCallback(completion: @escaping Completion<Bool>)
-
 }

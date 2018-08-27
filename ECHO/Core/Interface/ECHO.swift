@@ -88,8 +88,8 @@ public class ECHO: InterfaceFacades {
         informationFacade.getBalance(nameOrID: nameOrID, asset: asset, completion: completion)
     }
     
-    public func getAccountHistroy(id: String, startId: String, stopId: String, limit: Int, completion: @escaping Completion<[HistoryItem]>) {
-        informationFacade.getAccountHistroy(id: id, startId: startId, stopId: stopId, limit: limit, completion: completion)
+    public func getAccountHistroy(nameOrID: String, startId: String, stopId: String, limit: Int, completion: @escaping Completion<[HistoryItem]>) {
+        informationFacade.getAccountHistroy(nameOrID: nameOrID, startId: startId, stopId: stopId, limit: limit, completion: completion)
     }
 
 }

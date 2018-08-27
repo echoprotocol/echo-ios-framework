@@ -19,7 +19,7 @@ struct AccountUpdateOperation: BaseOperation {
     let type: OperationType
     let extensions: Extensions = Extensions()
     
-    let account: Account
+    var account: Account
     let owner: OptionalValue<Authority>
     let active: OptionalValue<Authority>
     let newOptions: OptionalValue<AccountOptions>
@@ -43,6 +43,11 @@ struct AccountUpdateOperation: BaseOperation {
         newOptions = OptionalValue(newOptionsValue)
         
         fee = try values.decode(AssetAmount.self, forKey: .fee)
+    }
+    
+    mutating func changeAccount(_ account: Account?) {
+        
+        if let account = account { self.account = account }
     }
     
     // MARK: ECHOCodable

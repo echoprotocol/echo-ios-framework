@@ -8,12 +8,11 @@
 
 struct GetBlockSocketOperation: SocketOperation {
     
-    typealias Result = Bool
     var method: SocketOperationType
     var operationId: Int
     var apiId: Int
-    var completion: Completion<Any>
     var blockNumber: Int
+    var completion: Completion<Block>
     
     func createParameters() -> [Any] {
         let array: [Any] = [apiId,
@@ -24,5 +23,16 @@ struct GetBlockSocketOperation: SocketOperation {
     
     func complete(json: [String: Any]) {
         
+        let result = (json["result"] as? [String: Any])
+            .flatMap { try? JSONSerialization.data(withJSONObject: $0, options: []) }
+            .flatMap { try? JSONDecoder().decode(Block.self, from: $0) }
+            .flatMap { Result<Block, ECHOError>(value: $0) }
+        
+        if let result = result {
+            completion(result)
+        } else {
+            let result = Result<Block, ECHOError>(error: ECHOError.undefined)
+            completion(result)
+        }
     }
 }

@@ -23,10 +23,16 @@ class AuthentificationFacadeImp: AuthentificationFacade {
         
         services.databaseService.getFullAccount(nameOrIds: [name], shoudSubscribe: false) { [weak self] (result) in
             switch result {
-            case .success(let userAccount):
+            case .success(let userAccounts):
                 
-                if self?.checkAccount(account: userAccount, name: name, password: password) == true {
-                    let result = Result<UserAccount, ECHOError>(value: userAccount)
+                guard let account = userAccounts.first else {
+                    let result = Result<UserAccount, ECHOError>(error: ECHOError.resultNotFound)
+                    completion(result)
+                    return
+                }
+                
+                if self?.checkAccount(account: account, name: name, password: password) == true {
+                    let result = Result<UserAccount, ECHOError>(value: account)
                     completion(result)
                 } else {
                     let result = Result<UserAccount, ECHOError>(error: ECHOError.invalidCredentials)

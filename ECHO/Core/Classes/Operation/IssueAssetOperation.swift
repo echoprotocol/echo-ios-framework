@@ -20,9 +20,9 @@ struct IssueAssetOperation: BaseOperation {
     let type: OperationType
     let extensions: Extensions = Extensions()
     
-    let issuer: Account
+    var issuer: Account
     let assetToIssue: AssetAmount
-    let issueToAccount: Account
+    var issueToAccount: Account
     let fee: AssetAmount
     var memo: Memo = Memo()
     
@@ -40,6 +40,12 @@ struct IssueAssetOperation: BaseOperation {
         if values.contains(.memo) {
             memo = try values.decode(Memo.self, forKey: .memo)
         }
+    }
+    
+    mutating func changeAccounts(issuer: Account?, issueToAccount: Account?) {
+        
+        if let issuer = issuer { self.issuer = issuer }
+        if let issueToAccount = issueToAccount { self.issueToAccount = issueToAccount }
     }
     
     // MARK: ECHOCodable

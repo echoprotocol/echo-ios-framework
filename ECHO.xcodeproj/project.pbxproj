@@ -125,6 +125,8 @@
 		D0947048212D931800B55A37 /* AccountUpdateOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0947047212D931800B55A37 /* AccountUpdateOperation.swift */; };
 		D094704A212D932500B55A37 /* CreateAssetOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0947049212D932500B55A37 /* CreateAssetOperation.swift */; };
 		D094704C212D9C7400B55A37 /* IssueAssetOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D094704B212D9C7400B55A37 /* IssueAssetOperation.swift */; };
+		D0A1B441212E9C5300294683 /* ECHOQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A1B440212E9C5300294683 /* ECHOQueue.swift */; };
+		D0A1B447212FF04600294683 /* Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A1B446212FF04600294683 /* Block.swift */; };
 		D0B6A0C62126B26D00A78E4B /* BaseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B6A0C52126B26D00A78E4B /* BaseOperation.swift */; };
 		D0B6A0C82126B39100A78E4B /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B6A0C72126B39100A78E4B /* Extensions.swift */; };
 		D0B6A0CA2126BA9300A78E4B /* OperationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B6A0C92126BA9300A78E4B /* OperationType.swift */; };
@@ -274,6 +276,8 @@
 		D0947047212D931800B55A37 /* AccountUpdateOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountUpdateOperation.swift; sourceTree = "<group>"; };
 		D0947049212D932500B55A37 /* CreateAssetOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateAssetOperation.swift; sourceTree = "<group>"; };
 		D094704B212D9C7400B55A37 /* IssueAssetOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueAssetOperation.swift; sourceTree = "<group>"; };
+		D0A1B440212E9C5300294683 /* ECHOQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ECHOQueue.swift; sourceTree = "<group>"; };
+		D0A1B446212FF04600294683 /* Block.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Block.swift; sourceTree = "<group>"; };
 		D0B6A0C52126B26D00A78E4B /* BaseOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseOperation.swift; sourceTree = "<group>"; };
 		D0B6A0C72126B39100A78E4B /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		D0B6A0C92126BA9300A78E4B /* OperationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationType.swift; sourceTree = "<group>"; };
@@ -410,6 +414,7 @@
 				B385970120F620B700B55E59 /* AssetOptions.swift */,
 				B30CAD1B20FFD5A10048E33E /* Authority.swift */,
 				D01BF7D7212AE77B00917DB8 /* BitassetOptions.swift */,
+				D0A1B446212FF04600294683 /* Block.swift */,
 				B348D09A21011E9C00C29AE4 /* BlockInformation.swift */,
 				B385970320F6270000B55E59 /* ECHOObject.swift */,
 				D0B6A0C72126B39100A78E4B /* Extensions.swift */,
@@ -539,6 +544,7 @@
 				B348D0AB210207ED00C29AE4 /* Encoding.swift */,
 				B3965B172125954200029585 /* PointerArray.swift */,
 				B3CA703F20F4FB0200511F6A /* ECHOSerializable.swift */,
+				D0A1B440212E9C5300294683 /* ECHOQueue.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -795,6 +801,7 @@
 				D0B6A0CC2126CB5800A78E4B /* AccountCreateOperation.swift in Sources */,
 				D01BF7D8212AE77B00917DB8 /* BitassetOptions.swift in Sources */,
 				D0B6A0CE2126CD5500A78E4B /* AccountOptions.swift in Sources */,
+				D0A1B447212FF04600294683 /* Block.swift in Sources */,
 				B370BB5B20F76853004C4A26 /* SocketMessenger.swift in Sources */,
 				B313B8D32130411D0052B266 /* Internal.m in Sources */,
 				B313B8E021305DAE0052B266 /* CryptoCoreImp.swift in Sources */,
@@ -809,6 +816,7 @@
 				B3A7AA4B20F8C32C002D569D /* RevealFacadeImp.swift in Sources */,
 				B38596F820F5F54100B55E59 /* SetSubscribeCallbackSocketOperation.swift in Sources */,
 				B39A7C0D2105F601003CC14D /* Statistics.swift in Sources */,
+				D0A1B441212E9C5300294683 /* ECHOQueue.swift in Sources */,
 				D0B6A0C82126B39100A78E4B /* Extensions.swift in Sources */,
 				D01BF7D4212AC7FE00917DB8 /* AccountAuthority.swift in Sources */,
 				B38596F020F5EDCD00B55E59 /* GetContractResultSocketOperation.swift in Sources */,
