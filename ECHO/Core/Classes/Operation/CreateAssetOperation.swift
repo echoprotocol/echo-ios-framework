@@ -18,7 +18,7 @@ struct CreateAssetOperation: BaseOperation {
     let type: OperationType
     let extensions: Extensions = Extensions()
     
-    let asset: Asset
+    var asset: Asset
     let fee: AssetAmount
     
     init(from decoder: Decoder) throws {
@@ -29,6 +29,11 @@ struct CreateAssetOperation: BaseOperation {
         
         asset = try Asset(from: decoder)
         fee = try values.decode(AssetAmount.self, forKey: .fee)
+    }
+    
+    mutating func changeIssuer(_ account: Account?) {
+        
+        asset.issuer = account
     }
     
     // MARK: ECHOCodable

@@ -36,6 +36,17 @@ class DatabaseApiServiceImp: DatabaseApiService, ApiIdentifireHolder {
         socketCore.send(operation: operation)
     }
     
+    func getBlock(blockNumber: Int, completion: @escaping (Result<Block, ECHOError>) -> Void) {
+        
+        let operation = GetBlockSocketOperation(method: .call,
+                                                operationId: socketCore.nextOperationId(),
+                                                apiId: apiIdentifire,
+                                                blockNumber: blockNumber,
+                                                completion: completion)
+        
+        socketCore.send(operation: operation)
+    }
+    
     func setSubscribeCallback(completion: @escaping Completion<Bool>) {
         let operation = SetSubscribeCallbackSocketOperation(method: .call,
                                                             operationId: socketCore.nextOperationId(),

@@ -13,11 +13,4 @@ protocol TransactionFacade {
                                amount: String,
                                asset: String,
                                completion: Completion<String>)
-    
-    func getAccountHistory(nameOrId: String,
-                           transactionStopId: String,
-                           limit: Int,
-                           transactionStartId: String,
-                           asset: String,
-                           completion: Completion<HistoryItem>)
 }

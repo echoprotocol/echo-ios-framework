@@ -45,6 +45,12 @@ struct TransferOperation: BaseOperation {
         }
     }
     
+    mutating func changeAccounts(from: Account?, to: Account?) {
+        
+        if let from = from { self.from = from }
+        if let to = to { self.to = to }
+    }
+    
     // MARK: ECHOCodable
     
     func toJSON() -> Any? {
