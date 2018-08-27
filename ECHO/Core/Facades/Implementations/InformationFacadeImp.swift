@@ -24,8 +24,15 @@ class InformationFacadeImp: InformationFacade, ECHOQueueble {
         
         services.databaseService.getFullAccount(nameOrIds: [nameOrID], shoudSubscribe: false) { (result) in
             switch result {
-            case .success(let userAccount):
-                let result = Result<Account, ECHOError>(value: userAccount.account)
+            case .success(let userAccounts):
+                
+                guard let account = userAccounts.first else {
+                    let result = Result<Account, ECHOError>(error: ECHOError.resultNotFound)
+                    completion(result)
+                    return
+                }
+                
+                let result = Result<Account, ECHOError>(value: account.account)
                 completion(result)
             case .failure(let error):
                 let result = Result<Account, ECHOError>(error: error)
@@ -52,14 +59,20 @@ class InformationFacadeImp: InformationFacade, ECHOQueueble {
         
         services.databaseService.getFullAccount(nameOrIds: [nameOrID], shoudSubscribe: false) { (result) in
             switch result {
-            case .success(let userAccount):
+            case .success(let userAccounts):
                 
                 let balances: [AccountBalance]
+
+                guard let account = userAccounts.first else {
+                    let result = Result<[AccountBalance], ECHOError>(error: ECHOError.resultNotFound)
+                    completion(result)
+                    return
+                }
                 
                 if let asset = asset {
-                    balances = userAccount.balances.filter {$0.assetType == asset }
+                    balances = account.balances.filter {$0.assetType == asset }
                 } else {
-                    balances =  userAccount.balances
+                    balances =  account.balances
                 }
                 
                 let result = Result<[AccountBalance], ECHOError>(value: balances)
@@ -259,9 +272,10 @@ class InformationFacadeImp: InformationFacade, ECHOQueueble {
                 var historyItem = history[index]
                 
                 guard let findedBlock = blocks[historyItem.blockNum] else { continue }
-                guard let timeInterval = TimeInterval(findedBlock.timestamp) else { continue }
                 
-                historyItem.timestamp = Date(timeIntervalSince1970: timeInterval)
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+                historyItem.timestamp = dateFormatter.date(from: findedBlock.timestamp)
                 
                 history[index] = historyItem
             }

@@ -14,7 +14,7 @@ class DatabaseApiServiceImp: DatabaseApiService, ApiIdentifireHolder {
         self.socketCore = socketCore
     }
     
-    func getFullAccount(nameOrIds: [String], shoudSubscribe: Bool, completion: @escaping Completion<UserAccount>) {
+    func getFullAccount(nameOrIds: [String], shoudSubscribe: Bool, completion: @escaping Completion<[UserAccount]>) {
         
         let operation = FullAccountSocketOperation(method: .call,
                                                    operationId: socketCore.nextOperationId(),

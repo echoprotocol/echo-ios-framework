@@ -13,7 +13,7 @@ struct FullAccountSocketOperation: SocketOperation {
     var apiId: Int
     var accountsIds: [String]
     var shoudSubscribe: Bool
-    var completion: Completion<UserAccount>
+    var completion: Completion<[UserAccount]>
     
     func createParameters() -> [Any] {
         let array: [Any] = [apiId,
@@ -30,30 +30,42 @@ struct FullAccountSocketOperation: SocketOperation {
             
             switch response.response {
             case .error(let error):
-                let result = Result<UserAccount, ECHOError>(error: ECHOError.internalError(error.message))
+                let result = Result<[UserAccount], ECHOError>(error: ECHOError.internalError(error.message))
                 completion(result)
             case .result(let result):
                 
                 switch result {
                 case .array(let array):
                     
-                    if let container = array[safe: 0] as? [Any],
-                        let fullAccountDict = container[safe: 1] as? [String: Any] {
-                        
-                        let data = try JSONSerialization.data(withJSONObject: fullAccountDict, options: [])
-                        let fullAccount = try JSONDecoder().decode(UserAccount.self, from: data)
-                        let result = Result<UserAccount, ECHOError>(value: fullAccount)
-                        completion(result)
-                    } else {
+                    var accounts = [UserAccount]()
+                    var findedEncodeError = false
+                    
+                    for container in array {
+                        if let containerArray = container as? [Any],
+                            let fullAccountDict = containerArray[safe: 1] as? [String: Any] {
+                            
+                            let data = try JSONSerialization.data(withJSONObject: fullAccountDict, options: [])
+                            let fullAccount = try JSONDecoder().decode(UserAccount.self, from: data)
+                            accounts.append(fullAccount)
+                        } else {
+                            findedEncodeError = true
+                            break
+                        }
+                    }
+                    
+                    if findedEncodeError {
                         fallthrough
                     }
+
+                    let result = Result<[UserAccount], ECHOError>(value: accounts)
+                    completion(result)
 
                 default:
                     throw ECHOError.encodableMapping
                 }
             }
-        } catch {
-            let result = Result<UserAccount, ECHOError>(error: ECHOError.encodableMapping)
+        } catch let error {
+            let result = Result<[UserAccount], ECHOError>(error: ECHOError.encodableMapping)
             completion(result)
         }
     }

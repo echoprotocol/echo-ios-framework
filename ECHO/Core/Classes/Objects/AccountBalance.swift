@@ -23,7 +23,17 @@ public class AccountBalance: GrapheneObject, Decodable {
         let id = try values.decode(String.self, forKey: .id)
         assetType = try values.decode(String.self, forKey: .assetType)
         owner = try values.decode(String.self, forKey: .owner)
-        balance = try values.decode(Int.self, forKey: .balance)
+        let balance = try values.decode(IntOrString.self, forKey: .balance)
+        switch balance {
+        case .integer(let intValue):
+            self.balance = intValue
+        case .string(let stringValue):
+            if let intValue = Int(stringValue) {
+                self.balance = intValue
+            } else {
+                throw ECHOError.encodableMapping
+            }
+        }
         super.init(string: id)
     }
 }
