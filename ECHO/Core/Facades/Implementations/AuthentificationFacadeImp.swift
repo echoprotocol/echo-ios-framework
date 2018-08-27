@@ -51,7 +51,7 @@ class AuthentificationFacadeImp: AuthentificationFacade {
         }
         
         let key = "ECHO" + keychain.publicAddress()
-        let matches = account.account.owner?.keyAuths.compactMap { $0.address.addressString == key }
+        let matches = account.account.owner?.keyAuths.compactMap { $0.address.addressString == key }.filter { $0 == true }
         
         if let matches = matches {
             return matches.count > 0

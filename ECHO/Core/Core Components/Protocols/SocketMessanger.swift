@@ -16,6 +16,7 @@ public protocol SocketMessenger: class {
     
     var state: SocketConnectionState { get }
     var onConnect: (() -> ())? { get set }
+    var onFailedConnect: (() -> ())? { get set }
     var onDisconnect: (() -> ())? { get set }
     var onText: ((String) -> ())? { get set }
     

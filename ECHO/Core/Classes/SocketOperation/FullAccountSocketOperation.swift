@@ -57,4 +57,9 @@ struct FullAccountSocketOperation: SocketOperation {
             completion(result)
         }
     }
+    
+    func forceEnd() {
+        let result = Result<UserAccount, ECHOError>(error: ECHOError.connectionLost)
+        completion(result)
+    }
 }

@@ -34,6 +34,7 @@ protocol SocketOperation: JSONCodable {
     var apiId: Int { get }
     func createParameters() -> [Any]
     func complete(json: [String: Any])
+    func forceEnd()
 }
 
 enum OperationCodingKeys: String, CodingKey {
@@ -52,4 +53,6 @@ extension SocketOperation {
 
         return dictionary
     }
+    
+    func forceEnd() { }
 }
