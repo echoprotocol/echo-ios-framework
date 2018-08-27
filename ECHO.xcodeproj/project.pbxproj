@@ -1046,7 +1046,7 @@
 					"$(SRCROOT)/Libraries/secp256k1/lib",
 					"$(SRCROOT)/Libraries/openssl/lib",
 				);
-				MODULEMAP_FILE = "/Users/nikitafedorenko/ECHO-lib/ECHO/Supports Files/ECHO.modulemap";
+				MODULEMAP_FILE = "./ECHO/Supports Files/ECHO.modulemap";
 				PRODUCT_BUNDLE_IDENTIFIER = com.pixelplex.ECHO;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -1088,7 +1088,7 @@
 					"$(SRCROOT)/Libraries/secp256k1/lib",
 					"$(SRCROOT)/Libraries/openssl/lib",
 				);
-				MODULEMAP_FILE = "/Users/nikitafedorenko/ECHO-lib/ECHO/Supports Files/ECHO.modulemap";
+				MODULEMAP_FILE = "./ECHO/Supports Files/ECHO.modulemap";
 				PRODUCT_BUNDLE_IDENTIFIER = com.pixelplex.ECHO;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
