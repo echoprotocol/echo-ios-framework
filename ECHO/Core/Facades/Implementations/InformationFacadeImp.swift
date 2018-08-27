@@ -45,8 +45,8 @@ class InformationFacadeImp: InformationFacade, ECHOQueueble {
         
         services.databaseService.getFullAccount(nameOrIds: [nameOrID], shoudSubscribe: false) { (result) in
             switch result {
-            case .success(_):
-                let result = Result<Bool, ECHOError>(value: true)
+            case .success(let accounts):
+                let result = Result<Bool, ECHOError>(value: accounts.count > 0)
                 completion(result)
             case .failure(_):
                 let result = Result<Bool, ECHOError>(value: false)
