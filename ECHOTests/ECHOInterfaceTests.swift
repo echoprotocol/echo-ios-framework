@@ -157,5 +157,35 @@ class ECHOInterfaceTests: XCTestCase {
         waitForExpectations(timeout: timeout) { error in
             XCTAssertTrue(isAccReserved)
         }
-    }    
+    }
+    
+    func testIsOwnedBy() {
+        
+        //arrange
+        echo = ECHO(settings: Settings(build: {
+            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+        }))
+        let exp = expectation(description: "Account Getting")
+        var owned = false
+        let userName = "dima1"
+        let password = "P5J8pDyzznMmEdiBCdgB7VKtMBuxw5e4MAJEo3sfUbxcM"
+        
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.isOwnedBy(name: userName, password: password, completion: { (result) in
+                switch result {
+                case .success(_):
+                    owned = true
+                    exp.fulfill()
+                case .failure(let error):
+                    XCTFail("Reserving checking fail \(error)")
+                }
+            })
+        }
+        
+        //assert
+        waitForExpectations(timeout: timeout) { error in
+            XCTAssertTrue(owned)
+        }
+    }
 }
