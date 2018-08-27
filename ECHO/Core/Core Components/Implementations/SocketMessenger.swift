@@ -41,12 +41,12 @@ class SocketCoreComponentImp: SocketCoreComponent {
             completion(result)
         }
         
-        messenger.connect(toUrl: url)
-        
         messenger.onText = { [weak self] (result) in
             
             self?.handleMessage(result)
         }
+        
+        messenger.connect(toUrl: url)
     }
     
     func disconnect() {

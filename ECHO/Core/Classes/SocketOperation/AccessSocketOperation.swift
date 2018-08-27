@@ -10,7 +10,7 @@ enum AccessSocketOperationType: String {
     case login
     case database
     case networkBroadcast = "network_broadcast"
-    case networkNodes = "network_nodes"
+    case networkNodes = "network_node"
     case history
     case crypto
 }
@@ -53,13 +53,27 @@ struct AccessSocketOperation: SocketOperation {
     
     func complete(json: [String: Any]) {
         
-        guard let resultId = json["result"] as? Int else {
-            let result = Result<Int, ECHOError>(error: ECHOError.undefined)
+        do {
+            let data = try JSONSerialization.data(withJSONObject: json, options: [])
+            let response = try JSONDecoder().decode(ECHOResponse.self, from: data)
+            
+            switch response.response {
+            case .error(let error):
+                let result = Result<Int, ECHOError>(error: ECHOError.internalError(error.message))
+                completion(result)
+            case .result(let result):
+                
+                switch result {
+                case .integer(let id):
+                    let result = Result<Int, ECHOError>(value: id)
+                    completion(result)
+                default:
+                    throw ECHOError.encodableMapping
+                }
+            }
+        } catch {
+            let result = Result<Int, ECHOError>(error: ECHOError.encodableMapping)
             completion(result)
-            return
         }
-        
-        let result = Result<Int, ECHOError>(value: resultId)
-        completion(result)
     }
 }

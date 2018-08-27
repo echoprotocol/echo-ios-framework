@@ -55,8 +55,8 @@ class RevealFacadeImp: RevealApiFacade {
             case .success(_):
                 self?.registerAPIs()
             case .failure(let error):
-                self?.error = error
-            }
+                let error = Result<Bool, ECHOError>(error: error)
+                self?.registrationCompletion?(error)            }
         }
         
         socketCore.send(operation: operation)
@@ -181,7 +181,7 @@ class RevealFacadeImp: RevealApiFacade {
     fileprivate func registerNetworkNodesApi(group: DispatchGroup) {
         group.enter()
         
-        let operation = AccessSocketOperation(type: .networkBroadcast,
+        let operation = AccessSocketOperation(type: .networkNodes,
                                               method: .call,
                                               operationId: socketCore.nextOperationId()) { [weak self] (result) in
             
