@@ -13,7 +13,7 @@ struct FullAccountSocketOperation: SocketOperation {
     var apiId: Int
     var accountsIds: [String]
     var shoudSubscribe: Bool
-    var completion: Completion<[UserAccount]>
+    var completion: Completion<[String: UserAccount]>
     
     func createParameters() -> [Any] {
         let array: [Any] = [apiId,
@@ -30,23 +30,24 @@ struct FullAccountSocketOperation: SocketOperation {
             
             switch response.response {
             case .error(let error):
-                let result = Result<[UserAccount], ECHOError>(error: ECHOError.internalError(error.message))
+                let result = Result<[String: UserAccount], ECHOError>(error: ECHOError.internalError(error.message))
                 completion(result)
             case .result(let result):
                 
                 switch result {
                 case .array(let array):
                     
-                    var accounts = [UserAccount]()
+                    var accounts = [String: UserAccount]()
                     var findedEncodeError = false
                     
                     for container in array {
                         if let containerArray = container as? [Any],
+                            let nameOrId = containerArray[safe: 0] as? String,
                             let fullAccountDict = containerArray[safe: 1] as? [String: Any] {
                             
                             let data = try JSONSerialization.data(withJSONObject: fullAccountDict, options: [])
                             let fullAccount = try JSONDecoder().decode(UserAccount.self, from: data)
-                            accounts.append(fullAccount)
+                            accounts[nameOrId] = fullAccount
                         } else {
                             findedEncodeError = true
                             break
@@ -57,7 +58,7 @@ struct FullAccountSocketOperation: SocketOperation {
                         fallthrough
                     }
 
-                    let result = Result<[UserAccount], ECHOError>(value: accounts)
+                    let result = Result<[String: UserAccount], ECHOError>(value: accounts)
                     completion(result)
 
                 default:
@@ -65,7 +66,7 @@ struct FullAccountSocketOperation: SocketOperation {
                 }
             }
         } catch let error {
-            let result = Result<[UserAccount], ECHOError>(error: ECHOError.encodableMapping)
+            let result = Result<[String: UserAccount], ECHOError>(error: ECHOError.encodableMapping)
             completion(result)
         }
     }

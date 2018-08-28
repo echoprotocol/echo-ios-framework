@@ -6,9 +6,10 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
-protocol FeeFacade {
+public protocol FeeFacade {
     func getFeeForTransferOperation(fromNameOrId: String,
-                                    toNemOrId: String,
+                                    toNameOrId: String,
+                                    amount: UInt,
                                     asset: String,
-                                    completion: Completion<String>)
+                                    completion: @escaping Completion<AssetAmount>)
 }

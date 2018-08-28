@@ -6,7 +6,7 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
-public typealias InterfaceFacades = AuthentificationFacade & InformationFacade & SubscriptionFacade
+public typealias InterfaceFacades = AuthentificationFacade & InformationFacade & SubscriptionFacade & FeeFacade
 
 public class ECHO: InterfaceFacades {
     
@@ -14,6 +14,7 @@ public class ECHO: InterfaceFacades {
     let subscriptionFacade: SubscriptionFacade
     let informationFacade: InformationFacade
     let authentificationFacade: AuthentificationFacade
+    let feeFacade: FeeFacade
 
     public init(settings: Settings) {
 
@@ -44,6 +45,9 @@ public class ECHO: InterfaceFacades {
         let subscriptionServices = SubscriptionServices(databaseService: databaseService)
         subscriptionFacade = SubscriptionFacadeImp(services: subscriptionServices,
                                                    socketCore: socketCore)
+        
+        let feeServices = FeeFacadeServices(databaseService: databaseService)
+        feeFacade = FeeFacadeImp(services: feeServices)
     }
     
     public func start(completion: @escaping Completion<Bool>) {
@@ -92,4 +96,9 @@ public class ECHO: InterfaceFacades {
         informationFacade.getAccountHistroy(nameOrID: nameOrID, startId: startId, stopId: stopId, limit: limit, completion: completion)
     }
 
+    // MARK: FeeFacade
+    
+    public func getFeeForTransferOperation(fromNameOrId: String, toNameOrId: String, amount: UInt, asset: String, completion: @escaping Completion<AssetAmount>) {
+        feeFacade.getFeeForTransferOperation(fromNameOrId: fromNameOrId, toNameOrId: toNameOrId, amount: amount, asset: asset, completion: completion)
+    }
 }

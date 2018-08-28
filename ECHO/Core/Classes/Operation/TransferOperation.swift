@@ -26,6 +26,16 @@ struct TransferOperation: BaseOperation {
     var fee: AssetAmount
     var memo: Memo = Memo()
     
+    init(from: Account, to: Account, transferAmount: AssetAmount, fee: AssetAmount) {
+        
+        self.type = .transferOperation
+        
+        self.from = from
+        self.to = to
+        self.transferAmount = transferAmount
+        self.fee = fee
+    }
+    
     init(from decoder: Decoder) throws {
         
         type = .transferOperation
@@ -67,6 +77,8 @@ struct TransferOperation: BaseOperation {
         if memo.byteMessage != nil {
             dictionary[TransferOperationCodingKeys.memo.rawValue] = memo.toJSON()
         }
+        
+        array.append(dictionary)
         
         return array
     }

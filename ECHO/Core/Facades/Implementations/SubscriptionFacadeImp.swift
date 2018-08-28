@@ -43,7 +43,7 @@ class SubscriptionFacadeImp: SubscriptionFacade {
     fileprivate func getUserIdAndSetSubscriber(nameOrId: String, delegate: SubscribeAccountDelegate) {
         
         services.databaseService.getFullAccount(nameOrIds: [nameOrId], shoudSubscribe: true) { [weak self] (result) in
-            if let userAccounts = try? result.dematerialize(), let userAccount = userAccounts.first {
+            if let userAccounts = try? result.dematerialize(), let userAccount = userAccounts[nameOrId] {
                 self?.addDelegate(id: userAccount.account.id, delegate: delegate)
             }
         }
@@ -66,7 +66,7 @@ class SubscriptionFacadeImp: SubscriptionFacade {
     fileprivate func getAccountAdnNotify(id: String) {
         
         services.databaseService.getFullAccount(nameOrIds: [id], shoudSubscribe: true) { [weak self] (result) in
-            if let userAccounts = try? result.dematerialize(), let userAccount = userAccounts.first {
+            if let userAccounts = try? result.dematerialize(), let userAccount = userAccounts[id] {
                 self?.notifyDelegatesForUser(id: id, userAccount: userAccount)
             }
         }

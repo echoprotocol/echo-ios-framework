@@ -26,7 +26,7 @@ class InformationFacadeImp: InformationFacade, ECHOQueueble {
             switch result {
             case .success(let userAccounts):
                 
-                guard let account = userAccounts.first else {
+                guard let account = userAccounts[nameOrID] else {
                     let result = Result<Account, ECHOError>(error: ECHOError.resultNotFound)
                     completion(result)
                     return
@@ -45,8 +45,8 @@ class InformationFacadeImp: InformationFacade, ECHOQueueble {
         
         services.databaseService.getFullAccount(nameOrIds: [nameOrID], shoudSubscribe: false) { (result) in
             switch result {
-            case .success(_):
-                let result = Result<Bool, ECHOError>(value: true)
+            case .success(let accounts):
+                let result = Result<Bool, ECHOError>(value: accounts.count > 0)
                 completion(result)
             case .failure(_):
                 let result = Result<Bool, ECHOError>(value: false)
@@ -63,7 +63,7 @@ class InformationFacadeImp: InformationFacade, ECHOQueueble {
                 
                 let balances: [AccountBalance]
 
-                guard let account = userAccounts.first else {
+                guard let account = userAccounts[nameOrID] else {
                     let result = Result<[AccountBalance], ECHOError>(error: ECHOError.resultNotFound)
                     completion(result)
                     return

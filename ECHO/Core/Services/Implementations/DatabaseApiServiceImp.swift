@@ -14,7 +14,7 @@ class DatabaseApiServiceImp: DatabaseApiService, ApiIdentifireHolder {
         self.socketCore = socketCore
     }
     
-    func getFullAccount(nameOrIds: [String], shoudSubscribe: Bool, completion: @escaping Completion<[UserAccount]>) {
+    func getFullAccount(nameOrIds: [String], shoudSubscribe: Bool, completion: @escaping Completion<[String: UserAccount]>) {
         
         let operation = FullAccountSocketOperation(method: .call,
                                                    operationId: socketCore.nextOperationId(),
@@ -43,6 +43,18 @@ class DatabaseApiServiceImp: DatabaseApiService, ApiIdentifireHolder {
                                                 apiId: apiIdentifire,
                                                 blockNumber: blockNumber,
                                                 completion: completion)
+        
+        socketCore.send(operation: operation)
+    }
+    
+    func getRequiredFees(operations: [BaseOperation], asset: Asset, completion: @escaping Completion<[AssetAmount]>) {
+        
+        let operation = RequiredFeeSocketOperation(method: .call,
+                                                   operationId: socketCore.nextOperationId(),
+                                                   apiId: apiIdentifire,
+                                                   operations: operations,
+                                                   asset: asset,
+                                                   completion: completion)
         
         socketCore.send(operation: operation)
     }

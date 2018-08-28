@@ -6,7 +6,7 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
-struct AssetAmount: ECHOCodable, Decodable {
+public struct AssetAmount: ECHOCodable, Decodable {
     
     enum AssetAmountCodingKeys: String, CodingKey {
         case amount
@@ -16,7 +16,13 @@ struct AssetAmount: ECHOCodable, Decodable {
     let amount: UInt
     let asset: Asset
     
-    init(from decoder: Decoder) throws {
+    init(amount: UInt, asset: Asset) {
+        
+        self.amount = amount
+        self.asset = asset
+    }
+    
+    public init(from decoder: Decoder) throws {
         
         let values = try decoder.container(keyedBy: AssetAmountCodingKeys.self)
         amount = try values.decode(UInt.self, forKey: .amount)

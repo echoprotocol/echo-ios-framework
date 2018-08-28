@@ -25,7 +25,7 @@ class AuthentificationFacadeImp: AuthentificationFacade {
             switch result {
             case .success(let userAccounts):
                 
-                guard let account = userAccounts.first else {
+                guard let account = userAccounts[name] else {
                     let result = Result<UserAccount, ECHOError>(error: ECHOError.resultNotFound)
                     completion(result)
                     return

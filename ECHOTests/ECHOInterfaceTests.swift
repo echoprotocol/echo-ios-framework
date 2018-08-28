@@ -84,7 +84,7 @@ class ECHOInterfaceTests: XCTestCase {
         
         //act
         echo.start { [unowned self] (result) in
-            self.echo.getAccountHistroy(id: userId, startId: startId, stopId: stopId, limit: limit) { (result) in
+            self.echo.getAccountHistroy(nameOrID: userId, startId: startId, stopId: stopId, limit: limit) { (result) in
                 switch result {
                 case .success(let accountHistory):
                     history = accountHistory
