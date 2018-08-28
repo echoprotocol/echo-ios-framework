@@ -6,7 +6,6 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
-
 protocol ECHOQueueble: class {
     
     var queues: [ECHOQueue] { get set }

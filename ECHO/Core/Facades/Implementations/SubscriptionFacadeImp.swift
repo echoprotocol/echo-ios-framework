@@ -51,23 +51,50 @@ class SubscriptionFacadeImp: SubscriptionFacade {
     
     fileprivate func handleMessage(_ json: [String: Any]) {
         
-        let result = (json["params"] as? [Any])
-            .flatMap { $0[safe: 1] as? [Any]}
-            .flatMap { $0[safe: 0] as? [Any]}
-            .flatMap { $0[safe: 0] as? [String: Any]}
-            .flatMap { try? JSONSerialization.data(withJSONObject: $0, options: []) }
-            .flatMap { try? JSONDecoder().decode(Statistics.self, from: $0) }
+        guard let notification = (try? JSONSerialization.data(withJSONObject: json, options: []))
+            .flatMap({ try? JSONDecoder().decode(ECHONotification.self, from: $0)}) else {
+            return
+        }
         
-        if let result = result {
-            getAccountAdnNotify(id: result.owner)
+        switch notification.params {
+        case .array(let array):
+            
+            if let objectsArray = (array[safe: 1] as? [Any])
+                .flatMap({ $0[safe: 0] as? [Any]}) {
+                
+                var ids = Set<String>()
+                
+                for object in objectsArray {
+                    
+                    if let statistic = (object as? [String: Any])
+                        .flatMap({ try? JSONSerialization.data(withJSONObject: $0, options: [])})
+                        .flatMap({ try? JSONDecoder().decode(Statistics.self, from: $0) }) {
+                        
+                        ids.insert(statistic.owner)
+                    }
+                }
+                
+                getAccountAdnNotify(ids: ids)
+            }
+        default:
+            break
         }
     }
     
-    fileprivate func getAccountAdnNotify(id: String) {
+    fileprivate func getAccountAdnNotify(ids: Set<String>) {
         
-        services.databaseService.getFullAccount(nameOrIds: [id], shoudSubscribe: true) { [weak self] (result) in
-            if let userAccounts = try? result.dematerialize(), let userAccount = userAccounts[id] {
-                self?.notifyDelegatesForUser(id: id, userAccount: userAccount)
+        for id in ids {
+            guard let _ = subscribers[id] else {
+                continue
+            }
+            
+            services.databaseService.getFullAccount(nameOrIds: [id], shoudSubscribe: true) { [weak self] (result) in
+                
+                if let userAccounts = try? result.dematerialize(),
+                    let userAccount = userAccounts[id] {
+                    
+                    self?.notifyDelegatesForUser(id: id, userAccount: userAccount)
+                }
             }
         }
     }
