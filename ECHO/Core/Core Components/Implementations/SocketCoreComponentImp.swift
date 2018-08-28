@@ -15,6 +15,7 @@ final class SocketMessengerImp: SocketMessenger {
     var onConnect: (() -> ())?
     var onReconnect: (() -> ())?
     var onDisconnect: (() -> ())?
+    var onFailedConnect: (() -> ())?
     var onText: ((String) -> ())?
     
     var timeout: Double = 3
@@ -59,11 +60,13 @@ final class SocketMessengerImp: SocketMessenger {
                     self?.state = .disconnected
                     self?.onDisconnect?()
                 }
-                
+                                
                 socket.onText = strongSelf.onText
                 socket.connect()
                 
                 _ = semaphore.wait(timeout: .distantFuture)
+            } else {
+                strongSelf.onFailedConnect?()
             }
         }
         workingQueue.addOperation(operation)

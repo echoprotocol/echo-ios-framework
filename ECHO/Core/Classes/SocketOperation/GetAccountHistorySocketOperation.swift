@@ -72,4 +72,9 @@ struct GetAccountHistorySocketOperation: SocketOperation {
             completion(result)
         }
     }
+    
+    func forceEnd() {
+        let result = Result<[HistoryItem], ECHOError>(error: ECHOError.connectionLost)
+        completion(result)
+    }
 }

@@ -41,9 +41,19 @@ class SocketCoreComponentImp: SocketCoreComponent {
             completion(result)
         }
         
+        messenger.onDisconnect = {
+            let result = Result<Bool, ECHOError>(error: ECHOError.connectionLost)
+            completion(result)
+        }
+        
         messenger.onText = { [weak self] (result) in
             
             self?.handleMessage(result)
+        }
+        
+        messenger.onFailedConnect = {
+            let result = Result<Bool, ECHOError>(error: ECHOError.invalidUrl)
+            completion(result)
         }
         
         messenger.connect(toUrl: url)
@@ -56,6 +66,11 @@ class SocketCoreComponentImp: SocketCoreComponent {
     func send(operation: SocketOperation) {
         
         guard let jsonString: String = operation.toJSON() else {
+            return
+        }
+        
+        guard messenger.state == .connected else {
+            operation.forceEnd()
             return
         }
         
@@ -89,5 +104,13 @@ class SocketCoreComponentImp: SocketCoreComponent {
             .flatMap { try? JSONSerialization.jsonObject(with: $0, options: [])}
         
         return json as? [String: Any]
+    }
+    
+    fileprivate func forceEndAllOperations() {
+        
+        operationsMap.forEach { (_, operation) in
+            operation.forceEnd()
+        }
+        operationsMap = [Int: SocketOperation]()
     }
 }

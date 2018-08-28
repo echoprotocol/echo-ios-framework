@@ -41,4 +41,9 @@ struct SetSubscribeCallbackSocketOperation: SocketOperation {
             completion(result)
         }
     }
+    
+    func forceEnd() {
+        let result = Result<Bool, ECHOError>(error: ECHOError.connectionLost)
+        completion(result)
+    }
 }

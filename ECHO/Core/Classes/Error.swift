@@ -19,6 +19,12 @@ public enum ECHOError: Swift.Error {
     
     /// Indicates that required data is missed
     case resultNotFound
+    
+    /// Indicates that ulr is not valid
+    case invalidUrl
+    
+    /// Indicates that connection is lost
+    case connectionLost
 
     case undefined
 }

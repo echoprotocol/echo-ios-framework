@@ -48,4 +48,9 @@ struct BlockDataSocketOperation: SocketOperation {
             completion(result)
         }
     }
+    
+    func forceEnd() {
+        let result = Result<BlockData, ECHOError>(error: ECHOError.connectionLost)
+        completion(result)
+    }
 }

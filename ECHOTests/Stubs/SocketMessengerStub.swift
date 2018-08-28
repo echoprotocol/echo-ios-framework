@@ -26,6 +26,7 @@ class SocketMessengerStub: SocketMessenger {
     var state: SocketConnectionState = .connected
     var onConnect: (() -> ())?
     var onDisconnect: (() -> ())?
+    var onFailedConnect: (() -> ())?
     var onText: ((String) -> ())?
     
     func connect(toUrl: String) {
