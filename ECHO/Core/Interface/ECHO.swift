@@ -61,11 +61,11 @@ public class ECHO: InterfaceFacades {
     }
     
     public func unsubscribeToAccount(nameOrId: String, delegate: SubscribeAccountDelegate) {
-        unsubscribeToAccount(nameOrId: nameOrId, delegate: delegate)
+        subscriptionFacade.unsubscribeToAccount(nameOrId: nameOrId, delegate: delegate)
     }
     
-    public func unsubscribeAll(completion: Completion<Bool>) {
-        unsubscribeAll(completion: completion)
+    public func unsubscribeAll() {
+        subscriptionFacade.unsubscribeAll()
     }
     
     // MARK: AuthentificationFacade

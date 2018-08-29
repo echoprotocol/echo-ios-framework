@@ -65,9 +65,29 @@ class SocketMessengerStub: SocketMessenger {
             revealCryptoApi = true
         case AccountHistorySocketRequestStub.request:
             onText?(AccountHistorySocketRequestStub.response)
+        case AccountSocketRequestForNotificationStub.request:
+            onText?(AccountSocketRequestForNotificationStub.response)
+        case AccountSocketRequestForNotificationStub2.request:
+            onText?(AccountSocketRequestForNotificationStub2.response)
+        case AccountSocketRequestForNotificationStub3.request:
+            onText?(AccountSocketRequestForNotificationStub3.response)
+        case SubscribeSuccesNotificationStub.request:
+            onText?(SubscribeSuccesNotificationStub.response)
         default:
             break
         }
+    }
+    
+    func makeUserAccountTransferChangeEvent() {
+        onText?(ChangePasswordEventNotificationStub.response1)
+        onText?(ChangePasswordEventNotificationStub.response2)
+        onText?(ChangePasswordEventNotificationStub.response3)
+    }
+    
+    func makeUserAccountChangePasswordEvent() {
+        onText?(TransactionEventEventNotificationStub.response1)
+        onText?(TransactionEventEventNotificationStub.response2)
+        onText?(TransactionEventEventNotificationStub.response3)
     }
 }
 

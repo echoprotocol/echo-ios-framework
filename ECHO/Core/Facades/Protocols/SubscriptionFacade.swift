@@ -13,5 +13,5 @@ public protocol SubscribeAccountDelegate: class {
 public protocol SubscriptionFacade {
     func subscribeToAccount(nameOrId: String, delegate: SubscribeAccountDelegate)
     func unsubscribeToAccount(nameOrId: String, delegate: SubscribeAccountDelegate)
-    func unsubscribeAll(completion: Completion<Bool>)
+    func unsubscribeAll()
 }

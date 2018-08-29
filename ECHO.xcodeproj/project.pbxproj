@@ -54,6 +54,7 @@
 		B313B8E021305DAE0052B266 /* CryptoCoreImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B313B8DF21305DAE0052B266 /* CryptoCoreImp.swift */; };
 		B31CB1A520F3772C00FA5532 /* ECHO.h in Headers */ = {isa = PBXBuildFile; fileRef = B31CB1A320F3772C00FA5532 /* ECHO.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B3405CB221355A9000C18FE6 /* SocketCoreComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3405CB121355A9000C18FE6 /* SocketCoreComponent.swift */; };
+		B3405CB82135BB3F00C18FE6 /* SubscribtionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3405CB72135BB3F00C18FE6 /* SubscribtionTests.swift */; };
 		B348D09921011E7C00C29AE4 /* AddressKeysContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B348D09821011E7C00C29AE4 /* AddressKeysContainer.swift */; };
 		B348D09B21011E9D00C29AE4 /* BlockInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B348D09A21011E9C00C29AE4 /* BlockInformation.swift */; };
 		B348D09D21011EBD00C29AE4 /* InformationFacadeImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B348D09C21011EBC00C29AE4 /* InformationFacadeImp.swift */; };
@@ -115,6 +116,7 @@
 		B3D1C58A212DA6B000D1A7E6 /* StatisticStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D1C589212DA6B000D1A7E6 /* StatisticStub.swift */; };
 		B3D1C58C212DA6E700D1A7E6 /* OptionsStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D1C58B212DA6E700D1A7E6 /* OptionsStub.swift */; };
 		B3D1C58E212DA92500D1A7E6 /* JsonEncodingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D1C58D212DA92500D1A7E6 /* JsonEncodingTests.swift */; };
+		B3D7612C21366F3A00860C62 /* SocketNotificationsRequestStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D7612B21366F3A00860C62 /* SocketNotificationsRequestStub.swift */; };
 		D01BF7D0212AB00700917DB8 /* Vote.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01BF7CF212AB00700917DB8 /* Vote.swift */; };
 		D01BF7D2212ABE4E00917DB8 /* OptionalValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01BF7D1212ABE4E00917DB8 /* OptionalValue.swift */; };
 		D01BF7D4212AC7FE00917DB8 /* AccountAuthority.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01BF7D3212AC7FE00917DB8 /* AccountAuthority.swift */; };
@@ -206,6 +208,7 @@
 		B31CB1A320F3772C00FA5532 /* ECHO.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ECHO.h; sourceTree = "<group>"; };
 		B31CB1A420F3772C00FA5532 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B3405CB121355A9000C18FE6 /* SocketCoreComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketCoreComponent.swift; sourceTree = "<group>"; };
+		B3405CB72135BB3F00C18FE6 /* SubscribtionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribtionTests.swift; sourceTree = "<group>"; };
 		B348D09821011E7C00C29AE4 /* AddressKeysContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressKeysContainer.swift; sourceTree = "<group>"; };
 		B348D09A21011E9C00C29AE4 /* BlockInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockInformation.swift; sourceTree = "<group>"; };
 		B348D09C21011EBC00C29AE4 /* InformationFacadeImp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationFacadeImp.swift; sourceTree = "<group>"; };
@@ -268,6 +271,7 @@
 		B3D1C589212DA6B000D1A7E6 /* StatisticStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticStub.swift; sourceTree = "<group>"; };
 		B3D1C58B212DA6E700D1A7E6 /* OptionsStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsStub.swift; sourceTree = "<group>"; };
 		B3D1C58D212DA92500D1A7E6 /* JsonEncodingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonEncodingTests.swift; sourceTree = "<group>"; };
+		B3D7612B21366F3A00860C62 /* SocketNotificationsRequestStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketNotificationsRequestStub.swift; sourceTree = "<group>"; };
 		D01BF7CF212AB00700917DB8 /* Vote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vote.swift; sourceTree = "<group>"; };
 		D01BF7D1212ABE4E00917DB8 /* OptionalValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionalValue.swift; sourceTree = "<group>"; };
 		D01BF7D3212AC7FE00917DB8 /* AccountAuthority.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountAuthority.swift; sourceTree = "<group>"; };
@@ -356,6 +360,7 @@
 			isa = PBXGroup;
 			children = (
 				B30FE90B212F2AE70009BF57 /* AccountSocketRequestStub.swift */,
+				B3D7612B21366F3A00860C62 /* SocketNotificationsRequestStub.swift */,
 			);
 			path = SocketRequestsStubs;
 			sourceTree = "<group>";
@@ -588,6 +593,7 @@
 				B30FE90D212F2DAE0009BF57 /* FakeSocketCoreComponentTests.swift */,
 				B313B8C0212FF9850052B266 /* ECHOInterfaceTests.swift */,
 				B3C365432134116800FC60F4 /* CryptoCoreComponentTests.swift */,
+				B3405CB72135BB3F00C18FE6 /* SubscribtionTests.swift */,
 				B3D1C565212C9CCA00D1A7E6 /* Info.plist */,
 			);
 			path = ECHOTests;
@@ -880,6 +886,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B3D7612C21366F3A00860C62 /* SocketNotificationsRequestStub.swift in Sources */,
 				B3D1C584212DA5A500D1A7E6 /* AccountBalanceStub.swift in Sources */,
 				B3D1C586212DA63500D1A7E6 /* AccountStub.swift in Sources */,
 				B3C365442134116800FC60F4 /* CryptoCoreComponentTests.swift in Sources */,
@@ -892,6 +899,7 @@
 				B3D1C57C212D4D8100D1A7E6 /* DataEncodingTests.swift in Sources */,
 				B3D1C58C212DA6E700D1A7E6 /* OptionsStub.swift in Sources */,
 				B30FE90C212F2AE70009BF57 /* AccountSocketRequestStub.swift in Sources */,
+				B3405CB82135BB3F00C18FE6 /* SubscribtionTests.swift in Sources */,
 				B350E3A621341FD600408728 /* AddressKeysContainerTests.swift in Sources */,
 				B350E3A421341DB200408728 /* ECHOKeychainTest.swift in Sources */,
 				B30FE90E212F2DAE0009BF57 /* FakeSocketCoreComponentTests.swift in Sources */,

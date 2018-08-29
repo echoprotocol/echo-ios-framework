@@ -33,10 +33,15 @@ class SubscriptionFacadeImp: SubscriptionFacade {
     }
     
     func unsubscribeToAccount(nameOrId: String, delegate: SubscribeAccountDelegate) {
-        subscribers[nameOrId] = NSPointerArray()
+        
+        services.databaseService.getFullAccount(nameOrIds: [nameOrId], shoudSubscribe: true) { [weak self] (result) in
+            if let userAccounts = try? result.dematerialize(), let userAccount = userAccounts[nameOrId] {
+                self?.removeDelegate(id: userAccount.account.id, delegate: delegate)
+            }
+        }
     }
     
-    func unsubscribeAll(completion: Completion<Bool>) {
+    func unsubscribeAll() {
         subscribers = [String: NSPointerArray]()
     }
     
@@ -106,10 +111,21 @@ class SubscriptionFacadeImp: SubscriptionFacade {
         if let settedDelegates = subscribers[id] {
             delegates = settedDelegates
         } else {
-            delegates = NSPointerArray()
+            delegates = NSPointerArray.weakObjects()
         }
         
         delegates.addObject(delegate)
+        subscribers[id] = delegates
+    }
+    
+    fileprivate func removeDelegate(id: String, delegate: SubscribeAccountDelegate) {
+        
+        guard let delegates = subscribers[id] else {
+            return
+        }
+        
+        let index = delegates.index(ofAccessibilityElement: delegates)
+        delegates.removeObject(at: index)
         subscribers[id] = delegates
     }
     
