@@ -13,10 +13,12 @@ class AuthentificationFacadeImp: AuthentificationFacade {
     
     let services: AuthentificationFacadeServices
     let core: CryptoCoreComponent
+    let network: Network
     
-    init(services: AuthentificationFacadeServices, core: CryptoCoreComponent) {
+    init(services: AuthentificationFacadeServices, core: CryptoCoreComponent, network: Network) {
         self.services = services
         self.core = core
+        self.network = network
     }
     
     func isOwnedBy(name: String, password: String, completion: @escaping Completion<UserAccount>) {
@@ -56,7 +58,7 @@ class AuthentificationFacadeImp: AuthentificationFacade {
             return false
         }
         
-        let key = "ECHO" + keychain.publicAddress()
+        let key = network.prefix.rawValue + keychain.publicAddress()
         let matches = account.account.owner?.keyAuths.compactMap { $0.address.addressString == key }.filter { $0 == true }
         
         if let matches = matches {

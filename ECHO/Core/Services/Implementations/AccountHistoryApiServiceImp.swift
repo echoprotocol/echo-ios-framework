@@ -6,6 +6,7 @@
 //
 
 class AccountHistoryApiServiceImp: AccountHistoryApiService, ApiIdentifireHolder {
+    
     var apiIdentifire: Int = 0
     
     let socketCore: SocketCoreComponent

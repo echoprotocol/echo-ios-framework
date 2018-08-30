@@ -8,4 +8,6 @@
 protocol NetworkBroadcastApiService {
     
     init(socketCore: SocketCoreComponent)
+    
+    func broadcastTransactionWithCallback(transaction: Transaction, completion: @escaping Completion<Bool>)
 }

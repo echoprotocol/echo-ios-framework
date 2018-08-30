@@ -24,43 +24,44 @@ extension Data {
     
     static func fromUIntLikeUnsignedByteArray(_ input: UInt) -> Data {
         
-        switch input {
-        case 0...252:
-            return Data() + UInt8(input).bigEndian
-        case 253...0xffff:
-            return Data() + UInt16(input).bigEndian
-        case 0x10000...0xffffffff:
-            return Data() + UInt32(input).bigEndian
-        case 0x100000000...0xffffffffffffffff:
-            fallthrough
-        default:
-            return Data() + UInt64(input).bigEndian
+        var data = Data()
+        var input = input
+        while (input & 0xFFFFFFFFFFFFFF80) != 0 {
+            let changed = (UInt8(truncatingIfNeeded: input) & 0x7F) | 0x80
+            data.append(changed)
+            
+            input >>= 7
         }
+        
+        let last = (UInt8(truncatingIfNeeded: input) & 0x7F)
+        data.append(last)
+        
+        return data
     }
     
     static func fromInt8(_ input: Int) -> Data {
         
-        return Data() + Int8(clamping: input).bigEndian
+        return Data() + Int8(clamping: input).littleEndian
     }
     
     static func fromInt16(_ input: Int) -> Data {
 
-        return Data() + Int16(clamping: input).bigEndian
+        return Data() + Int16(clamping: input).littleEndian
     }
     
     static func fromInt32(_ input: Int) -> Data {
 
-        return Data() + Int32(clamping: input).bigEndian
+        return Data() + Int32(clamping: input).littleEndian
     }
     
     static func fromInt64(_ input: Int) -> Data {
 
-        return Data() + Int64(clamping: input).bigEndian
+        return Data() + Int64(clamping: input).littleEndian
     }
     
     static func fromUint64(_ input: UInt) -> Data {
 
-        return Data() + UInt64(clamping: input).bigEndian
+        return Data() + UInt64(clamping: input).littleEndian
     }
     
     static func fromBool(_ input: Bool) -> Data {

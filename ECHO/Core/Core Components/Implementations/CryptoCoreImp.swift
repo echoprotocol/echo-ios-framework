@@ -22,5 +22,5 @@ class CryptoCoreImp: CryptoCoreComponent {
     
     func sign(_ hash: Data, privateKey: Data) throws -> Data {
         return try Crypto.sign(hash, privateKey: privateKey)
-    }    
+    }
 }

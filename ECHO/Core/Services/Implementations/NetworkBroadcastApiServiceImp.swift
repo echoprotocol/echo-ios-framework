@@ -14,4 +14,15 @@ class NetworkBroadcastApiServiceImp: NetworkBroadcastApiService, ApiIdentifireHo
     required init(socketCore: SocketCoreComponent) {
         self.socketCore = socketCore
     }
+    
+    func broadcastTransactionWithCallback(transaction: Transaction, completion: @escaping Completion<Bool>) {
+        
+        let operation = TransactionSocketOperation(method: .call,
+                                                   operationId: socketCore.nextOperationId(),
+                                                   apiId: apiIdentifire,
+                                                   transaction: transaction,
+                                                   completion: completion)
+        
+        socketCore.send(operation: operation)
+    }
 }

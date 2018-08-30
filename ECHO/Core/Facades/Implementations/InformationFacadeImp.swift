@@ -274,7 +274,7 @@ class InformationFacadeImp: InformationFacade, ECHOQueueble {
                 guard let findedBlock = blocks[historyItem.blockNum] else { continue }
                 
                 let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+                dateFormatter.dateFormat = Settings.defaultDateFormat
                 historyItem.timestamp = dateFormatter.date(from: findedBlock.timestamp)
                 
                 history[index] = historyItem

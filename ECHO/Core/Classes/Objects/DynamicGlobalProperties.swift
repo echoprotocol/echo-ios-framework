@@ -1,13 +1,13 @@
 //
-//  BlockData.swift
+//  DynamicGlobalProperties.swift
 //  ECHO
 //
 //  Created by Fedorenko Nikita on 19.07.2018.
 //
 
-public struct BlockData: ECHOObject, Decodable {
+public struct DynamicGlobalProperties: ECHOObject, Decodable {
     
-    enum BlockDataCodingKeys: String, CodingKey {
+    enum DynamicGlobalPropertiesCodingKeys: String, CodingKey {
         case id
         case accountsRegisteredThisInterval = "accounts_registered_this_interval"
         case currentAslot = "current_aslot"
@@ -41,7 +41,7 @@ public struct BlockData: ECHOObject, Decodable {
     
     public init(from decoder: Decoder) throws {
         
-        let values = try decoder.container(keyedBy: BlockDataCodingKeys.self)
+        let values = try decoder.container(keyedBy: DynamicGlobalPropertiesCodingKeys.self)
         id = try values.decode(String.self, forKey: .id)
         accountsRegisteredThisInterval = try values.decode(Int.self, forKey: .accountsRegisteredThisInterval)
         currentAslot = try values.decode(Int.self, forKey: .currentAslot)

@@ -17,9 +17,9 @@ struct CreateAssetOperation: BaseOperation {
     
     let type: OperationType
     let extensions: Extensions = Extensions()
+    var fee: AssetAmount
     
     var asset: Asset
-    let fee: AssetAmount
     
     init(from decoder: Decoder) throws {
         

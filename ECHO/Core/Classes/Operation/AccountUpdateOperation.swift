@@ -18,12 +18,12 @@ struct AccountUpdateOperation: BaseOperation {
     
     let type: OperationType
     let extensions: Extensions = Extensions()
+    var fee: AssetAmount
     
     var account: Account
     let owner: OptionalValue<Authority>
     let active: OptionalValue<Authority>
     let newOptions: OptionalValue<AccountOptions>
-    let fee: AssetAmount
     
     init(from decoder: Decoder) throws {
         

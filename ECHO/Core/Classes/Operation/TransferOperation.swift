@@ -19,11 +19,11 @@ struct TransferOperation: BaseOperation {
     
     var type: OperationType
     var extensions: Extensions = Extensions()
+    var fee: AssetAmount
     
     var from: Account
     var to: Account
     var transferAmount: AssetAmount
-    var fee: AssetAmount
     var memo: Memo = Memo()
     
     init(from: Account, to: Account, transferAmount: AssetAmount, fee: AssetAmount) {

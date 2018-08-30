@@ -65,14 +65,9 @@ struct FullAccountSocketOperation: SocketOperation {
                     throw ECHOError.encodableMapping
                 }
             }
-        } catch let error {
+        } catch {
             let result = Result<[String: UserAccount], ECHOError>(error: ECHOError.encodableMapping)
             completion(result)
         }
-    }
-    
-    func forceEnd() {
-        let result = Result<[UserAccount], ECHOError>(error: ECHOError.connectionLost)
-        completion(result)
     }
 }

@@ -1,23 +1,24 @@
 //
-//  SetSubscribeCallbackSocketOperation.swift
+//  TransactionSocketOperation.swift
 //  ECHO
 //
-//  Created by Fedorenko Nikita on 11.07.2018.
+//  Created by Vladimir Sharaev on 29.08.2018.
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
-struct SetSubscribeCallbackSocketOperation: SocketOperation {
+struct TransactionSocketOperation: SocketOperation {
     
     var method: SocketOperationType
     var operationId: Int
     var apiId: Int
-    var needClearFilter: Bool
+    var transaction: Transaction
     var completion: Completion<Bool>
     
     func createParameters() -> [Any] {
+        
         let array: [Any] = [apiId,
-                            SocketOperationKeys.subscribeCallback.rawValue,
-                            [operationId, needClearFilter]]
+                            SocketOperationKeys.transaction.rawValue,
+                            [operationId, transaction.toJSON() ?? ""]]
         return array
     }
     
@@ -31,18 +32,18 @@ struct SetSubscribeCallbackSocketOperation: SocketOperation {
             case .error(let error):
                 let result = Result<Bool, ECHOError>(error: ECHOError.internalError(error.message))
                 completion(result)
-            case .result(_):
-                let result = Result<Bool, ECHOError>(value: true)
-                completion(result)
+            case .result(let result):
+                
+                switch result {
+                case .undefined:
+                    completion(Result<Bool, ECHOError>(value: true))
+                default:
+                    throw ECHOError.encodableMapping
+                }
             }
         } catch {
             let result = Result<Bool, ECHOError>(error: ECHOError.encodableMapping)
             completion(result)
         }
-    }
-    
-    func forceEnd() {
-        let result = Result<Bool, ECHOError>(error: ECHOError.connectionLost)
-        completion(result)
     }
 }

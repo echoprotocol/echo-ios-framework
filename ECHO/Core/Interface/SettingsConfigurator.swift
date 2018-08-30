@@ -46,6 +46,8 @@ public class Settings {
         cryproComponent = configurator.cryproComponent
         apiOptions = configurator.apiOptions
     }
+    
+    public static let defaultDateFormat = "yyyy-MM-dd'T'HH:mm:ss"
 }
 
 public enum NetworkPrefix: String {
@@ -59,7 +61,7 @@ public class Network {
     public let url: String
     public let prefix: NetworkPrefix
     
-    init(url: String, prefix: NetworkPrefix) {
+    public init(url: String, prefix: NetworkPrefix) {
         self.prefix = prefix
         self.url = url
     }

@@ -6,11 +6,13 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
-protocol TransactionFacade {
-    func sendTransferOperation(nameOrId: String,
+public protocol TransactionFacade {
+    
+    func sendTransferOperation(fromNameOrId: String,
                                password: String,
-                               toNameOrID: String,
-                               amount: String,
+                               toNameOrId: String,
+                               amount: UInt,
                                asset: String,
-                               completion: Completion<String>)
+                               message: String?,
+                               completion: @escaping Completion<Bool>)
 }

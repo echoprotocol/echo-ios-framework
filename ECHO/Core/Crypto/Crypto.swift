@@ -62,11 +62,7 @@ public final class Crypto {
     /// - Returns: 65-byte signature of the hash data
     /// - Throws: EthereumKitError.failedToSign in case private key was invalid
     public static func sign(_ hash: Data, privateKey: Data) throws -> Data {
-        let encrypter = EllipticCurveEncrypterSecp256k1()
-        guard var signatureInInternalFormat = encrypter.sign(hash: hash, privateKey: privateKey) else {
-            throw CryptoEthereumSwiftError.failedToSign
-        }
-        return encrypter.export(signature: &signatureInInternalFormat)
+        return Secp256k1.sign(hash, privateKey: privateKey, isPubKeyCompressed: true)
     }
     
     /// Validates a signature of a hash with publicKey. If valid, it guarantees that the hash was signed by the

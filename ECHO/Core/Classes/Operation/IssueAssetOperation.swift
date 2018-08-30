@@ -19,11 +19,11 @@ struct IssueAssetOperation: BaseOperation {
     
     let type: OperationType
     let extensions: Extensions = Extensions()
+    var fee: AssetAmount
     
     var issuer: Account
     let assetToIssue: AssetAmount
     var issueToAccount: Account
-    let fee: AssetAmount
     var memo: Memo = Memo()
     
     init(from decoder: Decoder) throws {

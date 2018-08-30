@@ -6,7 +6,7 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
-public typealias InterfaceFacades = AuthentificationFacade & InformationFacade & SubscriptionFacade & FeeFacade
+public typealias InterfaceFacades = AuthentificationFacade & InformationFacade & SubscriptionFacade & FeeFacade & TransactionFacade
 
 public class ECHO: InterfaceFacades {
     
@@ -15,6 +15,7 @@ public class ECHO: InterfaceFacades {
     let informationFacade: InformationFacade
     let authentificationFacade: AuthentificationFacade
     let feeFacade: FeeFacade
+    let transacitonFacade: TransactionFacade
 
     public init(settings: Settings) {
 
@@ -36,7 +37,7 @@ public class ECHO: InterfaceFacades {
                                       services: revealServices)
         
         let authServices = AuthentificationFacadeServices(databaseService: databaseService)
-        authentificationFacade = AuthentificationFacadeImp(services: authServices, core: settings.cryproComponent)
+        authentificationFacade = AuthentificationFacadeImp(services: authServices, core: settings.cryproComponent, network: settings.network)
         
         let informationServices = InformationFacadeServices(databaseService: databaseService,
                                                             historyService: historyService)
@@ -48,6 +49,9 @@ public class ECHO: InterfaceFacades {
         
         let feeServices = FeeFacadeServices(databaseService: databaseService)
         feeFacade = FeeFacadeImp(services: feeServices)
+        
+        let transactoinServices = TransactionFacadeServices(databaseService: databaseService, networkBroadcastService: networkBroadcastService)
+        transacitonFacade = TransactionFacadeImp(services: transactoinServices, cryptoCore: settings.cryproComponent, network: settings.network)
     }
     
     public func start(completion: @escaping Completion<Bool>) {
@@ -98,7 +102,35 @@ public class ECHO: InterfaceFacades {
 
     // MARK: FeeFacade
     
-    public func getFeeForTransferOperation(fromNameOrId: String, toNameOrId: String, amount: UInt, asset: String, completion: @escaping Completion<AssetAmount>) {
-        feeFacade.getFeeForTransferOperation(fromNameOrId: fromNameOrId, toNameOrId: toNameOrId, amount: amount, asset: asset, completion: completion)
+    public func getFeeForTransferOperation(fromNameOrId: String,
+                                           toNameOrId: String,
+                                           amount: UInt,
+                                           asset: String,
+                                           completion: @escaping Completion<AssetAmount>) {
+        
+        feeFacade.getFeeForTransferOperation(fromNameOrId: fromNameOrId,
+                                             toNameOrId: toNameOrId,
+                                             amount: amount,
+                                             asset: asset,
+                                             completion: completion)
+    }
+    
+    // MARK: TransactionFacade
+    
+    public func sendTransferOperation(fromNameOrId: String,
+                                      password: String,
+                                      toNameOrId: String,
+                                      amount: UInt,
+                                      asset: String,
+                                      message: String?,
+                                      completion: @escaping (Result<Bool, ECHOError>) -> Void) {
+        
+        transacitonFacade.sendTransferOperation(fromNameOrId: fromNameOrId,
+                                                password: password,
+                                                toNameOrId: toNameOrId,
+                                                amount: amount,
+                                                asset: asset,
+                                                message: message,
+                                                completion: completion)
     }
 }

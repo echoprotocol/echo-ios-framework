@@ -10,6 +10,7 @@ protocol BaseOperation: ECHOCodable, Decodable {
     
     var type: OperationType { get }
     var extensions: Extensions { get }
+    var fee: AssetAmount { get set }
     
     func getId() -> Int
 }

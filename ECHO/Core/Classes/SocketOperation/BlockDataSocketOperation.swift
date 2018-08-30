@@ -11,7 +11,7 @@ struct BlockDataSocketOperation: SocketOperation {
     var method: SocketOperationType
     var operationId: Int
     var apiId: Int
-    var completion: Completion<BlockData>
+    var completion: Completion<DynamicGlobalProperties>
     
     func createParameters() -> [Any] {
         
@@ -29,28 +29,28 @@ struct BlockDataSocketOperation: SocketOperation {
             
             switch response.response {
             case .error(let error):
-                let result = Result<BlockData, ECHOError>(error: ECHOError.internalError(error.message))
+                let result = Result<DynamicGlobalProperties, ECHOError>(error: ECHOError.internalError(error.message))
                 completion(result)
             case .result(let result):
                 
                 switch result {
                 case .dictionary(let dict):
                     let data = try JSONSerialization.data(withJSONObject: dict, options: [])
-                    let blockData = try JSONDecoder().decode(BlockData.self, from: data)
-                    let result = Result<BlockData, ECHOError>(value: blockData)
+                    let dynamicGlobalProperties = try JSONDecoder().decode(DynamicGlobalProperties.self, from: data)
+                    let result = Result<DynamicGlobalProperties, ECHOError>(value: dynamicGlobalProperties)
                     completion(result)
                 default:
                     throw ECHOError.encodableMapping
                 }
             }
         } catch {
-            let result = Result<BlockData, ECHOError>(error: ECHOError.encodableMapping)
+            let result = Result<DynamicGlobalProperties, ECHOError>(error: ECHOError.encodableMapping)
             completion(result)
         }
     }
     
     func forceEnd() {
-        let result = Result<BlockData, ECHOError>(error: ECHOError.connectionLost)
+        let result = Result<DynamicGlobalProperties, ECHOError>(error: ECHOError.connectionLost)
         completion(result)
     }
 }

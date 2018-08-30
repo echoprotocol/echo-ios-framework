@@ -24,6 +24,7 @@ struct AccountCreateOperation: BaseOperation {
     
     let type: OperationType
     let extensions: Extensions = Extensions()
+    var fee: AssetAmount
     
     let name: String
     let registrar: String
@@ -32,7 +33,6 @@ struct AccountCreateOperation: BaseOperation {
     let owner: OptionalValue<Authority>
     let active: OptionalValue<Authority>
     let options: OptionalValue<AccountOptions>
-    let fee: AssetAmount
     
     init(from decoder: Decoder) throws {
         
