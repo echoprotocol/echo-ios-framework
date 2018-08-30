@@ -58,4 +58,9 @@ struct RequiredFeeSocketOperation: SocketOperation {
             completion(result)
         }
     }
+    
+    func forceEnd() {
+        let result = Result<[AssetAmount], ECHOError>(error: ECHOError.connectionLost)
+        completion(result)
+    }
 }

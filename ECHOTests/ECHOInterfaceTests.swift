@@ -394,4 +394,64 @@ class ECHOInterfaceTests: XCTestCase {
             XCTAssertFalse(owned)
         }
     }
+    
+    func testGetFee() {
+        
+        //arrange
+        echo = ECHO(settings: Settings(build: {
+            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+        }))
+        let exp = expectation(description: "Fee Getting")
+        let fromUser = "dima1"
+        let toUser = "nikita1994"
+        var fee: AssetAmount!
+        
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.getFeeForTransferOperation(fromNameOrId: fromUser, toNameOrId: toUser, amount: 1, asset: "1.3.0", completion: { (result) in
+                switch result {
+                case .success(let aFee):
+                    fee = aFee
+                    exp.fulfill()
+                case .failure(let error):
+                    XCTFail("Fee getting failed \(error)")
+                }
+            })
+        }
+        
+        //assert
+        waitForExpectations(timeout: timeout) { error in
+            XCTAssertNotNil(fee)
+        }
+    }
+    
+    func testGetFeeFailed() {
+        
+        //arrange
+        echo = ECHO(settings: Settings(build: {
+            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+        }))
+        let exp = expectation(description: "Fee Getting")
+        let fromUser = "dima1 new account unreserved"
+        let toUser = "nikita1994"
+        var userError: Error!
+        
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.getFeeForTransferOperation(fromNameOrId: fromUser, toNameOrId: toUser, amount: 1, asset: "1.3.0", completion: { (result) in
+                switch result {
+                case .success(_):
+                    XCTFail("Getting fee for transfer with undefining user must fail")
+                case .failure(let error):
+                    userError = error
+                    exp.fulfill()
+                }
+            })
+        }
+        
+        //assert
+        waitForExpectations(timeout: timeout) { error in
+            XCTAssertNotNil(userError)
+        }
+    }
 }
