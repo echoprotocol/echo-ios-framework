@@ -34,77 +34,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ECHO/Core/Facades/Implementations/RevealFacadeImp.swift"
-            timestampString = "557066428.851675"
+            filePath = "ECHOTests/Stubs/SocketMessengerStub.swift"
+            timestampString = "557219518.496308"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "39"
-            endingLineNumber = "39"
-            landmarkName = "revealApi(completion:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "ECHO.RevealFacadeImp.revealApi(completion: (ECHO.Result&lt;Swift.Bool, ECHO.ECHOError&gt;) -&gt; ()) -&gt; ()"
-                  moduleName = "ECHO"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/nikitafedorenko/ECHO-lib/ECHO/Core/Facades/Implementations/RevealFacadeImp.swift"
-                  timestampString = "557066285.175295"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "39"
-                  endingLineNumber = "39"
-                  offsetFromSymbolStart = "105">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (ECHO.Result&lt;Swift.Bool, ECHO.ECHOError&gt;) -&gt; () in ECHO.RevealFacadeImp.revealApi(completion: (ECHO.Result&lt;Swift.Bool, ECHO.ECHOError&gt;) -&gt; ()) -&gt; ()"
-                  moduleName = "ECHO"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/nikitafedorenko/ECHO-lib/ECHO/Core/Facades/Implementations/RevealFacadeImp.swift"
-                  timestampString = "557066285.178441"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "39"
-                  endingLineNumber = "39"
-                  offsetFromSymbolStart = "86">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ECHO/Core/Facades/Implementations/RevealFacadeImp.swift"
-            timestampString = "557066428.851932"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "42"
-            endingLineNumber = "42"
-            landmarkName = "revealApi(completion:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ECHO/Core/Facades/Implementations/RevealFacadeImp.swift"
-            timestampString = "557066718.188964"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "44"
-            endingLineNumber = "44"
-            landmarkName = "revealApi(completion:)"
+            startingLineNumber = "43"
+            endingLineNumber = "43"
+            landmarkName = "write(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

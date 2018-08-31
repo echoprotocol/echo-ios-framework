@@ -34,6 +34,24 @@ struct ECHOResponse: Decodable {
     }
 }
 
+struct ECHONotification: Decodable {
+    
+    let method: String
+    let params: ECHOResponseResult
+    
+    private enum CodingKeys: String, CodingKey {
+        case method
+        case params
+    }
+    
+    init(from decoder: Decoder) throws {
+        
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        method = try values.decode(String.self, forKey: .method)
+        params = try values.decode(ECHOResponseResult.self, forKey: .params)
+    }
+}
+
 struct ECHOResponseError: Decodable {
     
     let code: Int

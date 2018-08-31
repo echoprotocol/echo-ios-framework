@@ -80,11 +80,13 @@ class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
             self?.services.databaseService.getFullAccount(nameOrIds: [fromNameOrId, toNameOrId], shoudSubscribe: false, completion: { (result) in
                 switch result {
                 case .success(let accounts):
-                    if let fromAccount = accounts[fromNameOrId] {
+                    if let fromAccount = accounts[fromNameOrId], let toAccount = accounts[toNameOrId] {
                         queue?.saveValue(fromAccount.account, forKey: TransferResultsKeys.loadedFromAccount.rawValue)
-                    }
-                    if let toAccount = accounts[toNameOrId] {
                         queue?.saveValue(toAccount.account, forKey: TransferResultsKeys.loadedToAccount.rawValue)
+                    } else {
+                        queue?.cancelAllOperations()
+                        let result = Result<Bool, ECHOError>(error: ECHOError.resultNotFound)
+                        completion(result)
                     }
                 case .failure(let error):
                     queue?.cancelAllOperations()
@@ -234,6 +236,10 @@ class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
                 case .success(let fees):
                     if let fee = fees.first {
                         queue?.saveValue(fee, forKey: TransferResultsKeys.fee.rawValue)
+                    } else {
+                        queue?.cancelAllOperations()
+                        let result = Result<Bool, ECHOError>(error: ECHOError.resultNotFound)
+                        completion(result)
                     }
                 case .failure(let error):
                     queue?.cancelAllOperations()

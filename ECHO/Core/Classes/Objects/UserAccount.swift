@@ -8,13 +8,13 @@
 
 public struct UserAccount: Decodable {
     
-    enum UserAccountCodingKeys: String, CodingKey {
+    private enum UserAccountCodingKeys: String, CodingKey {
         case account
         case balances
     }
     
-    let account: Account
-    let balances: [AccountBalance]
+    public let account: Account
+    public let balances: [AccountBalance]
     
     public init(from decoder: Decoder) throws {
         

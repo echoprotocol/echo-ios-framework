@@ -37,7 +37,7 @@ extension NSPointerArray {
     }
     
     func removeObject(at index: Int) {
-        guard index < count else { return }
+        guard index < count && index > 0 else { return }
         
         removePointer(at: index)
     }

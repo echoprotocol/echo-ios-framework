@@ -38,7 +38,6 @@ struct FullAccountSocketOperation: SocketOperation {
                 case .array(let array):
                     
                     var accounts = [String: UserAccount]()
-                    var findedEncodeError = false
                     
                     for container in array {
                         if let containerArray = container as? [Any],
@@ -49,13 +48,8 @@ struct FullAccountSocketOperation: SocketOperation {
                             let fullAccount = try JSONDecoder().decode(UserAccount.self, from: data)
                             accounts[nameOrId] = fullAccount
                         } else {
-                            findedEncodeError = true
-                            break
+                            fallthrough
                         }
-                    }
-                    
-                    if findedEncodeError {
-                        fallthrough
                     }
 
                     let result = Result<[String: UserAccount], ECHOError>(value: accounts)
@@ -69,5 +63,10 @@ struct FullAccountSocketOperation: SocketOperation {
             let result = Result<[String: UserAccount], ECHOError>(error: ECHOError.encodableMapping)
             completion(result)
         }
+    }
+    
+    func forceEnd() {
+        let result = Result<[String: UserAccount], ECHOError>(error: ECHOError.connectionLost)
+        completion(result)
     }
 }

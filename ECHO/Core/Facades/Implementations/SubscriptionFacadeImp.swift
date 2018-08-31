@@ -33,10 +33,15 @@ class SubscriptionFacadeImp: SubscriptionFacade {
     }
     
     func unsubscribeToAccount(nameOrId: String, delegate: SubscribeAccountDelegate) {
-        subscribers[nameOrId] = NSPointerArray()
+        
+        services.databaseService.getFullAccount(nameOrIds: [nameOrId], shoudSubscribe: true) { [weak self] (result) in
+            if let userAccounts = try? result.dematerialize(), let userAccount = userAccounts[nameOrId] {
+                self?.removeDelegate(id: userAccount.account.id, delegate: delegate)
+            }
+        }
     }
     
-    func unsubscribeAll(completion: Completion<Bool>) {
+    func unsubscribeAll() {
         subscribers = [String: NSPointerArray]()
     }
     
@@ -51,23 +56,50 @@ class SubscriptionFacadeImp: SubscriptionFacade {
     
     fileprivate func handleMessage(_ json: [String: Any]) {
         
-        let result = (json["params"] as? [Any])
-            .flatMap { $0[safe: 1] as? [Any]}
-            .flatMap { $0[safe: 0] as? [Any]}
-            .flatMap { $0[safe: 0] as? [String: Any]}
-            .flatMap { try? JSONSerialization.data(withJSONObject: $0, options: []) }
-            .flatMap { try? JSONDecoder().decode(Statistics.self, from: $0) }
+        guard let notification = (try? JSONSerialization.data(withJSONObject: json, options: []))
+            .flatMap({ try? JSONDecoder().decode(ECHONotification.self, from: $0)}) else {
+            return
+        }
         
-        if let result = result {
-            getAccountAdnNotify(id: result.owner)
+        switch notification.params {
+        case .array(let array):
+            
+            if let objectsArray = (array[safe: 1] as? [Any])
+                .flatMap({ $0[safe: 0] as? [Any]}) {
+                
+                var ids = Set<String>()
+                
+                for object in objectsArray {
+                    
+                    if let statistic = (object as? [String: Any])
+                        .flatMap({ try? JSONSerialization.data(withJSONObject: $0, options: [])})
+                        .flatMap({ try? JSONDecoder().decode(Statistics.self, from: $0) }) {
+                        
+                        ids.insert(statistic.owner)
+                    }
+                }
+                
+                getAccountAdnNotify(ids: ids)
+            }
+        default:
+            break
         }
     }
     
-    fileprivate func getAccountAdnNotify(id: String) {
+    fileprivate func getAccountAdnNotify(ids: Set<String>) {
         
-        services.databaseService.getFullAccount(nameOrIds: [id], shoudSubscribe: true) { [weak self] (result) in
-            if let userAccounts = try? result.dematerialize(), let userAccount = userAccounts[id] {
-                self?.notifyDelegatesForUser(id: id, userAccount: userAccount)
+        for id in ids {
+            guard let _ = subscribers[id] else {
+                continue
+            }
+            
+            services.databaseService.getFullAccount(nameOrIds: [id], shoudSubscribe: true) { [weak self] (result) in
+                
+                if let userAccounts = try? result.dematerialize(),
+                    let userAccount = userAccounts[id] {
+                    
+                    self?.notifyDelegatesForUser(id: id, userAccount: userAccount)
+                }
             }
         }
     }
@@ -79,10 +111,21 @@ class SubscriptionFacadeImp: SubscriptionFacade {
         if let settedDelegates = subscribers[id] {
             delegates = settedDelegates
         } else {
-            delegates = NSPointerArray()
+            delegates = NSPointerArray.weakObjects()
         }
         
         delegates.addObject(delegate)
+        subscribers[id] = delegates
+    }
+    
+    fileprivate func removeDelegate(id: String, delegate: SubscribeAccountDelegate) {
+        
+        guard let delegates = subscribers[id] else {
+            return
+        }
+        
+        let index = delegates.index(ofAccessibilityElement: delegates)
+        delegates.removeObject(at: index)
         subscribers[id] = delegates
     }
     
