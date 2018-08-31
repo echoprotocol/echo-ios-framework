@@ -14,7 +14,7 @@ struct RevealFacadeServices {
     var networkNodesService: ApiIdentifireHolder
 }
 
-class RevealFacadeImp: RevealApiFacade {
+final class RevealFacadeImp: RevealApiFacade {
     
     var socketCore: SocketCoreComponent
     var apiOptions: APIOption

@@ -11,7 +11,7 @@ public enum KeychainType: String {
     case memo
 }
 
-class AddressKeysContainer {
+final class AddressKeysContainer {
     
     let ownerKeychain: ECHOKeychain
     let activeKeychain: ECHOKeychain

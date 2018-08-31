@@ -6,7 +6,7 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
-class CryptoCoreImp: CryptoCoreComponent {
+final class CryptoCoreImp: CryptoCoreComponent {
     
     func generatePublicKey(withPrivateKey privateKeyData: Data, compression isCompression: Bool) -> Data {
         return Crypto.generatePublicKey(data: privateKeyData, compressed: isCompression)

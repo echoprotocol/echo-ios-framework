@@ -9,7 +9,7 @@ struct SubscriptionServices {
     var databaseService: DatabaseApiService
 }
 
-class SubscriptionFacadeImp: SubscriptionFacade {
+final class SubscriptionFacadeImp: SubscriptionFacade {
     
     let services: SubscriptionServices
     let socketCore: SocketCoreComponent

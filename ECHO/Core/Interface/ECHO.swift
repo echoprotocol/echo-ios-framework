@@ -8,7 +8,15 @@
 
 public typealias InterfaceFacades = AuthentificationFacade & InformationFacade & SubscriptionFacade & FeeFacade & TransactionFacade
 
-public class ECHO: InterfaceFacades {
+/**
+     This is an  entry point of library.
+ 
+     ## Important Notes ##
+     1. All functions provided by the library are enclosed in this class.
+     2. It is possible to replace standard classes of work with cryptography and a socket
+     3. Modification of the library parameters is done using the **Settings** class in the constructor of the class
+ */
+final public class ECHO: InterfaceFacades {
     
     let revealFacade: RevealApiFacade
     let subscriptionFacade: SubscriptionFacade

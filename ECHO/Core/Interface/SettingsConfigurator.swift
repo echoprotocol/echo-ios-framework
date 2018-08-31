@@ -21,14 +21,14 @@ public struct APIOption: OptionSet {
     static public let networkNodes  = APIOption(rawValue: 1 << 4)
 }
 
-public class Configurator {
+final public class Configurator {
     public var socketMessenger: SocketMessenger = SocketMessengerImp()
     public var cryproComponent: CryptoCoreComponent = CryptoCoreImp()
     public var apiOptions: APIOption = [.database, .accountHistory, .networkBroadcast, .crypto, .networkNodes]
     public var network: Network = Network(url: "wss://echo-devnet-node.pixelplex.io/", prefix: NetworkPrefix.echo)
 }
 
-public class Settings {
+final public class Settings {
     
     public let socketMessenger: SocketMessenger
     public let cryproComponent: CryptoCoreComponent
@@ -56,7 +56,7 @@ public enum NetworkPrefix: String {
     case bitsharesTestnet = "TEST"
 }
 
-public class Network {
+final public class Network {
     
     public let url: String
     public let prefix: NetworkPrefix
@@ -64,20 +64,5 @@ public class Network {
     public init(url: String, prefix: NetworkPrefix) {
         self.prefix = prefix
         self.url = url
-    }
-}
-
-class ServiceLocator {
-    
-    private var registry: [String: Any] = [:]
-    
-    func registerService<T>(service: T, path: String = "") {
-        let key = "\(T.self)" + path
-        registry[key] = service
-    }
-    
-    func tryGetService<T>(path: String = "") -> T? {
-        let key = "\(T.self)" + path
-        return registry[key] as? T
     }
 }

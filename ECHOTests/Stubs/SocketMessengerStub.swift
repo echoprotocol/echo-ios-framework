@@ -9,7 +9,7 @@
 import Foundation
 import ECHO
 
-class SocketMessengerStub: SocketMessenger {
+final class SocketMessengerStub: SocketMessenger {
     
     var connectedUrl: String?
     
