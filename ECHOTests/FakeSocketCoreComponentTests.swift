@@ -139,36 +139,36 @@ class SocketCoreComponentTests: XCTestCase {
         }
     }
 
-//    func testGettingFakeAccountHistory() {
+//    func testFakeTransfer() {
 //
 //        //arrange
 //        let messenger = SocketMessengerStub()
 //        echo = ECHO(settings: Settings(build: {
 //            $0.socketMessenger = messenger
 //        }))
-//        let exp = expectation(description: "History Getting")
-//        let userId = "1.2.18"
-//        let startId = "1.11.0"
-//        let stopId = "1.11.0"
-//        let limit = 100
-//        var history: [HistoryItem]!
-//
+//        let exp = expectation(description: "Transfer")
+//        let password = "P5JDUR7rSa9QXtYp9CF9HhnDRdPYz9mVpeiU812r2p5WVr8UcREY"
+//        let fromUser = "nikita1994"
+//        let toUser = "dima1"
+//        var isSuccess = false
+//        
+//        
 //        //act
 //        echo.start { [unowned self] (result) in
-//            self.echo.getAccountHistroy(nameOrID: userId, startId: startId, stopId: stopId, limit: limit) { (result) in
+//            self.echo.sendTransferOperation(fromNameOrId: fromUser, password: password, toNameOrId: toUser, amount: 1, asset: "1.3.0", message: "", completion: { (result) in
 //                switch result {
-//                case .success(let accountHistory):
-//                    history = accountHistory
+//                case .success(let result):
+//                    isSuccess = result
 //                    exp.fulfill()
-//                case .failure(_):
-//                    XCTFail("Getting fake account cant fail")
+//                case .failure(let error):
+//                    XCTFail("Transfer must be valid \(error)")
 //                }
-//            }
+//            })
 //        }
-//
+//        
 //        //assert
-//        waitForExpectations(timeout: 3) { error in
-//            XCTAssertEqual(history.count, limit)
+//        waitForExpectations(timeout: 10) { error in
+//            XCTAssertTrue(isSuccess)
 //        }
 //    }
 }

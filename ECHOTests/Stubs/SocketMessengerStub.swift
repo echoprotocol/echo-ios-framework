@@ -73,9 +73,19 @@ class SocketMessengerStub: SocketMessenger {
             onText?(AccountSocketRequestForNotificationStub3.response)
         case SubscribeSuccesNotificationStub.request:
             onText?(SubscribeSuccesNotificationStub.response)
+        case TransferAccountsSocketRequestStub.request:
+            onText?(TransferAccountsSocketRequestStub.response)
+        case TransferRequredFeeSocketRequestStub.request:
+            onText?(TransferRequredFeeSocketRequestStub.response)
+        case TransferChainIdSocketRequestStub.request:
+            onText?(TransferChainIdSocketRequestStub.response)
+        case TransferGlobalPropertiesSocketRequestStub.request:
+            onText?(TransferGlobalPropertiesSocketRequestStub.response)
+        case TransferResultSocketRequestStub.request:
+            onText?(TransferResultSocketRequestStub.response)
         default:
             break
-        }
+        }        
     }
     
     func makeUserAccountTransferChangeEvent() {

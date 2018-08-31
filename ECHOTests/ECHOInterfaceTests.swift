@@ -454,4 +454,36 @@ class ECHOInterfaceTests: XCTestCase {
             XCTAssertNotNil(userError)
         }
     }
+    
+    func testTransfer() {
+        
+        //arrange
+        echo = ECHO(settings: Settings(build: {
+            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+        }))
+        let exp = expectation(description: "Transfer")
+        let password = "P5JDUR7rSa9QXtYp9CF9HhnDRdPYz9mVpeiU812r2p5WVr8UcREY"
+        let fromUser = "nikita1994"
+        let toUser = "dima1"
+        var isSuccess = false
+        
+        
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.sendTransferOperation(fromNameOrId: fromUser, password: password, toNameOrId: toUser, amount: 1, asset: "1.3.0", message: "", completion: { (result) in
+                switch result {
+                case .success(let result):
+                    isSuccess = result
+                    exp.fulfill()
+                case .failure(_):
+                    XCTFail("Transfer must be valid")
+                }
+            })
+        }
+        
+        //assert
+        waitForExpectations(timeout: timeout) { error in
+            XCTAssertTrue(isSuccess)
+        }
+    }
 }
