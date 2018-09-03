@@ -6,6 +6,9 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
+/**
+    Represents vote model in graphene blockchain
+ */
 struct Vote: ECHOCodable {
     
     var type: Int = 0

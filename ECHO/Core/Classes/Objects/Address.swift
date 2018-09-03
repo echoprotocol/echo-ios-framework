@@ -6,6 +6,10 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
+/**
+    Represents account model in Graphene blockchain
+    [Address model details](https://dev-doc.myecho.app/classgraphene_1_1chain_1_1address.html)
+ */
 public struct Address: ECHOCodable {
     
     public var data: Data?

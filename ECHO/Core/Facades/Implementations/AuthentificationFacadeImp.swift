@@ -9,7 +9,10 @@ struct AuthentificationFacadeServices {
     let databaseService: DatabaseApiService
 }
 
-final class AuthentificationFacadeImp: AuthentificationFacade {
+/**
+    Implementation of [AuthentificationFacade](AuthentificationFacade) 
+ */
+final public class AuthentificationFacadeImp: AuthentificationFacade {
     
     let services: AuthentificationFacadeServices
     let core: CryptoCoreComponent
@@ -21,7 +24,7 @@ final class AuthentificationFacadeImp: AuthentificationFacade {
         self.network = network
     }
     
-    func isOwnedBy(name: String, password: String, completion: @escaping Completion<UserAccount>) {
+    public func isOwnedBy(name: String, password: String, completion: @escaping Completion<UserAccount>) {
         
         services.databaseService.getFullAccount(nameOrIds: [name], shoudSubscribe: false) { [weak self] (result) in
             switch result {
@@ -48,7 +51,7 @@ final class AuthentificationFacadeImp: AuthentificationFacade {
         }
     }
     
-    func changePassword(old: String, new: String, name: String, completion: @escaping Completion<UserAccount>) {
+    public func changePassword(old: String, new: String, name: String, completion: @escaping Completion<UserAccount>) {
         preconditionFailure("Implementation requred")
     }
     

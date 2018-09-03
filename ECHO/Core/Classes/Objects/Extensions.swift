@@ -6,6 +6,9 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
+/**
+    Represents additional payload of models
+ */
 public struct Extensions: ECHOCodable {
     
     enum ExtensionsCodingKeys: String, CodingKey {

@@ -6,6 +6,9 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
+/**
+    Class used to represent a specific asset on the Graphene platform
+ */
 struct Asset: ECHOObject, BytesCodable, Decodable {
     
     enum AssetCodingKeys: String, CodingKey {

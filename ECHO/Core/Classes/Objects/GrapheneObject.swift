@@ -6,6 +6,10 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
+/**
+    Represents base graphene object model
+    Encapsulates logic of parsing object id
+ */
 public class GrapheneObject {
     
     var idString: String 

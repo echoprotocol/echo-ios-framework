@@ -6,33 +6,39 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
-struct FeeFacadeServices {
+/**
+    Services for FeeFacade
+ */
+public struct FeeFacadeServices {
     var databaseService: DatabaseApiService
 }
 
-final class FeeFacadeImp: FeeFacade, ECHOQueueble {
+/**
+    Implementation of [FeeFacade](FeeFacade)
+ */
+final public class FeeFacadeImp: FeeFacade, ECHOQueueble {
     
     var queues: [ECHOQueue]
     var services: FeeFacadeServices
     
-    required init(services: FeeFacadeServices) {
+    init(services: FeeFacadeServices) {
 
         self.services = services
         self.queues = [ECHOQueue]()
     }
     
-    enum FeeResultsKeys: String {
+    private enum FeeResultsKeys: String {
         case loadedToAccount
         case loadedFromAccount
         case operation
         case fee
     }
     
-    func getFeeForTransferOperation(fromNameOrId: String,
-                                    toNameOrId: String,
-                                    amount: UInt,
-                                    asset: String,
-                                    completion: @escaping Completion<AssetAmount>) {
+    public func getFeeForTransferOperation(fromNameOrId: String,
+                                           toNameOrId: String,
+                                           amount: UInt,
+                                           asset: String,
+                                           completion: @escaping Completion<AssetAmount>) {
         
         let feeQueue = ECHOQueue()
         queues.append(feeQueue)
@@ -50,10 +56,10 @@ final class FeeFacadeImp: FeeFacade, ECHOQueueble {
         feeQueue.addOperation(lastOperation)
     }
     
-    func createGetAccountsOperation(_ queue: ECHOQueue,
-                                    _ fromNameOrId: String,
-                                    _ toNameOrId: String,
-                                    _ completion: @escaping Completion<AssetAmount>) -> Operation {
+    fileprivate func createGetAccountsOperation(_ queue: ECHOQueue,
+                                                _ fromNameOrId: String,
+                                                _ toNameOrId: String,
+                                                _ completion: @escaping Completion<AssetAmount>) -> Operation {
         
         let getAccountsOperation = BlockOperation()
         
@@ -89,10 +95,10 @@ final class FeeFacadeImp: FeeFacade, ECHOQueueble {
         return getAccountsOperation
     }
     
-    func createBildTransferOperation(_ queue: ECHOQueue,
-                                     _ amount: UInt,
-                                     _ asset: String,
-                                     _ completion: @escaping Completion<AssetAmount>) -> Operation {
+    fileprivate func createBildTransferOperation(_ queue: ECHOQueue,
+                                                 _ amount: UInt,
+                                                 _ asset: String,
+                                                 _ completion: @escaping Completion<AssetAmount>) -> Operation {
         
         let bildTransferOperation = BlockOperation()
         
@@ -116,9 +122,9 @@ final class FeeFacadeImp: FeeFacade, ECHOQueueble {
         return bildTransferOperation
     }
     
-    func createGetRequiredFeeOperation(_ queue: ECHOQueue,
-                                       _ asset: String,
-                                       _ completion: @escaping Completion<AssetAmount>) -> Operation {
+    fileprivate func createGetRequiredFeeOperation(_ queue: ECHOQueue,
+                                                   _ asset: String,
+                                                   _ completion: @escaping Completion<AssetAmount>) -> Operation {
         
         let getRequiredFee = BlockOperation()
         
@@ -150,7 +156,7 @@ final class FeeFacadeImp: FeeFacade, ECHOQueueble {
         return getRequiredFee
     }
     
-    func createFeeComletionOperation(_ queue: ECHOQueue, _ completion: @escaping Completion<AssetAmount>) -> Operation {
+    fileprivate func createFeeComletionOperation(_ queue: ECHOQueue, _ completion: @escaping Completion<AssetAmount>) -> Operation {
         
         let feeComletionOperation = BlockOperation()
         

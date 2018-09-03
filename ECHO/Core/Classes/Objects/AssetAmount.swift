@@ -6,6 +6,9 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
+/**
+    Class used to represent a specific amount of a certain asset
+ */
 public struct AssetAmount: ECHOCodable, Decodable {
     
     enum AssetAmountCodingKeys: String, CodingKey {

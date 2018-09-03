@@ -14,7 +14,10 @@ struct RevealFacadeServices {
     var networkNodesService: ApiIdentifireHolder
 }
 
-final class RevealFacadeImp: RevealApiFacade {
+/**
+    Implementation of [RevealApiFacade](RevealApiFacade)
+ */
+final public class RevealFacadeImp: RevealApiFacade {
     
     var socketCore: SocketCoreComponent
     var apiOptions: APIOption
@@ -24,9 +27,9 @@ final class RevealFacadeImp: RevealApiFacade {
     
     let dispatchGroup = DispatchGroup()
     
-    required init(socketCore: SocketCoreComponent,
-                  options: APIOption,
-                  services: RevealFacadeServices) {
+    init(socketCore: SocketCoreComponent,
+         options: APIOption,
+         services: RevealFacadeServices) {
         apiOptions = options
         self.socketCore = socketCore
         self.services = services

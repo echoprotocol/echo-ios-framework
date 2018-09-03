@@ -5,7 +5,7 @@
 //  Created by Fedorenko Nikita on 19.07.2018.
 //
 
-public enum KeychainType: String {
+enum KeychainType: String {
     case owner
     case active
     case memo

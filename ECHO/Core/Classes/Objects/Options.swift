@@ -5,6 +5,9 @@
 //  Created by Fedorenko Nikita on 18.07.2018.
 //
 
+/**
+    Represents Options in Graphene blockchain
+ */
 public struct Options: Decodable {
     
     enum OptionsCodingKeys: String, CodingKey {

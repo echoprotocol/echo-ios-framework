@@ -6,19 +6,25 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
-struct TransactionFacadeServices {
+/**
+    Services for TransactionFacade
+ */
+public struct TransactionFacadeServices {
     var databaseService: DatabaseApiService
     var networkBroadcastService: NetworkBroadcastApiService
 }
 
-final class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
+/**
+    Implementation of [TransactionFacade](TransactionFacade)
+ */
+final public class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
     
     var queues: [ECHOQueue]
     let services: TransactionFacadeServices
     let network: Network
     let cryptoCore: CryptoCoreComponent
     
-    required init(services: TransactionFacadeServices, cryptoCore: CryptoCoreComponent, network: Network) {
+    public init(services: TransactionFacadeServices, cryptoCore: CryptoCoreComponent, network: Network) {
         
         self.services = services
         self.network = network
@@ -36,13 +42,13 @@ final class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
         case transaciton
     }
     
-    func sendTransferOperation(fromNameOrId: String,
-                               password: String,
-                               toNameOrId: String,
-                               amount: UInt,
-                               asset: String,
-                               message: String?,
-                               completion: @escaping Completion<Bool>) {
+    public func sendTransferOperation(fromNameOrId: String,
+                                      password: String,
+                                      toNameOrId: String,
+                                      amount: UInt,
+                                      asset: String,
+                                      message: String?,
+                                      completion: @escaping Completion<Bool>) {
         
         let transferQueue = ECHOQueue()
         queues.append(transferQueue)
@@ -66,10 +72,10 @@ final class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
         transferQueue.addOperation(lastOperation)
     }
     
-    func createGetAccountsOperation(_ queue: ECHOQueue,
-                                    _ fromNameOrId: String,
-                                    _ toNameOrId: String,
-                                    _ completion: @escaping Completion<Bool>) -> Operation {
+    fileprivate func createGetAccountsOperation(_ queue: ECHOQueue,
+                                                _ fromNameOrId: String,
+                                                _ toNameOrId: String,
+                                                _ completion: @escaping Completion<Bool>) -> Operation {
         
         let getAccountsOperation = BlockOperation()
         
@@ -103,8 +109,8 @@ final class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
         return getAccountsOperation
     }
     
-    func createGetBlockDataOperation(_ queue: ECHOQueue,
-                                     _ completion: @escaping Completion<Bool>) -> Operation {
+    fileprivate func createGetBlockDataOperation(_ queue: ECHOQueue,
+                                                 _ completion: @escaping Completion<Bool>) -> Operation {
         
         let getBlockDataOperation = BlockOperation()
         
@@ -131,8 +137,8 @@ final class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
         return getBlockDataOperation
     }
     
-    func createChainIdOperation(_ queue: ECHOQueue,
-                                _ completion: @escaping Completion<Bool>) -> Operation {
+    fileprivate func createChainIdOperation(_ queue: ECHOQueue,
+                                            _ completion: @escaping Completion<Bool>) -> Operation {
         
         let chainIdOperation = BlockOperation()
         
@@ -159,11 +165,11 @@ final class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
         return chainIdOperation
     }
     
-    func createBildTransferOperation(_ queue: ECHOQueue,
-                                     _ password: String,
-                                     _ amount: UInt,
-                                     _ asset: String,
-                                     _ completion: @escaping Completion<Bool>) -> Operation {
+    fileprivate func createBildTransferOperation(_ queue: ECHOQueue,
+                                                 _ password: String,
+                                                 _ amount: UInt,
+                                                 _ asset: String,
+                                                 _ completion: @escaping Completion<Bool>) -> Operation {
         
         let bildTransferOperation = BlockOperation()
         
@@ -198,7 +204,7 @@ final class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
         return bildTransferOperation
     }
     
-    func checkAccount(account: Account, name: String?, password: String) -> Bool {
+    fileprivate func checkAccount(account: Account, name: String?, password: String) -> Bool {
         
         guard let name = name else {
             return false
@@ -218,9 +224,9 @@ final class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
         return false
     }
     
-    func createGetRequiredFeeOperation(_ queue: ECHOQueue,
-                                       _ asset: String,
-                                       _ completion: @escaping Completion<Bool>) -> Operation {
+    fileprivate func createGetRequiredFeeOperation(_ queue: ECHOQueue,
+                                                   _ asset: String,
+                                                   _ completion: @escaping Completion<Bool>) -> Operation {
         
         let getRequiredFee = BlockOperation()
         
@@ -256,9 +262,9 @@ final class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
         return getRequiredFee
     }
     
-    func createBildTransactionOperation(_ queue: ECHOQueue,
-                                        _ password: String,
-                                        _ completion: @escaping Completion<Bool>) -> Operation {
+    fileprivate func createBildTransactionOperation(_ queue: ECHOQueue,
+                                                    _ password: String,
+                                                    _ completion: @escaping Completion<Bool>) -> Operation {
         
         let bildTransferOperation = BlockOperation()
         
@@ -294,8 +300,8 @@ final class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
         return bildTransferOperation
     }
     
-    func createSendTransactionOperation(_ queue: ECHOQueue,
-                                        _ completion: @escaping Completion<Bool>) -> Operation {
+    fileprivate func createSendTransactionOperation(_ queue: ECHOQueue,
+                                                    _ completion: @escaping Completion<Bool>) -> Operation {
     
         let sendTransactionOperation = BlockOperation()
         
