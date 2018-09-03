@@ -5,7 +5,7 @@
 //  Created by Fedorenko Nikita on 22.08.2018.
 //
 
-public struct AnyDecodable: Decodable {
+struct AnyDecodable: Decodable {
     public var value: Any
     
     private struct CodingKeys: CodingKey {

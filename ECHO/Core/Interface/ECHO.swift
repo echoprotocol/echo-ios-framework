@@ -6,7 +6,7 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
-public typealias InterfaceFacades = AuthentificationFacade & InformationFacade & SubscriptionFacade & FeeFacade & TransactionFacade
+typealias InterfaceFacades = AuthentificationFacade & InformationFacade & SubscriptionFacade & FeeFacade & TransactionFacade
 
 /**
      This is an  entry point of library.
