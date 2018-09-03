@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// Typealias for closure with result and error
 public typealias Completion<T> = (_ result: Result<T, ECHOError>) -> Void
 
 /// An enum representing either a failure with an explanatory error, or a success with a result value.
@@ -126,7 +127,7 @@ public enum Result<T, Error: Swift.Error>: CustomStringConvertible, CustomDebugS
 /// This can be used to describe `Result`s where failures will never
 /// be generated. For example, `Result<Int, NoError>` describes a result that
 /// contains an `Int`eger and is guaranteed never to be a `failure`.
-public enum NoError: Swift.Error, Equatable {
+enum NoError: Swift.Error, Equatable {
     public static func == (lhs: NoError, rhs: NoError) -> Bool {
         return true
     }
@@ -134,7 +135,7 @@ public enum NoError: Swift.Error, Equatable {
 
 /// A type-erased error which wraps an arbitrary error instance. This should be
 /// useful for generic contexts.
-public struct AnyError: Swift.Error {
+struct AnyError: Swift.Error {
     /// The underlying error.
     public let error: Swift.Error
     

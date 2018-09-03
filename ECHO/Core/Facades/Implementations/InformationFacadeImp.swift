@@ -10,7 +10,10 @@ struct InformationFacadeServices {
     var historyService: AccountHistoryApiService
 }
 
-final class InformationFacadeImp: InformationFacade, ECHOQueueble {
+/**
+    Implementation of [InformationFacade](InformationFacade)
+ */
+final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
     
     var queues: [ECHOQueue]
     let services: InformationFacadeServices
@@ -20,7 +23,7 @@ final class InformationFacadeImp: InformationFacade, ECHOQueueble {
         self.queues = [ECHOQueue]()
     }
     
-    func getAccount(nameOrID: String, completion: @escaping Completion<Account>) {
+    public func getAccount(nameOrID: String, completion: @escaping Completion<Account>) {
         
         services.databaseService.getFullAccount(nameOrIds: [nameOrID], shoudSubscribe: false) { (result) in
             switch result {
@@ -41,7 +44,7 @@ final class InformationFacadeImp: InformationFacade, ECHOQueueble {
         }
     }
     
-    func isAccountReserved(nameOrID: String, completion: @escaping Completion<Bool>) {
+    public func isAccountReserved(nameOrID: String, completion: @escaping Completion<Bool>) {
         
         services.databaseService.getFullAccount(nameOrIds: [nameOrID], shoudSubscribe: false) { (result) in
             switch result {
@@ -55,7 +58,7 @@ final class InformationFacadeImp: InformationFacade, ECHOQueueble {
         }
     }
     
-    func getBalance(nameOrID: String, asset: String?, completion: @escaping Completion<[AccountBalance]>) {
+    public func getBalance(nameOrID: String, asset: String?, completion: @escaping Completion<[AccountBalance]>) {
         
         services.databaseService.getFullAccount(nameOrIds: [nameOrID], shoudSubscribe: false) { (result) in
             switch result {
@@ -86,7 +89,7 @@ final class InformationFacadeImp: InformationFacade, ECHOQueueble {
     
     // MARK: History
     
-    enum AccountHistoryResultsKeys: String {
+    private enum AccountHistoryResultsKeys: String {
         case accountId
         case historyItems
         case findedBlockNums
@@ -95,7 +98,7 @@ final class InformationFacadeImp: InformationFacade, ECHOQueueble {
         case loadedAccounts
     }
     
-    func getAccountHistroy(nameOrID: String, startId: String, stopId: String, limit: Int, completion: @escaping Completion<[HistoryItem]>) {
+    public func getAccountHistroy(nameOrID: String, startId: String, stopId: String, limit: Int, completion: @escaping Completion<[HistoryItem]>) {
         
         let accountHistoryQueue = ECHOQueue()
         addQueue(accountHistoryQueue)
@@ -121,7 +124,9 @@ final class InformationFacadeImp: InformationFacade, ECHOQueueble {
         accountHistoryQueue.addOperation(lastOperation)
     }
     
-    func createGetAccountOperation(_ queue: ECHOQueue, _ nameOrID: String, _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
+    fileprivate func createGetAccountOperation(_ queue: ECHOQueue,
+                                               _ nameOrID: String,
+                                               _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
         
         let getAccountOperation = BlockOperation()
         
@@ -148,9 +153,9 @@ final class InformationFacadeImp: InformationFacade, ECHOQueueble {
         return getAccountOperation
     }
     
-    func createGetHistoryOperation(_ queue: ECHOQueue,
-                                   startId: String, stopId: String, limit: Int,
-                                   completion: @escaping Completion<[HistoryItem]>) -> Operation {
+    fileprivate func createGetHistoryOperation(_ queue: ECHOQueue,
+                                               startId: String, stopId: String, limit: Int,
+                                               completion: @escaping Completion<[HistoryItem]>) -> Operation {
         
         let getHistoryOperation = BlockOperation()
         
@@ -182,7 +187,7 @@ final class InformationFacadeImp: InformationFacade, ECHOQueueble {
         return getHistoryOperation
     }
     
-    func createGetBlocksOperation(_ queue: ECHOQueue, _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
+    fileprivate func createGetBlocksOperation(_ queue: ECHOQueue, _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
         
         let getBlockOperation = BlockOperation()
         
@@ -227,7 +232,7 @@ final class InformationFacadeImp: InformationFacade, ECHOQueueble {
         return getBlockOperation
     }
     
-    func createGetAccountsOperation(_ queue: ECHOQueue, _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
+    fileprivate func createGetAccountsOperation(_ queue: ECHOQueue, _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
         
         let getAccountsOperation = BlockOperation()
         
@@ -257,7 +262,7 @@ final class InformationFacadeImp: InformationFacade, ECHOQueueble {
         return getAccountsOperation
     }
     
-    func createMergeBlocksInHistoryOperation(_ queue: ECHOQueue, _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
+    fileprivate func createMergeBlocksInHistoryOperation(_ queue: ECHOQueue, _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
         
         let mergeBlocksInHistoryOperation = BlockOperation()
         
@@ -286,7 +291,7 @@ final class InformationFacadeImp: InformationFacade, ECHOQueueble {
         return mergeBlocksInHistoryOperation
     }
     
-    func createMergeAccountsInHistoryOperation(_ queue: ECHOQueue, _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
+    fileprivate func createMergeAccountsInHistoryOperation(_ queue: ECHOQueue, _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
         
         let mergeAccountsInHistoryOperation = BlockOperation()
         
@@ -338,7 +343,7 @@ final class InformationFacadeImp: InformationFacade, ECHOQueueble {
         return mergeAccountsInHistoryOperation
     }
     
-    func createHistoryComletionOperation(_ queue: ECHOQueue, _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
+    fileprivate func createHistoryComletionOperation(_ queue: ECHOQueue, _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
         
         let historyComletionOperation = BlockOperation()
         
@@ -354,21 +359,21 @@ final class InformationFacadeImp: InformationFacade, ECHOQueueble {
         return historyComletionOperation
     }
     
-    func findAccountIn(_ array: [UserAccount], accountId: String) -> Account? {
+    fileprivate func findAccountIn(_ array: [UserAccount], accountId: String) -> Account? {
         
         return array.first(where: {
             return $0.account.id == accountId
         })?.account
     }
     
-    func findDataToLoadFromHistoryItems(_ items: [HistoryItem]) -> (blockNums: Set<Int>, accountIds: Set<String>) {
+    fileprivate func findDataToLoadFromHistoryItems(_ items: [HistoryItem]) -> (blockNums: Set<Int>, accountIds: Set<String>) {
         
         let blockNums = fingBlockNumsFromHistoryItems(items)
         let accountIds = findAccountsIds(items)
         return (blockNums, accountIds)
     }
     
-    func fingBlockNumsFromHistoryItems(_ items: [HistoryItem]) -> Set<Int> {
+    fileprivate func fingBlockNumsFromHistoryItems(_ items: [HistoryItem]) -> Set<Int> {
         
         var blocksNums = Set<Int>()
         items.forEach {
@@ -378,7 +383,7 @@ final class InformationFacadeImp: InformationFacade, ECHOQueueble {
         return blocksNums
     }
     
-    func findAccountsIds(_ items: [HistoryItem]) -> Set<String> {
+    fileprivate func findAccountsIds(_ items: [HistoryItem]) -> Set<String> {
         
         var accountsIds = Set<String>()
         

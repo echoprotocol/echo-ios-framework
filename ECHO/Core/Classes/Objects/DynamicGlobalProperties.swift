@@ -5,6 +5,10 @@
 //  Created by Fedorenko Nikita on 19.07.2018.
 //
 
+/**
+    Represents account model in Graphene blockchain
+    [Dynamic global properties details] (https://dev-doc.myecho.app/classgraphene_1_1chain_1_1dynamic__global__property__object.html)
+ */
 public struct DynamicGlobalProperties: ECHOObject, Decodable {
     
     enum DynamicGlobalPropertiesCodingKeys: String, CodingKey {

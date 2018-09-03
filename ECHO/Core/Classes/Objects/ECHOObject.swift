@@ -7,7 +7,7 @@
 //
 //
 
-public protocol ECHOObject {
+protocol ECHOObject {
     var id: String { get }
 }
 

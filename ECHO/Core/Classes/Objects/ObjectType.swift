@@ -6,8 +6,10 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
-import Foundation
-
+/**
+    Enum type used to list all possible object types in Graphene blockchain
+    Every element contains information about it's type and space
+ */
 enum ObjectType: Int {
     case base = 1
     case account

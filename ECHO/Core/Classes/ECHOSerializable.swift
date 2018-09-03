@@ -57,7 +57,7 @@ protocol ECHOCodable: JSONCodable, BytesCodable { }
 
 typealias IntOrStrings = [IntOrString]
 
-public enum IntOrString: Codable, Equatable {
+enum IntOrString: Codable, Equatable {
     
     case integer(Int)
     case string(String)

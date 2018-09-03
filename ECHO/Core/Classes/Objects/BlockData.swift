@@ -6,6 +6,9 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
+/**
+    This class encapsulates all block-related information needed in order to build a valid transaction.
+ */
 struct BlockData: BytesEncodable {
     
     static let refBlockNumBytes = 2

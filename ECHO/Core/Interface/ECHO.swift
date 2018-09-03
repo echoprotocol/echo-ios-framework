@@ -62,6 +62,9 @@ final public class ECHO: InterfaceFacades {
         transacitonFacade = TransactionFacadeImp(services: transactoinServices, cryptoCore: settings.cryproComponent, network: settings.network)
     }
     
+/**
+     Starts socket connection, connects to blockchain apis
+ */
     public func start(completion: @escaping Completion<Bool>) {
         revealFacade.revealApi(completion: completion)
     }

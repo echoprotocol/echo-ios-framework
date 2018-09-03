@@ -6,7 +6,6 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
-
 /**
      The class that is used by the API library.
      

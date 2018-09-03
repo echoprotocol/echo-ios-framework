@@ -5,6 +5,9 @@
 //  Created by Fedorenko Nikita on 23.07.2018.
 //
 
+/**
+    Represents Statistics in Graphene blockchain
+ */
 public struct Statistics: ECHOObject, Decodable {
     
     enum StatisticsCodingKeys: String, CodingKey {

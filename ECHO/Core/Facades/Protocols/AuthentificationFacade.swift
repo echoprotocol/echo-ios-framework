@@ -10,6 +10,22 @@
     The interface of the class that is responsible for verifying user authorization and changing its parameters.
  */
 public protocol AuthentificationFacade {
+/**
+     A function that checks if the password for this account
+     
+     - Parameter name: Account name or id
+     - Parameter password: Password
+     - Parameter completion: Callback which returns an account or error
+ */
     func isOwnedBy(name: String, password: String, completion: @escaping Completion<UserAccount>)
+    
+/**
+     Function for changing the password
+     
+     - Parameter old: Old account password
+     - Parameter new: New account password
+     - Parameter name: Account name or id
+     - Parameter completion: Callback which returns an account or error
+ */
     func changePassword(old: String, new: String, name: String, completion: @escaping Completion<UserAccount>)
 }

@@ -6,6 +6,10 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
+/**
+    Represents block model in Graphene blockchain
+    [Block model details](https://dev-doc.myecho.app/structgraphene_1_1chain_1_1signed__block.html)
+ */
 struct Block: Decodable {
     
     enum BlockCodingKeys: String, CodingKey {

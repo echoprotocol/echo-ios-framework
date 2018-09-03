@@ -23,7 +23,7 @@ public protocol TransactionFacade {
      - Parameter completion: Callback in which the information will return whether the transaction was successful.
      
      - Remark:
-     Default asset is 1.3.0
+     Default asset is **"1.3.0"**
  */
     func sendTransferOperation(fromNameOrId: String,
                                password: String,

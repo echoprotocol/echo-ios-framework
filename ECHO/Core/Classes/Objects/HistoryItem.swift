@@ -6,6 +6,9 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
+/**
+    This struct encapsulates single history item
+ */
 public struct HistoryItem: Decodable {
     
     enum HistoryItemCodingKeys: String, CodingKey {

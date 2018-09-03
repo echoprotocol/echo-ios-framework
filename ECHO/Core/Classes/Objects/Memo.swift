@@ -6,6 +6,10 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
+/**
+    Represents additional transfer operation payload
+    [Memo model details](https://dev-doc.myecho.app/structgraphene_1_1chain_1_1memo__data.html)
+ */
 struct Memo: ECHOCodable, Decodable {
     
     enum MemoCodingKeys: String, CodingKey {

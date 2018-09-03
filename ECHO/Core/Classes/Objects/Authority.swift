@@ -5,6 +5,11 @@
 //  Created by Fedorenko Nikita on 18.07.2018.
 //
 
+/**
+    Class used to represent the weighted set of keys and accounts that must approve operations.
+ 
+    [Authority details](https://dev-doc.myecho.app/structgraphene_1_1chain_1_1authority.html)
+ */
 public struct Authority: ECHOCodable, Decodable {
     
     enum AuthorityCodingKeys: String, CodingKey {

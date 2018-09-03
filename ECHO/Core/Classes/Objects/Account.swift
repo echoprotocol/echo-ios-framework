@@ -5,6 +5,10 @@
 //  Created by Fedorenko Nikita on 18.07.2018.
 //
 
+/**
+    Represents account model in Graphene blockchain
+    [Account model documentation](https://dev-doc.myecho.app/classgraphene_1_1chain_1_1account__object.html)
+ */
 public struct Account: ECHOObject, ECHOCodable, Decodable, Hashable {
 
     enum AccountCodingKeys: String, CodingKey {
@@ -58,7 +62,7 @@ public struct Account: ECHOObject, ECHOCodable, Decodable, Hashable {
         options = try values.decode(Options.self, forKey: .options)
     }
     
-    // MAEK: Hashable
+    // MARK: Hashable
     
     public var hashValue: Int {
         

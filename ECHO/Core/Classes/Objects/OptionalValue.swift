@@ -6,6 +6,17 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
+/**
+    Container template class used whenever we have an optional field.
+
+    The idea here is that the binary serialization of this field should be performed in a specific way
+    determined by the field implementing the {@link ByteSerializable}
+    interface, more specifically using the {@link ByteSerializable#toBytes()} method.
+
+    However, if the field is missing, the Optional class should be able to know how to serialize it,
+    as this is always done by placing an zero byte.
+
+ */
 struct OptionalValue<T>: ECHOCodable where T: ECHOCodable {
     
     let object: T?

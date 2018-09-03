@@ -11,8 +11,8 @@
  */
 
 final public class Configurator {
-    var socketMessenger: SocketMessenger = SocketMessengerImp()
-    var cryproComponent: CryptoCoreComponent = CryptoCoreImp()
-    var apiOptions: APIOption = [.database, .accountHistory, .networkBroadcast, .crypto, .networkNodes]
-    var network: Network = Network(url: "wss://echo-devnet-node.pixelplex.io/", prefix: NetworkPrefix.echo)
+    public var socketMessenger: SocketMessenger = SocketMessengerImp()
+    public var cryproComponent: CryptoCoreComponent = CryptoCoreImp()
+    public var apiOptions: APIOption = [.database, .accountHistory, .networkBroadcast, .crypto, .networkNodes]
+    public var network: Network = Network(url: "wss://echo-devnet-node.pixelplex.io/", prefix: NetworkPrefix.echo)
 }

@@ -1,11 +1,11 @@
 //
 //  ECHOKeychain.swift
-//  BitcoinKit
+//  ECHO
 //
 //  Created by Fedorenko Nikita on 18.07.2018.
 //
 
-final public class ECHOKeychain {
+final class ECHOKeychain {
     
     public let raw: Data
     public let core: CryptoCoreComponent

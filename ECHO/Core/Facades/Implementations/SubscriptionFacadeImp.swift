@@ -9,7 +9,10 @@ struct SubscriptionServices {
     var databaseService: DatabaseApiService
 }
 
-final class SubscriptionFacadeImp: SubscriptionFacade {
+/**
+    Implementation of [SubscriptionFacade](SubscriptionFacade)
+ */
+final public class SubscriptionFacadeImp: SubscriptionFacade {
     
     let services: SubscriptionServices
     let socketCore: SocketCoreComponent
@@ -21,7 +24,7 @@ final class SubscriptionFacadeImp: SubscriptionFacade {
         self.socketCore = socketCore
     }
     
-    func subscribeToAccount(nameOrId: String, delegate: SubscribeAccountDelegate) {
+    public func subscribeToAccount(nameOrId: String, delegate: SubscribeAccountDelegate) {
         
         socketCore.onMessage = { [weak self] (result) in
             self?.handleMessage(result)
@@ -32,7 +35,7 @@ final class SubscriptionFacadeImp: SubscriptionFacade {
         }
     }
     
-    func unsubscribeToAccount(nameOrId: String, delegate: SubscribeAccountDelegate) {
+    public func unsubscribeToAccount(nameOrId: String, delegate: SubscribeAccountDelegate) {
         
         services.databaseService.getFullAccount(nameOrIds: [nameOrId], shoudSubscribe: true) { [weak self] (result) in
             if let userAccounts = try? result.dematerialize(), let userAccount = userAccounts[nameOrId] {
@@ -41,7 +44,7 @@ final class SubscriptionFacadeImp: SubscriptionFacade {
         }
     }
     
-    func unsubscribeAll() {
+    public func unsubscribeAll() {
         subscribers = [String: NSPointerArray]()
     }
     

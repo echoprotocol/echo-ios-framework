@@ -6,6 +6,9 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
+/**
+    Represents full information about user account
+ */
 public struct UserAccount: Decodable {
     
     private enum UserAccountCodingKeys: String, CodingKey {
