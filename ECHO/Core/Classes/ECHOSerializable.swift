@@ -62,6 +62,24 @@ enum IntOrString: Codable, Equatable {
     case integer(Int)
     case string(String)
     
+    var stringValue: String {
+        switch self {
+        case .integer(let int):
+            return String(int)
+        case .string(let string):
+            return string
+        }
+    }
+    
+    var intValue: Int {
+        switch self {
+        case .integer(let int):
+            return int
+        case .string(let string):
+            return Int(string) ?? 0
+        }
+    }
+    
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let value = try? container.decode(Int.self) {
