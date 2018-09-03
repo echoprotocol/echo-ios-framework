@@ -28,14 +28,22 @@ struct Memo: ECHOCodable, Decodable {
         nonce = 0
     }
     
+    init(source: Address?, destination: Address?, nonce: Int, byteMessage: Data?) {
+        
+        self.source = source
+        self.destination = destination
+        self.nonce = nonce
+        self.byteMessage = byteMessage
+    }
+    
     init(from decoder: Decoder) throws {
         
         let values = try decoder.container(keyedBy: MemoCodingKeys.self)
         
         let fromAddress = try? values.decode(String.self, forKey: .from)
         let toAddress = try? values.decode(String.self, forKey: .to)
-        if let fromAddress = fromAddress { source = Address(fromAddress) }
-        if let toAddress = toAddress { destination = Address(toAddress) }
+        if let fromAddress = fromAddress { source = Address(fromAddress, data: nil) }
+        if let toAddress = toAddress { destination = Address(toAddress, data: nil) }
         
         let nonceValue = try? values.decode(Int.self, forKey: .nonce)
         nonce = nonceValue ?? 0
@@ -53,7 +61,7 @@ struct Memo: ECHOCodable, Decodable {
             let byteMessage = byteMessage {
             
             var data = Data()
-            data.append(optional: Data(count: 1))
+            data.append(optional: Data.fromInt8(1))
             data.append(optional: source.toData())
             data.append(optional: destination.toData())
             data.append(optional: Data.fromInt64(nonce))
@@ -65,7 +73,7 @@ struct Memo: ECHOCodable, Decodable {
         
         if let byteMessage = byteMessage {
             var data = Data()
-            data.append(optional: Data(count: 1))
+            data.append(optional: Data.fromInt8(1))
             data.append(optional: Data.fromInt8(0))
             data.append(optional: Data.fromInt8(0))
             data.append(optional: Data.fromInt8(0))

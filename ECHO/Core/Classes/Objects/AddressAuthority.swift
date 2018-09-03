@@ -16,7 +16,7 @@ public struct AddressAuthority: ECHOCodable, Decodable {
     public init(from decoder: Decoder) throws {
         
         self.value = 0
-        self.address = Address(String())
+        self.address = Address(String(), data: nil)
         
         let value = try decoder.singleValueContainer()
         let decodedValue = try value.decode([IntOrString].self)
@@ -26,7 +26,7 @@ public struct AddressAuthority: ECHOCodable, Decodable {
             case let .integer(intValue):
                 self.value = intValue
             case let .string(stringValue):
-                self.address = Address(stringValue)
+                self.address = Address(stringValue, data: nil)
             }
         }
     }

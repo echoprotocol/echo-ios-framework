@@ -1,14 +1,16 @@
 #import "Internal.h"
+
 #import <openssl/sha.h>
 #import <openssl/ripemd.h>
 #import <openssl/hmac.h>
 #import <openssl/ec.h>
 #include <openssl/ecdsa.h>
-
 #include <openssl/evp.h>
 #include <openssl/obj_mac.h>
 #include <openssl/bn.h>
 #include <openssl/rand.h>
+
+#import <CommonCrypto/CommonCrypto.h>
 
 @implementation CryptoHash
 
@@ -20,6 +22,12 @@
 
 + (NSData *)sha256sha256:(NSData *)data {
     return [self sha256:[self sha256:data]];
+}
+
++ (NSData *)sha512:(NSData *)data {
+    NSMutableData *result = [NSMutableData dataWithLength:SHA512_DIGEST_LENGTH];
+    SHA512(data.bytes, data.length, result.mutableBytes);
+    return result;
 }
 
 + (NSData *)ripemd160:(NSData *)data {
@@ -42,6 +50,194 @@
 @end
 
 @implementation Secp256k1
+
++ (NSData *)dataFromHexString:(NSString *)string {
+    string = [string lowercaseString];
+    NSMutableData *data= [NSMutableData new];
+    unsigned char whole_byte;
+    char byte_chars[3] = {'\0','\0','\0'};
+    int i = 0;
+    int length = string.length;
+    while (i < length-1) {
+        char c = [string characterAtIndex:i++];
+        if (c < '0' || (c > '9' && c < 'a') || c > 'f')
+            continue;
+        byte_chars[0] = c;
+        byte_chars[1] = [string characterAtIndex:i++];
+        whole_byte = strtol(byte_chars, NULL, 16);
+        [data appendBytes:&whole_byte length:1];
+    }
+    return data;
+}
+
++ (NSString *)hexFromData:(NSData *)data {
+    
+    NSUInteger length = data.length;
+    if (length == 0) return @"";
+    
+    NSMutableData* resultdata = [NSMutableData dataWithLength:length * 2];
+    char *dest = resultdata.mutableBytes;
+    unsigned const char *src = data.bytes;
+    for (int i = 0; i < length; ++i) {
+        sprintf(dest + i*2, "%02x", (unsigned int)(src[i]));
+    }
+    return [[NSString alloc] initWithData:resultdata encoding:NSASCIIStringEncoding];
+}
+
+#pragma mark - Encryption / Decryption
+
++ (NSMutableData*) encryptData:(NSData*)data key:(NSData*)key iv:(NSData*)initializationVector {
+    return [Secp256k1 cryptData:data key:key iv:initializationVector operation:kCCEncrypt];
+}
+
++ (NSMutableData*) decryptData:(NSData*)data key:(NSData*)key iv:(NSData*)initializationVector {
+    return [Secp256k1 cryptData:data key:key iv:initializationVector operation:kCCDecrypt];
+}
+
+
++ (NSMutableData*) cryptData:(NSData*)data key:(NSData*)key iv:(NSData*)iv operation:(CCOperation)operation {
+    if (!data || !key) return nil;
+    
+    int blockSize = kCCBlockSizeAES128;
+    int encryptedDataCapacity = (int)(data.length / blockSize + 1) * blockSize;
+    NSMutableData* encryptedData = [[NSMutableData alloc] initWithLength:encryptedDataCapacity];
+    
+    // Treat empty IV as nil
+    if (iv.length == 0) {
+        iv = nil;
+    }
+    
+    // If IV is supplied, validate it.
+    if (iv) {
+        if (iv.length == blockSize) {
+            // perfect.
+        } else if (iv.length > blockSize) {
+            // IV is bigger than the block size. CCCrypt will take only the first 16 bytes.
+        } else {
+            // IV is smaller than needed. This should not happen. It's better to crash than to leak something.
+            @throw [NSException exceptionWithName:@"IV is invalid"
+                                           reason:[NSString stringWithFormat:@"Invalid size of IV: %d", (int)iv.length]
+                                         userInfo:nil];
+        }
+    }
+    
+    size_t dataOutMoved = 0;
+    CCCryptorStatus cryptstatus = CCCrypt(
+                                          operation,                   // CCOperation op,         /* kCCEncrypt, kCCDecrypt */
+                                          kCCAlgorithmAES,             // CCAlgorithm alg,        /* kCCAlgorithmAES128, etc. */
+                                          kCCOptionPKCS7Padding,       // CCOptions options,      /* kCCOptionPKCS7Padding, etc. */
+                                          key.bytes,                   // const void *key,
+                                          key.length,                  // size_t keyLength,
+                                          iv ? iv.bytes : NULL,        // const void *iv,         /* optional initialization vector */
+                                          data.bytes,                  // const void *dataIn,     /* optional per op and alg */
+                                          data.length,                 // size_t dataInLength,
+                                          encryptedData.mutableBytes,  // void *dataOut,          /* data RETURNED here */
+                                          encryptedData.length,        // size_t dataOutAvailable,
+                                          &dataOutMoved                // size_t *dataOutMoved
+                                          );
+    
+    if (cryptstatus == kCCSuccess) {
+        // Resize the result key to the correct size.
+        encryptedData.length = dataOutMoved;
+        return encryptedData;
+    } else {
+        //kCCSuccess          = 0,
+        //kCCParamError       = -4300,
+        //kCCBufferTooSmall   = -4301,
+        //kCCMemoryFailure    = -4302,
+        //kCCAlignmentError   = -4303,
+        //kCCDecodeError      = -4304,
+        //kCCUnimplemented    = -4305,
+        //kCCOverflow         = -4306
+        @throw [NSException exceptionWithName:@"CCCrypt failed"
+                                       reason:[NSString stringWithFormat:@"error: %d", cryptstatus] userInfo:nil];
+        return nil;
+    }
+}
+
+/**
+ * Decodes an ascii string to a byte array.
+ */
++ (NSData *)hexlify:(NSData *)data {
+    
+    NSString *hexString = [Secp256k1 hexFromData:data];
+    NSData *newData = [hexString dataUsingEncoding:NSASCIIStringEncoding];
+    
+    return newData;
+}
+
++ (NSData *)encryptMessageWithPrivateKey:(NSData *)privateKey publicKey:(NSData *)publicKey nonce:(NSString *)nonce message:(NSString *)message {
+    
+    // Nonce bytes
+    NSData *nonceData = [nonce dataUsingEncoding:NSUTF8StringEncoding];
+    
+    // Private key
+    BN_CTX *ctx = BN_CTX_new();
+    EC_KEY *private = EC_KEY_new_by_curve_name(NID_secp256k1);
+    const EC_GROUP *privateGroup = EC_KEY_get0_group(private);
+    
+    BIGNUM *prv = BN_new();
+    BN_bin2bn(privateKey.bytes, (int)privateKey.length, prv);
+    
+    EC_POINT *pub = EC_POINT_new(privateGroup);
+    EC_POINT_mul(privateGroup, pub, prv, nil, nil, ctx);
+    EC_KEY_set_private_key(private, prv);
+    EC_KEY_set_public_key(private, pub);
+    
+    // Public key
+    EC_KEY *public = EC_KEY_new_by_curve_name(NID_secp256k1);
+    const unsigned char* bytes = publicKey.bytes;
+    o2i_ECPublicKey(&public, &bytes, publicKey.length);
+    
+    // Bignum pk
+    BIGNUM pk;
+    BN_init(&pk);
+    BN_bin2bn(privateKey.bytes, (int)privateKey.length, &pk);
+    
+    // Curve point
+    const EC_POINT* ecpoint = EC_KEY_get0_public_key(public);
+    const EC_GROUP* group = EC_GROUP_new_by_curve_name(NID_secp256k1);
+    BN_CTX* bnctx = BN_CTX_new();
+    EC_POINT* point = EC_POINT_new(group);
+    EC_POINT_copy(point, ecpoint);
+    
+    // Multiply
+    EC_POINT_mul(group, point, NULL, point, &pk, bnctx);
+    
+    // X Point
+    BN_CTX_start(bnctx);
+    BIGNUM* xPoint = BN_CTX_get(bnctx);
+    EC_POINT_get_affine_coordinates_GFp(group, point, xPoint /* x */, NULL  /* y */, bnctx);
+    BN_CTX_end(bnctx);
+    
+    // X.unsignedBigEndian
+    int num_bytes = BN_num_bytes(xPoint);
+    NSMutableData* xPointData = [[NSMutableData alloc] initWithLength:32];
+    BN_bn2bin(xPoint, &xPointData.mutableBytes[32 - num_bytes]);
+    
+    NSData* hash = [CryptoHash sha512:xPointData];
+    NSData* hashInASCII = [Secp256k1 hexlify:hash];
+    
+    NSMutableData* seed = [nonceData mutableCopy];
+    [seed appendData:hashInASCII];
+    
+    NSData* checksum = [[CryptoHash sha256:[message dataUsingEncoding:NSUTF8StringEncoding]] subdataWithRange:NSMakeRange(0, 4)];
+    
+    NSMutableData* payload = checksum.mutableCopy;
+    [payload appendData:[message dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    NSData* hashedSeedData = [CryptoHash sha512:seed];
+    NSString* hashedSeed = [Secp256k1 hexFromData:hashedSeedData];
+    
+    NSData *key = [Secp256k1 dataFromHexString:[hashedSeed substringWithRange:NSMakeRange(0, 64)]];
+    NSData* iv = [Secp256k1 dataFromHexString:[hashedSeed substringWithRange:NSMakeRange(64, 32)]];
+    
+    return [Secp256k1 encryptData:payload key:key iv:iv];
+}
+
++ (NSData *)decryptMessageWithPrivateKey:(NSData *)privateKey publicKey:(NSData *)publicKey nonce:(NSString *)nonce message:(NSString *)message {
+    return [NSData new];
+}
 
 + (NSData *)generatePublicKeyWithPrivateKey:(NSData *)privateKeyData compression:(BOOL)isCompression {
     BN_CTX *ctx = BN_CTX_new();

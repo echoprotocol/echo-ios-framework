@@ -26,7 +26,7 @@ struct TransferOperation: BaseOperation {
     var transferAmount: AssetAmount
     var memo: Memo = Memo()
     
-    init(from: Account, to: Account, transferAmount: AssetAmount, fee: AssetAmount) {
+    init(from: Account, to: Account, transferAmount: AssetAmount, fee: AssetAmount, memo: Memo?) {
         
         self.type = .transferOperation
         
@@ -34,6 +34,9 @@ struct TransferOperation: BaseOperation {
         self.to = to
         self.transferAmount = transferAmount
         self.fee = fee
+        if let memo = memo {
+            self.memo = memo
+        }
     }
     
     init(from decoder: Decoder) throws {

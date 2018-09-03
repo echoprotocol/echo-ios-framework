@@ -92,4 +92,25 @@ public final class Crypto {
         guard var publicKeyInInternalFormat = encrypter.publicKey(signature: &signatureInInternalFormat, hash: hash) else { return nil }
         return encrypter.export(publicKey: &publicKeyInInternalFormat, compressed: compressed)
     }
+    
+    public static func encryptMessage(privateKey: Data, publicKey: Data, nonce: String, message: String) -> Data {
+        return Secp256k1.encryptMessage(withPrivateKey: privateKey, publicKey: publicKey, nonce: nonce, message: message)
+    }
+    
+    public static func decryptMessage(privateKey: Data, publicKey: Data, nonce: String, message: String) -> Data {
+        return Secp256k1.decryptMessage(withPrivateKey: privateKey, publicKey: publicKey, nonce: nonce, message: message)
+    }
+    
+    public static func getPublicKeyFromAddress(_ address: String, networkPrefix: String) -> Data {
+        
+        var address = address
+        if let range = address.range(of: networkPrefix) {
+            address.removeSubrange(range)
+        }
+        
+        var data = Base58.decode(address)
+        data.removeLast(4)
+        
+        return data
+    }
 }

@@ -23,4 +23,16 @@ class CryptoCoreImp: CryptoCoreComponent {
     func sign(_ hash: Data, privateKey: Data) throws -> Data {
         return try Crypto.sign(hash, privateKey: privateKey)
     }
+    
+    func encryptMessage(privateKey: Data, publicKey: Data, nonce: String, message: String) -> Data {
+        return Crypto.encryptMessage(privateKey: privateKey, publicKey: publicKey, nonce: nonce, message: message)
+    }
+    
+    func decryptMessage(privateKey: Data, publicKey: Data, nonce: String, message: String) -> Data {
+        return Crypto.decryptMessage(privateKey: privateKey, publicKey: publicKey, nonce: nonce, message: message)
+    }
+    
+    func getPublicKeyFromAddress(_ address: String, networkPrefix: String) -> Data {
+        return Crypto.getPublicKeyFromAddress(address, networkPrefix: networkPrefix)
+    }
 }

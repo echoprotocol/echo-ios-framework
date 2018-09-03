@@ -108,7 +108,8 @@ class FeeFacadeImp: FeeFacade, ECHOQueueble {
             let transferOperation = TransferOperation(from: fromAccount,
                                                       to: toAccount,
                                                       transferAmount: amount,
-                                                      fee: fee)
+                                                      fee: fee,
+                                                      memo: nil)
             
             queue?.saveValue(transferOperation, forKey: FeeResultsKeys.operation.rawValue)
         }

@@ -35,7 +35,7 @@ struct AccountOptions: ECHOCodable, Decodable {
         let values = try decoder.container(keyedBy: AccountOptionsCodingKeys.self)
         
         let memoString = try values.decode(String.self, forKey: .memo)
-        memo = Address(memoString)
+        memo = Address(memoString, data: nil)
         
         let voitingAccountIdString = try values.decode(String.self, forKey: .votingAccount)
         votingAccount = Account(voitingAccountIdString)

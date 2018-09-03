@@ -12,8 +12,9 @@ public struct Address: ECHOCodable {
     public var hash: UInt?
     public var addressString: String
     
-    public init(_ address: String) {
+    public init(_ address: String, data: Data?) {
         self.addressString = address
+        self.data = data
     }
     
     // MARK: ECHOCodable

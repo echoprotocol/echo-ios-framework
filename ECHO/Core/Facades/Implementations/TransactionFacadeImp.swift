@@ -48,7 +48,7 @@ class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
         queues.append(transferQueue)
         
         let getAccountsOperation = createGetAccountsOperation(transferQueue, fromNameOrId, toNameOrId, completion)
-        let bildTransferOperation = createBildTransferOperation(transferQueue, password, amount, asset, completion)
+        let bildTransferOperation = createBildTransferOperation(transferQueue, password, message, amount, asset, completion)
         let getRequiredFee = createGetRequiredFeeOperation(transferQueue, asset, completion)
         let getChainIdOperation = createChainIdOperation(transferQueue, completion)
         let getBlockDataOperation = createGetBlockDataOperation(transferQueue, completion)
@@ -161,6 +161,7 @@ class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
     
     func createBildTransferOperation(_ queue: ECHOQueue,
                                      _ password: String,
+                                     _ message: String?,
                                      _ amount: UInt,
                                      _ asset: String,
                                      _ completion: @escaping Completion<Bool>) -> Operation {
@@ -183,19 +184,61 @@ class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
                 return
             }
             
-            // TODO Add memo
+            guard let cryptoCore = self?.cryptoCore,
+                let name = fromAccount.name,
+                let keyChain = ECHOKeychain(name: name, password: password, type: KeychainType.memo, core: cryptoCore) else {
+                    
+                    queue?.cancelAllOperations()
+                    let result = Result<Bool, ECHOError>(error: ECHOError.invalidCredentials)
+                    completion(result)
+                    return
+            }
+            
+            let memo = self?.createMemo(privateKey: keyChain.raw, fromAccount: fromAccount, toAccount: toAccount, message: message)
             
             let fee = AssetAmount(amount: 0, asset: Asset(asset))
             let amount = AssetAmount(amount: amount, asset: Asset(asset))
-            let transferOperation = TransferOperation(from: fromAccount,
-                                                      to: toAccount,
-                                                      transferAmount: amount,
-                                                      fee: fee)
+            let extractedExpr: TransferOperation = TransferOperation(from: fromAccount,
+                                                                     to: toAccount,
+                                                                     transferAmount: amount,
+                                                                     fee: fee,
+                                                                     memo: memo)
+            let transferOperation = extractedExpr
             
             queue?.saveValue(transferOperation, forKey: TransferResultsKeys.operation.rawValue)
         }
         
         return bildTransferOperation
+    }
+    
+    func createMemo(privateKey: Data,
+                    fromAccount: Account,
+                    toAccount: Account,
+                    message: String?) -> Memo {
+        
+        guard let message = message else {
+            return Memo()
+        }
+        
+        guard let fromMemoKeyString = fromAccount.options?.memoKey else {
+            return Memo()
+        }
+
+        guard let toMemoKeyString = toAccount.options?.memoKey else {
+            return Memo()
+        }
+        
+        let fromublicKey = cryptoCore.getPublicKeyFromAddress(fromMemoKeyString, networkPrefix: network.prefix.rawValue)
+        let toPublicKey = cryptoCore.getPublicKeyFromAddress(toMemoKeyString, networkPrefix: network.prefix.rawValue)
+        
+        let nonce = 0
+        let byteMessage = cryptoCore.encryptMessage(privateKey: privateKey, publicKey: toPublicKey, nonce: String(format: "%llu", nonce), message: message)
+        let memo = Memo(source: Address(fromAccount.options!.memoKey, data: fromublicKey),
+                        destination: Address(toAccount.options!.memoKey, data: toPublicKey),
+                        nonce: nonce,
+                        byteMessage: byteMessage)
+        
+        return memo
     }
     
     func checkAccount(account: Account, name: String?, password: String) -> Bool {
