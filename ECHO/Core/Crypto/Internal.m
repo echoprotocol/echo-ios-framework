@@ -94,7 +94,6 @@
     return [Secp256k1 cryptData:data key:key iv:initializationVector operation:kCCDecrypt];
 }
 
-
 + (NSMutableData*) cryptData:(NSData*)data key:(NSData*)key iv:(NSData*)iv operation:(CCOperation)operation {
     if (!data || !key) return nil;
     
@@ -235,8 +234,80 @@
     return [Secp256k1 encryptData:payload key:key iv:iv];
 }
 
-+ (NSData *)decryptMessageWithPrivateKey:(NSData *)privateKey publicKey:(NSData *)publicKey nonce:(NSString *)nonce message:(NSString *)message {
-    return [NSData new];
++ (NSString *)decryptMessageWithPrivateKey:(NSData *)privateKey publicKey:(NSData *)publicKey nonce:(NSString *)nonce message:(NSData *)message {
+    
+    // Nonce bytes
+    NSData *nonceData = [nonce dataUsingEncoding:NSUTF8StringEncoding];
+    
+    // Private key
+    BN_CTX *ctx = BN_CTX_new();
+    EC_KEY *private = EC_KEY_new_by_curve_name(NID_secp256k1);
+    const EC_GROUP *privateGroup = EC_KEY_get0_group(private);
+    
+    BIGNUM *prv = BN_new();
+    BN_bin2bn(privateKey.bytes, (int)privateKey.length, prv);
+    
+    EC_POINT *pub = EC_POINT_new(privateGroup);
+    EC_POINT_mul(privateGroup, pub, prv, nil, nil, ctx);
+    EC_KEY_set_private_key(private, prv);
+    EC_KEY_set_public_key(private, pub);
+    
+    // Public key
+    EC_KEY *public = EC_KEY_new_by_curve_name(NID_secp256k1);
+    const unsigned char* bytes = publicKey.bytes;
+    o2i_ECPublicKey(&public, &bytes, publicKey.length);
+    
+    // Bignum pk
+    BIGNUM pk;
+    BN_init(&pk);
+    BN_bin2bn(privateKey.bytes, (int)privateKey.length, &pk);
+    
+    // Curve point
+    const EC_POINT* ecpoint = EC_KEY_get0_public_key(public);
+    const EC_GROUP* group = EC_GROUP_new_by_curve_name(NID_secp256k1);
+    BN_CTX* bnctx = BN_CTX_new();
+    EC_POINT* point = EC_POINT_new(group);
+    EC_POINT_copy(point, ecpoint);
+    
+    // Multiply
+    EC_POINT_mul(group, point, NULL, point, &pk, bnctx);
+    
+    // X Point
+    BN_CTX_start(bnctx);
+    BIGNUM* xPoint = BN_CTX_get(bnctx);
+    EC_POINT_get_affine_coordinates_GFp(group, point, xPoint /* x */, NULL  /* y */, bnctx);
+    BN_CTX_end(bnctx);
+    
+    // X.unsignedBigEndian
+    int num_bytes = BN_num_bytes(xPoint);
+    NSMutableData* xPointData = [[NSMutableData alloc] initWithLength:32];
+    BN_bn2bin(xPoint, &xPointData.mutableBytes[32 - num_bytes]);
+    
+    NSData* hash = [CryptoHash sha512:xPointData];
+    NSData* hashInASCII = [Secp256k1 hexlify:hash];
+    
+    NSMutableData* seed = [nonceData mutableCopy];
+    [seed appendData:hashInASCII];
+    
+    NSData* hashedSeedData = [CryptoHash sha512:seed];
+    NSString* hashedSeed = [Secp256k1 hexFromData:hashedSeedData];
+    
+    NSData* key = [Secp256k1 dataFromHexString:[hashedSeed substringWithRange:NSMakeRange(0, 64)]];
+    NSData* iv = [Secp256k1 dataFromHexString:[hashedSeed substringWithRange:NSMakeRange(64, 32)]];
+    
+    NSData* decoded = [Secp256k1 decryptData:message key:key iv:iv];
+    NSData* decodedMessageData = [decoded subdataWithRange:NSMakeRange(4, decoded.length - 4)];
+    NSData* checkSum = [decoded subdataWithRange:NSMakeRange(0, 4)];
+    NSData* verificationCheckSum = [[CryptoHash sha256:decodedMessageData] subdataWithRange:NSMakeRange(0, 4)];
+    
+    if (![checkSum isEqual:verificationCheckSum] ) {
+        NSLog(@"Checksums not equals");
+        return [NSString new];
+    }
+    
+    NSString* string = [NSString stringWithUTF8String:[decodedMessageData bytes]];
+    
+    return string;
 }
 
 + (NSData *)generatePublicKeyWithPrivateKey:(NSData *)privateKeyData compression:(BOOL)isCompression {

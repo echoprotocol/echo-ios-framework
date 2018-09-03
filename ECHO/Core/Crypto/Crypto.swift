@@ -93,7 +93,7 @@ final class Crypto {
         return Secp256k1.encryptMessage(withPrivateKey: privateKey, publicKey: publicKey, nonce: nonce, message: message)
     }
     
-    public static func decryptMessage(privateKey: Data, publicKey: Data, nonce: String, message: String) -> Data {
+    public static func decryptMessage(privateKey: Data, publicKey: Data, nonce: String, message: Data) -> String {
         return Secp256k1.decryptMessage(withPrivateKey: privateKey, publicKey: publicKey, nonce: nonce, message: message)
     }
     

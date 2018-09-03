@@ -228,12 +228,13 @@ final class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
             return Memo()
         }
         
-        let fromublicKey = cryptoCore.getPublicKeyFromAddress(fromMemoKeyString, networkPrefix: network.prefix.rawValue)
+        let fromPublicKey = cryptoCore.getPublicKeyFromAddress(fromMemoKeyString, networkPrefix: network.prefix.rawValue)
         let toPublicKey = cryptoCore.getPublicKeyFromAddress(toMemoKeyString, networkPrefix: network.prefix.rawValue)
         
         let nonce = 0
         let byteMessage = cryptoCore.encryptMessage(privateKey: privateKey, publicKey: toPublicKey, nonce: String(format: "%llu", nonce), message: message)
-        let memo = Memo(source: Address(fromAccount.options!.memoKey, data: fromublicKey),
+        
+        let memo = Memo(source: Address(fromAccount.options!.memoKey, data: fromPublicKey),
                         destination: Address(toAccount.options!.memoKey, data: toPublicKey),
                         nonce: nonce,
                         byteMessage: byteMessage)

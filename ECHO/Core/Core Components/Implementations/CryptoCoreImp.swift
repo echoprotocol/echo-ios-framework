@@ -28,7 +28,7 @@ final class CryptoCoreImp: CryptoCoreComponent {
         return Crypto.encryptMessage(privateKey: privateKey, publicKey: publicKey, nonce: nonce, message: message)
     }
     
-    func decryptMessage(privateKey: Data, publicKey: Data, nonce: String, message: String) -> Data {
+    func decryptMessage(privateKey: Data, publicKey: Data, nonce: String, message: Data) -> String {
         return Crypto.decryptMessage(privateKey: privateKey, publicKey: publicKey, nonce: nonce, message: message)
     }
     
