@@ -6,6 +6,9 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
+/**
+    The interface of the class that is responsible for the fee cost of the operation
+ */
 public protocol FeeFacade {
     func getFeeForTransferOperation(fromNameOrId: String,
                                     toNameOrId: String,

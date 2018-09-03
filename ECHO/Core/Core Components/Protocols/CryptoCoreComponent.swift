@@ -6,6 +6,9 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
+/**
+     The interface of the class that encompasses all cryptographic functions
+ */
 public protocol CryptoCoreComponent {
     func getPublicKeyFromAddress(_ address: String, networkPrefix: String) -> Data
     func generatePublicKey(withPrivateKey privateKeyData: Data, compression isCompression: Bool) -> Data

@@ -9,7 +9,7 @@ struct AuthentificationFacadeServices {
     let databaseService: DatabaseApiService
 }
 
-class AuthentificationFacadeImp: AuthentificationFacade {
+final class AuthentificationFacadeImp: AuthentificationFacade {
     
     let services: AuthentificationFacadeServices
     let core: CryptoCoreComponent

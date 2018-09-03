@@ -5,7 +5,7 @@
 //  Created by Fedorenko Nikita on 18.07.2018.
 //
 
-public class ECHOKeychain {
+final public class ECHOKeychain {
     
     public let raw: Data
     public let core: CryptoCoreComponent

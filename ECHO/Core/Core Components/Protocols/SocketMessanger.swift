@@ -8,9 +8,16 @@
 
 import Foundation
 
+/**
+    Connection socket options.
+ */
 public enum SocketConnectionState {
     case notConnected, connected, connecting, reconnecting, disconnected, connectionFailed
 }
+
+/**
+    The interface of the class that implements the request and the transmission of messages to the socket.
+*/
 
 public protocol SocketMessenger: class {
     

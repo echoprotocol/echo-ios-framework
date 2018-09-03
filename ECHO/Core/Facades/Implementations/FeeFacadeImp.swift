@@ -10,7 +10,7 @@ struct FeeFacadeServices {
     var databaseService: DatabaseApiService
 }
 
-class FeeFacadeImp: FeeFacade, ECHOQueueble {
+final class FeeFacadeImp: FeeFacade, ECHOQueueble {
     
     var queues: [ECHOQueue]
     var services: FeeFacadeServices

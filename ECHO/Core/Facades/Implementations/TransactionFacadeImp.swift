@@ -11,7 +11,7 @@ struct TransactionFacadeServices {
     var networkBroadcastService: NetworkBroadcastApiService
 }
 
-class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
+final class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
     
     var queues: [ECHOQueue]
     let services: TransactionFacadeServices

@@ -6,6 +6,9 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
+/**
+    The interface of the class that provides information about a user's account
+ */
 public protocol InformationFacade {
     func getAccount(nameOrID: String, completion: @escaping Completion<Account>)
     func isAccountReserved(nameOrID: String, completion: @escaping Completion<Bool>)

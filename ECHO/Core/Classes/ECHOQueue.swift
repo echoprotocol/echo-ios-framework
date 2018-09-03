@@ -50,7 +50,7 @@ extension ECHOQueueble {
     }
 }
 
-class ECHOQueue {
+final class ECHOQueue {
 
     fileprivate let workingQueue: OperationQueue
     fileprivate var valuesContainer: [String: Any?]

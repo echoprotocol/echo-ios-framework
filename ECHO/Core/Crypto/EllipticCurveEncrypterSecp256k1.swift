@@ -1,7 +1,7 @@
 import secp256k1
 
 /// Convenience class over libsecp256k1 methods
-public final class EllipticCurveEncrypterSecp256k1 {
+final class EllipticCurveEncrypterSecp256k1 {
     // holds internal state of the c library
     private let context: OpaquePointer
     

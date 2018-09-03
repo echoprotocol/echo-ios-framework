@@ -6,6 +6,9 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
+/**
+    A class that configures and passes operations through a socket.
+ */
 protocol SocketCoreComponent: class {
     
     init(messanger: SocketMessenger, url: String)

@@ -10,7 +10,7 @@ struct InformationFacadeServices {
     var historyService: AccountHistoryApiService
 }
 
-class InformationFacadeImp: InformationFacade, ECHOQueueble {
+final class InformationFacadeImp: InformationFacade, ECHOQueueble {
     
     var queues: [ECHOQueue]
     let services: InformationFacadeServices

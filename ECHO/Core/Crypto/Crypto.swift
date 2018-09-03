@@ -1,12 +1,8 @@
 import ECHO.Private
 import secp256k1
 
-public enum CryptoEthereumSwiftError: Error {
-    case failedToSign
-}
-
 /// Helper class for cryptographic algorithms.
-public final class Crypto {
+final class Crypto {
     /// Produces "hash-based message authentication code" that can be used to verify data integrity and authenticity.
     /// Hash is 512-bit length (64 bytes)
     ///

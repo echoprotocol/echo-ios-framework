@@ -4,12 +4,12 @@
   'roots': [
     {
       'type': 'directory',
-      'name': "/Users/nikitafedorenko/Library/Developer/Xcode/DerivedData/ECHO-gsodbueopmkrbbaznhzqiukoowby/Build/Products/Debug-iphonesimulator/ECHO.framework/Headers",
+      'name': "/Users/nikitafedorenko/ECHO-lib/build/Release-iphoneos/ECHO.framework/Headers",
       'contents': [
         {
           'type': 'file',
           'name': "ECHO-Swift.h",
-          'external-contents': "/Users/nikitafedorenko/Library/Developer/Xcode/DerivedData/ECHO-gsodbueopmkrbbaznhzqiukoowby/Build/Products/Debug-iphonesimulator/ECHO.framework/Headers/ECHO-Swift.h"
+          'external-contents': "/Users/nikitafedorenko/ECHO-lib/build/Release-iphoneos/ECHO.framework/Headers/ECHO-Swift.h"
         },
         {
           'type': 'file',
@@ -20,12 +20,23 @@
     },
     {
       'type': 'directory',
-      'name': "/Users/nikitafedorenko/Library/Developer/Xcode/DerivedData/ECHO-gsodbueopmkrbbaznhzqiukoowby/Build/Products/Debug-iphonesimulator/ECHO.framework/Modules",
+      'name': "/Users/nikitafedorenko/ECHO-lib/build/Release-iphoneos/ECHO.framework/Modules",
       'contents': [
         {
           'type': 'file',
           'name': "module.modulemap",
-          'external-contents': "/Users/nikitafedorenko/ECHO-lib/build/ECHO.build/Debug-iphonesimulator/ECHO.build/module.modulemap"
+          'external-contents': "/Users/nikitafedorenko/ECHO-lib/build/ECHO.build/Release-iphoneos/ECHO.build/module.modulemap"
+        }
+      ]
+    },
+    {
+      'type': 'directory',
+      'name': "/Users/nikitafedorenko/ECHO-lib/build/Release-iphoneos/ECHO.framework/PrivateHeaders",
+      'contents': [
+        {
+          'type': 'file',
+          'name': "Internal.h",
+          'external-contents': "/Users/nikitafedorenko/ECHO-lib/ECHO/Core/Crypto/Internal.h"
         }
       ]
     }

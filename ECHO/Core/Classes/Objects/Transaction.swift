@@ -6,7 +6,7 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
-class Transaction: ECHOCodable {
+final class Transaction: ECHOCodable {
     
     enum TransactionCodingKeys: String, CodingKey {
         case expiration

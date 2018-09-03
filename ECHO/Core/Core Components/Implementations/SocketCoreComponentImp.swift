@@ -6,7 +6,7 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
-class SocketCoreComponentImp: SocketCoreComponent {
+final class SocketCoreComponentImp: SocketCoreComponent {
     
     let messenger: SocketMessenger
     let url: String

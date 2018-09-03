@@ -38,7 +38,7 @@ class DataEncodingTests: XCTestCase {
         //act
         let encoded = Data.fromInt16(value)
         //assert
-        XCTAssertEqual(encoded.hex, "0001")
+        XCTAssertEqual(encoded.hex, "0100")
     }
     
     func testInt32Encode() {
@@ -48,7 +48,7 @@ class DataEncodingTests: XCTestCase {
         //act
         let encoded = Data.fromInt32(value)
         //assert
-        XCTAssertEqual(encoded.hex, "00000001")
+        XCTAssertEqual(encoded.hex, "01000000")
     }
     
     func testInt64Encode() {
@@ -58,7 +58,7 @@ class DataEncodingTests: XCTestCase {
         //act
         let encoded = Data.fromInt64(value)
         //assert
-        XCTAssertEqual(encoded.hex, "0000000000000001")
+        XCTAssertEqual(encoded.hex, "0100000000000000")
     }
     
     func testUnt64Encode() {
@@ -68,7 +68,7 @@ class DataEncodingTests: XCTestCase {
         //act
         let encoded = Data.fromUint64(value)
         //assert
-        XCTAssertEqual(encoded.hex, "0000000000000001")
+        XCTAssertEqual(encoded.hex, "0100000000000000")
     }
     
     func testUntEncodeBytes() {
@@ -78,7 +78,7 @@ class DataEncodingTests: XCTestCase {
         //act
         let encoded = Data.fromUIntLikeUnsignedByteArray(value)
         //assert
-        XCTAssertEqual(encoded.hex, "2710")
+        XCTAssertEqual(encoded.hex, "904e")
     }
     
     func testHexEncode() {
