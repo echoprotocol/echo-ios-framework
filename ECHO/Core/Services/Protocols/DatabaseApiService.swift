@@ -60,4 +60,14 @@ protocol DatabaseApiService {
      - Parameter completion: Callback which returns status of subscription
  */
     func setSubscribeCallback(completion: @escaping Completion<Bool>)
+    
+/**
+     Query list of assets by required asset symbol [lowerBound] with limit [limit]
+ */
+    func getAssets(assetIds: [String], completion: @escaping Completion<[Asset]>)
+    
+/**
+     Query list of assets by it's ids [assetIds]
+ */
+    func listAssets(lowerBound: String, limit: Int, completion: @escaping Completion<[Asset]>)
 }

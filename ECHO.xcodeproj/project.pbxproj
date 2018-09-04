@@ -80,6 +80,9 @@
 		B38596FE20F6009A00B55E59 /* Asset.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38596FD20F6009A00B55E59 /* Asset.swift */; };
 		B385970220F620B700B55E59 /* AssetOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B385970120F620B700B55E59 /* AssetOptions.swift */; };
 		B385970420F6270000B55E59 /* ECHOObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B385970320F6270000B55E59 /* ECHOObject.swift */; };
+		B39554B1213E70DB00CE2647 /* AssetsFacade.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39554B0213E70DB00CE2647 /* AssetsFacade.swift */; };
+		B39554B3213E822B00CE2647 /* AssetsFacadeImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39554B2213E822B00CE2647 /* AssetsFacadeImp.swift */; };
+		B39554B5213EBAED00CE2647 /* ListAssetsSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39554B4213EBAED00CE2647 /* ListAssetsSocketOperation.swift */; };
 		B3965B162125952700029585 /* Collection+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3965B152125952700029585 /* Collection+Extension.swift */; };
 		B3965B182125954200029585 /* PointerArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3965B172125954200029585 /* PointerArray.swift */; };
 		B39A7C0B2105F5F7003CC14D /* SubscriptionFacadeImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39A7C0A2105F5F6003CC14D /* SubscriptionFacadeImp.swift */; };
@@ -242,6 +245,9 @@
 		B38596FD20F6009A00B55E59 /* Asset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Asset.swift; sourceTree = "<group>"; };
 		B385970120F620B700B55E59 /* AssetOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetOptions.swift; sourceTree = "<group>"; };
 		B385970320F6270000B55E59 /* ECHOObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ECHOObject.swift; sourceTree = "<group>"; };
+		B39554B0213E70DB00CE2647 /* AssetsFacade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetsFacade.swift; sourceTree = "<group>"; };
+		B39554B2213E822B00CE2647 /* AssetsFacadeImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetsFacadeImp.swift; sourceTree = "<group>"; };
+		B39554B4213EBAED00CE2647 /* ListAssetsSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAssetsSocketOperation.swift; sourceTree = "<group>"; };
 		B3965B152125952700029585 /* Collection+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Collection+Extension.swift"; sourceTree = "<group>"; };
 		B3965B172125954200029585 /* PointerArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PointerArray.swift; sourceTree = "<group>"; };
 		B39A7C0A2105F5F6003CC14D /* SubscriptionFacadeImp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionFacadeImp.swift; sourceTree = "<group>"; };
@@ -518,6 +524,7 @@
 				B3A7AA4A20F8C32C002D569D /* RevealFacadeImp.swift */,
 				B39A7C0A2105F5F6003CC14D /* SubscriptionFacadeImp.swift */,
 				D0116C5721353C460004A491 /* TransactionFacadeImp.swift */,
+				B39554B2213E822B00CE2647 /* AssetsFacadeImp.swift */,
 			);
 			path = Implementations;
 			sourceTree = "<group>";
@@ -531,6 +538,7 @@
 				B3A7AA4820F8C247002D569D /* RevilSocketApiFacade.swift */,
 				B3CA702D20F4A46200511F6A /* SubscriptionFacade.swift */,
 				B3CA702B20F4A45400511F6A /* TransactionFacade.swift */,
+				B39554B0213E70DB00CE2647 /* AssetsFacade.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -601,6 +609,7 @@
 				B38596F520F5EEAC00B55E59 /* RequiredFeeSocketOperation.swift */,
 				B38596F720F5F54100B55E59 /* SetSubscribeCallbackSocketOperation.swift */,
 				D048AE762136ABBE00441FEB /* TransactionSocketOperation.swift */,
+				B39554B4213EBAED00CE2647 /* ListAssetsSocketOperation.swift */,
 			);
 			path = SocketOperation;
 			sourceTree = "<group>";
@@ -817,6 +826,7 @@
 				B30CAD0320FF74C80048E33E /* NetworkNodesApiService.swift in Sources */,
 				B370BB5920F7623F004C4A26 /* ApiOptions.swift in Sources */,
 				B3CA704220F502BE00511F6A /* SocketOperation.swift in Sources */,
+				B39554B5213EBAED00CE2647 /* ListAssetsSocketOperation.swift in Sources */,
 				B385970420F6270000B55E59 /* ECHOObject.swift in Sources */,
 				D0947048212D931800B55A37 /* AccountUpdateOperation.swift in Sources */,
 				B358CD0A213978990046327F /* Network.swift in Sources */,
@@ -831,6 +841,7 @@
 				B3CA704020F4FB0200511F6A /* ECHOSerializable.swift in Sources */,
 				B3CA702820F4A43000511F6A /* AuthentificationFacade.swift in Sources */,
 				B3CA704520F532BE00511F6A /* BaseSocketOperation.swift in Sources */,
+				B39554B1213E70DB00CE2647 /* AssetsFacade.swift in Sources */,
 				B3CA702020F4A3A900511F6A /* ECHO.swift in Sources */,
 				B3965B182125954200029585 /* PointerArray.swift in Sources */,
 				B3CA704D20F53A4500511F6A /* GetAccountHistorySocketOperation.swift in Sources */,
@@ -899,6 +910,7 @@
 				B313B8DD21305A080052B266 /* Crypto.swift in Sources */,
 				B30CAD0420FF74C80048E33E /* ApiIdentifireHolder.swift in Sources */,
 				B30CAD2820FFF9E70048E33E /* ECHOKeychain.swift in Sources */,
+				B39554B3213E822B00CE2647 /* AssetsFacadeImp.swift in Sources */,
 				D048AE772136ABBE00441FEB /* TransactionSocketOperation.swift in Sources */,
 				B30CAD1C20FFD5A10048E33E /* Authority.swift in Sources */,
 				B38596EA20F5ECBA00B55E59 /* GetAssetsSocketOperation.swift in Sources */,

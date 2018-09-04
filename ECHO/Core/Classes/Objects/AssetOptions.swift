@@ -19,7 +19,7 @@ struct AssetOptions: ECHOCodable, Decodable {
         case extensions
         case whitelistAuthorities = "whitelist_authorities"
         case blacklistAuthorities = "blacklist_authorities"
-        case whitelistMarkets = "whitelistMarkets"
+        case whitelistMarkets = "whitelist_markets"
         case blacklistMarkets = "blacklist_markets"
     }
     
@@ -30,28 +30,28 @@ struct AssetOptions: ECHOCodable, Decodable {
     let flags: Int
     var coreExchangeRate = [Price]()
     let description: String?
-    let whitelistAuthorities: Set<Account>
-    let blacklistAuthorities: Set<Account>
-    let whitelistMarkets: Set<Account>
-    let blacklistMarkets: Set<Account>
+    let whitelistAuthorities: [Account]
+    let blacklistAuthorities: [Account]
+    let whitelistMarkets: [Account]
+    let blacklistMarkets: [Account]
     let extensions = Extensions()
     
     init(from decoder: Decoder) throws {
         
         let values = try decoder.container(keyedBy: AssetOptionsCodingKeys.self)
-        maxSupply = try values.decode(UInt.self, forKey: .maxSupply)
-        marketFeePercent = try values.decode(Int.self, forKey: .marketFeePercent)
-        maxMarketFee = try values.decode(UInt.self, forKey: .maxMarketFee)
-        issuerPermissions = try values.decode(Int.self, forKey: .issuerPermissions)
-        flags = try values.decode(Int.self, forKey: .flags)
+        maxSupply = UInt(try values.decode(IntOrString.self, forKey: .maxSupply).intValue)
+        marketFeePercent = try values.decode(IntOrString.self, forKey: .marketFeePercent).intValue
+        maxMarketFee = UInt(try values.decode(IntOrString.self, forKey: .maxMarketFee).intValue)
+        issuerPermissions = try values.decode(IntOrString.self, forKey: .issuerPermissions).intValue
+        flags = try values.decode(IntOrString.self, forKey: .flags).intValue
         description = try values.decode(String.self, forKey: .description)
         let coreExchangeRateValue = try values.decode(Price.self, forKey: .coreExchangRate)
         coreExchangeRate.append(coreExchangeRateValue)
         
-        whitelistAuthorities = try values.decode(Set<Account>.self, forKey: .whitelistAuthorities)
-        blacklistAuthorities = try values.decode(Set<Account>.self, forKey: .blacklistAuthorities)
-        whitelistMarkets = try values.decode(Set<Account>.self, forKey: .whitelistMarkets)
-        blacklistMarkets = try values.decode(Set<Account>.self, forKey: .blacklistMarkets)
+        whitelistAuthorities = try values.decode([Account].self, forKey: .whitelistAuthorities)
+        blacklistAuthorities = try values.decode([Account].self, forKey: .blacklistAuthorities)
+        whitelistMarkets = try values.decode([Account].self, forKey: .whitelistMarkets)
+        blacklistMarkets = try values.decode([Account].self, forKey: .blacklistMarkets)
     }
     
     // MARK: ECHOCodable
@@ -104,22 +104,22 @@ struct AssetOptions: ECHOCodable, Decodable {
         data.append(optional: Data.fromInt16(flags))
         data.append(optional: coreExchangeRate[safe: 0]?.toData())
         
-        let whitelistAuthoritiesData = Data.fromSet(whitelistAuthorities) {
+        let whitelistAuthoritiesData = Data.fromArray(whitelistAuthorities) {
             return $0.toData()
         }
         data.append(optional: whitelistAuthoritiesData)
         
-        let blacklistAuthoritiesData = Data.fromSet(blacklistAuthorities) {
+        let blacklistAuthoritiesData = Data.fromArray(blacklistAuthorities) {
             return $0.toData()
         }
         data.append(optional: blacklistAuthoritiesData)
         
-        let whitelistMarketsData = Data.fromSet(whitelistMarkets) {
+        let whitelistMarketsData = Data.fromArray(whitelistMarkets) {
             return $0.toData()
         }
         data.append(optional: whitelistMarketsData)
         
-        let blacklistMarketsData = Data.fromSet(blacklistMarkets) {
+        let blacklistMarketsData = Data.fromArray(blacklistMarkets) {
             return $0.toData()
         }
         data.append(optional: blacklistMarketsData)

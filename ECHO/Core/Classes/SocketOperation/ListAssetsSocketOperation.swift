@@ -1,23 +1,24 @@
 //
-//  GetAssetsSocketOperation.swift
+//  ListAssetsSocketOperation.swift
 //  ECHO
 //
-//  Created by Fedorenko Nikita on 11.07.2018.
+//  Created by Fedorenko Nikita on 04.09.2018.
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
-struct GetAssetsSocketOperation: SocketOperation {
+struct ListAssetsSocketOperation: SocketOperation {
     
     var method: SocketOperationType
     var operationId: Int
     var apiId: Int
-    var assestsIds: [String]
+    var lowerBound: String
+    var limit: Int
     var completion: Completion<[Asset]>
     
     func createParameters() -> [Any] {
         let array: [Any] = [apiId,
-                            SocketOperationKeys.assets.rawValue,
-                            [assestsIds]]
+                            SocketOperationKeys.listAssets.rawValue,
+                            [lowerBound, limit]]
         return array
     }
     

@@ -7,7 +7,7 @@
 //
 
 /// An enum representing either a failure with an explanatory error
-public enum ECHOError: Swift.Error {
+public enum ECHOError: Swift.Error, Equatable {
     
     /// Indicates that Encodable couldn't be encoded into Object
     case encodableMapping
