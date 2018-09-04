@@ -9,7 +9,7 @@
 /**
     Class used to represent a specific asset on the Graphene platform
  */
-struct Asset: ECHOObject, BytesCodable, Decodable {
+public struct Asset: ECHOObject, BytesCodable, Decodable {
     
     enum AssetCodingKeys: String, CodingKey {
         case issuer
@@ -39,7 +39,7 @@ struct Asset: ECHOObject, BytesCodable, Decodable {
         bitassetOptions = OptionalValue(nil)
     }
     
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         
         let values = try decoder.container(keyedBy: AssetCodingKeys.self)
         id = try values.decode(String.self, forKey: .id)

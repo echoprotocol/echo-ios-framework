@@ -6,7 +6,12 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
-typealias InterfaceFacades = AuthentificationFacade & InformationFacade & SubscriptionFacade & FeeFacade & TransactionFacade
+typealias InterfaceFacades = AuthentificationFacade
+    & InformationFacade
+    & SubscriptionFacade
+    & FeeFacade
+    & TransactionFacade
+    & AssetsFacade
 
 /**
      This is an  entry point of library.
@@ -24,6 +29,7 @@ final public class ECHO: InterfaceFacades {
     let authentificationFacade: AuthentificationFacade
     let feeFacade: FeeFacade
     let transacitonFacade: TransactionFacade
+    let assetsFacade: AssetsFacade
 
     public init(settings: Settings) {
 
@@ -60,6 +66,9 @@ final public class ECHO: InterfaceFacades {
         
         let transactoinServices = TransactionFacadeServices(databaseService: databaseService, networkBroadcastService: networkBroadcastService)
         transacitonFacade = TransactionFacadeImp(services: transactoinServices, cryptoCore: settings.cryproComponent, network: settings.network)
+        
+        let assetsServices = AssetsServices(databaseService: databaseService, networkBroadcastService: networkBroadcastService)
+        assetsFacade = AssetsFacadeImp(services: assetsServices, cryptoCore: settings.cryproComponent)
     }
     
 /**
@@ -144,4 +153,45 @@ final public class ECHO: InterfaceFacades {
                                                 message: message,
                                                 completion: completion)
     }
+    
+    // MARK: AssetsFacade
+
+    public func createAsset(name: String,
+                            password: String,
+                            asset: Asset,
+                            completion: @escaping Completion<Bool>) {
+        
+        assetsFacade.createAsset(name: name, password: password, asset: asset, completion: completion)
+    }
+    
+    public func issueAsset(issuerNameOrId: String,
+                           password: String,
+                           asset: String,
+                           amount: String,
+                           destinationIdOrName: String,
+                           message: String?,
+                           completion: @escaping Completion<Bool>) {
+        
+        assetsFacade.issueAsset(issuerNameOrId: issuerNameOrId,
+                                password: password,
+                                asset: asset,
+                                amount: amount,
+                                destinationIdOrName: destinationIdOrName,
+                                message: message,
+                                completion: completion)
+    }
+    
+    public func listAssets(lowerBound: String,
+                           limit: Int,
+                           completion: @escaping Completion<[Asset]>) {
+        
+        assetsFacade.listAssets(lowerBound: lowerBound, limit: limit, completion: completion)
+    }
+    
+    public func getAsset(assetIds: [String],
+                         completion: @escaping Completion<[Asset]>) {
+        
+        assetsFacade.getAsset(assetIds: assetIds, completion: completion)
+    }
+
 }
