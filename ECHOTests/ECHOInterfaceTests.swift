@@ -486,4 +486,36 @@ class ECHOInterfaceTests: XCTestCase {
             XCTAssertTrue(isSuccess)
         }
     }
+    
+    func testFailedTransfer() {
+        
+        //arrange
+        echo = ECHO(settings: Settings(build: {
+            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+        }))
+        let exp = expectation(description: "Transfer")
+        let password = "wrongPassword"
+        let fromUser = "nikita1994"
+        let toUser = "dima1"
+        var isSuccess = false
+        
+        
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.sendTransferOperation(fromNameOrId: fromUser, password: password, toNameOrId: toUser, amount: 1, asset: "1.3.0", message: "", completion: { (result) in
+                switch result {
+                case .success(_):
+                    XCTFail("Transfer cant be valid")
+                case .failure(_):
+                    isSuccess = false
+                    exp.fulfill()
+                }
+            })
+        }
+        
+        //assert
+        waitForExpectations(timeout: timeout) { error in
+            XCTAssertFalse(isSuccess)
+        }
+    }
 }
