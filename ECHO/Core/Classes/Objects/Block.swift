@@ -26,7 +26,7 @@ struct Block: Decodable {
     let witness: String
     let transactionMerkleRoot: String
     let witnessSignature: String
-    let transactions: [Any]?
+    let transactions: [Transaction]
     
     public init(from decoder: Decoder) throws {
         
@@ -36,8 +36,6 @@ struct Block: Decodable {
         witness = try values.decode(String.self, forKey: .witness)
         transactionMerkleRoot = try values.decode(String.self, forKey: .transactionMerkleRoot)
         witnessSignature = try values.decode(String.self, forKey: .witnessSignature)
-        
-        //TODO: Add decode transactions array
-        transactions = nil
+        transactions = try values.decode([Transaction].self, forKey: .transactions)
     }
 }

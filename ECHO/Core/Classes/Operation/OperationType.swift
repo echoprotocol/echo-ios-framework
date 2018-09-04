@@ -77,6 +77,57 @@ struct OperationDecoder {
         }
     }
     
+    func decode(operations: [Any]) -> [BaseOperation] {
+        
+        var baseOperations = [BaseOperation]()
+        
+        for array in operations {
+            
+            guard let operation = array as? [Any] else {
+                continue
+            }
+            
+            guard let operationId = operation[safe: 0] as? Int else {
+                continue
+            }
+            
+            guard let type = OperationType(rawValue: operationId) else {
+                continue
+            }
+            
+            guard let operationDict = operation[safe: 1] as? [String: Any] else {
+                continue
+            }
+            
+            guard let data = try? JSONSerialization.data(withJSONObject: operationDict, options: []) else {
+                continue
+            }
+            
+            var baseOperation: BaseOperation?
+            
+            switch type {
+            case .accountCreateOperation:
+                baseOperation = try? JSONDecoder().decode(AccountCreateOperation.self, from: data)
+            case .accountUpdateOperation:
+                baseOperation = try? JSONDecoder().decode(AccountUpdateOperation.self, from: data)
+            case .transferOperation:
+                baseOperation = try? JSONDecoder().decode(TransferOperation.self, from: data)
+            case .assetCreateOperation:
+                baseOperation = try? JSONDecoder().decode(CreateAssetOperation.self, from: data)
+            case .assetIssueOperation:
+                baseOperation = try? JSONDecoder().decode(IssueAssetOperation.self, from: data)
+            default:
+                break
+            }
+            
+            if let operation = baseOperation {
+                baseOperations.append(operation)
+            }
+        }
+        
+        return baseOperations
+    }
+    
     fileprivate func decode<T>(_ type: T.Type, container: UnkeyedDecodingContainer) -> T? where T: Decodable {
         
         var container = container

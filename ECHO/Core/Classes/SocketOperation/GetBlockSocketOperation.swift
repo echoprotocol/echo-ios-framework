@@ -23,16 +23,34 @@ struct GetBlockSocketOperation: SocketOperation {
     
     func complete(json: [String: Any]) {
         
-        let result = (json["result"] as? [String: Any])
-            .flatMap { try? JSONSerialization.data(withJSONObject: $0, options: []) }
-            .flatMap { try? JSONDecoder().decode(Block.self, from: $0) }
-            .flatMap { Result<Block, ECHOError>(value: $0) }
-        
-        if let result = result {
-            completion(result)
-        } else {
-            let result = Result<Block, ECHOError>(error: ECHOError.undefined)
+        do {
+            let data = try JSONSerialization.data(withJSONObject: json, options: [])
+            let response = try JSONDecoder().decode(ECHOResponse.self, from: data)
+            
+            switch response.response {
+            case .error(let error):
+                let result = Result<Block, ECHOError>(error: ECHOError.internalError(error.message))
+                completion(result)
+            case .result(let result):
+                
+                switch result {
+                case .dictionary(let dict):
+                    let data = try JSONSerialization.data(withJSONObject: dict, options: [])
+                    let block = try JSONDecoder().decode(Block.self, from: data)
+                    let result = Result<Block, ECHOError>(value: block)
+                    completion(result)
+                default:
+                    throw ECHOError.encodableMapping
+                }
+            }
+        } catch {
+            let result = Result<Block, ECHOError>(error: ECHOError.encodableMapping)
             completion(result)
         }
+    }
+    
+    func forceEnd() {
+        let result = Result<Block, ECHOError>(error: ECHOError.encodableMapping)
+        completion(result)
     }
 }

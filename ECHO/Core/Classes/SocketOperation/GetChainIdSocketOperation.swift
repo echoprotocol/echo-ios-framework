@@ -45,4 +45,9 @@ struct GetChainIdSocketOperation: SocketOperation {
             completion(result)
         }
     }
+    
+    func forceEnd() {
+        let result = Result<String, ECHOError>(error: ECHOError.connectionLost)
+        completion(result)
+    }
 }

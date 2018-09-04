@@ -10,9 +10,9 @@
     Class used to represent a generic Graphene transaction.
     [Transaction details](https://dev-doc.myecho.app/structgraphene_1_1chain_1_1transaction.html)
  */
-final class Transaction: ECHOCodable {
+final class Transaction: ECHOCodable, Decodable {
     
-    enum TransactionCodingKeys: String, CodingKey {
+    private enum TransactionCodingKeys: String, CodingKey {
         case expiration
         case signatures
         case operations
@@ -23,19 +23,23 @@ final class Transaction: ECHOCodable {
     
     static let defaultExpirationTime = 40
     
-    var blockData: BlockData
+    var blockData: BlockData?
     var operations: [BaseOperation]
-    let chainId: String
-    let extensions: Extensions
+    var chainId: String?
+    let extensions: Extensions = Extensions()
     var signatures: [Data]
+    let refBlockNum: Int
+    let refBlockPrefix: Int
+    var expiration: Date?
     
     init(operations: [BaseOperation], blockData: BlockData, chainId: String) {
         
         self.blockData = blockData
         self.operations = operations
         self.chainId = chainId
-        self.extensions = Extensions()
         self.signatures = [Data]()
+        refBlockNum = 0
+        refBlockPrefix = 0
     }
     
     func setFees(_ fees: [AssetAmount]) {
@@ -51,14 +55,14 @@ final class Transaction: ECHOCodable {
     }
     
     func increaseExpiration() {
-        blockData.relativeExpiration += 1
+        blockData?.relativeExpiration += 1
     }
     
     // MARK: ECHOCodable
     
     func toJSON() -> Any? {
         
-        let expirationDate = Date(timeIntervalSince1970: TimeInterval(blockData.relativeExpiration))
+        let expirationDate = Date(timeIntervalSince1970: TimeInterval(blockData?.relativeExpiration ?? 0))
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = Settings.defaultDateFormat
         dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
@@ -77,8 +81,8 @@ final class Transaction: ECHOCodable {
         let dictionary: [AnyHashable: Any?] = [TransactionCodingKeys.expiration.rawValue: dateSring,
                                                TransactionCodingKeys.operations.rawValue: operationsArray,
                                                TransactionCodingKeys.extensions.rawValue: extensions.toJSON(),
-                                               TransactionCodingKeys.refBlockNum.rawValue: blockData.refBlockNum,
-                                               TransactionCodingKeys.refBlockPrefix.rawValue: blockData.refBlockPrefix,
+                                               TransactionCodingKeys.refBlockNum.rawValue: blockData?.refBlockNum ?? "",
+                                               TransactionCodingKeys.refBlockPrefix.rawValue: blockData?.refBlockPrefix ?? "",
                                                TransactionCodingKeys.signatures.rawValue: signaturesArray]
         
         return dictionary
@@ -87,8 +91,8 @@ final class Transaction: ECHOCodable {
     func toData() -> Data? {
         
         var data = Data()
-        data.append(optional: Data(hex: chainId))
-        data.append(optional: blockData.toData())
+        data.append(optional: Data(hex: chainId ?? "0"))
+        data.append(optional: blockData?.toData())
         
         data.append(optional: Data.fromArray(operations, elementToData: {
             var operationData = Data()
@@ -100,5 +104,19 @@ final class Transaction: ECHOCodable {
         data.append(optional: extensions.toData())
         
         return data
+    }
+    
+    public init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: TransactionCodingKeys.self)
+        
+        let expirationString = try values.decode(String.self, forKey: .expiration)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = Settings.defaultDateFormat
+        expiration = dateFormatter.date(from: expirationString)
+        refBlockNum = (try values.decode(IntOrString.self, forKey: .refBlockNum)).intValue
+        refBlockPrefix = (try values.decode(IntOrString.self, forKey: .refBlockPrefix)).intValue
+        signatures = (try values.decode([String].self, forKey: .signatures)).compactMap { Data(hex: $0) }
+        operations = ((try values.decode(AnyDecodable.self, forKey: .operations).value as? [Any])
+            .flatMap { OperationDecoder().decode(operations: $0)}) ?? [BaseOperation]()
     }
 }
