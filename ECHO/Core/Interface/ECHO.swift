@@ -44,7 +44,7 @@ final public class ECHO: InterfaceFacades {
                                       options: settings.apiOptions,
                                       services: revealServices)
         
-        let authServices = AuthentificationFacadeServices(databaseService: databaseService)
+        let authServices = AuthentificationFacadeServices(databaseService: databaseService, networkBroadcastService: networkBroadcastService)
         authentificationFacade = AuthentificationFacadeImp(services: authServices, core: settings.cryproComponent, network: settings.network)
         
         let informationServices = InformationFacadeServices(databaseService: databaseService,
@@ -89,7 +89,7 @@ final public class ECHO: InterfaceFacades {
         authentificationFacade.isOwnedBy(name: name, password: password, completion: completion)
     }
     
-    public func changePassword(old: String, new: String, name: String, completion: @escaping Completion<UserAccount>) {
+    public func changePassword(old: String, new: String, name: String, completion: @escaping Completion<Bool>) {
         authentificationFacade.changePassword(old: old, new: new, name: name, completion: completion)
     }
     

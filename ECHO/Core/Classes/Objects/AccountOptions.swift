@@ -17,6 +17,8 @@ struct AccountOptions: ECHOCodable, Decodable {
         case extensions
     }
     
+    let proxyToSelf = "1.2.5"
+    
     let memo: Address?
     let votingAccount: Account
     var witnessCount: Int = 0
@@ -25,9 +27,13 @@ struct AccountOptions: ECHOCodable, Decodable {
     
     private var extensions = Extensions()
     
-    init(memo: Address, votingAccount: Account) {
+    init(memo: Address, votingAccount: Account?) {
         self.memo = memo
-        self.votingAccount = votingAccount
+        if let votingAccount = votingAccount {
+            self.votingAccount = votingAccount
+        } else {
+            self.votingAccount = Account(proxyToSelf)
+        }
     }
     
     init(from decoder: Decoder) throws {

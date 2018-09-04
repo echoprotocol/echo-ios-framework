@@ -16,6 +16,12 @@ public struct AddressAuthority: ECHOCodable, Decodable {
     public var address: Address
     public var value: Int
     
+    public init(address: Address, value: Int) {
+        
+        self.address = address
+        self.value = value
+    }
+    
     public init(from decoder: Decoder) throws {
         
         self.value = 0

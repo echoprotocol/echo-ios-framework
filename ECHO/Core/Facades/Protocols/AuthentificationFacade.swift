@@ -25,7 +25,7 @@ public protocol AuthentificationFacade {
      - Parameter old: Old account password
      - Parameter new: New account password
      - Parameter name: Account name or id
-     - Parameter completion: Callback which returns an account or error
+     - Parameter completion: Callback in which the information will return whether the change password was successful
  */
-    func changePassword(old: String, new: String, name: String, completion: @escaping Completion<UserAccount>)
+    func changePassword(old: String, new: String, name: String, completion: @escaping Completion<Bool>)
 }

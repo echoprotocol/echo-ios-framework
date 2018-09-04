@@ -218,9 +218,9 @@ final public class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
     }
 
     fileprivate func createMemo(privateKey: Data,
-                    fromAccount: Account,
-                    toAccount: Account,
-                    message: String?) -> Memo {
+                                fromAccount: Account,
+                                toAccount: Account,
+                                message: String?) -> Memo {
         
         guard let message = message else {
             return Memo()
@@ -238,7 +238,10 @@ final public class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
         let toPublicKey = cryptoCore.getPublicKeyFromAddress(toMemoKeyString, networkPrefix: network.prefix.rawValue)
         
         let nonce = 0
-        let byteMessage = cryptoCore.encryptMessage(privateKey: privateKey, publicKey: toPublicKey, nonce: String(format: "%llu", nonce), message: message)
+        let byteMessage = cryptoCore.encryptMessage(privateKey: privateKey,
+                                                    publicKey: toPublicKey,
+                                                    nonce: String(format: "%llu", nonce),
+                                                    message: message)
         
         let memo = Memo(source: Address(fromAccount.options!.memoKey, data: fromPublicKey),
                         destination: Address(toAccount.options!.memoKey, data: toPublicKey),

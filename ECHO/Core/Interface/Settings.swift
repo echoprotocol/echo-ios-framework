@@ -29,4 +29,5 @@ final public class Settings {
     }
     
     public static let defaultDateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+    public static let defaultAsset = "1.3.0"
 }

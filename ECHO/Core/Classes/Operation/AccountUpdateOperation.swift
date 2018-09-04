@@ -20,12 +20,24 @@ struct AccountUpdateOperation: BaseOperation {
     let extensions: Extensions = Extensions()
     var fee: AssetAmount
     
-    var account: Account
-    let owner: OptionalValue<Authority>
-    let active: OptionalValue<Authority>
-    let newOptions: OptionalValue<AccountOptions>
+    public var account: Account
+    public let owner: OptionalValue<Authority>
+    public let active: OptionalValue<Authority>
+    public let newOptions: OptionalValue<AccountOptions>
     
-    init(from decoder: Decoder) throws {
+    public init(account: Account, owner: Authority?, active: Authority?, options: AccountOptions?, fee: AssetAmount) {
+        
+        type = .accountUpdateOperation
+        
+        self.account = account
+        self.owner = OptionalValue<Authority>(owner)
+        self.active = OptionalValue<Authority>(active)
+        self.newOptions = OptionalValue<AccountOptions>(options)
+        
+        self.fee = fee
+    }
+    
+    public init(from decoder: Decoder) throws {
         
         type = .accountUpdateOperation
         
@@ -84,6 +96,8 @@ struct AccountUpdateOperation: BaseOperation {
         if newOptions.isSet() {
             dictionary[AccountUpdateOperationCodingKeys.newOptions.rawValue] = newOptions.toJSON()
         }
+        
+        array.append(dictionary)
         
         return array
     }

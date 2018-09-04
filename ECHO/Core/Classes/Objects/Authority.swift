@@ -24,6 +24,13 @@ public struct Authority: ECHOCodable, Decodable {
     public let keyAuths: [AddressAuthority]
     public let extensions = Extensions()
     
+    public init (weight: Int, keyAuth: [AddressAuthority], accountAuth: [AccountAuthority]) {
+        
+        self.weightThreshold = weight
+        self.accountAuths = accountAuth
+        self.keyAuths = keyAuth
+    }
+    
     public init(from decoder: Decoder) throws {
         
         let values = try decoder.container(keyedBy: AuthorityCodingKeys.self)
@@ -41,11 +48,11 @@ public struct Authority: ECHOCodable, Decodable {
         let authsCount = accountAuths.count + keyAuths.count
         data.append(optional: Data.fromInt8(authsCount))
         
-        guard authsCount > 0 else {
+        if authsCount == 0 {
             return data
         }
         
-        data.append(optional: Data.fromInt8(weightThreshold))
+        data.append(optional: Data.fromInt32(weightThreshold))
         
         let accountAuthsData = Data.fromArray(accountAuths) {
             return $0.toData()

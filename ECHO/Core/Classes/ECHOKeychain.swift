@@ -29,9 +29,14 @@ final class ECHOKeychain {
         }
     }
     
+    func publicKey() -> Data {
+        
+        return core.generatePublicKey(withPrivateKey: raw, compression: true)
+    }
+    
     func publicAddress() -> String {
         
-        var publicKey = core.generatePublicKey(withPrivateKey: raw, compression: true)
+        var publicKey = self.publicKey()
         let checkSum = core.ripemd160(publicKey).prefix(4)
         publicKey.append(checkSum)
         return Base58.encode(publicKey)
