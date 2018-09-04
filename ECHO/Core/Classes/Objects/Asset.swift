@@ -13,7 +13,7 @@ public struct Asset: ECHOObject, BytesCodable, Decodable {
     
     enum AssetCodingKeys: String, CodingKey {
         case issuer
-        case precision = "membership_expiration_date"
+        case precision
         case symbol
         case dynamicAssetDataId = "dynamic_asset_data_id"
         case options
@@ -45,13 +45,14 @@ public struct Asset: ECHOObject, BytesCodable, Decodable {
         id = try values.decode(String.self, forKey: .id)
         symbol = try values.decode(String.self, forKey: .symbol)
         precision = try values.decode(Int.self, forKey: .precision)
-        issuer = try values.decode(Account.self, forKey: .issuer)
+        let issuerId = try values.decode(String.self, forKey: .issuer)
+        issuer = Account(issuerId)
         dynamicAssetDataId = try values.decode(String.self, forKey: .dynamicAssetDataId)
         options = try values.decode(AssetOptions.self, forKey: .options)
-        let parsedBitassetOpt = try values.decode(BitassetOptions.self, forKey: .bitassetOpts)
+        let parsedBitassetOpt = try? values.decode(BitassetOptions.self, forKey: .bitassetOpts)
         bitassetOptions = OptionalValue(parsedBitassetOpt)
-        predictionMarket = try values.decode(Bool.self, forKey: .isPredictionMarket)
-        bitAssetId = try values.decode(String.self, forKey: .bitassetDataId)
+        predictionMarket = (try? values.decode(Bool.self, forKey: .isPredictionMarket)) ?? false
+        bitAssetId = try? values.decode(String.self, forKey: .bitassetDataId)
     }
     
     // MARK: BytesCodable

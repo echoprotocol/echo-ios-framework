@@ -32,7 +32,7 @@ final public class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
         self.queues = [ECHOQueue]()
     }
     
-    enum TransferResultsKeys: String {
+    private enum TransferResultsKeys: String {
         case loadedToAccount
         case loadedFromAccount
         case blockData

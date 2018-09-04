@@ -82,6 +82,7 @@
 		B385970420F6270000B55E59 /* ECHOObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B385970320F6270000B55E59 /* ECHOObject.swift */; };
 		B39554B1213E70DB00CE2647 /* AssetsFacade.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39554B0213E70DB00CE2647 /* AssetsFacade.swift */; };
 		B39554B3213E822B00CE2647 /* AssetsFacadeImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39554B2213E822B00CE2647 /* AssetsFacadeImp.swift */; };
+		B39554B5213EBAED00CE2647 /* ListAssetsSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39554B4213EBAED00CE2647 /* ListAssetsSocketOperation.swift */; };
 		B3965B162125952700029585 /* Collection+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3965B152125952700029585 /* Collection+Extension.swift */; };
 		B3965B182125954200029585 /* PointerArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3965B172125954200029585 /* PointerArray.swift */; };
 		B39A7C0B2105F5F7003CC14D /* SubscriptionFacadeImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39A7C0A2105F5F6003CC14D /* SubscriptionFacadeImp.swift */; };
@@ -246,6 +247,7 @@
 		B385970320F6270000B55E59 /* ECHOObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ECHOObject.swift; sourceTree = "<group>"; };
 		B39554B0213E70DB00CE2647 /* AssetsFacade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetsFacade.swift; sourceTree = "<group>"; };
 		B39554B2213E822B00CE2647 /* AssetsFacadeImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetsFacadeImp.swift; sourceTree = "<group>"; };
+		B39554B4213EBAED00CE2647 /* ListAssetsSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAssetsSocketOperation.swift; sourceTree = "<group>"; };
 		B3965B152125952700029585 /* Collection+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Collection+Extension.swift"; sourceTree = "<group>"; };
 		B3965B172125954200029585 /* PointerArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PointerArray.swift; sourceTree = "<group>"; };
 		B39A7C0A2105F5F6003CC14D /* SubscriptionFacadeImp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionFacadeImp.swift; sourceTree = "<group>"; };
@@ -607,6 +609,7 @@
 				B38596F520F5EEAC00B55E59 /* RequiredFeeSocketOperation.swift */,
 				B38596F720F5F54100B55E59 /* SetSubscribeCallbackSocketOperation.swift */,
 				D048AE762136ABBE00441FEB /* TransactionSocketOperation.swift */,
+				B39554B4213EBAED00CE2647 /* ListAssetsSocketOperation.swift */,
 			);
 			path = SocketOperation;
 			sourceTree = "<group>";
@@ -823,6 +826,7 @@
 				B30CAD0320FF74C80048E33E /* NetworkNodesApiService.swift in Sources */,
 				B370BB5920F7623F004C4A26 /* ApiOptions.swift in Sources */,
 				B3CA704220F502BE00511F6A /* SocketOperation.swift in Sources */,
+				B39554B5213EBAED00CE2647 /* ListAssetsSocketOperation.swift in Sources */,
 				B385970420F6270000B55E59 /* ECHOObject.swift in Sources */,
 				D0947048212D931800B55A37 /* AccountUpdateOperation.swift in Sources */,
 				B358CD0A213978990046327F /* Network.swift in Sources */,

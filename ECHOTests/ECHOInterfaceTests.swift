@@ -518,4 +518,92 @@ class ECHOInterfaceTests: XCTestCase {
             XCTAssertFalse(isSuccess)
         }
     }
+    
+    func testGetAssets() {
+        
+        //arrange
+        echo = ECHO(settings: Settings(build: {
+            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+        }))
+        let exp = expectation(description: "Getting Asset")
+        let assetsIds = ["1.3.0", "1.3.2"]
+        var assets: [Asset] = []
+        
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.getAsset(assetIds: assetsIds, completion: { (result) in
+                switch result {
+                case .success(let aAssets):
+                    assets = aAssets
+                    exp.fulfill()
+                case .failure(_):
+                    XCTFail("Assets getting fail")
+                }
+            })
+        }
+        
+        //assert
+        waitForExpectations(timeout: timeout) { error in
+            XCTAssertEqual(assets.count, assetsIds.count)
+        }
+    }
+    
+    func testFailedGetAssets() {
+        
+        //arrange
+        echo = ECHO(settings: Settings(build: {
+            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+        }))
+        let exp = expectation(description: "Getting Asset")
+        let assetsIds = ["2.3.0", "2.3.2"]
+        var error: ECHOError = ECHOError.undefined
+
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.getAsset(assetIds: assetsIds, completion: { (result) in
+                switch result {
+                case .success(_):
+                    XCTFail("Assets getting fail")
+                case .failure(let aError):
+                    error = aError
+                    exp.fulfill()
+                }
+            })
+        }
+        
+        //assert
+        waitForExpectations(timeout: timeout) { _ in
+            XCTAssertNotEqual(error, ECHOError.undefined)
+        }
+    }
+    
+    func testGetListAssets() {
+        
+        //arrange
+        echo = ECHO(settings: Settings(build: {
+            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+        }))
+        let exp = expectation(description: "Getting list Asset")
+        let lowerBound = "ECHO"
+        let limit = 10
+        var assets: [Asset] = []
+        
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.listAssets(lowerBound: lowerBound, limit: limit, completion: { (result) in
+                switch result {
+                case .success(let aAssets):
+                    assets = aAssets
+                    exp.fulfill()
+                case .failure(_):
+                    XCTFail("List assets getting fail")
+                }
+            })
+        }
+        
+        //assert
+        waitForExpectations(timeout: timeout) { error in
+            XCTAssertTrue(assets.count > 0 && assets.count <= limit)
+        }
+    }
 }

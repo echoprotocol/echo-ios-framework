@@ -17,6 +17,16 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
     let services: AssetsServices
     let cryptoCore: CryptoCoreComponent
     
+    private enum AssetsResultsKeys: String {
+        case loadedToAccount
+        case loadedFromAccount
+        case blockData
+        case chainId
+        case operation
+        case fee
+        case transaciton
+    }
+    
     public init(services: AssetsServices, cryptoCore: CryptoCoreComponent) {
         
         self.services = services
@@ -24,21 +34,21 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
         self.queues = [ECHOQueue]()
     }
     
-    public func createAsset(name: String, password: String, asset: Asset, completion: @escaping (Result<Bool, ECHOError>) -> Void) {
+    public func createAsset(name: String, password: String, asset: Asset, completion: @escaping Completion<Bool>) {
         
     }
     
     public func issueAsset(issuerNameOrId: String, password: String, asset: String,
                            amount: String, destinationIdOrName: String, message: String?,
-                           completion: @escaping (Result<Bool, ECHOError>) -> Void) {
+                           completion: @escaping Completion<Bool>) {
         
     }
     
-    public func listAssets(lowerBound: String, limit: Int, completion: @escaping (Result<[Asset], ECHOError>) -> Void) {
-        
+    public func listAssets(lowerBound: String, limit: Int, completion: @escaping Completion<[Asset]>) {
+        services.databaseService.listAssets(lowerBound: lowerBound, limit: limit, completion: completion)
     }
     
-    public func getAsset(assetIds: [String], completion: @escaping (Result<[Asset], ECHOError>) -> Void) {
-        
-    }    
+    public func getAsset(assetIds: [String], completion: @escaping Completion<[Asset]>) {
+        services.databaseService.getAssets(assetIds: assetIds, completion: completion)
+    }
 }
