@@ -26,15 +26,30 @@ struct IssueAssetOperation: BaseOperation {
     var issueToAccount: Account
     var memo: Memo = Memo()
     
+    init(issuer: Account, assetToIssue: AssetAmount, issueToAccount: Account, fee: AssetAmount, memo: Memo?) {
+        
+        type = .assetIssueOperation
+        
+        self.issuer = issuer
+        self.assetToIssue = assetToIssue
+        self.issueToAccount = issueToAccount
+        self.fee = fee
+        if let memo = memo {
+            self.memo = memo
+        }
+    }
+    
     init(from decoder: Decoder) throws {
         
         type = .assetIssueOperation
         
         let values = try decoder.container(keyedBy: IssueAssetOperationCodingKeys.self)
         
-        issuer = try values.decode(Account.self, forKey: .issuer)
+        let issuerId = try values.decode(String.self, forKey: .issuer)
+        issuer = Account(issuerId)
         assetToIssue = try values.decode(AssetAmount.self, forKey: .assetToIssue)
-        issueToAccount = try values.decode(Account.self, forKey: .issueToAccount)
+        let issueToAccountId = try values.decode(String.self, forKey: .issueToAccount)
+        issueToAccount = Account(issueToAccountId)
         fee = try values.decode(AssetAmount.self, forKey: .fee)
         
         if values.contains(.memo) {
@@ -76,6 +91,8 @@ struct IssueAssetOperation: BaseOperation {
         if memo.byteMessage != nil {
             dictionary[IssueAssetOperationCodingKeys.memo.rawValue] = memo.toJSON()
         }
+        
+        array.append(dictionary)
         
         return array
     }

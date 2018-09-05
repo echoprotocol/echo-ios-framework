@@ -24,7 +24,17 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
         case fee
         case blockData
         case chainId
-        case transaciton
+        case transaction
+    }
+    
+    private enum IssueAssetKeys: String {
+        case issuerAccount
+        case destinationAccount
+        case operation
+        case fee
+        case blockData
+        case chainId
+        case transaction
     }
     
     public init(services: AssetsServices, cryptoCore: CryptoCoreComponent, network: Network) {
@@ -40,14 +50,17 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
         let createAssetQueue = ECHOQueue()
         queues.append(createAssetQueue)
         
-        let getAccountOperation = createGetAccountsOperation(createAssetQueue, nameOrId, completion)
+        let getAccountOperation = createGetAccountsOperation(createAssetQueue, [(nameOrId, CreateAssetKeys.account.rawValue)], completion)
         let createAssetOperation = self.createAssetOperation(createAssetQueue, asset, completion)
-        let lastOperation = createLastOperation(queue: createAssetQueue)
-        let getRequiredFeeOperation = createGetRequiredFeeOperation(createAssetQueue, completion)
-        let getChainIdOperation = createChainIdOperation(createAssetQueue, completion)
-        let getBlockDataOperation = createGetBlockDataOperation(createAssetQueue, completion)
+        let getRequiredFeeOperation = createGetRequiredFeeOperation(createAssetQueue,
+                                                                    CreateAssetKeys.operation.rawValue,
+                                                                    CreateAssetKeys.fee.rawValue,
+                                                                    completion)
+        let getChainIdOperation = createChainIdOperation(createAssetQueue, CreateAssetKeys.chainId.rawValue, completion)
+        let getBlockDataOperation = createGetBlockDataOperation(createAssetQueue, CreateAssetKeys.blockData.rawValue, completion)
         let bildTransactionOperation = createBildTransactionOperation(createAssetQueue, password, completion)
-        let sendTransactionOperation = createSendTransactionOperation(createAssetQueue, completion)
+        let sendTransactionOperation = createSendTransactionOperation(createAssetQueue, CreateAssetKeys.transaction.rawValue, completion)
+        let lastOperation = createLastOperation(queue: createAssetQueue)
         
         createAssetQueue.addOperation(getAccountOperation)
         createAssetQueue.addOperation(createAssetOperation)
@@ -59,10 +72,37 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
         createAssetQueue.addOperation(lastOperation)
     }
     
-    public func issueAsset(issuerNameOrId: String, password: String, asset: String,
-                           amount: String, destinationIdOrName: String, message: String?,
+    public func issueAsset(issuerNameOrId: String, password: String,
+                           asset: String, amount: UInt,
+                           destinationIdOrName: String, message: String?,
                            completion: @escaping Completion<Bool>) {
         
+        let issueAssetQueue = ECHOQueue()
+        queues.append(issueAssetQueue)
+        
+        let getAccountsOperaton = createGetAccountsOperation(issueAssetQueue,
+                                                             [(issuerNameOrId, IssueAssetKeys.issuerAccount.rawValue),
+                                                              (destinationIdOrName, IssueAssetKeys.destinationAccount.rawValue)],
+                                                             completion)
+        let createIssueAssetOperation = self.createIssueAssetOperation(issueAssetQueue, password, amount, asset, message, completion)
+        let getRequiredFeeOperation = createGetRequiredFeeOperation(issueAssetQueue,
+                                                                    IssueAssetKeys.operation.rawValue,
+                                                                    IssueAssetKeys.fee.rawValue,
+                                                                    completion)
+        let getChainIdOperation = createChainIdOperation(issueAssetQueue, IssueAssetKeys.chainId.rawValue, completion)
+        let getBlockDataOperation = createGetBlockDataOperation(issueAssetQueue, IssueAssetKeys.blockData.rawValue, completion)
+        let bildTransactionOperation = issueBildTransactionOperation(issueAssetQueue, password, completion)
+        let sendTransactionOperation = createSendTransactionOperation(issueAssetQueue, IssueAssetKeys.transaction.rawValue, completion)
+        let lastOperation = createLastOperation(queue: issueAssetQueue)
+        
+        issueAssetQueue.addOperation(getAccountsOperaton)
+        issueAssetQueue.addOperation(createIssueAssetOperation)
+        issueAssetQueue.addOperation(getRequiredFeeOperation)
+        issueAssetQueue.addOperation(getChainIdOperation)
+        issueAssetQueue.addOperation(getBlockDataOperation)
+        issueAssetQueue.addOperation(bildTransactionOperation)
+        issueAssetQueue.addOperation(sendTransactionOperation)
+        issueAssetQueue.addOperation(lastOperation)
     }
     
     public func listAssets(lowerBound: String, limit: Int, completion: @escaping Completion<[Asset]>) {
@@ -74,7 +114,7 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
     }
     
     fileprivate func createGetAccountsOperation(_ queue: ECHOQueue,
-                                                _ nameOrId: String,
+                                                _ namesOrIdsWithKeys: [(nameOrId: String, keyForSave: String)],
                                                 _ completion: @escaping Completion<Bool>) -> Operation {
         
         let getAccountsOperation = BlockOperation()
@@ -82,13 +122,27 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
         getAccountsOperation.addExecutionBlock { [weak getAccountsOperation, weak queue, weak self] in
             
             guard getAccountsOperation?.isCancelled == false else { return }
+            guard self != nil else { return }
             
-            self?.services.databaseService.getFullAccount(nameOrIds: [nameOrId], shoudSubscribe: false, completion: { (result) in
+            var namesOrIds = [String]()
+            namesOrIdsWithKeys.forEach{
+                namesOrIds.append($0.nameOrId)
+            }
+            
+            self?.services.databaseService.getFullAccount(nameOrIds: namesOrIds, shoudSubscribe: false, completion: { (result) in
                 switch result {
                 case .success(let accounts):
-                    if let account = accounts[nameOrId] {
-                        queue?.saveValue(account.account, forKey: CreateAssetKeys.account.rawValue)
-                    } else {
+                    
+                    var wasNotFound = false
+                    namesOrIdsWithKeys.forEach{
+                        guard let account = accounts[$0.nameOrId] else {
+                            wasNotFound = true
+                            return
+                        }
+                        queue?.saveValue(account.account, forKey: $0.keyForSave)
+                    }
+                    
+                    if wasNotFound {
                         queue?.cancelAllOperations()
                         let result = Result<Bool, ECHOError>(error: ECHOError.resultNotFound)
                         completion(result)
@@ -106,6 +160,57 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
         }
         
         return getAccountsOperation
+    }
+    
+    fileprivate func createIssueAssetOperation(_ queue: ECHOQueue,
+                                         _ password: String,
+                                         _ amount: UInt,
+                                         _ asset: String,
+                                         _ message: String?,
+                                         _ completion: @escaping Completion<Bool>) -> Operation {
+        
+        let createIssueAssetOperation = BlockOperation()
+        
+        createIssueAssetOperation.addExecutionBlock { [weak createIssueAssetOperation, weak self, weak queue] in
+            
+            guard createIssueAssetOperation?.isCancelled == false else { return }
+            guard self != nil else { return }
+            guard let issuerAccount: Account = queue?.getValue(IssueAssetKeys.issuerAccount.rawValue) else { return }
+            guard let destinationAccount: Account = queue?.getValue(IssueAssetKeys.destinationAccount.rawValue) else { return }
+            
+            if let strongSelf = self,
+                !strongSelf.checkAccount(account: issuerAccount, name: issuerAccount.name, password: password) {
+                
+                queue?.cancelAllOperations()
+                let result = Result<Bool, ECHOError>(error: ECHOError.invalidCredentials)
+                completion(result)
+                return
+            }
+            
+            guard let cryptoCore = self?.cryptoCore,
+                let name = issuerAccount.name,
+                let keyChain = ECHOKeychain(name: name, password: password, type: KeychainType.memo, core: cryptoCore) else {
+                    
+                    queue?.cancelAllOperations()
+                    let result = Result<Bool, ECHOError>(error: ECHOError.invalidCredentials)
+                    completion(result)
+                    return
+            }
+            
+            let memo = self?.createMemo(privateKey: keyChain.raw, fromAccount: issuerAccount, toAccount: destinationAccount, message: message)
+            let fee = AssetAmount(amount: 0, asset: Asset(Settings.defaultAsset))
+            let assetToIssue = AssetAmount(amount: amount, asset: Asset(asset))
+            
+            let operation = IssueAssetOperation(issuer: issuerAccount,
+                                                assetToIssue: assetToIssue,
+                                                issueToAccount: destinationAccount,
+                                                fee: fee,
+                                                memo: memo)
+            
+            queue?.saveValue(operation, forKey: IssueAssetKeys.operation.rawValue)
+        }
+        
+        return createIssueAssetOperation
     }
     
     fileprivate func createAssetOperation(_ queue: ECHOQueue,
@@ -129,6 +234,8 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
     }
     
     fileprivate func createGetRequiredFeeOperation(_ queue: ECHOQueue,
+                                                   _ getOperationKey: String,
+                                                   _ saveFeeKey: String,
                                                    _ completion: @escaping Completion<Bool>) -> Operation {
         
         let getRequiredFee = BlockOperation()
@@ -137,7 +244,7 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
             
             guard getRequiredFee?.isCancelled == false else { return }
             guard self != nil else { return }
-            guard let operation: CreateAssetOperation = queue?.getValue(CreateAssetKeys.operation.rawValue) else { return }
+            guard let operation: BaseOperation = queue?.getValue(getOperationKey) else { return }
             
             let asset = Asset(Settings.defaultAsset)
             
@@ -145,7 +252,7 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
                 switch result {
                 case .success(let fees):
                     if let fee = fees.first {
-                        queue?.saveValue(fee, forKey: CreateAssetKeys.fee.rawValue)
+                        queue?.saveValue(fee, forKey: saveFeeKey)
                     } else {
                         queue?.cancelAllOperations()
                         let result = Result<Bool, ECHOError>(error: ECHOError.resultNotFound)
@@ -167,6 +274,7 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
     }
     
     fileprivate func createGetBlockDataOperation(_ queue: ECHOQueue,
+                                                 _ saveBlockDataKey: String,
                                                  _ completion: @escaping Completion<Bool>) -> Operation {
         
         let getBlockDataOperation = BlockOperation()
@@ -179,7 +287,7 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
             self?.services.databaseService.getBlockData(completion: { (result) in
                 switch result {
                 case .success(let blockData):
-                    queue?.saveValue(blockData, forKey: CreateAssetKeys.blockData.rawValue)
+                    queue?.saveValue(blockData, forKey: saveBlockDataKey)
                 case .failure(let error):
                     queue?.cancelAllOperations()
                     let result = Result<Bool, ECHOError>(error: error)
@@ -196,6 +304,7 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
     }
     
     fileprivate func createChainIdOperation(_ queue: ECHOQueue,
+                                            _ saveChainIdKey: String,
                                             _ completion: @escaping Completion<Bool>) -> Operation {
         
         let chainIdOperation = BlockOperation()
@@ -208,7 +317,7 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
             self?.services.databaseService.getChainId(completion: { (result) in
                 switch result {
                 case .success(let chainId):
-                    queue?.saveValue(chainId, forKey: CreateAssetKeys.chainId.rawValue)
+                    queue?.saveValue(chainId, forKey: saveChainIdKey)
                 case .failure(let error):
                     queue?.cancelAllOperations()
                     let result = Result<Bool, ECHOError>(error: error)
@@ -228,11 +337,11 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
                                                     _ password: String,
                                                     _ completion: @escaping Completion<Bool>) -> Operation {
         
-        let bildTransferOperation = BlockOperation()
+        let bildCreateOperation = BlockOperation()
         
-        bildTransferOperation.addExecutionBlock { [weak bildTransferOperation, weak queue, weak self] in
+        bildCreateOperation.addExecutionBlock { [weak bildCreateOperation, weak queue, weak self] in
             
-            guard bildTransferOperation?.isCancelled == false else { return }
+            guard bildCreateOperation?.isCancelled == false else { return }
             guard self != nil else { return }
             
             guard let account: Account = queue?.getValue(CreateAssetKeys.account.rawValue) else { return }
@@ -262,7 +371,7 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
                 let generator = SignaturesGenerator()
                 let signatures = try generator.signTransaction(transaction, privateKeys: [keyChain.raw], cryptoCore: cryptoCore)
                 transaction.signatures = signatures
-                queue?.saveValue(transaction, forKey: CreateAssetKeys.transaciton.rawValue)
+                queue?.saveValue(transaction, forKey: CreateAssetKeys.transaction.rawValue)
             } catch {
                 queue?.cancelAllOperations()
                 let result = Result<Bool, ECHOError>(error: ECHOError.undefined)
@@ -270,10 +379,51 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
             }
         }
         
-        return bildTransferOperation
+        return bildCreateOperation
+    }
+    
+    fileprivate func issueBildTransactionOperation(_ queue: ECHOQueue,
+                                                   _ password: String,
+                                                   _ completion: @escaping Completion<Bool>) -> Operation {
+        
+        let issuebildTransactionOperation = BlockOperation()
+        
+        issuebildTransactionOperation.addExecutionBlock { [weak issuebildTransactionOperation, weak queue, weak self] in
+            
+            guard issuebildTransactionOperation?.isCancelled == false else { return }
+            guard self != nil else { return }
+            
+            guard let account: Account = queue?.getValue(IssueAssetKeys.issuerAccount.rawValue) else { return }
+            guard var operation: IssueAssetOperation = queue?.getValue(IssueAssetKeys.operation.rawValue) else { return }
+            guard let chainId: String = queue?.getValue(IssueAssetKeys.chainId.rawValue) else { return }
+            guard let blockData: BlockData = queue?.getValue(IssueAssetKeys.blockData.rawValue) else { return }
+            guard let fee: AssetAmount = queue?.getValue(IssueAssetKeys.fee.rawValue) else { return }
+            
+            operation.fee = fee
+            
+            let transaction = Transaction(operations: [operation], blockData: blockData, chainId: chainId)
+            
+            guard let name = account.name else { return }
+            guard let cryptoCore = self?.cryptoCore else { return }
+            guard let keyChain = ECHOKeychain(name: name, password: password, type: KeychainType.active, core: cryptoCore) else { return }
+            
+            do {
+                let generator = SignaturesGenerator()
+                let signatures = try generator.signTransaction(transaction, privateKeys: [keyChain.raw], cryptoCore: cryptoCore)
+                transaction.signatures = signatures
+                queue?.saveValue(transaction, forKey: CreateAssetKeys.transaction.rawValue)
+            } catch {
+                queue?.cancelAllOperations()
+                let result = Result<Bool, ECHOError>(error: ECHOError.undefined)
+                completion(result)
+            }
+        }
+        
+        return issuebildTransactionOperation
     }
     
     fileprivate func createSendTransactionOperation(_ queue: ECHOQueue,
+                                                    _ getTransactionKey: String,
                                                     _ completion: @escaping Completion<Bool>) -> Operation {
         
         let sendTransactionOperation = BlockOperation()
@@ -281,7 +431,7 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
         sendTransactionOperation.addExecutionBlock { [weak sendTransactionOperation, weak queue, weak self] in
             
             guard sendTransactionOperation?.isCancelled == false else { return }
-            guard let transction: Transaction = queue?.getValue(CreateAssetKeys.transaciton.rawValue) else { return }
+            guard let transction: Transaction = queue?.getValue(getTransactionKey) else { return }
             
             self?.services.networkBroadcastService.broadcastTransactionWithCallback(transaction: transction, completion: { (result) in
                 switch result {
@@ -301,6 +451,40 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
         }
         
         return sendTransactionOperation
+    }
+    
+    fileprivate func createMemo(privateKey: Data,
+                                fromAccount: Account,
+                                toAccount: Account,
+                                message: String?) -> Memo {
+        
+        guard let message = message else {
+            return Memo()
+        }
+        
+        guard let fromMemoKeyString = fromAccount.options?.memoKey else {
+            return Memo()
+        }
+        
+        guard let toMemoKeyString = toAccount.options?.memoKey else {
+            return Memo()
+        }
+        
+        let fromPublicKey = cryptoCore.getPublicKeyFromAddress(fromMemoKeyString, networkPrefix: network.prefix.rawValue)
+        let toPublicKey = cryptoCore.getPublicKeyFromAddress(toMemoKeyString, networkPrefix: network.prefix.rawValue)
+        
+        let nonce = 0
+        let byteMessage = cryptoCore.encryptMessage(privateKey: privateKey,
+                                                    publicKey: toPublicKey,
+                                                    nonce: String(format: "%llu", nonce),
+                                                    message: message)
+        
+        let memo = Memo(source: Address(fromAccount.options!.memoKey, data: fromPublicKey),
+                        destination: Address(toAccount.options!.memoKey, data: toPublicKey),
+                        nonce: nonce,
+                        byteMessage: byteMessage)
+        
+        return memo
     }
     
     fileprivate func checkAccount(account: Account, name: String?, password: String) -> Bool {

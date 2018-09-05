@@ -6,6 +6,18 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
+public enum AssetOptionIssuerPermissions: Int {
+    case chargeMarketFee     = 0x01 /**< an issuer-specified percentage of all market trades in this asset is paid to the issuer */
+    case whiteList           = 0x02 /**< accounts must be whitelisted in order to hold this asset */
+    case overrideAuthority   = 0x04 /**< issuer may transfer asset back to himself */
+    case transferRestricted  = 0x08 /**< require the issuer to be one party to every transfer */
+    case disableForceSettle  = 0x10 /**< disable force settling */
+    case globalSettle        = 0x20 /**< allow the bitasset issuer to force a global settling -- this may be set in permissions, but not flags */
+    case disableConfidential = 0x40 /**< allow the asset to be used with confidential transactions */
+    case witnessFedAsset     = 0x80 /**< allow the asset to be fed by witnesses */
+    case committeeFedAsset   = 0x100 /**< allow the asset to be fed by the committee */
+}
+
 public struct AssetOptions: ECHOCodable, Decodable {
     
     enum AssetOptionsCodingKeys: String, CodingKey {

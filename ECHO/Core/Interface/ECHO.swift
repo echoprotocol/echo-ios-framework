@@ -167,7 +167,7 @@ final public class ECHO: InterfaceFacades {
     public func issueAsset(issuerNameOrId: String,
                            password: String,
                            asset: String,
-                           amount: String,
+                           amount: UInt,
                            destinationIdOrName: String,
                            message: String?,
                            completion: @escaping Completion<Bool>) {
