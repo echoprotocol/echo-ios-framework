@@ -16,6 +16,7 @@ public struct Asset: ECHOObject, BytesCodable, Decodable {
         case precision
         case symbol
         case dynamicAssetDataId = "dynamic_asset_data_id"
+        case commonOptions = "common_options"
         case options
         case bitassetDataId = "bitasset_data_id"
         case bitassetOpts = "bitasset_opts"
@@ -24,35 +25,48 @@ public struct Asset: ECHOObject, BytesCodable, Decodable {
     }
     
     var id: String
-    var symbol: String?
-    var precision: Int = -1
-    var issuer: Account?
-    var dynamicAssetDataId: String?
-    var options: AssetOptions?
+    public var symbol: String?
+    public var precision: Int = -1
+    public var issuer: Account?
+    public var dynamicAssetDataId: String?
+    public var options: AssetOptions?
+    public var predictionMarket: Bool = false
+    public var bitAssetId: String?
     var bitassetOptions: OptionalValue<BitassetOptions>
-    var predictionMarket: Bool = false
-    var bitAssetId: String?
     
-    init(_ id: String) {
+    public init(_ id: String) {
         
         self.id = id
-        bitassetOptions = OptionalValue(nil)
+        bitassetOptions = OptionalValue(nil, addByteToStart: true)
     }
     
     public init(from decoder: Decoder) throws {
         
         let values = try decoder.container(keyedBy: AssetCodingKeys.self)
-        id = try values.decode(String.self, forKey: .id)
+        if values.contains(.id) {
+            id = try values.decode(String.self, forKey: .id)
+        } else {
+            id = ""
+        }
         symbol = try values.decode(String.self, forKey: .symbol)
         precision = try values.decode(Int.self, forKey: .precision)
         let issuerId = try values.decode(String.self, forKey: .issuer)
         issuer = Account(issuerId)
-        dynamicAssetDataId = try values.decode(String.self, forKey: .dynamicAssetDataId)
-        options = try values.decode(AssetOptions.self, forKey: .options)
+        dynamicAssetDataId = try? values.decode(String.self, forKey: .dynamicAssetDataId)
+        if values.contains(.options) {
+            options = try? values.decode(AssetOptions.self, forKey: .options)
+        } else {
+            options = try? values.decode(AssetOptions.self, forKey: .commonOptions)
+        }
         let parsedBitassetOpt = try? values.decode(BitassetOptions.self, forKey: .bitassetOpts)
-        bitassetOptions = OptionalValue(parsedBitassetOpt)
+        bitassetOptions = OptionalValue(parsedBitassetOpt, addByteToStart: true)
         predictionMarket = (try? values.decode(Bool.self, forKey: .isPredictionMarket)) ?? false
         bitAssetId = try? values.decode(String.self, forKey: .bitassetDataId)
+    }
+    
+    public mutating func setBitsassetOptions(_ options: BitassetOptions) {
+        
+        bitassetOptions = OptionalValue<BitassetOptions>(options, addByteToStart: true)
     }
     
     // MARK: BytesCodable

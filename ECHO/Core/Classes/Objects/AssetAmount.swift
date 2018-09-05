@@ -19,7 +19,7 @@ public struct AssetAmount: ECHOCodable, Decodable {
     let amount: UInt
     let asset: Asset
     
-    init(amount: UInt, asset: Asset) {
+    public init(amount: UInt, asset: Asset) {
         
         self.amount = amount
         self.asset = asset

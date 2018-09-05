@@ -20,9 +20,11 @@
 struct OptionalValue<T>: ECHOCodable where T: ECHOCodable {
     
     let object: T?
+    let addByteToStart: Bool
     
-    init(_ object: T?) {
+    init(_ object: T?, addByteToStart: Bool = false) {
         self.object = object
+        self.addByteToStart = addByteToStart
     }
     
     func isSet() -> Bool {
@@ -45,6 +47,11 @@ struct OptionalValue<T>: ECHOCodable where T: ECHOCodable {
             return Data(count: 1)
         }
         
-        return object.toData()
+        var data = Data()
+        if addByteToStart {
+            data.append(1)
+        }
+        data.append(optional: object.toData())
+        return data
     }
 }

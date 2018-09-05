@@ -6,7 +6,7 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
-struct BitassetOptions: ECHOCodable, Decodable {
+public struct BitassetOptions: ECHOCodable, Decodable {
     
     enum BitassetOptionsCodingKeys: String, CodingKey {
         case feedLifetimeSec = "feed_lifetime_sec"
@@ -25,6 +25,21 @@ struct BitassetOptions: ECHOCodable, Decodable {
     let maximumForceSettlementVolume: Int
     let shortBackingAsset: String
     let extensions: Extensions = Extensions()
+    
+    public init(feedLifetimeSec: Int,
+                minimumFeeds: Int,
+                forceSettlementDelaySec: Int,
+                forceSettlementOffsetPercent: Int,
+                maximumForceSettlementVolume: Int,
+                shortBackingAsset: String) {
+        
+        self.feedLifetimeSec = feedLifetimeSec
+        self.minimumFeeds = minimumFeeds
+        self.forceSettlementDelaySec = forceSettlementDelaySec
+        self.forceSettlementOffsetPercent = forceSettlementOffsetPercent
+        self.maximumForceSettlementVolume = maximumForceSettlementVolume
+        self.shortBackingAsset = shortBackingAsset
+    }
     
     public init(from decoder: Decoder) throws {
         

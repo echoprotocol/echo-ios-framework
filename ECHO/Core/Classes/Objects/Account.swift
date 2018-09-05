@@ -40,7 +40,7 @@ public struct Account: ECHOObject, ECHOCodable, Decodable, Hashable {
     public var active: Authority?
     public var options: Options?
     
-    init(_ id: String) {
+    public init(_ id: String) {
         
         self.id = id
     }
