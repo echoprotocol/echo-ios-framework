@@ -171,4 +171,37 @@ class SocketCoreComponentTests: XCTestCase {
 //            XCTAssertTrue(isSuccess)
 //        }
 //    }
+    
+    
+//    func testFakeChangePassword() {
+//
+//        //arrange
+//        let messenger = SocketMessengerStub()
+//        echo = ECHO(settings: Settings(build: {
+//            $0.socketMessenger = messenger
+//        }))
+//        let exp = expectation(description: "Change password")
+//        let userName = "dima1"
+//        let password = "P5J8pDyzznMmEdiBCdgB7VKtMBuxw5e4MAJEo3sfUbxcM"
+//        let newPassword = "newPassword"
+//        var success: Bool!
+//
+//        //act
+//        echo.start { [unowned self] (result) in
+//            self.echo.changePassword(old: password, new: newPassword, name: userName, completion: { (result) in
+//                switch result {
+//                case .success(let isSuccess):
+//                    success = isSuccess
+//                    exp.fulfill()
+//                case .failure(_):
+//                    XCTFail("Change password cant fail")
+//                }
+//            })
+//        }
+//
+//        //assert
+//        waitForExpectations(timeout: 1) { error in
+//            XCTAssertTrue(success)
+//        }
+//    }
 }
