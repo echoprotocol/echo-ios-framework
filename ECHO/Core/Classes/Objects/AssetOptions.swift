@@ -6,7 +6,7 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
-struct AssetOptions: ECHOCodable, Decodable {
+public struct AssetOptions: ECHOCodable, Decodable {
     
     enum AssetOptionsCodingKeys: String, CodingKey {
         case maxSupply = "max_supply"
@@ -36,7 +36,29 @@ struct AssetOptions: ECHOCodable, Decodable {
     let blacklistMarkets: [Account]
     let extensions = Extensions()
     
-    init(from decoder: Decoder) throws {
+    public init(maxSupply: UInt,
+                marketFeePercent: Int,
+                maxMarketFee: UInt,
+                issuerPermissions: Int,
+                flags: Int,
+                coreExchangeRate: Price,
+                description: String?) {
+        
+        self.maxSupply = maxSupply
+        self.marketFeePercent = marketFeePercent
+        self.maxMarketFee = maxMarketFee
+        self.issuerPermissions = issuerPermissions
+        self.flags = flags
+        self.coreExchangeRate.append(coreExchangeRate)
+        self.description = description
+        
+        self.whitelistAuthorities = [Account]()
+        self.blacklistAuthorities = [Account]()
+        self.whitelistMarkets = [Account]()
+        self.blacklistMarkets = [Account]()
+    }
+    
+    public init(from decoder: Decoder) throws {
         
         let values = try decoder.container(keyedBy: AssetOptionsCodingKeys.self)
         maxSupply = UInt(try values.decode(IntOrString.self, forKey: .maxSupply).intValue)

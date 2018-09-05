@@ -14,7 +14,7 @@ public protocol AssetsFacade {
 /**
      Creates asset [asset] with required parameters
  */
-    func createAsset(name: String,
+    func createAsset(nameOrId: String,
                      password: String,
                      asset: Asset,
                      completion: @escaping Completion<Bool>)

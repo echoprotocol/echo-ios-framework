@@ -21,6 +21,14 @@ struct CreateAssetOperation: BaseOperation {
     
     var asset: Asset
     
+    init(asset: Asset, fee: AssetAmount) {
+        
+        type = .assetCreateOperation
+        
+        self.fee = fee
+        self.asset = asset
+    }
+    
     init(from decoder: Decoder) throws {
         
         type = .assetCreateOperation
@@ -63,6 +71,8 @@ struct CreateAssetOperation: BaseOperation {
             dictionary[Asset.AssetCodingKeys.bitassetOpts.rawValue] = asset.bitassetOptions.toJSON()
         }
         dictionary[Asset.AssetCodingKeys.isPredictionMarket.rawValue] = asset.predictionMarket
+        
+        array.append(dictionary)
         
         return array
     }

@@ -68,7 +68,7 @@ final public class ECHO: InterfaceFacades {
         transacitonFacade = TransactionFacadeImp(services: transactoinServices, cryptoCore: settings.cryproComponent, network: settings.network)
         
         let assetsServices = AssetsServices(databaseService: databaseService, networkBroadcastService: networkBroadcastService)
-        assetsFacade = AssetsFacadeImp(services: assetsServices, cryptoCore: settings.cryproComponent)
+        assetsFacade = AssetsFacadeImp(services: assetsServices, cryptoCore: settings.cryproComponent, network: settings.network)
     }
     
 /**
@@ -156,12 +156,12 @@ final public class ECHO: InterfaceFacades {
     
     // MARK: AssetsFacade
 
-    public func createAsset(name: String,
+    public func createAsset(nameOrId: String,
                             password: String,
                             asset: Asset,
                             completion: @escaping Completion<Bool>) {
         
-        assetsFacade.createAsset(name: name, password: password, asset: asset, completion: completion)
+        assetsFacade.createAsset(nameOrId: nameOrId, password: password, asset: asset, completion: completion)
     }
     
     public func issueAsset(issuerNameOrId: String,

@@ -518,13 +518,13 @@
 		B3CA702520F4A40600511F6A /* Implementations */ = {
 			isa = PBXGroup;
 			children = (
+				B39554B2213E822B00CE2647 /* AssetsFacadeImp.swift */,
 				B30CAD1F20FFD5DB0048E33E /* AuthentificationFacadeImp.swift */,
 				D08B2BCC21342444000F7A9B /* FeeFacadeImp.swift */,
 				B348D09C21011EBC00C29AE4 /* InformationFacadeImp.swift */,
 				B3A7AA4A20F8C32C002D569D /* RevealFacadeImp.swift */,
 				B39A7C0A2105F5F6003CC14D /* SubscriptionFacadeImp.swift */,
 				D0116C5721353C460004A491 /* TransactionFacadeImp.swift */,
-				B39554B2213E822B00CE2647 /* AssetsFacadeImp.swift */,
 			);
 			path = Implementations;
 			sourceTree = "<group>";
@@ -532,13 +532,13 @@
 		B3CA702620F4A41300511F6A /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
+				B39554B0213E70DB00CE2647 /* AssetsFacade.swift */,
 				B3CA702720F4A43000511F6A /* AuthentificationFacade.swift */,
 				B3CA702F20F4A46E00511F6A /* FeeFacade.swift */,
 				B3CA702920F4A44900511F6A /* InformationFacade.swift */,
 				B3A7AA4820F8C247002D569D /* RevilSocketApiFacade.swift */,
 				B3CA702D20F4A46200511F6A /* SubscriptionFacade.swift */,
 				B3CA702B20F4A45400511F6A /* TransactionFacade.swift */,
-				B39554B0213E70DB00CE2647 /* AssetsFacade.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";

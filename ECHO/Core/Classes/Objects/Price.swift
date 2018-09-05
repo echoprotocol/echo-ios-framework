@@ -20,7 +20,7 @@
 
     - Note: Taken from the Graphene doxygen.
  */
-struct Price: ECHOCodable, Decodable {
+public struct Price: ECHOCodable, Decodable {
     
     enum PriceCodingKeys: String, CodingKey {
         case base
@@ -29,6 +29,12 @@ struct Price: ECHOCodable, Decodable {
     
     let base: AssetAmount
     let quote: AssetAmount
+    
+    public init(base: AssetAmount, quote: AssetAmount) {
+        
+        self.base = base
+        self.quote = quote
+    }
     
     public init(from decoder: Decoder) throws {
         
