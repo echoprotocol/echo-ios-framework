@@ -83,6 +83,16 @@ final class SocketMessengerStub: SocketMessenger {
             onText?(TransferGlobalPropertiesSocketRequestStub.response)
         case TransferResultSocketRequestStub.request:
             onText?(TransferResultSocketRequestStub.response)
+        case ChangePasswordAccountSocketRequestStub.request:
+            onText?(ChangePasswordAccountSocketRequestStub.response)
+        case ChangePasswordAssetSocketRequestStub.request:
+            onText?(ChangePasswordAssetSocketRequestStub.response)
+        case ChangePasswordSocketRequestStub.request:
+            onText?(ChangePasswordSocketRequestStub.response)
+        case ChangePasswordBlockSocketRequestStub.request:
+            onText?(ChangePasswordBlockSocketRequestStub.response)
+        case ChangePasswordResultSocketRequestStub.request:
+            onText?(ChangePasswordResultSocketRequestStub.response)
         default:
             break
         }        
