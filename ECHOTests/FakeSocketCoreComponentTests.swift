@@ -203,4 +203,46 @@ class SocketCoreComponentTests: XCTestCase {
             XCTAssertTrue(success)
         }
     }
+    
+    func testFakeIssueAsset() {
+        
+        //arrange
+        let messenger = SocketMessengerStub(state: .issueAsset)
+        echo = ECHO(settings: Settings(build: {
+            $0.socketMessenger = messenger
+        }))
+        let exp = expectation(description: "Issue asset")
+        let issuerNameOrId = "vsharaev1"
+        let password = "newTestPass"
+        let asset = "1.3.87"
+        let amount: UInt = 1
+        let destinationIdOrName = "vsharaev2"
+        let message = "Issue asset message"
+        var success: Bool!
+        
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.issueAsset(issuerNameOrId: issuerNameOrId,
+                                 password: password,
+                                 asset: asset,
+                                 amount: amount,
+                                 destinationIdOrName: destinationIdOrName,
+                                 message: message) { (result) in
+                                
+                switch result {
+                case .success(let isSuccess):
+                    success = isSuccess
+                    exp.fulfill()
+                case .failure(_):
+                    XCTFail("Issue asset cant fail")
+                }
+            }
+
+        }
+        
+        //assert
+        waitForExpectations(timeout: 1) { error in
+            XCTAssertTrue(success)
+        }
+    }
 }

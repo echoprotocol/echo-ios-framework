@@ -12,6 +12,7 @@ import ECHO
 enum OperationsState {
     case changePassword
     case transfer
+    case issueAsset
     case `default`
 }
 
@@ -62,6 +63,8 @@ final class SocketMessengerStub: SocketMessenger {
             response = getChangePasswordResponse(request: string)
         case .transfer:
             response = getTransferResponse(request: string)
+        case .issueAsset:
+            response = getIssueAssetResponse(request: string)
         }
     
         if let response = response {
@@ -119,6 +122,22 @@ final class SocketMessengerStub: SocketMessenger {
         }
     }
     
+    fileprivate func parceRequest(request: String) -> (id: Int, operationType: String)? {
+        
+        if let json = (request.data(using: .utf8))
+            .flatMap({ try? JSONSerialization.jsonObject(with: $0, options: [])}) as? [String: Any] {
+            
+            let id = json["id"] as? Int
+            let operationType = (json["params"] as? [Any]).flatMap { $0[safe: 1] as? String }
+            
+            if let id = id, let operationType = operationType {
+                return (id, operationType)
+            }
+        }
+        
+        return nil
+    }
+    
     fileprivate func getChangePasswordResponse(request: String) -> String? {
 
         guard let tuple = parceRequest(request: request) else {
@@ -155,20 +174,23 @@ final class SocketMessengerStub: SocketMessenger {
         return nil
     }
     
-    fileprivate func parceRequest(request: String) -> (id: Int, operationType: String)? {
+    fileprivate func getIssueAssetResponse(request: String) -> String? {
         
-        if let json = (request.data(using: .utf8))
-                    .flatMap({ try? JSONSerialization.jsonObject(with: $0, options: [])}) as? [String: Any] {
-            
-            let id = json["id"] as? Int
-            let operationType = (json["params"] as? [Any]).flatMap { $0[safe: 1] as? String }
-            
-            if let id = id, let operationType = operationType {
-                return (id, operationType)
-            }
+        guard let tuple = parceRequest(request: request) else {
+            return nil
+        }
+        
+        let revealHodler = RevialAPISocketRequestStubHodler()
+        let issueAssetHodler = IssueAssetSocketRequestStubHodler()
+        
+        if let revealResponse = revealHodler.response(id: tuple.id, operationType: tuple.operationType) {
+            return revealResponse
+        } else if let issueAssetResponse = issueAssetHodler.response(id: tuple.id, operationType: tuple.operationType) {
+            return issueAssetResponse
         }
         
         return nil
     }
+
 }
 
