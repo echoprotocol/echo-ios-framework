@@ -9,8 +9,15 @@
 import Foundation
 import ECHO
 
+enum OperationsState {
+    case changePassword
+    case transfer
+    case `default`
+}
+
 final class SocketMessengerStub: SocketMessenger {
     
+    let operationState: OperationsState
     var connectedUrl: String?
     
     var revealDatabaseApi = false
@@ -29,6 +36,10 @@ final class SocketMessengerStub: SocketMessenger {
     var onFailedConnect: (() -> ())?
     var onText: ((String) -> ())?
     
+    init(state: OperationsState = .default) {
+        operationState = state
+    }
+    
     func connect(toUrl: String) {
         connectedUrl = toUrl
         connectionCount += 1
@@ -42,60 +53,20 @@ final class SocketMessengerStub: SocketMessenger {
     
     func write(_ string: String) {
         
-        switch string {
-        case HistoryAPIRevealSocketRequestStub.request:
-            onText?(HistoryAPIRevealSocketRequestStub.response)
-            revealHistoryApi = true
-        case AccountSocketRequestStub.request:
-            onText?(AccountSocketRequestStub.response)
-        case LoginRevealSocketRequestStub.request:
-            onText?(LoginRevealSocketRequestStub.response)
-            login = true
-        case DatabaseAPIRevealSocketRequestStub.request:
-            onText?(DatabaseAPIRevealSocketRequestStub.response)
-            revealDatabaseApi = true
-        case NetworkBroadcastAPIRevealSocketRequestStub.request:
-            onText?(NetworkBroadcastAPIRevealSocketRequestStub.response)
-            revealNetBroadcastsApi = true
-        case NetworkNodesAPIRevealSocketRequestStub.request:
-            onText?(NetworkNodesAPIRevealSocketRequestStub.response)
-            revealNetNodesApi = true
-        case CryptoAPIRevealSocketRequestStub.request:
-            onText?(CryptoAPIRevealSocketRequestStub.response)
-            revealCryptoApi = true
-        case AccountHistorySocketRequestStub.request:
-            onText?(AccountHistorySocketRequestStub.response)
-        case AccountSocketRequestForNotificationStub.request:
-            onText?(AccountSocketRequestForNotificationStub.response)
-        case AccountSocketRequestForNotificationStub2.request:
-            onText?(AccountSocketRequestForNotificationStub2.response)
-        case AccountSocketRequestForNotificationStub3.request:
-            onText?(AccountSocketRequestForNotificationStub3.response)
-        case SubscribeSuccesNotificationStub.request:
-            onText?(SubscribeSuccesNotificationStub.response)
-        case TransferAccountsSocketRequestStub.request:
-            onText?(TransferAccountsSocketRequestStub.response)
-        case TransferRequredFeeSocketRequestStub.request:
-            onText?(TransferRequredFeeSocketRequestStub.response)
-        case TransferChainIdSocketRequestStub.request:
-            onText?(TransferChainIdSocketRequestStub.response)
-        case TransferGlobalPropertiesSocketRequestStub.request:
-            onText?(TransferGlobalPropertiesSocketRequestStub.response)
-        case TransferResultSocketRequestStub.request:
-            onText?(TransferResultSocketRequestStub.response)
-        case ChangePasswordAccountSocketRequestStub.request:
-            onText?(ChangePasswordAccountSocketRequestStub.response)
-        case ChangePasswordAssetSocketRequestStub.request:
-            onText?(ChangePasswordAssetSocketRequestStub.response)
-        case ChangePasswordSocketRequestStub.request:
-            onText?(ChangePasswordSocketRequestStub.response)
-        case ChangePasswordBlockSocketRequestStub.request:
-            onText?(ChangePasswordBlockSocketRequestStub.response)
-        case ChangePasswordResultSocketRequestStub.request:
-            onText?(ChangePasswordResultSocketRequestStub.response)
-        default:
-            break
-        }        
+        let response: String?
+        
+        switch operationState {
+        case .default:
+            response = getConstantResponse(request: string)
+        case .changePassword:
+            response = getChangePasswordResponse(request: string)
+        case .transfer:
+            response = getTransferResponse(request: string)
+        }
+    
+        if let response = response {
+            onText?(response)
+        }
     }
     
     func makeUserAccountTransferChangeEvent() {
@@ -108,6 +79,96 @@ final class SocketMessengerStub: SocketMessenger {
         onText?(TransactionEventEventNotificationStub.response1)
         onText?(TransactionEventEventNotificationStub.response2)
         onText?(TransactionEventEventNotificationStub.response3)
+    }
+    
+    fileprivate func getConstantResponse(request: String) -> String? {
+        
+        switch request {
+        case HistoryAPIRevealSocketRequestStub.request:
+            revealHistoryApi = true
+            return HistoryAPIRevealSocketRequestStub.response
+        case AccountSocketRequestStub.request:
+            return AccountSocketRequestStub.response
+        case LoginRevealSocketRequestStub.request:
+            login = true
+            return LoginRevealSocketRequestStub.response
+        case DatabaseAPIRevealSocketRequestStub.request:
+            revealDatabaseApi = true
+            return DatabaseAPIRevealSocketRequestStub.response
+        case NetworkBroadcastAPIRevealSocketRequestStub.request:
+            revealNetBroadcastsApi = true
+            return NetworkBroadcastAPIRevealSocketRequestStub.response
+        case NetworkNodesAPIRevealSocketRequestStub.request:
+            revealNetNodesApi = true
+            return NetworkNodesAPIRevealSocketRequestStub.response
+        case CryptoAPIRevealSocketRequestStub.request:
+            revealCryptoApi = true
+            return CryptoAPIRevealSocketRequestStub.response
+        case AccountHistorySocketRequestStub.request:
+            return AccountHistorySocketRequestStub.response
+        case AccountSocketRequestForNotificationStub.request:
+            return AccountSocketRequestForNotificationStub.response
+        case AccountSocketRequestForNotificationStub2.request:
+            return AccountSocketRequestForNotificationStub2.response
+        case AccountSocketRequestForNotificationStub3.request:
+            return AccountSocketRequestForNotificationStub3.response
+        case SubscribeSuccesNotificationStub.request:
+            return SubscribeSuccesNotificationStub.response
+        default:
+            return nil
+        }
+    }
+    
+    fileprivate func getChangePasswordResponse(request: String) -> String? {
+
+        guard let tuple = parceRequest(request: request) else {
+            return nil
+        }
+        
+        let revealHodler = RevialAPISocketRequestStubHodler()
+        let changePasswordHodler = ChangePasswordSocketRequestHodlerStub()
+
+        if let revealResponse = revealHodler.response(id: tuple.id, operationType: tuple.operationType) {
+            return revealResponse
+        } else if let changePasswordResponse = changePasswordHodler.response(id: tuple.id, operationType: tuple.operationType) {
+            return changePasswordResponse
+        }
+        
+        return nil
+    }
+    
+    fileprivate func getTransferResponse(request: String) -> String? {
+        
+        guard let tuple = parceRequest(request: request) else {
+            return nil
+        }
+        
+        let revealHodler = RevialAPISocketRequestStubHodler()
+        let transferHodler = TransferSocketRequestStubHodler()
+        
+        if let revealResponse = revealHodler.response(id: tuple.id, operationType: tuple.operationType) {
+            return revealResponse
+        } else if let transferResponse = transferHodler.response(id: tuple.id, operationType: tuple.operationType) {
+            return transferResponse
+        }
+        
+        return nil
+    }
+    
+    fileprivate func parceRequest(request: String) -> (id: Int, operationType: String)? {
+        
+        if let json = (request.data(using: .utf8))
+                    .flatMap({ try? JSONSerialization.jsonObject(with: $0, options: [])}) as? [String: Any] {
+            
+            let id = json["id"] as? Int
+            let operationType = (json["params"] as? [Any]).flatMap { $0[safe: 1] as? String }
+            
+            if let id = id, let operationType = operationType {
+                return (id, operationType)
+            }
+        }
+        
+        return nil
     }
 }
 

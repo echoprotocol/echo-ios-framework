@@ -139,69 +139,68 @@ class SocketCoreComponentTests: XCTestCase {
         }
     }
 
-//    func testFakeTransfer() {
-//
-//        //arrange
-//        let messenger = SocketMessengerStub()
-//        echo = ECHO(settings: Settings(build: {
-//            $0.socketMessenger = messenger
-//        }))
-//        let exp = expectation(description: "Transfer")
-//        let password = "P5JDUR7rSa9QXtYp9CF9HhnDRdPYz9mVpeiU812r2p5WVr8UcREY"
-//        let fromUser = "nikita1994"
-//        let toUser = "dima1"
-//        var isSuccess = false
-//        
-//        
-//        //act
-//        echo.start { [unowned self] (result) in
-//            self.echo.sendTransferOperation(fromNameOrId: fromUser, password: password, toNameOrId: toUser, amount: 1, asset: "1.3.0", message: "", completion: { (result) in
-//                switch result {
-//                case .success(let result):
-//                    isSuccess = result
-//                    exp.fulfill()
-//                case .failure(let error):
-//                    XCTFail("Transfer must be valid \(error)")
-//                }
-//            })
-//        }
-//        
-//        //assert
-//        waitForExpectations(timeout: 10) { error in
-//            XCTAssertTrue(isSuccess)
-//        }
-//    }
+    func testFakeTransfer() {
+
+        //arrange
+        let messenger = SocketMessengerStub(state: .transfer)
+        echo = ECHO(settings: Settings(build: {
+            $0.socketMessenger = messenger
+        }))
+        let exp = expectation(description: "Transfer")
+        let password = "P5JDUR7rSa9QXtYp9CF9HhnDRdPYz9mVpeiU812r2p5WVr8UcREY"
+        let fromUser = "nikita1994"
+        let toUser = "dima1"
+        var isSuccess = false
+        
+        
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.sendTransferOperation(fromNameOrId: fromUser, password: password, toNameOrId: toUser, amount: 1, asset: "1.3.0", message: "", completion: { (result) in
+                switch result {
+                case .success(let result):
+                    isSuccess = result
+                    exp.fulfill()
+                case .failure(let error):
+                    XCTFail("Transfer must be valid \(error)")
+                }
+            })
+        }
+        
+        //assert
+        waitForExpectations(timeout: 10) { error in
+            XCTAssertTrue(isSuccess)
+        }
+    }
     
-    
-//    func testFakeChangePassword() {
-//
-//        //arrange
-//        let messenger = SocketMessengerStub()
-//        echo = ECHO(settings: Settings(build: {
-//            $0.socketMessenger = messenger
-//        }))
-//        let exp = expectation(description: "Change password")
-//        let userName = "dima1"
-//        let password = "P5J8pDyzznMmEdiBCdgB7VKtMBuxw5e4MAJEo3sfUbxcM"
-//        let newPassword = "newPassword"
-//        var success: Bool!
-//
-//        //act
-//        echo.start { [unowned self] (result) in
-//            self.echo.changePassword(old: password, new: newPassword, name: userName, completion: { (result) in
-//                switch result {
-//                case .success(let isSuccess):
-//                    success = isSuccess
-//                    exp.fulfill()
-//                case .failure(_):
-//                    XCTFail("Change password cant fail")
-//                }
-//            })
-//        }
-//
-//        //assert
-//        waitForExpectations(timeout: 1) { error in
-//            XCTAssertTrue(success)
-//        }
-//    }
+    func testFakeChangePassword() {
+
+        //arrange
+        let messenger = SocketMessengerStub(state: .changePassword)
+        echo = ECHO(settings: Settings(build: {
+            $0.socketMessenger = messenger
+        }))
+        let exp = expectation(description: "Change password")
+        let userName = "dima1"
+        let password = "P5J8pDyzznMmEdiBCdgB7VKtMBuxw5e4MAJEo3sfUbxcM"
+        let newPassword = "newPassword"
+        var success: Bool!
+
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.changePassword(old: password, new: newPassword, name: userName, completion: { (result) in
+                switch result {
+                case .success(let isSuccess):
+                    success = isSuccess
+                    exp.fulfill()
+                case .failure(_):
+                    XCTFail("Change password cant fail")
+                }
+            })
+        }
+
+        //assert
+        waitForExpectations(timeout: 1) { error in
+            XCTAssertTrue(success)
+        }
+    }
 }

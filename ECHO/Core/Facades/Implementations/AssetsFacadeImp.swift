@@ -163,11 +163,11 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
     }
     
     fileprivate func createIssueAssetOperation(_ queue: ECHOQueue,
-                                         _ password: String,
-                                         _ amount: UInt,
-                                         _ asset: String,
-                                         _ message: String?,
-                                         _ completion: @escaping Completion<Bool>) -> Operation {
+                                               _ password: String,
+                                               _ amount: UInt,
+                                               _ asset: String,
+                                               _ message: String?,
+                                               _ completion: @escaping Completion<Bool>) -> Operation {
         
         let createIssueAssetOperation = BlockOperation()
         
