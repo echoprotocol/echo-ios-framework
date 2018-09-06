@@ -13,7 +13,7 @@ protocol ECHOQueueble: class {
     func addQueue(_ queue: ECHOQueue)
     func removeQueue(_ queue: ECHOQueue)
     
-    func createLastOperation(queue: ECHOQueue) -> Operation
+    func createCompletionOperation(queue: ECHOQueue) -> Operation
     func cancelAllOperationInQueues()
 }
 
@@ -31,15 +31,15 @@ extension ECHOQueueble {
         }
     }
     
-    func createLastOperation(queue: ECHOQueue) -> Operation {
+    func createCompletionOperation(queue: ECHOQueue) -> Operation {
         
-        let lastOperation = BlockOperation()
+        let completionOperation = BlockOperation()
         
-        lastOperation.addExecutionBlock { [weak self] in
+        completionOperation.addExecutionBlock { [weak self] in
             self?.removeQueue(queue)
         }
         
-        return lastOperation
+        return completionOperation
     }
     
     func cancelAllOperationInQueues() {
@@ -50,15 +50,17 @@ extension ECHOQueueble {
     }
 }
 
-final class ECHOQueue {
+final class ECHOQueue: NSObject {
 
     fileprivate let workingQueue: OperationQueue
     fileprivate var valuesContainer: [String: Any?]
     fileprivate var semaphore: DispatchSemaphore
+    fileprivate var completionOperation: Operation?
+    fileprivate var obs: NSKeyValueObservation?
     
     let uuid: String
     
-    init() {
+    override init() {
         
         uuid = NSUUID().uuidString
         
@@ -68,6 +70,10 @@ final class ECHOQueue {
         
         semaphore = DispatchSemaphore(value: 0)
         valuesContainer = [String: Any?]()
+    }
+    
+    deinit {
+        workingQueue.removeObserver(self, forKeyPath: "operationCount")
     }
     
     // MARK: Save and get operations results
@@ -104,8 +110,21 @@ final class ECHOQueue {
     
     // MARK: Operations
     
-    func addOperation(_ operation: Operation) {
+    func setCompletionOperation(_ completionOperation: Operation) {
         
+        self.completionOperation = completionOperation
+        
+        obs = workingQueue.observe(\.operationCount) { [weak self](queue, _) in
+            
+            if queue.operationCount == 0,
+                let completionOperation = self?.completionOperation,
+                completionOperation.isFinished == false {
+                queue.addOperation(completionOperation)
+            }
+        }
+    }
+    
+    func addOperation(_ operation: Operation) {
         workingQueue.addOperation(operation)
     }
     

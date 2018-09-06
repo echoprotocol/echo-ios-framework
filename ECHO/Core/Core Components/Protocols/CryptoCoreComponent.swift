@@ -9,7 +9,7 @@
 /**
      The interface of the class that encompasses all cryptographic functions
  */
-public protocol CryptoCoreComponent {
+public protocol CryptoCoreComponent: class {
     func getPublicKeyFromAddress(_ address: String, networkPrefix: String) -> Data
     func generatePublicKey(withPrivateKey privateKeyData: Data, compression isCompression: Bool) -> Data
     func sha256(_ data: Data) -> Data

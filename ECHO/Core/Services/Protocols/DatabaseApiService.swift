@@ -10,7 +10,7 @@
  
     [Graphene blockchain database API](https://dev-doc.myecho.app/classgraphene_1_1app_1_1database__api.html)
  */
-protocol DatabaseApiService {
+protocol DatabaseApiService: class {
     
     init(socketCore: SocketCoreComponent)
     
