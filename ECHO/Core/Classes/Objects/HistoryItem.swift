@@ -18,6 +18,7 @@ public struct HistoryItem: Decodable {
         case virtualOperation = "virtual_op"
         case operation = "op"
         case id
+        case result
     }
     
     var id: String
@@ -27,6 +28,7 @@ public struct HistoryItem: Decodable {
     let trxInBlock: Int
     let opInTrx: Int
     let virtualOp: Int
+    let result: [Any]
     
     public init(from decoder: Decoder) throws {
         
@@ -36,6 +38,7 @@ public struct HistoryItem: Decodable {
         trxInBlock = try values.decode(Int.self, forKey: .trxInBlock)
         opInTrx = try values.decode(Int.self, forKey: .operationsInTrx)
         virtualOp = try values.decode(Int.self, forKey: .virtualOperation)
+        result = try values.decode([AnyDecodable].self, forKey: .result).map { $0.value }
         
         let operationContainer = try values.nestedUnkeyedContainer(forKey: .operation)
         operation = mapOperation(operationContainer)
