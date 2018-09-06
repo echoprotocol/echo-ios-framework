@@ -8,7 +8,7 @@
 /**
     Represents balance model in Graphene blockchain
  */
-final public class AccountBalance: GrapheneObject, Decodable {
+public struct AccountBalance: ECHOObject, Decodable {
     
     enum AccountBalanceCodingKeys: String, CodingKey {
         case assetType = "asset_type"
@@ -20,10 +20,11 @@ final public class AccountBalance: GrapheneObject, Decodable {
     let assetType: String
     let owner: String
     let balance: Int
+    let id: String
 
-    required public init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: AccountBalanceCodingKeys.self)
-        let id = try values.decode(String.self, forKey: .id)
+        id = try values.decode(String.self, forKey: .id)
         assetType = try values.decode(String.self, forKey: .assetType)
         owner = try values.decode(String.self, forKey: .owner)
         let balance = try values.decode(IntOrString.self, forKey: .balance)
@@ -37,6 +38,5 @@ final public class AccountBalance: GrapheneObject, Decodable {
                 throw ECHOError.encodableMapping
             }
         }
-        super.init(string: id)
     }
 }
