@@ -13,6 +13,7 @@ enum OperationsState {
     case changePassword
     case transfer
     case issueAsset
+    case createAsset
     case `default`
 }
 
@@ -65,6 +66,8 @@ final class SocketMessengerStub: SocketMessenger {
             response = getTransferResponse(request: string)
         case .issueAsset:
             response = getIssueAssetResponse(request: string)
+        case .createAsset:
+            response = getCreateAssetResponse(request: string)
         }
     
         if let response = response {
@@ -187,6 +190,24 @@ final class SocketMessengerStub: SocketMessenger {
             return revealResponse
         } else if let issueAssetResponse = issueAssetHodler.response(id: tuple.id, operationType: tuple.operationType) {
             return issueAssetResponse
+        }
+        
+        return nil
+    }
+    
+    fileprivate func getCreateAssetResponse(request: String) -> String? {
+        
+        guard let tuple = parceRequest(request: request) else {
+            return nil
+        }
+        
+        let revealHodler = RevialAPISocketRequestStubHodler()
+        let createAssetHodler = CreateAssetSocketRequestStubHodler()
+        
+        if let revealResponse = revealHodler.response(id: tuple.id, operationType: tuple.operationType) {
+            return revealResponse
+        } else if let createAssetResponse = createAssetHodler.response(id: tuple.id, operationType: tuple.operationType) {
+            return createAssetResponse
         }
         
         return nil

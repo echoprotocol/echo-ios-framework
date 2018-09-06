@@ -63,7 +63,6 @@
 		B358CD062139786B0046327F /* Configurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B358CD052139786B0046327F /* Configurator.swift */; };
 		B358CD08213978800046327F /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B358CD07213978800046327F /* Settings.swift */; };
 		B358CD0A213978990046327F /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = B358CD09213978990046327F /* Network.swift */; };
-		B35F15AA20F3ABAE000CE3EA /* ObjectType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35F15A920F3ABAE000CE3EA /* ObjectType.swift */; };
 		B370BB5920F7623F004C4A26 /* ApiOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B370BB5820F7623F004C4A26 /* ApiOptions.swift */; };
 		B370BB5B20F76853004C4A26 /* SocketCoreComponentImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B370BB5A20F76853004C4A26 /* SocketCoreComponentImp.swift */; };
 		B370BB5D20F768B1004C4A26 /* CryptoCoreComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B370BB5C20F768B1004C4A26 /* CryptoCoreComponent.swift */; };
@@ -84,6 +83,7 @@
 		B390C2C621411FF600BD6CDC /* RevealAPISocketStubs.swift in Sources */ = {isa = PBXBuildFile; fileRef = B390C2C521411FF600BD6CDC /* RevealAPISocketStubs.swift */; };
 		B390C2C72141312D00BD6CDC /* Collection+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3965B152125952700029585 /* Collection+Extension.swift */; };
 		B390C2C92141385700BD6CDC /* IssueAssetSocketStubs.swift in Sources */ = {isa = PBXBuildFile; fileRef = B390C2C82141385700BD6CDC /* IssueAssetSocketStubs.swift */; };
+		B390C2CB2141403000BD6CDC /* CreateAssetSocketStubs.swift in Sources */ = {isa = PBXBuildFile; fileRef = B390C2CA2141403000BD6CDC /* CreateAssetSocketStubs.swift */; };
 		B39554B1213E70DB00CE2647 /* AssetsFacade.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39554B0213E70DB00CE2647 /* AssetsFacade.swift */; };
 		B39554B3213E822B00CE2647 /* AssetsFacadeImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39554B2213E822B00CE2647 /* AssetsFacadeImp.swift */; };
 		B39554B5213EBAED00CE2647 /* ListAssetsSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39554B4213EBAED00CE2647 /* ListAssetsSocketOperation.swift */; };
@@ -231,7 +231,6 @@
 		B358CD052139786B0046327F /* Configurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configurator.swift; sourceTree = "<group>"; };
 		B358CD07213978800046327F /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		B358CD09213978990046327F /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
-		B35F15A920F3ABAE000CE3EA /* ObjectType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectType.swift; sourceTree = "<group>"; };
 		B370BB5820F7623F004C4A26 /* ApiOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiOptions.swift; sourceTree = "<group>"; };
 		B370BB5A20F76853004C4A26 /* SocketCoreComponentImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketCoreComponentImp.swift; sourceTree = "<group>"; };
 		B370BB5C20F768B1004C4A26 /* CryptoCoreComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoCoreComponent.swift; sourceTree = "<group>"; };
@@ -251,6 +250,7 @@
 		B390C2C321411F9600BD6CDC /* SocketRequestProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketRequestProtocol.swift; sourceTree = "<group>"; };
 		B390C2C521411FF600BD6CDC /* RevealAPISocketStubs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevealAPISocketStubs.swift; sourceTree = "<group>"; };
 		B390C2C82141385700BD6CDC /* IssueAssetSocketStubs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueAssetSocketStubs.swift; sourceTree = "<group>"; };
+		B390C2CA2141403000BD6CDC /* CreateAssetSocketStubs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAssetSocketStubs.swift; sourceTree = "<group>"; };
 		B39554B0213E70DB00CE2647 /* AssetsFacade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetsFacade.swift; sourceTree = "<group>"; };
 		B39554B2213E822B00CE2647 /* AssetsFacadeImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetsFacadeImp.swift; sourceTree = "<group>"; };
 		B39554B4213EBAED00CE2647 /* ListAssetsSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAssetsSocketOperation.swift; sourceTree = "<group>"; };
@@ -393,6 +393,7 @@
 				B328FC30213FEA510022292C /* ChangePasswordSocketRequestElementStub.swift */,
 				B390C2C82141385700BD6CDC /* IssueAssetSocketStubs.swift */,
 				B390C2C521411FF600BD6CDC /* RevealAPISocketStubs.swift */,
+				B390C2CA2141403000BD6CDC /* CreateAssetSocketStubs.swift */,
 			);
 			path = SocketRequestsStubs;
 			sourceTree = "<group>";
@@ -460,7 +461,6 @@
 				D0B6A0C72126B39100A78E4B /* Extensions.swift */,
 				B3CA703B20F4AA3700511F6A /* HistoryItem.swift */,
 				D094703F212D3FEE00B55A37 /* Memo.swift */,
-				B35F15A920F3ABAE000CE3EA /* ObjectType.swift */,
 				D01BF7D1212ABE4E00917DB8 /* OptionalValue.swift */,
 				B30CAD1920FFD58E0048E33E /* Options.swift */,
 				B38596FB20F6005500B55E59 /* Price.swift */,
@@ -925,7 +925,6 @@
 				B38596FC20F6005500B55E59 /* Price.swift in Sources */,
 				D0947040212D3FEE00B55A37 /* Memo.swift in Sources */,
 				B38596F220F5EE1400B55E59 /* GetObjectsSocketOperation.swift in Sources */,
-				B35F15AA20F3ABAE000CE3EA /* ObjectType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -948,6 +947,7 @@
 				B30FE907212EFA0D0009BF57 /* FullHistoryStub.swift in Sources */,
 				B3D1C588212DA67300D1A7E6 /* AuthorityStub.swift in Sources */,
 				B3D1C57C212D4D8100D1A7E6 /* DataEncodingTests.swift in Sources */,
+				B390C2CB2141403000BD6CDC /* CreateAssetSocketStubs.swift in Sources */,
 				B3D1C58C212DA6E700D1A7E6 /* OptionsStub.swift in Sources */,
 				B30FE90C212F2AE70009BF57 /* AccountSocketRequestStub.swift in Sources */,
 				B3405CB82135BB3F00C18FE6 /* SubscribtionTests.swift in Sources */,

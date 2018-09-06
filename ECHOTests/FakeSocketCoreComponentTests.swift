@@ -245,4 +245,57 @@ class SocketCoreComponentTests: XCTestCase {
             XCTAssertTrue(success)
         }
     }
+    
+    func testFakeCreateAsset() {
+        
+        //arrange
+        let messenger = SocketMessengerStub(state: .createAsset)
+        echo = ECHO(settings: Settings(build: {
+            $0.socketMessenger = messenger
+        }))
+        let exp = expectation(description: "Create asset")
+        var asset = Asset("")
+        asset.symbol = "VSASSETFORISSUE2"
+        asset.precision = 4
+        asset.issuer = Account("1.2.95")
+        asset.setBitsassetOptions(BitassetOptions(feedLifetimeSec: 86400,
+                                                  minimumFeeds: 7,
+                                                  forceSettlementDelaySec: 86400,
+                                                  forceSettlementOffsetPercent: 100,
+                                                  maximumForceSettlementVolume: 2000,
+                                                  shortBackingAsset: "1.3.0"))
+        asset.predictionMarket = false
+        
+        asset.options = AssetOptions(maxSupply: 100000,
+                                     marketFeePercent: 0,
+                                     maxMarketFee: 0,
+                                     issuerPermissions: AssetOptionIssuerPermissions.committeeFedAsset.rawValue,
+                                     flags: AssetOptionIssuerPermissions.committeeFedAsset.rawValue,
+                                     coreExchangeRate: Price(base: AssetAmount(amount: 1, asset: Asset("1.3.0")), quote: AssetAmount(amount: 1, asset: Asset("1.3.1"))),
+                                     description: "description")
+        let nameOrId = "vsharaev1"
+        let password = "newTestPass"
+        var success: Bool!
+        
+        //act
+        echo.start { [unowned self] (result) in
+            
+            self.echo.createAsset(nameOrId: nameOrId, password: password, asset: asset) { (result) in
+                
+                switch result {
+                case .success(let isSuccess):
+                    success = isSuccess
+                    exp.fulfill()
+                case .failure(_):
+                    XCTFail("Create asset cant fail")
+                }
+            }
+            
+        }
+        
+        //assert
+        waitForExpectations(timeout: 1) { error in
+            XCTAssertTrue(success)
+        }
+    }
 }
