@@ -90,7 +90,7 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
     // MARK: History
     
     private enum AccountHistoryResultsKeys: String {
-        case accountId
+        case account
         case historyItems
         case findedBlockNums
         case loadedBlocks
@@ -103,16 +103,28 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         let accountHistoryQueue = ECHOQueue()
         addQueue(accountHistoryQueue)
         
-        let getAccountOperation = createGetAccountOperation(accountHistoryQueue, nameOrID, completion)
+        // Account
+        let getAccountNameOrIdsWithKey = GetAccountsNamesOrIdWithKeys([(nameOrID, AccountHistoryResultsKeys.account.rawValue)])
+        let getAccountOperationInitParams = (accountHistoryQueue,
+                                             services.databaseService,
+                                             getAccountNameOrIdsWithKey)
+        let getAccountOperation = GetAccountsQueueOperation<[HistoryItem]>(initParams: getAccountOperationInitParams,
+                                                                   completion: completion)
+        
+        // History
         let getHistoryOperation = createGetHistoryOperation(accountHistoryQueue,
                                                             startId: startId, stopId: stopId, limit: limit,
                                                             completion: completion)
+        
+        // OtherData
         let getBlocksOperation = createGetBlocksOperation(accountHistoryQueue, completion)
         let getAccountsOperation = createGetAccountsOperation(accountHistoryQueue, completion)
         let mergeBlocksToHistoryOperation = createMergeBlocksInHistoryOperation(accountHistoryQueue, completion)
         let mergeAccountsToHistoryOperation = createMergeAccountsInHistoryOperation(accountHistoryQueue, completion)
-        let completionOperation = createHistoryComletionOperation(accountHistoryQueue, completion)
-        let lastOperation = createLastOperation(queue: accountHistoryQueue)
+        
+        // Completion
+        let historyCompletionOperation = createHistoryComletionOperation(accountHistoryQueue, completion)
+        let completionOperation = createCompletionOperation(queue: accountHistoryQueue)
         
         accountHistoryQueue.addOperation(getAccountOperation)
         accountHistoryQueue.addOperation(getHistoryOperation)
@@ -120,37 +132,9 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         accountHistoryQueue.addOperation(getAccountsOperation)
         accountHistoryQueue.addOperation(mergeBlocksToHistoryOperation)
         accountHistoryQueue.addOperation(mergeAccountsToHistoryOperation)
-        accountHistoryQueue.addOperation(completionOperation)
-        accountHistoryQueue.addOperation(lastOperation)
-    }
-    
-    fileprivate func createGetAccountOperation(_ queue: ECHOQueue,
-                                               _ nameOrID: String,
-                                               _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
+        accountHistoryQueue.addOperation(historyCompletionOperation)
         
-        let getAccountOperation = BlockOperation()
-        
-        getAccountOperation.addExecutionBlock { [weak getAccountOperation, weak self, weak queue] in
-            
-            guard getAccountOperation?.isCancelled == false else { return }
-            
-            self?.getAccount(nameOrID: nameOrID, completion: { (result) in
-                switch result {
-                case .success(let account):
-                    queue?.saveValue(account.id, forKey: AccountHistoryResultsKeys.accountId.rawValue)
-                case .failure(let error):
-                    queue?.cancelAllOperations()
-                    let result = Result<[HistoryItem], ECHOError>(error: error)
-                    completion(result)
-                }
-                
-                queue?.startNextOperation()
-            })
-            
-            queue?.waitStartNextOperation()
-        }
-        
-        return getAccountOperation
+        accountHistoryQueue.setCompletionOperation(completionOperation)
     }
     
     fileprivate func createGetHistoryOperation(_ queue: ECHOQueue,
@@ -162,9 +146,9 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         getHistoryOperation.addExecutionBlock { [weak getHistoryOperation, weak self, weak queue] in
             
             guard getHistoryOperation?.isCancelled == false else { return }
-            guard let accountId: String = queue?.getValue(AccountHistoryResultsKeys.accountId.rawValue) else { return }
+            guard let account: Account = queue?.getValue(AccountHistoryResultsKeys.account.rawValue) else { return }
             
-            self?.services.historyService.getAccountHistory(id: accountId, startId: startId, stopId: stopId, limit: limit, completion: { (result) in
+            self?.services.historyService.getAccountHistory(id: account.id, startId: startId, stopId: stopId, limit: limit, completion: { (result) in
                 switch result {
                 case .success(let historyItems):
                     queue?.saveValue(historyItems, forKey: AccountHistoryResultsKeys.historyItems.rawValue)

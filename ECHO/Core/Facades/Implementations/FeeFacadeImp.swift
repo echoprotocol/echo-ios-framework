@@ -43,56 +43,39 @@ final public class FeeFacadeImp: FeeFacade, ECHOQueueble {
         let feeQueue = ECHOQueue()
         queues.append(feeQueue)
         
-        let getAccountsOperation = createGetAccountsOperation(feeQueue, fromNameOrId, toNameOrId, completion)
+        // Account
+        let getAccountsNamesOrIdsWithKeys = GetAccountsNamesOrIdWithKeys([(fromNameOrId, FeeResultsKeys.loadedFromAccount.rawValue),
+                                                                          (toNameOrId, FeeResultsKeys.loadedToAccount.rawValue)])
+        let getAccountsOperationInitParams = (feeQueue,
+                                             services.databaseService,
+                                             getAccountsNamesOrIdsWithKeys)
+        let getAccountsOperation = GetAccountsQueueOperation<AssetAmount>(initParams: getAccountsOperationInitParams,
+                                                                  completion: completion)
+        
+        // Operation
         let bildTransferOperation = createBildTransferOperation(feeQueue, amount, asset, completion)
-        let getRequiredFee = createGetRequiredFeeOperation(feeQueue, asset, completion)
-        let feeComletionOperation = createFeeComletionOperation(feeQueue, completion)
-        let lastOperation = createLastOperation(queue: feeQueue)
+        
+        // RequiredFee
+        let getRequiredFeeOperationInitParams = (feeQueue,
+                                                 services.databaseService,
+                                                 Asset(asset),
+                                                 FeeResultsKeys.operation.rawValue,
+                                                 FeeResultsKeys.fee.rawValue)
+        let getRequiredFeeOperation = GetRequiredFeeQueueOperation<AssetAmount>(initParams: getRequiredFeeOperationInitParams,
+                                                                         completion: completion)
+        
+        // FeeCompletion
+        let feeCompletionOperation = createFeeComletionOperation(feeQueue, completion)
+        
+        // Completion
+        let completionOperation = createCompletionOperation(queue: feeQueue)
         
         feeQueue.addOperation(getAccountsOperation)
         feeQueue.addOperation(bildTransferOperation)
-        feeQueue.addOperation(getRequiredFee)
-        feeQueue.addOperation(feeComletionOperation)
-        feeQueue.addOperation(lastOperation)
-    }
-    
-    fileprivate func createGetAccountsOperation(_ queue: ECHOQueue,
-                                                _ fromNameOrId: String,
-                                                _ toNameOrId: String,
-                                                _ completion: @escaping Completion<AssetAmount>) -> Operation {
+        feeQueue.addOperation(getRequiredFeeOperation)
+        feeQueue.addOperation(feeCompletionOperation)
         
-        let getAccountsOperation = BlockOperation()
-        
-        getAccountsOperation.addExecutionBlock { [weak getAccountsOperation, weak queue, weak self] in
-            
-            guard getAccountsOperation?.isCancelled == false else { return }
-            
-            self?.services.databaseService.getFullAccount(nameOrIds: [fromNameOrId, toNameOrId], shoudSubscribe: false, completion: { (result) in
-                switch result {
-                case .success(let accounts):
-                    
-                    if let fromAccount = accounts[fromNameOrId], let toAccount = accounts[toNameOrId] {
-                        queue?.saveValue(fromAccount.account, forKey: FeeResultsKeys.loadedFromAccount.rawValue)
-                        queue?.saveValue(toAccount.account, forKey: FeeResultsKeys.loadedToAccount.rawValue)
-                    } else {
-                        queue?.cancelAllOperations()
-                        let result = Result<AssetAmount, ECHOError>(error: ECHOError.resultNotFound)
-                        completion(result)
-                    }
-
-                case .failure(let error):
-                    queue?.cancelAllOperations()
-                    let result = Result<AssetAmount, ECHOError>(error: error)
-                    completion(result)
-                }
-                
-                queue?.startNextOperation()
-            })
-            
-            queue?.waitStartNextOperation()
-        }
-        
-        return getAccountsOperation
+        feeQueue.setCompletionOperation(completionOperation)
     }
     
     fileprivate func createBildTransferOperation(_ queue: ECHOQueue,
@@ -123,53 +106,19 @@ final public class FeeFacadeImp: FeeFacade, ECHOQueueble {
         return bildTransferOperation
     }
     
-    fileprivate func createGetRequiredFeeOperation(_ queue: ECHOQueue,
-                                                   _ asset: String,
-                                                   _ completion: @escaping Completion<AssetAmount>) -> Operation {
-        
-        let getRequiredFee = BlockOperation()
-        
-        getRequiredFee.addExecutionBlock { [weak getRequiredFee, weak queue, weak self] in
-        
-            guard getRequiredFee?.isCancelled == false else { return }
-            guard let operation: TransferOperation = queue?.getValue(FeeResultsKeys.operation.rawValue) else { return }
-            
-            let asset = Asset(asset)
-            
-            self?.services.databaseService.getRequiredFees(operations: [operation], asset: asset, completion: { (result) in
-                switch result {
-                case .success(let fees):
-                    if let fee = fees.first {
-                        queue?.saveValue(fee, forKey: FeeResultsKeys.fee.rawValue)
-                    }
-                case .failure(let error):
-                    queue?.cancelAllOperations()
-                    let result = Result<AssetAmount, ECHOError>(error: error)
-                    completion(result)
-                }
-                
-                queue?.startNextOperation()
-            })
-            
-            queue?.waitStartNextOperation()
-        }
-        
-        return getRequiredFee
-    }
-    
     fileprivate func createFeeComletionOperation(_ queue: ECHOQueue, _ completion: @escaping Completion<AssetAmount>) -> Operation {
         
-        let feeComletionOperation = BlockOperation()
+        let feeCompletionOperation = BlockOperation()
         
-        feeComletionOperation.addExecutionBlock { [weak feeComletionOperation, weak queue] in
+        feeCompletionOperation.addExecutionBlock { [weak feeCompletionOperation, weak queue] in
             
-            guard feeComletionOperation?.isCancelled == false else { return }
+            guard feeCompletionOperation?.isCancelled == false else { return }
             guard let fee: AssetAmount = queue?.getValue(FeeResultsKeys.fee.rawValue) else { return }
             
             let result = Result<AssetAmount, ECHOError>(value: fee)
             completion(result)
         }
         
-        return feeComletionOperation
+        return feeCompletionOperation
     }
 }

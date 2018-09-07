@@ -39,7 +39,8 @@ final public class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
         case chainId
         case operation
         case fee
-        case transaciton
+        case transaction
+        case memo
     }
     
     public func sendTransferOperation(fromNameOrId: String,
@@ -53,116 +54,82 @@ final public class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
         let transferQueue = ECHOQueue()
         queues.append(transferQueue)
         
-        let getAccountsOperation = createGetAccountsOperation(transferQueue, fromNameOrId, toNameOrId, completion)
+        // Accounts
+        let getAccountsNamesOrIdsWithKeys = GetAccountsNamesOrIdWithKeys([(fromNameOrId, TransferResultsKeys.loadedFromAccount.rawValue),
+                                                                          (toNameOrId, TransferResultsKeys.loadedToAccount.rawValue)])
+        let getAccountsOperationInitParams = (transferQueue,
+                                              services.databaseService,
+                                              getAccountsNamesOrIdsWithKeys)
+        let getAccountsOperation = GetAccountsQueueOperation<Bool>(initParams: getAccountsOperationInitParams,
+                                                                          completion: completion)
+        
+        // Memo
+        let getMemoOperationInitParams = (queue: transferQueue,
+                                          cryptoCore: cryptoCore,
+                                          message: message,
+                                          saveKey: TransferResultsKeys.memo.rawValue,
+                                          password: password,
+                                          networkPrefix: network.prefix.rawValue,
+                                          fromAccountKey: TransferResultsKeys.loadedFromAccount.rawValue,
+                                          toAccountKey: TransferResultsKeys.loadedToAccount.rawValue)
+        let getMemoOperation = GetMemoQueueOperation<Bool>(initParams: getMemoOperationInitParams,
+                                                           completion: completion)
+        
         let bildTransferOperation = createBildTransferOperation(transferQueue, password, message, amount, asset, completion)
-        let getRequiredFee = createGetRequiredFeeOperation(transferQueue, asset, completion)
-        let getChainIdOperation = createChainIdOperation(transferQueue, completion)
-        let getBlockDataOperation = createGetBlockDataOperation(transferQueue, completion)
-        let bildTransacitonOperation = createBildTransactionOperation(transferQueue, password, completion)
-        let sendTransacitonOperation = createSendTransactionOperation(transferQueue, completion)
-        let lastOperation = createLastOperation(queue: transferQueue)
+        
+        // RequiredFee
+        let getRequiredFeeOperationInitParams = (transferQueue,
+                                                 services.databaseService,
+                                                 Asset(asset),
+                                                 TransferResultsKeys.operation.rawValue,
+                                                 TransferResultsKeys.fee.rawValue)
+        let getRequiredFeeOperation = GetRequiredFeeQueueOperation<Bool>(initParams: getRequiredFeeOperationInitParams,
+                                                                                completion: completion)
+        
+        // ChainId
+        let getChainIdInitParams = (transferQueue, services.databaseService, TransferResultsKeys.chainId.rawValue)
+        let getChainIdOperation = GetChainIdQueueOperation<Bool>(initParams: getChainIdInitParams,
+                                                                 completion: completion)
+    
+        // BlockData
+        let getBlockDataInitParams = (transferQueue, services.databaseService, TransferResultsKeys.blockData.rawValue)
+        let getBlockDataOperation = GetBlockDataQueueOperation<Bool>(initParams: getBlockDataInitParams,
+                                                                     completion: completion)
+        
+        // Transaciton
+        let transactionOperationInitParams = (queue: transferQueue,
+                                              cryptoCore: cryptoCore,
+                                              keychainType: KeychainType.active,
+                                              saveKey: TransferResultsKeys.transaction.rawValue,
+                                              password: password,
+                                              networkPrefix: network.prefix.rawValue,
+                                              fromAccountKey: TransferResultsKeys.loadedFromAccount.rawValue,
+                                              operationKey: TransferResultsKeys.operation.rawValue,
+                                              chainIdKey: TransferResultsKeys.chainId.rawValue,
+                                              blockDataKey: TransferResultsKeys.blockData.rawValue,
+                                              feeKey: TransferResultsKeys.fee.rawValue)
+        let bildTransactionOperation = GetTransactionQueueOperation<Bool>(initParams: transactionOperationInitParams,
+                                                                          completion: completion)
+        
+        // Send transaction
+        let sendTransacionOperationInitParams = (transferQueue,
+                                                 services.networkBroadcastService,
+                                                 TransferResultsKeys.transaction.rawValue)
+        let sendTransactionOperation = SendTransactionQueueOperation(initParams: sendTransacionOperationInitParams,
+                                                                     completion: completion)
+        
+        let completionOperation = createCompletionOperation(queue: transferQueue)
         
         transferQueue.addOperation(getAccountsOperation)
+        transferQueue.addOperation(getMemoOperation)
         transferQueue.addOperation(bildTransferOperation)
-        transferQueue.addOperation(getRequiredFee)
+        transferQueue.addOperation(getRequiredFeeOperation)
         transferQueue.addOperation(getChainIdOperation)
         transferQueue.addOperation(getBlockDataOperation)
-        transferQueue.addOperation(bildTransacitonOperation)
-        transferQueue.addOperation(sendTransacitonOperation)
-        transferQueue.addOperation(lastOperation)
-    }
-    
-    fileprivate func createGetAccountsOperation(_ queue: ECHOQueue,
-                                                _ fromNameOrId: String,
-                                                _ toNameOrId: String,
-                                                _ completion: @escaping Completion<Bool>) -> Operation {
+        transferQueue.addOperation(bildTransactionOperation)
+        transferQueue.addOperation(sendTransactionOperation)
         
-        let getAccountsOperation = BlockOperation()
-        
-        getAccountsOperation.addExecutionBlock { [weak getAccountsOperation, weak queue, weak self] in
-            
-            guard getAccountsOperation?.isCancelled == false else { return }
-            
-            self?.services.databaseService.getFullAccount(nameOrIds: [fromNameOrId, toNameOrId], shoudSubscribe: false, completion: { (result) in
-                switch result {
-                case .success(let accounts):
-                    if let fromAccount = accounts[fromNameOrId], let toAccount = accounts[toNameOrId] {
-                        queue?.saveValue(fromAccount.account, forKey: TransferResultsKeys.loadedFromAccount.rawValue)
-                        queue?.saveValue(toAccount.account, forKey: TransferResultsKeys.loadedToAccount.rawValue)
-                    } else {
-                        queue?.cancelAllOperations()
-                        let result = Result<Bool, ECHOError>(error: ECHOError.resultNotFound)
-                        completion(result)
-                    }
-                case .failure(let error):
-                    queue?.cancelAllOperations()
-                    let result = Result<Bool, ECHOError>(error: error)
-                    completion(result)
-                }
-                
-                queue?.startNextOperation()
-            })
-            
-            queue?.waitStartNextOperation()
-        }
-        
-        return getAccountsOperation
-    }
-    
-    fileprivate func createGetBlockDataOperation(_ queue: ECHOQueue,
-                                                 _ completion: @escaping Completion<Bool>) -> Operation {
-        
-        let getBlockDataOperation = BlockOperation()
-        
-        getBlockDataOperation.addExecutionBlock { [weak getBlockDataOperation, weak queue, weak self] in
-            
-            guard getBlockDataOperation?.isCancelled == false else { return }
-            
-            self?.services.databaseService.getBlockData(completion: { (result) in
-                switch result {
-                case .success(let blockData):
-                    queue?.saveValue(blockData, forKey: TransferResultsKeys.blockData.rawValue)
-                case .failure(let error):
-                    queue?.cancelAllOperations()
-                    let result = Result<Bool, ECHOError>(error: error)
-                    completion(result)
-                }
-                
-                queue?.startNextOperation()
-            })
-            
-            queue?.waitStartNextOperation()
-        }
-        
-        return getBlockDataOperation
-    }
-    
-    fileprivate func createChainIdOperation(_ queue: ECHOQueue,
-                                            _ completion: @escaping Completion<Bool>) -> Operation {
-        
-        let chainIdOperation = BlockOperation()
-        
-        chainIdOperation.addExecutionBlock { [weak chainIdOperation, weak queue, weak self] in
-            
-            guard chainIdOperation?.isCancelled == false else { return }
-            
-            self?.services.databaseService.getChainId(completion: { (result) in
-                switch result {
-                case .success(let chainId):
-                    queue?.saveValue(chainId, forKey: TransferResultsKeys.chainId.rawValue)
-                case .failure(let error):
-                    queue?.cancelAllOperations()
-                    let result = Result<Bool, ECHOError>(error: error)
-                    completion(result)
-                }
-                
-                queue?.startNextOperation()
-            })
-            
-            queue?.waitStartNextOperation()
-        }
-        
-        return chainIdOperation
+        transferQueue.setCompletionOperation(completionOperation)
     }
     
     fileprivate func createBildTransferOperation(_ queue: ECHOQueue,
@@ -174,33 +141,13 @@ final public class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
         
         let bildTransferOperation = BlockOperation()
         
-        bildTransferOperation.addExecutionBlock { [weak bildTransferOperation, weak queue, weak self] in
+        bildTransferOperation.addExecutionBlock { [weak bildTransferOperation, weak queue] in
             
             guard bildTransferOperation?.isCancelled == false else { return }
             
             guard let fromAccount: Account = queue?.getValue(TransferResultsKeys.loadedFromAccount.rawValue) else { return }
             guard let toAccount: Account = queue?.getValue(TransferResultsKeys.loadedToAccount.rawValue) else { return }
-            
-            if let strongSelf = self,
-                    !strongSelf.checkAccount(account: fromAccount, name: fromAccount.name, password: password) {
-                
-                queue?.cancelAllOperations()
-                let result = Result<Bool, ECHOError>(error: ECHOError.invalidCredentials)
-                completion(result)
-                return
-            }
-            
-            guard let cryptoCore = self?.cryptoCore,
-                let name = fromAccount.name,
-                let keyChain = ECHOKeychain(name: name, password: password, type: KeychainType.memo, core: cryptoCore) else {
-                    
-                    queue?.cancelAllOperations()
-                    let result = Result<Bool, ECHOError>(error: ECHOError.invalidCredentials)
-                    completion(result)
-                    return
-            }
-            
-            let memo = self?.createMemo(privateKey: keyChain.raw, fromAccount: fromAccount, toAccount: toAccount, message: message)
+            guard let memo: Memo = queue?.getValue(TransferResultsKeys.memo.rawValue) else { return }
             
             let fee = AssetAmount(amount: 0, asset: Asset(asset))
             let amount = AssetAmount(amount: amount, asset: Asset(asset))
@@ -215,165 +162,5 @@ final public class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
         }
         
         return bildTransferOperation
-    }
-
-    fileprivate func createMemo(privateKey: Data,
-                                fromAccount: Account,
-                                toAccount: Account,
-                                message: String?) -> Memo {
-        
-        guard let message = message else {
-            return Memo()
-        }
-        
-        guard let fromMemoKeyString = fromAccount.options?.memoKey else {
-            return Memo()
-        }
-
-        guard let toMemoKeyString = toAccount.options?.memoKey else {
-            return Memo()
-        }
-        
-        let fromPublicKey = cryptoCore.getPublicKeyFromAddress(fromMemoKeyString, networkPrefix: network.prefix.rawValue)
-        let toPublicKey = cryptoCore.getPublicKeyFromAddress(toMemoKeyString, networkPrefix: network.prefix.rawValue)
-        
-        let nonce = 0
-        let byteMessage = cryptoCore.encryptMessage(privateKey: privateKey,
-                                                    publicKey: toPublicKey,
-                                                    nonce: String(format: "%llu", nonce),
-                                                    message: message)
-        
-        let memo = Memo(source: Address(fromAccount.options!.memoKey, data: fromPublicKey),
-                        destination: Address(toAccount.options!.memoKey, data: toPublicKey),
-                        nonce: nonce,
-                        byteMessage: byteMessage)
-        
-        return memo
-    }
-
-    fileprivate func checkAccount(account: Account, name: String?, password: String) -> Bool {
-
-        guard let name = name else {
-            return false
-        }
-        
-        guard let keychain = ECHOKeychain(name: name, password: password, type: .owner, core: cryptoCore)  else {
-            return false
-        }
-        
-        let key = network.prefix.rawValue + keychain.publicAddress()
-        let matches = account.owner?.keyAuths.compactMap { $0.address.addressString == key }.filter { $0 == true }
-        
-        if let matches = matches {
-            return matches.count > 0
-        }
-        
-        return false
-    }
-    
-    fileprivate func createGetRequiredFeeOperation(_ queue: ECHOQueue,
-                                                   _ asset: String,
-                                                   _ completion: @escaping Completion<Bool>) -> Operation {
-        
-        let getRequiredFee = BlockOperation()
-        
-        getRequiredFee.addExecutionBlock { [weak getRequiredFee, weak queue, weak self] in
-            
-            guard getRequiredFee?.isCancelled == false else { return }
-            guard let operation: TransferOperation = queue?.getValue(TransferResultsKeys.operation.rawValue) else { return }
-            
-            let asset = Asset(asset)
-            
-            self?.services.databaseService.getRequiredFees(operations: [operation], asset: asset, completion: { (result) in
-                switch result {
-                case .success(let fees):
-                    if let fee = fees.first {
-                        queue?.saveValue(fee, forKey: TransferResultsKeys.fee.rawValue)
-                    } else {
-                        queue?.cancelAllOperations()
-                        let result = Result<Bool, ECHOError>(error: ECHOError.resultNotFound)
-                        completion(result)
-                    }
-                case .failure(let error):
-                    queue?.cancelAllOperations()
-                    let result = Result<Bool, ECHOError>(error: error)
-                    completion(result)
-                }
-                
-                queue?.startNextOperation()
-            })
-            
-            queue?.waitStartNextOperation()
-        }
-        
-        return getRequiredFee
-    }
-    
-    fileprivate func createBildTransactionOperation(_ queue: ECHOQueue,
-                                                    _ password: String,
-                                                    _ completion: @escaping Completion<Bool>) -> Operation {
-        
-        let bildTransferOperation = BlockOperation()
-        
-        bildTransferOperation.addExecutionBlock { [weak bildTransferOperation, weak queue, weak self] in
-            
-            guard bildTransferOperation?.isCancelled == false else { return }
-            
-            guard var operation: TransferOperation = queue?.getValue(TransferResultsKeys.operation.rawValue) else { return }
-            guard let chainId: String = queue?.getValue(TransferResultsKeys.chainId.rawValue) else { return }
-            guard let blockData: BlockData = queue?.getValue(TransferResultsKeys.blockData.rawValue) else { return }
-            guard let fee: AssetAmount = queue?.getValue(TransferResultsKeys.fee.rawValue) else { return }
-            
-            operation.fee = fee
-            
-            let transaction = Transaction(operations: [operation], blockData: blockData, chainId: chainId)
-            
-            guard let name = operation.from.name else { return }
-            guard let cryptoCore = self?.cryptoCore else { return }
-            guard let keyChain = ECHOKeychain(name: name, password: password, type: KeychainType.active, core: cryptoCore) else { return }
-            
-            do {
-                let generator = SignaturesGenerator()
-                let signatures = try generator.signTransaction(transaction, privateKeys: [keyChain.raw], cryptoCore: cryptoCore)
-                transaction.signatures = signatures
-                queue?.saveValue(transaction, forKey: TransferResultsKeys.transaciton.rawValue)
-            } catch {
-                queue?.cancelAllOperations()
-                let result = Result<Bool, ECHOError>(error: ECHOError.undefined)
-                completion(result)
-            }
-        }
-        
-        return bildTransferOperation
-    }
-    
-    fileprivate func createSendTransactionOperation(_ queue: ECHOQueue,
-                                                    _ completion: @escaping Completion<Bool>) -> Operation {
-    
-        let sendTransactionOperation = BlockOperation()
-        
-        sendTransactionOperation.addExecutionBlock { [weak sendTransactionOperation, weak queue, weak self] in
-            
-            guard sendTransactionOperation?.isCancelled == false else { return }
-            guard let transction: Transaction = queue?.getValue(TransferResultsKeys.transaciton.rawValue) else { return }
-            
-            self?.services.networkBroadcastService.broadcastTransactionWithCallback(transaction: transction, completion: { (result) in
-                switch result {
-                case .success(let success):
-                    let result = Result<Bool, ECHOError>(value: success)
-                    completion(result)
-                case .failure(let error):
-                    queue?.cancelAllOperations()
-                    let result = Result<Bool, ECHOError>(error: error)
-                    completion(result)
-                }
-                
-                queue?.startNextOperation()
-            })
-            
-            queue?.waitStartNextOperation()
-        }
-        
-        return sendTransactionOperation
     }
 }

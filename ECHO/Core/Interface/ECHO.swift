@@ -28,7 +28,7 @@ final public class ECHO: InterfaceFacades {
     let informationFacade: InformationFacade
     let authentificationFacade: AuthentificationFacade
     let feeFacade: FeeFacade
-    let transacitonFacade: TransactionFacade
+    let transactionFacade: TransactionFacade
     let assetsFacade: AssetsFacade
 
     public init(settings: Settings) {
@@ -51,7 +51,7 @@ final public class ECHO: InterfaceFacades {
                                       services: revealServices)
         
         let authServices = AuthentificationFacadeServices(databaseService: databaseService, networkBroadcastService: networkBroadcastService)
-        authentificationFacade = AuthentificationFacadeImp(services: authServices, core: settings.cryproComponent, network: settings.network)
+        authentificationFacade = AuthentificationFacadeImp(services: authServices, cryptoCore: settings.cryproComponent, network: settings.network)
         
         let informationServices = InformationFacadeServices(databaseService: databaseService,
                                                             historyService: historyService)
@@ -65,7 +65,7 @@ final public class ECHO: InterfaceFacades {
         feeFacade = FeeFacadeImp(services: feeServices)
         
         let transactoinServices = TransactionFacadeServices(databaseService: databaseService, networkBroadcastService: networkBroadcastService)
-        transacitonFacade = TransactionFacadeImp(services: transactoinServices, cryptoCore: settings.cryproComponent, network: settings.network)
+        transactionFacade = TransactionFacadeImp(services: transactoinServices, cryptoCore: settings.cryproComponent, network: settings.network)
         
         let assetsServices = AssetsServices(databaseService: databaseService, networkBroadcastService: networkBroadcastService)
         assetsFacade = AssetsFacadeImp(services: assetsServices, cryptoCore: settings.cryproComponent, network: settings.network)
@@ -145,7 +145,7 @@ final public class ECHO: InterfaceFacades {
                                       message: String?,
                                       completion: @escaping (Result<Bool, ECHOError>) -> Void) {
         
-        transacitonFacade.sendTransferOperation(fromNameOrId: fromNameOrId,
+        transactionFacade.sendTransferOperation(fromNameOrId: fromNameOrId,
                                                 password: password,
                                                 toNameOrId: toNameOrId,
                                                 amount: amount,
