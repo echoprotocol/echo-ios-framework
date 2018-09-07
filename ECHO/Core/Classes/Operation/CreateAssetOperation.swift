@@ -3,8 +3,12 @@
 //  ECHO
 //
 //  Created by Vladimir Sharaev on 22.08.2018.
+//  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
+/**
+    Struct used to encapsulate operations related to the [OperationType.assetCreateOperation](OperationType.assetCreateOperation)
+ */
 struct CreateAssetOperation: BaseOperation {
     
     let defaultAssetId: String = "1.3.1"

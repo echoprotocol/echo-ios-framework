@@ -3,10 +3,13 @@
 //  ECHO
 //
 //  Created by Fedorenko Nikita on 18.07.2018.
+//  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
 /**
     Represents balance model in Graphene blockchain
+ 
+    [AccountBalance model documentation](https://dev-doc.myecho.app/classgraphene_1_1chain_1_1account__balance__object.html)
  */
 public struct AccountBalance: ECHOObject, Decodable {
     

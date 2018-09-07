@@ -8,7 +8,8 @@
 
 /**
     Represents account model in Graphene blockchain
-    [Address model details](https://dev-doc.myecho.app/classgraphene_1_1chain_1_1address.html)
+ 
+    [Address model documentations](https://dev-doc.myecho.app/classgraphene_1_1chain_1_1address.html)
  */
 public struct Address: ECHOCodable {
     

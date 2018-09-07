@@ -14,7 +14,7 @@ public struct FeeFacadeServices {
 }
 
 /**
-    Implementation of [FeeFacade](FeeFacade)
+    Implementation of [FeeFacade](FeeFacade), [ECHOQueueble](ECHOQueueble)
  */
 final public class FeeFacadeImp: FeeFacade, ECHOQueueble {
     
@@ -94,8 +94,8 @@ final public class FeeFacadeImp: FeeFacade, ECHOQueueble {
             
             let fee = AssetAmount(amount: 0, asset: Asset(asset))
             let amount = AssetAmount(amount: amount, asset: Asset(asset))
-            let transferOperation = TransferOperation(from: fromAccount,
-                                                      to: toAccount,
+            let transferOperation = TransferOperation(fromAccount: fromAccount,
+                                                      toAccount: toAccount,
                                                       transferAmount: amount,
                                                       fee: fee,
                                                       memo: nil)

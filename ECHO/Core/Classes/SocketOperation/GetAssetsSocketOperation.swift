@@ -6,6 +6,11 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
+/**
+    Get a list of assets by id.
+ 
+    - Return: [[Asset](Asset)]
+ */
 struct GetAssetsSocketOperation: SocketOperation {
     
     var method: SocketOperationType

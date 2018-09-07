@@ -1,10 +1,18 @@
+//
+//  Internal.h
+//  ECHO
+//
+//  Created by Fedorenko Nikita on 7.09.2018.
+//  Copyright © 2018 PixelPlex. All rights reserved.
+//
+
 #import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
 @interface CryptoHash : NSObject
 + (NSData *)sha256:(NSData *)data;
++ (NSData *)sha512:(NSData *)data;
 + (NSData *)ripemd160:(NSData *)data;
-+ (NSData *)hmacsha512:(NSData *)data key:(NSData *)key;
 @end
 
 @interface Secp256k1 : NSObject

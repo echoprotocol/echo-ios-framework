@@ -1,3 +1,11 @@
+//
+//  Crypto.swift
+//  ECHO
+//
+//  Created by Fedorenko Nikita on 7.09.2018.
+//  Copyright © 2018 PixelPlex. All rights reserved.
+//
+
 import ECHO.Private
 import secp256k1
 
@@ -25,14 +33,36 @@ final class Crypto {
         return Secp256k1.sign(hash, privateKey: privateKey, isPubKeyCompressed: true)
     }
     
+    /// Encrypt string message with private key, public key, nonce
+    ///
+    /// - Parameters:
+    ///   - privateKey: serialized private key based on secp256k1 algorithm
+    ///   - privateKey: serialized publicKey key based on secp256k1 algorithm
+    ///   - nonce: string value of nonce
+    ///   - message: string message for encrypt
+    /// - Returns: encrypted data
     public static func encryptMessage(privateKey: Data, publicKey: Data, nonce: String, message: String) -> Data {
         return Secp256k1.encryptMessage(withPrivateKey: privateKey, publicKey: publicKey, nonce: nonce, message: message)
     }
     
+    /// Decrypt encrypted message with private key, public key, nonce
+    ///
+    /// - Parameters:
+    ///   - privateKey: serialized private key based on secp256k1 algorithm
+    ///   - privateKey: serialized publicKey key based on secp256k1 algorithm
+    ///   - nonce: string value of nonce
+    ///   - message: encrypted message for decrypt
+    /// - Returns: encrypted string message
     public static func decryptMessage(privateKey: Data, publicKey: Data, nonce: String, message: Data) -> String {
         return Secp256k1.decryptMessage(withPrivateKey: privateKey, publicKey: publicKey, nonce: nonce, message: message)
     }
     
+    /// Generates public key from address string with network prefix
+    ///
+    /// - Parameters:
+    ///   - address: address string with network prefix
+    ///   - networkPrefix: string value of network prefix
+    /// - Returns: public key data value
     public static func getPublicKeyFromAddress(_ address: String, networkPrefix: String) -> Data {
         
         var address = address

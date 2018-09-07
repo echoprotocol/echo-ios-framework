@@ -5,7 +5,7 @@ excluded:
   - Pods
   - ECHOTests
   - ECHO/Other/R.generated.swift
-  - ECHO/Core/Classes/Encoding.swift
+  - ECHO/Core/Classes/Objects/Encoding.swift
   
 
 

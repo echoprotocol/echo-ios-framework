@@ -6,6 +6,11 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
+/**
+    Represents blockchain call. Returns list of AssetAmount for operations
+ 
+    - Return: [[AssetAmount](AssetAmount)]
+ */
 struct RequiredFeeSocketOperation: SocketOperation {
     
     var method: SocketOperationType

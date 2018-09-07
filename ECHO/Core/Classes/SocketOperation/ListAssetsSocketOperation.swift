@@ -6,6 +6,11 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
+/**
+    Get a list of assets by symbol
+ 
+    - Return: [[Asset](Asset)]
+ */
 struct ListAssetsSocketOperation: SocketOperation {
     
     var method: SocketOperationType

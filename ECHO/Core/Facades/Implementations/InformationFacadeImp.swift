@@ -3,6 +3,7 @@
 //  BitcoinKit
 //
 //  Created by Fedorenko Nikita on 19.07.2018.
+//  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
 struct InformationFacadeServices {
@@ -11,8 +12,10 @@ struct InformationFacadeServices {
 }
 
 /**
-    Implementation of [InformationFacade](InformationFacade)
+    Implementation of [InformationFacade](InformationFacade), [ECHOQueueble](ECHOQueueble)
  */
+
+// swiftlint:disable type_body_length
 final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
     
     var queues: [ECHOQueue]
@@ -88,7 +91,6 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
     }
     
     // MARK: History
-    
     private enum AccountHistoryResultsKeys: String {
         case account
         case historyItems
@@ -291,9 +293,9 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                 guard let operation = historyItem.operation else { continue }
             
                 if var operation = operation as? TransferOperation {
-                    let fromAccount = self?.findAccountIn(accounts, accountId: operation.from.id)
-                    let toAccount = self?.findAccountIn(accounts, accountId: operation.to.id)
-                    operation.changeAccounts(from: fromAccount, to: toAccount)
+                    let fromAccount = self?.findAccountIn(accounts, accountId: operation.fromAccount.id)
+                    let toAccount = self?.findAccountIn(accounts, accountId: operation.toAccount.id)
+                    operation.changeAccounts(from: fromAccount, toAccount: toAccount)
                     historyItem.operation = operation
                 }
                 
@@ -378,8 +380,8 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
             }
             
             if let operation = operation as? TransferOperation {
-                accountsIds.insert(operation.from.id)
-                accountsIds.insert(operation.to.id)
+                accountsIds.insert(operation.fromAccount.id)
+                accountsIds.insert(operation.toAccount.id)
                 return
             }
             
@@ -405,3 +407,4 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         return accountsIds
     }
 }
+// swiftlint:enable type_body_length

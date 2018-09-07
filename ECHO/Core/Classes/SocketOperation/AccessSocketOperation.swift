@@ -15,6 +15,9 @@ enum AccessSocketOperationType: String {
     case crypto
 }
 
+/**
+    Represents blockchain call for access to blockchain apis
+ */
 struct AccessSocketOperation: SocketOperation {
     
     var method: SocketOperationType

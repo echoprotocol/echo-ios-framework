@@ -8,13 +8,14 @@
 
 /**
     Represents additional transfer operation payload
-    [Memo model details](https://dev-doc.myecho.app/structgraphene_1_1chain_1_1memo__data.html)
+ 
+    [Memo model documentations](https://dev-doc.myecho.app/structgraphene_1_1chain_1_1memo__data.html)
  */
 struct Memo: ECHOCodable, Decodable {
     
     enum MemoCodingKeys: String, CodingKey {
-        case from
-        case to
+        case fromAccount = "from"
+        case toAccount = "to"
         case nonce
         case message
     }
@@ -44,15 +45,14 @@ struct Memo: ECHOCodable, Decodable {
         
         let values = try decoder.container(keyedBy: MemoCodingKeys.self)
         
-        let fromAddress = try? values.decode(String.self, forKey: .from)
-        let toAddress = try? values.decode(String.self, forKey: .to)
+        let fromAddress = try? values.decode(String.self, forKey: .fromAccount)
+        let toAddress = try? values.decode(String.self, forKey: .toAccount)
         if let fromAddress = fromAddress { source = Address(fromAddress, data: nil) }
         if let toAddress = toAddress { destination = Address(toAddress, data: nil) }
         
         let nonceValue = try? values.decode(Int.self, forKey: .nonce)
         nonce = nonceValue ?? 0
         
-        // TODO: check data decode
         byteMessage = try values.decode(Data.self, forKey: .message)
     }
     
@@ -92,8 +92,8 @@ struct Memo: ECHOCodable, Decodable {
     
     func toJSON() -> Any? {
         
-        let dictionary: [AnyHashable: Any?] = [MemoCodingKeys.from.rawValue: source?.toJSON(),
-                                               MemoCodingKeys.to.rawValue: destination?.toJSON(),
+        let dictionary: [AnyHashable: Any?] = [MemoCodingKeys.fromAccount.rawValue: source?.toJSON(),
+                                               MemoCodingKeys.toAccount.rawValue: destination?.toJSON(),
                                                MemoCodingKeys.nonce.rawValue: nonce,
                                                MemoCodingKeys.message.rawValue: byteMessage?.hex]
         

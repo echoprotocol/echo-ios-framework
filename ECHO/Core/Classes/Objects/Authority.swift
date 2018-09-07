@@ -8,7 +8,7 @@
 /**
     Class used to represent the weighted set of keys and accounts that must approve operations.
  
-    [Authority details](https://dev-doc.myecho.app/structgraphene_1_1chain_1_1authority.html)
+    [Address model documentations](https://dev-doc.myecho.app/structgraphene_1_1chain_1_1authority.html)
  */
 public struct Authority: ECHOCodable, Decodable {
     

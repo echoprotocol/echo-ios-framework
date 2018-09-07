@@ -18,6 +18,11 @@ public enum AssetOptionIssuerPermissions: Int {
     case committeeFedAsset   = 0x100 /**< allow the asset to be fed by the committee */
 }
 
+/**
+    Represents account model in Graphene blockchain
+ 
+    [Address model documentations](https://dev-doc.myecho.app/structgraphene_1_1chain_1_1asset__options.html)
+ */
 public struct AssetOptions: ECHOCodable, Decodable {
     
     enum AssetOptionsCodingKeys: String, CodingKey {

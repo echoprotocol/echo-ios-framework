@@ -6,6 +6,9 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
+/**
+    Struct used to encapsulate operations related to the [OperationType.assetIssueOperation](OperationType.assetIssueOperation)
+ */
 struct IssueAssetOperation: BaseOperation {
     
     enum IssueAssetOperationCodingKeys: String, CodingKey {

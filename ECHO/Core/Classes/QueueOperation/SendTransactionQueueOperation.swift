@@ -3,12 +3,16 @@
 //  ECHO
 //
 //  Created by Vladimir Sharaev on 06.09.2018.
+//  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
 typealias SendTransactionQueueOperationInitParams = (queue: ECHOQueue,
                                                      networkBroadcastService: NetworkBroadcastApiService,
                                                      transactionKey: String)
 
+/**
+    Operation for [ECHOQueue](ECHOQueue) whitch send saved [Transaction](Transaction) and call completion with result
+ */
 final class SendTransactionQueueOperation: Operation {
     
     fileprivate weak var queue: ECHOQueue?

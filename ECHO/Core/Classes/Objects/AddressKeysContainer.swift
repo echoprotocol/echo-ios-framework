@@ -3,6 +3,7 @@
 //  ECHO
 //
 //  Created by Fedorenko Nikita on 19.07.2018.
+//  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
 enum KeychainType: String {
@@ -11,6 +12,9 @@ enum KeychainType: String {
     case memo
 }
 
+/**
+    Encapsulates [ECHOKeychain](ECHOKeychain) for all types
+ */
 final class AddressKeysContainer {
     
     let ownerKeychain: ECHOKeychain

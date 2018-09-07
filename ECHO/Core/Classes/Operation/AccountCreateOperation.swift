@@ -8,6 +8,9 @@
 
 import Foundation
 
+/**
+    Struct used to encapsulate operations related to the [OperationType.accountCreateOperation](OperationType.accountCreateOperation)
+ */
 struct AccountCreateOperation: BaseOperation {
     
     enum AccountCreateOperationCodingKeys: String, CodingKey {

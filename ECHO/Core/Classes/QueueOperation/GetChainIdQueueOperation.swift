@@ -3,10 +3,16 @@
 //  ECHO
 //
 //  Created by Vladimir Sharaev on 06.09.2018.
+//  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
 typealias GetChainIdQueueOperationInitParams = (queue: ECHOQueue, databaseService: DatabaseApiService, saveKey: String)
 
+/**
+    Operation for [ECHOQueue](ECHOQueue) whitch load and save chain identifier
+ 
+    - Save [String](String)
+ */
 final class GetChainIdQueueOperation<T>: Operation where T: Any {
     
     fileprivate weak var queue: ECHOQueue?

@@ -2,7 +2,7 @@
 //  ECHO.h
 //  ECHO
 //
-//  Created by Fedorenko Nikita on 09.07.2018.
+//  Created by Fedorenko Nikita, Vladimir Sharaev on 09.07.2018.
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 

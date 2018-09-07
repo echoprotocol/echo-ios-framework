@@ -15,7 +15,7 @@ public struct TransactionFacadeServices {
 }
 
 /**
-    Implementation of [TransactionFacade](TransactionFacade)
+    Implementation of [TransactionFacade](TransactionFacade), [ECHOQueueble](ECHOQueueble)
  */
 final public class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
     
@@ -43,6 +43,7 @@ final public class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
         case memo
     }
     
+    // swiftlint:disable function_body_length
     public func sendTransferOperation(fromNameOrId: String,
                                       password: String,
                                       toNameOrId: String,
@@ -131,6 +132,7 @@ final public class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
         
         transferQueue.setCompletionOperation(completionOperation)
     }
+    // swiftlint:enable function_body_length
     
     fileprivate func createBildTransferOperation(_ queue: ECHOQueue,
                                                  _ password: String,
@@ -151,8 +153,8 @@ final public class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
             
             let fee = AssetAmount(amount: 0, asset: Asset(asset))
             let amount = AssetAmount(amount: amount, asset: Asset(asset))
-            let extractedExpr: TransferOperation = TransferOperation(from: fromAccount,
-                                                                     to: toAccount,
+            let extractedExpr: TransferOperation = TransferOperation(fromAccount: fromAccount,
+                                                                     toAccount: toAccount,
                                                                      transferAmount: amount,
                                                                      fee: fee,
                                                                      memo: memo)

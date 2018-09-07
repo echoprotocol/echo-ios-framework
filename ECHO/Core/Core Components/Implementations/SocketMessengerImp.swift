@@ -9,6 +9,9 @@
 import Foundation
 import Starscream
 
+/**
+    Implementation of [SocketMessenger](SocketMessenger)
+*/
 final class SocketMessengerImp: SocketMessenger {
     
     var state: SocketConnectionState = .notConnected

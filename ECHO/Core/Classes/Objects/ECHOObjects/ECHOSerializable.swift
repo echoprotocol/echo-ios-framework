@@ -6,8 +6,14 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
+/**
+    Protocol which contains logic of [JSONDecodable](JSONDecodable), [JSONEncodable](JSONEncodable)
+ */
 protocol JSONCodable: JSONDecodable, JSONEncodable { }
 
+/**
+    Decode object form JSON
+ */
 protocol JSONDecodable {
     func toObject<T>(from string: String, type: T.Type) -> T? where T: Decodable
     func toObject<T>(from data: Data, type: T.Type) -> T? where T: Decodable
@@ -27,6 +33,9 @@ extension JSONDecodable {
     }
 }
 
+/**
+    Encode object to JSON
+ */
 protocol JSONEncodable {
     func toJSON() -> Any?
     func toJSON() -> String?
@@ -45,18 +54,36 @@ extension JSONEncodable {
     }
 }
 
+/**
+    Protocol which contains logic of [BytesDecodable](BytesDecodable), [BytesEncodable](BytesEncodable)
+ */
 protocol BytesCodable: BytesDecodable, BytesEncodable { }
 
+/**
+    Decode object from Data
+ */
 protocol BytesDecodable { }
 
+/**
+    Encode object to Data
+ */
 protocol BytesEncodable {
     func toData() -> Data?
 }
 
+/**
+    Protocol which contains logic of [JSONCodable](JSONCodable), [BytesCodable](BytesCodable)
+ */
 protocol ECHOCodable: JSONCodable, BytesCodable { }
 
+/**
+    Array of [IntOrString](IntOrString)
+ */
 typealias IntOrStrings = [IntOrString]
 
+/**
+    Enum which contains int or string value from decoded object
+ */
 enum IntOrString: Codable, Equatable {
     
     case integer(Int)

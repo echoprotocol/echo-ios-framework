@@ -3,10 +3,14 @@
 //  ECHO
 //
 //  Created by Fedorenko Nikita on 22.08.2018.
+//  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
 import Foundation
 
+/**
+    Represent response from chain
+ */
 struct ECHOResponse: Decodable {
     
     let id: Int
@@ -34,6 +38,9 @@ struct ECHOResponse: Decodable {
     }
 }
 
+/**
+    Represent notification from chain
+ */
 struct ECHONotification: Decodable {
     
     let method: String
@@ -52,6 +59,9 @@ struct ECHONotification: Decodable {
     }
 }
 
+/**
+    Represent response error from chain
+ */
 struct ECHOResponseError: Decodable {
     
     let code: Int
@@ -69,6 +79,9 @@ struct ECHOResponseError: Decodable {
     }
 }
 
+/**
+    Represent response result from chain
+ */
 enum ECHOResponseResult: Decodable {
     
     case integer(Int)
@@ -111,6 +124,9 @@ enum ECHOResponseResult: Decodable {
     }
 }
 
+/**
+    Represent response result([ECHOResponseResult](ECHOResponseResult)) or error([ECHOResponseError](ECHOResponseError)) result from chain
+ */
 enum ErrorOrResult: Decodable {
     
     case error(ECHOResponseError)

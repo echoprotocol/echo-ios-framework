@@ -18,7 +18,6 @@ public enum SocketConnectionState {
 /**
     The interface of the class that implements the request and the transmission of messages to the socket.
 */
-
 public protocol SocketMessenger: class {
     
     var state: SocketConnectionState { get }

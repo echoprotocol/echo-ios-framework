@@ -3,6 +3,7 @@
 //  ECHO
 //
 //  Created by Fedorenko Nikita on 23.07.2018.
+//  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
 struct SubscriptionServices {
@@ -10,7 +11,7 @@ struct SubscriptionServices {
 }
 
 /**
-    Implementation of [SubscriptionFacade](SubscriptionFacade)
+    Implementation of [SubscriptionFacade](SubscriptionFacade), [ECHOQueueble](ECHOQueueble)
  */
 final public class SubscriptionFacadeImp: SubscriptionFacade {
     

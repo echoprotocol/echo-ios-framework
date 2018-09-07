@@ -6,6 +6,11 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
+/**
+    Get operations relevant to the specified account.
+ 
+    - Return: [[HistoryItem](HistoryItem)]
+ */
 struct GetAccountHistorySocketOperation: SocketOperation {
     
     var method: SocketOperationType

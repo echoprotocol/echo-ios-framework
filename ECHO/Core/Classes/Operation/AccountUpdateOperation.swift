@@ -3,8 +3,12 @@
 //  ECHO
 //
 //  Created by Vladimir Sharaev on 22.08.2018.
+//  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
+/**
+    Struct used to encapsulate operations related to the [OperationType.accountUpdateOperation](OperationType.accountUpdateOperation)
+ */
 struct AccountUpdateOperation: BaseOperation {
     
     enum AccountUpdateOperationCodingKeys: String, CodingKey {

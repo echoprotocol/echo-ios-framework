@@ -3,6 +3,7 @@
 //  ECHO
 //
 //  Created by Vladimir Sharaev on 06.09.2018.
+//  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
 typealias GetMemoQueueOperationInitParams = (queue: ECHOQueue,
@@ -14,6 +15,11 @@ typealias GetMemoQueueOperationInitParams = (queue: ECHOQueue,
                                              fromAccountKey: String,
                                              toAccountKey: String)
 
+/**
+    Operation for [ECHOQueue](ECHOQueue) whitch create and save memo
+ 
+    - Save [Memo](Memo)
+ */
 final class GetMemoQueueOperation<T>: Operation where T: Any {
     
     fileprivate weak var queue: ECHOQueue?

@@ -3,6 +3,7 @@
 //  ECHO
 //
 //  Created by Fedorenko Nikita on 18.07.2018.
+//  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
 struct AuthentificationFacadeServices {
@@ -11,7 +12,7 @@ struct AuthentificationFacadeServices {
 }
 
 /**
-    Implementation of [AuthentificationFacade](AuthentificationFacade) 
+    Implementation of [AuthentificationFacade](AuthentificationFacade), [ECHOQueueble](ECHOQueueble)
  */
 final public class AuthentificationFacadeImp: AuthentificationFacade, ECHOQueueble {
     
@@ -70,7 +71,6 @@ final public class AuthentificationFacadeImp: AuthentificationFacade, ECHOQueueb
         return false
     }
 
-    
     fileprivate enum ChangePasswordKeys: String {
         case account
         case operation

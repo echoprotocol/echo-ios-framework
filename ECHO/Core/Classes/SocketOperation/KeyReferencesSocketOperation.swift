@@ -6,6 +6,13 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
+/**
+    Get all account references
+ 
+    - Return: [Any](Any)
+ 
+    - Note: Not completed
+ */
 struct KeyReferencesSocketOperation: SocketOperation {
     
     var method: SocketOperationType

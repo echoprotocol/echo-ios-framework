@@ -6,6 +6,13 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
+/**
+    Protocol for object which want work with [ECHOQueue](ECHOQueue)
+ 
+    - Save reference to queue
+    - Operation for delete queue after complete
+    - Cancel all operations in all queues
+ */
 protocol ECHOQueueble: class {
     
     var queues: [ECHOQueue] { get set }
@@ -50,6 +57,12 @@ extension ECHOQueueble {
     }
 }
 
+/**
+    Custom Queue which contains [OperationQueue](OperationQueue) and [DispatchSemaphore](DispatchSemaphore)
+ 
+    - Stop queue while async operation working
+    - Storage for values between operations
+ */
 final class ECHOQueue: NSObject {
 
     fileprivate let workingQueue: OperationQueue

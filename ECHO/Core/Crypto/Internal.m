@@ -1,3 +1,11 @@
+//
+//  Internal.m
+//  ECHO
+//
+//  Created by Fedorenko Nikita on 7.09.2018.
+//  Copyright © 2018 PixelPlex. All rights reserved.
+//
+
 #import "Internal.h"
 
 #import <openssl/sha.h>
@@ -42,7 +50,7 @@
     unsigned char whole_byte;
     char byte_chars[3] = {'\0','\0','\0'};
     int i = 0;
-    int length = string.length;
+    int length = (int)string.length;
     while (i < length-1) {
         char c = [string characterAtIndex:i++];
         if (c < '0' || (c > '9' && c < 'a') || c > 'f')
@@ -199,6 +207,12 @@
     NSMutableData* xPointData = [[NSMutableData alloc] initWithLength:32];
     BN_bn2bin(xPoint, &xPointData.mutableBytes[32 - num_bytes]);
     
+    // Free
+    BN_free(prv);
+    EC_POINT_free(pub);
+    EC_KEY_free(private);
+    BN_CTX_free(ctx);
+    
     NSData* hash = [CryptoHash sha512:xPointData];
     NSData* hashInASCII = [Secp256k1 hexlify:hash];
     
@@ -267,6 +281,12 @@
     int num_bytes = BN_num_bytes(xPoint);
     NSMutableData* xPointData = [[NSMutableData alloc] initWithLength:32];
     BN_bn2bin(xPoint, &xPointData.mutableBytes[32 - num_bytes]);
+    
+    // Free
+    BN_free(prv);
+    EC_POINT_free(pub);
+    EC_KEY_free(private);
+    BN_CTX_free(ctx);
     
     NSData* hash = [CryptoHash sha512:xPointData];
     NSData* hashInASCII = [Secp256k1 hexlify:hash];

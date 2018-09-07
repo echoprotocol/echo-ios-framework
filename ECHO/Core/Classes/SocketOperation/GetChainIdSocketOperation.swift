@@ -6,6 +6,11 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
+/**
+    Get the chain id.
+ 
+    - Return: [String](String)
+ */
 struct GetChainIdSocketOperation: SocketOperation {
     
     var method: SocketOperationType

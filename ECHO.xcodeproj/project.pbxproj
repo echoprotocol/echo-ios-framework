@@ -389,14 +389,6 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
-		B30FE901212ECD780009BF57 /* Responce */ = {
-			isa = PBXGroup;
-			children = (
-				B30FE902212ECD780009BF57 /* ECHOResponse.swift */,
-			);
-			path = Responce;
-			sourceTree = "<group>";
-		};
 		B30FE90A212F2ABB0009BF57 /* SocketRequestsStubs */ = {
 			isa = PBXGroup;
 			children = (
@@ -455,9 +447,10 @@
 		B348D09E21011FCC00C29AE4 /* Objects */ = {
 			isa = PBXGroup;
 			children = (
-				B30FE901212ECD780009BF57 /* Responce */,
+				D0BC565321429563008104E6 /* ECHOObjects */,
 				B30CAD1620FFD5790048E33E /* Account.swift */,
 				D01BF7D3212AC7FE00917DB8 /* AccountAuthority.swift */,
+				B348D09821011E7C00C29AE4 /* AddressKeysContainer.swift */,
 				B3D1C90521386461009018AE /* SignaturesGenerator.swift */,
 				B30CAD1520FFD5790048E33E /* AccountBalance.swift */,
 				D0B6A0CD2126CD5500A78E4B /* AccountOptions.swift */,
@@ -471,13 +464,16 @@
 				D0A1B446212FF04600294683 /* Block.swift */,
 				D0116C5B21358F120004A491 /* BlockData.swift */,
 				D0CF8EE2213926BE000CA6E0 /* DynamicGlobalProperties.swift */,
-				B385970320F6270000B55E59 /* ECHOObject.swift */,
 				D0B6A0C72126B39100A78E4B /* Extensions.swift */,
+				B348D0AB210207ED00C29AE4 /* Encoding.swift */,
+				B3CA703720F4A72C00511F6A /* Error.swift */,
 				B3CA703B20F4AA3700511F6A /* HistoryItem.swift */,
 				D094703F212D3FEE00B55A37 /* Memo.swift */,
 				D01BF7D1212ABE4E00917DB8 /* OptionalValue.swift */,
 				B30CAD1920FFD58E0048E33E /* Options.swift */,
+				B3965B172125954200029585 /* PointerArray.swift */,
 				B38596FB20F6005500B55E59 /* Price.swift */,
+				B3CA701D20F49C6800511F6A /* ReslutHandler.swift */,
 				B39A7C0C2105F601003CC14D /* Statistics.swift */,
 				D0116C59213561490004A491 /* Transaction.swift */,
 				D01BF7CF212AB00700917DB8 /* Vote.swift */,
@@ -601,14 +597,6 @@
 				D0B6A0C42126B20900A78E4B /* Operation */,
 				B3CA704320F532AA00511F6A /* SocketOperation */,
 				D0D8CA3E2141847900F0646D /* QueueOperation */,
-				B348D09821011E7C00C29AE4 /* AddressKeysContainer.swift */,
-				B30CAD2720FFF9E70048E33E /* ECHOKeychain.swift */,
-				B3CA701D20F49C6800511F6A /* ReslutHandler.swift */,
-				B3CA703720F4A72C00511F6A /* Error.swift */,
-				B348D0AB210207ED00C29AE4 /* Encoding.swift */,
-				B3965B172125954200029585 /* PointerArray.swift */,
-				B3CA703F20F4FB0200511F6A /* ECHOSerializable.swift */,
-				D0A1B440212E9C5300294683 /* ECHOQueue.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -693,6 +681,18 @@
 				D094703D212D3ECC00B55A37 /* TransferOperation.swift */,
 			);
 			path = Operation;
+			sourceTree = "<group>";
+		};
+		D0BC565321429563008104E6 /* ECHOObjects */ = {
+			isa = PBXGroup;
+			children = (
+				B30CAD2720FFF9E70048E33E /* ECHOKeychain.swift */,
+				B3CA703F20F4FB0200511F6A /* ECHOSerializable.swift */,
+				D0A1B440212E9C5300294683 /* ECHOQueue.swift */,
+				B30FE902212ECD780009BF57 /* ECHOResponse.swift */,
+				B385970320F6270000B55E59 /* ECHOObject.swift */,
+			);
+			path = ECHOObjects;
 			sourceTree = "<group>";
 		};
 		D0D8CA3E2141847900F0646D /* QueueOperation */ = {
@@ -960,7 +960,6 @@
 				B38596FC20F6005500B55E59 /* Price.swift in Sources */,
 				D0947040212D3FEE00B55A37 /* Memo.swift in Sources */,
 				B38596F220F5EE1400B55E59 /* GetObjectsSocketOperation.swift in Sources */,
-				B35F15AA20F3ABAE000CE3EA /* ObjectType.swift in Sources */,
 				D0D8CA482141847900F0646D /* GetChainIdQueueOperation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

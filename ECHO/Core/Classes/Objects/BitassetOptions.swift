@@ -6,6 +6,11 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
+/**
+    The bitasset_options struct contains configurable options available only to BitAssets
+ 
+    [BitassetOptions model documentations](https://dev-doc.myecho.app/structgraphene_1_1chain_1_1bitasset__options.html)
+ */
 public struct BitassetOptions: ECHOCodable, Decodable {
     
     enum BitassetOptionsCodingKeys: String, CodingKey {

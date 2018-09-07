@@ -9,7 +9,6 @@
 /**
      A class that configures the modules used and has the default implementation.
  */
-
 final public class Configurator {
     public var socketMessenger: SocketMessenger = SocketMessengerImp()
     public var cryproComponent: CryptoCoreComponent = CryptoCoreImp()

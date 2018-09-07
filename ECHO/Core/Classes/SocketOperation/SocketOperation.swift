@@ -6,10 +6,17 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
+/**
+    Method type for call to blockchain
+ */
 enum SocketOperationType: String {
     case call
+    case notice
 }
 
+/**
+    Represents blockchain operations by keys
+ */
 enum SocketOperationKeys: String {
     case blockData = "get_dynamic_global_properties"
     case fullAccount = "get_full_accounts"
@@ -28,6 +35,9 @@ enum SocketOperationKeys: String {
 
 typealias OperationResult<T> = (operation: SocketOperation, result: Result<T, ECHOError>)
 
+/**
+    Represents blockchain call [Source](http://docs.bitshares.org/api/rpc.html)
+ */
 protocol SocketOperation: JSONCodable {
     
     var method: SocketOperationType { get }
@@ -38,6 +48,9 @@ protocol SocketOperation: JSONCodable {
     func forceEnd()
 }
 
+/**
+    Keys for json creation of blockchain call
+ */
 enum OperationCodingKeys: String, CodingKey {
     case method
     case params

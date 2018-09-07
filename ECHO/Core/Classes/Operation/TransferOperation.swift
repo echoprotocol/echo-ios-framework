@@ -6,12 +6,15 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
+/**
+    Struct used to encapsulate operations related to the [OperationType.transferOperation](OperationType.transferOperation)
+ */
 struct TransferOperation: BaseOperation {
     
     enum TransferOperationCodingKeys: String, CodingKey {
         case amount
-        case from
-        case to
+        case fromAccount = "from"
+        case toAccount = "to"
         case memo
         case extensions
         case fee
@@ -21,17 +24,17 @@ struct TransferOperation: BaseOperation {
     var extensions: Extensions = Extensions()
     var fee: AssetAmount
     
-    var from: Account
-    var to: Account
+    var fromAccount: Account
+    var toAccount: Account
     var transferAmount: AssetAmount
     var memo: Memo = Memo()
     
-    init(from: Account, to: Account, transferAmount: AssetAmount, fee: AssetAmount, memo: Memo?) {
+    init(fromAccount: Account, toAccount: Account, transferAmount: AssetAmount, fee: AssetAmount, memo: Memo?) {
         
         self.type = .transferOperation
         
-        self.from = from
-        self.to = to
+        self.fromAccount = fromAccount
+        self.toAccount = toAccount
         self.transferAmount = transferAmount
         self.fee = fee
         if let memo = memo {
@@ -45,10 +48,10 @@ struct TransferOperation: BaseOperation {
         
         let values = try decoder.container(keyedBy: TransferOperationCodingKeys.self)
         
-        let fromId = try values.decode(String.self, forKey: .from)
-        let toId = try values.decode(String.self, forKey: .to)
-        from = Account(fromId)
-        to = Account(toId)
+        let fromId = try values.decode(String.self, forKey: .fromAccount)
+        let toId = try values.decode(String.self, forKey: .toAccount)
+        fromAccount = Account(fromId)
+        toAccount = Account(toId)
         
         transferAmount = try values.decode(AssetAmount.self, forKey: .amount)
         fee = try values.decode(AssetAmount.self, forKey: .fee)
@@ -58,10 +61,10 @@ struct TransferOperation: BaseOperation {
         }
     }
     
-    mutating func changeAccounts(from: Account?, to: Account?) {
+    mutating func changeAccounts(from: Account?, toAccount: Account?) {
         
-        if let from = from { self.from = from }
-        if let to = to { self.to = to }
+        if let from = from { self.fromAccount = from }
+        if let toAccount = toAccount { self.toAccount = toAccount }
     }
     
     // MARK: ECHOCodable
@@ -72,8 +75,8 @@ struct TransferOperation: BaseOperation {
         array.append(getId())
         
         var dictionary: [AnyHashable: Any?] = [TransferOperationCodingKeys.fee.rawValue: fee.toJSON(),
-                                               TransferOperationCodingKeys.from.rawValue: from.toJSON(),
-                                               TransferOperationCodingKeys.to.rawValue: to.toJSON(),
+                                               TransferOperationCodingKeys.fromAccount.rawValue: fromAccount.toJSON(),
+                                               TransferOperationCodingKeys.toAccount.rawValue: toAccount.toJSON(),
                                                TransferOperationCodingKeys.amount.rawValue: transferAmount.toJSON(),
                                                TransferOperationCodingKeys.extensions.rawValue: extensions.toJSON()]
         
@@ -100,8 +103,8 @@ struct TransferOperation: BaseOperation {
         
         var data = Data()
         data.append(optional: fee.toData())
-        data.append(optional: from.toData())
-        data.append(optional: to.toData())
+        data.append(optional: fromAccount.toData())
+        data.append(optional: toAccount.toData())
         data.append(optional: transferAmount.toData())
         data.append(optional: memo.toData())
         data.append(optional: extensions.toData())

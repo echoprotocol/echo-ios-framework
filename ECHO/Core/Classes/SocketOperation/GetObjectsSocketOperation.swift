@@ -6,6 +6,13 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
+/**
+    Get the objects corresponding to the provided IDs.
+ 
+    - Return: [Any](Any)
+ 
+    - Note: Not completed
+ */
 struct GetObjectsSocketOperation: SocketOperation {
     
     var method: SocketOperationType

@@ -6,6 +6,13 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
+/**
+    Register global subscription callback to object
+    Every notification initiated by the full node will carry a particular id as defined by the
+    user with the identifier parameter.
+ 
+    - Return: [Bool](Bool)
+ */
 struct SetSubscribeCallbackSocketOperation: SocketOperation {
     
     var method: SocketOperationType

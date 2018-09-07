@@ -8,6 +8,8 @@
 
 /**
     Represents vote model in graphene blockchain
+ 
+    - Note: Not checked
  */
 struct Vote: ECHOCodable {
     
@@ -43,7 +45,6 @@ struct Vote: ECHOCodable {
     
     func toData() -> Data? {
         var data = Data()
-        //TODO: check
         data.append(optional: Data.fromInt16(type))
         data.append(optional: Data.fromInt16(instance))
         return data

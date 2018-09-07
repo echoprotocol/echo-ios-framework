@@ -11,7 +11,9 @@ import Foundation
 /// Typealias for closure with result and error
 public typealias Completion<T> = (_ result: Result<T, ECHOError>) -> Void
 
-/// An enum representing either a failure with an explanatory error, or a success with a result value.
+/**
+    An enum representing either a failure with an explanatory error, or a success with a result value.
+ */
 public enum Result<T, Error: Swift.Error>: CustomStringConvertible, CustomDebugStringConvertible {
     case success(T)
     case failure(Error)

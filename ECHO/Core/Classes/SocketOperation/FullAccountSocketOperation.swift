@@ -6,6 +6,14 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
+/**
+    This function fetches all relevant [UserAccount](UserAccount) objects for the given accounts, and
+    subscribes to updates to the given accounts. If any of the strings in [accountsIds] cannot be
+    tied to an account, that input will be ignored. All other accounts will be retrieved and
+    subscribed.
+ 
+    - Return: [[String](String):[UserAccount](UserAccount)]
+ */
 struct FullAccountSocketOperation: SocketOperation {
     
     var method: SocketOperationType

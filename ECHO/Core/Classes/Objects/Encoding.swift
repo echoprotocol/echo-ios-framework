@@ -1,15 +1,15 @@
 //
 //  Encoding.swift
-//  BitcoinKit
+//  ECHO
 //
-//  Created by Kishikawa Katsumi on 2018/01/30.
-//  Copyright © 2018 Kishikawa Katsumi. All rights reserved.
+//  Created by Vladimir Sharaev on 17.08.2018.
+//  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
-import Foundation
-
-// The Base58 encoding used is home made, and has some differences. Especially,
-// leading zeroes are kept as single zeroes when conversion happens.
+/**
+    The Base58 encoding used is home made, and has some differences. Especially,
+    leading zeroes are kept as single zeroes when conversion happens.
+ */
 struct Base58 {
     private static let base58Alphabet = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz"
 

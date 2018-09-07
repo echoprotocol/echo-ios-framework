@@ -3,10 +3,16 @@
 //  ECHO
 //
 //  Created by Vladimir Sharaev on 06.09.2018.
+//  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
 typealias GetBlockDataQueueOperationInitParams = (queue: ECHOQueue, databaseService: DatabaseApiService, saveKey: String)
 
+/**
+    Operation for [ECHOQueue](ECHOQueue) whitch load and save block data
+ 
+    - Save [BlockData](BlockData)
+ */
 final class GetBlockDataQueueOperation<T>: Operation where T: Any {
     
     fileprivate weak var queue: ECHOQueue?

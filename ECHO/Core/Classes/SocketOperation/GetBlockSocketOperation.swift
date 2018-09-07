@@ -6,6 +6,11 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
+/**
+    Retrieve a full, signed block.
+ 
+    - Return: [Block](Block)
+ */
 struct GetBlockSocketOperation: SocketOperation {
     
     var method: SocketOperationType

@@ -8,7 +8,8 @@
 
 /**
     Class used to represent a generic Graphene transaction.
-    [Transaction details](https://dev-doc.myecho.app/structgraphene_1_1chain_1_1transaction.html)
+ 
+    [Memo model documentations](https://dev-doc.myecho.app/structgraphene_1_1chain_1_1transaction.html)
  */
 final class Transaction: ECHOCodable, Decodable {
     

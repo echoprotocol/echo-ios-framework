@@ -6,6 +6,12 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
+/**
+    Returns the block chain’s rapidly-changing properties. The returned object contains information
+    that changes every block interval such as the head block number, the next witness, etc.
+ 
+    - Return: [DynamicGlobalProperties]()
+ */
 struct BlockDataSocketOperation: SocketOperation {
     
     var method: SocketOperationType

@@ -8,7 +8,8 @@
 
 /**
     Represents block model in Graphene blockchain
-    [Block model details](https://dev-doc.myecho.app/structgraphene_1_1chain_1_1signed__block.html)
+ 
+    [Block model documentations](https://dev-doc.myecho.app/structgraphene_1_1chain_1_1signed__block.html)
  */
 struct Block: Decodable {
     

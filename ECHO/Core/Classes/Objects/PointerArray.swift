@@ -8,6 +8,9 @@
 
 import Foundation
 
+/**
+    Array contrainer for store weak refference of objects
+ */
 extension NSPointerArray {
     
     func addObject(_ object: AnyObject?) {

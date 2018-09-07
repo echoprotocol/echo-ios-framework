@@ -8,6 +8,8 @@
 
 /**
     Class used to represent a specific asset on the Graphene platform
+ 
+    [Asset model documentation](https://dev-doc.myecho.app/structgraphene_1_1chain_1_1asset.html)
  */
 public struct Asset: ECHOObject, BytesCodable, Decodable {
     

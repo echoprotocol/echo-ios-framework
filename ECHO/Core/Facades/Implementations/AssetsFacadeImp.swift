@@ -11,6 +11,9 @@ public struct AssetsServices {
     var networkBroadcastService: NetworkBroadcastApiService
 }
 
+/**
+    Implementation of [AssetsFacade](AssetsFacade),[ECHOQueueble](ECHOQueueble)
+*/
 final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
     
     var queues: [ECHOQueue]
@@ -117,6 +120,7 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
         createAssetQueue.setCompletionOperation(completionOperation)
     }
     
+    // swiftlint:disable function_body_length
     public func issueAsset(issuerNameOrId: String, password: String,
                            asset: String, amount: UInt,
                            destinationIdOrName: String, message: String?,
@@ -204,6 +208,7 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
         
         issueAssetQueue.setCompletionOperation(completionOperation)
     }
+    // swiftlint:enable function_body_length
     
     public func listAssets(lowerBound: String, limit: Int, completion: @escaping Completion<[Asset]>) {
         services.databaseService.listAssets(lowerBound: lowerBound, limit: limit, completion: completion)

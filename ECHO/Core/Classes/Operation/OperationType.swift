@@ -6,6 +6,9 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
+/**
+  Represents all blockchain operation types [Operations](https://dev-doc.myecho.app/group__operations.html#details)
+ */
 enum OperationType: Int {
     case transferOperation                          //0
     case limitOrderCreateOperation
@@ -38,7 +41,9 @@ enum OperationType: Int {
     case withdrawPermissionDeleteOperation
     case committeeMemberCreateOperation
     case committeeMemberUpdateOperation             //30
+    // swiftlint:disable variable_name
     case committeeMemberUpdateGlobalParametersOperation
+    // swiftlint:enable variable_name
     case vestingBalanceCreateOperation
     case vestingBalanceWithdrawOperation
     case workerCreateOperation
@@ -83,25 +88,11 @@ struct OperationDecoder {
         
         for array in operations {
             
-            guard let operation = array as? [Any] else {
-                continue
-            }
-            
-            guard let operationId = operation[safe: 0] as? Int else {
-                continue
-            }
-            
-            guard let type = OperationType(rawValue: operationId) else {
-                continue
-            }
-            
-            guard let operationDict = operation[safe: 1] as? [String: Any] else {
-                continue
-            }
-            
-            guard let data = try? JSONSerialization.data(withJSONObject: operationDict, options: []) else {
-                continue
-            }
+            guard let operation = array as? [Any] else { continue }
+            guard let operationId = operation[safe: 0] as? Int else { continue }
+            guard let type = OperationType(rawValue: operationId) else { continue }
+            guard let operationDict = operation[safe: 1] as? [String: Any] else { continue }
+            guard let data = try? JSONSerialization.data(withJSONObject: operationDict, options: []) else { continue }
             
             var baseOperation: BaseOperation?
             

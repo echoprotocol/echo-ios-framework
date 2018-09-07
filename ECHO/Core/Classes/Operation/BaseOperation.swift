@@ -6,6 +6,9 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
+/**
+    Represents base operation model in ECHO blockchain
+ */
 protocol BaseOperation: ECHOCodable, Decodable {
     
     var type: OperationType { get }

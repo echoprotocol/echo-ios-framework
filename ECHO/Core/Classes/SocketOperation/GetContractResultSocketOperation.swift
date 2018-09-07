@@ -6,6 +6,13 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
+/**
+    Retrieves result of called contract operation
+ 
+    - Return: [Any](Any)
+ 
+    - Note: Not completed
+ */
 struct GetContractResultSocketOperation: SocketOperation {
     
     var method: SocketOperationType

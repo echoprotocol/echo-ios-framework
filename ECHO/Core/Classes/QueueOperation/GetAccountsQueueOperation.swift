@@ -3,6 +3,7 @@
 //  ECHO
 //
 //  Created by Vladimir Sharaev on 06.09.2018.
+//  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
 typealias GetAccountsNamesOrIdWithKeys = [(nameOrId: String, keyForSave: String)]
@@ -10,6 +11,11 @@ typealias GetAccountsQueueOperationInitParams = (queue: ECHOQueue,
                                                  databaseService: DatabaseApiService,
                                                  namesOrIdsWithKeys: GetAccountsNamesOrIdWithKeys)
 
+/**
+    Operation for [ECHOQueue](ECHOQueue) whitch load and save accounts
+ 
+    - Save [Account](Account)
+ */
 final class GetAccountsQueueOperation<T>: Operation where T: Any {
     
     fileprivate weak var queue: ECHOQueue?
@@ -31,7 +37,7 @@ final class GetAccountsQueueOperation<T>: Operation where T: Any {
         if isCancelled { return }
         
         var namesOrIds = [String]()
-        namesOrIdsWithKeys.forEach{
+        namesOrIdsWithKeys.forEach {
             namesOrIds.append($0.nameOrId)
         }
         
@@ -42,7 +48,7 @@ final class GetAccountsQueueOperation<T>: Operation where T: Any {
                 guard let strongSelf = self else { break }
                 
                 var wasNotFound = false
-                strongSelf.namesOrIdsWithKeys.forEach{
+                strongSelf.namesOrIdsWithKeys.forEach {
                     guard let account = accounts[$0.nameOrId] else {
                         wasNotFound = true
                         return

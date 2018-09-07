@@ -8,6 +8,15 @@
 
 import Foundation
 
+/**
+    Extension for [Data](Data)
+ 
+    - Provide save append to data
+    - Provide init from [UInt](UInt), [Int8](Int8), [Int16](Int16),
+        [Int32](Int32), [Int64](Int64), [UInt64](UInt64),
+        [Bool](Bool), [Array](Array),
+        [Set](Set), [String](String)
+ */
 extension Data {
     
     mutating func append(optional other: Data?) {
@@ -107,6 +116,12 @@ extension Data {
     }
 }
 
+/**
+    Extension for [Data](Data)
+ 
+    - Provide init from hex
+    - Provide hex representation
+ */
 extension Data {
     
     init?(hex: String) {

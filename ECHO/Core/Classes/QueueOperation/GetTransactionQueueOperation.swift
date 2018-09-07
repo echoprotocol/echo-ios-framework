@@ -3,6 +3,7 @@
 //  ECHO
 //
 //  Created by Vladimir Sharaev on 06.09.2018.
+//  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
 typealias GetTransactionQueueOperationInitParams = (queue: ECHOQueue,
@@ -17,6 +18,11 @@ typealias GetTransactionQueueOperationInitParams = (queue: ECHOQueue,
                                                     blockDataKey: String,
                                                     feeKey: String)
 
+/**
+    Operation for [ECHOQueue](ECHOQueue) whitch create, sign and save transaction
+ 
+    - Save [Transaction](Transaction)
+ */
 final class GetTransactionQueueOperation<T>: Operation where T: Any {
     
     fileprivate weak var queue: ECHOQueue?

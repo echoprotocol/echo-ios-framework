@@ -3,8 +3,12 @@
 //  ECHO
 //
 //  Created by Fedorenko Nikita on 18.07.2018.
+//  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
+/**
+    Container which create private key from name, password, type
+ */
 final class ECHOKeychain {
     
     public let raw: Data
@@ -37,8 +41,10 @@ final class ECHOKeychain {
     func publicAddress() -> String {
         
         var publicKey = self.publicKey()
+        
         let checkSum = core.ripemd160(publicKey).prefix(4)
         publicKey.append(checkSum)
+        
         return Base58.encode(publicKey)
     }
 }

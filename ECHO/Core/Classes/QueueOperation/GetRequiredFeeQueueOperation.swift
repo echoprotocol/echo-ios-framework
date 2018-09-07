@@ -3,6 +3,7 @@
 //  ECHO
 //
 //  Created by Vladimir Sharaev on 06.09.2018.
+//  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
 typealias GetRequiredFeeQueueOperationInitParams = (queue: ECHOQueue,
@@ -11,6 +12,11 @@ typealias GetRequiredFeeQueueOperationInitParams = (queue: ECHOQueue,
                                                     operationKey: String,
                                                     saveKey: String)
 
+/**
+    Operation for [ECHOQueue](ECHOQueue) whitch load and save required fee for [Operation](Operation)
+ 
+    - Save [AssetAmount](AssetAmount)
+ */
 final class GetRequiredFeeQueueOperation<T>: Operation where T: Any {
     
     fileprivate weak var queue: ECHOQueue?

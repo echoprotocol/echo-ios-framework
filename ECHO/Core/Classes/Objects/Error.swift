@@ -6,7 +6,9 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
-/// An enum representing either a failure with an explanatory error
+/**
+    An enum representing either a failure with an explanatory error
+ */
 public enum ECHOError: Swift.Error, Equatable {
     
     /// Indicates that Encodable couldn't be encoded into Object

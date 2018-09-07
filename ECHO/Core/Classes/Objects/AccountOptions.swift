@@ -6,6 +6,11 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
+/**
+    Represents account options model in Graphene blockchain
+ 
+    [AccountOptions model documentation](https://dev-doc.myecho.app/structgraphene_1_1chain_1_1account__options.html)
+ */
 struct AccountOptions: ECHOCodable, Decodable {
     
     enum AccountOptionsCodingKeys: String, CodingKey {
