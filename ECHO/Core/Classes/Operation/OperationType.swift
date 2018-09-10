@@ -52,16 +52,15 @@ enum OperationType: Int {
     case balanceClaimOperation
     case overrideTransferOperation
     case transferToBlindOperation
-    case blindTransferOperation40
+    case blindTransferOperation                     //40
     case transferFromBlindOperation
-    case assetSettleCancelOperation                  //Virtual
+    case assetSettleCancelOperation                 //Virtual
     case assetClaimFeesOperation
-    case fbaDistributeOperation                      //Virtual
+    case fbaDistributeOperation                     //Virtual
     case bidCollateralOperation
-    case executeBidOperation                         //Virtual
+    case executeBidOperation                        //Virtual
     case contractOperation
-    case contractTransferOperation                   //Virtual //48
-    case callContractWithVerificationOperation       //49
+    case contractTransferOperation                  //Virtual //48
 }
 
 struct OperationDecoder {

@@ -63,12 +63,50 @@ protocol DatabaseApiService: class {
     func setSubscribeCallback(completion: @escaping Completion<Bool>)
     
 /**
-     Query list of assets by required asset symbol [lowerBound] with limit [limit]
+     Query list of assets by it's ids [assetIds]
+     
+     - Parameter assetIds: Assets Ids for getting information
+     - Parameter completion: Callback which returns [[Asset](Asset)] or error
  */
     func getAssets(assetIds: [String], completion: @escaping Completion<[Asset]>)
     
 /**
-     Query list of assets by it's ids [assetIds]
+     Query list of assets by required asset symbol [lowerBound] with limit [limit]
+     
+     - Parameter lowerBound: Id of aseet used as lower bound
+     - Parameter limit: Count of getting assets
+     - Parameter completion: Callback which returns [[Asset](Asset)] or error
  */
     func listAssets(lowerBound: String, limit: Int, completion: @escaping Completion<[Asset]>)
+    
+/**
+     Return result of contract operation call
+     
+     - Parameter lowerBound: Hisory id for find contract result
+     - Parameter completion: Callback which returns [ContractResult](ContractResult) or error
+ */
+    func getContractResult(historyId: String, completion: @escaping Completion<ContractResult>)
+    
+/**
+     Returns contracts called by ids
+     
+     - Parameter contractIds: Contracts ids for call
+     - Parameter completion: Callback which returns an [[ContractInfo](ContractInfo)] or error
+ */
+    func getContracts(contractIds: [String], completion: @escaping Completion<[ContractInfo]>)
+    
+/**
+     Returns all existing contracts from blockchain
+     
+     - Parameter completion: Callback which returns an [[ContractInfo](ContractInfo)] or error
+ */
+    func getAllContracts(completion: @escaping Completion<[ContractInfo]>)
+    
+/**
+     Return full information about contract
+     
+     - Parameter contractId: Identifier for contract
+     - Parameter completion: Callback which returns an [ContractStruct](ContractStruct) or error
+ */
+    func getContract(contractId: String, completion: @escaping Completion<ContractStruct>)
 }

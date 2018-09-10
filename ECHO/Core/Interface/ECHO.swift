@@ -12,6 +12,7 @@ typealias InterfaceFacades = AuthentificationFacade
     & FeeFacade
     & TransactionFacade
     & AssetsFacade
+    & ContractsFacade
 
 /**
      This is an  entry point of library.
@@ -30,6 +31,7 @@ final public class ECHO: InterfaceFacades {
     let feeFacade: FeeFacade
     let transactionFacade: TransactionFacade
     let assetsFacade: AssetsFacade
+    let contractsFacade: ContractsFacade
 
     public init(settings: Settings) {
 
@@ -69,6 +71,10 @@ final public class ECHO: InterfaceFacades {
         
         let assetsServices = AssetsServices(databaseService: databaseService, networkBroadcastService: networkBroadcastService)
         assetsFacade = AssetsFacadeImp(services: assetsServices, cryptoCore: settings.cryproComponent, network: settings.network)
+        
+        
+        let contractsServices = ContractsFacadeServices(databaseService: databaseService, networkBroadcastService: networkBroadcastService)
+        contractsFacade = ContractsFacadeImp(services: contractsServices, cryptoCore: settings.cryproComponent, network: settings.network)
     }
     
 /**
@@ -193,5 +199,26 @@ final public class ECHO: InterfaceFacades {
         
         assetsFacade.getAsset(assetIds: assetIds, completion: completion)
     }
+    
+    // MARK: ContractsFacade
+    
+    public func getContractResult(historyId: String, completion: @escaping Completion<ContractResult>) {
+        
+        contractsFacade.getContractResult(historyId: historyId, completion: completion)
+    }
+    
+    public func getContracts(contractIds: [String], completion: @escaping Completion<[ContractInfo]>) {
+        
+        contractsFacade.getContracts(contractIds: contractIds, completion: completion)
+    }
 
+    public func getAllContracts(completion: @escaping Completion<[ContractInfo]>) {
+        
+        contractsFacade.getAllContracts(completion: completion)
+    }
+    
+    public func getContract(contractId: String, completion: @escaping Completion<ContractStruct>) {
+        
+        contractsFacade.getContract(contractId: contractId, completion: completion)
+    }
 }

@@ -31,6 +31,9 @@ enum SocketOperationKeys: String {
     case subscribeCallback = "set_subscribe_callback"
     case transaction = "broadcast_transaction_with_callback"
     case listAssets = "list_assets"
+    case getAllContracts = "get_all_contracts"
+    case getContracts = "get_contracts"
+    case getContract = "get_contract"
 }
 
 typealias OperationResult<T> = (operation: SocketOperation, result: Result<T, ECHOError>)

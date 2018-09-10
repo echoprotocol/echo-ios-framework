@@ -1,28 +1,27 @@
 //
-//  GetContractResultSocketOperation.swift
+//  GetContractSocketOperaton.swift
 //  ECHO
 //
-//  Created by Fedorenko Nikita on 11.07.2018.
-//  Copyright © 2018 PixelPlex. All rights reserved.
+//  Created by Vladimir Sharaev on 10.09.2018.
 //
 
 /**
-    Retrieves result of called contract operation
+    Retrieves full information about contract.
  
-    - Return: [ContractResult](ContractResult)
+    - Return: [ContractStruct](ContractStruct)
  */
-struct GetContractResultSocketOperation: SocketOperation {
+struct GetContractSocketOperaton: SocketOperation {
     
     var method: SocketOperationType
     var operationId: Int
     var apiId: Int
-    var historyId: String
-    var completion: Completion<ContractResult>
+    var contractId: String
+    var completion: Completion<ContractStruct>
     
     func createParameters() -> [Any] {
         let array: [Any] = [apiId,
-                            SocketOperationKeys.contractResult.rawValue,
-                            [historyId]]
+                            SocketOperationKeys.getContract.rawValue,
+                            [contractId]]
         return array
     }
     
@@ -34,28 +33,28 @@ struct GetContractResultSocketOperation: SocketOperation {
             
             switch response.response {
             case .error(let error):
-                let result = Result<ContractResult, ECHOError>(error: ECHOError.internalError(error.message))
+                let result = Result<ContractStruct, ECHOError>(error: ECHOError.internalError(error.message))
                 completion(result)
             case .result(let result):
                 
                 switch result {
                 case .dictionary(let dict):
                     let data = try JSONSerialization.data(withJSONObject: dict, options: [])
-                    let contractResult = try JSONDecoder().decode(ContractResult.self, from: data)
-                    let result = Result<ContractResult, ECHOError>(value: contractResult)
+                    let contractStruct = try JSONDecoder().decode(ContractStruct.self, from: data)
+                    let result = Result<ContractStruct, ECHOError>(value: contractStruct)
                     completion(result)
                 default:
                     throw ECHOError.encodableMapping
                 }
             }
         } catch {
-            let result = Result<ContractResult, ECHOError>(error: ECHOError.encodableMapping)
+            let result = Result<ContractStruct, ECHOError>(error: ECHOError.encodableMapping)
             completion(result)
         }
     }
     
     func forceEnd() {
-        let result = Result<ContractResult, ECHOError>(error: ECHOError.connectionLost)
+        let result = Result<ContractStruct, ECHOError>(error: ECHOError.connectionLost)
         completion(result)
     }
 }
