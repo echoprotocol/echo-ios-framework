@@ -19,15 +19,32 @@
 			<key>orderHint</key>
 			<integer>2</integer>
 		</dict>
-		<key>UniversalECHO.xcscheme</key>
+		<key>Test.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>1</integer>
+		</dict>
+		<key>UniversalECHO.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>2</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>B31CB19F20F3772C00FA5532</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B31CB1AD20F377AC00FA5532</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B3D1C560212C9CCA00D1A7E6</key>
 		<dict>
 			<key>primary</key>
 			<true/>
