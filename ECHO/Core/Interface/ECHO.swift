@@ -72,7 +72,6 @@ final public class ECHO: InterfaceFacades {
         let assetsServices = AssetsServices(databaseService: databaseService, networkBroadcastService: networkBroadcastService)
         assetsFacade = AssetsFacadeImp(services: assetsServices, cryptoCore: settings.cryproComponent, network: settings.network)
         
-        
         let contractsServices = ContractsFacadeServices(databaseService: databaseService, networkBroadcastService: networkBroadcastService)
         contractsFacade = ContractsFacadeImp(services: contractsServices, cryptoCore: settings.cryproComponent, network: settings.network)
     }

@@ -126,6 +126,7 @@
 		B3D1C90421386430009018AE /* CryptoCoreImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D1C90321386430009018AE /* CryptoCoreImp.swift */; };
 		B3D1C90621386461009018AE /* SignaturesGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D1C90521386461009018AE /* SignaturesGenerator.swift */; };
 		B3D7612C21366F3A00860C62 /* SocketNotificationsRequestStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D7612B21366F3A00860C62 /* SocketNotificationsRequestStub.swift */; };
+		B3DA875E2146C32E000EA228 /* GetContractInfoStubs.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3DA875D2146C32E000EA228 /* GetContractInfoStubs.swift */; };
 		D0116C5821353C460004A491 /* TransactionFacadeImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0116C5721353C460004A491 /* TransactionFacadeImp.swift */; };
 		D0116C5A213561490004A491 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0116C59213561490004A491 /* Transaction.swift */; };
 		D0116C5C21358F120004A491 /* BlockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0116C5B21358F120004A491 /* BlockData.swift */; };
@@ -309,6 +310,7 @@
 		B3D1C90321386430009018AE /* CryptoCoreImp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CryptoCoreImp.swift; sourceTree = "<group>"; };
 		B3D1C90521386461009018AE /* SignaturesGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignaturesGenerator.swift; sourceTree = "<group>"; };
 		B3D7612B21366F3A00860C62 /* SocketNotificationsRequestStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketNotificationsRequestStub.swift; sourceTree = "<group>"; };
+		B3DA875D2146C32E000EA228 /* GetContractInfoStubs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetContractInfoStubs.swift; sourceTree = "<group>"; };
 		D0116C5721353C460004A491 /* TransactionFacadeImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionFacadeImp.swift; sourceTree = "<group>"; };
 		D0116C59213561490004A491 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
 		D0116C5B21358F120004A491 /* BlockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockData.swift; sourceTree = "<group>"; };
@@ -416,6 +418,7 @@
 				B390C2C82141385700BD6CDC /* IssueAssetSocketStubs.swift */,
 				B390C2C521411FF600BD6CDC /* RevealAPISocketStubs.swift */,
 				B390C2CA2141403000BD6CDC /* CreateAssetSocketStubs.swift */,
+				B3DA875D2146C32E000EA228 /* GetContractInfoStubs.swift */,
 			);
 			path = SocketRequestsStubs;
 			sourceTree = "<group>";
@@ -1014,6 +1017,7 @@
 				B3D1C586212DA63500D1A7E6 /* AccountStub.swift in Sources */,
 				B3C365442134116800FC60F4 /* CryptoCoreComponentTests.swift in Sources */,
 				B328FC31213FEA510022292C /* ChangePasswordSocketRequestElementStub.swift in Sources */,
+				B3DA875E2146C32E000EA228 /* GetContractInfoStubs.swift in Sources */,
 				B3D1C58A212DA6B000D1A7E6 /* StatisticStub.swift in Sources */,
 				B30FE909212F1AEA0009BF57 /* SocketMessengerStub.swift in Sources */,
 				B3D1C58E212DA92500D1A7E6 /* JsonEncodingTests.swift in Sources */,
