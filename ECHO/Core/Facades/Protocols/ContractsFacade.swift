@@ -10,6 +10,17 @@
     Encapsulates logic, associated with various blockchain smart contract processes
  */
 public protocol ContractsFacade {
+  
+/**
+      Creates contract on blockchain
+     
+     - Parameter registrarNameOrId: Name or id of account that creates the contract
+     - Parameter password: Password from account for transaction signature
+     - Parameter assetId: Asset of contract
+     - Parameter byteCode:Bytecode of the created contract
+     - Parameter completion: Callback which returns an [Bool](Bool) result of creation or error
+ */
+    func createContract(registrarNameOrId: String, password: String, assetId: String, byteCode: String, completion: @escaping Completion<Bool>)
     
 /**
      Return result of contract operation call

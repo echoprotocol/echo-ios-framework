@@ -119,6 +119,7 @@ final public class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
         let sendTransactionOperation = SendTransactionQueueOperation(initParams: sendTransacionOperationInitParams,
                                                                      completion: completion)
         
+        // Completion
         let completionOperation = createCompletionOperation(queue: transferQueue)
         
         transferQueue.addOperation(getAccountsOperation)

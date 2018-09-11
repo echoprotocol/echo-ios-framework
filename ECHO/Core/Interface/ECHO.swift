@@ -72,7 +72,6 @@ final public class ECHO: InterfaceFacades {
         let assetsServices = AssetsServices(databaseService: databaseService, networkBroadcastService: networkBroadcastService)
         assetsFacade = AssetsFacadeImp(services: assetsServices, cryptoCore: settings.cryproComponent, network: settings.network)
         
-        
         let contractsServices = ContractsFacadeServices(databaseService: databaseService, networkBroadcastService: networkBroadcastService)
         contractsFacade = ContractsFacadeImp(services: contractsServices, cryptoCore: settings.cryproComponent, network: settings.network)
     }
@@ -220,5 +219,18 @@ final public class ECHO: InterfaceFacades {
     public func getContract(contractId: String, completion: @escaping Completion<ContractStruct>) {
         
         contractsFacade.getContract(contractId: contractId, completion: completion)
+    }
+    
+    public func createContract(registrarNameOrId: String,
+                               password: String,
+                               assetId: String,
+                               byteCode: String,
+                               completion: @escaping Completion<Bool>) {
+        
+        contractsFacade.createContract(registrarNameOrId: registrarNameOrId,
+                                       password: password,
+                                       assetId: assetId,
+                                       byteCode: byteCode,
+                                       completion: completion)
     }
 }

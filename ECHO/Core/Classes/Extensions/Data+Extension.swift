@@ -110,7 +110,7 @@ extension Data {
         }
         
         var data = Data()
-        data.append(UInt8(clamping: input.count))
+        data.append(UInt8(truncatingIfNeeded: input.count))
         data.append(optional: input.data(using: .utf8))
         return data
     }
