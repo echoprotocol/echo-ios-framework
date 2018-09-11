@@ -637,4 +637,208 @@ class ECHOInterfaceTests: XCTestCase {
             XCTAssertTrue(success)
         }
     }
+    
+    func testGetContractResult() {
+        
+        //arrange
+        echo = ECHO(settings: Settings(build: {
+            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+        }))
+        let exp = expectation(description: "Getting contract")
+        let historyId = "1.17.2"
+        var contractResult: ContractResult!
+        
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.getContractResult(historyId: historyId, completion: { (result) in
+                switch result {
+                case .success(let res):
+                    contractResult = res
+                    exp.fulfill()
+                case .failure(_):
+                    XCTFail("Getting result cant fail")
+                }
+            })
+        }
+        
+        //assert
+        waitForExpectations(timeout: timeout) { error in
+            XCTAssertNotNil(contractResult)
+        }
+    }
+    
+    func testFailGetContractResult() {
+        
+        //arrange
+        echo = ECHO(settings: Settings(build: {
+            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+        }))
+        let exp = expectation(description: "Getting contract")
+        let historyId = "3.17.2"
+        var error: ECHOError = ECHOError.undefined
+
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.getContractResult(historyId: historyId, completion: { (result) in
+                switch result {
+                case .success(_):
+                    XCTFail("Getting contract fail")
+                case .failure(let aError):
+                    error = aError
+                    exp.fulfill()
+                }
+            })
+        }
+        
+        //assert
+        waitForExpectations(timeout: timeout) { _ in
+            XCTAssertNotEqual(error, ECHOError.undefined)
+        }
+    }
+    
+    func testGetAllContracts() {
+        
+        //arrange
+        echo = ECHO(settings: Settings(build: {
+            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+        }))
+        let exp = expectation(description: "Getting contracts")
+        var contracts: [ContractInfo] = []
+        
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.getAllContracts(completion: { (result) in
+                switch result {
+                case .success(let res):
+                    contracts = res
+                    exp.fulfill()
+                case .failure(_):
+                    XCTFail("Getting contracts result cant fail")
+                }
+            })
+        }
+        
+        //assert
+        waitForExpectations(timeout: timeout) { error in
+            XCTAssertTrue(contracts.count > 0)
+        }
+    }
+    
+    func testGetContracts() {
+        
+        //arrange
+        echo = ECHO(settings: Settings(build: {
+            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+        }))
+        let exp = expectation(description: "Getting contracts")
+        let legalContractId = "1.16.1"
+        let contractsIDs = [legalContractId]
+        var contracts: [ContractInfo] = []
+
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.getContracts(contractIds: contractsIDs, completion: { (result) in
+                switch result {
+                case .success(let res):
+                    contracts = res
+                    exp.fulfill()
+                case .failure(_):
+                    XCTFail("Getting contracts result cant fail")
+                }
+            })
+        }
+        
+        //assert
+        waitForExpectations(timeout: timeout) { error in
+            XCTAssertTrue(contracts.count == 1)
+        }
+    }
+    
+    func testFailGetContracts() {
+        
+        //arrange
+        echo = ECHO(settings: Settings(build: {
+            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+        }))
+        let exp = expectation(description: "Getting contracts")
+        let illegalContractId = "3.16.1"
+        let contractsIDs = [illegalContractId]
+        var error: ECHOError = ECHOError.undefined
+
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.getContracts(contractIds: contractsIDs, completion: { (result) in
+                switch result {
+                case .success(_):
+                    XCTFail("Getting contract fail")
+                case .failure(let aError):
+                    error = aError
+                    exp.fulfill()
+                }
+            })
+        }
+        
+        //assert
+        waitForExpectations(timeout: timeout) { _ in
+            XCTAssertNotEqual(error, ECHOError.undefined)
+        }
+    }
+    
+    func testGetContract() {
+        
+        //arrange
+        echo = ECHO(settings: Settings(build: {
+            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+        }))
+        let exp = expectation(description: "Getting contracts")
+        let legalContractId = "1.16.1"
+        var contract: ContractStruct!
+        
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.getContract(contractId: legalContractId, completion: { (result) in
+                switch result {
+                case .success(let res):
+                    contract = res
+                    exp.fulfill()
+                case .failure(_):
+                    XCTFail("Getting contracts result cant fail")
+                }
+            })
+        }
+        
+        //assert
+        waitForExpectations(timeout: timeout) { error in
+            XCTAssertNotNil(contract)
+        }
+    }
+    
+    func testFailGetContract() {
+        
+        //arrange
+        echo = ECHO(settings: Settings(build: {
+            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+        }))
+        let exp = expectation(description: "Getting contracts")
+        let illegalContractId = "3.16.1"
+        var error: ECHOError = ECHOError.undefined
+        
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.getContract(contractId: illegalContractId, completion: { (result) in
+                switch result {
+                case .success(_):
+                    XCTFail("Getting contract fail")
+                case .failure(let aError):
+                    error = aError
+                    exp.fulfill()
+                }
+            })
+        }
+        
+        //assert
+        waitForExpectations(timeout: timeout) { _ in
+            XCTAssertNotEqual(error, ECHOError.undefined)
+        }
+    }
 }

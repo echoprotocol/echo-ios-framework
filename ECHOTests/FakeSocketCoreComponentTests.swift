@@ -298,4 +298,124 @@ class SocketCoreComponentTests: XCTestCase {
             XCTAssertTrue(success)
         }
     }
+    
+    func testFakeGetContract() {
+        
+        //arrange
+        let messenger = SocketMessengerStub(state: .getContract)
+        echo = ECHO(settings: Settings(build: {
+            $0.socketMessenger = messenger
+        }))
+        let exp = expectation(description: "Getting contracts")
+        let legalContractId = "1.16.1"
+        var contract: ContractStruct!
+        
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.getContract(contractId: legalContractId, completion: { (result) in
+                switch result {
+                case .success(let res):
+                    contract = res
+                    exp.fulfill()
+                case .failure(_):
+                    XCTFail("Getting contracts result cant fail")
+                }
+            })
+        }
+        
+        //assert
+        waitForExpectations(timeout: 1) { error in
+            XCTAssertNotNil(contract)
+        }
+    }
+    
+    func testFakeGetContracts() {
+        
+        //arrange
+        let messenger = SocketMessengerStub(state: .getContract)
+        echo = ECHO(settings: Settings(build: {
+            $0.socketMessenger = messenger
+        }))
+        let exp = expectation(description: "Getting contracts")
+        let legalContractId = "1.16.1"
+        let contractsIDs = [legalContractId]
+        var contracts: [ContractInfo] = []
+        
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.getContracts(contractIds: contractsIDs, completion: { (result) in
+                switch result {
+                case .success(let res):
+                    contracts = res
+                    exp.fulfill()
+                case .failure(_):
+                    XCTFail("Getting contracts result cant fail")
+                }
+            })
+        }
+        
+        //assert
+        waitForExpectations(timeout: 1) { error in
+            XCTAssertTrue(contracts.count == 1)
+        }
+    }
+    
+    func testFakeGetAllContracts() {
+        
+        //arrange
+        let messenger = SocketMessengerStub(state: .getContract)
+        echo = ECHO(settings: Settings(build: {
+            $0.socketMessenger = messenger
+        }))
+        let exp = expectation(description: "Getting contracts")
+        var contracts: [ContractInfo] = []
+        
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.getAllContracts(completion: { (result) in
+                switch result {
+                case .success(let res):
+                    contracts = res
+                    exp.fulfill()
+                case .failure(_):
+                    XCTFail("Getting contracts result cant fail")
+                }
+            })
+        }
+        
+        //assert
+        waitForExpectations(timeout: 1) { error in
+            XCTAssertTrue(contracts.count > 0)
+        }
+    }
+    
+    func testFakeGetContractResult() {
+        
+        //arrange
+        let messenger = SocketMessengerStub(state: .getContract)
+        echo = ECHO(settings: Settings(build: {
+            $0.socketMessenger = messenger
+        }))
+        let exp = expectation(description: "Getting contract")
+        let historyId = "1.17.2"
+        var contractResult: ContractResult!
+        
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.getContractResult(historyId: historyId, completion: { (result) in
+                switch result {
+                case .success(let res):
+                    contractResult = res
+                    exp.fulfill()
+                case .failure(_):
+                    XCTFail("Getting result cant fail")
+                }
+            })
+        }
+        
+        //assert
+        waitForExpectations(timeout: 1) { error in
+            XCTAssertNotNil(contractResult)
+        }
+    }
 }
