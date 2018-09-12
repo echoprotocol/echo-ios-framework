@@ -16,6 +16,14 @@ protocol DatabaseApiService: class {
     init(socketCore: SocketCoreComponent)
     
 /**
+    Get the objects corresponding to the provided IDs.
+     
+    - Parameter objectsIds: IDs of the objects to retrieve
+    - Parameter completion: Callback which returns current block data or error
+ */
+    func getObjects(objectsIds: [String], completion: @escaping Completion<Any>)
+    
+/**
      Retrieves base block information
 
      - Parameter completion: Callback which returns current block data or error
@@ -109,4 +117,19 @@ protocol DatabaseApiService: class {
      - Parameter completion: Callback which returns an [ContractStruct](ContractStruct) or error
  */
     func getContract(contractId: String, completion: @escaping Completion<ContractStruct>)
+    
+/**
+     Calls contract method without changing state of blockchain
+     
+     - Parameter contract: Called contract
+     - Parameter asset: Asset of contract
+     - Parameter account: Account that call the contract
+     - Parameter contractCode: Contract code for execute
+     - Parameter completion: Callback which returns an [Bool](Bool) result of call or error
+ */
+    func callContractNoChangingState(contract: Contract,
+                                     asset: Asset,
+                                     account: Account,
+                                     contractCode: String,
+                                     completion: @escaping Completion<String>)
 }

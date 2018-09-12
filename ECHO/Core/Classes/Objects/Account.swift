@@ -15,7 +15,7 @@ public struct Account: ECHOObject, ECHOCodable, Decodable, Hashable {
 
     enum AccountCodingKeys: String, CodingKey {
         case id
-        case membershiExperationDate = "membership_expiration_date"
+        case membershipExperationDate = "membership_expiration_date"
         case registrar
         case referrer
         case lifetimeReferrer = "lifetime_referrer"
@@ -30,7 +30,7 @@ public struct Account: ECHOObject, ECHOCodable, Decodable, Hashable {
     }
     
     public var id: String
-    public var membershiExperationDate: String?
+    public var membershipExperationDate: String?
     public var registrarId: String?
     public var referrerId: String?
     public var lifetimeReferrer: String?
@@ -51,7 +51,7 @@ public struct Account: ECHOObject, ECHOCodable, Decodable, Hashable {
         
         let values = try decoder.container(keyedBy: AccountCodingKeys.self)
         id = try values.decode(String.self, forKey: .id)
-        membershiExperationDate = try values.decode(String.self, forKey: .membershiExperationDate)
+        membershipExperationDate = try values.decode(String.self, forKey: .membershipExperationDate)
         registrarId = try values.decode(String.self, forKey: .registrar)
         referrerId = try values.decode(String.self, forKey: .referrer)
         lifetimeReferrer = try values.decode(String.self, forKey: .lifetimeReferrer)

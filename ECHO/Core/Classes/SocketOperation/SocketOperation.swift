@@ -34,6 +34,7 @@ enum SocketOperationKeys: String {
     case getAllContracts = "get_all_contracts"
     case getContracts = "get_contracts"
     case getContract = "get_contract"
+    case callContractNoChangingState = "call_contract_no_changing_state"
 }
 
 typealias OperationResult<T> = (operation: SocketOperation, result: Result<T, ECHOError>)

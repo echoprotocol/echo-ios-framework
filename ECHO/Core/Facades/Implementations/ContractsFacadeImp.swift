@@ -19,6 +19,17 @@ public struct ContractsFacadeServices {
  */
 final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
     
+    private enum ContractKeys: String {
+        case registrarAccount
+        case receiverContract
+        case byteCode
+        case operation
+        case blockData
+        case chainId
+        case fee
+        case transaction
+    }
+    
     var queues: [ECHOQueue]
     let services: ContractsFacadeServices
     let network: Network
@@ -52,15 +63,6 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
         services.databaseService.getContract(contractId: contractId, completion: completion)
     }
     
-    private enum CreateContractKeys: String {
-        case registrarAccount
-        case operation
-        case blockData
-        case chainId
-        case fee
-        case transaction
-    }
-    
     public func createContract(registrarNameOrId: String,
                                password: String,
                                assetId: String,
@@ -71,7 +73,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
         addQueue(createQueue)
         
         // Accounts
-        let getAccountsNamesOrIdsWithKeys = GetAccountsNamesOrIdWithKeys([(registrarNameOrId, CreateContractKeys.registrarAccount.rawValue)])
+        let getAccountsNamesOrIdsWithKeys = GetAccountsNamesOrIdWithKeys([(registrarNameOrId, ContractKeys.registrarAccount.rawValue)])
         let getAccountsOperationInitParams = (createQueue,
                                               services.databaseService,
                                               getAccountsNamesOrIdsWithKeys)
@@ -79,24 +81,25 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
                                                                    completion: completion)
         
         // Operation
-        let bildCreateContractOperation = createBildCreateContractOperation(createQueue, assetId, byteCode, completion)
+        createQueue.saveValue(byteCode, forKey: ContractKeys.byteCode.rawValue)
+        let bildCreateContractOperation = createBildContractOperation(createQueue, assetId, completion)
         
         // RequiredFee
         let getRequiredFeeOperationInitParams = (createQueue,
                                                  services.databaseService,
                                                  Asset(Settings.defaultAsset),
-                                                 CreateContractKeys.operation.rawValue,
-                                                 CreateContractKeys.fee.rawValue)
+                                                 ContractKeys.operation.rawValue,
+                                                 ContractKeys.fee.rawValue)
         let getRequiredFeeOperation = GetRequiredFeeQueueOperation<Bool>(initParams: getRequiredFeeOperationInitParams,
                                                                          completion: completion)
         
         // ChainId
-        let getChainIdInitParams = (createQueue, services.databaseService, CreateContractKeys.chainId.rawValue)
+        let getChainIdInitParams = (createQueue, services.databaseService, ContractKeys.chainId.rawValue)
         let getChainIdOperation = GetChainIdQueueOperation<Bool>(initParams: getChainIdInitParams,
                                                                  completion: completion)
         
         // BlockData
-        let getBlockDataInitParams = (createQueue, services.databaseService, CreateContractKeys.blockData.rawValue)
+        let getBlockDataInitParams = (createQueue, services.databaseService, ContractKeys.blockData.rawValue)
         let getBlockDataOperation = GetBlockDataQueueOperation<Bool>(initParams: getBlockDataInitParams,
                                                                      completion: completion)
         
@@ -104,21 +107,21 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
         let transactionOperationInitParams = (queue: createQueue,
                                               cryptoCore: cryptoCore,
                                               keychainType: KeychainType.active,
-                                              saveKey: CreateContractKeys.transaction.rawValue,
+                                              saveKey: ContractKeys.transaction.rawValue,
                                               password: password,
                                               networkPrefix: network.prefix.rawValue,
-                                              fromAccountKey: CreateContractKeys.registrarAccount.rawValue,
-                                              operationKey: CreateContractKeys.operation.rawValue,
-                                              chainIdKey: CreateContractKeys.chainId.rawValue,
-                                              blockDataKey: CreateContractKeys.blockData.rawValue,
-                                              feeKey: CreateContractKeys.fee.rawValue)
+                                              fromAccountKey: ContractKeys.registrarAccount.rawValue,
+                                              operationKey: ContractKeys.operation.rawValue,
+                                              chainIdKey: ContractKeys.chainId.rawValue,
+                                              blockDataKey: ContractKeys.blockData.rawValue,
+                                              feeKey: ContractKeys.fee.rawValue)
         let bildTransactionOperation = GetTransactionQueueOperation<Bool>(initParams: transactionOperationInitParams,
                                                                           completion: completion)
         
         // Send transaction
         let sendTransacionOperationInitParams = (createQueue,
                                                  services.networkBroadcastService,
-                                                 CreateContractKeys.transaction.rawValue)
+                                                 ContractKeys.transaction.rawValue)
         let sendTransactionOperation = SendTransactionQueueOperation(initParams: sendTransacionOperationInitParams,
                                                                      completion: completion)
         
@@ -135,18 +138,135 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
         createQueue.setCompletionOperation(completionOperation)
     }
     
-    fileprivate func createBildCreateContractOperation(_ queue: ECHOQueue,
-                                                       _ assetId: String,
-                                                       _ byteCode: String,
-                                                       _ completion: @escaping Completion<Bool>) -> Operation {
+    public func callContract(registrarNameOrId: String,
+                             password: String,
+                             assetId: String,
+                             contratId: String,
+                             methodName: String,
+                             methodParams: [Any],
+                             completion: @escaping (Result<Bool, ECHOError>) -> Void) {
+     
+        let callQueue = ECHOQueue()
+        addQueue(callQueue)
         
-        let createContractOperation = BlockOperation()
+        // Accounts
+        let getAccountsNamesOrIdsWithKeys = GetAccountsNamesOrIdWithKeys([(registrarNameOrId, ContractKeys.registrarAccount.rawValue)])
+        let getAccountsOperationInitParams = (callQueue,
+                                              services.databaseService,
+                                              getAccountsNamesOrIdsWithKeys)
+        let getAccountsOperation = GetAccountsQueueOperation<Bool>(initParams: getAccountsOperationInitParams,
+                                                                   completion: completion)
         
-        createContractOperation.addExecutionBlock { [weak createContractOperation, weak queue, weak self] in
+        // ByteCode
+        let byteCodeOperation = createByteCodeOperation(callQueue, methodName, methodParams, completion)
+        
+        // Operation
+        callQueue.saveValue(Contract(id: contratId), forKey: ContractKeys.receiverContract.rawValue)
+        let bildCreateContractOperation = createBildContractOperation(callQueue, assetId, completion)
+        
+        // RequiredFee
+        let getRequiredFeeOperationInitParams = (callQueue,
+                                                 services.databaseService,
+                                                 Asset(Settings.defaultAsset),
+                                                 ContractKeys.operation.rawValue,
+                                                 ContractKeys.fee.rawValue)
+        let getRequiredFeeOperation = GetRequiredFeeQueueOperation<Bool>(initParams: getRequiredFeeOperationInitParams,
+                                                                         completion: completion)
+        
+        // ChainId
+        let getChainIdInitParams = (callQueue, services.databaseService, ContractKeys.chainId.rawValue)
+        let getChainIdOperation = GetChainIdQueueOperation<Bool>(initParams: getChainIdInitParams,
+                                                                 completion: completion)
+        
+        // BlockData
+        let getBlockDataInitParams = (callQueue, services.databaseService, ContractKeys.blockData.rawValue)
+        let getBlockDataOperation = GetBlockDataQueueOperation<Bool>(initParams: getBlockDataInitParams,
+                                                                     completion: completion)
+        
+        // Transaciton
+        let transactionOperationInitParams = (queue: callQueue,
+                                              cryptoCore: cryptoCore,
+                                              keychainType: KeychainType.active,
+                                              saveKey: ContractKeys.transaction.rawValue,
+                                              password: password,
+                                              networkPrefix: network.prefix.rawValue,
+                                              fromAccountKey: ContractKeys.registrarAccount.rawValue,
+                                              operationKey: ContractKeys.operation.rawValue,
+                                              chainIdKey: ContractKeys.chainId.rawValue,
+                                              blockDataKey: ContractKeys.blockData.rawValue,
+                                              feeKey: ContractKeys.fee.rawValue)
+        let bildTransactionOperation = GetTransactionQueueOperation<Bool>(initParams: transactionOperationInitParams,
+                                                                          completion: completion)
+        
+        // Send transaction
+        let sendTransacionOperationInitParams = (callQueue,
+                                                 services.networkBroadcastService,
+                                                 ContractKeys.transaction.rawValue)
+        let sendTransactionOperation = SendTransactionQueueOperation(initParams: sendTransacionOperationInitParams,
+                                                                     completion: completion)
+        
+        // Completion
+        let completionOperation = createCompletionOperation(queue: callQueue)
+        
+        callQueue.addOperation(getAccountsOperation)
+        callQueue.addOperation(byteCodeOperation)
+        callQueue.addOperation(bildCreateContractOperation)
+        callQueue.addOperation(getRequiredFeeOperation)
+        callQueue.addOperation(getChainIdOperation)
+        callQueue.addOperation(getBlockDataOperation)
+        callQueue.addOperation(bildTransactionOperation)
+        callQueue.addOperation(sendTransactionOperation)
+        callQueue.setCompletionOperation(completionOperation)
+    }
+    
+    public func queryContract(registrarNameOrId: String,
+                              assetId: String,
+                              contratId: String,
+                              methodName: String,
+                              methodParams: [Any],
+                              completion: @escaping Completion<String>) {
+        
+        let queryQueue = ECHOQueue()
+        addQueue(queryQueue)
+        
+        // Accounts
+        let getAccountsNamesOrIdsWithKeys = GetAccountsNamesOrIdWithKeys([(registrarNameOrId, ContractKeys.registrarAccount.rawValue)])
+        let getAccountsOperationInitParams = (queryQueue,
+                                              services.databaseService,
+                                              getAccountsNamesOrIdsWithKeys)
+        let getAccountsOperation = GetAccountsQueueOperation<String>(initParams: getAccountsOperationInitParams,
+                                                                   completion: completion)
+        
+        // ByteCode
+        let byteCodeOperation = createByteCodeOperation(queryQueue, methodName, methodParams, completion)
+        
+        // Operation
+        queryQueue.saveValue(Contract(id: contratId), forKey: ContractKeys.receiverContract.rawValue)
+        let callContractNoChangigState = createBildCallContractNoChangingState(queryQueue, assetId, completion)
+        
+        // Completion
+        let completionOperation = createCompletionOperation(queue: queryQueue)
+        
+        queryQueue.addOperation(getAccountsOperation)
+        queryQueue.addOperation(byteCodeOperation)
+        queryQueue.addOperation(callContractNoChangigState)
+        queryQueue.setCompletionOperation(completionOperation)
+    }
+    
+    fileprivate func createBildContractOperation(_ queue: ECHOQueue,
+                                                 _ assetId: String,
+                                                 _ completion: @escaping Completion<Bool>) -> Operation {
+        
+        let contractOperation = BlockOperation()
+        
+        contractOperation.addExecutionBlock { [weak contractOperation, weak queue, weak self] in
             
-            guard createContractOperation?.isCancelled == false else { return }
+            guard contractOperation?.isCancelled == false else { return }
             guard self != nil else { return }
-            guard let account: Account = queue?.getValue(CreateContractKeys.registrarAccount.rawValue) else { return }
+            guard let account: Account = queue?.getValue(ContractKeys.registrarAccount.rawValue) else { return }
+            guard let byteCode: String = queue?.getValue(ContractKeys.byteCode.rawValue) else { return }
+            
+            let receive: Contract? = queue?.getValue(ContractKeys.receiverContract.rawValue)
             
             let operaion = ContractOperation(registrar: account,
                                              asset: Asset(assetId),
@@ -154,12 +274,58 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
                                              gasPrice: 0,
                                              gas: 1000000,
                                              code: byteCode,
-                                             receiver: nil,
+                                             receiver: receive,
                                              fee: AssetAmount(amount: 0, asset: Asset(Settings.defaultAsset)))
             
-            queue?.saveValue(operaion, forKey: CreateContractKeys.operation.rawValue)
+            queue?.saveValue(operaion, forKey: ContractKeys.operation.rawValue)
         }
         
-        return createContractOperation
+        return contractOperation
+    }
+    
+    fileprivate func createBildCallContractNoChangingState(_ queue: ECHOQueue,
+                                                           _ assetId: String,
+                                                           _ completion: @escaping Completion<String>) -> Operation {
+        let contractOperation = BlockOperation()
+        
+        contractOperation.addExecutionBlock { [weak contractOperation, weak queue, weak self] in
+            
+            guard contractOperation?.isCancelled == false else { return }
+            guard self != nil else { return }
+            guard let account: Account = queue?.getValue(ContractKeys.registrarAccount.rawValue) else { return }
+            guard let byteCode: String = queue?.getValue(ContractKeys.byteCode.rawValue) else { return }
+            guard let receive: Contract = queue?.getValue(ContractKeys.receiverContract.rawValue) else { return }
+            
+            self?.services.databaseService.callContractNoChangingState(contract: receive,
+                                                                       asset: Asset(assetId),
+                                                                       account: account,
+                                                                       contractCode: byteCode,
+                                                                       completion: completion)
+            
+        }
+        
+        return contractOperation
+    }
+    
+    fileprivate func createByteCodeOperation<T>(_ queue: ECHOQueue,
+                                                _ methodName: String,
+                                                _ methodParams: [Any],
+                                                _ completion: @escaping Completion<T>) -> Operation {
+        
+        let byteCodeOperation = BlockOperation()
+        
+        byteCodeOperation.addExecutionBlock { [weak byteCodeOperation, weak queue, weak self] in
+            
+            guard byteCodeOperation?.isCancelled == false else { return }
+            guard self != nil else { return }
+           
+//            let callExample = "5b34b966"
+//            queue?.saveValue(callExample, forKey: ContractKeys.byteCode.rawValue)
+            
+            let queryExample = "a87d942c"
+            queue?.saveValue(queryExample, forKey: ContractKeys.byteCode.rawValue)
+        }
+        
+        return byteCodeOperation
     }
 }

@@ -55,6 +55,17 @@ extension GlobalsService {
         
         socketCore.send(operation: operation)
     }
+    
+    func getObjects(objectsIds: [String], completion: @escaping (Result<Any, ECHOError>) -> Void) {
+        
+        let operation = GetObjectsSocketOperation(method: .call,
+                                                  operationId: socketCore.nextOperationId(),
+                                                  apiId: apiIdentifire,
+                                                  identifiers: objectsIds,
+                                                  completion: completion)
+        
+        socketCore.send(operation: operation)
+    }
 }
 
 extension AuthorityAndValidationService {
@@ -193,6 +204,24 @@ extension ContractsService {
                                                   apiId: apiIdentifire,
                                                   contractId: contractId,
                                                   completion: completion)
+        
+        socketCore.send(operation: operation)
+    }
+    
+    func callContractNoChangingState(contract: Contract,
+                                     asset: Asset,
+                                     account: Account,
+                                     contractCode: String,
+                                     completion: @escaping Completion<String>) {
+        
+        let operation = QueryContractSocketOperation(method: .call,
+                                                    operationId: socketCore.nextOperationId(),
+                                                    apiId: apiIdentifire,
+                                                    contractId: contract.id,
+                                                    registrarId: account.id,
+                                                    assetId: asset.id,
+                                                    code: contractCode,
+                                                    completion: completion)
         
         socketCore.send(operation: operation)
     }

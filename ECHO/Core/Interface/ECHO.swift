@@ -233,4 +233,36 @@ final public class ECHO: InterfaceFacades {
                                        byteCode: byteCode,
                                        completion: completion)
     }
+    
+    public func callContract(registrarNameOrId: String,
+                             password: String,
+                             assetId: String,
+                             contratId: String,
+                             methodName: String,
+                             methodParams: [Any],
+                             completion: @escaping Completion<Bool>) {
+        
+        contractsFacade.callContract(registrarNameOrId: registrarNameOrId,
+                                     password: password,
+                                     assetId: assetId,
+                                     contratId: contratId,
+                                     methodName: methodName,
+                                     methodParams: methodParams,
+                                     completion: completion)
+    }
+    
+    public func queryContract(registrarNameOrId: String,
+                              assetId: String,
+                              contratId: String,
+                              methodName: String,
+                              methodParams: [Any],
+                              completion: @escaping Completion<String>) {
+        
+        contractsFacade.queryContract(registrarNameOrId: registrarNameOrId,
+                                      assetId: assetId,
+                                      contratId: contratId,
+                                      methodName: methodName,
+                                      methodParams: methodParams,
+                                      completion: completion)
+    }
 }

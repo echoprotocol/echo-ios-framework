@@ -17,10 +17,46 @@ public protocol ContractsFacade {
      - Parameter registrarNameOrId: Name or id of account that creates the contract
      - Parameter password: Password from account for transaction signature
      - Parameter assetId: Asset of contract
-     - Parameter byteCode:Bytecode of the created contract
+     - Parameter byteCode: Bytecode of the created contract
      - Parameter completion: Callback which returns an [Bool](Bool) result of creation or error
  */
     func createContract(registrarNameOrId: String, password: String, assetId: String, byteCode: String, completion: @escaping Completion<Bool>)
+    
+/**
+     Calls to contract on blockchain
+     
+     - Parameter registrarNameOrId: Name or id of account that call the contract
+     - Parameter password: Password from account for transaction signature
+     - Parameter assetId: Asset of contract
+     - Parameter contratId: Id of called contract
+     - Parameter methodName: Name of called method
+     - Parameter methodParams: Parameters of called method
+     - Parameter completion: Callback which returns an [Bool](Bool) result of call or error
+ */
+    func callContract(registrarNameOrId: String,
+                      password: String,
+                      assetId: String,
+                      contratId: String,
+                      methodName: String,
+                      methodParams: [Any],
+                      completion: @escaping Completion<Bool>)
+    
+/**
+     Calls contract method without changing state of blockchain
+     
+     - Parameter registrarNameOrId: Name or id of account that call the contract
+     - Parameter assetId: Asset of contract
+     - Parameter contratId: Id of called contract
+     - Parameter methodName: Name of called method
+     - Parameter methodParams: Parameters of called method
+     - Parameter completion: Callback which returns an [Bool](Bool) result of call or error
+ */
+    func queryContract(registrarNameOrId: String,
+                       assetId: String,
+                       contratId: String,
+                       methodName: String,
+                       methodParams: [Any],
+                       completion: @escaping Completion<String>)
     
 /**
      Return result of contract operation call
