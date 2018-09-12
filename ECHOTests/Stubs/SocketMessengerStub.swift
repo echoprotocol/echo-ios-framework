@@ -15,6 +15,7 @@ enum OperationsState {
     case issueAsset
     case createAsset
     case getContract
+    case createContract
     case `default`
 }
 
@@ -70,6 +71,8 @@ final class SocketMessengerStub: SocketMessenger {
         case .createAsset:
             response = getCreateAssetResponse(request: string)
         case .getContract:
+            response = getContractResponse(request: string)
+        case .createContract:
             response = getContractResponse(request: string)
         }
     
@@ -229,6 +232,24 @@ final class SocketMessengerStub: SocketMessenger {
             return revealResponse
         } else if let getContractResponse = getContractHodler.response(id: tuple.id, operationType: tuple.operationType) {
             return getContractResponse
+        }
+        
+        return nil
+    }
+    
+    fileprivate func getCreateContractResponse(request: String) -> String? {
+        
+        guard let tuple = parceRequest(request: request) else {
+            return nil
+        }
+        
+        let revealHodler = RevialAPISocketRequestStubHodler()
+        let createContractHodler = CreateContractInfoStubHolder()
+        
+        if let revealResponse = revealHodler.response(id: tuple.id, operationType: tuple.operationType) {
+            return revealResponse
+        } else if let createContractResponse = createContractHodler.response(id: tuple.id, operationType: tuple.operationType) {
+            return createContractResponse
         }
         
         return nil

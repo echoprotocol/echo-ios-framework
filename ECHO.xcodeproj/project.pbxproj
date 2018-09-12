@@ -59,6 +59,7 @@
 		B348D0AC210207ED00C29AE4 /* Encoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = B348D0AB210207ED00C29AE4 /* Encoding.swift */; };
 		B350E3A421341DB200408728 /* ECHOKeychainTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B350E3A321341DB200408728 /* ECHOKeychainTest.swift */; };
 		B350E3A621341FD600408728 /* AddressKeysContainerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B350E3A521341FD600408728 /* AddressKeysContainerTests.swift */; };
+		B356E28D2148143900314E4A /* CreateContractInfoStubs.swift in Sources */ = {isa = PBXBuildFile; fileRef = B356E28C2148143900314E4A /* CreateContractInfoStubs.swift */; };
 		B358CD0421392DFD0046327F /* TransferSocketRequestStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = B358CD0321392DFD0046327F /* TransferSocketRequestStub.swift */; };
 		B358CD062139786B0046327F /* Configurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B358CD052139786B0046327F /* Configurator.swift */; };
 		B358CD08213978800046327F /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B358CD07213978800046327F /* Settings.swift */; };
@@ -246,6 +247,7 @@
 		B348D0AB210207ED00C29AE4 /* Encoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Encoding.swift; sourceTree = "<group>"; };
 		B350E3A321341DB200408728 /* ECHOKeychainTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ECHOKeychainTest.swift; sourceTree = "<group>"; };
 		B350E3A521341FD600408728 /* AddressKeysContainerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressKeysContainerTests.swift; sourceTree = "<group>"; };
+		B356E28C2148143900314E4A /* CreateContractInfoStubs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateContractInfoStubs.swift; sourceTree = "<group>"; };
 		B358CD0321392DFD0046327F /* TransferSocketRequestStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferSocketRequestStub.swift; sourceTree = "<group>"; };
 		B358CD052139786B0046327F /* Configurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configurator.swift; sourceTree = "<group>"; };
 		B358CD07213978800046327F /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
@@ -425,6 +427,7 @@
 				B390C2C521411FF600BD6CDC /* RevealAPISocketStubs.swift */,
 				B390C2CA2141403000BD6CDC /* CreateAssetSocketStubs.swift */,
 				B3DA875D2146C32E000EA228 /* GetContractInfoStubs.swift */,
+				B356E28C2148143900314E4A /* CreateContractInfoStubs.swift */,
 			);
 			path = SocketRequestsStubs;
 			sourceTree = "<group>";
@@ -1050,6 +1053,7 @@
 				B30FE90E212F2DAE0009BF57 /* FakeSocketCoreComponentTests.swift in Sources */,
 				B313B8C1212FF9850052B266 /* ECHOInterfaceTests.swift in Sources */,
 				B3D1C57A212C9D4900D1A7E6 /* JsonDecodingTests.swift in Sources */,
+				B356E28D2148143900314E4A /* CreateContractInfoStubs.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
