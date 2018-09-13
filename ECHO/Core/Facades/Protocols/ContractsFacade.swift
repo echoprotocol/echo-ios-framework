@@ -38,7 +38,7 @@ public protocol ContractsFacade {
                       assetId: String,
                       contratId: String,
                       methodName: String,
-                      methodParams: [Any],
+                      methodParams: [AbiTypeValueInputModel],
                       completion: @escaping Completion<Bool>)
     
 /**
@@ -55,7 +55,7 @@ public protocol ContractsFacade {
                        assetId: String,
                        contratId: String,
                        methodName: String,
-                       methodParams: [Any],
+                       methodParams: [AbiTypeValueInputModel],
                        completion: @escaping Completion<String>)
     
 /**

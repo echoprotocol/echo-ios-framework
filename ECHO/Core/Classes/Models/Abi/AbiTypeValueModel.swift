@@ -8,24 +8,24 @@
 
 import Foundation
 
-struct AbiTypeValueInputModel: Equatable {
+public struct AbiTypeValueInputModel: Equatable {
     
     var type: AbiParameterType
     var value: String
     
-    static func == (lhs: AbiTypeValueInputModel, rhs: AbiTypeValueInputModel) -> Bool {
+    public static func == (lhs: AbiTypeValueInputModel, rhs: AbiTypeValueInputModel) -> Bool {
         
         return lhs.type == rhs.type && lhs.value == rhs.value
     }
 
 }
 
-struct AbiTypeValueOutputModel: Equatable {
+public  struct AbiTypeValueOutputModel: Equatable {
     
     var type: AbiParameterType
     var value: Any
     
-    static func == (lhs: AbiTypeValueOutputModel, rhs: AbiTypeValueOutputModel) -> Bool {
+    public static func == (lhs: AbiTypeValueOutputModel, rhs: AbiTypeValueOutputModel) -> Bool {
         
         return lhs.type == rhs.type
     }

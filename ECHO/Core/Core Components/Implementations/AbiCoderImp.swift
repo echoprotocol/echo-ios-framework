@@ -10,7 +10,11 @@ import Foundation
 
 final class AbiCoderImp: AbiCoder {
     
-    var argumentCoder: AbiArgumentCoder!
+    let argumentCoder: AbiArgumentCoder
+    
+    init(argumentCoder: AbiArgumentCoder) {
+        self.argumentCoder = argumentCoder
+    }
     
     func getArguments(valueTypes: [AbiTypeValueInputModel]) throws -> Data {
         return try argumentCoder.getArguments(valueTypes: valueTypes)
@@ -45,6 +49,11 @@ final class AbiCoderImp: AbiCoder {
         return functionHash
     }
     
+    fileprivate func bridge(_ param: String, _ funcName: String) -> String {
+        let fullFunc = "\(funcName)(\(param))"
+        return fullFunc.sha3(.keccak256)[0..<8]
+    }
+    
     func getStringHash(abiFunc: AbiFunctionModel) throws -> String {
         
         var param = ""
@@ -58,15 +67,34 @@ final class AbiCoderImp: AbiCoder {
             }
         }
         
-        param = "\(abiFunc.name)(\(param))"
-        
-        return param.sha3(.keccak256)[0..<8]
+        return bridge(param, abiFunc.name)
     }
     
     func getStringHash(abiFunc: AbiFunctionModel, param: [AbiTypeValueInputModel]) throws -> String {
         
         let dataHash = try getHash(abiFunc: abiFunc, param: param)
         return dataHash.hex
+    }
+    
+    func getStringHash(funcName: String) throws -> String {
+        return (funcName + "()").sha3(.keccak256)[0..<8]
+    }
+    
+    func getStringHash(funcName: String, param: [AbiTypeValueInputModel]) throws -> String {
+        
+        let paramHashString = try argumentCoder.getArguments(valueTypes: param).hex
+        var paramString = ""
+        
+        for index in 0..<param.count {
+            
+            if index != param.count - 1 {
+                paramString +=  param[index].type.description + ","
+            } else {
+                paramString += param[index].type.description
+            }
+        }
+        
+        return bridge(paramString, funcName) + paramHashString
     }
     
     func getBytecode(bytecode: Data, constructor: AbiFunctionModel, param: [AbiTypeValueInputModel]) throws -> Data {

@@ -34,12 +34,14 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
     let services: ContractsFacadeServices
     let network: Network
     let cryptoCore: CryptoCoreComponent
+    let abiCoderCore: AbiCoder
     
-    public init(services: ContractsFacadeServices, cryptoCore: CryptoCoreComponent, network: Network) {
+    public init(services: ContractsFacadeServices, cryptoCore: CryptoCoreComponent, network: Network, abiCoder: AbiCoder) {
         
         self.services = services
         self.network = network
         self.cryptoCore = cryptoCore
+        self.abiCoderCore = abiCoder
         self.queues = [ECHOQueue]()
     }
     
@@ -143,7 +145,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
                              assetId: String,
                              contratId: String,
                              methodName: String,
-                             methodParams: [Any],
+                             methodParams: [AbiTypeValueInputModel],
                              completion: @escaping (Result<Bool, ECHOError>) -> Void) {
      
         let callQueue = ECHOQueue()
@@ -223,7 +225,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
                               assetId: String,
                               contratId: String,
                               methodName: String,
-                              methodParams: [Any],
+                              methodParams: [AbiTypeValueInputModel],
                               completion: @escaping Completion<String>) {
         
         let queryQueue = ECHOQueue()
@@ -309,7 +311,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
     
     fileprivate func createByteCodeOperation<T>(_ queue: ECHOQueue,
                                                 _ methodName: String,
-                                                _ methodParams: [Any],
+                                                _ methodParams: [AbiTypeValueInputModel],
                                                 _ completion: @escaping Completion<T>) -> Operation {
         
         let byteCodeOperation = BlockOperation()
@@ -318,12 +320,16 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
             
             guard byteCodeOperation?.isCancelled == false else { return }
             guard self != nil else { return }
-           
-//            let callExample = "5b34b966"
-//            queue?.saveValue(callExample, forKey: ContractKeys.byteCode.rawValue)
             
-            let queryExample = "a87d942c"
-            queue?.saveValue(queryExample, forKey: ContractKeys.byteCode.rawValue)
+            guard let hash = try? self?.abiCoderCore.getStringHash(funcName: methodName, param: methodParams) else {
+                
+                queue?.cancelAllOperations()
+                let result = Result<T, ECHOError>(error: ECHOError.abiCoding)
+                completion(result)
+                return
+            }
+            
+            queue?.saveValue(hash, forKey: ContractKeys.byteCode.rawValue)
         }
         
         return byteCodeOperation

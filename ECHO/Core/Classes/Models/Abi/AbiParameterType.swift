@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum AbiParameterType: Equatable, Hashable {
+enum AbiParameterType {
     
     case string
     case uint(size: Int)
@@ -102,13 +102,113 @@ enum AbiParameterType: Equatable, Hashable {
             return false
         }
     }
+}
+
+extension AbiParameterType: Hashable {
+    
+    var hashValue: Int {
+        
+        switch self {
+            
+        case .string:
+            return "string".hashValue
+            
+        case .address:
+            return "address".hashValue
+            
+        case .bool:
+            return "bool".hashValue
+            
+        case .unknown:
+            return "unknown".hashValue
+            
+        case .uint(_):
+            
+            return "uint".hashValue
+            
+        case .int(_):
+            
+            return "int".hashValue
+            
+        case .bytes:
+            
+            return "bytes".hashValue
+            
+        case .fixedBytes(_):
+            
+            return "fixedBytes".hashValue
+            
+        case .array(_):
+            
+            return "array".hashValue
+            
+        case .fixedArrayOfUint(_):
+            
+            return "fixedArrayOfUint".hashValue
+            
+        case .dynamicArrayOfUint:
+            
+            return "dynamicArrayOfUint".hashValue
+            
+        case .fixedArrayOfInt(_):
+            
+            return "fixedArrayOfInt".hashValue
+            
+        case .dynamicArrayOfInt:
+            
+            return "dynamicArrayOfInt".hashValue
+            
+        case .fixedArrayOfBool(_):
+            
+            return "fixedArrayOfBool".hashValue
+            
+        case .dynamicArrayOfBool:
+            
+            return "dynamicArrayOfBool".hashValue
+            
+        case .fixedArrayOfBytes(_):
+            
+            return "fixedArrayOfBytes".hashValue
+            
+        case .dynamicArrayOfBytes:
+            
+            return "dynamicArrayOfBytes".hashValue
+            
+        case .fixedArrayOfStrings(_):
+            
+            return "fixedArrayOfStrings".hashValue
+            
+        case .dynamicArrayOfStrings:
+            
+            return "dynamicArrayOfStrings".hashValue
+            
+        case .fixedArrayOfFixedBytes(_):
+            
+            return "fixedArrayOfFixedBytes".hashValue
+            
+        case .dynamicArrayOfFixedBytes:
+            
+            return "dynamicArrayOfFixedBytes".hashValue
+            
+        case .fixedArrayOfAddresses(_):
+            
+            return "fixedArrayOfAddresses".hashValue
+            
+        case .dynamicArrayOfAddresses:
+            
+            return "dynamicArrayOfAddresses".hashValue
+        }
+    }
+}
+
+extension AbiParameterType: Equatable {
     
     static func == (lhs: AbiParameterType, rhs: AbiParameterType) -> Bool {
         
         switch (lhs, rhs) {
             
         case (.string, .string):
-             return true
+            return true
             
         case (.address, .address):
             return true
@@ -120,7 +220,7 @@ enum AbiParameterType: Equatable, Hashable {
             return true
             
         case (.uint(_), .uint(_)):
-
+            
             return true
             
         case (.int(_), .int(_)):
@@ -146,7 +246,7 @@ enum AbiParameterType: Equatable, Hashable {
         case (.dynamicArrayOfUint, .dynamicArrayOfUint):
             
             return true
-
+            
         case let (.fixedArrayOfInt(left), .fixedArrayOfInt(right)):
             
             return left == right
@@ -154,7 +254,7 @@ enum AbiParameterType: Equatable, Hashable {
         case  (.dynamicArrayOfInt, .dynamicArrayOfInt):
             
             return true
-
+            
         case let (.fixedArrayOfBool(left), .fixedArrayOfBool(right)):
             
             return left == right
@@ -162,7 +262,7 @@ enum AbiParameterType: Equatable, Hashable {
         case (.dynamicArrayOfBool, .dynamicArrayOfBool):
             
             return true
-
+            
         case let (.fixedArrayOfBytes(left), .fixedArrayOfBytes(right)):
             
             return left == right
@@ -170,7 +270,7 @@ enum AbiParameterType: Equatable, Hashable {
         case (.dynamicArrayOfBytes, .dynamicArrayOfBytes):
             
             return true
-
+            
         case let (.fixedArrayOfStrings(left), .fixedArrayOfStrings(right)):
             
             return left == right
@@ -178,7 +278,7 @@ enum AbiParameterType: Equatable, Hashable {
         case (.dynamicArrayOfStrings, .dynamicArrayOfStrings):
             
             return true
-
+            
         case let (.fixedArrayOfFixedBytes(left), .fixedArrayOfFixedBytes(right)):
             
             return left == right
@@ -186,7 +286,7 @@ enum AbiParameterType: Equatable, Hashable {
         case (.dynamicArrayOfFixedBytes, .dynamicArrayOfFixedBytes):
             
             return true
-
+            
         case let (.fixedArrayOfAddresses(left), .fixedArrayOfAddresses(right)):
             
             return left == right
@@ -194,103 +294,106 @@ enum AbiParameterType: Equatable, Hashable {
         case (.dynamicArrayOfAddresses, .dynamicArrayOfAddresses):
             
             return true
-
+            
         default:
             return false
         }
     }
+}
+
+extension AbiParameterType: CustomStringConvertible {
     
-    var hashValue: Int {
+    public var description: String {
         
         switch self {
             
         case .string:
-            return "string".hashValue
+            return "string"
             
         case .address:
-            return "address".hashValue
-
+            return "address"
+            
         case .bool:
-            return "bool".hashValue
-
+            return "bool"
+            
         case .unknown:
-            return "unknown".hashValue
-
-        case .uint(_):
+            return "unknown"
             
-            return "uint".hashValue
-
-        case .int(_):
+        case .uint(let size):
             
-            return "int".hashValue
-
+            return "uint" + "\(size)"
+            
+        case .int(let size):
+            
+            return "int" + "\(size)"
+            
         case .bytes:
             
-            return "bytes".hashValue
-
-        case .fixedBytes(_):
+            return "bytes"
             
-            return "fixedBytes".hashValue
-
+        case .fixedBytes(let size):
+            
+            return "bytes" + "[\(size)]"
+            
         case .array(_):
             
-            return "array".hashValue
-
-        case .fixedArrayOfUint(_):
+            return "array"
             
-            return "fixedArrayOfUint".hashValue
+        case .fixedArrayOfUint(let size):
+            
+            return "uint" + "[\(size)]"
 
         case .dynamicArrayOfUint:
             
-            return "dynamicArrayOfUint".hashValue
+            return "uint" + "[]"
 
-        case .fixedArrayOfInt(_):
+        case .fixedArrayOfInt(let size):
             
-            return "fixedArrayOfInt".hashValue
+            return "int" + "[\(size)]"
 
         case .dynamicArrayOfInt:
             
-            return "dynamicArrayOfInt".hashValue
+            return "int" + "[]"
 
-        case .fixedArrayOfBool(_):
+        case .fixedArrayOfBool(let size):
             
-            return "fixedArrayOfBool".hashValue
+            return "bool" + "[\(size)]"
 
         case .dynamicArrayOfBool:
             
-            return "dynamicArrayOfBool".hashValue
+            return "bool" + "[]"
 
-        case .fixedArrayOfBytes(_):
+        case .fixedArrayOfBytes(let size):
             
-            return "fixedArrayOfBytes".hashValue
+            return "bytes" + "[\(size)]"
 
         case .dynamicArrayOfBytes:
             
-            return "dynamicArrayOfBytes".hashValue
+            return "bytes" + "[]"
 
-        case .fixedArrayOfStrings(_):
+        case .fixedArrayOfStrings(let size):
             
-            return "fixedArrayOfStrings".hashValue
+            return "string" + "[\(size)]"
 
         case .dynamicArrayOfStrings:
             
-            return "dynamicArrayOfStrings".hashValue
+            return "string" + "[]"
 
-        case .fixedArrayOfFixedBytes(_):
+        case .fixedArrayOfFixedBytes(let bytesSize, let arraySize):
             
-            return "fixedArrayOfFixedBytes".hashValue
+            return "bytes" + "\(bytesSize)" + "[\(arraySize)]"
 
-        case .dynamicArrayOfFixedBytes:
+        case .dynamicArrayOfFixedBytes(let bytesSize):
             
-            return "dynamicArrayOfFixedBytes".hashValue
+            return "bytes" + "\(bytesSize)" + "[]"
 
-        case .fixedArrayOfAddresses(_):
+        case .fixedArrayOfAddresses(let size):
             
-            return "fixedArrayOfAddresses".hashValue
+            return "address" + "[\(size)]"
 
         case .dynamicArrayOfAddresses:
             
-            return "dynamicArrayOfAddresses".hashValue
+            return "address" + "[]"
         }
     }
 }

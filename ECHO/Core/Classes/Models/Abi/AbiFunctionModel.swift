@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum AbiFunctionType: String {
+public enum AbiFunctionType: String {
     
     case function
     case constructor
@@ -16,7 +16,7 @@ enum AbiFunctionType: String {
     case undefined 
 }
 
-struct AbiFunctionModel: Equatable, Hashable {
+public struct AbiFunctionModel: Equatable, Hashable {
     
     var name: String
     var isConstant: Bool
@@ -25,7 +25,7 @@ struct AbiFunctionModel: Equatable, Hashable {
     var inputs: [AbiFunctionEntries]
     var outputs: [AbiFunctionEntries]
     
-    var hashValue: Int {
+    public var hashValue: Int {
         return name.hashValue ^ (isConstant ? 1:0) ^ (isPyable ? 1:0) ^ type.hashValue ^ inputs.hashValue ^ outputs.hashValue
     }
 }

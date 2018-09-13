@@ -73,7 +73,10 @@ final public class ECHO: InterfaceFacades {
         assetsFacade = AssetsFacadeImp(services: assetsServices, cryptoCore: settings.cryproComponent, network: settings.network)
         
         let contractsServices = ContractsFacadeServices(databaseService: databaseService, networkBroadcastService: networkBroadcastService)
-        contractsFacade = ContractsFacadeImp(services: contractsServices, cryptoCore: settings.cryproComponent, network: settings.network)
+        contractsFacade = ContractsFacadeImp(services: contractsServices,
+                                             cryptoCore: settings.cryproComponent,
+                                             network: settings.network,
+                                             abiCoder: settings.abiCoderComponent)
     }
     
 /**
@@ -239,7 +242,7 @@ final public class ECHO: InterfaceFacades {
                              assetId: String,
                              contratId: String,
                              methodName: String,
-                             methodParams: [Any],
+                             methodParams: [AbiTypeValueInputModel],
                              completion: @escaping Completion<Bool>) {
         
         contractsFacade.callContract(registrarNameOrId: registrarNameOrId,
@@ -255,7 +258,7 @@ final public class ECHO: InterfaceFacades {
                               assetId: String,
                               contratId: String,
                               methodName: String,
-                              methodParams: [Any],
+                              methodParams: [AbiTypeValueInputModel],
                               completion: @escaping Completion<String>) {
         
         contractsFacade.queryContract(registrarNameOrId: registrarNameOrId,

@@ -13,6 +13,7 @@ final public class Settings {
     
     public let socketMessenger: SocketMessenger
     public let cryproComponent: CryptoCoreComponent
+    public let abiCoderComponent: AbiCoder
     public let apiOptions: APIOption
     public let network: Network
     
@@ -26,6 +27,7 @@ final public class Settings {
         socketMessenger = configurator.socketMessenger
         cryproComponent = configurator.cryproComponent
         apiOptions = configurator.apiOptions
+        abiCoderComponent = configurator.abiCoderComponent
     }
     
     public static let defaultDateFormat = "yyyy-MM-dd'T'HH:mm:ss"
