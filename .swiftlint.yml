@@ -6,8 +6,8 @@ excluded:
   - ECHOTests
   - ECHO/Other/R.generated.swift
   - ECHO/Core/Classes/Objects/Encoding.swift
-  
-
+  - ECHO/Core/Classes/Extensions/
+  - ECHO/Core/Crypto/
 
 disabled_rules:
   - trailing_whitespace
