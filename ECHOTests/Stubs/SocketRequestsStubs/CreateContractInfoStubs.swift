@@ -47,7 +47,7 @@ struct CreateContractDynamicPropertiesSocketRequestElementStub: SocketRequestStu
     var operationType = "get_dynamic_global_properties"
     
     func createResponce(id: Int) -> String {
-        return "{\"id\":\(id),\"method\":\"call\",\"params\":[2,\"get_dynamic_global_properties\",[]]}"
+        return "{\"id\":\(id),\"jsonrpc\":\"2.0\",\"result\":{\"id\":\"2.1.0\",\"head_block_number\":609203,\"head_block_id\":\"00094bb3a35e4566fb433f83867bd46092a7909f\",\"time\":\"2018-09-14T09:20:05\",\"current_witness\":\"1.6.4\",\"next_maintenance_time\":\"2018-09-15T00:00:00\",\"last_budget_time\":\"2018-09-14T00:00:00\",\"witness_budget\":0,\"accounts_registered_this_interval\":0,\"recently_missed_count\":0,\"current_aslot\":5495024,\"recent_slots_filled\":\"340282366920938463463374607431768211455\",\"dynamic_flags\":0,\"last_irreversible_block_num\":609193}}"
     }
 }
 

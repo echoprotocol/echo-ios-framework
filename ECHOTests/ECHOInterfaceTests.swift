@@ -881,4 +881,80 @@ class ECHOInterfaceTests: XCTestCase {
 //            XCTAssertTrue(success)
 //        }
 //    }
+    
+    func testQueryContract() {
+
+        //arrange
+        echo = ECHO(settings: Settings(build: {
+            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+        }))
+        let exp = expectation(description: "Query contract")
+        let registrarNameOrId = "dariatest2"
+        let assetId = "1.3.0"
+        let contratId = "1.16.1"
+        let methodName = "getCount"
+        let params: [AbiTypeValueInputModel] = []
+        var query: String!
+
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.queryContract(registrarNameOrId: registrarNameOrId, assetId: assetId, contratId: contratId, methodName: methodName, methodParams: params) { (result) in
+                
+                switch result {
+                case .success(let res):
+                    query = res
+                    exp.fulfill()
+                case .failure(let error):
+                    XCTFail("Query contract cant fail \(error)")
+                }
+            }
+        }
+
+        //assert
+        waitForExpectations(timeout: timeout) { error in
+            XCTAssertNotNil(query)
+        }
+    }
+    
+//    func testCallContract() {
+//
+//        //arrange
+//        echo = ECHO(settings: Settings(build: {
+//            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+//        }))
+//        let exp = expectation(description: "Call contract")
+//        let password = "P5HyvBoQJQKXmcJw5CAK8UkzwFMLK3DAecniAHH7BM6Ci"
+//        let registrarNameOrId = "dariatest2"
+//        let assetId = "1.3.0"
+//        let contratId = "1.16.1"
+//        let methodName = "incrementCounter"
+//        let params: [AbiTypeValueInputModel] = []
+//        var success = false
+//
+//
+//
+//        //act
+//        echo.start { [unowned self] (result) in
+//            self.echo.callContract(registrarNameOrId: registrarNameOrId,
+//                                   password: password,
+//                                   assetId: assetId,
+//                                   contratId: contratId,
+//                                   methodName: methodName,
+//                                   methodParams: params) { (result) in
+//
+//                switch result {
+//                case .success(let isSuccess):
+//                    success = isSuccess
+//                    exp.fulfill()
+//                case .failure(let error):
+//                    XCTFail("Call contract cant fail \(error)")
+//                }
+//            }
+//        }
+//
+//        //assert
+//        waitForExpectations(timeout: 1000) { error in
+//            XCTAssertTrue(success)
+//        }
+//    }
 }

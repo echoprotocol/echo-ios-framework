@@ -72,6 +72,8 @@
 		B313B8DD21305A080052B266 /* Crypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = B313B8DB21305A080052B266 /* Crypto.swift */; };
 		B31CB1A520F3772C00FA5532 /* ECHO.h in Headers */ = {isa = PBXBuildFile; fileRef = B31CB1A320F3772C00FA5532 /* ECHO.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B328FC31213FEA510022292C /* ChangePasswordSocketRequestElementStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = B328FC30213FEA510022292C /* ChangePasswordSocketRequestElementStub.swift */; };
+		B3306DF7214BA25E002CFFF2 /* QueryContractInfoStubs.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3306DF6214BA25E002CFFF2 /* QueryContractInfoStubs.swift */; };
+		B3306DF9214BB6A9002CFFF2 /* CallContractInfoStubs.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3306DF8214BB6A9002CFFF2 /* CallContractInfoStubs.swift */; };
 		B3405CB221355A9000C18FE6 /* SocketCoreComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3405CB121355A9000C18FE6 /* SocketCoreComponent.swift */; };
 		B3405CB82135BB3F00C18FE6 /* SubscribtionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3405CB72135BB3F00C18FE6 /* SubscribtionTests.swift */; };
 		B348D09921011E7C00C29AE4 /* AddressKeysContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B348D09821011E7C00C29AE4 /* AddressKeysContainer.swift */; };
@@ -280,6 +282,8 @@
 		B31CB1A320F3772C00FA5532 /* ECHO.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ECHO.h; sourceTree = "<group>"; };
 		B31CB1A420F3772C00FA5532 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B328FC30213FEA510022292C /* ChangePasswordSocketRequestElementStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordSocketRequestElementStub.swift; sourceTree = "<group>"; };
+		B3306DF6214BA25E002CFFF2 /* QueryContractInfoStubs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryContractInfoStubs.swift; sourceTree = "<group>"; };
+		B3306DF8214BB6A9002CFFF2 /* CallContractInfoStubs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallContractInfoStubs.swift; sourceTree = "<group>"; };
 		B3405CB121355A9000C18FE6 /* SocketCoreComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketCoreComponent.swift; sourceTree = "<group>"; };
 		B3405CB72135BB3F00C18FE6 /* SubscribtionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribtionTests.swift; sourceTree = "<group>"; };
 		B348D09821011E7C00C29AE4 /* AddressKeysContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressKeysContainer.swift; sourceTree = "<group>"; };
@@ -488,6 +492,8 @@
 				B390C2CA2141403000BD6CDC /* CreateAssetSocketStubs.swift */,
 				B3DA875D2146C32E000EA228 /* GetContractInfoStubs.swift */,
 				B356E28C2148143900314E4A /* CreateContractInfoStubs.swift */,
+				B3306DF6214BA25E002CFFF2 /* QueryContractInfoStubs.swift */,
+				B3306DF8214BB6A9002CFFF2 /* CallContractInfoStubs.swift */,
 			);
 			path = SocketRequestsStubs;
 			sourceTree = "<group>";
@@ -1127,6 +1133,7 @@
 				B3C365442134116800FC60F4 /* CryptoCoreComponentTests.swift in Sources */,
 				B328FC31213FEA510022292C /* ChangePasswordSocketRequestElementStub.swift in Sources */,
 				B3DA875E2146C32E000EA228 /* GetContractInfoStubs.swift in Sources */,
+				B3306DF7214BA25E002CFFF2 /* QueryContractInfoStubs.swift in Sources */,
 				B3D1C58A212DA6B000D1A7E6 /* StatisticStub.swift in Sources */,
 				B30FE909212F1AEA0009BF57 /* SocketMessengerStub.swift in Sources */,
 				B3D1C58E212DA92500D1A7E6 /* JsonEncodingTests.swift in Sources */,
@@ -1139,6 +1146,7 @@
 				B3D1C57C212D4D8100D1A7E6 /* DataEncodingTests.swift in Sources */,
 				B30CC38F214AA870003953E3 /* AbiCoderTests.swift in Sources */,
 				B390C2CB2141403000BD6CDC /* CreateAssetSocketStubs.swift in Sources */,
+				B3306DF9214BB6A9002CFFF2 /* CallContractInfoStubs.swift in Sources */,
 				B3D1C58C212DA6E700D1A7E6 /* OptionsStub.swift in Sources */,
 				B30FE90C212F2AE70009BF57 /* AccountSocketRequestStub.swift in Sources */,
 				B3405CB82135BB3F00C18FE6 /* SubscribtionTests.swift in Sources */,
