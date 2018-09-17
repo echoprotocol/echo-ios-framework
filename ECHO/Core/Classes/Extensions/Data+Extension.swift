@@ -19,6 +19,14 @@ import Foundation
  */
 extension Data {
     
+    subscript (safe range: Range<Data.Index>) -> Data? {
+        
+        if range.lowerBound >= 0 && range.upperBound <= self.count {
+            return self.subdata(in: range)
+        }
+        return nil
+    }
+    
     mutating func append(optional other: Data?) {
         
         guard let data = other else { return }
@@ -110,7 +118,7 @@ extension Data {
         }
         
         var data = Data()
-        data.append(UInt8(clamping: input.count))
+        data.append(UInt8(truncatingIfNeeded: input.count))
         data.append(optional: input.data(using: .utf8))
         return data
     }
@@ -143,5 +151,9 @@ extension Data {
     
     var hex: String {
         return reduce("") { $0 + String(format: "%02x", $1) }
+    }
+    
+    public var bytes: Array<UInt8> {
+        return Array(self)
     }
 }

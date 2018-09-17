@@ -14,6 +14,10 @@ enum OperationsState {
     case transfer
     case issueAsset
     case createAsset
+    case getContract
+    case createContract
+    case queryContract
+    case callContract
     case `default`
 }
 
@@ -68,6 +72,14 @@ final class SocketMessengerStub: SocketMessenger {
             response = getIssueAssetResponse(request: string)
         case .createAsset:
             response = getCreateAssetResponse(request: string)
+        case .getContract:
+            response = getContractResponse(request: string)
+        case .createContract:
+            response = getCreateContractResponse(request: string)
+        case .queryContract:
+            response = getQueryContractResponse(request: string)
+        case .callContract:
+            response = getCallContractResponse(request: string)
         }
     
         if let response = response {
@@ -208,6 +220,78 @@ final class SocketMessengerStub: SocketMessenger {
             return revealResponse
         } else if let createAssetResponse = createAssetHodler.response(id: tuple.id, operationType: tuple.operationType) {
             return createAssetResponse
+        }
+        
+        return nil
+    }
+    
+    fileprivate func getContractResponse(request: String) -> String? {
+        
+        guard let tuple = parceRequest(request: request) else {
+            return nil
+        }
+        
+        let revealHodler = RevialAPISocketRequestStubHodler()
+        let getContractHodler = GetContractInfoStubHodler()
+        
+        if let revealResponse = revealHodler.response(id: tuple.id, operationType: tuple.operationType) {
+            return revealResponse
+        } else if let getContractResponse = getContractHodler.response(id: tuple.id, operationType: tuple.operationType) {
+            return getContractResponse
+        }
+        
+        return nil
+    }
+    
+    fileprivate func getCreateContractResponse(request: String) -> String? {
+        
+        guard let tuple = parceRequest(request: request) else {
+            return nil
+        }
+        
+        let revealHodler = RevialAPISocketRequestStubHodler()
+        let createContractHodler = CreateContractInfoStubHolder()
+        
+        if let revealResponse = revealHodler.response(id: tuple.id, operationType: tuple.operationType) {
+            return revealResponse
+        } else if let createContractResponse = createContractHodler.response(id: tuple.id, operationType: tuple.operationType) {
+            return createContractResponse
+        }
+        
+        return nil
+    }
+    
+    fileprivate func getQueryContractResponse(request: String) -> String? {
+        
+        guard let tuple = parceRequest(request: request) else {
+            return nil
+        }
+        
+        let revealHodler = RevialAPISocketRequestStubHodler()
+        let queryContractHodler = QueryContractStubs()
+        
+        if let revealResponse = revealHodler.response(id: tuple.id, operationType: tuple.operationType) {
+            return revealResponse
+        } else if let queryContractResponse = queryContractHodler.response(id: tuple.id, operationType: tuple.operationType) {
+            return queryContractResponse
+        }
+        
+        return nil
+    }
+    
+    fileprivate func getCallContractResponse(request: String) -> String? {
+        
+        guard let tuple = parceRequest(request: request) else {
+            return nil
+        }
+        
+        let revealHodler = RevialAPISocketRequestStubHodler()
+        let callContractHodler = CallContractStubs()
+        
+        if let revealResponse = revealHodler.response(id: tuple.id, operationType: tuple.operationType) {
+            return revealResponse
+        } else if let callContractResponse = callContractHodler.response(id: tuple.id, operationType: tuple.operationType) {
+            return callContractResponse
         }
         
         return nil

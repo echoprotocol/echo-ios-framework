@@ -52,16 +52,15 @@ enum OperationType: Int {
     case balanceClaimOperation
     case overrideTransferOperation
     case transferToBlindOperation
-    case blindTransferOperation40
+    case blindTransferOperation                     //40
     case transferFromBlindOperation
-    case assetSettleCancelOperation                  //Virtual
+    case assetSettleCancelOperation                 //Virtual
     case assetClaimFeesOperation
-    case fbaDistributeOperation                      //Virtual
+    case fbaDistributeOperation                     //Virtual
     case bidCollateralOperation
-    case executeBidOperation                         //Virtual
+    case executeBidOperation                        //Virtual
     case contractOperation
-    case contractTransferOperation                   //Virtual //48
-    case callContractWithVerificationOperation       //49
+    case contractTransferOperation                  //Virtual //48
 }
 
 struct OperationDecoder {
@@ -78,6 +77,7 @@ struct OperationDecoder {
         case .transferOperation: return decode(TransferOperation.self, container: container)
         case .assetCreateOperation: return decode(CreateAssetOperation.self, container: container)
         case .assetIssueOperation: return decode(IssueAssetOperation.self, container: container)
+        case .contractOperation: return decode(ContractOperation.self, container: container)
         default: return nil
         }
     }
@@ -107,6 +107,8 @@ struct OperationDecoder {
                 baseOperation = try? JSONDecoder().decode(CreateAssetOperation.self, from: data)
             case .assetIssueOperation:
                 baseOperation = try? JSONDecoder().decode(IssueAssetOperation.self, from: data)
+            case .contractOperation:
+                baseOperation = try? JSONDecoder().decode(ContractOperation.self, from: data)
             default:
                 break
             }

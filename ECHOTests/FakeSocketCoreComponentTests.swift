@@ -298,4 +298,241 @@ class SocketCoreComponentTests: XCTestCase {
             XCTAssertTrue(success)
         }
     }
+    
+    func testFakeGetContract() {
+        
+        //arrange
+        let messenger = SocketMessengerStub(state: .getContract)
+        echo = ECHO(settings: Settings(build: {
+            $0.socketMessenger = messenger
+        }))
+        let exp = expectation(description: "Getting contracts")
+        let legalContractId = "1.16.1"
+        var contract: ContractStruct!
+        
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.getContract(contractId: legalContractId, completion: { (result) in
+                switch result {
+                case .success(let res):
+                    contract = res
+                    exp.fulfill()
+                case .failure(_):
+                    XCTFail("Getting contracts result cant fail")
+                }
+            })
+        }
+        
+        //assert
+        waitForExpectations(timeout: 1) { error in
+            XCTAssertNotNil(contract)
+        }
+    }
+    
+    func testFakeGetContracts() {
+        
+        //arrange
+        let messenger = SocketMessengerStub(state: .getContract)
+        echo = ECHO(settings: Settings(build: {
+            $0.socketMessenger = messenger
+        }))
+        let exp = expectation(description: "Getting contracts")
+        let legalContractId = "1.16.1"
+        let contractsIDs = [legalContractId]
+        var contracts: [ContractInfo] = []
+        
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.getContracts(contractIds: contractsIDs, completion: { (result) in
+                switch result {
+                case .success(let res):
+                    contracts = res
+                    exp.fulfill()
+                case .failure(_):
+                    XCTFail("Getting contracts result cant fail")
+                }
+            })
+        }
+        
+        //assert
+        waitForExpectations(timeout: 1) { error in
+            XCTAssertTrue(contracts.count == 1)
+        }
+    }
+    
+    func testFakeGetAllContracts() {
+        
+        //arrange
+        let messenger = SocketMessengerStub(state: .getContract)
+        echo = ECHO(settings: Settings(build: {
+            $0.socketMessenger = messenger
+        }))
+        let exp = expectation(description: "Getting contracts")
+        var contracts: [ContractInfo] = []
+        
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.getAllContracts(completion: { (result) in
+                switch result {
+                case .success(let res):
+                    contracts = res
+                    exp.fulfill()
+                case .failure(_):
+                    XCTFail("Getting contracts result cant fail")
+                }
+            })
+        }
+        
+        //assert
+        waitForExpectations(timeout: 1) { error in
+            XCTAssertTrue(contracts.count > 0)
+        }
+    }
+    
+    func testFakeGetContractResult() {
+        
+        //arrange
+        let messenger = SocketMessengerStub(state: .getContract)
+        echo = ECHO(settings: Settings(build: {
+            $0.socketMessenger = messenger
+        }))
+        let exp = expectation(description: "Getting contract")
+        let historyId = "1.17.2"
+        var contractResult: ContractResult!
+        
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.getContractResult(historyId: historyId, completion: { (result) in
+                switch result {
+                case .success(let res):
+                    contractResult = res
+                    exp.fulfill()
+                case .failure(_):
+                    XCTFail("Getting result cant fail")
+                }
+            })
+        }
+        
+        //assert
+        waitForExpectations(timeout: 1) { error in
+            XCTAssertNotNil(contractResult)
+        }
+    }
+    
+    func testCreateContract() {
+
+        //arrange
+        let messenger = SocketMessengerStub(state: .createContract)
+        echo = ECHO(settings: Settings(build: {
+            $0.socketMessenger = messenger
+        }))
+        let exp = expectation(description: "Creating contract")
+        let byteCode =  "60806040526000805534801561001457600080fd5b5061011480610024" +
+                        "6000396000f300608060405260043610605c5763ffffffff7c010000000000000000000000000000000000" +
+                        "00000000000000000000006000350416635b34b966811460615780635b9af12b146075578063a87d942c14" +
+                        "608a578063f5c5ad831460ae575b600080fd5b348015606c57600080fd5b50607360c0565b005b34801560" +
+                        "8057600080fd5b50607360043560cb565b348015609557600080fd5b50609c60d6565b6040805191825251" +
+                        "9081900360200190f35b34801560b957600080fd5b50607360dc565b600080546001019055565b60008054" +
+                        "9091019055565b60005490565b600080546000190190555600a165627a7a7230582016b3f6673de41336e2" +
+                        "c5d4b136b4e67bbf43062b6bc47eaef982648cd3b92a9d0029"
+        var success = false
+
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.createContract(registrarNameOrId: "vsharaev1",
+                                     password: "newTestPass",
+                                     assetId: "1.3.0",
+                                     byteCode: byteCode) { (result) in
+
+                switch result {
+                case .success(let isSuccess):
+                    success = isSuccess
+                    exp.fulfill()
+                case .failure(_):
+                    XCTFail("Creating contract cant fail")
+                }
+            }
+        }
+
+        //assert
+        waitForExpectations(timeout: 1000) { error in
+            XCTAssertTrue(success)
+        }
+    }
+    
+    func testFakeQueryContract() {
+        
+        //arrange
+        let messenger = SocketMessengerStub(state: .queryContract)
+        echo = ECHO(settings: Settings(build: {
+            $0.socketMessenger = messenger
+        }))
+        let exp = expectation(description: "Query contract")
+        let registrarNameOrId = "dariatest2"
+        let assetId = "1.3.0"
+        let contratId = "1.16.1"
+        let methodName = "getCount"
+        let params: [AbiTypeValueInputModel] = []
+        var query: String!
+        
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.queryContract(registrarNameOrId: registrarNameOrId, assetId: assetId, contratId: contratId, methodName: methodName, methodParams: params) { (result) in
+                
+                switch result {
+                case .success(let res):
+                    query = res
+                    exp.fulfill()
+                case .failure(let error):
+                    XCTFail("Query contract cant fail \(error)")
+                }
+            }
+        }
+        
+        //assert
+        waitForExpectations(timeout: 1) { error in
+            XCTAssertNotNil(query)
+        }
+    }
+    
+    func testFakeCallContract() {
+
+        //arrange
+        let messenger = SocketMessengerStub(state: .callContract)
+        echo = ECHO(settings: Settings(build: {
+            $0.socketMessenger = messenger
+        }))
+        let exp = expectation(description: "Call contract")
+        let password = "P5HyvBoQJQKXmcJw5CAK8UkzwFMLK3DAecniAHH7BM6Ci"
+        let registrarNameOrId = "dariatest2"
+        let assetId = "1.3.0"
+        let contratId = "1.16.1"
+        let methodName = "incrementCounter"
+        let params: [AbiTypeValueInputModel] = []
+        var success = false
+
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.callContract(registrarNameOrId: registrarNameOrId,
+                                   password: password,
+                                   assetId: assetId,
+                                   contratId: contratId,
+                                   methodName: methodName,
+                                   methodParams: params) { (result) in
+
+                switch result {
+                case .success(let isSuccess):
+                    success = isSuccess
+                    exp.fulfill()
+                case .failure(let error):
+                    XCTFail("Call contract cant fail \(error)")
+                }
+            }
+        }
+
+        //assert
+        waitForExpectations(timeout: 1000) { error in
+            XCTAssertTrue(success)
+        }
+    }
 }

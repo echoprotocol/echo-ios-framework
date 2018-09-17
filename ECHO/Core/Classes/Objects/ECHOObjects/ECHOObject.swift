@@ -6,7 +6,7 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
-protocol ECHOObject {
+protocol ECHOObject: ECHOCodable {
     var id: String { get }
 }
 
@@ -19,6 +19,10 @@ extension ECHOObject {
         }
         
         return Data.fromUIntLikeUnsignedByteArray(instance)
+    }
+    
+    func toJSON() -> Any? {
+        return id
     }
     
     func getSpace() -> UInt? {

@@ -12,6 +12,7 @@ private typealias AssetsService = DatabaseApiServiceImp
 private typealias SubscriptionService = DatabaseApiServiceImp
 private typealias AuthorityAndValidationService = DatabaseApiServiceImp
 private typealias BlocksAndTransactionsService = DatabaseApiServiceImp
+private typealias ContractsService = DatabaseApiServiceImp
 
 /**
      Implementation of [DatabaseApiService](DatabaseApiService)
@@ -50,6 +51,17 @@ extension GlobalsService {
         let operation = GetChainIdSocketOperation(method: .call,
                                                   operationId: socketCore.nextOperationId(),
                                                   apiId: apiIdentifire,
+                                                  completion: completion)
+        
+        socketCore.send(operation: operation)
+    }
+    
+    func getObjects(objectsIds: [String], completion: @escaping (Result<Any, ECHOError>) -> Void) {
+        
+        let operation = GetObjectsSocketOperation(method: .call,
+                                                  operationId: socketCore.nextOperationId(),
+                                                  apiId: apiIdentifire,
+                                                  identifiers: objectsIds,
                                                   completion: completion)
         
         socketCore.send(operation: operation)
@@ -146,6 +158,70 @@ extension AssetsService {
                                                   lowerBound: lowerBound,
                                                   limit: limit,
                                                   completion: completion)
+        
+        socketCore.send(operation: operation)
+    }
+}
+
+extension ContractsService {
+    
+    func getContractResult(historyId: String, completion: @escaping Completion<ContractResult>) {
+        
+        let operation = GetContractResultSocketOperation(method: .call,
+                                                         operationId: socketCore.nextOperationId(),
+                                                         apiId: apiIdentifire,
+                                                         historyId: historyId,
+                                                         completion: completion)
+        
+        socketCore.send(operation: operation)
+    }
+    
+    func getContracts(contractIds: [String], completion: @escaping Completion<[ContractInfo]>) {
+        
+        let operation = GetContractsSocketOperation(method: .call,
+                                                    operationId: socketCore.nextOperationId(),
+                                                    apiId: apiIdentifire,
+                                                    contractIds: contractIds,
+                                                    completion: completion)
+        
+        socketCore.send(operation: operation)
+    }
+    
+    func getAllContracts(completion: @escaping Completion<[ContractInfo]>) {
+        
+        let operation = GetAllContractsSocketOperation(method: .call,
+                                                       operationId: socketCore.nextOperationId(),
+                                                       apiId: apiIdentifire,
+                                                       completion: completion)
+        
+        socketCore.send(operation: operation)
+    }
+    
+    func getContract(contractId: String, completion: @escaping Completion<ContractStruct>) {
+        
+        let operation = GetContractSocketOperaton(method: .call,
+                                                  operationId: socketCore.nextOperationId(),
+                                                  apiId: apiIdentifire,
+                                                  contractId: contractId,
+                                                  completion: completion)
+        
+        socketCore.send(operation: operation)
+    }
+    
+    func callContractNoChangingState(contract: Contract,
+                                     asset: Asset,
+                                     account: Account,
+                                     contractCode: String,
+                                     completion: @escaping Completion<String>) {
+        
+        let operation = QueryContractSocketOperation(method: .call,
+                                                    operationId: socketCore.nextOperationId(),
+                                                    apiId: apiIdentifire,
+                                                    contractId: contract.id,
+                                                    registrarId: account.id,
+                                                    assetId: asset.id,
+                                                    code: contractCode,
+                                                    completion: completion)
         
         socketCore.send(operation: operation)
     }

@@ -12,6 +12,7 @@ typealias InterfaceFacades = AuthentificationFacade
     & FeeFacade
     & TransactionFacade
     & AssetsFacade
+    & ContractsFacade
 
 /**
      This is an  entry point of library.
@@ -30,6 +31,7 @@ final public class ECHO: InterfaceFacades {
     let feeFacade: FeeFacade
     let transactionFacade: TransactionFacade
     let assetsFacade: AssetsFacade
+    let contractsFacade: ContractsFacade
 
     public init(settings: Settings) {
 
@@ -69,6 +71,12 @@ final public class ECHO: InterfaceFacades {
         
         let assetsServices = AssetsServices(databaseService: databaseService, networkBroadcastService: networkBroadcastService)
         assetsFacade = AssetsFacadeImp(services: assetsServices, cryptoCore: settings.cryproComponent, network: settings.network)
+        
+        let contractsServices = ContractsFacadeServices(databaseService: databaseService, networkBroadcastService: networkBroadcastService)
+        contractsFacade = ContractsFacadeImp(services: contractsServices,
+                                             cryptoCore: settings.cryproComponent,
+                                             network: settings.network,
+                                             abiCoder: settings.abiCoderComponent)
     }
     
 /**
@@ -193,5 +201,71 @@ final public class ECHO: InterfaceFacades {
         
         assetsFacade.getAsset(assetIds: assetIds, completion: completion)
     }
+    
+    // MARK: ContractsFacade
+    
+    public func getContractResult(historyId: String, completion: @escaping Completion<ContractResult>) {
+        
+        contractsFacade.getContractResult(historyId: historyId, completion: completion)
+    }
+    
+    public func getContracts(contractIds: [String], completion: @escaping Completion<[ContractInfo]>) {
+        
+        contractsFacade.getContracts(contractIds: contractIds, completion: completion)
+    }
 
+    public func getAllContracts(completion: @escaping Completion<[ContractInfo]>) {
+        
+        contractsFacade.getAllContracts(completion: completion)
+    }
+    
+    public func getContract(contractId: String, completion: @escaping Completion<ContractStruct>) {
+        
+        contractsFacade.getContract(contractId: contractId, completion: completion)
+    }
+    
+    public func createContract(registrarNameOrId: String,
+                               password: String,
+                               assetId: String,
+                               byteCode: String,
+                               completion: @escaping Completion<Bool>) {
+        
+        contractsFacade.createContract(registrarNameOrId: registrarNameOrId,
+                                       password: password,
+                                       assetId: assetId,
+                                       byteCode: byteCode,
+                                       completion: completion)
+    }
+    
+    public func callContract(registrarNameOrId: String,
+                             password: String,
+                             assetId: String,
+                             contratId: String,
+                             methodName: String,
+                             methodParams: [AbiTypeValueInputModel],
+                             completion: @escaping Completion<Bool>) {
+        
+        contractsFacade.callContract(registrarNameOrId: registrarNameOrId,
+                                     password: password,
+                                     assetId: assetId,
+                                     contratId: contratId,
+                                     methodName: methodName,
+                                     methodParams: methodParams,
+                                     completion: completion)
+    }
+    
+    public func queryContract(registrarNameOrId: String,
+                              assetId: String,
+                              contratId: String,
+                              methodName: String,
+                              methodParams: [AbiTypeValueInputModel],
+                              completion: @escaping Completion<String>) {
+        
+        contractsFacade.queryContract(registrarNameOrId: registrarNameOrId,
+                                      assetId: assetId,
+                                      contratId: contratId,
+                                      methodName: methodName,
+                                      methodParams: methodParams,
+                                      completion: completion)
+    }
 }

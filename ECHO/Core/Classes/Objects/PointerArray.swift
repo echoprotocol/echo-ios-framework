@@ -1,6 +1,6 @@
 //
 //  PointerArray.swift
-//  QTUM
+//  ECHO
 //
 //  Created by Fedorenko Nikita on 20.03.2018.
 //  Copyright © 2018 PixelPlex. All rights reserved.
