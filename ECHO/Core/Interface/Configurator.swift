@@ -14,5 +14,5 @@ final public class Configurator {
     public var cryproComponent: CryptoCoreComponent = CryptoCoreImp()
     public var abiCoderComponent: AbiCoder = AbiCoderImp(argumentCoder: AbiArgumentCoderImp())
     public var apiOptions: APIOption = [.database, .accountHistory, .networkBroadcast, .crypto, .networkNodes]
-    public var network: Network = Network(url: "wss://echo-devnet-node.pixelplex.io/", prefix: NetworkPrefix.echo)
+    public var network: ECHONetwork = ECHONetwork(url: "wss://echo-devnet-node.pixelplex.io/", prefix: ECHONetworkPrefix.echo)
 }

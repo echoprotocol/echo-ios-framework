@@ -19,7 +19,7 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
     var queues: [ECHOQueue]
     let services: AssetsServices
     let cryptoCore: CryptoCoreComponent
-    let network: Network
+    let network: ECHONetwork
     
     private enum CreateAssetKeys: String {
         case account
@@ -41,7 +41,7 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
         case memo
     }
     
-    public init(services: AssetsServices, cryptoCore: CryptoCoreComponent, network: Network) {
+    public init(services: AssetsServices, cryptoCore: CryptoCoreComponent, network: ECHONetwork) {
         
         self.services = services
         self.cryptoCore = cryptoCore

@@ -45,7 +45,7 @@ class ECHOInterfaceTests: XCTestCase {
         //arrange
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
-            $0.network = Network(url: "wss://echo-devnet-node.pixelplx.io", prefix: NetworkPrefix.bitshares)
+            $0.network = ECHONetwork(url: "wss://echo-devnet-node.pixelplx.io", prefix: ECHONetworkPrefix.bitshares)
         }))
         let exp = expectation(description: "Start")
         var isStarted = false
@@ -73,7 +73,7 @@ class ECHOInterfaceTests: XCTestCase {
         //arrange
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
-            $0.network = Network(url: "fake url", prefix: NetworkPrefix.bitshares)
+            $0.network = ECHONetwork(url: "fake url", prefix: ECHONetworkPrefix.bitshares)
         }))
         let exp = expectation(description: "Start")
         var isStarted = false

@@ -21,10 +21,10 @@ final public class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
     
     var queues: [ECHOQueue]
     let services: TransactionFacadeServices
-    let network: Network
+    let network: ECHONetwork
     let cryptoCore: CryptoCoreComponent
     
-    public init(services: TransactionFacadeServices, cryptoCore: CryptoCoreComponent, network: Network) {
+    public init(services: TransactionFacadeServices, cryptoCore: CryptoCoreComponent, network: ECHONetwork) {
         
         self.services = services
         self.network = network

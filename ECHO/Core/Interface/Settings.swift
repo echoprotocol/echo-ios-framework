@@ -15,7 +15,7 @@ final public class Settings {
     public let cryproComponent: CryptoCoreComponent
     public let abiCoderComponent: AbiCoder
     public let apiOptions: APIOption
-    public let network: Network
+    public let network: ECHONetwork
     
     public typealias BuildConfiguratorClosure = (Configurator) -> Void
     

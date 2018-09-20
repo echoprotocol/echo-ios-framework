@@ -32,11 +32,11 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
     
     var queues: [ECHOQueue]
     let services: ContractsFacadeServices
-    let network: Network
+    let network: ECHONetwork
     let cryptoCore: CryptoCoreComponent
     let abiCoderCore: AbiCoder
     
-    public init(services: ContractsFacadeServices, cryptoCore: CryptoCoreComponent, network: Network, abiCoder: AbiCoder) {
+    public init(services: ContractsFacadeServices, cryptoCore: CryptoCoreComponent, network: ECHONetwork, abiCoder: AbiCoder) {
         
         self.services = services
         self.network = network

@@ -19,9 +19,9 @@ final public class AuthentificationFacadeImp: AuthentificationFacade, ECHOQueueb
     var queues: [ECHOQueue]
     let services: AuthentificationFacadeServices
     let cryptoCore: CryptoCoreComponent
-    let network: Network
+    let network: ECHONetwork
     
-    init(services: AuthentificationFacadeServices, cryptoCore: CryptoCoreComponent, network: Network) {
+    init(services: AuthentificationFacadeServices, cryptoCore: CryptoCoreComponent, network: ECHONetwork) {
         self.services = services
         self.cryptoCore = cryptoCore
         self.network = network

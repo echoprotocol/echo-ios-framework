@@ -14,7 +14,7 @@
      case bitsharesTestnet = "TEST"
      ````
  */
-public enum NetworkPrefix: String {
+public enum ECHONetworkPrefix: String {
     /// The prefix that is used for ECHO
     case echo = "ECHO"
     
@@ -30,17 +30,17 @@ public enum NetworkPrefix: String {
     - Parameter firstname: The first part of the full name.
     - Parameter lastname: The last part of the fullname.
  */
-final public class Network {
+final public class ECHONetwork {
     
     public let url: String
-    public let prefix: NetworkPrefix
+    public let prefix: ECHONetworkPrefix
     
 /**
      A contractor that specifies network parameters.
      - Parameter url: Socket URL
      - Parameter prefix: Prefix for addresses
  */
-    public init(url: String, prefix: NetworkPrefix) {
+    public init(url: String, prefix: ECHONetworkPrefix) {
         self.prefix = prefix
         self.url = url
     }

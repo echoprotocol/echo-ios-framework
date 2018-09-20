@@ -85,7 +85,7 @@
 		B358CD0421392DFD0046327F /* TransferSocketRequestStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = B358CD0321392DFD0046327F /* TransferSocketRequestStub.swift */; };
 		B358CD062139786B0046327F /* Configurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B358CD052139786B0046327F /* Configurator.swift */; };
 		B358CD08213978800046327F /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B358CD07213978800046327F /* Settings.swift */; };
-		B358CD0A213978990046327F /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = B358CD09213978990046327F /* Network.swift */; };
+		B358CD0A213978990046327F /* ECHONetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = B358CD09213978990046327F /* ECHONetwork.swift */; };
 		B35D4C0D215248BF00FC7B27 /* ErrorResponseStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35D4C0C215248BF00FC7B27 /* ErrorResponseStub.swift */; };
 		B35D4C2521525DBC00FC7B27 /* Starscream.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = B30CACEA20FF74840048E33E /* Starscream.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B370BB5920F7623F004C4A26 /* ApiOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B370BB5820F7623F004C4A26 /* ApiOptions.swift */; };
@@ -298,7 +298,7 @@
 		B358CD0321392DFD0046327F /* TransferSocketRequestStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferSocketRequestStub.swift; sourceTree = "<group>"; };
 		B358CD052139786B0046327F /* Configurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configurator.swift; sourceTree = "<group>"; };
 		B358CD07213978800046327F /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
-		B358CD09213978990046327F /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		B358CD09213978990046327F /* ECHONetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ECHONetwork.swift; sourceTree = "<group>"; };
 		B35D4C0C215248BF00FC7B27 /* ErrorResponseStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorResponseStub.swift; sourceTree = "<group>"; };
 		B370BB5820F7623F004C4A26 /* ApiOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiOptions.swift; sourceTree = "<group>"; };
 		B370BB5A20F76853004C4A26 /* SocketCoreComponentImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketCoreComponentImp.swift; sourceTree = "<group>"; };
@@ -623,7 +623,7 @@
 				B370BB5820F7623F004C4A26 /* ApiOptions.swift */,
 				B358CD052139786B0046327F /* Configurator.swift */,
 				B358CD07213978800046327F /* Settings.swift */,
-				B358CD09213978990046327F /* Network.swift */,
+				B358CD09213978990046327F /* ECHONetwork.swift */,
 			);
 			path = Interface;
 			sourceTree = "<group>";
@@ -1023,7 +1023,7 @@
 				B39554B5213EBAED00CE2647 /* ListAssetsSocketOperation.swift in Sources */,
 				B385970420F6270000B55E59 /* ECHOObject.swift in Sources */,
 				D0947048212D931800B55A37 /* AccountUpdateOperation.swift in Sources */,
-				B358CD0A213978990046327F /* Network.swift in Sources */,
+				B358CD0A213978990046327F /* ECHONetwork.swift in Sources */,
 				B3CA702A20F4A44900511F6A /* InformationFacade.swift in Sources */,
 				B348D09921011E7C00C29AE4 /* AddressKeysContainer.swift in Sources */,
 				D0B6A0C62126B26D00A78E4B /* BaseOperation.swift in Sources */,
