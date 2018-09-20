@@ -9,33 +9,35 @@
 /**
     Implementation of [CryptoCoreComponent](CryptoCoreComponent)
 */
-final class CryptoCoreImp: CryptoCoreComponent {
+final public class CryptoCoreImp: CryptoCoreComponent {
     
-    func generatePublicKey(withPrivateKey privateKeyData: Data, compression isCompression: Bool) -> Data {
+    public init(){}
+    
+    public func generatePublicKey(withPrivateKey privateKeyData: Data, compression isCompression: Bool) -> Data {
         return Crypto.generatePublicKey(data: privateKeyData, compressed: isCompression)
     }
     
-    func sha256(_ data: Data) -> Data {
+    public func sha256(_ data: Data) -> Data {
         return CryptoHash.sha256(data)
     }
     
-    func ripemd160(_ data: Data) -> Data {
+    public func ripemd160(_ data: Data) -> Data {
         return CryptoHash.ripemd160(data)
     }
     
-    func sign(_ hash: Data, privateKey: Data) throws -> Data {
+    public func sign(_ hash: Data, privateKey: Data) throws -> Data {
         return try Crypto.sign(hash, privateKey: privateKey)
     }
     
-    func encryptMessage(privateKey: Data, publicKey: Data, nonce: String, message: String) -> Data {
+    public func encryptMessage(privateKey: Data, publicKey: Data, nonce: String, message: String) -> Data {
         return Crypto.encryptMessage(privateKey: privateKey, publicKey: publicKey, nonce: nonce, message: message)
     }
     
-    func decryptMessage(privateKey: Data, publicKey: Data, nonce: String, message: Data) -> String {
+    public func decryptMessage(privateKey: Data, publicKey: Data, nonce: String, message: Data) -> String {
         return Crypto.decryptMessage(privateKey: privateKey, publicKey: publicKey, nonce: nonce, message: message)
     }
     
-    func getPublicKeyFromAddress(_ address: String, networkPrefix: String) -> Data {
+    public func getPublicKeyFromAddress(_ address: String, networkPrefix: String) -> Data {
         return Crypto.getPublicKeyFromAddress(address, networkPrefix: networkPrefix)
     }
 }

@@ -9,7 +9,7 @@
 /**
     Container which create private key from name, password, type
  */
-final class ECHOKeychain {
+final public class ECHOKeychain {
     
     public let raw: Data
     public let core: CryptoCoreComponent
@@ -33,12 +33,12 @@ final class ECHOKeychain {
         }
     }
     
-    func publicKey() -> Data {
+    public func publicKey() -> Data {
         
         return core.generatePublicKey(withPrivateKey: raw, compression: true)
     }
     
-    func publicAddress() -> String {
+    public func publicAddress() -> String {
         
         var publicKey = self.publicKey()
         
