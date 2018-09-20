@@ -5,6 +5,7 @@
 build/
 DerivedData
 docs/
+ECHO.framework
 
 ## Various settings
 *.pbxuser

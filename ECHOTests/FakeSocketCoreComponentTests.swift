@@ -127,14 +127,14 @@ class SocketCoreComponentTests: XCTestCase {
                 case .success(let userAccount):
                     account = userAccount
                     exp.fulfill()
-                case .failure(_):
-                    XCTFail("Getting fake account cant fail")
+                case .failure(let error):
+                    XCTFail("Getting fake account cant fail \(error)")
                 }
             })
         }
         
         //assert
-        waitForExpectations(timeout: 1) { error in
+        waitForExpectations(timeout: 1000) { error in
             XCTAssertEqual(account.name, userName)
         }
     }

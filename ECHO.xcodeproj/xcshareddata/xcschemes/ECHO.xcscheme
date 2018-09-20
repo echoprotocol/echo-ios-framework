@@ -20,6 +20,20 @@
                ReferencedContainer = "container:ECHO.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "B31CB1AD20F377AC00FA5532"
+               BuildableName = "UniversalECHO"
+               BlueprintName = "UniversalECHO"
+               ReferencedContainer = "container:ECHO.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction

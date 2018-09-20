@@ -43,7 +43,8 @@ extension Data {
         
         var data = Data()
         var input = input
-        while (input & 0xFFFFFFFFFFFFFF80) != 0 {
+        let val: UInt64 = 0xFFFFFFFFFFFFFF80
+        while (input & UInt(val)) != 0 {
             let changed = (UInt8(truncatingIfNeeded: input) & 0x7F) | 0x80
             data.append(changed)
             

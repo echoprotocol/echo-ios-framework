@@ -7,18 +7,23 @@ Pod::Spec.new do |spec|
   spec.authors = {
     "Fedorenko Nikita" => '',
   }
-  spec.source = { :path => '.' }
-  spec.source_files  ="ECHO/**/*.{h,swift,m}"
+  spec.source = { :git => 'https://gitlab.pixelplex.by/646_echo_mobile_library/ios.git' }
   spec.requires_arc = true
   spec.platform     = :ios
   spec.ios.deployment_target = "9.0"
   spec.preserve_path = 'ECHO/Supports Files/ECHO.modulemap'
   spec.module_map = 'ECHO/Supports Files/ECHO.modulemap'
-  spec.pod_target_xcconfig = {'SWIFT_INCLUDE_PATHS' => '$(SRCROOT)/Libraries', 
-  'LIBRARY_SEARCH_PATHS' => '$(SRCROOT)/Libraries/openssl/lib $(SRCROOT)/Libraries/secp256k1/lib',
-  'HEADER_SEARCH_PATHS' => '$(SRCROOT)/Libraries/secp256k1/include $(SRCROOT)/Libraries/openssl/include'}
-
+  spec.pod_target_xcconfig = {'SWIFT_INCLUDE_PATHS' => '$(SRCROOT)/ECHO/Libraries',
+  'APPLICATION_EXTENSION_API_ONLY' => 'YES',
+  'LIBRARY_SEARCH_PATHS' => '$(SRCROOT)/ECHO/Libraries/openssl/lib $(SRCROOT)/ECHO/Libraries/secp256k1/lib',
+  'HEADER_SEARCH_PATHS' => '$(SRCROOT)/ECHO/Libraries/secp256k1/include $(SRCROOT)/ECHO/Libraries/openssl/include'}
+  spec.default_subspec = "Core"
+  spec.preserve_paths = ['Libraries']
   # spec.xcconfig =  {'SWIFT_INCLUDE_PATHS' => '$(SRCROOT)/Libraries'}
   spec.dependency "Starscream", '~> 3.0.2'
+
+  spec.subspec "Core" do |ss|
+    spec.source_files  = 'ECHO/**/*.{h,swift,m}', 'Libraries/**/*.{h,a,modulemap}'
+  end
 
 end

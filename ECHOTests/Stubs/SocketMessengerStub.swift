@@ -84,6 +84,9 @@ final class SocketMessengerStub: SocketMessenger {
     
         if let response = response {
             onText?(response)
+        } else {
+            let response = getErrorResponse(request: string)
+            onText?(response)
         }
     }
     
@@ -133,8 +136,20 @@ final class SocketMessengerStub: SocketMessenger {
         case SubscribeSuccesNotificationStub.request:
             return SubscribeSuccesNotificationStub.response
         default:
+            break
+        }
+        
+        guard let tuple = parceRequest(request: request) else {
             return nil
         }
+        
+        let revealHodler = RevialAPISocketRequestStubHodler()
+        
+        if let revealResponse = revealHodler.response(id: tuple.id, operationType: tuple.operationType) {
+            return revealResponse
+        }
+        
+        return nil
     }
     
     fileprivate func parceRequest(request: String) -> (id: Int, operationType: String)? {
@@ -169,6 +184,16 @@ final class SocketMessengerStub: SocketMessenger {
         }
         
         return nil
+    }
+    
+    fileprivate func getErrorResponse(request: String) -> String {
+        
+        guard let tuple = parceRequest(request: request) else {
+            return ""
+        }
+        
+        let error = ErrorResponseStub.getError(id: String(tuple.id), request: request)
+        return error
     }
     
     fileprivate func getTransferResponse(request: String) -> String? {
@@ -296,6 +321,5 @@ final class SocketMessengerStub: SocketMessenger {
         
         return nil
     }
-
 }
 

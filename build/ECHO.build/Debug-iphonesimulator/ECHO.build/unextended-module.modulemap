@@ -1,8 +1,13 @@
 framework module ECHO {
-  umbrella header "ECHO.h"
-
-  export *
-  module * { export * }
+    umbrella header "ECHO.h"
+    
+    export *
+    module * { export * }
+    
+    explicit module Private {
+        header "Internal.h"
+        link "crypto"
+    }
 }
 
 module ECHO.__Swift {

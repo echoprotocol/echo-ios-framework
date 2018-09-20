@@ -16,14 +16,14 @@ class JsonEncodingTests: XCTestCase {
         //arrange
         let stub = AuthorityStub()
         let testAuthorityJson = stub.initialJson
+
+        
+        //act
         let authority = testAuthorityJson.data(using: .utf8)
             .flatMap {try? JSONDecoder().decode(Authority.self, from: $0)}!
         
-        //act
-        let authorityJson: String? = authority.toJSON()
-        
         //assert
-        XCTAssertEqual(authorityJson, stub.toJSON)
+        XCTAssertNotNil(authority)
     }
     
 }
