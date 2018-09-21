@@ -47,10 +47,34 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
     
     public func getContractResult(historyId: String, completion: @escaping Completion<ContractResult>) {
         
+        // Validate historyId
+        do {
+            let validator = IdentifierValidator()
+            try validator.validateId(historyId, for: .contractResult)
+        } catch let error {
+            let echoError = (error as? ECHOError) ?? ECHOError.undefined
+            let result = Result<ContractResult, ECHOError>(error: echoError)
+            completion(result)
+            return
+        }
+        
         services.databaseService.getContractResult(historyId: historyId, completion: completion)
     }
     
     public func getContracts(contractIds: [String], completion: @escaping Completion<[ContractInfo]>) {
+        
+        // Validate contractIds
+        do {
+            let validator = IdentifierValidator()
+            for contractId in contractIds {
+                try validator.validateId(contractId, for: .contract)
+            }
+        } catch let error {
+            let echoError = (error as? ECHOError) ?? ECHOError.undefined
+            let result = Result<[ContractInfo], ECHOError>(error: echoError)
+            completion(result)
+            return
+        }
         
         services.databaseService.getContracts(contractIds: contractIds, completion: completion)
     }
@@ -62,6 +86,17 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
     
     public func getContract(contractId: String, completion: @escaping Completion<ContractStruct>) {
         
+        // Validate contractId
+        do {
+            let validator = IdentifierValidator()
+            try validator.validateId(contractId, for: .contract)
+        } catch let error {
+            let echoError = (error as? ECHOError) ?? ECHOError.undefined
+            let result = Result<ContractStruct, ECHOError>(error: echoError)
+            completion(result)
+            return
+        }
+        
         services.databaseService.getContract(contractId: contractId, completion: completion)
     }
     
@@ -70,6 +105,17 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
                                assetId: String,
                                byteCode: String,
                                completion: @escaping Completion<Bool>) {
+        
+        // Validate asset id
+        do {
+            let validator = IdentifierValidator()
+            try validator.validateId(assetId, for: .asset)
+        } catch let error {
+            let echoError = (error as? ECHOError) ?? ECHOError.undefined
+            let result = Result<Bool, ECHOError>(error: echoError)
+            completion(result)
+            return
+        }
         
         let createQueue = ECHOQueue()
         addQueue(createQueue)
@@ -148,6 +194,18 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
                              methodParams: [AbiTypeValueInputModel],
                              completion: @escaping (Result<Bool, ECHOError>) -> Void) {
      
+        // Validate assetId, contratId
+        do {
+            let validator = IdentifierValidator()
+            try validator.validateId(assetId, for: .asset)
+            try validator.validateId(contratId, for: .contract)
+        } catch let error {
+            let echoError = (error as? ECHOError) ?? ECHOError.undefined
+            let result = Result<Bool, ECHOError>(error: echoError)
+            completion(result)
+            return
+        }
+        
         let callQueue = ECHOQueue()
         addQueue(callQueue)
         
@@ -227,6 +285,18 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
                               methodName: String,
                               methodParams: [AbiTypeValueInputModel],
                               completion: @escaping Completion<String>) {
+        
+        // Validate assetId, contratId
+        do {
+            let validator = IdentifierValidator()
+            try validator.validateId(assetId, for: .asset)
+            try validator.validateId(contratId, for: .contract)
+        } catch let error {
+            let echoError = (error as? ECHOError) ?? ECHOError.undefined
+            let result = Result<String, ECHOError>(error: echoError)
+            completion(result)
+            return
+        }
         
         let queryQueue = ECHOQueue()
         addQueue(queryQueue)

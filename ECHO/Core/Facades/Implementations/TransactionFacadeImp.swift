@@ -52,6 +52,17 @@ final public class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
                                       message: String?,
                                       completion: @escaping Completion<Bool>) {
         
+        // Validate asset id
+        do {
+            let validator = IdentifierValidator()
+            try validator.validateId(asset, for: .asset)
+        } catch let error {
+            let echoError = (error as? ECHOError) ?? ECHOError.undefined
+            let result = Result<Bool, ECHOError>(error: echoError)
+            completion(result)
+            return
+        }
+        
         let transferQueue = ECHOQueue()
         queues.append(transferQueue)
         

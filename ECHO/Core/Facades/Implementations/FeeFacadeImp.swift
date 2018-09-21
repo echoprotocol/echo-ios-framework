@@ -40,6 +40,17 @@ final public class FeeFacadeImp: FeeFacade, ECHOQueueble {
                                            asset: String,
                                            completion: @escaping Completion<AssetAmount>) {
         
+        // Validate asset id
+        do {
+            let validator = IdentifierValidator()
+            try validator.validateId(asset, for: .asset)
+        } catch let error {
+            let echoError = (error as? ECHOError) ?? ECHOError.undefined
+            let result = Result<AssetAmount, ECHOError>(error: echoError)
+            completion(result)
+            return
+        }
+        
         let feeQueue = ECHOQueue()
         queues.append(feeQueue)
         

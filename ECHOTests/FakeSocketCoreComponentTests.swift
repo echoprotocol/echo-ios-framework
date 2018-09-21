@@ -135,7 +135,7 @@ class SocketCoreComponentTests: XCTestCase {
         
         //assert
         waitForExpectations(timeout: 1000) { error in
-            XCTAssertEqual(account.name, userName)
+            XCTAssertEqual(account?.name, userName)
         }
     }
 

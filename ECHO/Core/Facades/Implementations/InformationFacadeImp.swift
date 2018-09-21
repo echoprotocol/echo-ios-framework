@@ -76,6 +76,18 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                 }
                 
                 if let asset = asset {
+                    
+                    // Validate asset id
+                    do {
+                        let validator = IdentifierValidator()
+                        try validator.validateId(asset, for: .asset)
+                    } catch let error {
+                        let echoError = (error as? ECHOError) ?? ECHOError.undefined
+                        let result = Result<[AccountBalance], ECHOError>(error: echoError)
+                        completion(result)
+                        return
+                    }
+                    
                     balances = account.balances.filter {$0.assetType == asset }
                 } else {
                     balances =  account.balances

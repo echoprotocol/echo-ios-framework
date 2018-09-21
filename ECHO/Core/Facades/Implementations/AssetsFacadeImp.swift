@@ -126,6 +126,17 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
                            destinationIdOrName: String, message: String?,
                            completion: @escaping Completion<Bool>) {
         
+        // Validate asset id
+        do {
+            let validator = IdentifierValidator()
+            try validator.validateId(asset, for: .asset)
+        } catch let error {
+            let echoError = (error as? ECHOError) ?? ECHOError.undefined
+            let result = Result<Bool, ECHOError>(error: echoError)
+            completion(result)
+            return
+        }
+        
         let issueAssetQueue = ECHOQueue()
         queues.append(issueAssetQueue)
         
@@ -215,6 +226,20 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
     }
     
     public func getAsset(assetIds: [String], completion: @escaping Completion<[Asset]>) {
+        
+        // Validate assetIds
+        do {
+            let validator = IdentifierValidator()
+            for identifier in assetIds {
+                try validator.validateId(identifier, for: .asset)
+            }
+        } catch let error {
+            let echoError = (error as? ECHOError) ?? ECHOError.undefined
+            let result = Result<[Asset], ECHOError>(error: echoError)
+            completion(result)
+            return
+        }
+        
         services.databaseService.getAssets(assetIds: assetIds, completion: completion)
     }
     

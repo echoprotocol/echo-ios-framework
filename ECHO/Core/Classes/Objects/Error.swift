@@ -31,6 +31,12 @@ public enum ECHOError: Swift.Error, Equatable {
     
     /// Indicates that encode or decode abi failed
     case abiCoding
+    
+    /// Indicates that object identifier have not valid format
+    case identifierFormat
+    
+    /// Indicates that object identifier have not valid type
+    case identifier(ObjectType)
 
     case undefined
 }

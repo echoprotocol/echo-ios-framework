@@ -573,7 +573,7 @@ class ECHOInterfaceTests: XCTestCase {
         
         //assert
         waitForExpectations(timeout: timeout) { _ in
-            XCTAssertNotEqual(error, ECHOError.undefined)
+            XCTAssertEqual(error, ECHOError.identifier(.asset))
         }
     }
     
@@ -838,7 +838,7 @@ class ECHOInterfaceTests: XCTestCase {
         
         //assert
         waitForExpectations(timeout: timeout) { _ in
-            XCTAssertNotEqual(error, ECHOError.undefined)
+            XCTAssertEqual(error, ECHOError.identifier(.contract))
         }
     }
     
