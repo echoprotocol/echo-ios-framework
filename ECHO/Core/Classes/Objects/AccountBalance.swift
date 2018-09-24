@@ -20,10 +20,10 @@ public struct AccountBalance: ECHOObject, Decodable {
         case balance
     }
     
-    let assetType: String
-    let owner: String
-    let balance: Int
-    let id: String
+    public let assetType: String
+    public let owner: String
+    public let balance: Int
+    public let id: String
 
     public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: AccountBalanceCodingKeys.self)
