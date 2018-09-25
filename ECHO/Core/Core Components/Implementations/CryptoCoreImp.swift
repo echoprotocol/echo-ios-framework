@@ -11,7 +11,7 @@
 */
 final public class CryptoCoreImp: CryptoCoreComponent {
     
-    public init(){}
+    public init() { }
     
     public func generatePublicKey(withPrivateKey privateKeyData: Data, compression isCompression: Bool) -> Data {
         return Crypto.generatePublicKey(data: privateKeyData, compressed: isCompression)

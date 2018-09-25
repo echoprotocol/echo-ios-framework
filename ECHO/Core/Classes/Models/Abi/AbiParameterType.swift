@@ -8,6 +8,7 @@
 
 import Foundation
 
+// swiftlint:disable no_fallthrough_only
 enum AbiParameterType {
     
     case string
@@ -397,3 +398,4 @@ extension AbiParameterType: CustomStringConvertible {
         }
     }
 }
+// swiftlint:enable no_fallthrough_only

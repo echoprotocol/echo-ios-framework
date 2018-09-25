@@ -470,7 +470,7 @@ class ECHOInterfaceTests: XCTestCase {
         
         //act
         echo.start { [unowned self] (result) in
-            self.echo.sendTransferOperation(fromNameOrId: fromUser, password: password, toNameOrId: toUser, amount: 1, asset: "1.3.0", message: "", completion: { (result) in
+            self.echo.sendTransferOperation(fromNameOrId: fromUser, password: password, toNameOrId: toUser, amount: 1, asset: "1.3.0", assetForFee: nil, message: "", completion: { (result) in
                 switch result {
                 case .success(let result):
                     isSuccess = result
@@ -487,6 +487,39 @@ class ECHOInterfaceTests: XCTestCase {
         }
     }
     
+//    func testTransferWithAssetForFee() {
+//
+//        //arrange
+//        echo = ECHO(settings: Settings(build: {
+//            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+//        }))
+//        let exp = expectation(description: "Transfer")
+//        let password = "newTestPass"
+//        let fromUser = "vsharaev1"
+//        let toUser = "vsharaev2"
+//        var isSuccess = false
+//
+//
+//        //act
+//        echo.start { [unowned self] (result) in
+//            self.echo.sendTransferOperation(fromNameOrId: fromUser, password: password, toNameOrId: toUser, amount: 10, asset: "1.3.0", assetForFee: "1.3.137", message: nil, completion: { (result) in
+//                switch result {
+//                case .success(let result):
+//                    isSuccess = result
+//                    exp.fulfill()
+//                case .failure(let error):
+//                    print(error)
+//                    XCTFail("Transfer must be valid")
+//                }
+//            })
+//        }
+//
+//        //assert
+//        waitForExpectations(timeout: timeout) { error in
+//            XCTAssertTrue(isSuccess)
+//        }
+//    }
+    
     func testFailedTransfer() {
         
         //arrange
@@ -502,7 +535,7 @@ class ECHOInterfaceTests: XCTestCase {
         
         //act
         echo.start { [unowned self] (result) in
-            self.echo.sendTransferOperation(fromNameOrId: fromUser, password: password, toNameOrId: toUser, amount: 1, asset: "1.3.0", message: "", completion: { (result) in
+            self.echo.sendTransferOperation(fromNameOrId: fromUser, password: password, toNameOrId: toUser, amount: 1, asset: "1.3.0", assetForFee: nil, message: "", completion: { (result) in
                 switch result {
                 case .success(_):
                     XCTFail("Transfer cant be valid")

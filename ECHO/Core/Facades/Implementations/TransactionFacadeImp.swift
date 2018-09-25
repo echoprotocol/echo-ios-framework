@@ -49,13 +49,18 @@ final public class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
                                       toNameOrId: String,
                                       amount: UInt,
                                       asset: String,
+                                      assetForFee: String?,
                                       message: String?,
                                       completion: @escaping Completion<Bool>) {
+        
+        // if we don't hace assetForFee, we use asset.
+        let assetForFee = assetForFee ?? asset
         
         // Validate asset id
         do {
             let validator = IdentifierValidator()
             try validator.validateId(asset, for: .asset)
+            try validator.validateId(assetForFee, for: .asset)
         } catch let error {
             let echoError = (error as? ECHOError) ?? ECHOError.undefined
             let result = Result<Bool, ECHOError>(error: echoError)
@@ -92,7 +97,7 @@ final public class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
         // RequiredFee
         let getRequiredFeeOperationInitParams = (transferQueue,
                                                  services.databaseService,
-                                                 Asset(asset),
+                                                 Asset(assetForFee),
                                                  TransferResultsKeys.operation.rawValue,
                                                  TransferResultsKeys.fee.rawValue)
         let getRequiredFeeOperation = GetRequiredFeeQueueOperation<Bool>(initParams: getRequiredFeeOperationInitParams,

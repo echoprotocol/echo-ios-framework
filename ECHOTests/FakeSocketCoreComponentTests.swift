@@ -155,7 +155,7 @@ class SocketCoreComponentTests: XCTestCase {
         
         //act
         echo.start { [unowned self] (result) in
-            self.echo.sendTransferOperation(fromNameOrId: fromUser, password: password, toNameOrId: toUser, amount: 1, asset: "1.3.0", message: "", completion: { (result) in
+            self.echo.sendTransferOperation(fromNameOrId: fromUser, password: password, toNameOrId: toUser, amount: 1, asset: "1.3.0", assetForFee: nil,message: "", completion: { (result) in
                 switch result {
                 case .success(let result):
                     isSuccess = result

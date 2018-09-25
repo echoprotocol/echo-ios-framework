@@ -90,6 +90,7 @@ final class AbiArgumentCoderImp: AbiArgumentCoder {
     
 }
 
+// swiftlint:disable no_fallthrough_only
 private typealias Decoder = AbiArgumentCoderImp
 extension Decoder {
     
@@ -574,3 +575,4 @@ extension Encoder {
         return 0
     }
 }
+// swiftlint:enable no_fallthrough_only

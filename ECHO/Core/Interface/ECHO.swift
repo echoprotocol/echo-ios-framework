@@ -150,6 +150,7 @@ final public class ECHO: InterfaceFacades {
                                       toNameOrId: String,
                                       amount: UInt,
                                       asset: String,
+                                      assetForFee: String?,
                                       message: String?,
                                       completion: @escaping (Result<Bool, ECHOError>) -> Void) {
         
@@ -158,6 +159,7 @@ final public class ECHO: InterfaceFacades {
                                                 toNameOrId: toNameOrId,
                                                 amount: amount,
                                                 asset: asset,
+                                                assetForFee: assetForFee,
                                                 message: message,
                                                 completion: completion)
     }

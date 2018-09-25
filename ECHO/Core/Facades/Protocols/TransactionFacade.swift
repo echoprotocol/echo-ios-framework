@@ -30,6 +30,7 @@ public protocol TransactionFacade {
                                toNameOrId: String,
                                amount: UInt,
                                asset: String,
+                               assetForFee: String?,
                                message: String?,
                                completion: @escaping Completion<Bool>)
 }
