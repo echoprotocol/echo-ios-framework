@@ -48,7 +48,7 @@
 		B30CC372214A5C29003953E3 /* AbiFunctionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30CC36E214A5C29003953E3 /* AbiFunctionModel.swift */; };
 		B30CC373214A5C29003953E3 /* AbiInterfaceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30CC36F214A5C29003953E3 /* AbiInterfaceModel.swift */; };
 		B30CC375214A5D15003953E3 /* AbiTypeValueModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30CC374214A5D15003953E3 /* AbiTypeValueModel.swift */; };
-		B30CC37C214A6C59003953E3 /* BTCData.h in Headers */ = {isa = PBXBuildFile; fileRef = B30CC37A214A6C59003953E3 /* BTCData.h */; };
+		B30CC37C214A6C59003953E3 /* BTCData.h in Headers */ = {isa = PBXBuildFile; fileRef = B30CC37A214A6C59003953E3 /* BTCData.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		B30CC37D214A6C59003953E3 /* BTCData.m in Sources */ = {isa = PBXBuildFile; fileRef = B30CC37B214A6C59003953E3 /* BTCData.m */; };
 		B30CC37F214A7074003953E3 /* String+AbiRegexp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30CC37E214A7074003953E3 /* String+AbiRegexp.swift */; };
 		B30CC381214A745E003953E3 /* SHA3.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30CC380214A745D003953E3 /* SHA3.swift */; };

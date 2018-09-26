@@ -6,6 +6,7 @@ framework module ECHO {
     
     explicit module Private {
         header "Internal.h"
+        header "BTCData.h"
         link "crypto"
     }
 }

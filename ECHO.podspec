@@ -13,17 +13,12 @@ Pod::Spec.new do |spec|
   spec.ios.deployment_target = "9.0"
   spec.preserve_path = 'ECHO/Supports Files/ECHO.modulemap'
   spec.module_map = 'ECHO/Supports Files/ECHO.modulemap'
-  spec.pod_target_xcconfig = {'SWIFT_INCLUDE_PATHS' => '$(SRCROOT)/ECHO/Libraries',
-  'APPLICATION_EXTENSION_API_ONLY' => 'YES',
-  'LIBRARY_SEARCH_PATHS' => '$(SRCROOT)/ECHO/Libraries/openssl/lib $(SRCROOT)/ECHO/Libraries/secp256k1/lib',
-  'HEADER_SEARCH_PATHS' => '$(SRCROOT)/ECHO/Libraries/secp256k1/include $(SRCROOT)/ECHO/Libraries/openssl/include'}
-  spec.default_subspec = "Core"
+  spec.pod_target_xcconfig = {  'SWIFT_INCLUDE_PATHS' => '$(SRCROOT)/ECHO/Libraries',
+  								'SWIFT_WHOLE_MODULE_OPTIMIZATION' => 'YES',
+  								'LIBRARY_SEARCH_PATHS' => '$(SRCROOT)/ECHO/Libraries/openssl/lib $(SRCROOT)/ECHO/Libraries/secp256k1/lib',
+  								'HEADER_SEARCH_PATHS' => '$(SRCROOT)/ECHO/Libraries/secp256k1/include $(SRCROOT)/ECHO/Libraries/openssl/include'}
   spec.preserve_paths = ['Libraries']
-  # spec.xcconfig =  {'SWIFT_INCLUDE_PATHS' => '$(SRCROOT)/Libraries'}
   spec.dependency "Starscream", '~> 3.0.2'
-
-  spec.subspec "Core" do |ss|
-    spec.source_files  = 'ECHO/**/*.{h,swift,m}', 'Libraries/**/*.{h,a,modulemap}'
-  end
+  spec.source_files  = 'ECHO/**/*.{h,swift,m}'
 
 end
