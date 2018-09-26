@@ -38,12 +38,17 @@ final public class FeeFacadeImp: FeeFacade, ECHOQueueble {
                                            toNameOrId: String,
                                            amount: UInt,
                                            asset: String,
+                                           assetForFee: String?,
                                            completion: @escaping Completion<AssetAmount>) {
+        
+        // if we don't hace assetForFee, we use asset.
+        let assetForFee = assetForFee ?? asset
         
         // Validate asset id
         do {
             let validator = IdentifierValidator()
             try validator.validateId(asset, for: .asset)
+            try validator.validateId(assetForFee, for: .asset)
         } catch let error {
             let echoError = (error as? ECHOError) ?? ECHOError.undefined
             let result = Result<AssetAmount, ECHOError>(error: echoError)
@@ -69,7 +74,7 @@ final public class FeeFacadeImp: FeeFacade, ECHOQueueble {
         // RequiredFee
         let getRequiredFeeOperationInitParams = (feeQueue,
                                                  services.databaseService,
-                                                 Asset(asset),
+                                                 Asset(assetForFee),
                                                  FeeResultsKeys.operation.rawValue,
                                                  FeeResultsKeys.fee.rawValue)
         let getRequiredFeeOperation = GetRequiredFeeQueueOperation<AssetAmount>(initParams: getRequiredFeeOperationInitParams,

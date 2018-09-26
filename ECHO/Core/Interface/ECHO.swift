@@ -134,12 +134,14 @@ final public class ECHO: InterfaceFacades {
                                            toNameOrId: String,
                                            amount: UInt,
                                            asset: String,
+                                           assetForFee: String?,
                                            completion: @escaping Completion<AssetAmount>) {
         
         feeFacade.getFeeForTransferOperation(fromNameOrId: fromNameOrId,
                                              toNameOrId: toNameOrId,
                                              amount: amount,
                                              asset: asset,
+                                             assetForFee: assetForFee,
                                              completion: completion)
     }
     

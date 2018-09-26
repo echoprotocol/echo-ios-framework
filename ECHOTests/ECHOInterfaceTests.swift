@@ -408,7 +408,7 @@ class ECHOInterfaceTests: XCTestCase {
         
         //act
         echo.start { [unowned self] (result) in
-            self.echo.getFeeForTransferOperation(fromNameOrId: fromUser, toNameOrId: toUser, amount: 1, asset: "1.3.0", completion: { (result) in
+            self.echo.getFeeForTransferOperation(fromNameOrId: fromUser, toNameOrId: toUser, amount: 1, asset: "1.3.0", assetForFee: nil, completion: { (result) in
                 switch result {
                 case .success(let aFee):
                     fee = aFee
@@ -425,6 +425,38 @@ class ECHOInterfaceTests: XCTestCase {
         }
     }
     
+    func testGetFeeInAnotherAsset() {
+        
+        //arrange
+        echo = ECHO(settings: Settings(build: {
+            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+        }))
+        let exp = expectation(description: "Fee Getting In Another Asset")
+        let fromUser = "vsharaev1"
+        let toUser = "nikita1994"
+        let assetForFee = "1.3.137"
+        var fee: AssetAmount!
+        
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.getFeeForTransferOperation(fromNameOrId: fromUser, toNameOrId: toUser, amount: 1, asset: "1.3.0", assetForFee: assetForFee, completion: { (result) in
+                switch result {
+                case .success(let aFee):
+                    fee = aFee
+                    exp.fulfill()
+                case .failure(let error):
+                    XCTFail("Fee getting failed \(error)")
+                }
+            })
+        }
+        
+        //assert
+        waitForExpectations(timeout: timeout) { error in
+            XCTAssertNotNil(fee)
+            XCTAssertEqual(fee.asset.id, assetForFee)
+        }
+    }
+    
     func testGetFeeFailed() {
         
         //arrange
@@ -438,7 +470,7 @@ class ECHOInterfaceTests: XCTestCase {
         
         //act
         echo.start { [unowned self] (result) in
-            self.echo.getFeeForTransferOperation(fromNameOrId: fromUser, toNameOrId: toUser, amount: 1, asset: "1.3.0", completion: { (result) in
+            self.echo.getFeeForTransferOperation(fromNameOrId: fromUser, toNameOrId: toUser, amount: 1, asset: "1.3.0", assetForFee: nil, completion: { (result) in
                 switch result {
                 case .success(_):
                     XCTFail("Getting fee for transfer with undefining user must fail")
