@@ -16,8 +16,8 @@ public struct AssetAmount: ECHOCodable, Decodable {
         case assetId = "asset_id"
     }
     
-    let amount: UInt
-    let asset: Asset
+    public let amount: UInt
+    public let asset: Asset
     
     public init(amount: UInt, asset: Asset) {
         

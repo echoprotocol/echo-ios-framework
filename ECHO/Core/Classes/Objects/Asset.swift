@@ -26,7 +26,7 @@ public struct Asset: ECHOObject, BytesCodable, Decodable {
         case id
     }
     
-    var id: String
+    public var id: String
     public var symbol: String?
     public var precision: Int = -1
     public var issuer: Account?
