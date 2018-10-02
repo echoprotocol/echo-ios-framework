@@ -408,7 +408,7 @@ class ECHOInterfaceTests: XCTestCase {
         
         //act
         echo.start { [unowned self] (result) in
-            self.echo.getFeeForTransferOperation(fromNameOrId: fromUser, toNameOrId: toUser, amount: 1, asset: "1.3.0", assetForFee: nil, completion: { (result) in
+            self.echo.getFeeForTransferOperation(fromNameOrId: fromUser, toNameOrId: toUser, amount: 1, asset: "1.3.0", assetForFee: nil, message: nil, completion: { (result) in
                 switch result {
                 case .success(let aFee):
                     fee = aFee
@@ -439,7 +439,7 @@ class ECHOInterfaceTests: XCTestCase {
         
         //act
         echo.start { [unowned self] (result) in
-            self.echo.getFeeForTransferOperation(fromNameOrId: fromUser, toNameOrId: toUser, amount: 1, asset: "1.3.0", assetForFee: assetForFee, completion: { (result) in
+            self.echo.getFeeForTransferOperation(fromNameOrId: fromUser, toNameOrId: toUser, amount: 1, asset: "1.3.0", assetForFee: assetForFee, message: nil, completion: { (result) in
                 switch result {
                 case .success(let aFee):
                     fee = aFee
@@ -470,7 +470,7 @@ class ECHOInterfaceTests: XCTestCase {
         
         //act
         echo.start { [unowned self] (result) in
-            self.echo.getFeeForTransferOperation(fromNameOrId: fromUser, toNameOrId: toUser, amount: 1, asset: "1.3.0", assetForFee: nil, completion: { (result) in
+            self.echo.getFeeForTransferOperation(fromNameOrId: fromUser, toNameOrId: toUser, amount: 1, asset: "1.3.0", assetForFee: nil, message: nil, completion: { (result) in
                 switch result {
                 case .success(_):
                     XCTFail("Getting fee for transfer with undefining user must fail")
