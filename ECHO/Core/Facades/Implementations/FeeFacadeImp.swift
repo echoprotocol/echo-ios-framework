@@ -19,17 +19,22 @@ public struct FeeFacadeServices {
 final public class FeeFacadeImp: FeeFacade, ECHOQueueble {
     
     var queues: [ECHOQueue]
-    var services: FeeFacadeServices
+    let services: FeeFacadeServices
+    let network: ECHONetwork
+    let cryptoCore: CryptoCoreComponent
     
-    init(services: FeeFacadeServices) {
+    init(services: FeeFacadeServices, cryptoCore: CryptoCoreComponent, network: ECHONetwork) {
 
         self.services = services
+        self.network = network
+        self.cryptoCore = cryptoCore
         self.queues = [ECHOQueue]()
     }
     
     private enum FeeResultsKeys: String {
         case loadedToAccount
         case loadedFromAccount
+        case memo
         case operation
         case fee
     }
@@ -39,6 +44,7 @@ final public class FeeFacadeImp: FeeFacade, ECHOQueueble {
                                            amount: UInt,
                                            asset: String,
                                            assetForFee: String?,
+                                           message: String?,
                                            completion: @escaping Completion<AssetAmount>) {
         
         // if we don't hace assetForFee, we use asset.
@@ -68,6 +74,18 @@ final public class FeeFacadeImp: FeeFacade, ECHOQueueble {
         let getAccountsOperation = GetAccountsQueueOperation<AssetAmount>(initParams: getAccountsOperationInitParams,
                                                                   completion: completion)
         
+        // Memo
+        let getMemoOperationInitParams = (queue: feeQueue,
+                                          cryptoCore: cryptoCore,
+                                          message: message,
+                                          saveKey: FeeResultsKeys.memo.rawValue,
+                                          password: UUID().uuidString,
+                                          networkPrefix: network.prefix.rawValue,
+                                          fromAccountKey: FeeResultsKeys.loadedFromAccount.rawValue,
+                                          toAccountKey: FeeResultsKeys.loadedToAccount.rawValue)
+        let getMemoOperation = GetMemoQueueOperation<AssetAmount>(initParams: getMemoOperationInitParams,
+                                                           completion: completion)
+        
         // Operation
         let bildTransferOperation = createBildTransferOperation(feeQueue, amount, asset, completion)
         
@@ -87,6 +105,7 @@ final public class FeeFacadeImp: FeeFacade, ECHOQueueble {
         let completionOperation = createCompletionOperation(queue: feeQueue)
         
         feeQueue.addOperation(getAccountsOperation)
+        feeQueue.addOperation(getMemoOperation)
         feeQueue.addOperation(bildTransferOperation)
         feeQueue.addOperation(getRequiredFeeOperation)
         feeQueue.addOperation(feeCompletionOperation)
@@ -107,6 +126,7 @@ final public class FeeFacadeImp: FeeFacade, ECHOQueueble {
             
             guard let fromAccount: Account = queue?.getValue(FeeResultsKeys.loadedFromAccount.rawValue) else { return }
             guard let toAccount: Account = queue?.getValue(FeeResultsKeys.loadedFromAccount.rawValue) else { return }
+            guard let memo: Memo = queue?.getValue(FeeResultsKeys.memo.rawValue) else { return }
             
             let fee = AssetAmount(amount: 0, asset: Asset(asset))
             let amount = AssetAmount(amount: amount, asset: Asset(asset))
@@ -114,7 +134,7 @@ final public class FeeFacadeImp: FeeFacade, ECHOQueueble {
                                                       toAccount: toAccount,
                                                       transferAmount: amount,
                                                       fee: fee,
-                                                      memo: nil)
+                                                      memo: memo)
             
             queue?.saveValue(transferOperation, forKey: FeeResultsKeys.operation.rawValue)
         }

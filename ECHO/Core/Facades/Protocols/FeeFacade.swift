@@ -25,5 +25,6 @@ public protocol FeeFacade {
                                     amount: UInt,
                                     asset: String,
                                     assetForFee: String?,
+                                    message: String?,
                                     completion: @escaping Completion<AssetAmount>)
 }

@@ -64,7 +64,7 @@ final public class ECHO: InterfaceFacades {
                                                    socketCore: socketCore)
         
         let feeServices = FeeFacadeServices(databaseService: databaseService)
-        feeFacade = FeeFacadeImp(services: feeServices)
+        feeFacade = FeeFacadeImp(services: feeServices, cryptoCore: settings.cryproComponent, network: settings.network)
         
         let transactoinServices = TransactionFacadeServices(databaseService: databaseService, networkBroadcastService: networkBroadcastService)
         transactionFacade = TransactionFacadeImp(services: transactoinServices, cryptoCore: settings.cryproComponent, network: settings.network)
@@ -135,6 +135,7 @@ final public class ECHO: InterfaceFacades {
                                            amount: UInt,
                                            asset: String,
                                            assetForFee: String?,
+                                           message: String?,
                                            completion: @escaping Completion<AssetAmount>) {
         
         feeFacade.getFeeForTransferOperation(fromNameOrId: fromNameOrId,
@@ -142,6 +143,7 @@ final public class ECHO: InterfaceFacades {
                                              amount: amount,
                                              asset: asset,
                                              assetForFee: assetForFee,
+                                             message: message,
                                              completion: completion)
     }
     

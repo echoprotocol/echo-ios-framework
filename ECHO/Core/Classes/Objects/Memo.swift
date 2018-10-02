@@ -68,8 +68,8 @@ struct Memo: ECHOCodable, Decodable {
             data.append(optional: Data.fromInt8(1))
             data.append(optional: source.toData())
             data.append(optional: destination.toData())
-            data.append(optional: Data.fromInt64(nonce))
-            data.append(optional: Data.fromInt8(byteMessage.count))
+            data.append(optional: nonceToData(nonce))
+            data.append(optional: Data.fromUIntLikeUnsignedByteArray(UInt(byteMessage.count)))
             data.append(optional: byteMessage)
             
             return data
@@ -80,14 +80,24 @@ struct Memo: ECHOCodable, Decodable {
             data.append(optional: Data.fromInt8(1))
             data.append(optional: Data.fromInt8(0))
             data.append(optional: Data.fromInt8(0))
-            data.append(optional: Data.fromInt8(0))
-            data.append(optional: Data.fromInt8(byteMessage.count))
+            data.append(optional: nonceToData(0))
+            data.append(optional: Data.fromUIntLikeUnsignedByteArray(UInt(byteMessage.count)))
             data.append(optional: byteMessage)
             
             return data
         }
         
         return Data(count: 1)
+    }
+    
+    func nonceToData(_ nonce: Int) -> Data {
+        
+        var paddedNonceBytes = Data(count: 8)
+        var originalNonceBytes = Data(from: nonce)
+        
+        paddedNonceBytes[0..<8] = originalNonceBytes[8-originalNonceBytes.count..<originalNonceBytes.count]
+        
+        return paddedNonceBytes
     }
     
     func toJSON() -> Any? {
