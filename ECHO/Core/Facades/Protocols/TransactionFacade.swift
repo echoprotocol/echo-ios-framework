@@ -19,6 +19,7 @@ public protocol TransactionFacade {
      - Parameter toNameOrId: Receiver name or id
      - Parameter amount: Amount
      - Parameter asset: Id of asset which is sent
+     - Parameter assetForFee: Id of asset which is pay fee
      - Parameter message: The message that is sent with the transaction
      - Parameter completion: Callback in which the information will return whether the transaction was successful.
      

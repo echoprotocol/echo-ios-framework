@@ -18,6 +18,8 @@ public protocol FeeFacade {
      - Parameter toNameOrId: Receiver name or id
      - Parameter amount: Amount
      - Parameter asset: Id of asset which is sent
+     - Parameter assetForFee: Id of asset which is pay fee
+     - Parameter message: Message into transaction
      - Parameter completion: Callback which returns fee for operation or error
  */
     func getFeeForTransferOperation(fromNameOrId: String,

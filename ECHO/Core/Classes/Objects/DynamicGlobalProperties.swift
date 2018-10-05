@@ -13,6 +13,8 @@
  */
 public struct DynamicGlobalProperties: ECHOObject, Decodable {
     
+    public static let  defaultIdentifier: String  = "2.1.0"
+    
     enum DynamicGlobalPropertiesCodingKeys: String, CodingKey {
         case id
         case accountsRegisteredThisInterval = "accounts_registered_this_interval"

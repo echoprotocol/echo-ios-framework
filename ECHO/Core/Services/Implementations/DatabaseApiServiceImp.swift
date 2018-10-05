@@ -56,13 +56,13 @@ extension GlobalsService {
         socketCore.send(operation: operation)
     }
     
-    func getObjects(objectsIds: [String], completion: @escaping (Result<Any, ECHOError>) -> Void) {
+    func getObjects<T>(type: T.Type, objectsIds: [String], completion: @escaping Completion<[T]>) where T: Decodable {
         
-        let operation = GetObjectsSocketOperation(method: .call,
-                                                  operationId: socketCore.nextOperationId(),
-                                                  apiId: apiIdentifire,
-                                                  identifiers: objectsIds,
-                                                  completion: completion)
+        let operation = GetObjectsSocketOperation<T>(method: .call,
+                                                     operationId: socketCore.nextOperationId(),
+                                                     apiId: apiIdentifire,
+                                                     identifiers: objectsIds,
+                                                     completion: completion)
         
         socketCore.send(operation: operation)
     }
@@ -134,6 +134,16 @@ extension SubscriptionService {
                                                             apiId: apiIdentifire,
                                                             needClearFilter: false,
                                                             completion: completion)
+        socketCore.send(operation: operation)
+    }
+    
+    func setBlockAppliedCallback(blockId: String, completion: @escaping Completion<Bool>) {
+        
+        let operation = SetBlockAppliedCollbackSocketOperation(method: .call,
+                                                               operationId: socketCore.nextOperationId(),
+                                                               apiId: apiIdentifire,
+                                                               blockId: blockId,
+                                                               completion: completion)
         socketCore.send(operation: operation)
     }
 }

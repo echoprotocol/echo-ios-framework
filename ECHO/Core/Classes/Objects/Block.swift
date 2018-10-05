@@ -11,7 +11,7 @@
  
     [Block model documentations](https://dev-doc.myecho.app/structgraphene_1_1chain_1_1signed__block.html)
  */
-struct Block: Decodable {
+public struct Block: Decodable {
     
     enum BlockCodingKeys: String, CodingKey {
         case previous

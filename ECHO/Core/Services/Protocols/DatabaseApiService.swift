@@ -21,7 +21,7 @@ protocol DatabaseApiService: class {
     - Parameter objectsIds: IDs of the objects to retrieve
     - Parameter completion: Callback which returns current block data or error
  */
-    func getObjects(objectsIds: [String], completion: @escaping Completion<Any>)
+    func getObjects<T>(type: T.Type, objectsIds: [String], completion: @escaping Completion<[T]>) where T: Decodable
     
 /**
      Retrieves base block information
@@ -69,6 +69,13 @@ protocol DatabaseApiService: class {
      - Parameter completion: Callback which returns status of subscription
  */
     func setSubscribeCallback(completion: @escaping Completion<Bool>)
+    
+/**
+     Subscribes to listening chain objects
+     
+     - Parameter completion: Callback which returns status of subscription
+ */
+    func setBlockAppliedCallback(blockId: String, completion: @escaping Completion<Bool>)
     
 /**
      Query list of assets by it's ids [assetIds]

@@ -96,6 +96,22 @@ final public class ECHO: InterfaceFacades {
         subscriptionFacade.unsubscribeToAccount(nameOrId: nameOrId, delegate: delegate)
     }
     
+    public func subscribeToDynamicGlobalProperties(delegate: SubscribeDynamicGlobalPropertiesDelegate) {
+        subscriptionFacade.subscribeToDynamicGlobalProperties(delegate: delegate)
+    }
+    
+    public func unsubscribeToDynamicGlobalProperties() {
+        subscriptionFacade.unsubscribeToDynamicGlobalProperties()
+    }
+    
+    public func subscribeToBlock(delegate: SubscribeBlockDelegate) {
+        subscriptionFacade.subscribeToBlock(delegate: delegate)
+    }
+    
+    public func unsubscribeToBlock() {
+        subscriptionFacade.unsubscribeToBlock()
+    }
+    
     public func unsubscribeAll() {
         subscriptionFacade.unsubscribeAll()
     }

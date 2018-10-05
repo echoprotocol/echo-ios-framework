@@ -11,7 +11,7 @@
  
     [Memo model documentations](https://dev-doc.myecho.app/structgraphene_1_1chain_1_1transaction.html)
  */
-final class Transaction: ECHOCodable, Decodable {
+public final class Transaction: ECHOCodable, Decodable {
     
     private enum TransactionCodingKeys: String, CodingKey {
         case expiration

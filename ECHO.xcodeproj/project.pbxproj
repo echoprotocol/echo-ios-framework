@@ -162,6 +162,7 @@
 		D01BF7D4212AC7FE00917DB8 /* AccountAuthority.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01BF7D3212AC7FE00917DB8 /* AccountAuthority.swift */; };
 		D01BF7D6212AC81000917DB8 /* AddressAuthority.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01BF7D5212AC81000917DB8 /* AddressAuthority.swift */; };
 		D01BF7D8212AE77B00917DB8 /* BitassetOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01BF7D7212AE77B00917DB8 /* BitassetOptions.swift */; };
+		D0414AF6216758BD00CD0322 /* SetBlockAppliedCollbackSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0414AF5216758BC00CD0322 /* SetBlockAppliedCollbackSocketOperation.swift */; };
 		D048AE772136ABBE00441FEB /* TransactionSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D048AE762136ABBE00441FEB /* TransactionSocketOperation.swift */; };
 		D048BA982149403B0098AEBF /* QueryContractSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D048BA972149403B0098AEBF /* QueryContractSocketOperation.swift */; };
 		D0814E8C2154DD6600E248AA /* ObjectType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0814E8B2154DD6600E248AA /* ObjectType.swift */; };
@@ -375,6 +376,7 @@
 		D01BF7D3212AC7FE00917DB8 /* AccountAuthority.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountAuthority.swift; sourceTree = "<group>"; };
 		D01BF7D5212AC81000917DB8 /* AddressAuthority.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressAuthority.swift; sourceTree = "<group>"; };
 		D01BF7D7212AE77B00917DB8 /* BitassetOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitassetOptions.swift; sourceTree = "<group>"; };
+		D0414AF5216758BC00CD0322 /* SetBlockAppliedCollbackSocketOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetBlockAppliedCollbackSocketOperation.swift; sourceTree = "<group>"; };
 		D048AE762136ABBE00441FEB /* TransactionSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionSocketOperation.swift; sourceTree = "<group>"; };
 		D048BA972149403B0098AEBF /* QueryContractSocketOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueryContractSocketOperation.swift; sourceTree = "<group>"; };
 		D0814E8B2154DD6600E248AA /* ObjectType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectType.swift; sourceTree = "<group>"; };
@@ -719,6 +721,7 @@
 		B3CA704320F532AA00511F6A /* SocketOperation */ = {
 			isa = PBXGroup;
 			children = (
+				D0414AF5216758BC00CD0322 /* SetBlockAppliedCollbackSocketOperation.swift */,
 				D048BA972149403B0098AEBF /* QueryContractSocketOperation.swift */,
 				D0B0588121469A0900A80CDE /* GetContractSocketOperaton.swift */,
 				B3CA704120F502BE00511F6A /* SocketOperation.swift */,
@@ -1141,6 +1144,7 @@
 				D094704C212D9C7400B55A37 /* IssueAssetOperation.swift in Sources */,
 				B30CACFE20FF74C80048E33E /* DatabaseApiServiceImp.swift in Sources */,
 				B30CC365214A5B05003953E3 /* AbiCoderImp.swift in Sources */,
+				D0414AF6216758BD00CD0322 /* SetBlockAppliedCollbackSocketOperation.swift in Sources */,
 				B38596FC20F6005500B55E59 /* Price.swift in Sources */,
 				D0947040212D3FEE00B55A37 /* Memo.swift in Sources */,
 				B38596F220F5EE1400B55E59 /* GetObjectsSocketOperation.swift in Sources */,

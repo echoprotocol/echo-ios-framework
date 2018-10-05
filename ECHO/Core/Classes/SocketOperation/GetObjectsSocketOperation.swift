@@ -13,13 +13,13 @@
  
     - Note: Not completed
  */
-struct GetObjectsSocketOperation: SocketOperation {
+struct GetObjectsSocketOperation<T>: SocketOperation where T: Decodable {
     
     var method: SocketOperationType
     var operationId: Int
     var apiId: Int
     var identifiers: [String]
-    var completion: Completion<Any>
+    var completion: Completion<[T]>
     
     func createParameters() -> [Any] {
         let array: [Any] = [apiId,
@@ -36,25 +36,28 @@ struct GetObjectsSocketOperation: SocketOperation {
             
             switch response.response {
             case .error(let error):
-                let result = Result<Any, ECHOError>(error: ECHOError.internalError(error.message))
+                let result = Result<[T], ECHOError>(error: ECHOError.internalError(error.message))
                 completion(result)
             case .result(let result):
                 
                 switch result {
                 case .array(let array):
-                    print(array)
+                    let data = try JSONSerialization.data(withJSONObject: array, options: [])
+                    let objects = try JSONDecoder().decode([T].self, from: data)
+                    let result = Result<[T], ECHOError>(value: objects)
+                    completion(result)
                 default:
                     throw ECHOError.encodableMapping
                 }
             }
         } catch {
-            let result = Result<Any, ECHOError>(error: ECHOError.encodableMapping)
+            let result = Result<[T], ECHOError>(error: ECHOError.encodableMapping)
             completion(result)
         }
     }
     
     func forceEnd() {
-        let result = Result<Any, ECHOError>(error: ECHOError.connectionLost)
+        let result = Result<[T], ECHOError>(error: ECHOError.connectionLost)
         completion(result)
     }
 }

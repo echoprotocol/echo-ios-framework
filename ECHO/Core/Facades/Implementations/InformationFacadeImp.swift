@@ -147,7 +147,7 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         accountHistoryQueue.addOperation(mergeBlocksToHistoryOperation)
         accountHistoryQueue.addOperation(mergeAccountsToHistoryOperation)
         accountHistoryQueue.addOperation(historyCompletionOperation)
-        
+    
         accountHistoryQueue.setCompletionOperation(completionOperation)
     }
     

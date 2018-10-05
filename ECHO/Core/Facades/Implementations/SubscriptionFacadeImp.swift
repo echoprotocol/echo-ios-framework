@@ -18,6 +18,8 @@ final public class SubscriptionFacadeImp: SubscriptionFacade {
     let services: SubscriptionServices
     let socketCore: SocketCoreComponent
     var subscribers = [String: NSPointerArray]()
+    weak var dynamicGlobalPropertiesSubscriber: SubscribeDynamicGlobalPropertiesDelegate?
+    weak var createBlockSubscriber: SubscribeBlockDelegate?
     
     init(services: SubscriptionServices,
          socketCore: SocketCoreComponent) {
@@ -27,9 +29,7 @@ final public class SubscriptionFacadeImp: SubscriptionFacade {
     
     public func subscribeToAccount(nameOrId: String, delegate: SubscribeAccountDelegate) {
         
-        socketCore.onMessage = { [weak self] (result) in
-            self?.handleMessage(result)
-        }
+        updateSocketOnDelegate()
         
         services.databaseService.setSubscribeCallback { [weak self] (_) in
             self?.getUserIdAndSetSubscriber(nameOrId: nameOrId, delegate: delegate)
@@ -45,8 +45,41 @@ final public class SubscriptionFacadeImp: SubscriptionFacade {
         }
     }
     
+    public func subscribeToDynamicGlobalProperties(delegate: SubscribeDynamicGlobalPropertiesDelegate) {
+        
+        updateSocketOnDelegate()
+        
+        services.databaseService.setSubscribeCallback { [weak self] (_) in
+            self?.getDynamicGlobalPropertiesAndSetSubscriber(delegate: delegate)
+        }
+    }
+    
+    public func unsubscribeToDynamicGlobalProperties() {
+        dynamicGlobalPropertiesSubscriber = nil
+    }
+    
+    public func subscribeToBlock(delegate: SubscribeBlockDelegate) {
+        
+        updateSocketOnDelegate()
+        
+        services.databaseService.setSubscribeCallback { [weak self] (_) in
+            self?.getDynamicGlobalPropertiesAndSetSubscriber(delegate: delegate)
+        }
+    }
+    
+    public func unsubscribeToBlock() {
+        createBlockSubscriber = nil
+    }
+    
     public func unsubscribeAll() {
         subscribers = [String: NSPointerArray]()
+    }
+    
+    fileprivate func updateSocketOnDelegate() {
+        
+        socketCore.onMessage = { [weak self] (result) in
+            self?.handleMessage(result)
+        }
     }
     
     fileprivate func getUserIdAndSetSubscriber(nameOrId: String, delegate: SubscribeAccountDelegate) {
@@ -55,6 +88,20 @@ final public class SubscriptionFacadeImp: SubscriptionFacade {
             if let userAccounts = try? result.dematerialize(), let userAccount = userAccounts[nameOrId] {
                 self?.addDelegate(id: userAccount.account.id, delegate: delegate)
             }
+        }
+    }
+    
+    fileprivate func getDynamicGlobalPropertiesAndSetSubscriber(delegate: SubscribeDynamicGlobalPropertiesDelegate) {
+        
+        services.databaseService.getObjects(type: DynamicGlobalProperties.self, objectsIds: [DynamicGlobalProperties.defaultIdentifier]) { [weak self] (_) in
+            self?.dynamicGlobalPropertiesSubscriber = delegate
+        }
+    }
+    
+    fileprivate func getDynamicGlobalPropertiesAndSetSubscriber(delegate: SubscribeBlockDelegate) {
+        
+        services.databaseService.getObjects(type: DynamicGlobalProperties.self, objectsIds: [DynamicGlobalProperties.defaultIdentifier]) { [weak self] (_) in
+            self?.createBlockSubscriber = delegate
         }
     }
     
@@ -71,26 +118,51 @@ final public class SubscriptionFacadeImp: SubscriptionFacade {
             if let objectsArray = (array[safe: 1] as? [Any])
                 .flatMap({ $0[safe: 0] as? [Any]}) {
                 
-                var ids = Set<String>()
+                var userIds = Set<String>()
+                var dynamicGlobalProperties: DynamicGlobalProperties?
                 
                 for object in objectsArray {
                     
-                    if let statistic = (object as? [String: Any])
-                        .flatMap({ try? JSONSerialization.data(withJSONObject: $0, options: [])})
-                        .flatMap({ try? JSONDecoder().decode(Statistics.self, from: $0) }) {
-                        
-                        ids.insert(statistic.owner)
+                    if let userId = findUserId(object: object) {
+                        userIds.insert(userId)
                     }
+                    
+                    dynamicGlobalProperties = findDynamicGlobalPropeties(object: object)
                 }
                 
-                getAccountAdnNotify(ids: ids)
+                getAccountAndNotify(ids: userIds)
+                getBlockIfNeededAndNotify(dynamicGlobalProperties: dynamicGlobalProperties)
             }
         default:
             break
         }
     }
     
-    fileprivate func getAccountAdnNotify(ids: Set<String>) {
+    fileprivate func findUserId(object: Any) -> String? {
+        
+        if let statistic = (object as? [String: Any])
+            .flatMap({ try? JSONSerialization.data(withJSONObject: $0, options: [])})
+            .flatMap({ try? JSONDecoder().decode(Statistics.self, from: $0) }) {
+            
+            return statistic.owner
+        }
+        
+        return nil
+    }
+    
+    fileprivate func findDynamicGlobalPropeties(object: Any) -> DynamicGlobalProperties? {
+        
+        if let globalProperties = (object as? [String: Any])
+            .flatMap({ try? JSONSerialization.data(withJSONObject: $0, options: [])})
+            .flatMap({ try? JSONDecoder().decode(DynamicGlobalProperties.self, from: $0) }) {
+            
+            return globalProperties
+        }
+        
+        return nil
+    }
+    
+    fileprivate func getAccountAndNotify(ids: Set<String>) {
         
         for id in ids {
             guard let _ = subscribers[id] else {
@@ -145,6 +217,26 @@ final public class SubscriptionFacadeImp: SubscriptionFacade {
             
             if let delegate = delegates.object(at: index) as? SubscribeAccountDelegate {
                 delegate.didUpdateAccount(userAccount: userAccount)
+            }
+        }
+    }
+    
+    fileprivate func getBlockIfNeededAndNotify(dynamicGlobalProperties: DynamicGlobalProperties?) {
+        
+        guard let globalProperties = dynamicGlobalProperties else {
+            return
+        }
+        
+        dynamicGlobalPropertiesSubscriber?.didUpdateDynamicGlobalProperties(dynamicGlobalProperties: globalProperties)
+        
+        guard let createBlockSubscriber = createBlockSubscriber else {
+            return
+        }
+        
+        services.databaseService.getBlock(blockNumber: globalProperties.headBlockNumber) { (result) in
+            
+            if let block = try? result.dematerialize() {
+                createBlockSubscriber.didCreateBlock(block: block)
             }
         }
     }
