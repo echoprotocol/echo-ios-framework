@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Settings Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Class/Settings" class="dashAnchor"></a>
+    <a title="Settings Class Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">ECHO Docs</a> (46% documented)</p>
+        <p class="header-right"><a href="https://github.com/echoprotocol"><img src="../img/gh.png"/>View on GitHub</a></p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">ECHO Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        Settings Class Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/AddressKeysContainer.html">AddressKeysContainer</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/AssetsFacadeImp.html">AssetsFacadeImp</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/AuthentificationFacadeImp.html">AuthentificationFacadeImp</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Configurator.html">Configurator</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ContractsFacadeImp.html">ContractsFacadeImp</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/CryptoCoreImp.html">CryptoCoreImp</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ECHO.html">ECHO</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ECHOKeychain.html">ECHOKeychain</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ECHONetwork.html">ECHONetwork</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/FeeFacadeImp.html">FeeFacadeImp</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/InformationFacadeImp.html">InformationFacadeImp</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/s:4ECHO15RevealFacadeImpC">RevealFacadeImp</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SHA3.html">SHA3</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SHA3/Variant.html">– Variant</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Settings.html">Settings</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SubscriptionFacadeImp.html">SubscriptionFacadeImp</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Transaction.html">Transaction</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/TransactionFacadeImp.html">TransactionFacadeImp</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/AbiFunctionType.html">AbiFunctionType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/AssetOptionIssuerPermissions.html">AssetOptionIssuerPermissions</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ECHOError.html">ECHOError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ECHONetworkPrefix.html">ECHONetworkPrefix</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/KeychainType.html">KeychainType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ObjectSpace.html">ObjectSpace</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ObjectType.html">ObjectType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/Result.html">Result</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/SocketConnectionState.html">SocketConnectionState</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Extensions/AbiParameterType.html">AbiParameterType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/AnyError.html">AnyError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Array.html">Array</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Data.html">Data</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/String.html">String</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/UInt32.html">UInt32</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/UInt64.html">UInt64</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/AbiCoder.html">AbiCoder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/AssetsFacade.html">AssetsFacade</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/AuthentificationFacade.html">AuthentificationFacade</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/ContractsFacade.html">ContractsFacade</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/CryptoCoreComponent.html">CryptoCoreComponent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/FeeFacade.html">FeeFacade</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/InformationFacade.html">InformationFacade</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/SocketMessenger.html">SocketMessenger</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/SubscribeAccountDelegate.html">SubscribeAccountDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/SubscribeBlockDelegate.html">SubscribeBlockDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/SubscribeDynamicGlobalPropertiesDelegate.html">SubscribeDynamicGlobalPropertiesDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/SubscriptionFacade.html">SubscriptionFacade</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/TransactionFacade.html">TransactionFacade</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/APIOption.html">APIOption</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/AbiFunctionModel.html">AbiFunctionModel</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/AbiTypeValueInputModel.html">AbiTypeValueInputModel</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/AbiTypeValueOutputModel.html">AbiTypeValueOutputModel</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Account.html">Account</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/AccountAuthority.html">AccountAuthority</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/AccountBalance.html">AccountBalance</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Address.html">Address</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/AddressAuthority.html">AddressAuthority</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Asset.html">Asset</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/AssetAmount.html">AssetAmount</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/AssetOptions.html">AssetOptions</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs.html#/s:4ECHO14AssetsServicesV">AssetsServices</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Authority.html">Authority</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/BitassetOptions.html">BitassetOptions</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Block.html">Block</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Contract.html">Contract</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/ContractInfo.html">ContractInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/ContractResult.html">ContractResult</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/ContractStruct.html">ContractStruct</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs.html#/s:4ECHO23ContractsFacadeServicesV">ContractsFacadeServices</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/DynamicGlobalProperties.html">DynamicGlobalProperties</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/ExecRes.html">ExecRes</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs.html#/s:4ECHO10ExtensionsV">Extensions</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs.html#/s:4ECHO17FeeFacadeServicesV">FeeFacadeServices</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/HistoryItem.html">HistoryItem</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Options.html">Options</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Price.html">Price</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Statistics.html">Statistics</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/TrReceipt.html">TrReceipt</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs.html#/s:4ECHO25TransactionFacadeServicesV">TransactionFacadeServices</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/UserAccount.html">UserAccount</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Typealiases.html">Type Aliases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:4ECHO10Completiona">Completion</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>Settings</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">final</span> <span class="kd">public</span> <span class="kd">class</span> <span class="kt">Settings</span></code></pre>
+
+                </div>
+              </div>
+            <p>The class used to initialize the library. Sets the implementation of modules.</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ECHO8SettingsC15socketMessengerAA06SocketD0_pvp"></a>
+                    <a name="//apple_ref/swift/Property/socketMessenger" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ECHO8SettingsC15socketMessengerAA06SocketD0_pvp">socketMessenger</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">socketMessenger</span><span class="p">:</span> <span class="kt"><a href="../Protocols/SocketMessenger.html">SocketMessenger</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ECHO8SettingsC15cryproComponentAA010CryptoCoreD0_pvp"></a>
+                    <a name="//apple_ref/swift/Property/cryproComponent" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ECHO8SettingsC15cryproComponentAA010CryptoCoreD0_pvp">cryproComponent</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">cryproComponent</span><span class="p">:</span> <span class="kt"><a href="../Protocols/CryptoCoreComponent.html">CryptoCoreComponent</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ECHO8SettingsC17abiCoderComponentAA03AbiD0_pvp"></a>
+                    <a name="//apple_ref/swift/Property/abiCoderComponent" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ECHO8SettingsC17abiCoderComponentAA03AbiD0_pvp">abiCoderComponent</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">abiCoderComponent</span><span class="p">:</span> <span class="kt"><a href="../Protocols/AbiCoder.html">AbiCoder</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ECHO8SettingsC10apiOptionsAA9APIOptionVvp"></a>
+                    <a name="//apple_ref/swift/Property/apiOptions" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ECHO8SettingsC10apiOptionsAA9APIOptionVvp">apiOptions</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">apiOptions</span><span class="p">:</span> <span class="kt"><a href="../Structs/APIOption.html">APIOption</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ECHO8SettingsC7networkAA11ECHONetworkCvp"></a>
+                    <a name="//apple_ref/swift/Property/network" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ECHO8SettingsC7networkAA11ECHONetworkCvp">network</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">network</span><span class="p">:</span> <span class="kt"><a href="../Classes/ECHONetwork.html">ECHONetwork</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ECHO8SettingsC24BuildConfiguratorClosurea"></a>
+                    <a name="//apple_ref/swift/Alias/BuildConfiguratorClosure" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ECHO8SettingsC24BuildConfiguratorClosurea">BuildConfiguratorClosure</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">typealias</span> <span class="kt">BuildConfiguratorClosure</span> <span class="o">=</span> <span class="p">(</span><span class="kt"><a href="../Classes/Configurator.html">Configurator</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ECHO8SettingsC5buildACyAA12ConfiguratorCXE_tcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(build:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ECHO8SettingsC5buildACyAA12ConfiguratorCXE_tcfc">init(build:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">build</span><span class="p">:</span> <span class="kt"><a href="../Classes/Settings.html#/s:4ECHO8SettingsC24BuildConfiguratorClosurea">BuildConfiguratorClosure</a></span> <span class="o">=</span> <span class="p">{</span><span class="n">_</span> <span class="k">in</span> <span class="p">})</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ECHO8SettingsC17defaultDateFormatSSvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/defaultDateFormat" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ECHO8SettingsC17defaultDateFormatSSvpZ">defaultDateFormat</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">defaultDateFormat</span><span class="p">:</span> <span class="kt">String</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ECHO8SettingsC12defaultAssetSSvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/defaultAsset" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ECHO8SettingsC12defaultAssetSSvpZ">defaultAsset</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">defaultAsset</span><span class="p">:</span> <span class="kt">String</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2018 <a class="link" href="https://pixelplex.io" target="_blank" rel="external">pixelplex, inc</a>. All rights reserved. (Last updated: 2018-10-10)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>
