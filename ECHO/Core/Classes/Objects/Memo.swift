@@ -11,7 +11,7 @@
  
     [Memo model documentations](https://dev-doc.myecho.app/structgraphene_1_1chain_1_1memo__data.html)
  */
-struct Memo: ECHOCodable, Decodable {
+public struct Memo: ECHOCodable, Decodable {
     
     enum MemoCodingKeys: String, CodingKey {
         case fromAccount = "from"
@@ -20,8 +20,8 @@ struct Memo: ECHOCodable, Decodable {
         case message
     }
     
-    let nonceRadix: Int = 10
-    let paddedNonceArraySize: Int = 8
+    public let nonceRadix: Int = 10
+    public let paddedNonceArraySize: Int = 8
     
     var source: Address?
     var destination: Address?
@@ -41,7 +41,7 @@ struct Memo: ECHOCodable, Decodable {
         self.byteMessage = byteMessage
     }
     
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         
         let values = try decoder.container(keyedBy: MemoCodingKeys.self)
         
@@ -58,7 +58,7 @@ struct Memo: ECHOCodable, Decodable {
     
     // MARK: ECHOCodable
     
-    func toData() -> Data? {
+    public func toData() -> Data? {
         
         if let source = source,
             let destination = destination,
@@ -100,7 +100,7 @@ struct Memo: ECHOCodable, Decodable {
         return paddedNonceBytes
     }
     
-    func toJSON() -> Any? {
+    public func toJSON() -> Any? {
         
         let dictionary: [AnyHashable: Any?] = [MemoCodingKeys.fromAccount.rawValue: source?.toJSON(),
                                                MemoCodingKeys.toAccount.rawValue: destination?.toJSON(),

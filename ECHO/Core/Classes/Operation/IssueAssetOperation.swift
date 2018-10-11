@@ -9,7 +9,7 @@
 /**
     Struct used to encapsulate operations related to the [OperationType.assetIssueOperation](OperationType.assetIssueOperation)
  */
-struct IssueAssetOperation: BaseOperation {
+public struct IssueAssetOperation: BaseOperation {
     
     enum IssueAssetOperationCodingKeys: String, CodingKey {
         case issuer
@@ -20,14 +20,14 @@ struct IssueAssetOperation: BaseOperation {
         case fee
     }
     
-    let type: OperationType
-    let extensions: Extensions = Extensions()
-    var fee: AssetAmount
+    public let type: OperationType
+    public let extensions: Extensions = Extensions()
+    public var fee: AssetAmount
     
-    var issuer: Account
-    let assetToIssue: AssetAmount
-    var issueToAccount: Account
-    var memo: Memo = Memo()
+    public var issuer: Account
+    public let assetToIssue: AssetAmount
+    public var issueToAccount: Account
+    public var memo: Memo = Memo()
     
     init(issuer: Account, assetToIssue: AssetAmount, issueToAccount: Account, fee: AssetAmount, memo: Memo?) {
         
@@ -42,7 +42,7 @@ struct IssueAssetOperation: BaseOperation {
         }
     }
     
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         
         type = .assetIssueOperation
         
@@ -68,7 +68,7 @@ struct IssueAssetOperation: BaseOperation {
     
     // MARK: ECHOCodable
     
-    func toData() -> Data? {
+    public func toData() -> Data? {
         
         var data = Data()
         data.append(optional: fee.toData())
@@ -80,7 +80,7 @@ struct IssueAssetOperation: BaseOperation {
         return data
     }
     
-    func toJSON() -> Any? {
+    public func toJSON() -> Any? {
         
         var array = [Any]()
         array.append(getId())

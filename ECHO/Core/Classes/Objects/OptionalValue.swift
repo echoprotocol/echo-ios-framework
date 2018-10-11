@@ -17,7 +17,7 @@
     as this is always done by placing an zero byte.
 
  */
-struct OptionalValue<T>: ECHOCodable where T: ECHOCodable {
+public struct OptionalValue<T>: ECHOCodable where T: ECHOCodable {
     
     let object: T?
     let addByteToStart: Bool
@@ -33,15 +33,15 @@ struct OptionalValue<T>: ECHOCodable where T: ECHOCodable {
     
     // MARK: ECHOCodable
     
-    func toJSON() -> Any? {
+    public func toJSON() -> Any? {
         return object?.toJSON()
     }
     
-    func toJSON() -> String? {
+    public func toJSON() -> String? {
         return object?.toJSON()
     }
     
-    func toData() -> Data? {
+    public func toData() -> Data? {
         
         guard let object = object else {
             return Data(count: 1)

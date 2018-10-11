@@ -9,7 +9,7 @@
 /**
     Struct used to encapsulate operations related to the [OperationType.accountUpdateOperation](OperationType.accountUpdateOperation)
  */
-struct AccountUpdateOperation: BaseOperation {
+public struct AccountUpdateOperation: BaseOperation {
     
     enum AccountUpdateOperationCodingKeys: String, CodingKey {
         case account
@@ -20,9 +20,9 @@ struct AccountUpdateOperation: BaseOperation {
         case fee
     }
     
-    let type: OperationType
-    let extensions: Extensions = Extensions()
-    var fee: AssetAmount
+    public let type: OperationType
+    public let extensions: Extensions = Extensions()
+    public var fee: AssetAmount
     
     public var account: Account
     public let owner: OptionalValue<Authority>
@@ -68,7 +68,7 @@ struct AccountUpdateOperation: BaseOperation {
     
     // MARK: ECHOCodable
     
-    func toData() -> Data? {
+    public func toData() -> Data? {
         
         var data = Data()
         data.append(optional: fee.toData())
@@ -80,7 +80,7 @@ struct AccountUpdateOperation: BaseOperation {
         return data
     }
     
-    func toJSON() -> Any? {
+    public func toJSON() -> Any? {
         
         var array = [Any]()
         array.append(getId())

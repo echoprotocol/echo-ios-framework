@@ -41,7 +41,7 @@ public struct Authority: ECHOCodable, Decodable {
     
     // MARK: ECHOCodable
     
-    func toData() -> Data? {
+    public func toData() -> Data? {
         
         var data = Data()
         
@@ -69,7 +69,7 @@ public struct Authority: ECHOCodable, Decodable {
         return data
     }
     
-    func toJSON() -> Any? {
+    public func toJSON() -> Any? {
         
         var accountsAuthsJSON = [Any?]()
         accountAuths.forEach {

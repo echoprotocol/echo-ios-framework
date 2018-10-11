@@ -35,7 +35,7 @@ public struct AssetAmount: ECHOCodable, Decodable {
     
     // MARK: ECHOCodable
     
-    func toJSON() -> Any? {
+    public func toJSON() -> Any? {
         
         let dictionary: [AnyHashable: Any?] = [AssetAmountCodingKeys.amount.rawValue: amount,
                                                AssetAmountCodingKeys.assetId.rawValue: asset.id]
@@ -43,7 +43,7 @@ public struct AssetAmount: ECHOCodable, Decodable {
         return dictionary
     }
     
-    func toData() -> Data? {
+    public func toData() -> Data? {
         
         guard let assetInstance = asset.getInstance() else {
             return nil

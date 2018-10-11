@@ -11,7 +11,7 @@
  
     [AccountOptions model documentation](https://dev-doc.myecho.app/structgraphene_1_1chain_1_1account__options.html)
  */
-struct AccountOptions: ECHOCodable, Decodable {
+public struct AccountOptions: ECHOCodable, Decodable {
     
     enum AccountOptionsCodingKeys: String, CodingKey {
         case memo = "memo_key"
@@ -41,7 +41,7 @@ struct AccountOptions: ECHOCodable, Decodable {
         }
     }
     
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
 
         let values = try decoder.container(keyedBy: AccountOptionsCodingKeys.self)
         
@@ -57,7 +57,7 @@ struct AccountOptions: ECHOCodable, Decodable {
     
     // MARK: ECHOCodable
     
-    func toJSON() -> Any? {
+    public func toJSON() -> Any? {
         
         var votesArray = [Any]()
         votes.forEach {
@@ -76,7 +76,7 @@ struct AccountOptions: ECHOCodable, Decodable {
         return dictionary
     }
     
-    func toData() -> Data? {
+    public func toData() -> Data? {
         
         guard let memo = memo else {
             return Data.init(count: 1)

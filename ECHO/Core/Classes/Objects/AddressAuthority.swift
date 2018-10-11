@@ -42,13 +42,13 @@ public struct AddressAuthority: ECHOCodable, Decodable {
     
     // MARK: ECHOCodable
     
-    func toJSON() -> Any? {
+    public func toJSON() -> Any? {
         
         let array: [Any?] = [address.toJSON(), value]
         return array
     }
     
-    func toData() -> Data? {
+    public func toData() -> Data? {
         
         var data = Data()
         data.append(optional: address.toData())

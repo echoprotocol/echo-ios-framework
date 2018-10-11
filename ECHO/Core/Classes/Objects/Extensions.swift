@@ -23,7 +23,7 @@ public struct Extensions: ECHOCodable {
     
     // MARK: ECHOCodable
     
-    func toJSON() -> Any? {
+    public func toJSON() -> Any? {
 
         var array = [Any?]()
         extensions.forEach {
@@ -32,11 +32,11 @@ public struct Extensions: ECHOCodable {
         return array
     }
 
-    func toJSON() -> String? {
+    public func toJSON() -> String? {
         return nil
     }
 
-    func toData() -> Data? {
+    public func toData() -> Data? {
         return Data(count: 1)
     }
 }

@@ -9,7 +9,7 @@
 /**
     Struct used to encapsulate operations related to the [OperationType.assetCreateOperation](OperationType.assetCreateOperation)
  */
-struct CreateAssetOperation: BaseOperation {
+public struct CreateAssetOperation: BaseOperation {
     
     let defaultAssetId: String = "1.3.1"
     
@@ -19,11 +19,11 @@ struct CreateAssetOperation: BaseOperation {
         case fee
     }
     
-    let type: OperationType
-    let extensions: Extensions = Extensions()
-    var fee: AssetAmount
+    public let type: OperationType
+    public let extensions: Extensions = Extensions()
+    public var fee: AssetAmount
     
-    var asset: Asset
+    public var asset: Asset
     
     init(asset: Asset, fee: AssetAmount) {
         
@@ -33,7 +33,7 @@ struct CreateAssetOperation: BaseOperation {
         self.asset = asset
     }
     
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         
         type = .assetCreateOperation
         
@@ -50,7 +50,7 @@ struct CreateAssetOperation: BaseOperation {
     
     // MARK: ECHOCodable
     
-    func toData() -> Data? {
+    public func toData() -> Data? {
         
         var data = Data()
         data.append(optional: fee.toData())
@@ -59,7 +59,7 @@ struct CreateAssetOperation: BaseOperation {
         return data
     }
     
-    func toJSON() -> Any? {
+    public func toJSON() -> Any? {
         
         var array = [Any]()
         array.append(getId())

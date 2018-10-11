@@ -59,7 +59,7 @@ public struct BitassetOptions: ECHOCodable, Decodable {
     
     // MARK: ECHOCodable
     
-    func toJSON() -> Any? {
+    public func toJSON() -> Any? {
         
         let dictionary: [AnyHashable: Any?] = [BitassetOptionsCodingKeys.feedLifetimeSec.rawValue: feedLifetimeSec,
                                                BitassetOptionsCodingKeys.minimumFeeds.rawValue: minimumFeeds,
@@ -72,7 +72,7 @@ public struct BitassetOptions: ECHOCodable, Decodable {
         return dictionary
     }
     
-    func toData() -> Data? {
+    public func toData() -> Data? {
         
         var data = Data()
         data.append(optional: Data.fromInt32(feedLifetimeSec))

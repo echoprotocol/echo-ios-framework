@@ -48,7 +48,7 @@ public struct Price: ECHOCodable, Decodable {
     
     // MARK: ECHOCodable
     
-    func toJSON() -> Any? {
+    public func toJSON() -> Any? {
         
         let dictionary: [AnyHashable: Any?] = [PriceCodingKeys.base.rawValue: base.toJSON(),
                                                PriceCodingKeys.quote.rawValue: quote.toJSON()]
@@ -56,7 +56,7 @@ public struct Price: ECHOCodable, Decodable {
         return dictionary
     }
     
-    func toData() -> Data? {
+    public func toData() -> Data? {
         
         var data = Data()
         data.append(optional: base.toData())

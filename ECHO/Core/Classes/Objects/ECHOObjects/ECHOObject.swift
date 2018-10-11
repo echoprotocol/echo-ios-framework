@@ -12,7 +12,7 @@ protocol ECHOObject: ECHOCodable {
 
 extension ECHOObject {
     
-    func toData() -> Data? {
+    public func toData() -> Data? {
         
         guard let instance = getInstance() else {
             return nil
@@ -21,7 +21,7 @@ extension ECHOObject {
         return Data.fromUIntLikeUnsignedByteArray(instance)
     }
     
-    func toJSON() -> Any? {
+    public func toJSON() -> Any? {
         return id
     }
     

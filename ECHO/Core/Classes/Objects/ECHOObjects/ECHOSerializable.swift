@@ -9,25 +9,25 @@
 /**
     Protocol which contains logic of [JSONDecodable](JSONDecodable), [JSONEncodable](JSONEncodable)
  */
-protocol JSONCodable: JSONDecodable, JSONEncodable { }
+public protocol JSONCodable: JSONDecodable, JSONEncodable { }
 
 /**
     Decode object form JSON
  */
-protocol JSONDecodable {
+public protocol JSONDecodable {
     func toObject<T>(from string: String, type: T.Type) -> T? where T: Decodable
     func toObject<T>(from data: Data, type: T.Type) -> T? where T: Decodable
 }
 
 extension JSONDecodable {
     
-    func toObject<T>(from string: String, type: T.Type) -> T? where T: Decodable {
+    public func toObject<T>(from string: String, type: T.Type) -> T? where T: Decodable {
         let object = string.data(using: .utf8)
             .flatMap {try? JSONDecoder().decode(type, from: $0)}
         return object
     }
     
-    func toObject<T>(from data: Data, type: T.Type) -> T? where T: Decodable {
+    public func toObject<T>(from data: Data, type: T.Type) -> T? where T: Decodable {
         let object = try? JSONDecoder().decode(type, from: data)
         return object
     }
@@ -36,14 +36,14 @@ extension JSONDecodable {
 /**
     Encode object to JSON
  */
-protocol JSONEncodable {
+public protocol JSONEncodable {
     func toJSON() -> Any?
     func toJSON() -> String?
 }
 
 extension JSONEncodable {
     
-    func toJSON() -> String? {
+    public func toJSON() -> String? {
         
         let json: Any? = toJSON()
         let jsonString = (json as?  [AnyHashable: Any?])
@@ -57,24 +57,24 @@ extension JSONEncodable {
 /**
     Protocol which contains logic of [BytesDecodable](BytesDecodable), [BytesEncodable](BytesEncodable)
  */
-protocol BytesCodable: BytesDecodable, BytesEncodable { }
+public protocol BytesCodable: BytesDecodable, BytesEncodable { }
 
 /**
     Decode object from Data
  */
-protocol BytesDecodable { }
+public protocol BytesDecodable { }
 
 /**
     Encode object to Data
  */
-protocol BytesEncodable {
+public protocol BytesEncodable {
     func toData() -> Data?
 }
 
 /**
     Protocol which contains logic of [JSONCodable](JSONCodable), [BytesCodable](BytesCodable)
  */
-protocol ECHOCodable: JSONCodable, BytesCodable { }
+public protocol ECHOCodable: JSONCodable, BytesCodable { }
 
 /**
     Array of [IntOrString](IntOrString)

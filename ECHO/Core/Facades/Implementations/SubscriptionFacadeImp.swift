@@ -93,14 +93,16 @@ final public class SubscriptionFacadeImp: SubscriptionFacade {
     
     fileprivate func getDynamicGlobalPropertiesAndSetSubscriber(delegate: SubscribeDynamicGlobalPropertiesDelegate) {
         
-        services.databaseService.getObjects(type: DynamicGlobalProperties.self, objectsIds: [DynamicGlobalProperties.defaultIdentifier]) { [weak self] (_) in
+        services.databaseService.getObjects(type: DynamicGlobalProperties.self,
+                                            objectsIds: [DynamicGlobalProperties.defaultIdentifier]) { [weak self] (_) in
             self?.dynamicGlobalPropertiesSubscriber = delegate
         }
     }
     
     fileprivate func getDynamicGlobalPropertiesAndSetSubscriber(delegate: SubscribeBlockDelegate) {
         
-        services.databaseService.getObjects(type: DynamicGlobalProperties.self, objectsIds: [DynamicGlobalProperties.defaultIdentifier]) { [weak self] (_) in
+        services.databaseService.getObjects(type: DynamicGlobalProperties.self,
+                                            objectsIds: [DynamicGlobalProperties.defaultIdentifier]) { [weak self] (_) in
             self?.createBlockSubscriber = delegate
         }
     }

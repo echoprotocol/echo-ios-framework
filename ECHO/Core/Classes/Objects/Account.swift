@@ -78,11 +78,11 @@ public struct Account: ECHOObject, ECHOCodable, Decodable, Hashable {
     
     // MARK: ECHOCodable
     
-    func toJSON() -> Any? {
+    public func toJSON() -> Any? {
         return id
     }
     
-    func toJSON() -> String? {
+    public func toJSON() -> String? {
         return id
     }
 }

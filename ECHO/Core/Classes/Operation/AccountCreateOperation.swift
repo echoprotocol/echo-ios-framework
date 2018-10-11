@@ -11,7 +11,7 @@ import Foundation
 /**
     Struct used to encapsulate operations related to the [OperationType.accountCreateOperation](OperationType.accountCreateOperation)
  */
-struct AccountCreateOperation: BaseOperation {
+public struct AccountCreateOperation: BaseOperation {
     
     enum AccountCreateOperationCodingKeys: String, CodingKey {
         case name
@@ -25,19 +25,19 @@ struct AccountCreateOperation: BaseOperation {
         case fee
     }
     
-    let type: OperationType
-    let extensions: Extensions = Extensions()
-    var fee: AssetAmount
+    public let type: OperationType
+    public let extensions: Extensions = Extensions()
+    public var fee: AssetAmount
     
-    let name: String
-    let registrar: String
-    let referrer: String
-    let referrerPercent: Int = 0
-    let owner: OptionalValue<Authority>
-    let active: OptionalValue<Authority>
-    let options: OptionalValue<AccountOptions>
+    public let name: String
+    public let registrar: String
+    public let referrer: String
+    public let referrerPercent: Int = 0
+    public let owner: OptionalValue<Authority>
+    public let active: OptionalValue<Authority>
+    public let options: OptionalValue<AccountOptions>
     
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         
         type = .accountCreateOperation
         
@@ -60,7 +60,7 @@ struct AccountCreateOperation: BaseOperation {
     
     // MARK: ECHOCodable
     
-    func toJSON() -> Any? {
+    public func toJSON() -> Any? {
         
         var array = [Any]()
         array.append(getId())
@@ -87,7 +87,7 @@ struct AccountCreateOperation: BaseOperation {
         return array
     }
     
-    func toData() -> Data? {
+    public func toData() -> Data? {
         
         var data = Data()
         data.append(optional: fee.toData())

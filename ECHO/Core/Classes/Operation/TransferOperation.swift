@@ -9,7 +9,7 @@
 /**
     Struct used to encapsulate operations related to the [OperationType.transferOperation](OperationType.transferOperation)
  */
-struct TransferOperation: BaseOperation {
+public struct TransferOperation: BaseOperation {
     
     enum TransferOperationCodingKeys: String, CodingKey {
         case amount
@@ -20,14 +20,14 @@ struct TransferOperation: BaseOperation {
         case fee
     }
     
-    var type: OperationType
-    var extensions: Extensions = Extensions()
-    var fee: AssetAmount
+    public var type: OperationType
+    public var extensions: Extensions = Extensions()
+    public var fee: AssetAmount
     
-    var fromAccount: Account
-    var toAccount: Account
-    var transferAmount: AssetAmount
-    var memo: Memo = Memo()
+    public var fromAccount: Account
+    public var toAccount: Account
+    public var transferAmount: AssetAmount
+    public var memo: Memo = Memo()
     
     init(fromAccount: Account, toAccount: Account, transferAmount: AssetAmount, fee: AssetAmount, memo: Memo?) {
         
@@ -42,7 +42,7 @@ struct TransferOperation: BaseOperation {
         }
     }
     
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         
         type = .transferOperation
         
@@ -69,7 +69,7 @@ struct TransferOperation: BaseOperation {
     
     // MARK: ECHOCodable
     
-    func toJSON() -> Any? {
+    public func toJSON() -> Any? {
         
         var array = [Any]()
         array.append(getId())
@@ -89,7 +89,7 @@ struct TransferOperation: BaseOperation {
         return array
     }
     
-    func toJSON() -> String? {
+    public func toJSON() -> String? {
         
         let json: Any? = toJSON()
         let jsonString = (json as? [Any])
@@ -99,7 +99,7 @@ struct TransferOperation: BaseOperation {
         return jsonString
     }
     
-    func toData() -> Data? {
+    public func toData() -> Data? {
         
         var data = Data()
         data.append(optional: fee.toData())

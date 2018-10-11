@@ -9,7 +9,7 @@
 /**
   Represents all blockchain operation types [Operations](https://dev-doc.myecho.app/group__operations.html#details)
  */
-enum OperationType: Int {
+public enum OperationType: Int {
     case transferOperation                          //0
     case limitOrderCreateOperation
     case limitOrderCancelOperation

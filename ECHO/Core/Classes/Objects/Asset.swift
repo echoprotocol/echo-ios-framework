@@ -73,7 +73,7 @@ public struct Asset: ECHOObject, BytesCodable, Decodable {
     
     // MARK: BytesCodable
     
-    func toData() -> Data? {
+    public func toData() -> Data? {
         
         var data = Data()
         data.append(optional: issuer?.toData())

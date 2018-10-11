@@ -9,7 +9,7 @@
 /**
     Represents base operation model in ECHO blockchain
  */
-protocol BaseOperation: ECHOCodable, Decodable {
+public protocol BaseOperation: ECHOCodable, Decodable {
     
     var type: OperationType { get }
     var extensions: Extensions { get }
@@ -20,7 +20,7 @@ protocol BaseOperation: ECHOCodable, Decodable {
 
 extension BaseOperation {
     
-    func getId() -> Int {
+    public func getId() -> Int {
         return type.rawValue
     }
 }

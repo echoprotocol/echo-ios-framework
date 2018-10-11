@@ -61,7 +61,7 @@ public final class Transaction: ECHOCodable, Decodable {
     
     // MARK: ECHOCodable
     
-    func toJSON() -> Any? {
+    public func toJSON() -> Any? {
         
         let expirationDate = Date(timeIntervalSince1970: TimeInterval(blockData?.relativeExpiration ?? 0))
         let dateFormatter = DateFormatter()
@@ -89,7 +89,7 @@ public final class Transaction: ECHOCodable, Decodable {
         return dictionary
     }
     
-    func toData() -> Data? {
+    public func toData() -> Data? {
         
         var data = Data()
         data.append(optional: Data(hex: chainId ?? "0"))

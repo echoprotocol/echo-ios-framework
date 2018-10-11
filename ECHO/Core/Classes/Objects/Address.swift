@@ -24,15 +24,15 @@ public struct Address: ECHOCodable {
     
     // MARK: ECHOCodable
     
-    func toData() -> Data? {
+    public func toData() -> Data? {
         return data
     }
     
-    func toJSON() -> Any? {
+    public func toJSON() -> Any? {
         return addressString
     }
     
-    func toJSON() -> String? {
+    public func toJSON() -> String? {
         return addressString
     }
 }

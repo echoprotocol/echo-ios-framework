@@ -21,14 +21,14 @@ public struct HistoryItem: Decodable {
         case result
     }
     
-    var id: String
-    var operation: BaseOperation?
-    var timestamp: Date?
-    let blockNum: Int
-    let trxInBlock: Int
-    let opInTrx: Int
-    let virtualOp: Int
-    let result: [Any]
+    public var id: String
+    public var operation: BaseOperation?
+    public var timestamp: Date?
+    public let blockNum: Int
+    public let trxInBlock: Int
+    public let opInTrx: Int
+    public let virtualOp: Int
+    public let result: [Any]
     
     public init(from decoder: Decoder) throws {
         

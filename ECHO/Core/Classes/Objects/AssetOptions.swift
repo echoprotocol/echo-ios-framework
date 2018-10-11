@@ -95,7 +95,7 @@ public struct AssetOptions: ECHOCodable, Decodable {
     
     // MARK: ECHOCodable
     
-    func toJSON() -> Any? {
+    public func toJSON() -> Any? {
         
         var whitelistAuthoritiesArray = [Any?]()
         whitelistAuthorities.forEach {
@@ -133,7 +133,7 @@ public struct AssetOptions: ECHOCodable, Decodable {
         return dictionary
     }
     
-    func toData() -> Data? {
+    public func toData() -> Data? {
         
         var data = Data()
         data.append(optional: Data.fromUint64(maxSupply))

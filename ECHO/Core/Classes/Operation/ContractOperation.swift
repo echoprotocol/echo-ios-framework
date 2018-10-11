@@ -8,7 +8,7 @@
 /**
     Struct used to encapsulate operations related to the [OperationType.contractOperation](OperationType.contractOperation)
  */
-struct ContractOperation: BaseOperation {
+public struct ContractOperation: BaseOperation {
     
     private enum ContractOperationCodingKeys: String, CodingKey {
         case registrar
@@ -21,17 +21,17 @@ struct ContractOperation: BaseOperation {
         case fee
     }
     
-    var type: OperationType
-    var extensions: Extensions = Extensions()
-    var fee: AssetAmount
+    public var type: OperationType
+    public var extensions: Extensions = Extensions()
+    public var fee: AssetAmount
     
-    let registrar: Account
-    let asset: Asset
-    let value: Int
-    let gasPrice: Int
-    let gas: Int
-    let code: String
-    let receiver: OptionalValue<Contract>
+    public let registrar: Account
+    public let asset: Asset
+    public let value: Int
+    public let gasPrice: Int
+    public let gas: Int
+    public let code: String
+    public let receiver: OptionalValue<Contract>
     
     public init(registrar: Account,
                 asset: Asset,
@@ -76,7 +76,7 @@ struct ContractOperation: BaseOperation {
         fee = try values.decode(AssetAmount.self, forKey: .fee)
     }
     
-    func toData() -> Data? {
+    public func toData() -> Data? {
         
         var data = Data()
         data.append(optional: fee.toData())
@@ -95,7 +95,7 @@ struct ContractOperation: BaseOperation {
         return data
     }
     
-    func toJSON() -> Any? {
+    public func toJSON() -> Any? {
         
         var array = [Any]()
         array.append(getId())
