@@ -297,7 +297,7 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
             
             guard mergeAccountsInHistoryOperation?.isCancelled == false else { return }
             guard var history: [HistoryItem] = queue?.getValue(AccountHistoryResultsKeys.historyItems.rawValue) else { return }
-            guard let accounts: [UserAccount] = queue?.getValue(AccountHistoryResultsKeys.loadedAccounts.rawValue) else { return }
+            guard let accounts: [String: UserAccount] = queue?.getValue(AccountHistoryResultsKeys.loadedAccounts.rawValue) else { return }
             
             for index in 0..<history.count {
                 
@@ -332,6 +332,13 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                     historyItem.operation = operation
                 }
                 
+                if var operation = operation as? AccountCreateOperation {
+                    let registrar = self?.findAccountIn(accounts, accountId: operation.registrar.id)
+                    let refereer = self?.findAccountIn(accounts, accountId: operation.referrer.id)
+                    operation.changeAccounts(registrar: registrar, referrer: refereer)
+                    historyItem.operation = operation
+                }
+                
                 history[index] = historyItem
             }
             
@@ -357,11 +364,9 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         return historyComletionOperation
     }
     
-    fileprivate func findAccountIn(_ array: [UserAccount], accountId: String) -> Account? {
+    fileprivate func findAccountIn(_ dict: [String: UserAccount], accountId: String) -> Account? {
         
-        return array.first(where: {
-            return $0.account.id == accountId
-        })?.account
+        return dict[accountId]?.account
     }
     
     fileprivate func findDataToLoadFromHistoryItems(_ items: [HistoryItem]) -> (blockNums: Set<Int>, accountIds: Set<String>) {
@@ -412,6 +417,12 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
             if let operation = operation as? IssueAssetOperation {
                 accountsIds.insert(operation.issuer.id)
                 accountsIds.insert(operation.issueToAccount.id)
+                return
+            }
+            
+            if let operation = operation as? AccountCreateOperation {
+                accountsIds.insert(operation.registrar.id)
+                accountsIds.insert(operation.referrer.id)
                 return
             }
         }

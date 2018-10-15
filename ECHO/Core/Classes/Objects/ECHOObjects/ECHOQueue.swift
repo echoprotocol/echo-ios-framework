@@ -82,7 +82,7 @@ final class ECHOQueue: NSObject {
         workingQueue.qualityOfService = .utility
         
         semaphore = DispatchSemaphore(value: 0)
-        valuesContainer = [String: Any?]()
+        valuesContainer = [String: Any]()
     }
     
     deinit {

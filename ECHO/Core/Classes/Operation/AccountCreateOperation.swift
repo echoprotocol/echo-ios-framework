@@ -30,8 +30,8 @@ public struct AccountCreateOperation: BaseOperation {
     public var fee: AssetAmount
     
     public let name: String
-    public let registrar: String
-    public let referrer: String
+    public var registrar: Account
+    public var referrer: Account
     public let referrerPercent: Int = 0
     public let owner: OptionalValue<Authority>
     public let active: OptionalValue<Authority>
@@ -44,8 +44,12 @@ public struct AccountCreateOperation: BaseOperation {
         let values = try decoder.container(keyedBy: AccountCreateOperationCodingKeys.self)
         
         name = try values.decode(String.self, forKey: .name)
-        registrar = try values.decode(String.self, forKey: .registrar)
-        referrer = try values.decode(String.self, forKey: .referrer)
+        
+        let registrarId = try values.decode(String.self, forKey: .registrar)
+        let referrerId = try values.decode(String.self, forKey: .referrer)
+
+        registrar = Account(registrarId)
+        referrer = Account(referrerId)
         
         let ownerValue = try values.decode(Authority.self, forKey: .owner)
         let activeValue = try values.decode(Authority.self, forKey: .active)
@@ -87,13 +91,19 @@ public struct AccountCreateOperation: BaseOperation {
         return array
     }
     
+    mutating func changeAccounts(registrar: Account?, referrer: Account?) {
+        
+        if let registrar = registrar { self.registrar = registrar }
+        if let referrer = referrer { self.referrer = referrer }
+    }
+    
     public func toData() -> Data? {
         
         var data = Data()
         data.append(optional: fee.toData())
         data.append(optional: Data.fromString(name))
-        data.append(optional: Data.fromString(registrar))
-        data.append(optional: Data.fromString(referrer))
+        data.append(optional: Data.fromString(registrar.id))
+        data.append(optional: Data.fromString(referrer.id))
         data.append(optional: Data.fromInt8(referrerPercent))
         data.append(optional: owner.toData())
         data.append(optional: active.toData())
