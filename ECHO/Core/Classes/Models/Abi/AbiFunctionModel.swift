@@ -25,6 +25,21 @@ public struct AbiFunctionModel: Equatable, Hashable {
     var inputs: [AbiFunctionEntries]
     var outputs: [AbiFunctionEntries]
     
+    public init(name: String,
+                isConstant: Bool,
+                isPyable: Bool,
+                type: AbiFunctionType,
+                inputs: [AbiFunctionEntries],
+                outputs: [AbiFunctionEntries]) {
+        
+        self.name = name
+        self.isConstant = isConstant
+        self.isPyable = isPyable
+        self.type = type
+        self.inputs = inputs
+        self.outputs = outputs
+    }
+    
     public var hashValue: Int {
         return name.hashValue ^ (isConstant ? 1:0) ^ (isPyable ? 1:0) ^ type.hashValue ^ inputs.hashValue ^ outputs.hashValue
     }

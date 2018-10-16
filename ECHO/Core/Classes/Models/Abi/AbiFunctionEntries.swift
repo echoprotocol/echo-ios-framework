@@ -8,30 +8,30 @@
 
 import Foundation
 
-class AbiFunctionEntries: Equatable, Hashable {    
+public class AbiFunctionEntries: Equatable, Hashable {
     
     var name: String
     var typeString: String
     var type: AbiParameterType
     
-    init(name: String, typeString: String, type: AbiParameterType) {
+    public init(name: String, typeString: String, type: AbiParameterType) {
         self.name = name
         self.typeString = typeString
         self.type = type
     }
     
-    static func == (lhs: AbiFunctionEntries, rhs: AbiFunctionEntries) -> Bool {
+    public static func == (lhs: AbiFunctionEntries, rhs: AbiFunctionEntries) -> Bool {
         return lhs.type == rhs.type
     }
     
-    var hashValue: Int {
+    public var hashValue: Int {
         return type.hashValue
     }
 }
 
-class AbiFunctionInputModel: AbiFunctionEntries { }
+public class AbiFunctionInputModel: AbiFunctionEntries { }
 
-class AbiFunctionOutputModel: AbiFunctionEntries { }
+public class AbiFunctionOutputModel: AbiFunctionEntries { }
 
 extension Array where Element: AbiFunctionEntries {
     

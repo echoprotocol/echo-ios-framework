@@ -347,7 +347,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
                                              asset: Asset(assetId),
                                              value: 0,
                                              gasPrice: 0,
-                                             gas: 1000000,
+                                             gas: 11000000,
                                              code: byteCode,
                                              receiver: receive,
                                              fee: AssetAmount(amount: 0, asset: Asset(Settings.defaultAsset)))

@@ -9,7 +9,7 @@
 import Foundation
 
 // swiftlint:disable no_fallthrough_only
-enum AbiParameterType {
+public enum AbiParameterType {
     
     case string
     case uint(size: Int)
@@ -107,7 +107,7 @@ enum AbiParameterType {
 
 extension AbiParameterType: Hashable {
     
-    var hashValue: Int {
+    public var hashValue: Int {
         
         switch self {
             
@@ -204,7 +204,7 @@ extension AbiParameterType: Hashable {
 
 extension AbiParameterType: Equatable {
     
-    static func == (lhs: AbiParameterType, rhs: AbiParameterType) -> Bool {
+    public static func == (lhs: AbiParameterType, rhs: AbiParameterType) -> Bool {
         
         switch (lhs, rhs) {
             
@@ -334,7 +334,7 @@ extension AbiParameterType: CustomStringConvertible {
             
         case .fixedBytes(let size):
             
-            return "bytes" + "[\(size)]"
+            return "bytes" + "\(size)"
             
         case .array(_):
             

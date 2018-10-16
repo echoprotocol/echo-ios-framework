@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol AbiArgumentCoder {
+public protocol AbiArgumentCoder {
     
     func getArguments(valueTypes: [AbiTypeValueInputModel]) throws -> Data
     func getValueTypes(data: Data, abiFunc: AbiFunctionModel) throws -> [AbiTypeValueOutputModel]

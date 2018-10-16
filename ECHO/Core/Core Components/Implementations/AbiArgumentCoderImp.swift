@@ -11,11 +11,13 @@ class ArrayOfData {
     var array = [Data]()
 }
 
-final class AbiArgumentCoderImp: AbiArgumentCoder {
+final public class AbiArgumentCoderImp: AbiArgumentCoder {
     
     let sliceSize = 32
     
-    func getArguments(valueTypes: [AbiTypeValueInputModel]) throws -> Data {
+    public init() { }
+    
+    public func getArguments(valueTypes: [AbiTypeValueInputModel]) throws -> Data {
         
         let staticData = ArrayOfData()
         let dynamicData = ArrayOfData()
@@ -73,12 +75,12 @@ final class AbiArgumentCoderImp: AbiArgumentCoder {
         return args
     }
     
-    func getValueTypes(data: Data, abiFunc: AbiFunctionModel) throws -> [AbiTypeValueOutputModel] {
+    public func getValueTypes(data: Data, abiFunc: AbiFunctionModel) throws -> [AbiTypeValueOutputModel] {
         
         return try decodeOutputs(data: data, function: abiFunc)
     }
     
-    func getValueTypes(string: String, abiFunc: AbiFunctionModel) throws -> [AbiTypeValueOutputModel] {
+    public func getValueTypes(string: String, abiFunc: AbiFunctionModel) throws -> [AbiTypeValueOutputModel] {
         
         if let data = Data(hex: string) {
             return try decodeOutputs(data: data, function: abiFunc)
@@ -175,6 +177,60 @@ extension Decoder {
                         throw error
                     }
                 }
+            case .fixedArrayOfAddresses(let size):
+                var addresses = [String]()
+                for index in 0..<size {
+                    if let btcNumber = BTCBigNumber(unsignedBigEndian: outputsData.subdata(in: (sliceSize * index)..<(sliceSize * index + sliceSize))) {
+                        addresses.append(btcNumber.decimalString)
+                    }
+                }
+                
+                if let newData = outputsData[safe: size * sliceSize..<outputsData.count] {
+                    let output = AbiTypeValueOutputModel(type: type, value: addresses)
+                    decodedOutputs.append(output)
+                    
+                    outputsData = newData
+                } else {
+                    let error = NSError(domain: "", code: 0, userInfo: nil)
+                    throw error
+                }
+            case .fixedArrayOfBool(let size):
+                var bools = [Bool]()
+                for index in 0..<size {
+                    if let btcNumber = BTCBigNumber(unsignedBigEndian: outputsData.subdata(in: (sliceSize * index)..<(sliceSize * index + sliceSize))),
+                        let intValue = Int(btcNumber.decimalString) {
+                        bools.append(intValue == 1)
+                    }
+                }
+                
+                if let newData = outputsData[safe: size * sliceSize..<outputsData.count] {
+                    let output = AbiTypeValueOutputModel(type: type, value: bools)
+                    decodedOutputs.append(output)
+                    
+                    outputsData = newData
+                } else {
+                    let error = NSError(domain: "", code: 0, userInfo: nil)
+                    throw error
+                }
+            case .fixedArrayOfUint(let size): fallthrough
+            case .fixedArrayOfInt(let size):
+                var ints = [Int]()
+                for index in 0..<size {
+                    if let btcNumber = BTCBigNumber(unsignedBigEndian: outputsData.subdata(in: (sliceSize * index)..<(sliceSize * index + sliceSize))),
+                        let intValue = Int(btcNumber.decimalString) {
+                        ints.append(intValue)
+                    }
+                }
+                
+                if let newData = outputsData[safe: size * sliceSize..<outputsData.count] {
+                    let output = AbiTypeValueOutputModel(type: type, value: ints)
+                    decodedOutputs.append(output)
+                    
+                    outputsData = newData
+                } else {
+                    let error = NSError(domain: "", code: 0, userInfo: nil)
+                    throw error
+                }
             default:
             break
             }
@@ -230,7 +286,7 @@ extension Encoder {
             
         case .fixedBytes(let size):
             
-            if var value = data.data(using: .ascii) {
+            if var value = Data(hex: data) {
                 
                 if value.count > size {
                     value = value.subdata(in: 0..<size)

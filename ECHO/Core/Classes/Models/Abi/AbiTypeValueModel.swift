@@ -10,8 +10,14 @@ import Foundation
 
 public struct AbiTypeValueInputModel: Equatable {
     
-    var type: AbiParameterType
-    var value: String
+    public var type: AbiParameterType
+    public var value: String
+    
+    public init(type: AbiParameterType, value: String) {
+        
+        self.type = type
+        self.value = value
+    }
     
     public static func == (lhs: AbiTypeValueInputModel, rhs: AbiTypeValueInputModel) -> Bool {
         
@@ -22,8 +28,14 @@ public struct AbiTypeValueInputModel: Equatable {
 
 public  struct AbiTypeValueOutputModel: Equatable {
     
-    var type: AbiParameterType
-    var value: Any
+    public var type: AbiParameterType
+    public var value: Any
+    
+    public init(type: AbiParameterType, value: Any) {
+        
+        self.type = type
+        self.value = value
+    }
     
     public static func == (lhs: AbiTypeValueOutputModel, rhs: AbiTypeValueOutputModel) -> Bool {
         
