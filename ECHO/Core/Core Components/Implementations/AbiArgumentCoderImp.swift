@@ -93,6 +93,7 @@ final public class AbiArgumentCoderImp: AbiArgumentCoder {
 }
 
 // swiftlint:disable no_fallthrough_only
+// swiftlint:disable function_body_length
 private typealias Decoder = AbiArgumentCoderImp
 extension Decoder {
     
@@ -212,8 +213,7 @@ extension Decoder {
                     let error = NSError(domain: "", code: 0, userInfo: nil)
                     throw error
                 }
-            case .fixedArrayOfUint(let size): fallthrough
-            case .fixedArrayOfInt(let size):
+            case .fixedArrayOfInt(let size), .fixedArrayOfUint(let size):
                 var ints = [Int]()
                 for index in 0..<size {
                     if let btcNumber = BTCBigNumber(unsignedBigEndian: outputsData.subdata(in: (sliceSize * index)..<(sliceSize * index + sliceSize))),
@@ -632,3 +632,4 @@ extension Encoder {
     }
 }
 // swiftlint:enable no_fallthrough_only
+// swiftlint:enable function_body_length
