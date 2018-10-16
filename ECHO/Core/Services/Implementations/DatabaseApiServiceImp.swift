@@ -97,6 +97,7 @@ extension BlocksAndTransactionsService {
                 let dateFormatter = DateFormatter()
                 dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
                 dateFormatter.dateFormat = Settings.defaultDateFormat
+                dateFormatter.locale = Locale(identifier: Settings.localeIdentifier)
                 
                 let date = dateFormatter.date(from: dynamicProperties.time)
                 let interval = date?.timeIntervalSince1970 ?? 0

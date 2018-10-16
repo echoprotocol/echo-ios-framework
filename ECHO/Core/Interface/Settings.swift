@@ -32,4 +32,5 @@ final public class Settings {
     
     public static let defaultDateFormat = "yyyy-MM-dd'T'H:mm:ss"
     public static let defaultAsset = "1.3.0"
+    public static let localeIdentifier = "en_US_POSIX"
 }

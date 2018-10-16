@@ -278,6 +278,8 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                 
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = Settings.defaultDateFormat
+                dateFormatter.locale = Locale(identifier: Settings.localeIdentifier)
+
                 historyItem.timestamp = dateFormatter.date(from: findedBlock.timestamp)
                 
                 history[index] = historyItem

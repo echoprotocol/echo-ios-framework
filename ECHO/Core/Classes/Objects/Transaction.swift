@@ -67,6 +67,8 @@ public final class Transaction: ECHOCodable, Decodable {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = Settings.defaultDateFormat
         dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+        dateFormatter.locale = Locale(identifier: Settings.localeIdentifier)
+
         let dateSring = dateFormatter.string(from: expirationDate)
         
         var operationsArray = [Any?]()
@@ -113,6 +115,8 @@ public final class Transaction: ECHOCodable, Decodable {
         let expirationString = try values.decode(String.self, forKey: .expiration)
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = Settings.defaultDateFormat
+        dateFormatter.locale = Locale(identifier: Settings.localeIdentifier)
+        
         expiration = dateFormatter.date(from: expirationString)
         refBlockNum = (try values.decode(IntOrString.self, forKey: .refBlockNum)).intValue
         refBlockPrefix = (try values.decode(IntOrString.self, forKey: .refBlockPrefix)).intValue
