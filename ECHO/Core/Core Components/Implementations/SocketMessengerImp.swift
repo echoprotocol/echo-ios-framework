@@ -10,8 +10,8 @@ import Foundation
 import Starscream
 
 /**
-    Implementation of [SocketMessenger](SocketMessenger)
-*/
+ Implementation of [SocketMessenger](SocketMessenger)
+ */
 final class SocketMessengerImp: SocketMessenger {
     
     var state: SocketConnectionState = .notConnected
@@ -31,7 +31,13 @@ final class SocketMessengerImp: SocketMessenger {
         return queue
     }()
     
+    var semaphore: DispatchSemaphore = {
+        return DispatchSemaphore(value: 0)
+    }()
+    
     func connect(toUrl: String) {
+        
+        clearPreviousState()
         
         let operation: BlockOperation = BlockOperation()
         
@@ -47,33 +53,30 @@ final class SocketMessengerImp: SocketMessenger {
             
             if let url = URL(string: toUrl) {
                 
-                let semaphore = DispatchSemaphore(value: 0)
-
                 let socket = WebSocket(url: url)
                 strongSelf.socket = socket
                 strongSelf.state = .connecting
                 
-                socket.onConnect = { [weak self, weak semaphore] in
+                socket.onConnect = { [weak self] in
                     self?.state = .connected
                     self?.onConnect?()
-                    semaphore?.signal()
+                    self?.semaphore.signal()
                 }
                 
                 socket.onDisconnect = { [weak self] (error: Error?) in
                     self?.state = .disconnected
                     self?.onDisconnect?()
                 }
-                                
+                
                 socket.onText = strongSelf.onText
                 socket.connect()
                 
-                _ = semaphore.wait(timeout: .distantFuture)
+                _ = strongSelf.semaphore.wait(timeout: .distantFuture)
             } else {
                 strongSelf.onFailedConnect?()
             }
         }
         workingQueue.addOperation(operation)
-
     }
     
     func disconnect() {
@@ -97,7 +100,7 @@ final class SocketMessengerImp: SocketMessenger {
     }
     
     func write(_ string: String) {
-
+        
         let operation: BlockOperation = BlockOperation()
         
         operation.addExecutionBlock { [weak self, weak operation] in
@@ -114,5 +117,11 @@ final class SocketMessengerImp: SocketMessenger {
         }
         
         workingQueue.addOperation(operation)
+    }
+    
+    func clearPreviousState() {
+        
+        workingQueue.cancelAllOperations()
+        semaphore.signal()
     }
 }

@@ -212,8 +212,7 @@ extension Decoder {
                     let error = NSError(domain: "", code: 0, userInfo: nil)
                     throw error
                 }
-            case .fixedArrayOfUint(let size): fallthrough
-            case .fixedArrayOfInt(let size):
+            case .fixedArrayOfInt(let size), .fixedArrayOfUint(let size):
                 var ints = [Int]()
                 for index in 0..<size {
                     if let btcNumber = BTCBigNumber(unsignedBigEndian: outputsData.subdata(in: (sliceSize * index)..<(sliceSize * index + sliceSize))),
