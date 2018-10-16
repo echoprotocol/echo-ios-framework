@@ -93,6 +93,7 @@ final public class AbiArgumentCoderImp: AbiArgumentCoder {
 }
 
 // swiftlint:disable no_fallthrough_only
+// swiftlint:disable function_body_length
 private typealias Decoder = AbiArgumentCoderImp
 extension Decoder {
     
@@ -631,3 +632,4 @@ extension Encoder {
     }
 }
 // swiftlint:enable no_fallthrough_only
+// swiftlint:enable function_body_length
