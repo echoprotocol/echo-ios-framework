@@ -30,6 +30,6 @@ final public class Settings {
         abiCoderComponent = configurator.abiCoderComponent
     }
     
-    public static let defaultDateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+    public static let defaultDateFormat = "yyyy-MM-dd'T'H:mm:ss"
     public static let defaultAsset = "1.3.0"
 }
