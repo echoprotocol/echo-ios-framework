@@ -11,6 +11,6 @@ import Foundation
 public protocol AbiArgumentCoder {
     
     func getArguments(valueTypes: [AbiTypeValueInputModel]) throws -> Data
-    func getValueTypes(data: Data, abiFunc: AbiFunctionModel) throws -> [AbiTypeValueOutputModel]
-    func getValueTypes(string: String, abiFunc: AbiFunctionModel) throws -> [AbiTypeValueOutputModel]
+    func getValueTypes(data: Data, outputs: [AbiFunctionEntries]) throws -> [AbiTypeValueOutputModel]
+    func getValueTypes(string: String, outputs: [AbiFunctionEntries]) throws -> [AbiTypeValueOutputModel]
 }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class AbiCoderImp: AbiCoder {
+public final class AbiCoderImp: AbiCoder {
     
     let argumentCoder: AbiArgumentCoder
     
@@ -16,19 +16,20 @@ final class AbiCoderImp: AbiCoder {
         self.argumentCoder = argumentCoder
     }
     
-    func getArguments(valueTypes: [AbiTypeValueInputModel]) throws -> Data {
+    public func getArguments(valueTypes: [AbiTypeValueInputModel]) throws -> Data {
         return try argumentCoder.getArguments(valueTypes: valueTypes)
     }
     
-    func getValueTypes(data: Data, abiFunc: AbiFunctionModel) throws -> [AbiTypeValueOutputModel] {
-        return try argumentCoder.getValueTypes(data: data, abiFunc: abiFunc)
+    public func getValueTypes(data: Data, outputs: [AbiFunctionEntries]) throws -> [AbiTypeValueOutputModel] {
+        return try argumentCoder.getValueTypes(data: data, outputs: outputs)
 
     }
-    func getValueTypes(string: String, abiFunc: AbiFunctionModel) throws -> [AbiTypeValueOutputModel] {
-        return try argumentCoder.getValueTypes(string: string, abiFunc: abiFunc)
+    
+    public func getValueTypes(string: String, outputs: [AbiFunctionEntries]) throws -> [AbiTypeValueOutputModel] {
+        return try argumentCoder.getValueTypes(string: string, outputs: outputs)
     }
     
-    func getHash(abiFunc: AbiFunctionModel) throws -> Data {
+    public func getHash(abiFunc: AbiFunctionModel) throws -> Data {
         
         let string = try getStringHash(abiFunc: abiFunc)
         
@@ -40,7 +41,7 @@ final class AbiCoderImp: AbiCoder {
         }
     }
     
-    func getHash(abiFunc: AbiFunctionModel, param: [AbiTypeValueInputModel]) throws -> Data {
+    public func getHash(abiFunc: AbiFunctionModel, param: [AbiTypeValueInputModel]) throws -> Data {
         
         let paramHash = try argumentCoder.getArguments(valueTypes: param)
         var functionHash = try getHash(abiFunc: abiFunc)
@@ -54,7 +55,7 @@ final class AbiCoderImp: AbiCoder {
         return fullFunc.sha3(.keccak256)[0..<8]
     }
     
-    func getStringHash(abiFunc: AbiFunctionModel) throws -> String {
+    public func getStringHash(abiFunc: AbiFunctionModel) throws -> String {
         
         var param = ""
         
@@ -70,17 +71,17 @@ final class AbiCoderImp: AbiCoder {
         return bridge(param, abiFunc.name)
     }
     
-    func getStringHash(abiFunc: AbiFunctionModel, param: [AbiTypeValueInputModel]) throws -> String {
+    public func getStringHash(abiFunc: AbiFunctionModel, param: [AbiTypeValueInputModel]) throws -> String {
         
         let dataHash = try getHash(abiFunc: abiFunc, param: param)
         return dataHash.hex
     }
     
-    func getStringHash(funcName: String) throws -> String {
+    public func getStringHash(funcName: String) throws -> String {
         return (funcName + "()").sha3(.keccak256)[0..<8]
     }
     
-    func getStringHash(funcName: String, param: [AbiTypeValueInputModel]) throws -> String {
+    public func getStringHash(funcName: String, param: [AbiTypeValueInputModel]) throws -> String {
         
         let paramHashString = try argumentCoder.getArguments(valueTypes: param).hex
         var paramString = ""
@@ -97,7 +98,7 @@ final class AbiCoderImp: AbiCoder {
         return bridge(paramString, funcName) + paramHashString
     }
     
-    func getBytecode(bytecode: Data, constructor: AbiFunctionModel, param: [AbiTypeValueInputModel]) throws -> Data {
+    public func getBytecode(bytecode: Data, constructor: AbiFunctionModel, param: [AbiTypeValueInputModel]) throws -> Data {
         
         let paramHash = try getArguments(valueTypes: param)
         var bytecodeCreator = bytecode
@@ -105,7 +106,7 @@ final class AbiCoderImp: AbiCoder {
         return bytecodeCreator
     }
     
-    func getStringBytecode(bytecode: Data, constructor: AbiFunctionModel, param: [AbiTypeValueInputModel]) throws -> String {
+    public func getStringBytecode(bytecode: Data, constructor: AbiFunctionModel, param: [AbiTypeValueInputModel]) throws -> String {
         return try getBytecode(bytecode: bytecode, constructor: constructor, param: param).hex
     }
 }

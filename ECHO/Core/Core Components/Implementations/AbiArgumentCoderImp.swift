@@ -75,15 +75,15 @@ final public class AbiArgumentCoderImp: AbiArgumentCoder {
         return args
     }
     
-    public func getValueTypes(data: Data, abiFunc: AbiFunctionModel) throws -> [AbiTypeValueOutputModel] {
+    public func getValueTypes(data: Data, outputs: [AbiFunctionEntries]) throws -> [AbiTypeValueOutputModel] {
         
-        return try decodeOutputs(data: data, function: abiFunc)
+        return try decodeOutputs(data: data, outputs: outputs)
     }
     
-    public func getValueTypes(string: String, abiFunc: AbiFunctionModel) throws -> [AbiTypeValueOutputModel] {
+    public func getValueTypes(string: String, outputs: [AbiFunctionEntries]) throws -> [AbiTypeValueOutputModel] {
         
         if let data = Data(hex: string) {
-            return try decodeOutputs(data: data, function: abiFunc)
+            return try decodeOutputs(data: data, outputs: outputs)
         } else {
             let error = NSError(domain: "", code: 0, userInfo: nil)
             throw error
@@ -97,7 +97,7 @@ final public class AbiArgumentCoderImp: AbiArgumentCoder {
 private typealias Decoder = AbiArgumentCoderImp
 extension Decoder {
     
-    fileprivate func decodeOutputs(data: Data, function: AbiFunctionModel) throws -> [AbiTypeValueOutputModel] {
+    fileprivate func decodeOutputs(data: Data, outputs: [AbiFunctionEntries]) throws -> [AbiTypeValueOutputModel] {
         
         guard data.count > 0 else {
             let error = NSError(domain: "", code: 0, userInfo: nil)
@@ -107,9 +107,9 @@ extension Decoder {
         var decodedOutputs = [AbiTypeValueOutputModel]()
         var outputsData = data
         
-        for index in 0..<function.outputs.count {
+        for index in 0..<outputs.count {
             
-            let type = function.outputs[index].type
+            let type = outputs[index].type
             
             switch type {
             case .uint(_): fallthrough
