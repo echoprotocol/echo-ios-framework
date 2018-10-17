@@ -954,11 +954,13 @@ class ECHOInterfaceTests: XCTestCase {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
         }))
         let exp = expectation(description: "Query contract")
-        let registrarNameOrId = "dariatest2"
+        let registrarNameOrId = "dima1"
         let assetId = "1.3.0"
-        let contratId = "1.16.1"
-        let methodName = "getCount"
-        let params: [AbiTypeValueInputModel] = []
+        let contratId = "1.16.16244"
+        let methodName = "balanceOf"
+        let params = [
+            AbiTypeValueInputModel(type: .address, value: "18"),
+        ]
         var query: String!
 
         //act

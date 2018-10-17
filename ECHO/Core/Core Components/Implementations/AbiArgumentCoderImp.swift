@@ -308,18 +308,7 @@ extension Encoder {
     
     fileprivate func encodeAddress(staticStack: ArrayOfData, type: AbiParameterType, offset: Int, data: String) throws {
         
-        if var value = Base58.decode(data) as Data? {
-            
-            if value.count == 25 {
-                value = value.subdata(in: 1..<21)
-            }
-            
-            value = fillSlice(data: value)
-            staticStack.array.append(value)
-            
-        } else {
-            staticStack.array.append(placeholderData())
-        }
+        staticStack.array.append(BTCBigNumber(decimalString: data).unsignedBigEndian ?? placeholderData())
     }
     
     fileprivate func encodeString(staticStack: ArrayOfData,
