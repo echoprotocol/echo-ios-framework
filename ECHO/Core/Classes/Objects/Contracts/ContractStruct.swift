@@ -13,9 +13,9 @@ public struct ContractStruct: Decodable {
         case storage
     }
     
-    let contractInfo: ContractInfo
-    let code: String
-    let storage: [[String]]?
+    public let contractInfo: ContractInfo
+    public let code: String
+    public let storage: [[String]]?
     
     public init(from decoder: Decoder) throws {
         

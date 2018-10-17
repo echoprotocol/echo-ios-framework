@@ -14,9 +14,9 @@ public struct ContractInfo: ECHOObject, Decodable {
         case suicided
     }
     
-    var id: String
-    let statistics: String
-    let suicided: Bool
+    public var id: String
+    public let statistics: String
+    public let suicided: Bool
     
     public init(from decoder: Decoder) throws {
         
