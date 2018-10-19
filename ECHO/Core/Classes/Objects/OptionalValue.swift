@@ -19,15 +19,15 @@
  */
 public struct OptionalValue<T>: ECHOCodable where T: ECHOCodable {
     
-    let object: T?
+    public let object: T?
     let addByteToStart: Bool
     
-    init(_ object: T?, addByteToStart: Bool = false) {
+    public init(_ object: T?, addByteToStart: Bool = false) {
         self.object = object
         self.addByteToStart = addByteToStart
     }
     
-    func isSet() -> Bool {
+    public func isSet() -> Bool {
         return object != nil
     }
     
