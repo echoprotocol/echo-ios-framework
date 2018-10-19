@@ -23,11 +23,11 @@ public struct Memo: ECHOCodable, Decodable {
     public let nonceRadix: Int = 10
     public let paddedNonceArraySize: Int = 8
     
-    var source: Address?
-    var destination: Address?
-    let nonce: Int
-    var byteMessage: Data?
-    var plaintextMessage: String?
+    public var source: Address?
+    public var destination: Address?
+    public let nonce: Int
+    public var byteMessage: Data?
+    public var plaintextMessage: String?
     
     init() {
         nonce = 0

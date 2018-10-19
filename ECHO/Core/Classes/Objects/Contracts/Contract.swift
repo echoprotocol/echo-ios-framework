@@ -16,9 +16,9 @@ public struct Contract: ECHOObject, Decodable {
         case amount
     }
     
-    var id: String
-    let contractCode: String?
-    let assetAmount: AssetAmount?
+    public var id: String
+    public let contractCode: String?
+    public let assetAmount: AssetAmount?
  
     public init(id: String, contractCode: String? = nil, assetAmount: AssetAmount? = nil) {
         
