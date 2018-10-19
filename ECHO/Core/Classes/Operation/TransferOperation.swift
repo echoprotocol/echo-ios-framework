@@ -67,6 +67,12 @@ public struct TransferOperation: BaseOperation {
         if let toAccount = toAccount { self.toAccount = toAccount }
     }
     
+    mutating func changeAssets(feeAsset: Asset?, transferAmount: Asset?) {
+        
+        if let feeAsset = feeAsset { self.fee = AssetAmount(amount: fee.amount, asset: feeAsset) }
+        if let transferAmount = transferAmount { self.transferAmount = AssetAmount(amount: self.transferAmount.amount, asset: transferAmount) }
+    }
+    
     // MARK: ECHOCodable
     
     public func toJSON() -> Any? {

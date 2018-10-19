@@ -110,6 +110,8 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         case loadedBlocks
         case findedAccountIds
         case loadedAccounts
+        case findedAssetIds
+        case loadedAssets
     }
     
     public func getAccountHistroy(nameOrID: String, startId: String, stopId: String, limit: Int, completion: @escaping Completion<[HistoryItem]>) {
@@ -133,8 +135,10 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         // OtherData
         let getBlocksOperation = createGetBlocksOperation(accountHistoryQueue, completion)
         let getAccountsOperation = createGetAccountsOperation(accountHistoryQueue, completion)
+        let getAssetsOperation = createGetAssetsOperation(accountHistoryQueue, completion)
         let mergeBlocksToHistoryOperation = createMergeBlocksInHistoryOperation(accountHistoryQueue, completion)
         let mergeAccountsToHistoryOperation = createMergeAccountsInHistoryOperation(accountHistoryQueue, completion)
+        let mergeAssetsToHistoryOperation = createMergeAssetsInHistoryOperation(accountHistoryQueue, completion)
         
         // Completion
         let historyCompletionOperation = createHistoryComletionOperation(accountHistoryQueue, completion)
@@ -144,8 +148,10 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         accountHistoryQueue.addOperation(getHistoryOperation)
         accountHistoryQueue.addOperation(getBlocksOperation)
         accountHistoryQueue.addOperation(getAccountsOperation)
+        accountHistoryQueue.addOperation(getAssetsOperation)
         accountHistoryQueue.addOperation(mergeBlocksToHistoryOperation)
         accountHistoryQueue.addOperation(mergeAccountsToHistoryOperation)
+        accountHistoryQueue.addOperation(mergeAssetsToHistoryOperation)
         accountHistoryQueue.addOperation(historyCompletionOperation)
     
         accountHistoryQueue.setCompletionOperation(completionOperation)
@@ -169,6 +175,7 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                     if let findedData = self?.findDataToLoadFromHistoryItems(historyItems) {
                         queue?.saveValue(findedData.blockNums, forKey: AccountHistoryResultsKeys.findedBlockNums.rawValue)
                         queue?.saveValue(findedData.accountIds, forKey: AccountHistoryResultsKeys.findedAccountIds.rawValue)
+                        queue?.saveValue(findedData.assetIds, forKey: AccountHistoryResultsKeys.findedAssetIds.rawValue)
                     }
                 case .failure(let error):
                     queue?.cancelAllOperations()
@@ -228,6 +235,35 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         }
         
         return getBlockOperation
+    }
+    
+    fileprivate func createGetAssetsOperation(_ queue: ECHOQueue, _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
+        
+        let getAssetsOperation = BlockOperation()
+        
+        getAssetsOperation.addExecutionBlock { [weak getAssetsOperation, weak queue, weak self] in
+            
+            guard getAssetsOperation?.isCancelled == false else { return }
+            guard let assetsIds: Set<String> = queue?.getValue(AccountHistoryResultsKeys.findedAssetIds.rawValue) else { return }
+            
+            let assetsArray = assetsIds.map { $0 }
+            
+            self?.services.databaseService.getAssets(assetIds: assetsArray, completion: { (result) in
+                switch result {
+                case .success(let assets):
+                    queue?.saveValue(assets, forKey: AccountHistoryResultsKeys.loadedAssets.rawValue)
+                case .failure(let error):
+                    queue?.cancelAllOperations()
+                    let result = Result<[HistoryItem], ECHOError>(error: error)
+                    completion(result)
+                }
+                queue?.startNextOperation()
+            })
+            
+            queue?.waitStartNextOperation()
+        }
+        
+        return getAssetsOperation
     }
     
     fileprivate func createGetAccountsOperation(_ queue: ECHOQueue, _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
@@ -350,6 +386,78 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         return mergeAccountsInHistoryOperation
     }
     
+    fileprivate func createMergeAssetsInHistoryOperation(_ queue: ECHOQueue, _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
+        
+        let mergeAssetsInHistoryOperation = BlockOperation()
+        
+        mergeAssetsInHistoryOperation.addExecutionBlock { [weak mergeAssetsInHistoryOperation, weak self, weak queue] in
+            
+            guard mergeAssetsInHistoryOperation?.isCancelled == false else { return }
+            guard var history: [HistoryItem] = queue?.getValue(AccountHistoryResultsKeys.historyItems.rawValue) else { return }
+            guard let assets: [Asset] = queue?.getValue(AccountHistoryResultsKeys.loadedAssets.rawValue) else { return }
+            
+            for index in 0..<history.count {
+                
+                var historyItem = history[index]
+                guard let operation = historyItem.operation else { continue }
+                
+                if var operation = operation as? TransferOperation {
+                    let feeAsset = self?.findAssetsIn(assets, assetId: operation.fee.asset.id)
+                    let transferAsset = self?.findAssetsIn(assets, assetId: operation.transferAmount.asset.id)
+                    operation.changeAssets(feeAsset: feeAsset, transferAmount: transferAsset)
+                    historyItem.operation = operation
+                }
+                
+                if var operation = operation as? ContractOperation {
+                    let feeAsset = self?.findAssetsIn(assets, assetId: operation.fee.asset.id)
+                    let asset = self?.findAssetsIn(assets, assetId: operation.asset.id)
+                    operation.changeAssets(feeAsset: feeAsset, asset: asset)
+                    historyItem.operation = operation
+                }
+                
+                if var operation = operation as? AccountCreateOperation {
+                    let feeAsset = self?.findAssetsIn(assets, assetId: operation.fee.asset.id)
+                    operation.changeAssets(feeAsset: feeAsset)
+                    historyItem.operation = operation
+                }
+                
+                if var operation = operation as? CreateAssetOperation {
+                    let feeAsset = self?.findAssetsIn(assets, assetId: operation.fee.asset.id)
+                    let asset = self?.findAssetsIn(assets, assetId: operation.asset.id)
+                    operation.changeAssets(feeAsset: feeAsset, asset: asset)
+                    historyItem.operation = operation
+                }
+                
+                if var operation = operation as? AccountUpdateOperation {
+                    let feeAsset = self?.findAssetsIn(assets, assetId: operation.fee.asset.id)
+                    operation.changeAssets(feeAsset: feeAsset)
+                    historyItem.operation = operation
+                }
+                
+                if var operation = operation as? CreateAssetOperation {
+                    let feeAsset = self?.findAssetsIn(assets, assetId: operation.fee.asset.id)
+                    let asset = self?.findAssetsIn(assets, assetId: operation.asset.id)
+                    operation.changeAssets(feeAsset: feeAsset, asset: asset)
+                    historyItem.operation = operation
+                }
+                
+                if var operation = operation as? IssueAssetOperation {
+                    let feeAsset = self?.findAssetsIn(assets, assetId: operation.fee.asset.id)
+                    let assetToIssue = self?.findAssetsIn(assets, assetId: operation.assetToIssue.asset.id)
+                    operation.changeAssets(feeAsset: feeAsset, assetToIssue: assetToIssue)
+                    historyItem.operation = operation
+                }
+
+
+                history[index] = historyItem
+            }
+            
+            queue?.saveValue(history, forKey: AccountHistoryResultsKeys.historyItems.rawValue)
+        }
+        
+        return mergeAssetsInHistoryOperation
+    }
+    
     fileprivate func createHistoryComletionOperation(_ queue: ECHOQueue, _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
         
         let historyComletionOperation = BlockOperation()
@@ -371,11 +479,17 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         return dict[accountId]?.account
     }
     
-    fileprivate func findDataToLoadFromHistoryItems(_ items: [HistoryItem]) -> (blockNums: Set<Int>, accountIds: Set<String>) {
+    fileprivate func findAssetsIn(_ array: [Asset], assetId: String) -> Asset? {
+        
+        return array.first(where: {$0.id == assetId})
+    }
+    
+    fileprivate func findDataToLoadFromHistoryItems(_ items: [HistoryItem]) -> (blockNums: Set<Int>, accountIds: Set<String>, assetIds: Set<String>) {
         
         let blockNums = fingBlockNumsFromHistoryItems(items)
         let accountIds = findAccountsIds(items)
-        return (blockNums, accountIds)
+        let assetIds = findAssetsIds(items)
+        return (blockNums, accountIds, assetIds)
     }
     
     fileprivate func fingBlockNumsFromHistoryItems(_ items: [HistoryItem]) -> Set<Int> {
@@ -430,6 +544,54 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         }
         
         return accountsIds
+    }
+    
+    fileprivate func findAssetsIds(_ items: [HistoryItem]) -> Set<String> {
+        
+        var assetsIds = Set<String>()
+        
+        items.forEach {
+            
+            guard let operation = $0.operation else {
+                return
+            }
+            
+            if let operation = operation as? TransferOperation {
+                assetsIds.insert(operation.fee.asset.id)
+                assetsIds.insert(operation.transferAmount.asset.id)
+                return
+            }
+            
+            if let operation = operation as? ContractOperation {
+                assetsIds.insert(operation.fee.asset.id)
+                assetsIds.insert(operation.asset.id)
+                return
+            }
+            
+            if let operation = operation as? AccountCreateOperation {
+                assetsIds.insert(operation.fee.asset.id)
+                return
+            }
+            
+            if let operation = operation as? AccountUpdateOperation {
+                assetsIds.insert(operation.fee.asset.id)
+                return
+            }
+            
+            if let operation = operation as? CreateAssetOperation {
+                assetsIds.insert(operation.fee.asset.id)
+                assetsIds.insert(operation.asset.id)
+                return
+            }
+            
+            if let operation = operation as? IssueAssetOperation {
+                assetsIds.insert(operation.fee.asset.id)
+                assetsIds.insert(operation.assetToIssue.asset.id)
+                return
+            }
+        }
+        
+        return assetsIds
     }
 }
 // swiftlint:enable type_body_length

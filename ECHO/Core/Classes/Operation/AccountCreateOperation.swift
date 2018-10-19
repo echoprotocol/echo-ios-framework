@@ -111,4 +111,9 @@ public struct AccountCreateOperation: BaseOperation {
         data.append(optional: extensions.toData())
         return data
     }
+    
+    mutating func changeAssets(feeAsset: Asset?) {
+        
+        if let feeAsset = feeAsset { self.fee = AssetAmount(amount: fee.amount, asset: feeAsset) }
+    }
 }

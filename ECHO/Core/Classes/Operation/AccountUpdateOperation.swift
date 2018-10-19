@@ -105,4 +105,9 @@ public struct AccountUpdateOperation: BaseOperation {
         
         return array
     }
+    
+    mutating func changeAssets(feeAsset: Asset?) {
+        
+        if let feeAsset = feeAsset { self.fee = AssetAmount(amount: fee.amount, asset: feeAsset) }
+    }
 }

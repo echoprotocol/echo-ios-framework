@@ -80,4 +80,10 @@ public struct CreateAssetOperation: BaseOperation {
         
         return array
     }
+    
+    mutating func changeAssets(feeAsset: Asset?, asset: Asset?) {
+        
+        if let feeAsset = feeAsset { self.fee = AssetAmount(amount: fee.amount, asset: feeAsset) }
+        if let asset = asset { self.asset = asset }
+    }
 }

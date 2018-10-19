@@ -26,7 +26,7 @@ public struct ContractOperation: BaseOperation {
     public var fee: AssetAmount
     
     public let registrar: Account
-    public let asset: Asset
+    public var asset: Asset
     public let value: Int
     public let gasPrice: Int
     public let gas: Int
@@ -115,5 +115,11 @@ public struct ContractOperation: BaseOperation {
         array.append(dictionary)
         
         return array
+    }
+    
+    mutating func changeAssets(feeAsset: Asset?, asset: Asset?) {
+        
+        if let feeAsset = feeAsset { self.fee = AssetAmount(amount: fee.amount, asset: feeAsset) }
+        if let asset = asset { self.asset = asset }
     }
 }

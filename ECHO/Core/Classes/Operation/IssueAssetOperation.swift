@@ -25,7 +25,7 @@ public struct IssueAssetOperation: BaseOperation {
     public var fee: AssetAmount
     
     public var issuer: Account
-    public let assetToIssue: AssetAmount
+    public var assetToIssue: AssetAmount
     public var issueToAccount: Account
     public var memo: Memo = Memo()
     
@@ -98,5 +98,11 @@ public struct IssueAssetOperation: BaseOperation {
         array.append(dictionary)
         
         return array
+    }
+    
+    mutating func changeAssets(feeAsset: Asset?, assetToIssue: Asset?) {
+        
+        if let feeAsset = feeAsset { self.fee = AssetAmount(amount: fee.amount, asset: feeAsset) }
+        if let assetToIssue = assetToIssue { self.assetToIssue = AssetAmount(amount: self.assetToIssue.amount, asset: assetToIssue) }
     }
 }
