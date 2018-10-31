@@ -1,0 +1,1729 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>OperationType Enumeration Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Enum/OperationType" class="dashAnchor"></a>
+    <a title="OperationType Enumeration Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">ECHO Docs</a> (33% documented)</p>
+        <p class="header-right"><a href="https://github.com/echoprotocol"><img src="../img/gh.png"/>View on GitHub</a></p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">ECHO Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        OperationType Enumeration Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/AbiArgumentCoderImp.html">AbiArgumentCoderImp</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/AbiCoderImp.html">AbiCoderImp</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/AbiFunctionEntries.html">AbiFunctionEntries</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/s:4ECHO21AbiFunctionInputModelC">AbiFunctionInputModel</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/s:4ECHO22AbiFunctionOutputModelC">AbiFunctionOutputModel</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/AddressKeysContainer.html">AddressKeysContainer</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/AssetsFacadeImp.html">AssetsFacadeImp</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/AuthentificationFacadeImp.html">AuthentificationFacadeImp</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Configurator.html">Configurator</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ContractsFacadeImp.html">ContractsFacadeImp</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/CryptoCoreImp.html">CryptoCoreImp</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ECHO.html">ECHO</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ECHOKeychain.html">ECHOKeychain</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ECHONetwork.html">ECHONetwork</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/FeeFacadeImp.html">FeeFacadeImp</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/InformationFacadeImp.html">InformationFacadeImp</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/s:4ECHO15RevealFacadeImpC">RevealFacadeImp</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SHA3.html">SHA3</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SHA3/Variant.html">– Variant</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Settings.html">Settings</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SubscriptionFacadeImp.html">SubscriptionFacadeImp</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Transaction.html">Transaction</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/TransactionFacadeImp.html">TransactionFacadeImp</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/AbiFunctionType.html">AbiFunctionType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/AbiParameterType.html">AbiParameterType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/AssetOptionIssuerPermissions.html">AssetOptionIssuerPermissions</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ECHOError.html">ECHOError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ECHONetworkPrefix.html">ECHONetworkPrefix</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/KeychainType.html">KeychainType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ObjectSpace.html">ObjectSpace</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ObjectType.html">ObjectType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/OperationType.html">OperationType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/Result.html">Result</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/SocketConnectionState.html">SocketConnectionState</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Extensions/AnyError.html">AnyError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Array.html">Array</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Data.html">Data</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/ECHOObject.html">ECHOObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/String.html">String</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/UInt32.html">UInt32</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/UInt64.html">UInt64</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/AbiArgumentCoder.html">AbiArgumentCoder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/AbiCoder.html">AbiCoder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/AssetsFacade.html">AssetsFacade</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/AuthentificationFacade.html">AuthentificationFacade</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/BaseOperation.html">BaseOperation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols.html#/s:4ECHO12BytesCodableP">BytesCodable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols.html#/s:4ECHO14BytesDecodableP">BytesDecodable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/BytesEncodable.html">BytesEncodable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/ContractsFacade.html">ContractsFacade</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/CryptoCoreComponent.html">CryptoCoreComponent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols.html#/s:4ECHO11ECHOCodableP">ECHOCodable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/FeeFacade.html">FeeFacade</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/InformationFacade.html">InformationFacade</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols.html#/s:4ECHO11JSONCodableP">JSONCodable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/JSONDecodable.html">JSONDecodable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/JSONEncodable.html">JSONEncodable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/SocketMessenger.html">SocketMessenger</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/SubscribeAccountDelegate.html">SubscribeAccountDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/SubscribeBlockDelegate.html">SubscribeBlockDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/SubscribeDynamicGlobalPropertiesDelegate.html">SubscribeDynamicGlobalPropertiesDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/SubscriptionFacade.html">SubscriptionFacade</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/TransactionFacade.html">TransactionFacade</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/APIOption.html">APIOption</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/AbiFunctionModel.html">AbiFunctionModel</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/AbiTypeValueInputModel.html">AbiTypeValueInputModel</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/AbiTypeValueOutputModel.html">AbiTypeValueOutputModel</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Account.html">Account</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/AccountAuthority.html">AccountAuthority</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/AccountBalance.html">AccountBalance</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/AccountCreateOperation.html">AccountCreateOperation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/AccountOptions.html">AccountOptions</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/AccountUpdateOperation.html">AccountUpdateOperation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Address.html">Address</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/AddressAuthority.html">AddressAuthority</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Asset.html">Asset</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/AssetAmount.html">AssetAmount</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/AssetOptions.html">AssetOptions</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs.html#/s:4ECHO14AssetsServicesV">AssetsServices</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Authority.html">Authority</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/BitassetOptions.html">BitassetOptions</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Block.html">Block</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Contract.html">Contract</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/ContractInfo.html">ContractInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/ContractOperation.html">ContractOperation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/ContractResult.html">ContractResult</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/ContractStruct.html">ContractStruct</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs.html#/s:4ECHO23ContractsFacadeServicesV">ContractsFacadeServices</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/CreateAssetOperation.html">CreateAssetOperation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/DynamicGlobalProperties.html">DynamicGlobalProperties</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/ExecRes.html">ExecRes</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Extensions.html">Extensions</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs.html#/s:4ECHO17FeeFacadeServicesV">FeeFacadeServices</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/HistoryItem.html">HistoryItem</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/IssueAssetOperation.html">IssueAssetOperation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Memo.html">Memo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/OptionalValue.html">OptionalValue</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Options.html">Options</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Price.html">Price</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Statistics.html">Statistics</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/TrReceipt.html">TrReceipt</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs.html#/s:4ECHO25TransactionFacadeServicesV">TransactionFacadeServices</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/TransferOperation.html">TransferOperation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/UserAccount.html">UserAccount</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Typealiases.html">Type Aliases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:4ECHO10Completiona">Completion</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>OperationType</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">OperationType</span> <span class="p">:</span> <span class="kt">Int</span></code></pre>
+
+                </div>
+              </div>
+            <p>Represents all blockchain operation types <a href="https://dev-doc.myecho.app/group__operations.html#details">Operations</a></p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ECHO13OperationTypeO08transferB0yA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/transferOperation" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ECHO13OperationTypeO08transferB0yA2CmF">transferOperation</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">transferOperation</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ECHO13OperationTypeO016limitOrderCreateB0yA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/limitOrderCreateOperation" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ECHO13OperationTypeO016limitOrderCreateB0yA2CmF">limitOrderCreateOperation</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">limitOrderCreateOperation</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ECHO13OperationTypeO016limitOrderCancelB0yA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/limitOrderCancelOperation" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ECHO13OperationTypeO016limitOrderCancelB0yA2CmF">limitOrderCancelOperation</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">limitOrderCancelOperation</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ECHO13OperationTypeO015callOrderUpdateB0yA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/callOrderUpdateOperation" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ECHO13OperationTypeO015callOrderUpdateB0yA2CmF">callOrderUpdateOperation</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">callOrderUpdateOperation</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ECHO13OperationTypeO09fillOrderB0yA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/fillOrderOperation" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ECHO13OperationTypeO09fillOrderB0yA2CmF">fillOrderOperation</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">fillOrderOperation</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ECHO13OperationTypeO013accountCreateB0yA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/accountCreateOperation" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ECHO13OperationTypeO013accountCreateB0yA2CmF">accountCreateOperation</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">accountCreateOperation</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ECHO13OperationTypeO013accountUpdateB0yA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/accountUpdateOperation" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ECHO13OperationTypeO013accountUpdateB0yA2CmF">accountUpdateOperation</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">accountUpdateOperation</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ECHO13OperationTypeO016accountWhitelistB0yA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/accountWhitelistOperation" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ECHO13OperationTypeO016accountWhitelistB0yA2CmF">accountWhitelistOperation</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">accountWhitelistOperation</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ECHO13OperationTypeO014accountUpgradeB0yA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/accountUpgradeOperation" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ECHO13OperationTypeO014accountUpgradeB0yA2CmF">accountUpgradeOperation</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">accountUpgradeOperation</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ECHO13OperationTypeO015accountTransferB0yA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/accountTransferOperation" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ECHO13OperationTypeO015accountTransferB0yA2CmF">accountTransferOperation</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">accountTransferOperation</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ECHO13OperationTypeO011assetCreateB0yA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/assetCreateOperation" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ECHO13OperationTypeO011assetCreateB0yA2CmF">assetCreateOperation</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">assetCreateOperation</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ECHO13OperationTypeO011assetUpdateB0yA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/assetUpdateOperation" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ECHO13OperationTypeO011assetUpdateB0yA2CmF">assetUpdateOperation</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">assetUpdateOperation</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ECHO13OperationTypeO019assetUpdateBitassetB0yA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/assetUpdateBitassetOperation" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ECHO13OperationTypeO019assetUpdateBitassetB0yA2CmF">assetUpdateBitassetOperation</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">assetUpdateBitassetOperation</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ECHO13OperationTypeO024assetUpdateFeedProducersB0yA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/assetUpdateFeedProducersOperation" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ECHO13OperationTypeO024assetUpdateFeedProducersB0yA2CmF">assetUpdateFeedProducersOperation</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">assetUpdateFeedProducersOperation</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ECHO13OperationTypeO010assetIssueB0yA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/assetIssueOperation" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ECHO13OperationTypeO010assetIssueB0yA2CmF">assetIssueOperation</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">assetIssueOperation</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ECHO13OperationTypeO012assetReserveB0yA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/assetReserveOperation" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ECHO13OperationTypeO012assetReserveB0yA2CmF">assetReserveOperation</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">assetReserveOperation</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ECHO13OperationTypeO016assetFundFeePoolB0yA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/assetFundFeePoolOperation" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ECHO13OperationTypeO016assetFundFeePoolB0yA2CmF">assetFundFeePoolOperation</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">assetFundFeePoolOperation</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ECHO13OperationTypeO011assetSettleB0yA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/assetSettleOperation" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ECHO13OperationTypeO011assetSettleB0yA2CmF">assetSettleOperation</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">assetSettleOperation</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ECHO13OperationTypeO017assetGlobalSettleB0yA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/assetGlobalSettleOperation" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ECHO13OperationTypeO017assetGlobalSettleB0yA2CmF">assetGlobalSettleOperation</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">assetGlobalSettleOperation</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ECHO13OperationTypeO016assetPublishFeedB0yA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/assetPublishFeedOperation" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ECHO13OperationTypeO016assetPublishFeedB0yA2CmF">assetPublishFeedOperation</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">assetPublishFeedOperation</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ECHO13OperationTypeO013witnessCreateB0yA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/witnessCreateOperation" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ECHO13OperationTypeO013witnessCreateB0yA2CmF">witnessCreateOperation</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">witnessCreateOperation</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ECHO13OperationTypeO013witnessUpdateB0yA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/witnessUpdateOperation" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ECHO13OperationTypeO013witnessUpdateB0yA2CmF">witnessUpdateOperation</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">witnessUpdateOperation</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ECHO13OperationTypeO014proposalCreateB0yA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/proposalCreateOperation" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ECHO13OperationTypeO014proposalCreateB0yA2CmF">proposalCreateOperation</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">proposalCreateOperation</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ECHO13OperationTypeO014proposalUpdateB0yA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/proposalUpdateOperation" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ECHO13OperationTypeO014proposalUpdateB0yA2CmF">proposalUpdateOperation</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">proposalUpdateOperation</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ECHO13OperationTypeO014proposalDeleteB0yA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/proposalDeleteOperation" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ECHO13OperationTypeO014proposalDeleteB0yA2CmF">proposalDeleteOperation</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">proposalDeleteOperation</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ECHO13OperationTypeO024withdrawPermissionCreateB0yA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/withdrawPermissionCreateOperation" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ECHO13OperationTypeO024withdrawPermissionCreateB0yA2CmF">withdrawPermissionCreateOperation</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">withdrawPermissionCreateOperation</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ECHO13OperationTypeO024withdrawPermissionUpdateB0yA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/withdrawPermissionUpdateOperation" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ECHO13OperationTypeO024withdrawPermissionUpdateB0yA2CmF">withdrawPermissionUpdateOperation</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">withdrawPermissionUpdateOperation</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ECHO13OperationTypeO023withdrawPermissionClaimB0yA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/withdrawPermissionClaimOperation" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ECHO13OperationTypeO023withdrawPermissionClaimB0yA2CmF">withdrawPermissionClaimOperation</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">withdrawPermissionClaimOperation</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ECHO13OperationTypeO024withdrawPermissionDeleteB0yA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/withdrawPermissionDeleteOperation" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ECHO13OperationTypeO024withdrawPermissionDeleteB0yA2CmF">withdrawPermissionDeleteOperation</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">withdrawPermissionDeleteOperation</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ECHO13OperationTypeO021committeeMemberCreateB0yA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/committeeMemberCreateOperation" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ECHO13OperationTypeO021committeeMemberCreateB0yA2CmF">committeeMemberCreateOperation</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">committeeMemberCreateOperation</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ECHO13OperationTypeO021committeeMemberUpdateB0yA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/committeeMemberUpdateOperation" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ECHO13OperationTypeO021committeeMemberUpdateB0yA2CmF">committeeMemberUpdateOperation</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">committeeMemberUpdateOperation</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ECHO13OperationTypeO037committeeMemberUpdateGlobalParametersB0yA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/committeeMemberUpdateGlobalParametersOperation" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ECHO13OperationTypeO037committeeMemberUpdateGlobalParametersB0yA2CmF">committeeMemberUpdateGlobalParametersOperation</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">committeeMemberUpdateGlobalParametersOperation</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ECHO13OperationTypeO020vestingBalanceCreateB0yA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/vestingBalanceCreateOperation" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ECHO13OperationTypeO020vestingBalanceCreateB0yA2CmF">vestingBalanceCreateOperation</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">vestingBalanceCreateOperation</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ECHO13OperationTypeO022vestingBalanceWithdrawB0yA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/vestingBalanceWithdrawOperation" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ECHO13OperationTypeO022vestingBalanceWithdrawB0yA2CmF">vestingBalanceWithdrawOperation</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">vestingBalanceWithdrawOperation</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ECHO13OperationTypeO012workerCreateB0yA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/workerCreateOperation" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ECHO13OperationTypeO012workerCreateB0yA2CmF">workerCreateOperation</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">workerCreateOperation</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ECHO13OperationTypeO06customB0yA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/customOperation" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ECHO13OperationTypeO06customB0yA2CmF">customOperation</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">customOperation</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ECHO13OperationTypeO06assertB0yA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/assertOperation" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ECHO13OperationTypeO06assertB0yA2CmF">assertOperation</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">assertOperation</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ECHO13OperationTypeO012balanceClaimB0yA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/balanceClaimOperation" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ECHO13OperationTypeO012balanceClaimB0yA2CmF">balanceClaimOperation</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">balanceClaimOperation</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ECHO13OperationTypeO016overrideTransferB0yA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/overrideTransferOperation" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ECHO13OperationTypeO016overrideTransferB0yA2CmF">overrideTransferOperation</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">overrideTransferOperation</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ECHO13OperationTypeO015transferToBlindB0yA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/transferToBlindOperation" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ECHO13OperationTypeO015transferToBlindB0yA2CmF">transferToBlindOperation</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">transferToBlindOperation</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ECHO13OperationTypeO013blindTransferB0yA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/blindTransferOperation" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ECHO13OperationTypeO013blindTransferB0yA2CmF">blindTransferOperation</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">blindTransferOperation</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ECHO13OperationTypeO017transferFromBlindB0yA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/transferFromBlindOperation" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ECHO13OperationTypeO017transferFromBlindB0yA2CmF">transferFromBlindOperation</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">transferFromBlindOperation</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ECHO13OperationTypeO017assetSettleCancelB0yA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/assetSettleCancelOperation" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ECHO13OperationTypeO017assetSettleCancelB0yA2CmF">assetSettleCancelOperation</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">assetSettleCancelOperation</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ECHO13OperationTypeO014assetClaimFeesB0yA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/assetClaimFeesOperation" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ECHO13OperationTypeO014assetClaimFeesB0yA2CmF">assetClaimFeesOperation</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">assetClaimFeesOperation</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ECHO13OperationTypeO013fbaDistributeB0yA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/fbaDistributeOperation" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ECHO13OperationTypeO013fbaDistributeB0yA2CmF">fbaDistributeOperation</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">fbaDistributeOperation</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ECHO13OperationTypeO013bidCollateralB0yA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/bidCollateralOperation" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ECHO13OperationTypeO013bidCollateralB0yA2CmF">bidCollateralOperation</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">bidCollateralOperation</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ECHO13OperationTypeO010executeBidB0yA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/executeBidOperation" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ECHO13OperationTypeO010executeBidB0yA2CmF">executeBidOperation</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">executeBidOperation</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ECHO13OperationTypeO08contractB0yA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/contractOperation" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ECHO13OperationTypeO08contractB0yA2CmF">contractOperation</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">contractOperation</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ECHO13OperationTypeO016contractTransferB0yA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/contractTransferOperation" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ECHO13OperationTypeO016contractTransferB0yA2CmF">contractTransferOperation</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">contractTransferOperation</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2018 <a class="link" href="https://pixelplex.io" target="_blank" rel="external">pixelplex.inc</a>. All rights reserved. (Last updated: 2018-10-31)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>
