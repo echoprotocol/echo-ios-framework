@@ -1,4 +1,3 @@
-
 # Echo-ios-framework (echo-ios-framework)
 
 Pure Swift Echo framework for iOS mobile development. Can be used to work with accounts, transactions and contracts in Swift, and to easily obtain data from the blockchain via public apis.
@@ -7,7 +6,7 @@ Pure Swift Echo framework for iOS mobile development. Can be used to work with a
 
 This framework can be obtained through CocoaPods:
 ```
-TODO
+pod 'ECHO', :git => 'https://github.com/echoprotocol/echo-ios-framework.git'
 ```
 
 ## Setup
