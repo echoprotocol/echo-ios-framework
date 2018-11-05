@@ -448,7 +448,6 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                     historyItem.operation = operation
                 }
 
-
                 history[index] = historyItem
             }
             

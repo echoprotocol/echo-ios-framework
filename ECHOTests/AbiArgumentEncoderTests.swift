@@ -1,5 +1,5 @@
 //
-//  AbiArgumentCoderTests.swift
+//  AbiArgumentEncoderTests.swift
 //  ECHOTests
 //
 //  Created by Fedorenko Nikita on 13.09.2018.
@@ -9,7 +9,7 @@
 import XCTest
 @testable import ECHO
 
-class AbiArgumentCoderTests: XCTestCase {
+class AbiArgumentEncoderTests: XCTestCase {
     
     var interpretator: AbiArgumentCoder = AbiArgumentCoderImp()
     
@@ -129,6 +129,25 @@ class AbiArgumentCoderTests: XCTestCase {
         XCTAssertEqual(data?.hex, decodedParams)
     }
     
+    func testFromExamples() {
+        
+        //arrange
+        let decodedParams = "00000000000000000000000000000000000000000000000000000000000001230000000000000000000000000000000000000000000000000000000000000080313233343536373839300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000e0000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000004560000000000000000000000000000000000000000000000000000000000000789000000000000000000000000000000000000000000000000000000000000000d48656c6c6f2c20776f726c642100000000000000000000000000000000000000"
+        let typeValue = [
+            AbiTypeValueInputModel(type: .uint(size: 256), value: "291"),
+            AbiTypeValueInputModel(type: .dynamicArrayOfUint, value: "[1110,1929]"),
+            AbiTypeValueInputModel(type: .fixedBytes(size: 10), value: "31323334353637383930"),
+            AbiTypeValueInputModel(type: .bytes, value: "Hello, world!")
+        ]
+        
+        //act
+        let data = try? interpretator.getArguments(valueTypes: typeValue)
+        
+        //assert
+        XCTAssertNotNil(data?.hex)
+        XCTAssertEqual(data?.hex, decodedParams)
+    }
+    
     func testEncodeEtherExampleUintAndDynamicArrayOfUintsAndBytes10AndBytes() {
         
         //arrange
@@ -136,7 +155,7 @@ class AbiArgumentCoderTests: XCTestCase {
         let typeValue = [
             AbiTypeValueInputModel(type: .uint(size: 256), value: "1"),
             AbiTypeValueInputModel(type: .dynamicArrayOfUint, value: "[2,3]"),
-            AbiTypeValueInputModel(type: .fixedBytes(size: 10), value: "1234567890"),
+            AbiTypeValueInputModel(type: .fixedBytes(size: 10), value: "31323334353637383930"),
             AbiTypeValueInputModel(type: .bytes, value: "Hello, world!")
         ]
         
@@ -154,8 +173,8 @@ class AbiArgumentCoderTests: XCTestCase {
         let decodedParams = "00000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000080313233343536373839300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000e0000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000120000000000000000000000000000000000000000000000000000000000000012000000000000000000000000000000000000000000000000000000000000000d48656c6c6f2c20776f726c642100000000000000000000000000000000000000"
         let typeValue = [
             AbiTypeValueInputModel(type: .uint(size: 256), value: "1"),
-            AbiTypeValueInputModel(type: .dynamicArrayOfAddresses, value: "[18,18]"),
-            AbiTypeValueInputModel(type: .fixedBytes(size: 10), value: "1234567890"),
+            AbiTypeValueInputModel(type: .dynamicArrayOfUint, value: "[18,18]"),
+            AbiTypeValueInputModel(type: .fixedBytes(size: 10), value: "31323334353637383930"),
             AbiTypeValueInputModel(type: .bytes, value: "Hello, world!")
         ]
         
@@ -174,7 +193,7 @@ class AbiArgumentCoderTests: XCTestCase {
         let typeValue = [
             AbiTypeValueInputModel(type: .uint(size: 256), value: "1"),
             AbiTypeValueInputModel(type: .dynamicArrayOfFixedBytes(size: 32), value: "[1234567890,1234567890]"),
-            AbiTypeValueInputModel(type: .fixedBytes(size: 10), value: "1234567890"),
+            AbiTypeValueInputModel(type: .fixedBytes(size: 10), value: "31323334353637383930"),
             AbiTypeValueInputModel(type: .bytes, value: "Hello, world!")
         ]
         
@@ -193,7 +212,7 @@ class AbiArgumentCoderTests: XCTestCase {
         let typeValue = [
             AbiTypeValueInputModel(type: .uint(size: 256), value: "1"),
             AbiTypeValueInputModel(type: .fixedArrayOfFixedBytes(bytesSize: 32, arraySize: 2), value: "[1234567890,1234567890]"),
-            AbiTypeValueInputModel(type: .fixedBytes(size: 10), value: "1234567890"),
+            AbiTypeValueInputModel(type: .fixedBytes(size: 10), value: "31323334353637383930"),
             AbiTypeValueInputModel(type: .bytes, value: "Hello, world!")
         ]
         

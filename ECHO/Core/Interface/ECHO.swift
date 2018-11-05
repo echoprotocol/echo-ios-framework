@@ -226,6 +226,11 @@ final public class ECHO: InterfaceFacades {
     
     // MARK: ContractsFacade
     
+    public func getContractResult(contractResultId: String, completion: @escaping Completion<ContractResult>) {
+        
+        contractsFacade.getContractResult(historyId: contractResultId, completion: completion)
+    }
+    
     public func getContractResult(historyId: String, completion: @escaping Completion<ContractResult>) {
         
         contractsFacade.getContractResult(historyId: historyId, completion: completion)

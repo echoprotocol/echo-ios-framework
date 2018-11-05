@@ -57,7 +57,7 @@
 		B30CC387214A761D003953E3 /* Integer+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30CC386214A761D003953E3 /* Integer+Extension.swift */; };
 		B30CC389214A7782003953E3 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30CC388214A7782003953E3 /* String+Extension.swift */; };
 		B30CC38B214A8A4D003953E3 /* AbiParameterValidationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30CC38A214A8A4C003953E3 /* AbiParameterValidationTests.swift */; };
-		B30CC38D214A92EB003953E3 /* AbiArgumentCoderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30CC38C214A92EB003953E3 /* AbiArgumentCoderTests.swift */; };
+		B30CC38D214A92EB003953E3 /* AbiArgumentEncoderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30CC38C214A92EB003953E3 /* AbiArgumentEncoderTests.swift */; };
 		B30CC38F214AA870003953E3 /* AbiCoderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30CC38E214AA870003953E3 /* AbiCoderTests.swift */; };
 		B30FE903212ECD780009BF57 /* ECHOResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30FE902212ECD780009BF57 /* ECHOResponse.swift */; };
 		B30FE905212ECDAD0009BF57 /* Codable+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30FE904212ECDAD0009BF57 /* Codable+Extension.swift */; };
@@ -270,7 +270,7 @@
 		B30CC386214A761D003953E3 /* Integer+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Integer+Extension.swift"; sourceTree = "<group>"; };
 		B30CC388214A7782003953E3 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		B30CC38A214A8A4C003953E3 /* AbiParameterValidationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AbiParameterValidationTests.swift; sourceTree = "<group>"; };
-		B30CC38C214A92EB003953E3 /* AbiArgumentCoderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbiArgumentCoderTests.swift; sourceTree = "<group>"; };
+		B30CC38C214A92EB003953E3 /* AbiArgumentEncoderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbiArgumentEncoderTests.swift; sourceTree = "<group>"; };
 		B30CC38E214AA870003953E3 /* AbiCoderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbiCoderTests.swift; sourceTree = "<group>"; };
 		B30FE902212ECD780009BF57 /* ECHOResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ECHOResponse.swift; sourceTree = "<group>"; };
 		B30FE904212ECDAD0009BF57 /* Codable+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Codable+Extension.swift"; sourceTree = "<group>"; };
@@ -750,7 +750,7 @@
 			isa = PBXGroup;
 			children = (
 				B30CC38E214AA870003953E3 /* AbiCoderTests.swift */,
-				B30CC38C214A92EB003953E3 /* AbiArgumentCoderTests.swift */,
+				B30CC38C214A92EB003953E3 /* AbiArgumentEncoderTests.swift */,
 				B3D1C57F212DA09500D1A7E6 /* Stubs */,
 				B3D1C58D212DA92500D1A7E6 /* JsonEncodingTests.swift */,
 				B350E3A321341DB200408728 /* ECHOKeychainTest.swift */,
@@ -1173,7 +1173,7 @@
 				B390C2C621411FF600BD6CDC /* RevealAPISocketStubs.swift in Sources */,
 				B3D1C582212DA10400D1A7E6 /* FullAccountStub.swift in Sources */,
 				B30FE907212EFA0D0009BF57 /* FullHistoryStub.swift in Sources */,
-				B30CC38D214A92EB003953E3 /* AbiArgumentCoderTests.swift in Sources */,
+				B30CC38D214A92EB003953E3 /* AbiArgumentEncoderTests.swift in Sources */,
 				B3D1C588212DA67300D1A7E6 /* AuthorityStub.swift in Sources */,
 				B3D1C57C212D4D8100D1A7E6 /* DataEncodingTests.swift in Sources */,
 				B30CC38F214AA870003953E3 /* AbiCoderTests.swift in Sources */,

@@ -181,7 +181,9 @@ extension Decoder {
             case .fixedArrayOfAddresses(let size):
                 var addresses = [String]()
                 for index in 0..<size {
-                    if let btcNumber = BTCBigNumber(unsignedBigEndian: outputsData.subdata(in: (sliceSize * index)..<(sliceSize * index + sliceSize))) {
+                    let startIndex = sliceSize * index
+                    let endIndex = sliceSize * index + sliceSize
+                    if let btcNumber = BTCBigNumber(unsignedBigEndian: outputsData.subdata(in: startIndex..<endIndex)) {
                         addresses.append(btcNumber.decimalString)
                     }
                 }
@@ -198,7 +200,9 @@ extension Decoder {
             case .fixedArrayOfBool(let size):
                 var bools = [Bool]()
                 for index in 0..<size {
-                    if let btcNumber = BTCBigNumber(unsignedBigEndian: outputsData.subdata(in: (sliceSize * index)..<(sliceSize * index + sliceSize))),
+                    let startIndex = sliceSize * index
+                    let endIndex = sliceSize * index + sliceSize
+                    if let btcNumber = BTCBigNumber(unsignedBigEndian: outputsData.subdata(in: startIndex..<endIndex)),
                         let intValue = Int(btcNumber.decimalString) {
                         bools.append(intValue == 1)
                     }
@@ -216,7 +220,9 @@ extension Decoder {
             case .fixedArrayOfInt(let size), .fixedArrayOfUint(let size):
                 var ints = [Int]()
                 for index in 0..<size {
-                    if let btcNumber = BTCBigNumber(unsignedBigEndian: outputsData.subdata(in: (sliceSize * index)..<(sliceSize * index + sliceSize))),
+                    let startIndex = sliceSize * index
+                    let endIndex = sliceSize * index + sliceSize
+                    if let btcNumber = BTCBigNumber(unsignedBigEndian: outputsData.subdata(in: startIndex..<endIndex)),
                         let intValue = Int(btcNumber.decimalString) {
                         ints.append(intValue)
                     }
