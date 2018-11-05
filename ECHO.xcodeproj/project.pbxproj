@@ -119,6 +119,7 @@
 		B3A7AA4920F8C247002D569D /* RevilSocketApiFacade.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A7AA4820F8C247002D569D /* RevilSocketApiFacade.swift */; };
 		B3A7AA4B20F8C32C002D569D /* RevealFacadeImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A7AA4A20F8C32C002D569D /* RevealFacadeImp.swift */; };
 		B3A8BF6320F7DA4F0041A1D7 /* SocketMessanger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A8BF6220F7DA4F0041A1D7 /* SocketMessanger.swift */; };
+		B3B0C7A9219054970088D018 /* AbiArgumentDecoderTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B0C7A8219054970088D018 /* AbiArgumentDecoderTest.swift */; };
 		B3C365442134116800FC60F4 /* CryptoCoreComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C365432134116800FC60F4 /* CryptoCoreComponentTests.swift */; };
 		B3CA701E20F49C6800511F6A /* ReslutHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3CA701D20F49C6800511F6A /* ReslutHandler.swift */; };
 		B3CA702020F4A3A900511F6A /* ECHO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3CA701F20F4A3A900511F6A /* ECHO.swift */; };
@@ -332,6 +333,7 @@
 		B3A7AA4820F8C247002D569D /* RevilSocketApiFacade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevilSocketApiFacade.swift; sourceTree = "<group>"; };
 		B3A7AA4A20F8C32C002D569D /* RevealFacadeImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevealFacadeImp.swift; sourceTree = "<group>"; };
 		B3A8BF6220F7DA4F0041A1D7 /* SocketMessanger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketMessanger.swift; sourceTree = "<group>"; };
+		B3B0C7A8219054970088D018 /* AbiArgumentDecoderTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbiArgumentDecoderTest.swift; sourceTree = "<group>"; };
 		B3C365432134116800FC60F4 /* CryptoCoreComponentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoCoreComponentTests.swift; sourceTree = "<group>"; };
 		B3CA701D20F49C6800511F6A /* ReslutHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReslutHandler.swift; sourceTree = "<group>"; };
 		B3CA701F20F4A3A900511F6A /* ECHO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ECHO.swift; sourceTree = "<group>"; };
@@ -749,9 +751,10 @@
 		B3D1C562212C9CCA00D1A7E6 /* ECHOTests */ = {
 			isa = PBXGroup;
 			children = (
-				B30CC38E214AA870003953E3 /* AbiCoderTests.swift */,
-				B30CC38C214A92EB003953E3 /* AbiArgumentEncoderTests.swift */,
 				B3D1C57F212DA09500D1A7E6 /* Stubs */,
+				B30CC38E214AA870003953E3 /* AbiCoderTests.swift */,
+				B3B0C7A8219054970088D018 /* AbiArgumentDecoderTest.swift */,
+				B30CC38C214A92EB003953E3 /* AbiArgumentEncoderTests.swift */,
 				B3D1C58D212DA92500D1A7E6 /* JsonEncodingTests.swift */,
 				B350E3A321341DB200408728 /* ECHOKeychainTest.swift */,
 				B350E3A521341FD600408728 /* AddressKeysContainerTests.swift */,
@@ -1180,6 +1183,7 @@
 				B390C2CB2141403000BD6CDC /* CreateAssetSocketStubs.swift in Sources */,
 				B3306DF9214BB6A9002CFFF2 /* CallContractInfoStubs.swift in Sources */,
 				B3D1C58C212DA6E700D1A7E6 /* OptionsStub.swift in Sources */,
+				B3B0C7A9219054970088D018 /* AbiArgumentDecoderTest.swift in Sources */,
 				B30FE90C212F2AE70009BF57 /* AccountSocketRequestStub.swift in Sources */,
 				B3405CB82135BB3F00C18FE6 /* SubscribtionTests.swift in Sources */,
 				B390C2C92141385700BD6CDC /* IssueAssetSocketStubs.swift in Sources */,

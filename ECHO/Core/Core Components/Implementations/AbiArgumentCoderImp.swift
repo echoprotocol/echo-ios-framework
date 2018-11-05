@@ -114,12 +114,13 @@ extension Decoder {
             switch type {
             case .uint(_): fallthrough
             case .int(_): fallthrough
+            case .address: fallthrough
             case .bool:
                 
                 if let btcNumber = BTCBigNumber(unsignedBigEndian: outputsData.subdata(in: 0..<sliceSize)) {
                     
-                    let start = 0
-                    let end = start + sliceSize
+                    let start = sliceSize
+                    let end = outputsData.count
                     
                     if let newData = outputsData[safe: start..<end] {
                         let output = AbiTypeValueOutputModel(type: type, value: btcNumber.decimalString)
@@ -154,7 +155,6 @@ extension Decoder {
                         throw error
                     }
                 }
-            case .address: fallthrough
             case .fixedBytes(_):
                 
                 var stringOutput = stringFrom(data: outputsData.subdata(in: 0..<sliceSize))
