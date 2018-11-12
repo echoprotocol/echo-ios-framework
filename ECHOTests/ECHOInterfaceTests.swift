@@ -453,7 +453,7 @@ class ECHOInterfaceTests: XCTestCase {
         //assert
         waitForExpectations(timeout: timeout) { error in
             XCTAssertNotNil(fee)
-            XCTAssertEqual(fee.asset.id, assetForFee)
+            XCTAssertEqual(fee?.asset.id, assetForFee)
         }
     }
     

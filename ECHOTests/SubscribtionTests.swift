@@ -15,6 +15,11 @@ class SubscribtionTests: XCTestCase {
     var echo: ECHO!
     var strongDelegate: SubscribeDelegateMock?
     
+    override func tearDown() {
+        super.tearDown()
+        strongDelegate = nil
+    }
+    
     class SubscribeDelegateMock: SubscribeAccountDelegate {
         
         var subscribeNameOrIds = [String]()
@@ -40,9 +45,9 @@ class SubscribtionTests: XCTestCase {
     }
     
     func testSubscribe() {
-        
+  
         //arrange
-        let messenger = SocketMessengerStub()
+        let messenger = SocketMessengerStub(state: .subscribe)
         echo = ECHO(settings: Settings(build: {
             $0.socketMessenger = messenger
         }))
@@ -54,13 +59,14 @@ class SubscribtionTests: XCTestCase {
         
         //act
         echo.start { [unowned self] (result) in
+            print(result)
             self.echo.subscribeToAccount(nameOrId: userName, delegate: delegate)
             messenger.makeUserAccountChangePasswordEvent()
             exp.fulfill()
         }
         
         //assert
-        waitForExpectations(timeout: 1) { error in
+        waitForExpectations(timeout: 1000) { error in
             XCTAssertEqual(delegate.delegateEvents, 1)
         }
     }
@@ -95,7 +101,7 @@ class SubscribtionTests: XCTestCase {
     func testSubscribe2() {
         
         //arrange
-        let messenger = SocketMessengerStub()
+        let messenger = SocketMessengerStub(state: .subscribe)
         echo = ECHO(settings: Settings(build: {
             $0.socketMessenger = messenger
         }))

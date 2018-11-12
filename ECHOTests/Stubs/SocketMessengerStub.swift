@@ -10,7 +10,9 @@ import Foundation
 import ECHO
 
 enum OperationsState {
+    case reveal
     case changePassword
+    case getAccount
     case transfer
     case issueAsset
     case createAsset
@@ -18,6 +20,7 @@ enum OperationsState {
     case createContract
     case queryContract
     case callContract
+    case subscribe
     case `default`
 }
 
@@ -64,6 +67,8 @@ final class SocketMessengerStub: SocketMessenger {
         switch operationState {
         case .default:
             response = getConstantResponse(request: string)
+        case .reveal:
+            response = getRevealResponse(request: string)
         case .changePassword:
             response = getChangePasswordResponse(request: string)
         case .transfer:
@@ -80,6 +85,10 @@ final class SocketMessengerStub: SocketMessenger {
             response = getQueryContractResponse(request: string)
         case .callContract:
             response = getCallContractResponse(request: string)
+        case .subscribe:
+            response = getSubscribeResponse(request: string)
+        case .getAccount:
+            response = getAccountResponse(request: string)
         }
     
         if let response = response {
@@ -317,6 +326,75 @@ final class SocketMessengerStub: SocketMessenger {
             return revealResponse
         } else if let callContractResponse = callContractHodler.response(id: tuple.id, operationType: tuple.operationType) {
             return callContractResponse
+        }
+        
+        return nil
+    }
+    
+    fileprivate func getSubscribeResponse(request: String) -> String? {
+        
+        guard let tuple = parceRequest(request: request) else {
+            return nil
+        }
+        
+        let revealHodler = RevialAPISocketRequestStubHodler()
+        let stubHolder = SubscribeSocketRequestStubHodler()
+        
+        if let revealResponse = revealHodler.response(id: tuple.id, operationType: tuple.operationType) {
+            return revealResponse
+        } else if let response = stubHolder.response(id: tuple.id, operationType: tuple.operationType) {
+            return response
+        }
+        
+        return nil
+    }
+    
+    fileprivate func getRevealResponse(request: String) -> String? {
+        
+        guard let tuple = parceRequest(request: request) else {
+            return nil
+        }
+        
+        let revealHodler = RevialAPISocketRequestStubHodler()
+        
+        if let revealResponse = revealHodler.response(id: tuple.id, operationType: tuple.operationType) {
+            
+            switch tuple.operationType {
+            case "crypto":
+                revealCryptoApi = true
+            case "network_node":
+                revealNetNodesApi = true
+            case "network_broadcast":
+                revealNetBroadcastsApi = true
+            case "database":
+                revealDatabaseApi = true
+            case "history":
+                revealHistoryApi = true
+            case "login":
+                login = true
+            default:
+                break
+            }
+            
+            return revealResponse
+        }
+        
+        return nil
+    }
+    
+    fileprivate func getAccountResponse(request: String) -> String? {
+        
+        guard let tuple = parceRequest(request: request) else {
+            return nil
+        }
+        
+        let revealHodler = RevialAPISocketRequestStubHodler()
+        let stubHolder = GetAccountStubHolder()
+        
+        if let revealResponse = revealHodler.response(id: tuple.id, operationType: tuple.operationType) {
+            return revealResponse
+        } else if let response = stubHolder.response(id: tuple.id, operationType: tuple.operationType) {
+            return response
         }
         
         return nil

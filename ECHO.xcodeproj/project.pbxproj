@@ -22,6 +22,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		B30AFDB12191BD9300A657D8 /* SubscribeSocketRequestStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30AFDB02191BD9300A657D8 /* SubscribeSocketRequestStub.swift */; };
 		B30CACFA20FF74C80048E33E /* NetworkNodesApiServiceImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30CACEE20FF74C70048E33E /* NetworkNodesApiServiceImp.swift */; };
 		B30CACFB20FF74C80048E33E /* NetworkBroadcastApiServiceImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30CACEF20FF74C70048E33E /* NetworkBroadcastApiServiceImp.swift */; };
 		B30CACFC20FF74C80048E33E /* AccountHistoryApiServiceImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30CACF020FF74C70048E33E /* AccountHistoryApiServiceImp.swift */; };
@@ -153,6 +154,7 @@
 		B3D1C90621386461009018AE /* SignaturesGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D1C90521386461009018AE /* SignaturesGenerator.swift */; };
 		B3D7612C21366F3A00860C62 /* SocketNotificationsRequestStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D7612B21366F3A00860C62 /* SocketNotificationsRequestStub.swift */; };
 		B3DA875E2146C32E000EA228 /* GetContractInfoStubs.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3DA875D2146C32E000EA228 /* GetContractInfoStubs.swift */; };
+		B3DFFB9721941F8000BC67D7 /* GetAccountRequestStubs.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3DFFB9621941F8000BC67D7 /* GetAccountRequestStubs.swift */; };
 		D00C3D242147B4140053A636 /* ContractOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00C3D232147B4140053A636 /* ContractOperation.swift */; };
 		D00C3D282147B4F90053A636 /* Contract.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00C3D272147B4F90053A636 /* Contract.swift */; };
 		D0116C5821353C460004A491 /* TransactionFacadeImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0116C5721353C460004A491 /* TransactionFacadeImp.swift */; };
@@ -235,6 +237,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		B30AFDB02191BD9300A657D8 /* SubscribeSocketRequestStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribeSocketRequestStub.swift; sourceTree = "<group>"; };
 		B30CACEA20FF74840048E33E /* Starscream.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Starscream.framework; path = Carthage/Build/iOS/Starscream.framework; sourceTree = "<group>"; };
 		B30CACEE20FF74C70048E33E /* NetworkNodesApiServiceImp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkNodesApiServiceImp.swift; sourceTree = "<group>"; };
 		B30CACEF20FF74C70048E33E /* NetworkBroadcastApiServiceImp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkBroadcastApiServiceImp.swift; sourceTree = "<group>"; };
@@ -368,6 +371,7 @@
 		B3D1C90521386461009018AE /* SignaturesGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignaturesGenerator.swift; sourceTree = "<group>"; };
 		B3D7612B21366F3A00860C62 /* SocketNotificationsRequestStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketNotificationsRequestStub.swift; sourceTree = "<group>"; };
 		B3DA875D2146C32E000EA228 /* GetContractInfoStubs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetContractInfoStubs.swift; sourceTree = "<group>"; };
+		B3DFFB9621941F8000BC67D7 /* GetAccountRequestStubs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAccountRequestStubs.swift; sourceTree = "<group>"; };
 		D00C3D232147B4140053A636 /* ContractOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContractOperation.swift; sourceTree = "<group>"; };
 		D00C3D272147B4F90053A636 /* Contract.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contract.swift; sourceTree = "<group>"; };
 		D0116C5721353C460004A491 /* TransactionFacadeImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionFacadeImp.swift; sourceTree = "<group>"; };
@@ -505,6 +509,8 @@
 				B3306DF6214BA25E002CFFF2 /* QueryContractInfoStubs.swift */,
 				B3306DF8214BB6A9002CFFF2 /* CallContractInfoStubs.swift */,
 				B35D4C0C215248BF00FC7B27 /* ErrorResponseStub.swift */,
+				B30AFDB02191BD9300A657D8 /* SubscribeSocketRequestStub.swift */,
+				B3DFFB9621941F8000BC67D7 /* GetAccountRequestStubs.swift */,
 			);
 			path = SocketRequestsStubs;
 			sourceTree = "<group>";
@@ -1182,6 +1188,7 @@
 				B30CC38F214AA870003953E3 /* AbiCoderTests.swift in Sources */,
 				B390C2CB2141403000BD6CDC /* CreateAssetSocketStubs.swift in Sources */,
 				B3306DF9214BB6A9002CFFF2 /* CallContractInfoStubs.swift in Sources */,
+				B30AFDB12191BD9300A657D8 /* SubscribeSocketRequestStub.swift in Sources */,
 				B3D1C58C212DA6E700D1A7E6 /* OptionsStub.swift in Sources */,
 				B3B0C7A9219054970088D018 /* AbiArgumentDecoderTest.swift in Sources */,
 				B30FE90C212F2AE70009BF57 /* AccountSocketRequestStub.swift in Sources */,
@@ -1190,6 +1197,7 @@
 				B350E3A621341FD600408728 /* AddressKeysContainerTests.swift in Sources */,
 				B350E3A421341DB200408728 /* ECHOKeychainTest.swift in Sources */,
 				B390C2C421411F9600BD6CDC /* SocketRequestProtocol.swift in Sources */,
+				B3DFFB9721941F8000BC67D7 /* GetAccountRequestStubs.swift in Sources */,
 				B30FE90E212F2DAE0009BF57 /* FakeSocketCoreComponentTests.swift in Sources */,
 				B313B8C1212FF9850052B266 /* ECHOInterfaceTests.swift in Sources */,
 				B3D1C57A212C9D4900D1A7E6 /* JsonDecodingTests.swift in Sources */,

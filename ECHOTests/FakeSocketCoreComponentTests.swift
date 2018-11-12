@@ -63,7 +63,7 @@ class SocketCoreComponentTests: XCTestCase {
     func testRevealingApi() {
         
         //arrange
-        let messenger = SocketMessengerStub()
+        let messenger = SocketMessengerStub(state: .reveal)
         echo = ECHO(settings: Settings(build: {
             $0.socketMessenger = messenger
             $0.apiOptions = [.database, .networkBroadcast]
@@ -88,7 +88,7 @@ class SocketCoreComponentTests: XCTestCase {
     func testRevealingAllApi() {
         
         //arrange
-        let messenger = SocketMessengerStub()
+        let messenger = SocketMessengerStub(state: .reveal)
         echo = ECHO(settings: Settings(build: {
             $0.socketMessenger = messenger
         }))
@@ -112,7 +112,7 @@ class SocketCoreComponentTests: XCTestCase {
     func testGettingFakeAccount() {
         
         //arrange
-        let messenger = SocketMessengerStub()
+        let messenger = SocketMessengerStub(state: .getAccount)
         echo = ECHO(settings: Settings(build: {
             $0.socketMessenger = messenger
         }))
