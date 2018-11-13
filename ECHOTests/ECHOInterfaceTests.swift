@@ -182,7 +182,7 @@ class ECHOInterfaceTests: XCTestCase {
         
         //assert
         waitForExpectations(timeout: timeout) { error in
-            XCTAssertEqual(history.count, limit)
+            XCTAssertEqual(history?.count, limit)
         }
     }
     

@@ -92,10 +92,239 @@ final public class AbiArgumentCoderImp: AbiArgumentCoder {
     
 }
 
-// swiftlint:disable no_fallthrough_only
-// swiftlint:disable function_body_length
 private typealias Decoder = AbiArgumentCoderImp
 extension Decoder {
+    
+    fileprivate func decodePrimitives(_ data: Data,
+                                      _ sliceIndex: Int,
+                                      _ type: AbiParameterType,
+                                      _ decodedOutputs: inout [AbiTypeValueOutputModel]) throws {
+        
+        let start = sliceSize * sliceIndex
+        let end = start + sliceSize
+        
+        guard let btcNumber = BTCBigNumber(unsignedBigEndian: data[safe: start..<end]) else {
+            let error = NSError(domain: "", code: 0, userInfo: nil)
+            throw error
+        }
+        
+        let output = AbiTypeValueOutputModel(type: type, value: btcNumber.decimalString)
+        decodedOutputs.append(output)
+    }
+    
+    fileprivate func decodeStrings(_ data: Data,
+                                   _ sliceIndex: Int,
+                                   _ type: AbiParameterType,
+                                   _ decodedOutputs: inout [AbiTypeValueOutputModel],
+                                   _ outputs: [AbiFunctionEntries]) throws {
+        
+        var start = sliceSize * sliceIndex
+        var end = start + sliceSize
+        
+        guard let btcNumber = BTCBigNumber(unsignedBigEndian: data[safe: start..<end]) else {
+            let error = NSError(domain: "", code: 0, userInfo: nil)
+            throw error
+        }
+        
+        let offset = Int(btcNumber.uint32value)
+        
+        guard let lenght = BTCBigNumber(unsignedBigEndian: data[safe: offset..<offset + sliceSize]) else {
+            let error = NSError(domain: "", code: 0, userInfo: nil)
+            throw error
+        }
+        
+        start = sliceSize + offset
+        end = sliceSize + offset + Int(lenght.uint32value)
+        
+        let data = data[safe: start..<end]
+        
+        if let sringOutput = stringFrom(data: data) {
+            let output = AbiTypeValueOutputModel(type: type, value: sringOutput)
+            decodedOutputs.append(output)
+        } else {
+            let error = NSError(domain: "", code: 0, userInfo: nil)
+            throw error
+        }
+    }
+    
+    fileprivate func decodeBytes(_ data: Data,
+                                 _ sliceIndex: Int,
+                                 _ type: AbiParameterType,
+                                 _ decodedOutputs: inout [AbiTypeValueOutputModel],
+                                 _ outputs: [AbiFunctionEntries]) throws {
+        
+        var start = sliceSize * sliceIndex
+        var end = start + sliceSize
+        
+        guard let btcNumber = BTCBigNumber(unsignedBigEndian: data[safe: start..<end]) else {
+            let error = NSError(domain: "", code: 0, userInfo: nil)
+            throw error
+        }
+        
+        let offset = Int(btcNumber.uint32value)
+        
+        guard let lenght = BTCBigNumber(unsignedBigEndian: data[safe: offset..<offset + sliceSize]) else {
+            let error = NSError(domain: "", code: 0, userInfo: nil)
+            throw error
+        }
+        
+        start = sliceSize + offset
+        end = sliceSize + offset + Int(lenght.uint32value)
+        
+        let data = data[safe: start..<end]
+        
+        if let sringOutput = stringFrom(data: data) {
+            let output = AbiTypeValueOutputModel(type: type, value: sringOutput)
+            decodedOutputs.append(output)
+        } else {
+            let error = NSError(domain: "", code: 0, userInfo: nil)
+            throw error
+        }
+    }
+    
+    fileprivate func decodeDynamicArrayOfInt(_ data: Data,
+                                             _ sliceIndex: Int,
+                                             _ type: AbiParameterType,
+                                             _ decodedOutputs: inout [AbiTypeValueOutputModel],
+                                             _ outputs: [AbiFunctionEntries]) throws {
+        
+        let start = sliceSize * sliceIndex
+        let end = start + sliceSize
+        
+        guard let offsetNumber = BTCBigNumber(unsignedBigEndian: data[safe: start..<end]) else {
+            let error = NSError(domain: "", code: 0, userInfo: nil)
+            throw error
+        }
+        
+        let offset = Int(offsetNumber.uint32value)
+        
+        guard let lenghtNumber = BTCBigNumber(unsignedBigEndian: data[safe: offset..<offset + sliceSize]) else {
+            let error = NSError(domain: "", code: 0, userInfo: nil)
+            throw error
+        }
+        
+        let lenght = Int(lenghtNumber.uint32value)
+        var resultString = ""
+        
+        for index in 0..<lenght {
+            
+            let start = sliceSize + offset + index * sliceSize
+            let end = start + sliceSize
+            
+            guard let btcNumber = BTCBigNumber(unsignedBigEndian: data[safe: start..<end]) else {
+                let error = NSError(domain: "", code: 0, userInfo: nil)
+                throw error
+            }
+            
+            resultString += btcNumber.decimalString
+
+            if index != lenght - 1 {
+                resultString += ","
+            }
+        }
+
+        resultString = "[\(resultString)]"
+        let output = AbiTypeValueOutputModel(type: type, value: resultString)
+        decodedOutputs.append(output)
+    }
+    
+    fileprivate func decodeFixedBytes(_ data: Data,
+                                      _ sliceIndex: Int,
+                                      _ bytesSize: Int,
+                                      _ type: AbiParameterType,
+                                      _ decodedOutputs: inout [AbiTypeValueOutputModel],
+                                      _ outputs: [AbiFunctionEntries]) throws {
+        
+        let start = sliceSize * sliceIndex
+        let end = start + sliceSize
+        
+        guard let bytesData = data[safe: start..<end] else {
+            let error = NSError(domain: "", code: 0, userInfo: nil)
+            throw error
+        }
+        
+        guard let fixedBytesData = bytesData[safe: 0..<bytesSize] else {
+            let error = NSError(domain: "", code: 0, userInfo: nil)
+            throw error
+        }
+        
+        let output = AbiTypeValueOutputModel(type: type, value: fixedBytesData.hex)
+        decodedOutputs.append(output)
+    }
+    
+    fileprivate func decodeArrayOfAddresses(_ size: Int,
+                                            _ outputsData: inout Data,
+                                            _ type: AbiParameterType,
+                                            _ decodedOutputs: inout [AbiTypeValueOutputModel]) throws {
+        var addresses = [String]()
+        for index in 0..<size {
+            let startIndex = sliceSize * index
+            let endIndex = sliceSize * index + sliceSize
+            if let btcNumber = BTCBigNumber(unsignedBigEndian: outputsData.subdata(in: startIndex..<endIndex)) {
+                addresses.append(btcNumber.decimalString)
+            }
+        }
+        
+        if let newData = outputsData[safe: size * sliceSize..<outputsData.count] {
+            let output = AbiTypeValueOutputModel(type: type, value: addresses)
+            decodedOutputs.append(output)
+            
+            outputsData = newData
+        } else {
+            let error = NSError(domain: "", code: 0, userInfo: nil)
+            throw error
+        }
+    }
+    
+    fileprivate func decodeFixedArrayOfBool(_ size: Int,
+                                            _ outputsData: inout Data,
+                                            _ type: AbiParameterType,
+                                            _ decodedOutputs: inout [AbiTypeValueOutputModel]) throws {
+        var bools = [Bool]()
+        for index in 0..<size {
+            let startIndex = sliceSize * index
+            let endIndex = sliceSize * index + sliceSize
+            if let btcNumber = BTCBigNumber(unsignedBigEndian: outputsData.subdata(in: startIndex..<endIndex)),
+                let intValue = Int(btcNumber.decimalString) {
+                bools.append(intValue == 1)
+            }
+        }
+        
+        if let newData = outputsData[safe: size * sliceSize..<outputsData.count] {
+            let output = AbiTypeValueOutputModel(type: type, value: bools)
+            decodedOutputs.append(output)
+            
+            outputsData = newData
+        } else {
+            let error = NSError(domain: "", code: 0, userInfo: nil)
+            throw error
+        }
+    }
+    
+    fileprivate func decodeFixedArrayOfInt(_ size: Int,
+                                           _ outputsData: inout Data,
+                                           _ type: AbiParameterType,
+                                           _ decodedOutputs: inout [AbiTypeValueOutputModel]) throws {
+        var ints = [Int]()
+        for index in 0..<size {
+            let startIndex = sliceSize * index
+            let endIndex = sliceSize * index + sliceSize
+            if let btcNumber = BTCBigNumber(unsignedBigEndian: outputsData.subdata(in: startIndex..<endIndex)),
+                let intValue = Int(btcNumber.decimalString) {
+                ints.append(intValue)
+            }
+        }
+        
+        if let newData = outputsData[safe: size * sliceSize..<outputsData.count] {
+            let output = AbiTypeValueOutputModel(type: type, value: ints)
+            decodedOutputs.append(output)
+            
+            outputsData = newData
+        } else {
+            let error = NSError(domain: "", code: 0, userInfo: nil)
+            throw error
+        }
+    }
     
     fileprivate func decodeOutputs(data: Data, outputs: [AbiFunctionEntries]) throws -> [AbiTypeValueOutputModel] {
         
@@ -112,133 +341,32 @@ extension Decoder {
             let type = outputs[index].type
             
             switch type {
-            case .uint(_): fallthrough
-            case .int(_): fallthrough
-            case .address: fallthrough
-            case .bool:
+            case .uint, .int, .address, .bool:
                 
-                if let btcNumber = BTCBigNumber(unsignedBigEndian: outputsData.subdata(in: 0..<sliceSize)) {
-                    
-                    let start = sliceSize
-                    let end = outputsData.count
-                    
-                    if let newData = outputsData[safe: start..<end] {
-                        let output = AbiTypeValueOutputModel(type: type, value: btcNumber.decimalString)
-                        decodedOutputs.append(output)
-                        outputsData = newData
-                    } else {
-                        let error = NSError(domain: "", code: 0, userInfo: nil)
-                        throw error
-                    }
-                }
+                try decodePrimitives(data, index, type, &decodedOutputs)
             case .string:
                 
-                if let offset = BTCBigNumber(unsignedBigEndian: outputsData[safe: 0..<sliceSize] ),
-                    let lenght = BTCBigNumber(unsignedBigEndian: outputsData[safe: sliceSize..<(sliceSize * 2)]) {
-                    
-                    let data = outputsData[safe: (sliceSize + Int(offset.uint32value))..<(sliceSize * 2) + Int(lenght.uint32value)]
-
-                    if let sringOutput = stringFrom(data: data) {
-                        let start = sliceSize * 2 + (counSlicesOfData(data: data) * sliceSize)
-                        let end = outputsData.count
-                        
-                        if let newData = outputsData[safe: start..<end] {
-                            let output = AbiTypeValueOutputModel(type: type, value: sringOutput)
-                            decodedOutputs.append(output)
-                            outputsData = newData
-                        } else {
-                            let error = NSError(domain: "", code: 0, userInfo: nil)
-                            throw error
-                        }
-                    } else {
-                        let error = NSError(domain: "", code: 0, userInfo: nil)
-                        throw error
-                    }
-                }
-            case .fixedBytes(_):
+                try decodeStrings(data, index, type, &decodedOutputs, outputs)
+            case .bytes:
                 
-                var stringOutput = stringFrom(data: outputsData.subdata(in: 0..<sliceSize))
+                try decodeBytes(data, index, type, &decodedOutputs, outputs)
+            case .dynamicArrayOfUint:
                 
-                if stringOutput == nil {
-                    stringOutput = outputsData.subdata(in: 0..<sliceSize).hex
-                }
+                try decodeDynamicArrayOfInt(data, index, type, &decodedOutputs, outputs)
+            case .fixedBytes(let size):
                 
-                if let stringOutput = stringOutput {
-                
-                    let start = sliceSize
-                    let end = outputsData.count
-
-                    if let newData = outputsData[safe: start..<end] {
-                        let output = AbiTypeValueOutputModel(type: type, value: stringOutput)
-                        decodedOutputs.append(output)
-
-                        outputsData = newData
-                    } else {
-                        let error = NSError(domain: "", code: 0, userInfo: nil)
-                        throw error
-                    }
-                }
+                try decodeFixedBytes(data, index, size, type, &decodedOutputs, outputs)
             case .fixedArrayOfAddresses(let size):
-                var addresses = [String]()
-                for index in 0..<size {
-                    let startIndex = sliceSize * index
-                    let endIndex = sliceSize * index + sliceSize
-                    if let btcNumber = BTCBigNumber(unsignedBigEndian: outputsData.subdata(in: startIndex..<endIndex)) {
-                        addresses.append(btcNumber.decimalString)
-                    }
-                }
                 
-                if let newData = outputsData[safe: size * sliceSize..<outputsData.count] {
-                    let output = AbiTypeValueOutputModel(type: type, value: addresses)
-                    decodedOutputs.append(output)
-                    
-                    outputsData = newData
-                } else {
-                    let error = NSError(domain: "", code: 0, userInfo: nil)
-                    throw error
-                }
+                try decodeArrayOfAddresses(size, &outputsData, type, &decodedOutputs)
             case .fixedArrayOfBool(let size):
-                var bools = [Bool]()
-                for index in 0..<size {
-                    let startIndex = sliceSize * index
-                    let endIndex = sliceSize * index + sliceSize
-                    if let btcNumber = BTCBigNumber(unsignedBigEndian: outputsData.subdata(in: startIndex..<endIndex)),
-                        let intValue = Int(btcNumber.decimalString) {
-                        bools.append(intValue == 1)
-                    }
-                }
                 
-                if let newData = outputsData[safe: size * sliceSize..<outputsData.count] {
-                    let output = AbiTypeValueOutputModel(type: type, value: bools)
-                    decodedOutputs.append(output)
-                    
-                    outputsData = newData
-                } else {
-                    let error = NSError(domain: "", code: 0, userInfo: nil)
-                    throw error
-                }
+                try decodeFixedArrayOfBool(size, &outputsData, type, &decodedOutputs)
             case .fixedArrayOfInt(let size), .fixedArrayOfUint(let size):
-                var ints = [Int]()
-                for index in 0..<size {
-                    let startIndex = sliceSize * index
-                    let endIndex = sliceSize * index + sliceSize
-                    if let btcNumber = BTCBigNumber(unsignedBigEndian: outputsData.subdata(in: startIndex..<endIndex)),
-                        let intValue = Int(btcNumber.decimalString) {
-                        ints.append(intValue)
-                    }
-                }
                 
-                if let newData = outputsData[safe: size * sliceSize..<outputsData.count] {
-                    let output = AbiTypeValueOutputModel(type: type, value: ints)
-                    decodedOutputs.append(output)
-                    
-                    outputsData = newData
-                } else {
-                    let error = NSError(domain: "", code: 0, userInfo: nil)
-                    throw error
-                }
+                try decodeFixedArrayOfInt(size, &outputsData, type, &decodedOutputs)
             default:
-            break
+                break
             }
         }
         
@@ -261,9 +389,8 @@ extension Encoder {
         
         switch type {
             
-        case .uint(_): fallthrough
-        case .int(_):
-            
+        case .uint, .int:
+    
             staticStack.array.append(BTCBigNumber(decimalString: data).unsignedBigEndian ?? placeholderData())
         case .bool:
             
@@ -354,8 +481,7 @@ extension Encoder {
         dynamicStack.array.append(BTCBigNumber(int64: Int64(lenght)).unsignedBigEndian ?? placeholderData())
 
         switch type {
-        case .dynamicArrayOfInt: fallthrough
-        case .dynamicArrayOfUint:
+        case .dynamicArrayOfInt, .dynamicArrayOfUint:
             
             for index in 0..<arrayElements.count {
                 
@@ -418,7 +544,6 @@ extension Encoder {
                     dynamicStack.array.append(placeholderData())
                 }
             }
-            
         default:
             break
         }
@@ -533,13 +658,11 @@ extension Encoder {
                     dynamicStack.array.append(placeholderData())
                 }
             }
-            
         default:
             break
         }
 
         return offset + lenght * sliceSize + sliceSize
-        
     }
     
     fileprivate func encodeDynamicStringArray(staticStack: ArrayOfData,
@@ -547,7 +670,6 @@ extension Encoder {
                                               type: AbiParameterType,
                                               offset: Int,
                                               data: String) throws -> Int {
-        
         //adding offset
         staticStack.array.append(BTCBigNumber(int64: Int64(offset)).unsignedBigEndian ?? placeholderData())
         
@@ -626,5 +748,3 @@ extension Encoder {
         return 0
     }
 }
-// swiftlint:enable no_fallthrough_only
-// swiftlint:enable function_body_length
