@@ -255,12 +255,29 @@ final public class ECHO: InterfaceFacades {
                                password: String,
                                assetId: String,
                                byteCode: String,
+                               parameters: [AbiTypeValueInputModel]?,
                                completion: @escaping Completion<Bool>) {
         
         contractsFacade.createContract(registrarNameOrId: registrarNameOrId,
                                        password: password,
                                        assetId: assetId,
                                        byteCode: byteCode,
+                                       parameters: parameters,
+                                       completion: completion)
+    }
+    
+    public func createContract(registrarNameOrId: String,
+                               password: String,
+                               assetId: String,
+                               byteCode: String,
+                               parameters: [AbiTypeValueInputModel],
+                               completion: @escaping Completion<Bool>) {
+        
+        contractsFacade.createContract(registrarNameOrId: registrarNameOrId,
+                                       password: password,
+                                       assetId: assetId,
+                                       byteCode: byteCode,
+                                       parameters: parameters,
                                        completion: completion)
     }
     
