@@ -566,6 +566,7 @@ class SocketCoreComponentTests: XCTestCase {
             self.echo.callContract(registrarNameOrId: registrarNameOrId,
                                    password: password,
                                    assetId: assetId,
+                                   amount: nil,
                                    assetForFee: nil,
                                    contratId: contratId,
                                    methodName: methodName,

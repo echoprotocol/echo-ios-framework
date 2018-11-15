@@ -129,6 +129,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
     public func callContract(registrarNameOrId: String,
                              password: String,
                              assetId: String,
+                             amount: UInt?,
                              assetForFee: String?,
                              contratId: String,
                              methodName: String,
@@ -167,7 +168,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
         
         // Operation
         callQueue.saveValue(Contract(id: contratId), forKey: ContractKeys.receiverContract.rawValue)
-        let bildCreateContractOperation = createBildContractOperation(callQueue, assetId, assetForFee, completion)
+        let bildCreateContractOperation = createBildContractOperation(callQueue, amount ?? 0, assetId, assetForFee, completion)
         
         // RequiredFee
         let getRequiredFeeOperationInitParams = (callQueue,
@@ -305,7 +306,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
         
         // Operation
         createQueue.saveValue(byteCode, forKey: ContractKeys.byteCode.rawValue)
-        let bildCreateContractOperation = createBildContractOperation(createQueue, assetId, assetForFee, completion)
+        let bildCreateContractOperation = createBildContractOperation(createQueue, 0, assetId, assetForFee, completion)
         
         // RequiredFee
         let getRequiredFeeOperationInitParams = (createQueue,
@@ -362,6 +363,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
     }
     
     fileprivate func createBildContractOperation(_ queue: ECHOQueue,
+                                                 _ amount: UInt,
                                                  _ assetId: String,
                                                  _ assetForFee: String,
                                                  _ completion: @escaping Completion<Bool>) -> Operation {

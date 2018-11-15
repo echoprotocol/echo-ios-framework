@@ -43,6 +43,7 @@ public protocol ContractsFacade {
     func callContract(registrarNameOrId: String,
                       password: String,
                       assetId: String,
+                      amount: UInt?,
                       assetForFee: String?,
                       contratId: String,
                       methodName: String,
