@@ -442,6 +442,7 @@ class SocketCoreComponentTests: XCTestCase {
             self.echo.createContract(registrarNameOrId: "vsharaev1",
                                      password: "newTestPass",
                                      assetId: "1.3.0",
+                                     assetForFee: nil,
                                      byteCode: byteCode,
                                      parameters: nil,
                                      completion: { (result) in
@@ -489,6 +490,7 @@ class SocketCoreComponentTests: XCTestCase {
             self.echo.createContract(registrarNameOrId: "vsharaev1",
                                      password: "newTestPass",
                                      assetId: "1.3.0",
+                                     assetForFee: nil,
                                      byteCode: byteCode,
                                      parameters: parameters,
                                      completion: { (result) in
@@ -564,6 +566,7 @@ class SocketCoreComponentTests: XCTestCase {
             self.echo.callContract(registrarNameOrId: registrarNameOrId,
                                    password: password,
                                    assetId: assetId,
+                                   assetForFee: nil,
                                    contratId: contratId,
                                    methodName: methodName,
                                    methodParams: params) { (result) in

@@ -254,6 +254,7 @@ final public class ECHO: InterfaceFacades {
     public func createContract(registrarNameOrId: String,
                                password: String,
                                assetId: String,
+                               assetForFee: String?,
                                byteCode: String,
                                parameters: [AbiTypeValueInputModel]?,
                                completion: @escaping Completion<Bool>) {
@@ -261,21 +262,7 @@ final public class ECHO: InterfaceFacades {
         contractsFacade.createContract(registrarNameOrId: registrarNameOrId,
                                        password: password,
                                        assetId: assetId,
-                                       byteCode: byteCode,
-                                       parameters: parameters,
-                                       completion: completion)
-    }
-    
-    public func createContract(registrarNameOrId: String,
-                               password: String,
-                               assetId: String,
-                               byteCode: String,
-                               parameters: [AbiTypeValueInputModel],
-                               completion: @escaping Completion<Bool>) {
-        
-        contractsFacade.createContract(registrarNameOrId: registrarNameOrId,
-                                       password: password,
-                                       assetId: assetId,
+                                       assetForFee: assetForFee,
                                        byteCode: byteCode,
                                        parameters: parameters,
                                        completion: completion)
@@ -284,6 +271,7 @@ final public class ECHO: InterfaceFacades {
     public func callContract(registrarNameOrId: String,
                              password: String,
                              assetId: String,
+                             assetForFee: String?,
                              contratId: String,
                              methodName: String,
                              methodParams: [AbiTypeValueInputModel],
@@ -292,6 +280,7 @@ final public class ECHO: InterfaceFacades {
         contractsFacade.callContract(registrarNameOrId: registrarNameOrId,
                                      password: password,
                                      assetId: assetId,
+                                     assetForFee: assetForFee,
                                      contratId: contratId,
                                      methodName: methodName,
                                      methodParams: methodParams,

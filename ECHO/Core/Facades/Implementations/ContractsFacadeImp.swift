@@ -106,6 +106,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
     public func createContract(registrarNameOrId: String,
                                password: String,
                                assetId: String,
+                               assetForFee: String?,
                                byteCode: String,
                                parameters: [AbiTypeValueInputModel]?,
                                completion: @escaping Completion<Bool>) {
@@ -120,6 +121,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
         createContract(registrarNameOrId: registrarNameOrId,
                        password: password,
                        assetId: assetId,
+                       assetForFee: assetForFee,
                        byteCode: byteCode,
                        completion: completion)
     }
@@ -127,16 +129,21 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
     public func callContract(registrarNameOrId: String,
                              password: String,
                              assetId: String,
+                             assetForFee: String?,
                              contratId: String,
                              methodName: String,
                              methodParams: [AbiTypeValueInputModel],
                              completion: @escaping (Result<Bool, ECHOError>) -> Void) {
-     
-        // Validate assetId, contratId
+        
+        let assetForFee = assetForFee ?? Settings.defaultAsset
+        
+        // Validate assetId, contratId, assetIdForFee
         do {
             let validator = IdentifierValidator()
             try validator.validateId(assetId, for: .asset)
             try validator.validateId(contratId, for: .contract)
+            try validator.validateId(assetForFee, for: .asset)
+
         } catch let error {
             let echoError = (error as? ECHOError) ?? ECHOError.undefined
             let result = Result<Bool, ECHOError>(error: echoError)
@@ -160,12 +167,12 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
         
         // Operation
         callQueue.saveValue(Contract(id: contratId), forKey: ContractKeys.receiverContract.rawValue)
-        let bildCreateContractOperation = createBildContractOperation(callQueue, assetId, completion)
+        let bildCreateContractOperation = createBildContractOperation(callQueue, assetId, assetForFee, completion)
         
         // RequiredFee
         let getRequiredFeeOperationInitParams = (callQueue,
                                                  services.databaseService,
-                                                 Asset(Settings.defaultAsset),
+                                                 Asset(assetForFee),
                                                  ContractKeys.operation.rawValue,
                                                  ContractKeys.fee.rawValue)
         let getRequiredFeeOperation = GetRequiredFeeQueueOperation<Bool>(initParams: getRequiredFeeOperationInitParams,
@@ -266,13 +273,18 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
     fileprivate func createContract(registrarNameOrId: String,
                                     password: String,
                                     assetId: String,
+                                    assetForFee: String?,
                                     byteCode: String,
                                     completion: @escaping Completion<Bool>) {
         
-        // Validate asset id
+        let assetForFee = assetForFee ?? Settings.defaultAsset
+
+        // Validate asset id, assetIdForFee
         do {
             let validator = IdentifierValidator()
             try validator.validateId(assetId, for: .asset)
+            try validator.validateId(assetForFee, for: .asset)
+
         } catch let error {
             let echoError = (error as? ECHOError) ?? ECHOError.undefined
             let result = Result<Bool, ECHOError>(error: echoError)
@@ -293,12 +305,12 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
         
         // Operation
         createQueue.saveValue(byteCode, forKey: ContractKeys.byteCode.rawValue)
-        let bildCreateContractOperation = createBildContractOperation(createQueue, assetId, completion)
+        let bildCreateContractOperation = createBildContractOperation(createQueue, assetId, assetForFee, completion)
         
         // RequiredFee
         let getRequiredFeeOperationInitParams = (createQueue,
                                                  services.databaseService,
-                                                 Asset(Settings.defaultAsset),
+                                                 Asset(assetForFee),
                                                  ContractKeys.operation.rawValue,
                                                  ContractKeys.fee.rawValue)
         let getRequiredFeeOperation = GetRequiredFeeQueueOperation<Bool>(initParams: getRequiredFeeOperationInitParams,
@@ -351,6 +363,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
     
     fileprivate func createBildContractOperation(_ queue: ECHOQueue,
                                                  _ assetId: String,
+                                                 _ assetForFee: String,
                                                  _ completion: @escaping Completion<Bool>) -> Operation {
         
         let contractOperation = BlockOperation()
@@ -371,7 +384,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
                                              gas: 11000000,
                                              code: byteCode,
                                              receiver: receive,
-                                             fee: AssetAmount(amount: 0, asset: Asset(Settings.defaultAsset)))
+                                             fee: AssetAmount(amount: 0, asset: Asset(assetForFee)))
             
             queue?.saveValue(operaion, forKey: ContractKeys.operation.rawValue)
         }

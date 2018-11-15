@@ -24,6 +24,7 @@ public protocol ContractsFacade {
     func createContract(registrarNameOrId: String,
                         password: String,
                         assetId: String,
+                        assetForFee: String?,
                         byteCode: String,
                         parameters: [AbiTypeValueInputModel]?,
                         completion: @escaping Completion<Bool>)
@@ -42,6 +43,7 @@ public protocol ContractsFacade {
     func callContract(registrarNameOrId: String,
                       password: String,
                       assetId: String,
+                      assetForFee: String?,
                       contratId: String,
                       methodName: String,
                       methodParams: [AbiTypeValueInputModel],
