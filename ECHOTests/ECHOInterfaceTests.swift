@@ -13,6 +13,11 @@ class ECHOInterfaceTests: XCTestCase {
     
     var echo: ECHO!
     let timeout: Double = 20
+    
+    override func tearDown() {
+        super.tearDown()
+        echo = nil
+    }
 
     func testStartingLib() {
         
@@ -103,7 +108,7 @@ class ECHOInterfaceTests: XCTestCase {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
         }))
         let exp = expectation(description: "Account Getting")
-        var account: Account!
+        var account: Account?
         let userName = "dima1"
         
         //act
@@ -121,7 +126,7 @@ class ECHOInterfaceTests: XCTestCase {
         
         //assert
         waitForExpectations(timeout: timeout) { error in
-            XCTAssertEqual(account.name, userName)
+            XCTAssertEqual(account?.name, userName)
         }
     }
     
@@ -625,6 +630,8 @@ class ECHOInterfaceTests: XCTestCase {
 
         //act
         echo.start { [unowned self] (result) in
+            
+            let started = try? result.dematerialize()
             self.echo.getAsset(assetIds: assetsIds, completion: { (result) in
                 switch result {
                 case .success(_):
