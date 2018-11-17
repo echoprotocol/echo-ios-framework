@@ -27,7 +27,7 @@ public struct ContractOperation: BaseOperation {
     
     public let registrar: Account
     public var asset: Asset
-    public let value: Int
+    public let value: UInt
     public let gasPrice: Int
     public let gas: Int
     public let code: String
@@ -35,7 +35,7 @@ public struct ContractOperation: BaseOperation {
     
     public init(registrar: Account,
                 asset: Asset,
-                value: Int,
+                value: UInt,
                 gasPrice: Int,
                 gas: Int,
                 code: String,
@@ -62,7 +62,7 @@ public struct ContractOperation: BaseOperation {
         registrar = Account(registrarId)
         let assetId = try values.decode(String.self, forKey: .assetId)
         asset = Asset(assetId)
-        value = try values.decode(Int.self, forKey: .value)
+        value = try values.decode(UInt.self, forKey: .value)
         gasPrice = try values.decode(Int.self, forKey: .gasPrice)
         gas = try values.decode(Int.self, forKey: .gas)
         code = try values.decode(String.self, forKey: .code)
@@ -85,7 +85,7 @@ public struct ContractOperation: BaseOperation {
         if let instance = asset.getInstance() {
             data.append(optional: Data.fromUIntLikeUnsignedByteArray(instance))
         }
-        data.append(optional: Data.fromInt64(value))
+        data.append(optional: Data.fromUint64(value))
         data.append(optional: Data.fromInt64(gasPrice))
         data.append(optional: Data.fromInt64(gas))
         
