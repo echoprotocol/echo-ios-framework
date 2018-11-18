@@ -28,7 +28,7 @@ struct KeyReferencesSocketOperation: SocketOperation {
         return array
     }
     
-    func complete(json: [String: Any]) {
+    func handleResponse(_ response: ECHODirectResponse) {
         
     }
 }

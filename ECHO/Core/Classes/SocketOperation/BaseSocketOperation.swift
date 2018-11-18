@@ -18,7 +18,7 @@ struct BaseSocketOperation: SocketOperation {
         return []
     }
     
-    func complete(json: [String: Any]) {
+    func handleResponse(_ response: ECHODirectResponse) {
         
     }
 }

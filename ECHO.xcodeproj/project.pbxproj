@@ -60,7 +60,7 @@
 		B30CC38B214A8A4D003953E3 /* AbiParameterValidationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30CC38A214A8A4C003953E3 /* AbiParameterValidationTests.swift */; };
 		B30CC38D214A92EB003953E3 /* AbiArgumentEncoderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30CC38C214A92EB003953E3 /* AbiArgumentEncoderTests.swift */; };
 		B30CC38F214AA870003953E3 /* AbiCoderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30CC38E214AA870003953E3 /* AbiCoderTests.swift */; };
-		B30FE903212ECD780009BF57 /* ECHOResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30FE902212ECD780009BF57 /* ECHOResponse.swift */; };
+		B30FE903212ECD780009BF57 /* ECHODirectResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30FE902212ECD780009BF57 /* ECHODirectResponse.swift */; };
 		B30FE905212ECDAD0009BF57 /* Codable+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30FE904212ECDAD0009BF57 /* Codable+Extension.swift */; };
 		B30FE907212EFA0D0009BF57 /* FullHistoryStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30FE906212EFA0D0009BF57 /* FullHistoryStub.swift */; };
 		B30FE909212F1AEA0009BF57 /* SocketMessengerStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30FE908212F1AEA0009BF57 /* SocketMessengerStub.swift */; };
@@ -121,6 +121,7 @@
 		B3A7AA4B20F8C32C002D569D /* RevealFacadeImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A7AA4A20F8C32C002D569D /* RevealFacadeImp.swift */; };
 		B3A8BF6320F7DA4F0041A1D7 /* SocketMessanger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A8BF6220F7DA4F0041A1D7 /* SocketMessanger.swift */; };
 		B3B0C7A9219054970088D018 /* AbiArgumentDecoderTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B0C7A8219054970088D018 /* AbiArgumentDecoderTest.swift */; };
+		B3BEA1FF21A05C0300CB9021 /* TransactionWithCallbackSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BEA1FE21A05C0300CB9021 /* TransactionWithCallbackSocketOperation.swift */; };
 		B3C365442134116800FC60F4 /* CryptoCoreComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C365432134116800FC60F4 /* CryptoCoreComponentTests.swift */; };
 		B3CA701E20F49C6800511F6A /* ReslutHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3CA701D20F49C6800511F6A /* ReslutHandler.swift */; };
 		B3CA702020F4A3A900511F6A /* ECHO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3CA701F20F4A3A900511F6A /* ECHO.swift */; };
@@ -276,7 +277,7 @@
 		B30CC38A214A8A4C003953E3 /* AbiParameterValidationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AbiParameterValidationTests.swift; sourceTree = "<group>"; };
 		B30CC38C214A92EB003953E3 /* AbiArgumentEncoderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbiArgumentEncoderTests.swift; sourceTree = "<group>"; };
 		B30CC38E214AA870003953E3 /* AbiCoderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbiCoderTests.swift; sourceTree = "<group>"; };
-		B30FE902212ECD780009BF57 /* ECHOResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ECHOResponse.swift; sourceTree = "<group>"; };
+		B30FE902212ECD780009BF57 /* ECHODirectResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ECHODirectResponse.swift; sourceTree = "<group>"; };
 		B30FE904212ECDAD0009BF57 /* Codable+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Codable+Extension.swift"; sourceTree = "<group>"; };
 		B30FE906212EFA0D0009BF57 /* FullHistoryStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullHistoryStub.swift; sourceTree = "<group>"; };
 		B30FE908212F1AEA0009BF57 /* SocketMessengerStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketMessengerStub.swift; sourceTree = "<group>"; };
@@ -337,6 +338,7 @@
 		B3A7AA4A20F8C32C002D569D /* RevealFacadeImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevealFacadeImp.swift; sourceTree = "<group>"; };
 		B3A8BF6220F7DA4F0041A1D7 /* SocketMessanger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketMessanger.swift; sourceTree = "<group>"; };
 		B3B0C7A8219054970088D018 /* AbiArgumentDecoderTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbiArgumentDecoderTest.swift; sourceTree = "<group>"; };
+		B3BEA1FE21A05C0300CB9021 /* TransactionWithCallbackSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionWithCallbackSocketOperation.swift; sourceTree = "<group>"; };
 		B3C365432134116800FC60F4 /* CryptoCoreComponentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoCoreComponentTests.swift; sourceTree = "<group>"; };
 		B3CA701D20F49C6800511F6A /* ReslutHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReslutHandler.swift; sourceTree = "<group>"; };
 		B3CA701F20F4A3A900511F6A /* ECHO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ECHO.swift; sourceTree = "<group>"; };
@@ -750,6 +752,7 @@
 				B38596F720F5F54100B55E59 /* SetSubscribeCallbackSocketOperation.swift */,
 				D048AE762136ABBE00441FEB /* TransactionSocketOperation.swift */,
 				B39554B4213EBAED00CE2647 /* ListAssetsSocketOperation.swift */,
+				B3BEA1FE21A05C0300CB9021 /* TransactionWithCallbackSocketOperation.swift */,
 			);
 			path = SocketOperation;
 			sourceTree = "<group>";
@@ -838,7 +841,7 @@
 				B30CAD2720FFF9E70048E33E /* ECHOKeychain.swift */,
 				B3CA703F20F4FB0200511F6A /* ECHOSerializable.swift */,
 				D0A1B440212E9C5300294683 /* ECHOQueue.swift */,
-				B30FE902212ECD780009BF57 /* ECHOResponse.swift */,
+				B30FE902212ECD780009BF57 /* ECHODirectResponse.swift */,
 				B385970320F6270000B55E59 /* ECHOObject.swift */,
 			);
 			path = ECHOObjects;
@@ -1096,6 +1099,7 @@
 				D0B0588221469A0900A80CDE /* GetContractSocketOperaton.swift in Sources */,
 				B348D0AC210207ED00C29AE4 /* Encoding.swift in Sources */,
 				B348D09D21011EBD00C29AE4 /* InformationFacadeImp.swift in Sources */,
+				B3BEA1FF21A05C0300CB9021 /* TransactionWithCallbackSocketOperation.swift in Sources */,
 				D0D8CA4A2141847900F0646D /* GetAccountsQueueOperation.swift in Sources */,
 				B30CC389214A7782003953E3 /* String+Extension.swift in Sources */,
 				B3CA703A20F4A7C300511F6A /* UserAccount.swift in Sources */,
@@ -1130,7 +1134,7 @@
 				D0B0587621468A0400A80CDE /* ContractInfo.swift in Sources */,
 				B3CA703820F4A72C00511F6A /* Error.swift in Sources */,
 				D0D8CA492141847900F0646D /* SendTransactionQueueOperation.swift in Sources */,
-				B30FE903212ECD780009BF57 /* ECHOResponse.swift in Sources */,
+				B30FE903212ECD780009BF57 /* ECHODirectResponse.swift in Sources */,
 				B3A7AA4920F8C247002D569D /* RevilSocketApiFacade.swift in Sources */,
 				B30CACFB20FF74C80048E33E /* NetworkBroadcastApiServiceImp.swift in Sources */,
 				D0B05874214689F600A80CDE /* GetContractsSocketOperation.swift in Sources */,

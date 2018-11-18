@@ -29,28 +29,22 @@ struct QueryContractSocketOperation: SocketOperation {
         return array
     }
     
-    func complete(json: [String: Any]) {
+    func handleResponse(_ response: ECHODirectResponse) {
         
-        do {
-            let data = try JSONSerialization.data(withJSONObject: json, options: [])
-            let response = try JSONDecoder().decode(ECHOResponse.self, from: data)
-            
-            switch response.response {
-            case .error(let error):
-                let result = Result<String, ECHOError>(error: ECHOError.internalError(error.message))
-                completion(result)
-            case .result(let result):
-                
-                switch result {
-                case .string(let string):
-                    completion(Result<String, ECHOError>(value: string))
-                default:
-                    throw ECHOError.encodableMapping
-                }
-            }
-        } catch {
-            let result = Result<String, ECHOError>(error: ECHOError.encodableMapping)
+        switch response.response {
+        case .error(let error):
+            let result = Result<String, ECHOError>(error: ECHOError.internalError(error.message))
             completion(result)
+        case .result(let result):
+            
+            switch result {
+            case .string(let string):
+                let result = Result<String, ECHOError>(value: string)
+                completion(result)
+            default:
+                let result = Result<String, ECHOError>(error: ECHOError.encodableMapping)
+                completion(result)
+            }
         }
     }
 }

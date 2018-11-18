@@ -24,12 +24,9 @@ struct GetAllContractsSocketOperation: SocketOperation {
         return array
     }
     
-    func complete(json: [String: Any]) {
+    func handleResponse(_ response: ECHODirectResponse) {
         
         do {
-            let data = try JSONSerialization.data(withJSONObject: json, options: [])
-            let response = try JSONDecoder().decode(ECHOResponse.self, from: data)
-            
             switch response.response {
             case .error(let error):
                 let result = Result<[ContractInfo], ECHOError>(error: ECHOError.internalError(error.message))

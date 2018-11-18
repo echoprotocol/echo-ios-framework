@@ -30,7 +30,8 @@ enum SocketOperationKeys: String {
     case requiredFee = "get_required_fees"
     case subscribeCallback = "set_subscribe_callback"
     case setBlockAppliedCallback = "set_block_applied_callback"
-    case transaction = "broadcast_transaction_with_callback"
+    case transaction = "broadcast_transaction"
+    case transactionWithCallBack = "broadcast_transaction_with_callback"
     case listAssets = "list_assets"
     case getAllContracts = "get_all_contracts"
     case getContracts = "get_contracts"
@@ -49,7 +50,7 @@ protocol SocketOperation: JSONCodable {
     var operationId: Int { get }
     var apiId: Int { get }
     func createParameters() -> [Any]
-    func complete(json: [String: Any])
+    func handleResponse(_ response: ECHODirectResponse)
     func forceEnd()
 }
 

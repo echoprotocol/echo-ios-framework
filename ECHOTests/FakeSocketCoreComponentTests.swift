@@ -583,7 +583,7 @@ class SocketCoreComponentTests: XCTestCase {
         }
 
         //assert
-        waitForExpectations(timeout: 1000) { error in
+        waitForExpectations(timeout: 1) { error in
             XCTAssertTrue(success)
         }
     }

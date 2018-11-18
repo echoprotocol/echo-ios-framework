@@ -15,7 +15,7 @@ final class SocketCoreComponentImp: SocketCoreComponent {
     let url: String
     var operationsMap = [Int: SocketOperation]()
     var currentOperationId: Int = 0
-    var onMessage: (([String: Any]) -> ())?
+    private var noticeSubscribers = NSPointerArray.weakObjects()
     
     required init(messanger: SocketMessenger, url: String) {
         self.messenger = messanger
@@ -56,6 +56,10 @@ final class SocketCoreComponentImp: SocketCoreComponent {
         messenger.disconnect()
     }
     
+    func subscribeToNotifications(subscriver: SubscribeBlockchainNotification) {
+        noticeSubscribers.addObject(subscriver)
+    }
+    
     func send(operation: SocketOperation) {
         
         guard let jsonString: String = operation.toJSON() else {
@@ -73,22 +77,64 @@ final class SocketCoreComponentImp: SocketCoreComponent {
     
     fileprivate func handleMessage(_ string: String) {
         
-        guard let json = converToJSON(string) else {
+        print("""
+            ------------
+            \(string)
+            ----------
+            """)
+        
+        guard let json = converToJSON(string),
+            let data = try? JSONSerialization.data(withJSONObject: json, options: []) else {
             return
         }
         
-        onMessage?(json)
+        if let response = decodeDirectResopnse(data: data) {
+            
+            handleResponse(response)
+        } else if let notifcation = decodeNotice(data: data) {
+            
+            handleNotification(notifcation)
+        }
+    }
+    
+    fileprivate func handleResponse(_ response: ECHODirectResponse) {
         
-        guard let operationId = json["id"] as? Int else {
+        let id = response.id
+        guard let operation = operationsMap[id] else {
             return
         }
         
-        guard let operation = operationsMap[operationId] else {
-            return
-        }
+        operation.handleResponse(response)
+        operationsMap[id] = nil
+    }
+    
+    fileprivate func handleNotification(_ notification: ECHONotification) {
         
-        operation.complete(json: json)
-        operationsMap[operationId] = nil
+        noticeSubscribers.compact()
+        
+        for index in 0..<noticeSubscribers.count {
+            
+            if let delegate = noticeSubscribers.object(at: index) as? SubscribeBlockchainNotification {
+                
+                delegate.didReceiveNotification(notification: notification)
+            }
+        }
+    }
+    
+    fileprivate func decodeDirectResopnse(data: Data) -> ECHODirectResponse? {
+        
+        guard let response = try? JSONDecoder().decode(ECHODirectResponse.self, from: data) else {
+            return nil
+        }
+        return response
+    }
+    
+    fileprivate func decodeNotice(data: Data) -> ECHONotification? {
+        
+        guard let notification = try? JSONDecoder().decode(ECHONotification.self, from: data) else {
+            return nil
+        }
+        return notification
     }
     
     fileprivate func converToJSON(_ jsonString: String) -> [String: Any]? {

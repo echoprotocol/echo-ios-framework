@@ -11,7 +11,7 @@ import Foundation
 /**
     Represent response from chain
  */
-struct ECHOResponse: Decodable {
+struct ECHODirectResponse: Decodable {
     
     let id: Int
     let response: ErrorOrResult

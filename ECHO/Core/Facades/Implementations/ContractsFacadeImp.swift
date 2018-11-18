@@ -381,7 +381,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
             
             let operaion = ContractOperation(registrar: account,
                                              asset: Asset(assetId),
-                                             value: 0,
+                                             value: amount,
                                              gasPrice: 0,
                                              gas: 11000000,
                                              code: byteCode,

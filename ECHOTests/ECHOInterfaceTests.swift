@@ -23,7 +23,7 @@ class ECHOInterfaceTests: XCTestCase {
         
         //arrange
         echo = ECHO(settings: Settings(build: {
-            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+            $0.apiOptions = [.database, .networkBroadcast, .accountHistory]
         }))
         let exp = expectation(description: "Start")
         var isStarted = false
@@ -109,7 +109,7 @@ class ECHOInterfaceTests: XCTestCase {
         }))
         let exp = expectation(description: "Account Getting")
         var account: Account?
-        let userName = "dima1"
+        let userName = "nikitatest"
         
         //act
         echo.start { [unowned self] (result) in
@@ -137,7 +137,7 @@ class ECHOInterfaceTests: XCTestCase {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
         }))
         let exp = expectation(description: "Account Getting")
-        let userName = "dima1 new account unreserved"
+        let userName = "nikitatest new account unreserved"
         var errorMessage: String?
 
         //act
@@ -231,7 +231,7 @@ class ECHOInterfaceTests: XCTestCase {
         }))
         let exp = expectation(description: "Account balances Getting")
         var accountBalaces: [AccountBalance]!
-        let userName = "dima1"
+        let userName = "nikitatest"
         
         //act
         echo.start { [unowned self] (result) in
@@ -289,7 +289,7 @@ class ECHOInterfaceTests: XCTestCase {
         }))
         let exp = expectation(description: "Account Getting")
         var isAccReserved = false
-        let userName = "dima1"
+        let userName = "nikitatest"
         
         //act
         echo.start { [unowned self] (result) in
@@ -347,8 +347,8 @@ class ECHOInterfaceTests: XCTestCase {
         }))
         let exp = expectation(description: "Account Getting")
         var owned = false
-        let userName = "dima1"
-        let password = "P5J8pDyzznMmEdiBCdgB7VKtMBuxw5e4MAJEo3sfUbxcM"
+        let userName = "nikitatest"
+        let password = "nikitatest"
         
         //act
         echo.start { [unowned self] (result) in
@@ -377,7 +377,7 @@ class ECHOInterfaceTests: XCTestCase {
         }))
         let exp = expectation(description: "Account Getting")
         var owned = false
-        let userName = "dima1"
+        let userName = "nikitatest"
         let password = "fake password"
         
         //act
@@ -407,8 +407,8 @@ class ECHOInterfaceTests: XCTestCase {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
         }))
         let exp = expectation(description: "Fee Getting")
-        let fromUser = "dima1"
-        let toUser = "nikita1994"
+        let fromUser = "nikitatest"
+        let toUser = "nikitatest1"
         var fee: AssetAmount!
         
         //act
@@ -437,8 +437,8 @@ class ECHOInterfaceTests: XCTestCase {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
         }))
         let exp = expectation(description: "Fee Getting In Another Asset")
-        let fromUser = "vsharaev1"
-        let toUser = "nikita1994"
+        let fromUser = "nikitatest"
+        let toUser = "nikitatest1"
         let assetForFee = "1.3.137"
         var fee: AssetAmount!
         
@@ -470,7 +470,7 @@ class ECHOInterfaceTests: XCTestCase {
         }))
         let exp = expectation(description: "Fee Getting")
         let fromUser = "dima1 new account unreserved"
-        let toUser = "nikita1994"
+        let toUser = "nikitatest"
         var userError: Error!
         
         //act
@@ -499,9 +499,9 @@ class ECHOInterfaceTests: XCTestCase {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
         }))
         let exp = expectation(description: "Transfer")
-        let password = "P5JDUR7rSa9QXtYp9CF9HhnDRdPYz9mVpeiU812r2p5WVr8UcREY"
-        let fromUser = "nikita1994"
-        let toUser = "dima1"
+        let password = "nikitatest1"
+        let fromUser = "nikitatest1"
+        let toUser = "nikitatest"
         var isSuccess = false
         
         
@@ -565,8 +565,8 @@ class ECHOInterfaceTests: XCTestCase {
         }))
         let exp = expectation(description: "Transfer")
         let password = "wrongPassword"
-        let fromUser = "nikita1994"
-        let toUser = "dima1"
+        let fromUser = "nikitatest1"
+        let toUser = "nikitatest"
         var isSuccess = false
         
         
@@ -631,7 +631,6 @@ class ECHOInterfaceTests: XCTestCase {
         //act
         echo.start { [unowned self] (result) in
             
-            let started = try? result.dematerialize()
             self.echo.getAsset(assetIds: assetsIds, completion: { (result) in
                 switch result {
                 case .success(_):
@@ -914,45 +913,47 @@ class ECHOInterfaceTests: XCTestCase {
         }
     }
     
-//    func testCreateContract() {
-//
-//        //arrange
-//        echo = ECHO(settings: Settings(build: {
-//            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
-//        }))
-//        let exp = expectation(description: "Creating contract")
-//        let byteCode =  "60806040526000805534801561001457600080fd5b5061011480610024" +
-//                        "6000396000f300608060405260043610605c5763ffffffff7c010000000000000000000000000000000000" +
-//                        "00000000000000000000006000350416635b34b966811460615780635b9af12b146075578063a87d942c14" +
-//                        "608a578063f5c5ad831460ae575b600080fd5b348015606c57600080fd5b50607360c0565b005b34801560" +
-//                        "8057600080fd5b50607360043560cb565b348015609557600080fd5b50609c60d6565b6040805191825251" +
-//                        "9081900360200190f35b34801560b957600080fd5b50607360dc565b600080546001019055565b60008054" +
-//                        "9091019055565b60005490565b600080546000190190555600a165627a7a7230582016b3f6673de41336e2" +
-//                        "c5d4b136b4e67bbf43062b6bc47eaef982648cd3b92a9d0029"
-//        var success = false
-//
-//        //act
-//        echo.start { [unowned self] (result) in
-//            self.echo.createContract(registrarNameOrId: "vsharaev1",
-//                                     password: "newTestPass",
-//                                     assetId: "1.3.0",
-//                                     byteCode: byteCode) { (result) in
-//
-//                switch result {
-//                case .success(let isSuccess):
-//                    success = isSuccess
-//                    exp.fulfill()
-//                case .failure(_):
-//                    XCTFail("Creating contract cant fail")
-//                }
-//            }
-//        }
-//
-//        //assert
-//        waitForExpectations(timeout: 1000) { error in
-//            XCTAssertTrue(success)
-//        }
-//    }
+    func testCreateContract() {
+
+        //arrange
+        echo = ECHO(settings: Settings(build: {
+            $0.apiOptions = [.database, .networkBroadcast, .accountHistory]
+        }))
+        let exp = expectation(description: "Creating contract")
+        let byteCode =  "60806040526000805534801561001457600080fd5b5061011480610024" +
+                        "6000396000f300608060405260043610605c5763ffffffff7c010000000000000000000000000000000000" +
+                        "00000000000000000000006000350416635b34b966811460615780635b9af12b146075578063a87d942c14" +
+                        "608a578063f5c5ad831460ae575b600080fd5b348015606c57600080fd5b50607360c0565b005b34801560" +
+                        "8057600080fd5b50607360043560cb565b348015609557600080fd5b50609c60d6565b6040805191825251" +
+                        "9081900360200190f35b34801560b957600080fd5b50607360dc565b600080546001019055565b60008054" +
+                        "9091019055565b60005490565b600080546000190190555600a165627a7a7230582016b3f6673de41336e2" +
+                        "c5d4b136b4e67bbf43062b6bc47eaef982648cd3b92a9d0029"
+        var success = false
+
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.createContract(registrarNameOrId: "nikitatest",
+                                     password: "nikitatest",
+                                     assetId: "1.3.0",
+                                     assetForFee: nil,
+                                     byteCode: byteCode,
+                                     parameters: nil) { (result) in
+
+                switch result {
+                case .success(let isSuccess):
+                    success = isSuccess
+                    exp.fulfill()
+                case .failure(_):
+                    XCTFail("Creating contract cant fail")
+                }
+            }
+        }
+
+        //assert
+        waitForExpectations(timeout: timeout) { error in
+            XCTAssertTrue(success)
+        }
+    }
     
     func testQueryContract() {
 
@@ -961,7 +962,7 @@ class ECHOInterfaceTests: XCTestCase {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
         }))
         let exp = expectation(description: "Query contract")
-        let registrarNameOrId = "dima1"
+        let registrarNameOrId = "nikitatest"
         let assetId = "1.3.0"
         let contratId = "1.16.16244"
         let methodName = "balanceOf"

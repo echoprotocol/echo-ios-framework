@@ -21,22 +21,14 @@ struct SetBlockAppliedCollbackSocketOperation: SocketOperation {
         return array
     }
     
-    func complete(json: [String: Any]) {
+    func handleResponse(_ response: ECHODirectResponse) {
         
-        do {
-            let data = try JSONSerialization.data(withJSONObject: json, options: [])
-            let response = try JSONDecoder().decode(ECHOResponse.self, from: data)
-            
-            switch response.response {
-            case .error(let error):
-                let result = Result<Bool, ECHOError>(error: ECHOError.internalError(error.message))
-                completion(result)
-            case .result(_):
-                let result = Result<Bool, ECHOError>(value: true)
-                completion(result)
-            }
-        } catch {
-            let result = Result<Bool, ECHOError>(error: ECHOError.encodableMapping)
+        switch response.response {
+        case .error(let error):
+            let result = Result<Bool, ECHOError>(error: ECHOError.internalError(error.message))
+            completion(result)
+        case .result(_):
+            let result = Result<Bool, ECHOError>(value: true)
             completion(result)
         }
     }

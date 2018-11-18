@@ -77,9 +77,7 @@ final public class SubscriptionFacadeImp: SubscriptionFacade {
     
     fileprivate func updateSocketOnDelegate() {
         
-        socketCore.onMessage = { [weak self] (result) in
-            self?.handleMessage(result)
-        }
+        socketCore.subscribeToNotifications(subscriver: self)
     }
     
     fileprivate func getUserIdAndSetSubscriber(nameOrId: String, delegate: SubscribeAccountDelegate) {
@@ -107,12 +105,7 @@ final public class SubscriptionFacadeImp: SubscriptionFacade {
         }
     }
     
-    fileprivate func handleMessage(_ json: [String: Any]) {
-        
-        guard let notification = (try? JSONSerialization.data(withJSONObject: json, options: []))
-            .flatMap({ try? JSONDecoder().decode(ECHONotification.self, from: $0)}) else {
-            return
-        }
+    fileprivate func handleNotification(_ notification: ECHONotification) {
         
         switch notification.params {
         case .array(let array):
@@ -241,5 +234,12 @@ final public class SubscriptionFacadeImp: SubscriptionFacade {
                 createBlockSubscriber.didCreateBlock(block: block)
             }
         }
+    }
+}
+
+extension SubscriptionFacadeImp: SubscribeBlockchainNotification {
+    
+    func didReceiveNotification(notification: ECHONotification) {
+        handleNotification(notification)
     }
 }
