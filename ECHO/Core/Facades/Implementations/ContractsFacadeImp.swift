@@ -31,6 +31,9 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
         case chainId
         case fee
         case transaction
+        case operationId
+        case noticeHandler
+        case notice
     }
     
     var queues: [ECHOQueue]
@@ -38,14 +41,21 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
     let network: ECHONetwork
     let cryptoCore: CryptoCoreComponent
     let abiCoderCore: AbiCoder
+    let socketCore: SocketCoreComponent
     
-    public init(services: ContractsFacadeServices, cryptoCore: CryptoCoreComponent, network: ECHONetwork, abiCoder: AbiCoder) {
+    public init(services: ContractsFacadeServices,
+                cryptoCore: CryptoCoreComponent,
+                network: ECHONetwork,
+                abiCoder: AbiCoder,
+                socketCore: SocketCoreComponent) {
         
         self.services = services
         self.network = network
         self.cryptoCore = cryptoCore
         self.abiCoderCore = abiCoder
         self.queues = [ECHOQueue]()
+        self.socketCore = socketCore
+        self.socketCore.subscribeToNotifications(subscriver: self)
     }
     
     public func getContractResult(historyId: String, completion: @escaping Completion<ContractResult>) {
@@ -109,7 +119,8 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
                                assetForFee: String?,
                                byteCode: String,
                                parameters: [AbiTypeValueInputModel]?,
-                               completion: @escaping Completion<Bool>) {
+                               completion: @escaping Completion<Bool>,
+                               noticeHandler: NoticeHandler?) {
         
         var completedBytecode = byteCode
         
@@ -123,7 +134,8 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
                        assetId: assetId,
                        assetForFee: assetForFee,
                        byteCode: byteCode,
-                       completion: completion)
+                       completion: completion,
+                       noticeHandler: noticeHandler)
     }
     
     public func callContract(registrarNameOrId: String,
@@ -134,7 +146,8 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
                              contratId: String,
                              methodName: String,
                              methodParams: [AbiTypeValueInputModel],
-                             completion: @escaping (Result<Bool, ECHOError>) -> Void) {
+                             completion: @escaping Completion<Bool>,
+                             noticeHandler: NoticeHandler?) {
         
         let assetForFee = assetForFee ?? Settings.defaultAsset
         
@@ -207,10 +220,14 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
         // Send transaction
         let sendTransacionOperationInitParams = (callQueue,
                                                  services.networkBroadcastService,
+                                                 ContractKeys.operationId.rawValue,
                                                  ContractKeys.transaction.rawValue)
         let sendTransactionOperation = SendTransactionQueueOperation(initParams: sendTransacionOperationInitParams,
                                                                      completion: completion)
         
+        //Notice handler
+        callQueue.saveValue(noticeHandler, forKey: ContractKeys.noticeHandler.rawValue)
+
         // Completion
         let completionOperation = createCompletionOperation(queue: callQueue)
         
@@ -222,6 +239,16 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
         callQueue.addOperation(getBlockDataOperation)
         callQueue.addOperation(bildTransactionOperation)
         callQueue.addOperation(sendTransactionOperation)
+        
+        //Notice handler
+        if let noticeHandler = noticeHandler {
+            callQueue.saveValue(noticeHandler, forKey: ContractKeys.noticeHandler.rawValue)
+            let waitOperation = createWaitingOperation(callQueue)
+            let noticeHandleOperation = createNoticeHandleOperation(callQueue)
+            callQueue.addOperation(waitOperation)
+            callQueue.addOperation(noticeHandleOperation)
+        }
+        
         callQueue.setCompletionOperation(completionOperation)
     }
     
@@ -276,7 +303,8 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
                                     assetId: String,
                                     assetForFee: String?,
                                     byteCode: String,
-                                    completion: @escaping Completion<Bool>) {
+                                    completion: @escaping Completion<Bool>,
+                                    noticeHandler: NoticeHandler?) {
         
         let assetForFee = assetForFee ?? Settings.defaultAsset
 
@@ -345,6 +373,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
         // Send transaction
         let sendTransacionOperationInitParams = (createQueue,
                                                  services.networkBroadcastService,
+                                                 ContractKeys.operationId.rawValue,
                                                  ContractKeys.transaction.rawValue)
         let sendTransactionOperation = SendTransactionQueueOperation(initParams: sendTransacionOperationInitParams,
                                                                      completion: completion)
@@ -359,6 +388,16 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
         createQueue.addOperation(getBlockDataOperation)
         createQueue.addOperation(bildTransactionOperation)
         createQueue.addOperation(sendTransactionOperation)
+        
+        //Notice handler
+        if let noticeHandler = noticeHandler {
+            createQueue.saveValue(noticeHandler, forKey: ContractKeys.noticeHandler.rawValue)
+            let waitOperation = createWaitingOperation(createQueue)
+            let noticeHandleOperation = createNoticeHandleOperation(createQueue)
+            createQueue.addOperation(waitOperation)
+            createQueue.addOperation(noticeHandleOperation)
+        }
+        
         createQueue.setCompletionOperation(completionOperation)
     }
     
@@ -392,6 +431,37 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
         }
         
         return contractOperation
+    }
+    
+    fileprivate func createNoticeHandleOperation(_ queue: ECHOQueue) -> Operation {
+        
+        let noticeOperation = BlockOperation()
+        
+        noticeOperation.addExecutionBlock { [weak noticeOperation, weak queue, weak self] in
+            
+            guard noticeOperation?.isCancelled == false else { return }
+            guard self != nil else { return }
+            guard let noticeHandler: NoticeHandler = queue?.getValue(ContractKeys.noticeHandler.rawValue) else { return }
+            guard let notice: ECHONotification = queue?.getValue(ContractKeys.notice.rawValue) else { return }
+            
+            noticeHandler(notice)
+        }
+        
+        return noticeOperation
+    }
+    
+    fileprivate func createWaitingOperation(_ queue: ECHOQueue) -> Operation {
+        
+        let waitingOperation = BlockOperation()
+        
+        waitingOperation.addExecutionBlock { [weak waitingOperation, weak queue, weak self] in
+            
+            guard waitingOperation?.isCancelled == false else { return }
+            guard self != nil else { return }
+            queue?.waitStartNextOperation()
+        }
+        
+        return waitingOperation
     }
     
     fileprivate func createBildCallContractNoChangingState(_ queue: ECHOQueue,
@@ -446,3 +516,26 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
 }
 // swiftlint:enable function_body_length
 // swiftlint:enable type_body_length
+
+extension ContractsFacadeImp: SubscribeBlockchainNotification {
+    
+    public func didReceiveNotification(notification: ECHONotification) {
+        
+        switch notification.params {
+        case .array(let array):
+            if let noticeOperationId = array.first as? Int {
+                
+                for queue in queues {
+                    
+                    if let queueTransferOperationId: Int = queue.getValue(ContractKeys.operationId.rawValue),
+                        queueTransferOperationId == noticeOperationId {
+                        queue.saveValue(notification, forKey: ContractKeys.notice.rawValue)
+                        queue.startNextOperation()
+                    }
+                }
+            }
+        default:
+            break
+        }
+    }
+}

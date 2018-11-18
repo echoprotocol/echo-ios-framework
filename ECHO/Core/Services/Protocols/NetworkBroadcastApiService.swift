@@ -20,6 +20,7 @@ protocol NetworkBroadcastApiService: class {
  
     - Parameter transaction: Transaction whitch need to send to the netword
     - Parameter completion: Callback which returns bool result of send transaction
+    - Returns: ID of operation
 */
-    func broadcastTransactionWithCallback(transaction: Transaction, completion: @escaping Completion<Bool>)
+    func broadcastTransactionWithCallback(transaction: Transaction, completion: @escaping Completion<Bool>) -> Int
 }

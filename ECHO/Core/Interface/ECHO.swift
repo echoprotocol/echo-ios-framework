@@ -76,7 +76,8 @@ final public class ECHO: InterfaceFacades {
         contractsFacade = ContractsFacadeImp(services: contractsServices,
                                              cryptoCore: settings.cryproComponent,
                                              network: settings.network,
-                                             abiCoder: settings.abiCoderComponent)
+                                             abiCoder: settings.abiCoderComponent,
+                                             socketCore: socketCore)
     }
     
 /**
@@ -257,7 +258,8 @@ final public class ECHO: InterfaceFacades {
                                assetForFee: String?,
                                byteCode: String,
                                parameters: [AbiTypeValueInputModel]?,
-                               completion: @escaping Completion<Bool>) {
+                               completion: @escaping Completion<Bool>,
+                               noticeHandler: NoticeHandler?) {
         
         contractsFacade.createContract(registrarNameOrId: registrarNameOrId,
                                        password: password,
@@ -265,7 +267,8 @@ final public class ECHO: InterfaceFacades {
                                        assetForFee: assetForFee,
                                        byteCode: byteCode,
                                        parameters: parameters,
-                                       completion: completion)
+                                       completion: completion,
+                                       noticeHandler: noticeHandler)
     }
     
     public func callContract(registrarNameOrId: String,
@@ -276,7 +279,8 @@ final public class ECHO: InterfaceFacades {
                              contratId: String,
                              methodName: String,
                              methodParams: [AbiTypeValueInputModel],
-                             completion: @escaping Completion<Bool>) {
+                             completion: @escaping Completion<Bool>,
+                             noticeHandler: NoticeHandler?) {
         
         contractsFacade.callContract(registrarNameOrId: registrarNameOrId,
                                      password: password,
@@ -286,7 +290,8 @@ final public class ECHO: InterfaceFacades {
                                      contratId: contratId,
                                      methodName: methodName,
                                      methodParams: methodParams,
-                                     completion: completion)
+                                     completion: completion,
+                                     noticeHandler: noticeHandler)
     }
     
     public func queryContract(registrarNameOrId: String,

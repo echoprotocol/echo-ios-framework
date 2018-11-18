@@ -28,6 +28,7 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
         case blockData
         case chainId
         case transaction
+        case operationId
     }
     
     private enum IssueAssetKeys: String {
@@ -38,6 +39,7 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
         case blockData
         case chainId
         case transaction
+        case operationId
         case memo
     }
     
@@ -102,6 +104,7 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
         // Send transaction
         let sendTransacionOperationInitParams = (createAssetQueue,
                                                  services.networkBroadcastService,
+                                                 CreateAssetKeys.operationId.rawValue,
                                                  CreateAssetKeys.transaction.rawValue)
         let sendTransactionOperation = SendTransactionQueueOperation(initParams: sendTransacionOperationInitParams,
                                                                      completion: completion)
@@ -201,6 +204,7 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
         // Send transaction
         let sendTransacionOperationInitParams = (issueAssetQueue,
                                                  services.networkBroadcastService,
+                                                 IssueAssetKeys.operationId.rawValue,
                                                  IssueAssetKeys.transaction.rawValue)
         let sendTransactionOperation = SendTransactionQueueOperation(initParams: sendTransacionOperationInitParams,
                                                                      completion: completion)

@@ -9,14 +9,14 @@
 /**
  The interface of the class that allows you to receive notification from blockchain.
  */
-protocol SubscribeBlockchainNotification: class {
+public protocol SubscribeBlockchainNotification: class {
     func didReceiveNotification(notification: ECHONotification)
 }
 
 /**
     A class that configures and passes operations through a socket.
  */
-protocol SocketCoreComponent: class {
+public protocol SocketCoreComponent: class {
     
     init(messanger: SocketMessenger, url: String)
     

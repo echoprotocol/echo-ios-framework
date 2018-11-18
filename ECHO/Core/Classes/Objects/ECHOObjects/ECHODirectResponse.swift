@@ -11,7 +11,7 @@ import Foundation
 /**
     Represent response from chain
  */
-struct ECHODirectResponse: Decodable {
+public struct ECHODirectResponse: Decodable {
     
     let id: Int
     let response: ErrorOrResult
@@ -24,7 +24,7 @@ struct ECHODirectResponse: Decodable {
         case jsonrpc
     }
     
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         
         let values = try decoder.container(keyedBy: CodingKeys.self)
         id = try values.decode(Int.self, forKey: .id)
@@ -41,7 +41,7 @@ struct ECHODirectResponse: Decodable {
 /**
     Represent notification from chain
  */
-struct ECHONotification: Decodable {
+public struct ECHONotification: Decodable {
     
     let method: String
     let params: ECHOResponseResult
@@ -51,7 +51,7 @@ struct ECHONotification: Decodable {
         case params
     }
     
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         
         let values = try decoder.container(keyedBy: CodingKeys.self)
         method = try values.decode(String.self, forKey: .method)

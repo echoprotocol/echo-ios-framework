@@ -78,6 +78,7 @@ final public class AuthentificationFacadeImp: AuthentificationFacade, ECHOQueueb
         case blockData
         case chainId
         case transaction
+        case operationId
     }
     
     public func changePassword(old: String, new: String, name: String, completion: @escaping Completion<Bool>) {
@@ -128,6 +129,7 @@ final public class AuthentificationFacadeImp: AuthentificationFacade, ECHOQueueb
         // Send transaction
         let sendTransacionOperationInitParams = (changePasswordQueue,
                                                  services.networkBroadcastService,
+                                                 ChangePasswordKeys.operationId.rawValue,
                                                  ChangePasswordKeys.transaction.rawValue)
         let sendTransactionOperation = SendTransactionQueueOperation(initParams: sendTransacionOperationInitParams,
                                                                      completion: completion)

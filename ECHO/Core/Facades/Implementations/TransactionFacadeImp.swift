@@ -40,6 +40,7 @@ final public class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
         case operation
         case fee
         case transaction
+        case operationId
         case memo
     }
     
@@ -131,6 +132,7 @@ final public class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
         // Send transaction
         let sendTransacionOperationInitParams = (transferQueue,
                                                  services.networkBroadcastService,
+                                                 TransferResultsKeys.operationId.rawValue,
                                                  TransferResultsKeys.transaction.rawValue)
         let sendTransactionOperation = SendTransactionQueueOperation(initParams: sendTransacionOperationInitParams,
                                                                      completion: completion)

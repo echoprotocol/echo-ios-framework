@@ -8,6 +8,7 @@
 
 typealias SendTransactionQueueOperationInitParams = (queue: ECHOQueue,
                                                      networkBroadcastService: NetworkBroadcastApiService,
+                                                     transactionOperationKey: String,
                                                      transactionKey: String)
 
 /**
@@ -18,6 +19,7 @@ final class SendTransactionQueueOperation: Operation {
     fileprivate weak var queue: ECHOQueue?
     fileprivate weak var networkBroadcastService: NetworkBroadcastApiService?
     fileprivate let transactionKey: String
+    fileprivate let transactionOperationKey: String
     fileprivate let completion: Completion<Bool>
     
     required init(initParams: SendTransactionQueueOperationInitParams, completion: @escaping Completion<Bool>) {
@@ -26,6 +28,7 @@ final class SendTransactionQueueOperation: Operation {
         self.networkBroadcastService = initParams.networkBroadcastService
         self.transactionKey = initParams.transactionKey
         self.completion = completion
+        self.transactionOperationKey = initParams.transactionOperationKey
     }
     
     override func main() {
@@ -35,7 +38,7 @@ final class SendTransactionQueueOperation: Operation {
         
         guard let transction: Transaction = queue?.getValue(transactionKey) else { return }
         
-        networkBroadcastService?.broadcastTransactionWithCallback(transaction: transction,
+        let operationId = networkBroadcastService?.broadcastTransactionWithCallback(transaction: transction,
                                                                   completion: { [weak self] (result) in
             switch result {
             case .success(let success):
@@ -50,6 +53,7 @@ final class SendTransactionQueueOperation: Operation {
             self?.queue?.startNextOperation()
         })
         
+        queue?.saveValue(operationId, forKey: transactionOperationKey)
         queue?.waitStartNextOperation()
     }
 }

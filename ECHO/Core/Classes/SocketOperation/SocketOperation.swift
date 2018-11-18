@@ -9,7 +9,7 @@
 /**
     Method type for call to blockchain
  */
-enum SocketOperationType: String {
+public enum SocketOperationType: String {
     case call
     case notice
 }
@@ -44,7 +44,7 @@ typealias OperationResult<T> = (operation: SocketOperation, result: Result<T, EC
 /**
     Represents blockchain call [Source](http://docs.bitshares.org/api/rpc.html)
  */
-protocol SocketOperation: JSONCodable {
+public protocol SocketOperation: JSONCodable {
     
     var method: SocketOperationType { get }
     var operationId: Int { get }

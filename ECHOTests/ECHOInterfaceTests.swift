@@ -596,7 +596,7 @@ class ECHOInterfaceTests: XCTestCase {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
         }))
         let exp = expectation(description: "Getting Asset")
-        let assetsIds = ["1.3.0", "1.3.2"]
+        let assetsIds = ["1.3.0", "1.3.1"]
         var assets: [Asset] = []
         
         //act
@@ -932,13 +932,14 @@ class ECHOInterfaceTests: XCTestCase {
 
         //act
         echo.start { [unowned self] (result) in
+            
             self.echo.createContract(registrarNameOrId: "nikitatest",
                                      password: "nikitatest",
                                      assetId: "1.3.0",
                                      assetForFee: nil,
                                      byteCode: byteCode,
-                                     parameters: nil) { (result) in
-
+                                     parameters: nil,
+                                     completion: { (result) in
                 switch result {
                 case .success(let isSuccess):
                     success = isSuccess
@@ -946,7 +947,9 @@ class ECHOInterfaceTests: XCTestCase {
                 case .failure(_):
                     XCTFail("Creating contract cant fail")
                 }
-            }
+            }, noticeHandler: { (notice) in
+                print(notice)
+            })
         }
 
         //assert

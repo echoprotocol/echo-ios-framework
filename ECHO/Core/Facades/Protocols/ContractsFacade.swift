@@ -6,9 +6,14 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
+/// Typealias for function with notice
+public typealias NoticeHandler = (_ notice: ECHONotification) -> Void
+
 /**
     Encapsulates logic, associated with various blockchain smart contract processes
  */
+
+
 public protocol ContractsFacade {
     
     /**
@@ -27,7 +32,8 @@ public protocol ContractsFacade {
                         assetForFee: String?,
                         byteCode: String,
                         parameters: [AbiTypeValueInputModel]?,
-                        completion: @escaping Completion<Bool>)
+                        completion: @escaping Completion<Bool>,
+                        noticeHandler: NoticeHandler?)
     
 /**
      Calls to contract on blockchain
@@ -48,7 +54,8 @@ public protocol ContractsFacade {
                       contratId: String,
                       methodName: String,
                       methodParams: [AbiTypeValueInputModel],
-                      completion: @escaping Completion<Bool>)
+                      completion: @escaping Completion<Bool>,
+                      noticeHandler: NoticeHandler?)
     
 /**
      Calls contract method without changing state of blockchain

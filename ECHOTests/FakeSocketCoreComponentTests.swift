@@ -454,6 +454,8 @@ class SocketCoreComponentTests: XCTestCase {
                 case .failure(_):
                     XCTFail("Creating contract cant fail")
                 }
+            }, noticeHandler: { (notice) in
+                
             })
         }
 
@@ -501,6 +503,8 @@ class SocketCoreComponentTests: XCTestCase {
                 case .failure(_):
                     XCTFail("Creating contract cant fail")
                 }
+            }, noticeHandler: { (notice) in
+                
             })
         }
         
@@ -570,8 +574,8 @@ class SocketCoreComponentTests: XCTestCase {
                                    assetForFee: nil,
                                    contratId: contratId,
                                    methodName: methodName,
-                                   methodParams: params) { (result) in
-
+                                   methodParams: params,
+                                   completion: { (result) in
                 switch result {
                 case .success(let isSuccess):
                     success = isSuccess
@@ -579,7 +583,9 @@ class SocketCoreComponentTests: XCTestCase {
                 case .failure(let error):
                     XCTFail("Call contract cant fail \(error)")
                 }
-            }
+            }, noticeHandler: { (notice) in
+                
+            })
         }
 
         //assert

@@ -21,15 +21,17 @@ final class NetworkBroadcastApiServiceImp: NetworkBroadcastApiService, ApiIdenti
         self.socketCore = socketCore
     }
     
-    func broadcastTransactionWithCallback(transaction: Transaction, completion: @escaping Completion<Bool>) {
+    func broadcastTransactionWithCallback(transaction: Transaction, completion: @escaping Completion<Bool>) -> Int {
         
+        let operationId = socketCore.nextOperationId()
         let operation = TransactionWithCallbackSocketOperation(method: .call,
-                                                               operationId: socketCore.nextOperationId(),
+                                                               operationId: operationId,
                                                                apiId: apiIdentifire,
                                                                transaction: transaction,
                                                                completion: completion,
                                                                notifyHandler: nil)
         
         socketCore.send(operation: operation)
+        return operationId
     }
 }

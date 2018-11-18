@@ -239,7 +239,7 @@ final public class SubscriptionFacadeImp: SubscriptionFacade {
 
 extension SubscriptionFacadeImp: SubscribeBlockchainNotification {
     
-    func didReceiveNotification(notification: ECHONotification) {
+    public func didReceiveNotification(notification: ECHONotification) {
         handleNotification(notification)
     }
 }
