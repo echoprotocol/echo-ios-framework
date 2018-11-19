@@ -13,6 +13,7 @@ typealias InterfaceFacades = AuthentificationFacade
     & TransactionFacade
     & AssetsFacade
     & ContractsFacade
+    & CustomOperationsFacade
 
 /**
      This is an  entry point of library.
@@ -32,6 +33,7 @@ final public class ECHO: InterfaceFacades {
     let transactionFacade: TransactionFacade
     let assetsFacade: AssetsFacade
     let contractsFacade: ContractsFacade
+    let customOperationsFacade: CustomOperationsFacade
 
     public init(settings: Settings) {
 
@@ -39,6 +41,7 @@ final public class ECHO: InterfaceFacades {
         let socketCore = SocketCoreComponentImp(messanger: settings.socketMessenger,
                                                 url: settings.network.url,
                                                 noticeUpdateHandler: noticeEventProxy)
+        
         let databaseService = DatabaseApiServiceImp(socketCore: socketCore)
         let cryptoService = CryptoApiServiceImp(socketCore: socketCore)
         let networkBroadcastService = NetworkBroadcastApiServiceImp(socketCore: socketCore)
@@ -81,6 +84,13 @@ final public class ECHO: InterfaceFacades {
                                              network: settings.network,
                                              abiCoder: settings.abiCoderComponent,
                                              noticeDelegateHandler: noticeEventProxy)
+        
+        let customOperationsServices = CustomOperationsFacadeServices(databaseService: databaseService,
+                                                                      cryptoService: cryptoService,
+                                                                      networkBroadcastService: networkBroadcastService,
+                                                                      historyService: historyService,
+                                                                      networkNodesSetvice: networkNodesSetvice)
+        customOperationsFacade = CustomOperationsFacadeImp(services: customOperationsServices)
     }
     
 /**
@@ -310,5 +320,12 @@ final public class ECHO: InterfaceFacades {
                                       methodName: methodName,
                                       methodParams: methodParams,
                                       completion: completion)
+    }
+    
+    // MARK: CustomOperationsFacade
+    
+    func sendCustomOperation(operation: CustomSocketOperation, for specificAPI: API) {
+        
+        customOperationsFacade.sendCustomOperation(operation: operation, for: specificAPI)
     }
 }

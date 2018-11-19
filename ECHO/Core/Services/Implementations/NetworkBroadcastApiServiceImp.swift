@@ -11,7 +11,7 @@
  
     Encapsulates logic of preparing API calls to [SocketCoreComponent](SocketCoreComponent)
  */
-final class NetworkBroadcastApiServiceImp: NetworkBroadcastApiService, ApiIdentifireHolder {
+final class NetworkBroadcastApiServiceImp: NetworkBroadcastApiService {
     
     var apiIdentifire: Int = 0
     
@@ -21,6 +21,14 @@ final class NetworkBroadcastApiServiceImp: NetworkBroadcastApiService, ApiIdenti
         self.socketCore = socketCore
     }
     
+    func sendCustomOperation(operation: CustomSocketOperation) {
+        
+        operation.setApiId(apiIdentifire)
+        operation.setOperationId(socketCore.nextOperationId())
+        
+        socketCore.send(operation: operation)
+    }
+    
     func broadcastTransactionWithCallback(transaction: Transaction, completion: @escaping Completion<Bool>) -> Int {
         
         let operationId = socketCore.nextOperationId()
@@ -28,8 +36,7 @@ final class NetworkBroadcastApiServiceImp: NetworkBroadcastApiService, ApiIdenti
                                                                operationId: operationId,
                                                                apiId: apiIdentifire,
                                                                transaction: transaction,
-                                                               completion: completion,
-                                                               notifyHandler: nil)
+                                                               completion: completion)
         
         socketCore.send(operation: operation)
         return operationId

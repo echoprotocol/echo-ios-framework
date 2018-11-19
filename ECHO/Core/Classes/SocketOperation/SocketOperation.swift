@@ -55,15 +55,24 @@ public protocol SocketOperation: JSONCodable {
 }
 
 /**
+    Represents custom blockchain call with customized methods
+ */
+public protocol CustomSocketOperation: SocketOperation {
+    
+    func setOperationId(_ operationId: Int)
+    func setApiId(_ apiId: Int)
+}
+
+/**
     Keys for json creation of blockchain call
  */
-enum OperationCodingKeys: String, CodingKey {
+public enum OperationCodingKeys: String, CodingKey {
     case method
     case params
     case id
 }
 
-extension SocketOperation {
+public extension SocketOperation {
 
     func toJSON() -> Any? {
 

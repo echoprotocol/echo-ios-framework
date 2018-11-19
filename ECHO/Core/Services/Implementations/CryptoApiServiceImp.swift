@@ -11,12 +11,20 @@
  
     Encapsulates logic of preparing API calls to [SocketCoreComponent](SocketCoreComponent)
  */
-final class CryptoApiServiceImp: CryptoApiService, ApiIdentifireHolder {
+final class CryptoApiServiceImp: CryptoApiService {
     var apiIdentifire: Int = 0
     
     let socketCore: SocketCoreComponent
     
     required init(socketCore: SocketCoreComponent) {
         self.socketCore = socketCore
+    }
+    
+    func sendCustomOperation(operation: CustomSocketOperation) {
+        
+        operation.setApiId(apiIdentifire)
+        operation.setOperationId(socketCore.nextOperationId())
+        
+        socketCore.send(operation: operation)
     }
 }

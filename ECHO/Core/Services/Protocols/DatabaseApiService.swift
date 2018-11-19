@@ -11,9 +11,7 @@
  
     [Graphene blockchain database API](https://dev-doc.myecho.app/classgraphene_1_1app_1_1database__api.html)
  */
-protocol DatabaseApiService: class {
-    
-    init(socketCore: SocketCoreComponent)
+protocol DatabaseApiService: BaseApiService {
     
 /**
     Get the objects corresponding to the provided IDs.

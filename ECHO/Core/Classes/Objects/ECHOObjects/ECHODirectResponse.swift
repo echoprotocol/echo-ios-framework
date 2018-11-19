@@ -13,9 +13,9 @@ import Foundation
  */
 public struct ECHODirectResponse: Decodable {
     
-    let id: Int
-    let response: ErrorOrResult
-    let jsonrpc: String
+    public let id: Int
+    public let response: ErrorOrResult
+    public let jsonrpc: String
     
     private enum CodingKeys: String, CodingKey {
         case id
@@ -43,8 +43,8 @@ public struct ECHODirectResponse: Decodable {
  */
 public struct ECHONotification: Decodable {
     
-    let method: String
-    let params: ECHOResponseResult
+    public let method: String
+    public let params: ECHOResponseResult
     
     private enum CodingKeys: String, CodingKey {
         case method
@@ -62,17 +62,17 @@ public struct ECHONotification: Decodable {
 /**
     Represent response error from chain
  */
-struct ECHOResponseError: Decodable {
+public struct ECHOResponseError: Decodable {
     
-    let code: Int
-    let message: String
+    public let code: Int
+    public let message: String
     
     private enum CodingKeys: String, CodingKey {
         case code
         case message
     }
     
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         code = try values.decode(Int.self, forKey: .code)
         message = try values.decode(String.self, forKey: .message)
@@ -82,7 +82,7 @@ struct ECHOResponseError: Decodable {
 /**
     Represent response result from chain
  */
-enum ECHOResponseResult: Decodable {
+public enum ECHOResponseResult: Decodable {
     
     case integer(Int)
     case string(String)
@@ -90,7 +90,7 @@ enum ECHOResponseResult: Decodable {
     case dictionary([String: Any])
     case undefined
 
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         
         let container = try decoder.singleValueContainer()
         
@@ -127,7 +127,7 @@ enum ECHOResponseResult: Decodable {
 /**
     Represent response result([ECHOResponseResult](ECHOResponseResult)) or error([ECHOResponseError](ECHOResponseError)) result from chain
  */
-enum ErrorOrResult: Decodable {
+public enum ErrorOrResult: Decodable {
     
     case error(ECHOResponseError)
     case result(ECHOResponseResult)

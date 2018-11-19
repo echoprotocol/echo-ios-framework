@@ -11,9 +11,7 @@
  
     - Note: [Graphene blockchain account history API](https://dev-doc.myecho.app/classgraphene_1_1app_1_1history__api.html)
 */
-protocol AccountHistoryApiService {
-    
-    init(socketCore: SocketCoreComponent)
+protocol AccountHistoryApiService: BaseApiService {
     
 /**
     Get operations relevant to the specified account

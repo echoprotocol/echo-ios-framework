@@ -11,7 +11,7 @@
  
     Encapsulates logic of preparing API calls to [SocketCoreComponent](SocketCoreComponent)
  */
-final class AccountHistoryApiServiceImp: AccountHistoryApiService, ApiIdentifireHolder {
+final class AccountHistoryApiServiceImp: AccountHistoryApiService {
     
     var apiIdentifire: Int = 0
     
@@ -19,6 +19,14 @@ final class AccountHistoryApiServiceImp: AccountHistoryApiService, ApiIdentifire
     
     required init(socketCore: SocketCoreComponent) {
         self.socketCore = socketCore
+    }
+    
+    func sendCustomOperation(operation: CustomSocketOperation) {
+        
+        operation.setApiId(apiIdentifire)
+        operation.setOperationId(socketCore.nextOperationId())
+        
+        socketCore.send(operation: operation)
     }
     
     func getAccountHistory(id: String,

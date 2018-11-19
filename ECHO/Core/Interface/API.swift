@@ -1,10 +1,28 @@
 //
-//  SettingsConfigurator.swift
+//  API.swift
 //  ECHO
 //
 //  Created by Fedorenko Nikita on 12.07.2018.
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
+
+/**
+    The enum that represent netwotk API's.
+ 
+    ## API ##
+    1. Database API
+    2. Account History API
+    3. Crypto API
+    4. Network Broadcast API
+    5. Network Nodes API
+ */
+enum API {
+    case database
+    case accountHistory
+    case crypto
+    case networkBroadcast
+    case networkNodes
+}
 
 /**
      The class that is used by the API library.
@@ -16,7 +34,6 @@
      4. Network Broadcast API
      5. Network Nodes API
 */
-
 public struct APIOption: OptionSet {
     
     public let rawValue: Int
