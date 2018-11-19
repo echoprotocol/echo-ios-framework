@@ -16,20 +16,17 @@ struct SubscriptionServices {
 final public class SubscriptionFacadeImp: SubscriptionFacade {
     
     let services: SubscriptionServices
-    let socketCore: SocketCoreComponent
     var subscribers = [String: NSPointerArray]()
     weak var dynamicGlobalPropertiesSubscriber: SubscribeDynamicGlobalPropertiesDelegate?
     weak var createBlockSubscriber: SubscribeBlockDelegate?
     
     init(services: SubscriptionServices,
-         socketCore: SocketCoreComponent) {
+         noticeDelegateHandler: NoticeEventDelegateHandler) {
         self.services = services
-        self.socketCore = socketCore
+        noticeDelegateHandler.delegate = self
     }
     
     public func subscribeToAccount(nameOrId: String, delegate: SubscribeAccountDelegate) {
-        
-        updateSocketOnDelegate()
         
         services.databaseService.setSubscribeCallback { [weak self] (_) in
             self?.getUserIdAndSetSubscriber(nameOrId: nameOrId, delegate: delegate)
@@ -47,8 +44,6 @@ final public class SubscriptionFacadeImp: SubscriptionFacade {
     
     public func subscribeToDynamicGlobalProperties(delegate: SubscribeDynamicGlobalPropertiesDelegate) {
         
-        updateSocketOnDelegate()
-        
         services.databaseService.setSubscribeCallback { [weak self] (_) in
             self?.getDynamicGlobalPropertiesAndSetSubscriber(delegate: delegate)
         }
@@ -59,8 +54,6 @@ final public class SubscriptionFacadeImp: SubscriptionFacade {
     }
     
     public func subscribeToBlock(delegate: SubscribeBlockDelegate) {
-        
-        updateSocketOnDelegate()
         
         services.databaseService.setSubscribeCallback { [weak self] (_) in
             self?.getDynamicGlobalPropertiesAndSetSubscriber(delegate: delegate)
@@ -73,11 +66,6 @@ final public class SubscriptionFacadeImp: SubscriptionFacade {
     
     public func unsubscribeAll() {
         subscribers = [String: NSPointerArray]()
-    }
-    
-    fileprivate func updateSocketOnDelegate() {
-        
-        socketCore.subscribeToNotifications(subscriver: self)
     }
     
     fileprivate func getUserIdAndSetSubscriber(nameOrId: String, delegate: SubscribeAccountDelegate) {
@@ -237,7 +225,7 @@ final public class SubscriptionFacadeImp: SubscriptionFacade {
     }
 }
 
-extension SubscriptionFacadeImp: SubscribeBlockchainNotification {
+extension SubscriptionFacadeImp: NoticeEventDelegate {
     
     public func didReceiveNotification(notification: ECHONotification) {
         handleNotification(notification)

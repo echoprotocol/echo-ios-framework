@@ -913,49 +913,49 @@ class ECHOInterfaceTests: XCTestCase {
         }
     }
     
-    func testCreateContract() {
-
-        //arrange
-        echo = ECHO(settings: Settings(build: {
-            $0.apiOptions = [.database, .networkBroadcast, .accountHistory]
-        }))
-        let exp = expectation(description: "Creating contract")
-        let byteCode =  "60806040526000805534801561001457600080fd5b5061011480610024" +
-                        "6000396000f300608060405260043610605c5763ffffffff7c010000000000000000000000000000000000" +
-                        "00000000000000000000006000350416635b34b966811460615780635b9af12b146075578063a87d942c14" +
-                        "608a578063f5c5ad831460ae575b600080fd5b348015606c57600080fd5b50607360c0565b005b34801560" +
-                        "8057600080fd5b50607360043560cb565b348015609557600080fd5b50609c60d6565b6040805191825251" +
-                        "9081900360200190f35b34801560b957600080fd5b50607360dc565b600080546001019055565b60008054" +
-                        "9091019055565b60005490565b600080546000190190555600a165627a7a7230582016b3f6673de41336e2" +
-                        "c5d4b136b4e67bbf43062b6bc47eaef982648cd3b92a9d0029"
-        var success = false
-
-        //act
-        echo.start { [unowned self] (result) in
-            
-            self.echo.createContract(registrarNameOrId: "nikitatest",
-                                     password: "nikitatest",
-                                     assetId: "1.3.0",
-                                     assetForFee: nil,
-                                     byteCode: byteCode,
-                                     parameters: nil,
-                                     completion: { (result) in
-                switch result {
-                case .success(let isSuccess):
-                    success = isSuccess
-                    exp.fulfill()
-                case .failure(_):
-                    XCTFail("Creating contract cant fail")
-                }
-            }, noticeHandler: { (notice) in
-                print(notice)
-            })
-        }
-
-        //assert
-        waitForExpectations(timeout: timeout) { error in
-            XCTAssertTrue(success)
-        }
+//    func testCreateContract() {
+//
+//        //arrange
+//        echo = ECHO(settings: Settings(build: {
+//            $0.apiOptions = [.database, .networkBroadcast, .accountHistory]
+//        }))
+//        let exp = expectation(description: "Creating contract")
+//        let byteCode =  "60806040526000805534801561001457600080fd5b5061011480610024" +
+//                        "6000396000f300608060405260043610605c5763ffffffff7c010000000000000000000000000000000000" +
+//                        "00000000000000000000006000350416635b34b966811460615780635b9af12b146075578063a87d942c14" +
+//                        "608a578063f5c5ad831460ae575b600080fd5b348015606c57600080fd5b50607360c0565b005b34801560" +
+//                        "8057600080fd5b50607360043560cb565b348015609557600080fd5b50609c60d6565b6040805191825251" +
+//                        "9081900360200190f35b34801560b957600080fd5b50607360dc565b600080546001019055565b60008054" +
+//                        "9091019055565b60005490565b600080546000190190555600a165627a7a7230582016b3f6673de41336e2" +
+//                        "c5d4b136b4e67bbf43062b6bc47eaef982648cd3b92a9d0029"
+//        var success = false
+//
+//        //act
+//        echo.start { [unowned self] (result) in
+//
+//            self.echo.createContract(registrarNameOrId: "nikitatest",
+//                                     password: "nikitatest",
+//                                     assetId: "1.3.0",
+//                                     assetForFee: nil,
+//                                     byteCode: byteCode,
+//                                     parameters: nil,
+//                                     completion: { (result) in
+//                switch result {
+//                case .success(let isSuccess):
+//                    success = isSuccess
+//                    exp.fulfill()
+//                case .failure(_):
+//                    XCTFail("Creating contract cant fail")
+//                }
+//            }, noticeHandler: { (notice) in
+//                print(notice)
+//            })
+//        }
+//
+//        //assert
+//        waitForExpectations(timeout: timeout) { error in
+//            XCTAssertTrue(success)
+//        }
     }
     
     func testQueryContract() {

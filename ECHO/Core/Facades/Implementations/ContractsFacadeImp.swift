@@ -41,21 +41,19 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
     let network: ECHONetwork
     let cryptoCore: CryptoCoreComponent
     let abiCoderCore: AbiCoder
-    let socketCore: SocketCoreComponent
     
     public init(services: ContractsFacadeServices,
                 cryptoCore: CryptoCoreComponent,
                 network: ECHONetwork,
                 abiCoder: AbiCoder,
-                socketCore: SocketCoreComponent) {
+                noticeDelegateHandler: NoticeEventDelegateHandler) {
         
         self.services = services
         self.network = network
         self.cryptoCore = cryptoCore
         self.abiCoderCore = abiCoder
         self.queues = [ECHOQueue]()
-        self.socketCore = socketCore
-        self.socketCore.subscribeToNotifications(subscriver: self)
+        noticeDelegateHandler.delegate = self
     }
     
     public func getContractResult(historyId: String, completion: @escaping Completion<ContractResult>) {
@@ -517,7 +515,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
 // swiftlint:enable function_body_length
 // swiftlint:enable type_body_length
 
-extension ContractsFacadeImp: SubscribeBlockchainNotification {
+extension ContractsFacadeImp: NoticeEventDelegate {
     
     public func didReceiveNotification(notification: ECHONotification) {
         

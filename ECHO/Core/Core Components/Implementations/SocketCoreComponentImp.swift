@@ -15,11 +15,12 @@ final class SocketCoreComponentImp: SocketCoreComponent {
     let url: String
     var operationsMap = [Int: SocketOperation]()
     var currentOperationId: Int = 0
-    private var noticeSubscribers = NSPointerArray.weakObjects()
+    let noticeUpdateHandler: NoticeActionHandler?
     
-    required init(messanger: SocketMessenger, url: String) {
+    required init(messanger: SocketMessenger, url: String, noticeUpdateHandler: NoticeActionHandler?) {
         self.messenger = messanger
         self.url = url
+        self.noticeUpdateHandler = noticeUpdateHandler
     }
     
     func nextOperationId() -> Int {
@@ -54,10 +55,6 @@ final class SocketCoreComponentImp: SocketCoreComponent {
     
     func disconnect() {
         messenger.disconnect()
-    }
-    
-    func subscribeToNotifications(subscriver: SubscribeBlockchainNotification) {
-        noticeSubscribers.addObject(subscriver)
     }
     
     func send(operation: SocketOperation) {
@@ -110,15 +107,11 @@ final class SocketCoreComponentImp: SocketCoreComponent {
     
     fileprivate func handleNotification(_ notification: ECHONotification) {
         
-        noticeSubscribers.compact()
-        
-        for index in 0..<noticeSubscribers.count {
-            
-            if let delegate = noticeSubscribers.object(at: index) as? SubscribeBlockchainNotification {
-                
-                delegate.didReceiveNotification(notification: notification)
-            }
+        guard let noticeUpdateHandler = noticeUpdateHandler else {
+            return
         }
+        
+        noticeUpdateHandler.actionReceiveNotice(notification: notification)
     }
     
     fileprivate func decodeDirectResopnse(data: Data) -> ECHODirectResponse? {

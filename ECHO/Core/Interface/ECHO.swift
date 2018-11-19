@@ -35,7 +35,10 @@ final public class ECHO: InterfaceFacades {
 
     public init(settings: Settings) {
 
-        let socketCore = SocketCoreComponentImp(messanger: settings.socketMessenger, url: settings.network.url)
+        let noticeEventProxy = NoticeEventProxyImp()
+        let socketCore = SocketCoreComponentImp(messanger: settings.socketMessenger,
+                                                url: settings.network.url,
+                                                noticeUpdateHandler: noticeEventProxy)
         let databaseService = DatabaseApiServiceImp(socketCore: socketCore)
         let cryptoService = CryptoApiServiceImp(socketCore: socketCore)
         let networkBroadcastService = NetworkBroadcastApiServiceImp(socketCore: socketCore)
@@ -61,7 +64,7 @@ final public class ECHO: InterfaceFacades {
         
         let subscriptionServices = SubscriptionServices(databaseService: databaseService)
         subscriptionFacade = SubscriptionFacadeImp(services: subscriptionServices,
-                                                   socketCore: socketCore)
+                                                   noticeDelegateHandler: noticeEventProxy)
         
         let feeServices = FeeFacadeServices(databaseService: databaseService)
         feeFacade = FeeFacadeImp(services: feeServices, cryptoCore: settings.cryproComponent, network: settings.network)
@@ -77,7 +80,7 @@ final public class ECHO: InterfaceFacades {
                                              cryptoCore: settings.cryproComponent,
                                              network: settings.network,
                                              abiCoder: settings.abiCoderComponent,
-                                             socketCore: socketCore)
+                                             noticeDelegateHandler: noticeEventProxy)
     }
     
 /**

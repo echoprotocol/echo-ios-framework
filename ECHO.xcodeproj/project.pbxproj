@@ -156,6 +156,8 @@
 		B3D7612C21366F3A00860C62 /* SocketNotificationsRequestStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D7612B21366F3A00860C62 /* SocketNotificationsRequestStub.swift */; };
 		B3DA875E2146C32E000EA228 /* GetContractInfoStubs.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3DA875D2146C32E000EA228 /* GetContractInfoStubs.swift */; };
 		B3DFFB9721941F8000BC67D7 /* GetAccountRequestStubs.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3DFFB9621941F8000BC67D7 /* GetAccountRequestStubs.swift */; };
+		B3E9A35721A2A40E001A95B4 /* NoticeEventProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E9A35621A2A40E001A95B4 /* NoticeEventProxy.swift */; };
+		B3E9A35B21A2A51E001A95B4 /* NoticeEventProxyImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E9A35A21A2A51E001A95B4 /* NoticeEventProxyImp.swift */; };
 		D00C3D242147B4140053A636 /* ContractOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00C3D232147B4140053A636 /* ContractOperation.swift */; };
 		D00C3D282147B4F90053A636 /* Contract.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00C3D272147B4F90053A636 /* Contract.swift */; };
 		D0116C5821353C460004A491 /* TransactionFacadeImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0116C5721353C460004A491 /* TransactionFacadeImp.swift */; };
@@ -374,6 +376,8 @@
 		B3D7612B21366F3A00860C62 /* SocketNotificationsRequestStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketNotificationsRequestStub.swift; sourceTree = "<group>"; };
 		B3DA875D2146C32E000EA228 /* GetContractInfoStubs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetContractInfoStubs.swift; sourceTree = "<group>"; };
 		B3DFFB9621941F8000BC67D7 /* GetAccountRequestStubs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAccountRequestStubs.swift; sourceTree = "<group>"; };
+		B3E9A35621A2A40E001A95B4 /* NoticeEventProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeEventProxy.swift; sourceTree = "<group>"; };
+		B3E9A35A21A2A51E001A95B4 /* NoticeEventProxyImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeEventProxyImp.swift; sourceTree = "<group>"; };
 		D00C3D232147B4140053A636 /* ContractOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContractOperation.swift; sourceTree = "<group>"; };
 		D00C3D272147B4F90053A636 /* Contract.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contract.swift; sourceTree = "<group>"; };
 		D0116C5721353C460004A491 /* TransactionFacadeImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionFacadeImp.swift; sourceTree = "<group>"; };
@@ -613,6 +617,7 @@
 		B3CA702120F4A3CA00511F6A /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				B3E9A35521A2A3BB001A95B4 /* Event Proxy */,
 				B313B8CD21303EF80052B266 /* Crypto */,
 				B30CACEC20FF74C70048E33E /* Services */,
 				B3CA702420F4A3F800511F6A /* Facades */,
@@ -793,6 +798,31 @@
 				B30FE908212F1AEA0009BF57 /* SocketMessengerStub.swift */,
 			);
 			path = Stubs;
+			sourceTree = "<group>";
+		};
+		B3E9A35521A2A3BB001A95B4 /* Event Proxy */ = {
+			isa = PBXGroup;
+			children = (
+				B3E9A35921A2A431001A95B4 /* Protocols */,
+				B3E9A35821A2A424001A95B4 /* Implementation */,
+			);
+			path = "Event Proxy";
+			sourceTree = "<group>";
+		};
+		B3E9A35821A2A424001A95B4 /* Implementation */ = {
+			isa = PBXGroup;
+			children = (
+				B3E9A35A21A2A51E001A95B4 /* NoticeEventProxyImp.swift */,
+			);
+			path = Implementation;
+			sourceTree = "<group>";
+		};
+		B3E9A35921A2A431001A95B4 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				B3E9A35621A2A40E001A95B4 /* NoticeEventProxy.swift */,
+			);
+			path = Protocols;
 			sourceTree = "<group>";
 		};
 		D01BF7CE212AAFA800917DB8 /* Extensions */ = {
@@ -1118,11 +1148,13 @@
 				B38596F620F5EEAC00B55E59 /* RequiredFeeSocketOperation.swift in Sources */,
 				B3D1C90421386430009018AE /* CryptoCoreImp.swift in Sources */,
 				B3CA702E20F4A46200511F6A /* SubscriptionFacade.swift in Sources */,
+				B3E9A35B21A2A51E001A95B4 /* NoticeEventProxyImp.swift in Sources */,
 				B3CA703020F4A46E00511F6A /* FeeFacade.swift in Sources */,
 				B3965B162125952700029585 /* Collection+Extension.swift in Sources */,
 				B3D1C90621386461009018AE /* SignaturesGenerator.swift in Sources */,
 				D0B6A0CA2126BA9300A78E4B /* OperationType.swift in Sources */,
 				B3CA701E20F49C6800511F6A /* ReslutHandler.swift in Sources */,
+				B3E9A35721A2A40E001A95B4 /* NoticeEventProxy.swift in Sources */,
 				B30CC369214A5B30003953E3 /* AbiCoder.swift in Sources */,
 				B3CA702C20F4A45400511F6A /* TransactionFacade.swift in Sources */,
 				B3CA704B20F5363F00511F6A /* FullAccountSocketOperation.swift in Sources */,
