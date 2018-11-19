@@ -195,6 +195,19 @@ extension ContractsService {
         socketCore.send(operation: operation)
     }
     
+    func getContractLogs(contractId: String, fromBlock: Int, toBlock: Int, completion: @escaping Completion<[ContractLog]>) {
+        
+        let operation = GetContractLogsSocketOperation(method: .call,
+                                                       operationId: socketCore.nextOperationId(),
+                                                       apiId: apiIdentifire,
+                                                       contractId: contractId,
+                                                       fromBlock: fromBlock,
+                                                       toBlock: toBlock,
+                                                       completion: completion)
+        
+        socketCore.send(operation: operation)
+    }
+    
     func getContracts(contractIds: [String], completion: @escaping Completion<[ContractInfo]>) {
         
         let operation = GetContractsSocketOperation(method: .call,
