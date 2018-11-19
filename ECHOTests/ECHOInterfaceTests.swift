@@ -439,7 +439,7 @@ class ECHOInterfaceTests: XCTestCase {
         let exp = expectation(description: "Fee Getting In Another Asset")
         let fromUser = "nikitatest"
         let toUser = "nikitatest1"
-        let assetForFee = "1.3.137"
+        let assetForFee = "1.3.1"
         var fee: AssetAmount!
         
         //act
@@ -524,38 +524,38 @@ class ECHOInterfaceTests: XCTestCase {
         }
     }
     
-//    func testTransferWithAssetForFee() {
-//
-//        //arrange
-//        echo = ECHO(settings: Settings(build: {
-//            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
-//        }))
-//        let exp = expectation(description: "Transfer")
-//        let password = "newTestPass"
-//        let fromUser = "vsharaev1"
-//        let toUser = "vsharaev2"
-//        var isSuccess = false
-//
-//
-//        //act
-//        echo.start { [unowned self] (result) in
-//            self.echo.sendTransferOperation(fromNameOrId: fromUser, password: password, toNameOrId: toUser, amount: 10, asset: "1.3.0", assetForFee: "1.3.137", message: nil, completion: { (result) in
-//                switch result {
-//                case .success(let result):
-//                    isSuccess = result
-//                    exp.fulfill()
-//                case .failure(let error):
-//                    print(error)
-//                    XCTFail("Transfer must be valid")
-//                }
-//            })
-//        }
-//
-//        //assert
-//        waitForExpectations(timeout: timeout) { error in
-//            XCTAssertTrue(isSuccess)
-//        }
-//    }
+    func testTransferWithAssetForFee() {
+
+        //arrange
+        echo = ECHO(settings: Settings(build: {
+            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+        }))
+        let exp = expectation(description: "Transfer")
+        let password = "nikitatest1"
+        let fromUser = "nikitatest1"
+        let toUser = "nikitatest"
+        var isSuccess = false
+
+
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.sendTransferOperation(fromNameOrId: fromUser, password: password, toNameOrId: toUser, amount: 10, asset: "1.3.0", assetForFee: "1.3.1", message: nil, completion: { (result) in
+                switch result {
+                case .success(let result):
+                    isSuccess = result
+                    exp.fulfill()
+                case .failure(let error):
+                    print(error)
+                    XCTFail("Transfer must be valid")
+                }
+            })
+        }
+
+        //assert
+        waitForExpectations(timeout: timeout) { error in
+            XCTAssertTrue(isSuccess)
+        }
+    }
     
     func testFailedTransfer() {
         
@@ -913,49 +913,49 @@ class ECHOInterfaceTests: XCTestCase {
         }
     }
     
-//    func testCreateContract() {
-//
-//        //arrange
-//        echo = ECHO(settings: Settings(build: {
-//            $0.apiOptions = [.database, .networkBroadcast, .accountHistory]
-//        }))
-//        let exp = expectation(description: "Creating contract")
-//        let byteCode =  "60806040526000805534801561001457600080fd5b5061011480610024" +
-//                        "6000396000f300608060405260043610605c5763ffffffff7c010000000000000000000000000000000000" +
-//                        "00000000000000000000006000350416635b34b966811460615780635b9af12b146075578063a87d942c14" +
-//                        "608a578063f5c5ad831460ae575b600080fd5b348015606c57600080fd5b50607360c0565b005b34801560" +
-//                        "8057600080fd5b50607360043560cb565b348015609557600080fd5b50609c60d6565b6040805191825251" +
-//                        "9081900360200190f35b34801560b957600080fd5b50607360dc565b600080546001019055565b60008054" +
-//                        "9091019055565b60005490565b600080546000190190555600a165627a7a7230582016b3f6673de41336e2" +
-//                        "c5d4b136b4e67bbf43062b6bc47eaef982648cd3b92a9d0029"
-//        var success = false
-//
-//        //act
-//        echo.start { [unowned self] (result) in
-//
-//            self.echo.createContract(registrarNameOrId: "nikitatest",
-//                                     password: "nikitatest",
-//                                     assetId: "1.3.0",
-//                                     assetForFee: nil,
-//                                     byteCode: byteCode,
-//                                     parameters: nil,
-//                                     completion: { (result) in
-//                switch result {
-//                case .success(let isSuccess):
-//                    success = isSuccess
-//                    exp.fulfill()
-//                case .failure(_):
-//                    XCTFail("Creating contract cant fail")
-//                }
-//            }, noticeHandler: { (notice) in
-//                print(notice)
-//            })
-//        }
-//
-//        //assert
-//        waitForExpectations(timeout: timeout) { error in
-//            XCTAssertTrue(success)
-//        }
+    func testCreateContract() {
+
+        //arrange
+        echo = ECHO(settings: Settings(build: {
+            $0.apiOptions = [.database, .networkBroadcast, .accountHistory]
+        }))
+        let exp = expectation(description: "Creating contract")
+        let byteCode =  "60806040526000805534801561001457600080fd5b5061011480610024" +
+                        "6000396000f300608060405260043610605c5763ffffffff7c010000000000000000000000000000000000" +
+                        "00000000000000000000006000350416635b34b966811460615780635b9af12b146075578063a87d942c14" +
+                        "608a578063f5c5ad831460ae575b600080fd5b348015606c57600080fd5b50607360c0565b005b34801560" +
+                        "8057600080fd5b50607360043560cb565b348015609557600080fd5b50609c60d6565b6040805191825251" +
+                        "9081900360200190f35b34801560b957600080fd5b50607360dc565b600080546001019055565b60008054" +
+                        "9091019055565b60005490565b600080546000190190555600a165627a7a7230582016b3f6673de41336e2" +
+                        "c5d4b136b4e67bbf43062b6bc47eaef982648cd3b92a9d0029"
+        var success = false
+
+        //act
+        echo.start { [unowned self] (result) in
+
+            self.echo.createContract(registrarNameOrId: "nikitatest1",
+                                     password: "nikitatest1",
+                                     assetId: "1.3.0",
+                                     assetForFee: nil,
+                                     byteCode: byteCode,
+                                     parameters: nil,
+                                     completion: { (result) in
+                switch result {
+                case .success(let isSuccess):
+                    success = isSuccess
+                    exp.fulfill()
+                case .failure(_):
+                    XCTFail("Creating contract cant fail")
+                }
+            }, noticeHandler: { (notice) in
+                print(notice)
+            })
+        }
+
+        //assert
+        waitForExpectations(timeout: timeout) { error in
+            XCTAssertTrue(success)
+        }
     }
     
     func testQueryContract() {
@@ -967,7 +967,7 @@ class ECHOInterfaceTests: XCTestCase {
         let exp = expectation(description: "Query contract")
         let registrarNameOrId = "nikitatest"
         let assetId = "1.3.0"
-        let contratId = "1.16.16244"
+        let contratId = "1.16.1880"
         let methodName = "balanceOf"
         let params = [
             AbiTypeValueInputModel(type: .address, value: "18"),
@@ -994,45 +994,49 @@ class ECHOInterfaceTests: XCTestCase {
         }
     }
     
-//    func testCallContract() {
-//
-//        //arrange
-//        echo = ECHO(settings: Settings(build: {
-//            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
-//        }))
-//        let exp = expectation(description: "Call contract")
-//        let password = "P5HyvBoQJQKXmcJw5CAK8UkzwFMLK3DAecniAHH7BM6Ci"
-//        let registrarNameOrId = "dariatest2"
-//        let assetId = "1.3.0"
-//        let contratId = "1.16.1"
-//        let methodName = "incrementCounter"
-//        let params: [AbiTypeValueInputModel] = []
-//        var success = false
-//
-//
-//
-//        //act
-//        echo.start { [unowned self] (result) in
-//            self.echo.callContract(registrarNameOrId: registrarNameOrId,
-//                                   password: password,
-//                                   assetId: assetId,
-//                                   contratId: contratId,
-//                                   methodName: methodName,
-//                                   methodParams: params) { (result) in
-//
-//                switch result {
-//                case .success(let isSuccess):
-//                    success = isSuccess
-//                    exp.fulfill()
-//                case .failure(let error):
-//                    XCTFail("Call contract cant fail \(error)")
-//                }
-//            }
-//        }
-//
-//        //assert
-//        waitForExpectations(timeout: 1000) { error in
-//            XCTAssertTrue(success)
-//        }
-//    }
+    func testCallContract() {
+
+        //arrange
+        echo = ECHO(settings: Settings(build: {
+            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+        }))
+        let exp = expectation(description: "Call contract")
+        let password = "nikitatest1"
+        let registrarNameOrId = "nikitatest1"
+        let assetId = "1.3.0"
+        let contratId = "1.16.1880"
+        let methodName = "incrementCounter"
+        let params: [AbiTypeValueInputModel] = []
+        var success = false
+
+        //act
+        echo.start { [unowned self] (result) in
+            
+            self.echo.callContract(registrarNameOrId: registrarNameOrId,
+                                   password: password,
+                                   assetId: assetId,
+                                   amount: nil,
+                                   assetForFee: nil,
+                                   contratId: contratId,
+                                   methodName: methodName,
+                                   methodParams: params,
+                                   completion: { (result) in
+                                    
+                switch result {
+                case .success(let isSuccess):
+                    success = isSuccess
+                    exp.fulfill()
+                case .failure(let error):
+                    XCTFail("Call contract cant fail \(error)")
+                }
+            }, noticeHandler: { (notice) in
+                print(notice)
+            })
+        }
+
+        //assert
+        waitForExpectations(timeout: 1000) { error in
+            XCTAssertTrue(success)
+        }
+    }
 }
