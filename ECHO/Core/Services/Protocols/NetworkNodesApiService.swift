@@ -9,7 +9,6 @@
 /**
      Encapsulates logic, associated with network nodes API     
  */
-protocol NetworkNodesApiService {
+protocol NetworkNodesApiService: BaseApiService {
     
-    init(socketCore: SocketCoreComponent)
 }

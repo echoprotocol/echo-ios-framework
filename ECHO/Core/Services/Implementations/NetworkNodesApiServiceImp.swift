@@ -11,7 +11,7 @@
  
     Encapsulates logic of preparing API calls to [SocketCoreComponent](SocketCoreComponent)
  */
-final class NetworkNodesApiServiceImp: NetworkNodesApiService, ApiIdentifireHolder {
+final class NetworkNodesApiServiceImp: NetworkNodesApiService {
     
     var apiIdentifire: Int = 0
     
@@ -19,5 +19,13 @@ final class NetworkNodesApiServiceImp: NetworkNodesApiService, ApiIdentifireHold
     
     required init(socketCore: SocketCoreComponent) {
         self.socketCore = socketCore
+    }
+    
+    func sendCustomOperation(operation: CustomSocketOperation) {
+        
+        operation.setApiId(apiIdentifire)
+        operation.setOperationId(socketCore.nextOperationId())
+        
+        socketCore.send(operation: operation)
     }
 }

@@ -11,9 +11,7 @@
 
     - Note: [Graphene blockchain network broadcast API](https://dev-doc.myecho.app/classgraphene_1_1app_1_1network__broadcast__api.html)
 */
-protocol NetworkBroadcastApiService: class {
-    
-    init(socketCore: SocketCoreComponent)
+protocol NetworkBroadcastApiService: BaseApiService {
     
 /**
     Broadcast a transaction to the network.

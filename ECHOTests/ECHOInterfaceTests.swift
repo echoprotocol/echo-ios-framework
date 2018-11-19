@@ -1039,4 +1039,78 @@ class ECHOInterfaceTests: XCTestCase {
             XCTAssertTrue(success)
         }
     }
+    
+    func testCustomGetUser() {
+        
+        //arrange
+        echo = ECHO(settings: Settings(build: {
+            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+        }))
+        let exp = expectation(description: "Account Getting")
+        var account: UserAccount?
+        let accountName = "nikitatest "
+        let accountsIds = [accountName]
+        
+        let operation = CustomGetFullAccountSocketOperation(accountsIds: accountsIds) { (result) in
+            
+            switch result {
+            case .success(let userAccounts):
+                account = userAccounts[accountName]
+                exp.fulfill()
+            case .failure(let error):
+                XCTFail("Getting account cant fail \(error)")
+            }
+        }
+        
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.sendCustomOperation(operation: operation, for: .database)
+        }
+        
+        //assert
+        waitForExpectations(timeout: timeout) { error in
+            XCTAssertEqual(account?.account.name, accountName)
+        }
+    }
+    
+    
+    func testCustomGetUserFailed() {
+        
+        //arrange
+        echo = ECHO(settings: Settings(build: {
+            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+        }))
+        let exp = expectation(description: "Account Getting")
+        var account: UserAccount?
+        let accountName = "nikitatest new account unreserved"
+        let accountsIds = [accountName]
+        var errorMessage: String?
+        
+        let operation = CustomGetFullAccountSocketOperation(accountsIds: accountsIds) { (result) in
+            
+            switch result {
+            case .success(let userAccounts):
+                account = userAccounts[accountName]
+                if account != nil {
+                    XCTFail("Getting new account must fail")
+                } else {
+                    errorMessage = "Account didn't got"
+                    exp.fulfill()
+                }
+            case .failure(let error):
+                errorMessage = error.localizedDescription
+                exp.fulfill()
+            }
+        }
+        
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.sendCustomOperation(operation: operation, for: .database)
+        }
+        
+        //assert
+        waitForExpectations(timeout: timeout) { error in
+            XCTAssertNotNil(errorMessage)
+        }
+    }
 }

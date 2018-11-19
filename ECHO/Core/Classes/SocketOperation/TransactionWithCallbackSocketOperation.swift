@@ -20,7 +20,6 @@ struct TransactionWithCallbackSocketOperation: SocketOperation {
     var apiId: Int
     var transaction: Transaction
     var completion: Completion<Bool>
-    var notifyHandler: Completion<Bool>?
     
     func createParameters() -> [Any] {
         

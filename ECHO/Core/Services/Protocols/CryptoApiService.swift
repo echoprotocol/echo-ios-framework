@@ -11,7 +11,6 @@
  
     - Note: [Graphene blockchain crypto API](https://dev-doc.myecho.app/classgraphene_1_1app_1_1crypto__api.html)
 */
-protocol CryptoApiService {
+protocol CryptoApiService: BaseApiService {
     
-    init(socketCore: SocketCoreComponent)
 }

@@ -12,8 +12,6 @@ public typealias NoticeHandler = (_ notice: ECHONotification) -> Void
 /**
     Encapsulates logic, associated with various blockchain smart contract processes
  */
-
-
 public protocol ContractsFacade {
     
     /**
