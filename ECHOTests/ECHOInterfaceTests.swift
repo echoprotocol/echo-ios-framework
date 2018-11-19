@@ -1048,7 +1048,7 @@ class ECHOInterfaceTests: XCTestCase {
         }))
         let exp = expectation(description: "Account Getting")
         var account: UserAccount?
-        let accountName = "nikitatest "
+        let accountName = "nikitatest"
         let accountsIds = [accountName]
         
         let operation = CustomGetFullAccountSocketOperation(accountsIds: accountsIds) { (result) in
