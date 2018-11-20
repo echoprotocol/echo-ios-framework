@@ -53,7 +53,6 @@ final public class ECHO: InterfaceFacades {
                                                   historyService: historyService,
                                                   networkBroadcastService: networkBroadcastService,
                                                   networkNodesService: networkNodesSetvice)
-        
         revealFacade = RevealFacadeImp(socketCore: socketCore,
                                       options: settings.apiOptions,
                                       services: revealServices)
@@ -73,7 +72,10 @@ final public class ECHO: InterfaceFacades {
         feeFacade = FeeFacadeImp(services: feeServices, cryptoCore: settings.cryproComponent, network: settings.network)
         
         let transactoinServices = TransactionFacadeServices(databaseService: databaseService, networkBroadcastService: networkBroadcastService)
-        transactionFacade = TransactionFacadeImp(services: transactoinServices, cryptoCore: settings.cryproComponent, network: settings.network)
+        transactionFacade = TransactionFacadeImp(services: transactoinServices,
+                                                 cryptoCore: settings.cryproComponent,
+                                                 network: settings.network,
+                                                 noticeDelegateHandler: noticeEventProxy)
         
         let assetsServices = AssetsServices(databaseService: databaseService, networkBroadcastService: networkBroadcastService)
         assetsFacade = AssetsFacadeImp(services: assetsServices, cryptoCore: settings.cryproComponent, network: settings.network)
@@ -186,7 +188,8 @@ final public class ECHO: InterfaceFacades {
                                       asset: String,
                                       assetForFee: String?,
                                       message: String?,
-                                      completion: @escaping (Result<Bool, ECHOError>) -> Void) {
+                                      completion: @escaping Completion<Bool>,
+                                      noticeHandler: NoticeHandler?) {
         
         transactionFacade.sendTransferOperation(fromNameOrId: fromNameOrId,
                                                 password: password,
@@ -195,7 +198,7 @@ final public class ECHO: InterfaceFacades {
                                                 asset: asset,
                                                 assetForFee: assetForFee,
                                                 message: message,
-                                                completion: completion)
+                                                completion: completion, noticeHandler: noticeHandler)
     }
     
     // MARK: AssetsFacade

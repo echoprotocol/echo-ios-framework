@@ -511,10 +511,11 @@ class ECHOInterfaceTests: XCTestCase {
                 switch result {
                 case .success(let result):
                     isSuccess = result
-                    exp.fulfill()
                 case .failure(_):
                     XCTFail("Transfer must be valid")
                 }
+            }, noticeHandler: { notice in
+                exp.fulfill()
             })
         }
         
@@ -543,11 +544,12 @@ class ECHOInterfaceTests: XCTestCase {
                 switch result {
                 case .success(let result):
                     isSuccess = result
-                    exp.fulfill()
                 case .failure(let error):
                     print(error)
                     XCTFail("Transfer must be valid")
                 }
+            }, noticeHandler: { notice in
+                exp.fulfill()
             })
         }
 
@@ -580,7 +582,7 @@ class ECHOInterfaceTests: XCTestCase {
                     isSuccess = false
                     exp.fulfill()
                 }
-            })
+            }, noticeHandler: nil)
         }
         
         //assert
