@@ -75,6 +75,20 @@ class AbiArgumentEncoderTests: XCTestCase {
         XCTAssertEqual(data?.hex, decodedParams)
     }
     
+    func testEncodeContractAddress() {
+        
+        //arrange
+        let decodedParams = "00000000000000000000000001000000000000000000000000000000000041a3"
+        let typeValue = [AbiTypeValueInputModel(type: .contractAddress, value: "16803")]
+        
+        //act
+        let data = try? interpretator.getArguments(valueTypes: typeValue)
+        
+        //assert
+        XCTAssertNotNil(data?.hex)
+        XCTAssertEqual(data?.hex, decodedParams)
+    }
+    
     func testEncodeAddressAndUint256AndUint256AndStringAndString() {
         
         //arrange

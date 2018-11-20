@@ -31,6 +31,42 @@ class AbiArgumentDecoderTest: XCTestCase {
         XCTAssertEqual(result, decodedString)
     }
     
+    func testDecodedContractAddress() {
+        
+        //arrange
+        let encodedString = "01000000000000000000000000000000000041a3"
+        let decodedString = "16803"
+        let type = AbiParameterType.contractAddress
+        let outputs = [AbiFunctionEntries(name: "", typeString: type.description, type: type)]
+        var result: String?
+        
+        //act
+        let values = try? interpretator.getValueTypes(string: encodedString, outputs: outputs)
+        result = values?[safe: 0]?.value as? String
+        
+        //assert
+        XCTAssertNotNil(result)
+        XCTAssertEqual(result, decodedString)
+    }
+    
+    func testDecodedFullContractAddress() {
+        
+        //arrange
+        let encodedString = "00000000000000000000000001000000000000000000000000000000000041a3"
+        let decodedString = "16803"
+        let type = AbiParameterType.contractAddress
+        let outputs = [AbiFunctionEntries(name: "", typeString: type.description, type: type)]
+        var result: String?
+        
+        //act
+        let values = try? interpretator.getValueTypes(string: encodedString, outputs: outputs)
+        result = values?[safe: 0]?.value as? String
+        
+        //assert
+        XCTAssertNotNil(result)
+        XCTAssertEqual(result, decodedString)
+    }
+    
     func testDecodedNameProperty() {
         
         //arrange

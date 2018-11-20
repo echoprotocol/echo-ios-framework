@@ -155,6 +155,19 @@ extension SubscriptionService {
                                                                completion: completion)
         socketCore.send(operation: operation)
     }
+    
+    func subscribeContractLogs(contractId: String, fromBlock: Int, toBlock: Int, completion: @escaping Completion<[ContractLog]>) {
+        
+        let operation = SubscribeContractLogsSocketOperation(method: .call,
+                                                             operationId: socketCore.nextOperationId(),
+                                                             apiId: apiIdentifire,
+                                                             contractId: contractId,
+                                                             fromBlock: fromBlock,
+                                                             toBlock: toBlock,
+                                                             completion: completion)
+        
+        socketCore.send(operation: operation)
+    }
 }
 
 extension AssetsService {

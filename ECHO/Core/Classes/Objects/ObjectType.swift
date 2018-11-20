@@ -57,6 +57,10 @@ public enum ObjectType: Int {
         return "\(getSpace().rawValue).\(rawValue).0"
     }
     
+    func getFullObjectIdByLastPart(_ lastPart: String) -> String {
+        return "\(getSpace().rawValue).\(rawValue).\(lastPart)"
+    }
+    
     func getSpace() -> ObjectSpace {
         return ObjectType.getSpace(type: self)
     }
@@ -102,6 +106,7 @@ public enum ObjectType: Int {
         return space
     }
 }
+
 /**
     Struct used to validate object identifier by [ObjectType](ObjectType)
  */

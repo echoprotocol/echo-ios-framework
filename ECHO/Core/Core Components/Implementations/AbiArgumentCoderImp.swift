@@ -14,6 +14,8 @@ class ArrayOfData {
 final public class AbiArgumentCoderImp: AbiArgumentCoder {
     
     let sliceSize = 32
+    let addressSize = 20
+    let contractAddressFirstPartValue: UInt8 = 1
     
     public init() { }
     
@@ -53,6 +55,9 @@ final public class AbiArgumentCoderImp: AbiArgumentCoder {
             } else if type == AbiParameterType.address {
                 
                 try encodeAddress(staticStack: staticData, type: type, offset: offset, data: value)
+            } else if type == AbiParameterType.contractAddress {
+                
+                try encodeContractAddress(staticStack: staticData, type: type, offset: offset, data: value)
             } else if type == AbiParameterType.string {
                 
                 offset = try encodeString(staticStack: staticData, dynamicStack: dynamicData, type: type, offset: offset, data: value)
@@ -104,6 +109,59 @@ extension Decoder {
         let end = start + sliceSize
         
         guard let btcNumber = BTCBigNumber(unsignedBigEndian: data[safe: start..<end]) else {
+            let error = NSError(domain: "", code: 0, userInfo: nil)
+            throw error
+        }
+        
+        let output = AbiTypeValueOutputModel(type: type, value: btcNumber.decimalString)
+        decodedOutputs.append(output)
+    }
+    
+    fileprivate func decodeAddress(_ data: Data,
+                                   _ sliceIndex: Int,
+                                   _ type: AbiParameterType,
+                                   _ decodedOutputs: inout [AbiTypeValueOutputModel]) throws {
+        
+        let start = sliceSize * sliceIndex
+        var end = start + sliceSize
+        
+        if end > data.count {
+            end = start + addressSize
+        }
+        
+        guard let btcNumber = BTCBigNumber(unsignedBigEndian: data[safe: start..<end]) else {
+            let error = NSError(domain: "", code: 0, userInfo: nil)
+            throw error
+        }
+        
+        let output = AbiTypeValueOutputModel(type: type, value: btcNumber.decimalString)
+        decodedOutputs.append(output)
+    }
+    
+    fileprivate func decodeContractAddress(_ data: Data,
+                                           _ sliceIndex: Int,
+                                           _ type: AbiParameterType,
+                                           _ decodedOutputs: inout [AbiTypeValueOutputModel]) throws {
+        
+        let start = sliceSize * sliceIndex
+        var end = start + sliceSize
+        
+        if end > data.count {
+            end = start + addressSize
+        }
+        
+        guard var addressData = data[safe: start..<end] else {
+            let error = NSError(domain: "", code: 0, userInfo: nil)
+            throw error
+        }
+        
+        if addressData.count == sliceSize {
+            addressData.removeFirst(sliceSize - addressSize)
+        }
+        
+        addressData.removeFirst()
+        
+        guard let btcNumber = BTCBigNumber(unsignedBigEndian: addressData) else {
             let error = NSError(domain: "", code: 0, userInfo: nil)
             throw error
         }
@@ -341,9 +399,15 @@ extension Decoder {
             let type = outputs[index].type
             
             switch type {
-            case .uint, .int, .address, .bool:
+            case .uint, .int, .bool:
                 
                 try decodePrimitives(data, index, type, &decodedOutputs)
+            case .address:
+                
+                try decodeAddress(data, index, type, &decodedOutputs)
+            case .contractAddress:
+                
+                try decodeContractAddress(data, index, type, &decodedOutputs)
             case .string:
                 
                 try decodeStrings(data, index, type, &decodedOutputs, outputs)
@@ -401,22 +465,6 @@ extension Encoder {
             } else {
                 staticStack.array.append(BTCBigNumber(decimalString: data).unsignedBigEndian ?? placeholderData())
             }
-            
-        case .address:
-            
-            if var value = Base58.decode(data) as Data? {
-                
-                if value.count == 25 {
-                    value = value.subdata(in: 1..<21)
-                }
-                
-                value = fillSlice(data: value)
-                staticStack.array.append(value)
-
-            } else {
-                staticStack.array.append(placeholderData())
-            }
-            
         case .fixedBytes(let size):
             
             if var value = Data(hex: data) {
@@ -442,6 +490,16 @@ extension Encoder {
     fileprivate func encodeAddress(staticStack: ArrayOfData, type: AbiParameterType, offset: Int, data: String) throws {
         
         staticStack.array.append(BTCBigNumber(decimalString: data).unsignedBigEndian ?? placeholderData())
+    }
+    
+    fileprivate func encodeContractAddress(staticStack: ArrayOfData, type: AbiParameterType, offset: Int, data: String) throws {
+        
+        if var value = BTCBigNumber(decimalString: data).unsignedBigEndian {
+            value[sliceSize - addressSize] = contractAddressFirstPartValue
+            staticStack.array.append(value)
+        } else {
+            staticStack.array.append(placeholderData())
+        }
     }
     
     fileprivate func encodeString(staticStack: ArrayOfData,

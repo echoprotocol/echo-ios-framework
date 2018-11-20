@@ -7,11 +7,11 @@
 //
 
 /**
- Broadcast a transaction with callback to the network.
- The [transaction] will be checked for validity in the local database prior to broadcasting. If it
- fails to apply locally, an error will be thrown and the transaction will not be broadcast.
+    Broadcast a transaction with callback to the network.
+    The [Transaction](Transaction) will be checked for validity in the local database prior to broadcasting. If it
+    fails to apply locally, an error will be thrown and the transaction will not be broadcast.
  
- - Return: [Bool](Bool)
+    - Return: [Bool](Bool)
  */
 struct TransactionWithCallbackSocketOperation: SocketOperation {
     

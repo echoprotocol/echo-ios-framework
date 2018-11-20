@@ -17,6 +17,7 @@ public enum AbiParameterType {
     case bool
     case bytes
     case address
+    case contractAddress
     case fixedBytes(size: Int)
     case array(size: Int)
     case fixedArrayOfUint(size: Int)
@@ -114,7 +115,7 @@ extension AbiParameterType: Hashable {
         case .string:
             return "string".hashValue
             
-        case .address:
+        case .address, .contractAddress:
             return "address".hashValue
             
         case .bool:
@@ -214,6 +215,9 @@ extension AbiParameterType: Equatable {
         case (.address, .address):
             return true
             
+        case (.contractAddress, .contractAddress):
+            return true
+            
         case (.bool, .bool):
             return true
             
@@ -311,7 +315,7 @@ extension AbiParameterType: CustomStringConvertible {
         case .string:
             return "string"
             
-        case .address:
+        case .address, .contractAddress:
             return "address"
             
         case .bool:
