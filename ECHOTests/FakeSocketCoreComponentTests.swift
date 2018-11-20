@@ -163,7 +163,7 @@ class SocketCoreComponentTests: XCTestCase {
                 case .failure(let error):
                     XCTFail("Transfer must be valid \(error)")
                 }
-            })
+            }, noticeHandler: nil)
         }
         
         //assert

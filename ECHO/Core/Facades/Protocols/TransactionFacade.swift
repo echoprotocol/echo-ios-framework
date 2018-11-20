@@ -33,5 +33,6 @@ public protocol TransactionFacade {
                                asset: String,
                                assetForFee: String?,
                                message: String?,
-                               completion: @escaping Completion<Bool>)
+                               completion: @escaping Completion<Bool>,
+                               noticeHandler: NoticeHandler?)
 }

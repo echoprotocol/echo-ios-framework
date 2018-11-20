@@ -24,12 +24,16 @@ final public class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
     let network: ECHONetwork
     let cryptoCore: CryptoCoreComponent
     
-    public init(services: TransactionFacadeServices, cryptoCore: CryptoCoreComponent, network: ECHONetwork) {
+    public init(services: TransactionFacadeServices,
+                cryptoCore: CryptoCoreComponent,
+                network: ECHONetwork,
+                noticeDelegateHandler: NoticeEventDelegateHandler) {
         
         self.services = services
         self.network = network
         self.cryptoCore = cryptoCore
         self.queues = [ECHOQueue]()
+        noticeDelegateHandler.delegate = self
     }
     
     private enum TransferResultsKeys: String {
@@ -42,6 +46,8 @@ final public class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
         case transaction
         case operationId
         case memo
+        case notice
+        case noticeHandler
     }
     
     // swiftlint:disable function_body_length
@@ -52,7 +58,8 @@ final public class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
                                       asset: String,
                                       assetForFee: String?,
                                       message: String?,
-                                      completion: @escaping Completion<Bool>) {
+                                      completion: @escaping Completion<Bool>,
+                                      noticeHandler: NoticeHandler?) {
         
         // if we don't hace assetForFee, we use asset.
         let assetForFee = assetForFee ?? asset
@@ -149,6 +156,15 @@ final public class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
         transferQueue.addOperation(bildTransactionOperation)
         transferQueue.addOperation(sendTransactionOperation)
         
+        //Notice handler
+        if let noticeHandler = noticeHandler {
+            transferQueue.saveValue(noticeHandler, forKey: TransferResultsKeys.noticeHandler.rawValue)
+            let waitOperation = createWaitingOperation(transferQueue)
+            let noticeHandleOperation = createNoticeHandleOperation(transferQueue)
+            transferQueue.addOperation(waitOperation)
+            transferQueue.addOperation(noticeHandleOperation)
+        }
+        
         transferQueue.setCompletionOperation(completionOperation)
     }
     // swiftlint:enable function_body_length
@@ -183,5 +199,59 @@ final public class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
         }
         
         return bildTransferOperation
+    }
+    
+    fileprivate func createNoticeHandleOperation(_ queue: ECHOQueue) -> Operation {
+        
+        let noticeOperation = BlockOperation()
+        
+        noticeOperation.addExecutionBlock { [weak noticeOperation, weak queue, weak self] in
+            
+            guard noticeOperation?.isCancelled == false else { return }
+            guard self != nil else { return }
+            guard let noticeHandler: NoticeHandler = queue?.getValue(TransferResultsKeys.noticeHandler.rawValue) else { return }
+            guard let notice: ECHONotification = queue?.getValue(TransferResultsKeys.notice.rawValue) else { return }
+            
+            noticeHandler(notice)
+        }
+        
+        return noticeOperation
+    }
+    
+    fileprivate func createWaitingOperation(_ queue: ECHOQueue) -> Operation {
+        
+        let waitingOperation = BlockOperation()
+        
+        waitingOperation.addExecutionBlock { [weak waitingOperation, weak queue, weak self] in
+            
+            guard waitingOperation?.isCancelled == false else { return }
+            guard self != nil else { return }
+            queue?.waitStartNextOperation()
+        }
+        
+        return waitingOperation
+    }
+}
+
+extension TransactionFacadeImp: NoticeEventDelegate {
+    
+    public func didReceiveNotification(notification: ECHONotification) {
+        
+        switch notification.params {
+        case .array(let array):
+            if let noticeOperationId = array.first as? Int {
+                
+                for queue in queues {
+                    
+                    if let queueTransferOperationId: Int = queue.getValue(TransferResultsKeys.operationId.rawValue),
+                        queueTransferOperationId == noticeOperationId {
+                        queue.saveValue(notification, forKey: TransferResultsKeys.notice.rawValue)
+                        queue.startNextOperation()
+                    }
+                }
+            }
+        default:
+            break
+        }
     }
 }
