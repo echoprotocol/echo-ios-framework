@@ -769,6 +769,72 @@ class ECHOInterfaceTests: XCTestCase {
         }
     }
     
+    func testGetContractLogs() {
+        
+        //arrange
+        echo = ECHO(settings: Settings(build: {
+            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+        }))
+        let exp = expectation(description: "Getting contract logs")
+        let contractId = "1.16.2033"
+        let fromBlock = 53500
+        let toBlock = 53580
+        var contractLogs: [ContractLog]!
+        
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.getContractLogs(contractId: contractId, fromBlock: fromBlock, toBlock: toBlock, completion: { (result) in
+                
+                switch result {
+                case .success(let logs):
+                    contractLogs = logs
+                    exp.fulfill()
+                case .failure(_):
+                    XCTFail("Getting result cant fail")
+                }
+            })
+        }
+        
+        //assert
+        waitForExpectations(timeout: timeout) { error in
+            XCTAssertNotNil(contractLogs)
+            XCTAssertNotEqual(contractLogs.count, 0)
+        }
+    }
+    
+    func testFailGetContractLogs() {
+        
+        //arrange
+        echo = ECHO(settings: Settings(build: {
+            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+        }))
+        let exp = expectation(description: "Getting contract logs")
+        let contractId = "1.13.1880"
+        let fromBlock = 53500
+        let toBlock = 53580
+        var error: ECHOError = ECHOError.undefined
+        
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.getContractLogs(contractId: contractId, fromBlock: fromBlock, toBlock: toBlock, completion: { (result) in
+                
+                switch result {
+                case .success(_):
+                    XCTFail("Getting contract fail")
+                    exp.fulfill()
+                case .failure(let aError):
+                    error = aError
+                    exp.fulfill()
+                }
+            })
+        }
+        
+        //assert
+        waitForExpectations(timeout: timeout) { _ in
+            XCTAssertNotEqual(error, ECHOError.undefined)
+        }
+    }
+    
     func testGetAllContracts() {
         
         //arrange

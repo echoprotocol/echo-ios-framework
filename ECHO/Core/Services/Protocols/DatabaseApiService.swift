@@ -101,6 +101,16 @@ protocol DatabaseApiService: BaseApiService {
     func getContractResult(historyId: String, completion: @escaping Completion<ContractResult>)
     
 /**
+    Return list of contract logs
+     
+     - Parameter contractId: Contract id for fetching logs
+     - Parameter fromBlockId: Number of the earliest block to retrieve
+     - Parameter toBlockId: Number of the most recent block to retrieve
+     - Parameter completion: Callback which returns an array of [ContractLog](ContractLog) result of call or error
+ */
+    func getContractLogs(contractId: String, fromBlock: Int, toBlock: Int, completion: @escaping Completion<[ContractLog]>)
+    
+/**
      Returns contracts called by ids
      
      - Parameter contractIds: Contracts ids for call

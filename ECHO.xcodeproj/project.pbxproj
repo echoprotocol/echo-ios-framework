@@ -174,6 +174,8 @@
 		D061330C21A2C836009EC456 /* CustomOperationsFacade.swift in Sources */ = {isa = PBXBuildFile; fileRef = D061330B21A2C836009EC456 /* CustomOperationsFacade.swift */; };
 		D061330E21A2C99F009EC456 /* CustomOperationsFacadeImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D061330D21A2C99F009EC456 /* CustomOperationsFacadeImp.swift */; };
 		D061331021A2D073009EC456 /* CustomGetFullAccountSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D061330F21A2D073009EC456 /* CustomGetFullAccountSocketOperation.swift */; };
+		D061331321A2E93F009EC456 /* ContractLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = D061331221A2E93F009EC456 /* ContractLog.swift */; };
+		D061331521A2EC53009EC456 /* GetContractLogsSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D061331421A2EC53009EC456 /* GetContractLogsSocketOperation.swift */; };
 		D0814E8C2154DD6600E248AA /* ObjectType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0814E8B2154DD6600E248AA /* ObjectType.swift */; };
 		D08B2BCD21342444000F7A9B /* FeeFacadeImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08B2BCC21342444000F7A9B /* FeeFacadeImp.swift */; };
 		D094703E212D3ECC00B55A37 /* TransferOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D094703D212D3ECC00B55A37 /* TransferOperation.swift */; };
@@ -397,6 +399,8 @@
 		D061330B21A2C836009EC456 /* CustomOperationsFacade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomOperationsFacade.swift; sourceTree = "<group>"; };
 		D061330D21A2C99F009EC456 /* CustomOperationsFacadeImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomOperationsFacadeImp.swift; sourceTree = "<group>"; };
 		D061330F21A2D073009EC456 /* CustomGetFullAccountSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomGetFullAccountSocketOperation.swift; sourceTree = "<group>"; };
+		D061331221A2E93F009EC456 /* ContractLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractLog.swift; sourceTree = "<group>"; };
+		D061331421A2EC53009EC456 /* GetContractLogsSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetContractLogsSocketOperation.swift; sourceTree = "<group>"; };
 		D0814E8B2154DD6600E248AA /* ObjectType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectType.swift; sourceTree = "<group>"; };
 		D08B2BCC21342444000F7A9B /* FeeFacadeImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeeFacadeImp.swift; sourceTree = "<group>"; };
 		D094703D212D3ECC00B55A37 /* TransferOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferOperation.swift; sourceTree = "<group>"; };
@@ -766,6 +770,7 @@
 				D048AE762136ABBE00441FEB /* TransactionSocketOperation.swift */,
 				B39554B4213EBAED00CE2647 /* ListAssetsSocketOperation.swift */,
 				B3BEA1FE21A05C0300CB9021 /* TransactionWithCallbackSocketOperation.swift */,
+				D061331421A2EC53009EC456 /* GetContractLogsSocketOperation.swift */,
 			);
 			path = SocketOperation;
 			sourceTree = "<group>";
@@ -863,6 +868,7 @@
 				D0B0587D214698F900A80CDE /* ContractStruct.swift */,
 				D0B0587521468A0300A80CDE /* ContractInfo.swift */,
 				D0B0586D2146728800A80CDE /* ContractResult.swift */,
+				D061331221A2E93F009EC456 /* ContractLog.swift */,
 			);
 			path = Contracts;
 			sourceTree = "<group>";
@@ -1101,11 +1107,13 @@
 				D061330A21A2BD41009EC456 /* BaseApiService.swift in Sources */,
 				B3CA704020F4FB0200511F6A /* ECHOSerializable.swift in Sources */,
 				B3CA702820F4A43000511F6A /* AuthentificationFacade.swift in Sources */,
+				D061331321A2E93F009EC456 /* ContractLog.swift in Sources */,
 				B3CA704520F532BE00511F6A /* BaseSocketOperation.swift in Sources */,
 				B39554B1213E70DB00CE2647 /* AssetsFacade.swift in Sources */,
 				D00C3D242147B4140053A636 /* ContractOperation.swift in Sources */,
 				B3CA702020F4A3A900511F6A /* ECHO.swift in Sources */,
 				B3965B182125954200029585 /* PointerArray.swift in Sources */,
+				D061331521A2EC53009EC456 /* GetContractLogsSocketOperation.swift in Sources */,
 				B3CA704D20F53A4500511F6A /* GetAccountHistorySocketOperation.swift in Sources */,
 				B38596FA20F6003500B55E59 /* AssetAmount.swift in Sources */,
 				B30CAD0020FF74C80048E33E /* NetworkBroadcastApiService.swift in Sources */,

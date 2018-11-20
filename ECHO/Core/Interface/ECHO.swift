@@ -253,6 +253,11 @@ final public class ECHO: InterfaceFacades {
         contractsFacade.getContractResult(historyId: historyId, completion: completion)
     }
     
+    public func getContractLogs(contractId: String, fromBlock: Int, toBlock: Int, completion: @escaping Completion<[ContractLog]>) {
+        
+        contractsFacade.getContractLogs(contractId: contractId, fromBlock: fromBlock, toBlock: toBlock, completion: completion)
+    }
+    
     public func getContracts(contractIds: [String], completion: @escaping Completion<[ContractInfo]>) {
         
         contractsFacade.getContracts(contractIds: contractIds, completion: completion)
