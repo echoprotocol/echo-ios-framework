@@ -19,8 +19,6 @@ unit_tests:
     - fastlane tests
   tags:
     - ios
-  only:
-    - test
 
 
 release:
