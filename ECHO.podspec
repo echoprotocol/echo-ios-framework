@@ -1,11 +1,12 @@
 Pod::Spec.new do |spec|
-  spec.name = "ECHO"
+  spec.name = "Echo"
   spec.version = "1.0.0"
-  spec.summary = "ECHO Framework"
-  spec.homepage = "https://github.com"
+  spec.summary = "Echo iOS Framework"
+  spec.homepage = "https://gitlab.pixelplex.by/646_echo_mobile_library/ios"
   spec.license = { :type => 'MIT', :file => 'LICENSE' }
   spec.authors = {
     "Fedorenko Nikita" => '',
+    "Sharaev Vladimir" => '',
   }
   spec.source = { :git => 'https://gitlab.pixelplex.by/646_echo_mobile_library/ios.git' }
   spec.requires_arc = true
