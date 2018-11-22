@@ -99,7 +99,7 @@ platform :ios do
 
   lane :get_next_version do
 
-    sh('git pull origin --tags')
+    sh('git pull origin master --tags')
     get_tags_command = "git tag -l #{ENV['VERSION_MAIN_PART']}* | sort -V"
     tags = sh(get_tags_command)
 
