@@ -1,5 +1,6 @@
 stages:
   - unit_tests
+  - release
 
 variables:
   LC_ALL: "en_US.UTF-8"
@@ -10,7 +11,6 @@ before_script:
   - bundle install
 
 unit_tests:
-  dependencies: []
   stage: unit_tests
   artifacts:
     paths:
@@ -19,3 +19,18 @@ unit_tests:
     - fastlane tests
   tags:
     - ios
+  only:
+    - test
+
+
+release:
+  stage: unit_tests
+  before_script:
+    - get_env_settings.sh $SETTINGS_URL $SETTINGS_BRANCH_MASTER
+  script:
+    - fastlane release
+  tags:
+    - ios
+  only:
+    - master
+  when: manual

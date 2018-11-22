@@ -4,7 +4,6 @@
 ## Build generated
 build/
 DerivedData
-#docs/
 ECHO.framework
 
 ## Various settings
@@ -23,6 +22,16 @@ xcuserdata
 *.moved-aside
 *.xcuserstate
 *.xcscmblueprint
+
+## CI/CD Settings
+.env
+.jazzy.yml
+
+## Fastlane
+fastlane/Appfile
+fastlane/README.md
+fastlane/report
+fastlane/test_output
 
 ## Obj-C/Swift specific
 *.hmap

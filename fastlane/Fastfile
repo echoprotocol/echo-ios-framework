@@ -4,13 +4,27 @@ default_platform(:ios)
 
 platform :ios do
 
-  desc "Description of what the lane does"
-
   lane :tests do
 
     libraries
-
     scan
+
+  end
+
+  lane :release do
+
+    version_number = get_next_version
+    print version_number
+
+    change_configs_for_release(version_number: version_number)
+
+    #TODO: Need valid config file
+    #config_documentation
+
+    commit_to_master(version_number: version_number)
+    push_to_master
+    tag_setup(version_number: version_number)
+    push_to_release
 
   end
 
@@ -22,5 +36,86 @@ platform :ios do
 
   end
 
+  lane :change_configs_for_release do |options|
+
+    increment_version_number(
+      version_number: options[:version_number]
+    )
+
+    version_bump_podspec(
+      path: ENV['PODSPEC_NAME'],
+      version_number: options[:version_number]
+    )
+
+  end
+
+  lane :config_documentation do
+
+    jazzy(
+      config: ENV['JAZZY_CONFIG_PATH']
+    )
+
+  end
+
+  lane :commit_to_master do |options|
+
+    git_add(
+      path: "docs/*"
+    )
+
+    git_commit(path: ["ECHO.podspec",
+                      "ECHO/Info.plist",
+                      "ECHOTests/Info.plist",
+                      "docs/*"], 
+                message: "Version: #{options[:version_number]}")
+
+  end
+
+  lane :push_to_master do 
+
+    push_to_git_remote(
+      remote_branch: "master"
+    )
+
+  end
+
+  lane :push_to_release do
+
+    push_to_git_remote(
+      remote_branch: "release"
+    )
+    
+  end
+
+  lane :tag_setup do |options|
+
+    add_git_tag(
+      tag: options[:version_number]
+    )
+
+    push_git_tags
+
+  end 
+
+  lane :get_next_version do
+
+    sh('git pull origin --tags')
+    get_tags_command = "git tag -l #{ENV['VERSION_MAIN_PART']}* | sort -V"
+    tags = sh(get_tags_command)
+
+    tags_array = tags.split
+
+    if tags_array.count == 0
+      "#{ENV['VERSION_MAIN_PART']}0"
+    else
+      last_tag = tags_array.last
+      tag_numbers_array = last_tag.split('.')
+      last_tag_number = tag_numbers_array.last
+      new_last_tag_number = last_tag_number.to_i + 1
+
+      "#{ENV['VERSION_MAIN_PART']}#{new_last_tag_number}"
+    end
+
+  end
 
 end
