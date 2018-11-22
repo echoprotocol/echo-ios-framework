@@ -176,6 +176,7 @@
 		D061331021A2D073009EC456 /* CustomGetFullAccountSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D061330F21A2D073009EC456 /* CustomGetFullAccountSocketOperation.swift */; };
 		D061331321A2E93F009EC456 /* ContractLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = D061331221A2E93F009EC456 /* ContractLog.swift */; };
 		D061331521A2EC53009EC456 /* GetContractLogsSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D061331421A2EC53009EC456 /* GetContractLogsSocketOperation.swift */; };
+		D061331721A30052009EC456 /* SubscribeContractLogsSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D061331621A30052009EC456 /* SubscribeContractLogsSocketOperation.swift */; };
 		D0814E8C2154DD6600E248AA /* ObjectType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0814E8B2154DD6600E248AA /* ObjectType.swift */; };
 		D08B2BCD21342444000F7A9B /* FeeFacadeImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08B2BCC21342444000F7A9B /* FeeFacadeImp.swift */; };
 		D094703E212D3ECC00B55A37 /* TransferOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D094703D212D3ECC00B55A37 /* TransferOperation.swift */; };
@@ -401,6 +402,7 @@
 		D061330F21A2D073009EC456 /* CustomGetFullAccountSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomGetFullAccountSocketOperation.swift; sourceTree = "<group>"; };
 		D061331221A2E93F009EC456 /* ContractLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractLog.swift; sourceTree = "<group>"; };
 		D061331421A2EC53009EC456 /* GetContractLogsSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetContractLogsSocketOperation.swift; sourceTree = "<group>"; };
+		D061331621A30052009EC456 /* SubscribeContractLogsSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribeContractLogsSocketOperation.swift; sourceTree = "<group>"; };
 		D0814E8B2154DD6600E248AA /* ObjectType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectType.swift; sourceTree = "<group>"; };
 		D08B2BCC21342444000F7A9B /* FeeFacadeImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeeFacadeImp.swift; sourceTree = "<group>"; };
 		D094703D212D3ECC00B55A37 /* TransferOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferOperation.swift; sourceTree = "<group>"; };
@@ -771,6 +773,7 @@
 				B39554B4213EBAED00CE2647 /* ListAssetsSocketOperation.swift */,
 				B3BEA1FE21A05C0300CB9021 /* TransactionWithCallbackSocketOperation.swift */,
 				D061331421A2EC53009EC456 /* GetContractLogsSocketOperation.swift */,
+				D061331621A30052009EC456 /* SubscribeContractLogsSocketOperation.swift */,
 			);
 			path = SocketOperation;
 			sourceTree = "<group>";
@@ -1163,6 +1166,7 @@
 				D00C3D282147B4F90053A636 /* Contract.swift in Sources */,
 				D0D8CA462141847900F0646D /* GetTransactionQueueOperation.swift in Sources */,
 				B30CAD1A20FFD58E0048E33E /* Options.swift in Sources */,
+				D061331721A30052009EC456 /* SubscribeContractLogsSocketOperation.swift in Sources */,
 				D094704A212D932500B55A37 /* CreateAssetOperation.swift in Sources */,
 				B30CAD1720FFD5790048E33E /* AccountBalance.swift in Sources */,
 				D01BF7D0212AB00700917DB8 /* Vote.swift in Sources */,

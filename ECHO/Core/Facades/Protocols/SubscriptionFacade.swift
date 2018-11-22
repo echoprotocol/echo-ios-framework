@@ -14,17 +14,24 @@ public protocol SubscribeAccountDelegate: class {
 }
 
 /**
- The interface of the class that allows you to receive notification about the change dynamic global properties.
+    The interface of the class that allows you to receive notification about the change dynamic global properties.
  */
 public protocol SubscribeDynamicGlobalPropertiesDelegate: class {
     func didUpdateDynamicGlobalProperties(dynamicGlobalProperties: DynamicGlobalProperties)
 }
 
 /**
- The interface of the class that allows you to receive notification about the create new block
+    The interface of the class that allows you to receive notification about the create new block
  */
 public protocol SubscribeBlockDelegate: class {
     func didCreateBlock(block: Block)
+}
+
+/**
+    The interface of the class that allows you to receive notification about the create new logs from specific contract
+ */
+public protocol SubscribeContractLogsDelegate: class {
+    func didCreateLogs(logs: [ContractLog])
 }
 
 /**
@@ -54,6 +61,9 @@ public protocol SubscriptionFacade {
      Adding a listener to the dynamic global properties change
      
      - Parameter delegate: The class that receive change notifications
+     
+     - Remark:
+     Delegate must be a class
  */
     func subscribeToDynamicGlobalProperties(delegate: SubscribeDynamicGlobalPropertiesDelegate)
     
@@ -66,6 +76,9 @@ public protocol SubscriptionFacade {
      Adding a listener to the block create
      
      - Parameter delegate: The class that receive create notifications
+     
+     - Remark:
+     Delegate must be a class
  */
     func subscribeToBlock(delegate: SubscribeBlockDelegate)
     
@@ -73,6 +86,25 @@ public protocol SubscriptionFacade {
      Removing a listener to the block create
  */
     func unsubscribeToBlock()
+    
+/**
+     Adding a listener to the new contract logs
+     
+     - Parameter contractId: Id of the contract for which the logs will create
+     - Parameter delegate: The class that will receive contract logs notifications
+     
+     - Remark:
+     Delegate must be a class
+ */
+    func subscribeToContractLogs(contractId: String, delegate: SubscribeContractLogsDelegate)
+    
+/**
+     Removing a listener to the new contract logs
+     
+     - Parameter contractId: Id of the contract for which the logs will create
+     - Parameter delegate: The class that will receive contract logs notifications
+ */
+    func unsubscribeToContractLogs(contractId: String, delegate: SubscribeContractLogsDelegate)
     
 /**
      Removing all listeners to the account change
