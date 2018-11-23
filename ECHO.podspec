@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name = "ECHO"
-  spec.version = "1.0.0"
+  spec.version = "2.0.0"
   spec.summary = "Echo iOS Framework"
   spec.homepage = "https://gitlab.pixelplex.by/646_echo_mobile_library/ios"
   spec.license = { :type => 'MIT', :file => 'LICENSE' }
