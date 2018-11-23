@@ -1,5 +1,5 @@
 Pod::Spec.new do |spec|
-  spec.name = "Echo"
+  spec.name = "ECHO"
   spec.version = "1.0.0"
   spec.summary = "Echo iOS Framework"
   spec.homepage = "https://gitlab.pixelplex.by/646_echo_mobile_library/ios"
