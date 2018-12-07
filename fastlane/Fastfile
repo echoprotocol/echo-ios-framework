@@ -9,6 +9,7 @@ platform :ios do
   lane :tests do
 
     libraries
+    clear_derived_data
     scan
 
   end
