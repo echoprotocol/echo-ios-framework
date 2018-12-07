@@ -1,5 +1,7 @@
 fastlane_version "2.66.2"
 
+setup_travis
+
 default_platform(:ios)
 
 platform :ios do
