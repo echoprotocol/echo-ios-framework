@@ -1441,7 +1441,7 @@
 					"$(SRCROOT)/Libraries/openssl/lib",
 				);
 				MODULEMAP_FILE = "./ECHO/Supports Files/ECHO.modulemap";
-				PRODUCT_BUNDLE_IDENTIFIER = com.pixelplex.ECHO;
+				PRODUCT_BUNDLE_IDENTIFIER = org.echo.mobile.framework;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_INCLUDE_PATHS = "$(SRCROOT) $(SRCROOT)/Libraries";
@@ -1483,7 +1483,7 @@
 					"$(SRCROOT)/Libraries/openssl/lib",
 				);
 				MODULEMAP_FILE = "./ECHO/Supports Files/ECHO.modulemap";
-				PRODUCT_BUNDLE_IDENTIFIER = com.pixelplex.ECHO;
+				PRODUCT_BUNDLE_IDENTIFIER = org.echo.mobile.framework;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_INCLUDE_PATHS = "$(SRCROOT) $(SRCROOT)/Libraries";
