@@ -25,7 +25,7 @@ public struct Memo: ECHOCodable, Decodable {
     
     public var source: Address?
     public var destination: Address?
-    public let nonce: Int
+    public let nonce: UInt
     public var byteMessage: Data?
     public var plaintextMessage: String?
     
@@ -33,7 +33,7 @@ public struct Memo: ECHOCodable, Decodable {
         nonce = 0
     }
     
-    init(source: Address?, destination: Address?, nonce: Int, byteMessage: Data?) {
+    init(source: Address?, destination: Address?, nonce: UInt, byteMessage: Data?) {
         
         self.source = source
         self.destination = destination
@@ -50,10 +50,19 @@ public struct Memo: ECHOCodable, Decodable {
         if let fromAddress = fromAddress { source = Address(fromAddress, data: nil) }
         if let toAddress = toAddress { destination = Address(toAddress, data: nil) }
         
-        let nonceValue = try? values.decode(Int.self, forKey: .nonce)
-        nonce = nonceValue ?? 0
+        if let nonceString = try? values.decode(String.self, forKey: .nonce) {
+            nonce = UInt(nonceString) ?? 0
+        } else if let nonceValue = try? values.decode(UInt.self, forKey: .nonce) {
+            nonce = nonceValue
+        } else {
+            nonce = 0
+        }
         
-        byteMessage = try values.decode(Data.self, forKey: .message)
+        if let byteMessageString = try? values.decode(String.self, forKey: .message) {
+            byteMessage = Data(hex: byteMessageString)
+        } else {
+            byteMessage = try values.decode(Data.self, forKey: .message)
+        }
     }
     
     // MARK: ECHOCodable
@@ -90,7 +99,7 @@ public struct Memo: ECHOCodable, Decodable {
         return Data(count: 1)
     }
     
-    func nonceToData(_ nonce: Int) -> Data {
+    func nonceToData(_ nonce: UInt) -> Data {
         
         var paddedNonceBytes = Data(count: 8)
         var originalNonceBytes = Data(from: nonce)

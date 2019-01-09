@@ -76,7 +76,7 @@ final class GetMemoQueueOperation<T>: Operation where T: Any {
         let fromPublicKey = cryptoCore.getPublicKeyFromAddress(fromMemoKeyString, networkPrefix: networkPrefix)
         let toPublicKey = cryptoCore.getPublicKeyFromAddress(toMemoKeyString, networkPrefix: networkPrefix)
         
-        let nonce = 0
+        let nonce = UInt(0)
         let byteMessage = cryptoCore.encryptMessage(privateKey: keyChain.raw,
                                                     publicKey: toPublicKey,
                                                     nonce: String(format: "%llu", nonce),
