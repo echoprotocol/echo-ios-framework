@@ -29,4 +29,26 @@ public protocol FeeFacade {
                                     assetForFee: String?,
                                     message: String?,
                                     completion: @escaping Completion<AssetAmount>)
+    
+/**
+     Function for evaluating the fee of call contract operation
+     
+     - Parameter registrarNameOrId: Name or id of account that call the contract
+     - Parameter assetId: Asset of contract
+     - Parameter amount: Amount
+     - Parameter asset: Id of asset which is sent
+     - Parameter assetForFee: Id of asset which is pay fee
+     - Parameter contratId: Id of called contract
+     - Parameter methodName: Name of called method
+     - Parameter methodParams: Parameters of called method
+     - Parameter completion: Callback which returns fee for operation or error
+*/
+    func getFeeForCallContractOperation(registrarNameOrId: String,
+                                        assetId: String,
+                                        amount: UInt?,
+                                        assetForFee: String?,
+                                        contratId: String,
+                                        methodName: String,
+                                        methodParams: [AbiTypeValueInputModel],
+                                        completion: @escaping Completion<AssetAmount>)
 }

@@ -39,6 +39,7 @@ public protocol ContractsFacade {
      - Parameter registrarNameOrId: Name or id of account that call the contract
      - Parameter password: Password from account for transaction signature
      - Parameter assetId: Asset of contract
+     - Parameter amount: Amount
      - Parameter contratId: Id of called contract
      - Parameter methodName: Name of called method
      - Parameter methodParams: Parameters of called method
