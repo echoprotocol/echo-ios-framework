@@ -236,6 +236,10 @@
 
 + (NSString *)decryptMessageWithPrivateKey:(NSData *)privateKey publicKey:(NSData *)publicKey nonce:(NSString *)nonce message:(NSData *)message {
     
+    if (message.length == 0) {
+        return [NSString new];
+    }
+    
     // Nonce bytes
     NSData *nonceData = [nonce dataUsingEncoding:NSUTF8StringEncoding];
     
