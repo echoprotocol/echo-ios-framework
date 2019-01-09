@@ -22,12 +22,17 @@ final public class FeeFacadeImp: FeeFacade, ECHOQueueble {
     let services: FeeFacadeServices
     let network: ECHONetwork
     let cryptoCore: CryptoCoreComponent
+    let abiCoderCore: AbiCoder
     
-    init(services: FeeFacadeServices, cryptoCore: CryptoCoreComponent, network: ECHONetwork) {
+    init(services: FeeFacadeServices,
+         cryptoCore: CryptoCoreComponent,
+         network: ECHONetwork,
+         abiCoderCore: AbiCoder) {
 
         self.services = services
         self.network = network
         self.cryptoCore = cryptoCore
+        self.abiCoderCore = abiCoderCore
         self.queues = [ECHOQueue]()
     }
     
@@ -37,6 +42,9 @@ final public class FeeFacadeImp: FeeFacade, ECHOQueueble {
         case memo
         case operation
         case fee
+        case registrarAccount
+        case receiverContract
+        case byteCode
     }
     
     public func getFeeForTransferOperation(fromNameOrId: String,
@@ -47,7 +55,7 @@ final public class FeeFacadeImp: FeeFacade, ECHOQueueble {
                                            message: String?,
                                            completion: @escaping Completion<AssetAmount>) {
         
-        // if we don't hace assetForFee, we use asset.
+        // if we don't have assetForFee, we use asset.
         let assetForFee = assetForFee ?? asset
         
         // Validate asset id
@@ -113,6 +121,73 @@ final public class FeeFacadeImp: FeeFacade, ECHOQueueble {
         feeQueue.setCompletionOperation(completionOperation)
     }
     
+    public func getFeeForCallContractOperation(registrarNameOrId: String,
+                                               assetId: String,
+                                               amount: UInt?,
+                                               assetForFee: String?,
+                                               contratId: String,
+                                               methodName: String,
+                                               methodParams: [AbiTypeValueInputModel],
+                                               completion: @escaping Completion<AssetAmount>) {
+        
+        // if we don't have assetForFee, we use asset.
+        let assetForFee = assetForFee ?? assetId
+        
+        // Validate asset id
+        do {
+            let validator = IdentifierValidator()
+            try validator.validateId(assetId, for: .asset)
+            try validator.validateId(assetForFee, for: .asset)
+            try validator.validateId(contratId, for: .contract)
+        } catch let error {
+            let echoError = (error as? ECHOError) ?? ECHOError.undefined
+            let result = Result<AssetAmount, ECHOError>(error: echoError)
+            completion(result)
+            return
+        }
+        
+        let callQueue = ECHOQueue()
+        addQueue(callQueue)
+        
+        // Accounts
+        let getAccountsNamesOrIdsWithKeys = GetAccountsNamesOrIdWithKeys([(registrarNameOrId, FeeResultsKeys.registrarAccount.rawValue)])
+        let getAccountsOperationInitParams = (callQueue,
+                                              services.databaseService,
+                                              getAccountsNamesOrIdsWithKeys)
+        let getAccountsOperation = GetAccountsQueueOperation<AssetAmount>(initParams: getAccountsOperationInitParams,
+                                                                          completion: completion)
+        
+        // ByteCode
+        let byteCodeOperation = createByteCodeOperation(callQueue, methodName, methodParams, completion)
+        
+        // Operation
+        callQueue.saveValue(Contract(id: contratId), forKey: FeeResultsKeys.receiverContract.rawValue)
+        let bildCreateContractOperation = createBildContractOperation(callQueue, amount ?? 0, assetId, assetForFee, completion)
+        
+        // RequiredFee
+        let getRequiredFeeOperationInitParams = (callQueue,
+                                                 services.databaseService,
+                                                 Asset(assetForFee),
+                                                 FeeResultsKeys.operation.rawValue,
+                                                 FeeResultsKeys.fee.rawValue)
+        let getRequiredFeeOperation = GetRequiredFeeQueueOperation<AssetAmount>(initParams: getRequiredFeeOperationInitParams,
+                                                                                completion: completion)
+        
+        // FeeCompletion
+        let feeCompletionOperation = createFeeComletionOperation(callQueue, completion)
+        
+        // Completion
+        let completionOperation = createCompletionOperation(queue: callQueue)
+        
+        callQueue.addOperation(getAccountsOperation)
+        callQueue.addOperation(byteCodeOperation)
+        callQueue.addOperation(bildCreateContractOperation)
+        callQueue.addOperation(getRequiredFeeOperation)
+        callQueue.addOperation(feeCompletionOperation)
+        
+        callQueue.setCompletionOperation(completionOperation)
+    }
+    
     fileprivate func createBildTransferOperation(_ queue: ECHOQueue,
                                                  _ amount: UInt,
                                                  _ asset: String,
@@ -156,5 +231,63 @@ final public class FeeFacadeImp: FeeFacade, ECHOQueueble {
         }
         
         return feeCompletionOperation
+    }
+    
+    fileprivate func createByteCodeOperation<T>(_ queue: ECHOQueue,
+                                                _ methodName: String,
+                                                _ methodParams: [AbiTypeValueInputModel],
+                                                _ completion: @escaping Completion<T>) -> Operation {
+        
+        let byteCodeOperation = BlockOperation()
+        
+        byteCodeOperation.addExecutionBlock { [weak byteCodeOperation, weak queue, weak self] in
+            
+            guard byteCodeOperation?.isCancelled == false else { return }
+            guard self != nil else { return }
+            
+            guard let hash = try? self?.abiCoderCore.getStringHash(funcName: methodName, param: methodParams) else {
+                
+                queue?.cancelAllOperations()
+                let result = Result<T, ECHOError>(error: ECHOError.abiCoding)
+                completion(result)
+                return
+            }
+            
+            queue?.saveValue(hash, forKey: FeeResultsKeys.byteCode.rawValue)
+        }
+        
+        return byteCodeOperation
+    }
+    
+    fileprivate func createBildContractOperation(_ queue: ECHOQueue,
+                                                 _ amount: UInt,
+                                                 _ assetId: String,
+                                                 _ assetForFee: String,
+                                                 _ completion: @escaping Completion<AssetAmount>) -> Operation {
+        
+        let contractOperation = BlockOperation()
+        
+        contractOperation.addExecutionBlock { [weak contractOperation, weak queue, weak self] in
+            
+            guard contractOperation?.isCancelled == false else { return }
+            guard self != nil else { return }
+            guard let account: Account = queue?.getValue(FeeResultsKeys.registrarAccount.rawValue) else { return }
+            guard let byteCode: String = queue?.getValue(FeeResultsKeys.byteCode.rawValue) else { return }
+            
+            let receive: Contract? = queue?.getValue(FeeResultsKeys.receiverContract.rawValue)
+            
+            let operation = ContractOperation(registrar: account,
+                                              asset: Asset(assetId),
+                                              value: amount,
+                                              gasPrice: 0,
+                                              gas: 11000000,
+                                              code: byteCode,
+                                              receiver: receive,
+                                              fee: AssetAmount(amount: 0, asset: Asset(assetForFee)))    
+            
+            queue?.saveValue(operation, forKey: FeeResultsKeys.operation.rawValue)
+        }
+        
+        return contractOperation
     }
 }
