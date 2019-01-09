@@ -40,18 +40,18 @@ public struct AssetOptions: ECHOCodable, Decodable {
         case blacklistMarkets = "blacklist_markets"
     }
     
-    let maxSupply: UInt
-    let marketFeePercent: Int
-    let maxMarketFee: UInt
-    let issuerPermissions: Int
-    let flags: Int
-    var coreExchangeRate = [Price]()
-    let description: String?
-    let whitelistAuthorities: [Account]
-    let blacklistAuthorities: [Account]
-    let whitelistMarkets: [Account]
-    let blacklistMarkets: [Account]
-    let extensions = Extensions()
+    public let maxSupply: UInt
+    public let marketFeePercent: Int
+    public let maxMarketFee: UInt
+    public let issuerPermissions: Int
+    public let flags: Int
+    public var coreExchangeRate = [Price]()
+    public let description: String?
+    public let whitelistAuthorities: [Account]
+    public let blacklistAuthorities: [Account]
+    public let whitelistMarkets: [Account]
+    public let blacklistMarkets: [Account]
+    public let extensions = Extensions()
     
     public init(maxSupply: UInt,
                 marketFeePercent: Int,

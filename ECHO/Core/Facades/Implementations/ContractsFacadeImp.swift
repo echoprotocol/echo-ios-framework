@@ -432,16 +432,16 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
             
             let receive: Contract? = queue?.getValue(ContractKeys.receiverContract.rawValue)
             
-            let operaion = ContractOperation(registrar: account,
-                                             asset: Asset(assetId),
-                                             value: amount,
-                                             gasPrice: 0,
-                                             gas: 11000000,
-                                             code: byteCode,
-                                             receiver: receive,
-                                             fee: AssetAmount(amount: 0, asset: Asset(assetForFee)))
+            let operation = ContractOperation(registrar: account,
+                                              asset: Asset(assetId),
+                                              value: amount,
+                                              gasPrice: 0,
+                                              gas: 11000000,
+                                              code: byteCode,
+                                              receiver: receive,
+                                              fee: AssetAmount(amount: 0, asset: Asset(assetForFee)))
             
-            queue?.saveValue(operaion, forKey: ContractKeys.operation.rawValue)
+            queue?.saveValue(operation, forKey: ContractKeys.operation.rawValue)
         }
         
         return contractOperation

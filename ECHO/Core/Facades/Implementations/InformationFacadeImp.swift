@@ -436,7 +436,12 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                 
                 if var operation = operation as? CreateAssetOperation {
                     let feeAsset = self?.findAssetsIn(assets, assetId: operation.fee.asset.id)
-                    let asset = self?.findAssetsIn(assets, assetId: operation.asset.id)
+                    
+                    var asset: Asset? = nil
+                    
+                    if let assetId = history[index].result[safe: 1] as? String {
+                        asset = self?.findAssetsIn(assets, assetId: assetId)
+                    }
                     operation.changeAssets(feeAsset: feeAsset, asset: asset)
                     historyItem.operation = operation
                 }
@@ -579,8 +584,9 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
             
             if let operation = operation as? CreateAssetOperation {
                 assetsIds.insert(operation.fee.asset.id)
-                assetsIds.insert(operation.asset.id)
-                return
+                if let assetId = $0.result[safe: 1] as? String {
+                    assetsIds.insert(assetId)
+                }
             }
             
             if let operation = operation as? IssueAssetOperation {
