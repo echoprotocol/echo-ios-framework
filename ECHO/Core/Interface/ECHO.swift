@@ -69,7 +69,10 @@ final public class ECHO: InterfaceFacades {
                                                    noticeDelegateHandler: noticeEventProxy)
         
         let feeServices = FeeFacadeServices(databaseService: databaseService)
-        feeFacade = FeeFacadeImp(services: feeServices, cryptoCore: settings.cryproComponent, network: settings.network)
+        feeFacade = FeeFacadeImp(services: feeServices,
+                                 cryptoCore: settings.cryproComponent,
+                                 network: settings.network,
+                                 abiCoderCore: settings.abiCoderComponent)
         
         let transactoinServices = TransactionFacadeServices(databaseService: databaseService, networkBroadcastService: networkBroadcastService)
         transactionFacade = TransactionFacadeImp(services: transactoinServices,
@@ -185,6 +188,25 @@ final public class ECHO: InterfaceFacades {
                                              assetForFee: assetForFee,
                                              message: message,
                                              completion: completion)
+    }
+    
+    public func getFeeForCallContractOperation(registrarNameOrId: String,
+                                               assetId: String,
+                                               amount: UInt?,
+                                               assetForFee: String?,
+                                               contratId: String,
+                                               methodName: String,
+                                               methodParams: [AbiTypeValueInputModel],
+                                               completion: @escaping Completion<AssetAmount>) {
+        
+        feeFacade.getFeeForCallContractOperation(registrarNameOrId: registrarNameOrId,
+                                                 assetId: assetId,
+                                                 amount: amount,
+                                                 assetForFee: assetForFee,
+                                                 contratId: contratId,
+                                                 methodName: methodName,
+                                                 methodParams: methodParams,
+                                                 completion: completion)
     }
     
     // MARK: TransactionFacade

@@ -492,6 +492,129 @@ class ECHOInterfaceTests: XCTestCase {
         }
     }
     
+    func testGetFeeForCallContract() {
+        
+        //arrange
+        echo = ECHO(settings: Settings(build: {
+            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+        }))
+        let exp = expectation(description: "Fee For Call Сontract Getting")
+        let registrarNameOrId = "nikitatest1"
+        let assetId = "1.3.0"
+        let contratId = "1.16.1880"
+        let methodName = "incrementCounter"
+        let params: [AbiTypeValueInputModel] = []
+
+        var fee: AssetAmount!
+        
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.getFeeForCallContractOperation(registrarNameOrId: registrarNameOrId,
+                                                     assetId: assetId,
+                                                     amount: nil,
+                                                     assetForFee: nil,
+                                                     contratId: contratId,
+                                                     methodName: methodName,
+                                                     methodParams: params,
+                                                     completion: { (result) in
+                switch result {
+                case .success(let aFee):
+                    fee = aFee
+                    exp.fulfill()
+                case .failure(let error):
+                    XCTFail("Fee for call contract getting failed \(error)")
+                }
+            })
+        }
+        
+        //assert
+        waitForExpectations(timeout: timeout) { error in
+            XCTAssertNotNil(fee)
+        }
+    }
+    
+    func testGetFeeForCallContractInAnotherAsset() {
+        
+        //arrange
+        echo = ECHO(settings: Settings(build: {
+            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+        }))
+        let exp = expectation(description: "Fee For Call Сontract Getting In AnotherAsset")
+        let registrarNameOrId = "nikitatest1"
+        let assetId = "1.3.1"
+        let contratId = "1.16.1880"
+        let methodName = "incrementCounter"
+        let params: [AbiTypeValueInputModel] = []
+        
+        var fee: AssetAmount!
+        
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.getFeeForCallContractOperation(registrarNameOrId: registrarNameOrId,
+                                                     assetId: assetId,
+                                                     amount: nil,
+                                                     assetForFee: nil,
+                                                     contratId: contratId,
+                                                     methodName: methodName,
+                                                     methodParams: params,
+                                                     completion: { (result) in
+                switch result {
+                case .success(let aFee):
+                    fee = aFee
+                    exp.fulfill()
+                case .failure(let error):
+                    XCTFail("Fee for call contract getting failed \(error)")
+                }
+            })
+        }
+        
+        //assert
+        waitForExpectations(timeout: timeout) { error in
+            XCTAssertNotNil(fee)
+        }
+    }
+    
+    func testGetFeeForCallContractFailed() {
+        
+        //arrange
+        echo = ECHO(settings: Settings(build: {
+            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+        }))
+        let exp = expectation(description: "Fee For Call Сontract Getting Failed")
+        let registrarNameOrId = "dima1 new account unreserved"
+        let assetId = "1.3.0"
+        let contratId = "1.16.1880"
+        let methodName = "incrementCounter"
+        let params: [AbiTypeValueInputModel] = []
+        
+        var userError: Error!
+        
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.getFeeForCallContractOperation(registrarNameOrId: registrarNameOrId,
+                                                     assetId: assetId,
+                                                     amount: nil,
+                                                     assetForFee: nil,
+                                                     contratId: contratId,
+                                                     methodName: methodName,
+                                                     methodParams: params,
+                                                     completion: { (result) in
+                switch result {
+                case .success(_):
+                    XCTFail("Getting fee for transfer with undefining user must fail")
+                case .failure(let error):
+                    userError = error
+                    exp.fulfill()
+                }
+            })
+        }
+        
+        //assert
+        waitForExpectations(timeout: timeout) { error in
+            XCTAssertNotNil(userError)
+        }
+    }
+    
     func testTransfer() {
         
         //arrange
