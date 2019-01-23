@@ -85,7 +85,7 @@ final class GetMemoQueueOperation<T>: Operation where T: Any {
         let memo = Memo(source: Address(fromMemoKeyString, data: fromPublicKey),
                         destination: Address(toMemoKeyString, data: toPublicKey),
                         nonce: nonce,
-                        byteMessage: byteMessage)
+                        byteMessage: byteMessage.hex)
         
         queue?.saveValue(memo, forKey: saveKey)
     }

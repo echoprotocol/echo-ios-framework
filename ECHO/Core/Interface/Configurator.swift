@@ -9,7 +9,11 @@
 /**
      A class that configures the modules used and has the default implementation.
  */
+
+import Foundation
+
 final public class Configurator {
+    public var workingQueue: DispatchQueue = DispatchQueue.main
     public var socketMessenger: SocketMessenger = SocketMessengerImp()
     public var cryproComponent: CryptoCoreComponent = CryptoCoreImp()
     public var abiCoderComponent: AbiCoder = AbiCoderImp(argumentCoder: AbiArgumentCoderImp())

@@ -26,14 +26,14 @@ public struct Memo: ECHOCodable, Decodable {
     public var source: Address?
     public var destination: Address?
     public let nonce: UInt
-    public var byteMessage: Data?
+    public var byteMessage: String?
     public var plaintextMessage: String?
     
     init() {
         nonce = 0
     }
     
-    init(source: Address?, destination: Address?, nonce: UInt, byteMessage: Data?) {
+    init(source: Address?, destination: Address?, nonce: UInt, byteMessage: String?) {
         
         self.source = source
         self.destination = destination
@@ -59,9 +59,9 @@ public struct Memo: ECHOCodable, Decodable {
         }
         
         if let byteMessageString = try? values.decode(String.self, forKey: .message) {
-            byteMessage = Data(hex: byteMessageString)
+            byteMessage = byteMessageString
         } else {
-            byteMessage = try values.decode(Data.self, forKey: .message)
+            byteMessage = (try values.decode(Data.self, forKey: .message)).hex
         }
     }
     
@@ -79,7 +79,7 @@ public struct Memo: ECHOCodable, Decodable {
             data.append(optional: destination.toData())
             data.append(optional: nonceToData(nonce))
             data.append(optional: Data.fromUIntLikeUnsignedByteArray(UInt(byteMessage.count)))
-            data.append(optional: byteMessage)
+            data.append(optional: Data(hex: byteMessage))
             
             return data
         }
@@ -91,8 +91,8 @@ public struct Memo: ECHOCodable, Decodable {
             data.append(optional: Data.fromInt8(0))
             data.append(optional: nonceToData(0))
             data.append(optional: Data.fromUIntLikeUnsignedByteArray(UInt(byteMessage.count)))
-            data.append(optional: byteMessage)
-            
+            data.append(optional: Data(hex: byteMessage))
+
             return data
         }
         
@@ -114,7 +114,7 @@ public struct Memo: ECHOCodable, Decodable {
         let dictionary: [AnyHashable: Any?] = [MemoCodingKeys.fromAccount.rawValue: source?.toJSON(),
                                                MemoCodingKeys.toAccount.rawValue: destination?.toJSON(),
                                                MemoCodingKeys.nonce.rawValue: nonce,
-                                               MemoCodingKeys.message.rawValue: byteMessage?.hex]
+                                               MemoCodingKeys.message.rawValue: byteMessage]
         
         return dictionary
     }

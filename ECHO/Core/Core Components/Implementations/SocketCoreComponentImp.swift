@@ -17,8 +17,10 @@ final class SocketCoreComponentImp: SocketCoreComponent {
     var currentOperationId: Int = 0
     let noticeUpdateHandler: NoticeActionHandler?
     
-    required init(messanger: SocketMessenger, url: String, noticeUpdateHandler: NoticeActionHandler?) {
+    required init(messanger: SocketMessenger, url: String,
+                  noticeUpdateHandler: NoticeActionHandler?, socketQueue: DispatchQueue) {
         self.messenger = messanger
+        self.messenger.callbackQueue = socketQueue
         self.url = url
         self.noticeUpdateHandler = noticeUpdateHandler
     }

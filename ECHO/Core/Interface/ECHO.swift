@@ -40,7 +40,8 @@ final public class ECHO: InterfaceFacades {
         let noticeEventProxy = NoticeEventProxyImp()
         let socketCore = SocketCoreComponentImp(messanger: settings.socketMessenger,
                                                 url: settings.network.url,
-                                                noticeUpdateHandler: noticeEventProxy)
+                                                noticeUpdateHandler: noticeEventProxy,
+                                                socketQueue: settings.workingQueue)
         
         let databaseService = DatabaseApiServiceImp(socketCore: socketCore)
         let cryptoService = CryptoApiServiceImp(socketCore: socketCore)

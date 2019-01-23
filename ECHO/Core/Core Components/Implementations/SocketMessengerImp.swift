@@ -14,13 +14,14 @@ import Starscream
  */
 final class SocketMessengerImp: SocketMessenger {
     
+    var callbackQueue: DispatchQueue = DispatchQueue.main
     var state: SocketConnectionState = .notConnected
     var onConnect: (() -> ())?
     var onReconnect: (() -> ())?
     var onDisconnect: (() -> ())?
     var onFailedConnect: (() -> ())?
     var onText: ((String) -> ())?
-    
+
     var timeout: Double = 3
     
     var socket: WebSocket?
@@ -56,6 +57,7 @@ final class SocketMessengerImp: SocketMessenger {
                 let socket = WebSocket(url: url)
                 strongSelf.socket = socket
                 strongSelf.state = .connecting
+                socket.callbackQueue = strongSelf.callbackQueue
                 
                 socket.onConnect = { [weak self] in
                     self?.state = .connected
