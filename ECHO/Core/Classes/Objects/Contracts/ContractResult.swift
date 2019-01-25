@@ -16,8 +16,8 @@ public struct ContractResult: Decodable {
         case trReceipt = "tr_receipt"
     }
     
-    let execRes: ExecRes
-    let trReceipt: TrReceipt
+    public let execRes: ExecRes
+    public let trReceipt: TrReceipt
     
     public init(from decoder: Decoder) throws {
         
@@ -42,13 +42,13 @@ public struct ExecRes: Decodable {
         case gasForDeposit = "gas_for_deposit"
     }
     
-    let excepted: String?
-    let newAddress: String?
-    let output: String?
-    let codeDeposit: String?
-    let gasRefunded: String?
-    let depositSize: Int?
-    let gasForDeposit: String?
+    public let excepted: String?
+    public let newAddress: String?
+    public let output: String?
+    public let codeDeposit: String?
+    public let gasRefunded: String?
+    public let depositSize: Int?
+    public let gasForDeposit: String?
     
     public init(from decoder: Decoder) throws {
         
@@ -75,10 +75,10 @@ public struct TrReceipt: Decodable {
         case log
     }
     
-    let statusCode: String?
-    let gasUsed: String?
-    let bloom: String?
-    let log: [String]?
+    public let statusCode: String?
+    public let gasUsed: String?
+    public let bloom: String?
+    public let log: [String]?
     
     public init(from decoder: Decoder) throws {
         
