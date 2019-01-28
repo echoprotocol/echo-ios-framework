@@ -22,6 +22,7 @@ enum API {
     case crypto
     case networkBroadcast
     case networkNodes
+    case registration
 }
 
 /**
@@ -47,4 +48,5 @@ public struct APIOption: OptionSet {
     static public let crypto  = APIOption(rawValue: 1 << 2)
     static public let networkBroadcast  = APIOption(rawValue: 1 << 3)
     static public let networkNodes  = APIOption(rawValue: 1 << 4)
+    static public let registration  = APIOption(rawValue: 1 << 5)
 }

@@ -57,7 +57,10 @@ final public class AuthentificationFacadeImp: AuthentificationFacade, ECHOQueueb
     
     fileprivate func checkAccount(account: UserAccount, name: String, password: String) -> Bool {
         
-        guard let keychain = ECHOKeychain(name: name, password: password, type: .owner, core: cryptoCore)  else {
+        guard let keychain = ECHOKeychainSecp256k1(name: name,
+                                                   password: password,
+                                                   type: .owner,
+                                                   core: cryptoCore)  else {
             return false
         }
         
@@ -204,6 +207,7 @@ final public class AuthentificationFacadeImp: AuthentificationFacade, ECHOQueueb
             let memoAddressString = network.prefix.rawValue + addressContainer.memoKeychain.publicAddress()
             let activeAddressString = network.prefix.rawValue + addressContainer.activeKeychain.publicAddress()
             let ownerAddressString = network.prefix.rawValue + addressContainer.ownerKeychain.publicAddress()
+            let echorandKey = addressContainer.echorandKeychain.publicKey().hex
             
             let memoAddress = Address(memoAddressString, data: addressContainer.memoKeychain.publicKey())
             let activeAddress = Address(activeAddressString, data: addressContainer.activeKeychain.publicKey())
@@ -214,13 +218,26 @@ final public class AuthentificationFacadeImp: AuthentificationFacade, ECHOQueueb
             
             let activeAuthority = Authority(weight: 1, keyAuth: [activeKeyAddressAuth], accountAuth: [])
             let ownerAuthority = Authority(weight: 1, keyAuth: [ownerKeyAddressAuth], accountAuth: [])
-            let options = AccountOptions(memo: memoAddress, votingAccount: nil)
+            
+            var delegatingAccount: Account?
+            if let delegatingAccountId = account.options?.delegatingAccount {
+                delegatingAccount = Account(delegatingAccountId)
+            }
+            var votingAccount: Account?
+            if let votingAccountId = account.options?.votingAccount {
+                votingAccount = Account(votingAccountId)
+            }
+            
+            let options = AccountOptions(memo: memoAddress,
+                                         votingAccount: votingAccount,
+                                         delegatingAccount: delegatingAccount)
             
             let fee = AssetAmount(amount: 0, asset: Asset(Settings.defaultAsset))
             
             let operation = AccountUpdateOperation(account: account,
                                                    owner: ownerAuthority,
                                                    active: activeAuthority,
+                                                   edKey: echorandKey,
                                                    options: options,
                                                    fee: fee)
             

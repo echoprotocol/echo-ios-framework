@@ -12,6 +12,17 @@
 public protocol InformationFacade {
     
 /**
+     Register new account in blockchain
+     
+     - Parameter name: The name of new account
+     - Parameter password: The password wich will be used for create private keys
+     - Parameter completion: Callback which returns bool result or error
+ */
+    func registerAccount(name: String,
+                         password: String,
+                         completion: @escaping Completion<Bool>)
+    
+/**
      Account function
      
      - Parameter nameOrID: Name or id of the account

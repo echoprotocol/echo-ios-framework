@@ -132,6 +132,8 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
                                assetId: String,
                                assetForFee: String?,
                                byteCode: String,
+                               supportedAssetId: String?,
+                               ethAccuracy: Bool,
                                parameters: [AbiTypeValueInputModel]?,
                                completion: @escaping Completion<Bool>,
                                noticeHandler: NoticeHandler?) {
@@ -148,6 +150,8 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
                        assetId: assetId,
                        assetForFee: assetForFee,
                        byteCode: byteCode,
+                       supportedAssetId: supportedAssetId,
+                       ethAccuracy: ethAccuracy,
                        completion: completion,
                        noticeHandler: noticeHandler)
     }
@@ -195,7 +199,11 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
         
         // Operation
         callQueue.saveValue(Contract(id: contratId), forKey: ContractKeys.receiverContract.rawValue)
-        let bildCreateContractOperation = createBildContractOperation(callQueue, amount ?? 0, assetId, assetForFee, completion)
+        let bildCreateContractOperation = createBildCallContractOperation(callQueue,
+                                                                          amount ?? 0,
+                                                                          assetId,
+                                                                          assetForFee,
+                                                                          completion)
         
         // RequiredFee
         let getRequiredFeeOperationInitParams = (callQueue,
@@ -317,6 +325,8 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
                                     assetId: String,
                                     assetForFee: String?,
                                     byteCode: String,
+                                    supportedAssetId: String?,
+                                    ethAccuracy: Bool,
                                     completion: @escaping Completion<Bool>,
                                     noticeHandler: NoticeHandler?) {
         
@@ -348,7 +358,13 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
         
         // Operation
         createQueue.saveValue(byteCode, forKey: ContractKeys.byteCode.rawValue)
-        let bildCreateContractOperation = createBildContractOperation(createQueue, 0, assetId, assetForFee, completion)
+        let bildCreateContractOperation = createBildCreateContractOperation(createQueue,
+                                                                            0,
+                                                                            assetId,
+                                                                            assetForFee,
+                                                                            supportedAssetId,
+                                                                            ethAccuracy,
+                                                                            completion)
         
         // RequiredFee
         let getRequiredFeeOperationInitParams = (createQueue,
@@ -415,11 +431,43 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
         createQueue.setCompletionOperation(completionOperation)
     }
     
-    fileprivate func createBildContractOperation(_ queue: ECHOQueue,
-                                                 _ amount: UInt,
-                                                 _ assetId: String,
-                                                 _ assetForFee: String,
-                                                 _ completion: @escaping Completion<Bool>) -> Operation {
+    fileprivate func createBildCallContractOperation(_ queue: ECHOQueue,
+                                                     _ amount: UInt,
+                                                     _ assetId: String,
+                                                     _ assetForFee: String,
+                                                     _ completion: @escaping Completion<Bool>) -> Operation {
+        
+        let contractOperation = BlockOperation()
+        
+        contractOperation.addExecutionBlock { [weak contractOperation, weak queue, weak self] in
+            
+            guard contractOperation?.isCancelled == false else { return }
+            guard self != nil else { return }
+            guard let account: Account = queue?.getValue(ContractKeys.registrarAccount.rawValue) else { return }
+            guard let byteCode: String = queue?.getValue(ContractKeys.byteCode.rawValue) else { return }
+            guard let receiver: Contract = queue?.getValue(ContractKeys.receiverContract.rawValue) else { return }
+            
+            let operation = CallContractOperation(registrar: account,
+                                                  value: AssetAmount(amount: amount, asset: Asset(assetId)),
+                                                  gasPrice: 0,
+                                                  gas: 11000000,
+                                                  code: byteCode,
+                                                  callee: receiver,
+                                                  fee: AssetAmount(amount: 0, asset: Asset(assetForFee)))
+            
+            queue?.saveValue(operation, forKey: ContractKeys.operation.rawValue)
+        }
+        
+        return contractOperation
+    }
+    
+    fileprivate func createBildCreateContractOperation(_ queue: ECHOQueue,
+                                                       _ amount: UInt,
+                                                       _ assetId: String,
+                                                       _ assetForFee: String,
+                                                       _ supportedAssetId: String?,
+                                                       _ ethAccuracy: Bool,
+                                                       _ completion: @escaping Completion<Bool>) -> Operation {
         
         let contractOperation = BlockOperation()
         
@@ -430,16 +478,19 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
             guard let account: Account = queue?.getValue(ContractKeys.registrarAccount.rawValue) else { return }
             guard let byteCode: String = queue?.getValue(ContractKeys.byteCode.rawValue) else { return }
             
-            let receive: Contract? = queue?.getValue(ContractKeys.receiverContract.rawValue)
+            var supportedAsset: Asset?
+            if let supportedAssetId = supportedAssetId {
+                supportedAsset = Asset(supportedAssetId)
+            }
             
-            let operation = ContractOperation(registrar: account,
-                                              asset: Asset(assetId),
-                                              value: amount,
-                                              gasPrice: 0,
-                                              gas: 11000000,
-                                              code: byteCode,
-                                              receiver: receive,
-                                              fee: AssetAmount(amount: 0, asset: Asset(assetForFee)))
+            let operation = CreateContractOperation(registrar: account,
+                                                    value: AssetAmount(amount: amount, asset: Asset(assetId)),
+                                                    gasPrice: 0,
+                                                    gas: 11000000,
+                                                    code: byteCode,
+                                                    fee: AssetAmount(amount: 0, asset: Asset(assetForFee)),
+                                                    supportedAsset: supportedAsset,
+                                                    ethAccuracy: ethAccuracy)
             
             queue?.saveValue(operation, forKey: ContractKeys.operation.rawValue)
         }

@@ -29,6 +29,10 @@ final public class CryptoCoreImp: CryptoCoreComponent {
         return try Crypto.sign(hash, privateKey: privateKey)
     }
     
+    public func signByEd25519(_ hash: Data, privateKey: Data) -> Data {
+        return Crypto.signByEd25519(hash, privateKey: privateKey)
+    }
+    
     public func encryptMessage(privateKey: Data, publicKey: Data, nonce: String, message: String) -> Data {
         return Crypto.encryptMessage(privateKey: privateKey, publicKey: publicKey, nonce: nonce, message: message)
     }
@@ -39,5 +43,9 @@ final public class CryptoCoreImp: CryptoCoreComponent {
     
     public func getPublicKeyFromAddress(_ address: String, networkPrefix: String) -> Data {
         return Crypto.getPublicKeyFromAddress(address, networkPrefix: networkPrefix)
+    }
+    
+    public func generatePublicEd25519Key(withPrivateKey privateKeyData: Data) -> Data {
+        return Crypto.generatePublicEd25519Key(data: privateKeyData)
     }
 }

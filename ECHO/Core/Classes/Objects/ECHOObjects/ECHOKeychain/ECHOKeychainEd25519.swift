@@ -1,15 +1,15 @@
 //
-//  ECHOKeychain.swift
+//  ECHOKeychainEd25519.swift
 //  ECHO
 //
-//  Created by Fedorenko Nikita on 18.07.2018.
-//  Copyright © 2018 PixelPlex. All rights reserved.
+//  Created by Vladimir Sharaev on 15/01/2019.
+//  Copyright © 2019 PixelPlex. All rights reserved.
 //
 
 /**
-    Container which create private key from name, password, type
+ Container which create private key by Ed25519 curve from name, password, type
  */
-final public class ECHOKeychain {
+final public class ECHOKeychainEd25519: ECHOKeychain {
     
     public let raw: Data
     public let core: CryptoCoreComponent
@@ -22,10 +22,10 @@ final public class ECHOKeychain {
     public convenience init?(name: String, password: String, type: KeychainType, core: CryptoCoreComponent) {
         
         let seed = "\(name)" + "\(type.rawValue)" + "\(password)"
-
+        
         let seedData = seed.data(using: .utf8)
             .flatMap { core.sha256($0) }
-
+        
         if let seedData = seedData {
             self.init(seed: seedData, core: core)
         } else {
@@ -35,16 +35,12 @@ final public class ECHOKeychain {
     
     public func publicKey() -> Data {
         
-        return core.generatePublicKey(withPrivateKey: raw, compression: true)
+        return core.generatePublicEd25519Key(withPrivateKey: raw)
     }
     
     public func publicAddress() -> String {
         
-        var publicKey = self.publicKey()
-        
-        let checkSum = core.ripemd160(publicKey).prefix(4)
-        publicKey.append(checkSum)
-        
+        let publicKey = self.publicKey()
         return Base58.encode(publicKey)
     }
 }

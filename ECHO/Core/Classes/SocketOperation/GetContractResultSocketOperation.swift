@@ -37,7 +37,12 @@ struct GetContractResultSocketOperation: SocketOperation {
             case .result(let result):
                 
                 switch result {
-                case .dictionary(let dict):
+                case .array(let arr):
+                    let lastElement = arr.last
+                    guard let dict = lastElement as? [String: Any] else {
+                        throw ECHOError.encodableMapping
+                    }
+                    
                     let data = try JSONSerialization.data(withJSONObject: dict, options: [])
                     let contractResult = try JSONDecoder().decode(ContractResult.self, from: data)
                     let result = Result<ContractResult, ECHOError>(value: contractResult)

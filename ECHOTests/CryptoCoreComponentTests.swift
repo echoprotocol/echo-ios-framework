@@ -94,4 +94,28 @@ class CryptoCoreComponentTests: XCTestCase {
         //assert
         XCTAssertEqual(message, decryptedMessage)
     }
+    
+    func testEd25519PublicKeyGeneration() {
+        
+        //arrange
+        let privateKeyData = Data(hex: "c5aa8df43f9f837bedb7442f31dcb7b166d38535076f094b85ce3a2e0b4458f7")!
+        
+        //act
+        let publicKey = cryptoCore.generatePublicEd25519Key(withPrivateKey: privateKeyData)
+        
+        //assert
+        XCTAssertEqual(publicKey.hex, "a08fd46ee534e62d08e577a84a28601903d424bdf288be45644ece293672943e")
+    }
+    
+    func testEd25519SignText() {
+
+        //arrange
+        let data = Data(hex: "746573746d7367")!
+        let privateKeyData = Data(hex: "c5aa8df43f9f837bedb7442f31dcb7b166d38535076f094b85ce3a2e0b4458f7")!
+
+        //act
+        let signature = cryptoCore.signByEd25519(data, privateKey: privateKeyData)
+        //assert
+        XCTAssertEqual(signature.hex, "f457ae1fd4f4ff52ea09f807bdda0eddfeb05467c2c24df1009b9d63ce6dab4fd391395be4d41540f582d937c4accea360d2be13ff7e17a084d1016aeb56f308")
+    }
 }

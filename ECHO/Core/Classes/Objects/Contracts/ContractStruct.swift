@@ -8,20 +8,17 @@
 public struct ContractStruct: Decodable {
     
     private enum ContractStructCodingKeys: String, CodingKey {
-        case contractInfo = "contract_info"
         case code
         case storage
     }
     
-    public let contractInfo: ContractInfo
     public let code: String
-    public let storage: [[String]]?
+    public let storage: [String: [String]]?
     
     public init(from decoder: Decoder) throws {
         
         let values = try decoder.container(keyedBy: ContractStructCodingKeys.self)
-        contractInfo = try values.decode(ContractInfo.self, forKey: .contractInfo)
         code = try values.decode(String.self, forKey: .code)
-        storage = try? values.decode([[String]].self, forKey: .storage)
+        storage = try? values.decode([String: [String]].self, forKey: .storage)
     }
 }

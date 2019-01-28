@@ -80,10 +80,10 @@ final class GetTransactionQueueOperation<T>: Operation where T: Any {
         guard let name = account.name else { return }
         guard let cryptoCore = cryptoCore else { return }
         
-        guard let keyChain = ECHOKeychain(name: name,
-                                          password: password,
-                                          type: keychainType,
-                                          core: cryptoCore) else { return }
+        guard let keyChain = ECHOKeychainSecp256k1(name: name,
+                                                   password: password,
+                                                   type: keychainType,
+                                                   core: cryptoCore) else { return }
         
         do {
             let generator = SignaturesGenerator()
@@ -102,7 +102,10 @@ final class GetTransactionQueueOperation<T>: Operation where T: Any {
         guard let name = name else { return false }
         guard let cryptoCore = cryptoCore else { return false }
         
-        guard let keychain = ECHOKeychain(name: name, password: password, type: .owner, core: cryptoCore)  else {
+        guard let keychain = ECHOKeychainSecp256k1(name: name,
+                                                   password: password,
+                                                   type: .owner,
+                                                   core: cryptoCore)  else {
             return false
         }
         

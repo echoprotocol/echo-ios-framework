@@ -62,10 +62,10 @@ final class GetMemoQueueOperation<T>: Operation where T: Any {
             return
         }
         
-        guard let keyChain = ECHOKeychain(name: name,
-                                          password: password,
-                                          type: KeychainType.memo,
-                                          core: cryptoCore) else {
+        guard let keyChain = ECHOKeychainSecp256k1(name: name,
+                                                   password: password,
+                                                   type: KeychainType.memo,
+                                                   core: cryptoCore) else {
                 
                 queue?.cancelAllOperations()
                 let result = Result<T, ECHOError>(error: ECHOError.invalidCredentials)

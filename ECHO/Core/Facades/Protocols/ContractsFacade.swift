@@ -21,6 +21,8 @@ public protocol ContractsFacade {
      - Parameter password: Password from account for transaction signature
      - Parameter assetId: Asset of contract
      - Parameter byteCode: Bytecode of the created contract
+     - Parameter supportedAssetId: If you dont want to link the contract with the specified asset
+     - Parameter ethAccuracy: If true all balances passing to contract with ethereum accuracy
      - Parameter parameters: Parameters of constructor 
      - Parameter completion: Callback which returns an [Bool](Bool) result of creation or error
      */
@@ -29,6 +31,8 @@ public protocol ContractsFacade {
                         assetId: String,
                         assetForFee: String?,
                         byteCode: String,
+                        supportedAssetId: String?,
+                        ethAccuracy: Bool,
                         parameters: [AbiTypeValueInputModel]?,
                         completion: @escaping Completion<Bool>,
                         noticeHandler: NoticeHandler?)

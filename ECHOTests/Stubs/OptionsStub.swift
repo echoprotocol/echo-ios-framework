@@ -8,13 +8,18 @@
 
 struct OptionsStub {
     let initialJson = """
-                    {
-                      "num_committee": 0,
-                      "votes": [],
-                      "extensions": [],
-                      "voting_account": "1.2.5",
-                      "memo_key": "TEST7okvxowDi4pdvJt1t8ksPZFwaemAcFtP8K7cDPcsVnjDbHa1FW",
-                      "num_witness": 0
-                    }
+                                {
+                        "memo_key": "ECHO7iMzBkAxXJkKy8vMMZ3JZmXHJ7jBz81rNxy1jkwyYXMNJkfVVY",
+                        "voting_account": "1.2.5",
+                        "delegating_account": "1.2.12",
+                        "num_witness": 0,
+                        "num_committee": 0,
+                        "votes": [
+                          
+                        ],
+                        "extensions": [
+                          
+                        ]
+                      }
                     """
 }

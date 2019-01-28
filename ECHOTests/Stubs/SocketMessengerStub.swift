@@ -26,6 +26,7 @@ enum OperationsState {
 
 final class SocketMessengerStub: SocketMessenger {
     
+    var callbackQueue: DispatchQueue
     let operationState: OperationsState
     var connectedUrl: String?
     
@@ -34,6 +35,7 @@ final class SocketMessengerStub: SocketMessenger {
     var revealCryptoApi = false
     var revealNetNodesApi = false
     var revealNetBroadcastsApi = false
+    var registrationApi = false
     var login = false
     
     var connectionCount = 0
@@ -47,6 +49,7 @@ final class SocketMessengerStub: SocketMessenger {
     
     init(state: OperationsState = .default) {
         operationState = state
+        callbackQueue = DispatchQueue(label: "SocketMessengerStub")
     }
     
     func connect(toUrl: String) {
@@ -100,15 +103,16 @@ final class SocketMessengerStub: SocketMessenger {
     }
     
     func makeUserAccountTransferChangeEvent() {
-        onText?(ChangePasswordEventNotificationStub.response1)
-        onText?(ChangePasswordEventNotificationStub.response2)
-        onText?(ChangePasswordEventNotificationStub.response3)
-    }
-    
-    func makeUserAccountChangePasswordEvent() {
         onText?(TransactionEventEventNotificationStub.response1)
         onText?(TransactionEventEventNotificationStub.response2)
         onText?(TransactionEventEventNotificationStub.response3)
+    }
+    
+    func makeUserAccountChangePasswordEvent() {
+        onText?(ChangePasswordEventNotificationStub.response1)
+        onText?(ChangePasswordEventNotificationStub.response2)
+        onText?(ChangePasswordEventNotificationStub.response3)
+        onText?(ChangePasswordEventNotificationStub.response4)
     }
     
     fileprivate func getConstantResponse(request: String) -> String? {
@@ -128,6 +132,9 @@ final class SocketMessengerStub: SocketMessenger {
         case NetworkBroadcastAPIRevealSocketRequestStub.request:
             revealNetBroadcastsApi = true
             return NetworkBroadcastAPIRevealSocketRequestStub.response
+        case RegistrationAPIRevealSocketRequestStub.request:
+            registrationApi = true
+            return RegistrationAPIRevealSocketRequestStub.response
         case NetworkNodesAPIRevealSocketRequestStub.request:
             revealNetNodesApi = true
             return NetworkNodesAPIRevealSocketRequestStub.response

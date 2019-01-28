@@ -18,14 +18,16 @@ class AddressKeysContainerTests: XCTestCase {
         let cryptoCore = CryptoCoreImp()
 
         //act
-        let keychainOwner = ECHOKeychain(name: name, password: password, type: .owner, core: cryptoCore)
-        let keychainActive = ECHOKeychain(name: name, password: password, type: .active, core: cryptoCore)
-        let keychainMemo = ECHOKeychain(name: name, password: password, type: .memo, core: cryptoCore)
+        let keychainOwner = ECHOKeychainSecp256k1(name: name, password: password, type: .owner, core: cryptoCore)
+        let keychainActive = ECHOKeychainSecp256k1(name: name, password: password, type: .active, core: cryptoCore)
+        let keychainMemo = ECHOKeychainSecp256k1(name: name, password: password, type: .memo, core: cryptoCore)
+        let keychainEchorand = ECHOKeychainEd25519(name: name, password: password, type: .echorand, core: cryptoCore)
         let container = AddressKeysContainer(login: name, password: password, core: cryptoCore)
         
         //assert
         XCTAssertEqual(keychainOwner?.publicAddress(), container?.ownerKeychain.publicAddress())
         XCTAssertEqual(keychainActive?.publicAddress(), container?.activeKeychain.publicAddress())
         XCTAssertEqual(keychainMemo?.publicAddress(), container?.memoKeychain.publicAddress())
+        XCTAssertEqual(keychainEchorand?.publicAddress(), container?.echorandKeychain.publicAddress())
     }    
 }
