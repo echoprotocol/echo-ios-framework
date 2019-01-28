@@ -12,6 +12,7 @@ struct RevealFacadeServices {
     var historyService: ApiIdentifireHolder
     var networkBroadcastService: ApiIdentifireHolder
     var networkNodesService: ApiIdentifireHolder
+    var registrationService: ApiIdentifireHolder
 }
 
 /**
@@ -102,6 +103,10 @@ final public class RevealFacadeImp: RevealApiFacade {
         if options.contains(.networkNodes) {
             registerNetworkNodesApi(group: dispatchGroup)
         }
+        
+        if options.contains(.registration) {
+            registerRegistrationApi(group: dispatchGroup)
+        }
     }
     
     fileprivate func registerCryptoApi(group: DispatchGroup) {
@@ -191,6 +196,25 @@ final public class RevealFacadeImp: RevealApiFacade {
             switch result {
             case .success(let id):
                 self?.services.networkNodesService.apiIdentifire = id
+            case .failure(let error):
+                self?.error = error
+            }
+            self?.dispatchGroup.leave()
+        }
+        
+        socketCore.send(operation: operation)
+    }
+    
+    fileprivate func registerRegistrationApi(group: DispatchGroup) {
+        group.enter()
+        
+        let operation = AccessSocketOperation(type: .registration,
+                                              method: .call,
+                                              operationId: socketCore.nextOperationId()) { [weak self] (result) in
+                                                
+            switch result {
+            case .success(let id):
+                self?.services.registrationService.apiIdentifire = id
             case .failure(let error):
                 self?.error = error
             }

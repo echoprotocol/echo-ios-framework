@@ -13,6 +13,7 @@ enum AccessSocketOperationType: String {
     case networkNodes = "network_node"
     case history
     case crypto
+    case registration
 }
 
 /**
@@ -49,7 +50,7 @@ struct AccessSocketOperation: SocketOperation {
         switch type {
         case .login:
             return ["", ""]
-        case .crypto, .history, .database, .networkBroadcast, .networkNodes:
+        case .crypto, .history, .database, .networkBroadcast, .networkNodes, .registration:
             return []
         }
     }

@@ -24,7 +24,7 @@ class SocketCoreComponentTests: XCTestCase {
         let fakeUrl = "fakeUrl"
         let messenger = SocketMessengerStub()
         echo = ECHO(settings: Settings(build: {
-                $0.network = ECHONetwork(url: fakeUrl, prefix: ECHONetworkPrefix.echo)
+            $0.network = ECHONetwork(url: fakeUrl, prefix: ECHONetworkPrefix.echo, echorandPrefix: .det)
                 $0.socketMessenger = messenger
             }))
         let exp = expectation(description: "Start with url \(fakeUrl)")
@@ -66,7 +66,7 @@ class SocketCoreComponentTests: XCTestCase {
         let messenger = SocketMessengerStub(state: .reveal)
         echo = ECHO(settings: Settings(build: {
             $0.socketMessenger = messenger
-            $0.apiOptions = [.database, .networkBroadcast]
+            $0.apiOptions = [.database, .networkBroadcast, .registration]
         }))
         let exp = expectation(description: "Revealing API")
 
@@ -82,6 +82,7 @@ class SocketCoreComponentTests: XCTestCase {
             XCTAssertEqual(messenger.revealNetBroadcastsApi, true)
             XCTAssertEqual(messenger.revealHistoryApi, false)
             XCTAssertEqual(messenger.revealNetNodesApi, false)
+            XCTAssertEqual(messenger.registrationApi, false)
         }
     }
     
@@ -118,7 +119,7 @@ class SocketCoreComponentTests: XCTestCase {
         }))
         let exp = expectation(description: "Account Getting")
         var account: Account!
-        let userName = "dima1"
+        let userName = "vsharaev"
         
         //act
         echo.start { [unowned self] (result) in
@@ -147,9 +148,9 @@ class SocketCoreComponentTests: XCTestCase {
             $0.socketMessenger = messenger
         }))
         let exp = expectation(description: "Transfer")
-        let password = "P5JDUR7rSa9QXtYp9CF9HhnDRdPYz9mVpeiU812r2p5WVr8UcREY"
-        let fromUser = "nikita1994"
-        let toUser = "dima1"
+        let password = "vsharaev1"
+        let fromUser = "vsharaev"
+        let toUser = "vsharaev"
         var isSuccess = false
         
         
@@ -180,8 +181,8 @@ class SocketCoreComponentTests: XCTestCase {
             $0.socketMessenger = messenger
         }))
         let exp = expectation(description: "Change password")
-        let userName = "dima1"
-        let password = "P5J8pDyzznMmEdiBCdgB7VKtMBuxw5e4MAJEo3sfUbxcM"
+        let userName = "vsharaev"
+        let password = "vsharaev1"
         let newPassword = "newPassword"
         var success: Bool!
 
@@ -192,8 +193,8 @@ class SocketCoreComponentTests: XCTestCase {
                 case .success(let isSuccess):
                     success = isSuccess
                     exp.fulfill()
-                case .failure(_):
-                    XCTFail("Change password cant fail")
+                case .failure(let error):
+                    XCTFail("Change password cant fail \(error)")
                 }
             })
         }
@@ -212,11 +213,11 @@ class SocketCoreComponentTests: XCTestCase {
             $0.socketMessenger = messenger
         }))
         let exp = expectation(description: "Issue asset")
-        let issuerNameOrId = "vsharaev1"
-        let password = "newTestPass"
-        let asset = "1.3.87"
+        let issuerNameOrId = "vsharaev"
+        let password = "vsharaev1"
+        let asset = "1.3.1"
         let amount: UInt = 1
-        let destinationIdOrName = "vsharaev2"
+        let destinationIdOrName = "vsharaev"
         let message = "Issue asset message"
         var success: Bool!
         
@@ -233,8 +234,8 @@ class SocketCoreComponentTests: XCTestCase {
                 case .success(let isSuccess):
                     success = isSuccess
                     exp.fulfill()
-                case .failure(_):
-                    XCTFail("Issue asset cant fail")
+                case .failure(let error):
+                    XCTFail("Issue asset cant fail \(error)")
                 }
             }
 
@@ -273,8 +274,8 @@ class SocketCoreComponentTests: XCTestCase {
                                      flags: AssetOptionIssuerPermissions.committeeFedAsset.rawValue,
                                      coreExchangeRate: Price(base: AssetAmount(amount: 1, asset: Asset("1.3.0")), quote: AssetAmount(amount: 1, asset: Asset("1.3.1"))),
                                      description: "description")
-        let nameOrId = "vsharaev1"
-        let password = "newTestPass"
+        let nameOrId = "vsharaev"
+        let password = "vsharaev1"
         var success: Bool!
         
         //act
@@ -307,7 +308,7 @@ class SocketCoreComponentTests: XCTestCase {
             $0.socketMessenger = messenger
         }))
         let exp = expectation(description: "Getting contracts")
-        let legalContractId = "1.16.1"
+        let legalContractId = "1.16.36"
         var contract: ContractStruct!
         
         //act
@@ -337,7 +338,7 @@ class SocketCoreComponentTests: XCTestCase {
             $0.socketMessenger = messenger
         }))
         let exp = expectation(description: "Getting contracts")
-        let legalContractId = "1.16.1"
+        let legalContractId = "1.16.36"
         let contractsIDs = [legalContractId]
         var contracts: [ContractInfo] = []
         
@@ -377,8 +378,8 @@ class SocketCoreComponentTests: XCTestCase {
                 case .success(let res):
                     contracts = res
                     exp.fulfill()
-                case .failure(_):
-                    XCTFail("Getting contracts result cant fail")
+                case .failure(let error):
+                    XCTFail("Getting contracts result cant fail \(error)")
                 }
             })
         }
@@ -427,23 +428,28 @@ class SocketCoreComponentTests: XCTestCase {
             $0.socketMessenger = messenger
         }))
         let exp = expectation(description: "Creating contract")
-        let byteCode =  "60806040526000805534801561001457600080fd5b5061011480610024" +
-                        "6000396000f300608060405260043610605c5763ffffffff7c010000000000000000000000000000000000" +
-                        "00000000000000000000006000350416635b34b966811460615780635b9af12b146075578063a87d942c14" +
-                        "608a578063f5c5ad831460ae575b600080fd5b348015606c57600080fd5b50607360c0565b005b34801560" +
-                        "8057600080fd5b50607360043560cb565b348015609557600080fd5b50609c60d6565b6040805191825251" +
-                        "9081900360200190f35b34801560b957600080fd5b50607360dc565b600080546001019055565b60008054" +
-                        "9091019055565b60005490565b600080546000190190555600a165627a7a7230582016b3f6673de41336e2" +
-                        "c5d4b136b4e67bbf43062b6bc47eaef982648cd3b92a9d0029"
+        let byteCode =  "60806040526000805534801561001457600080fd5b5061010180610024" +
+                        "6000396000f3006080604052600436106053576000357c010000000000" +
+                        "0000000000000000000000000000000000000000000000900463fffff" +
+                        "fff1680635b34b966146058578063a87d942c14606c578063f5c5ad8" +
+                        "3146094575b600080fd5b348015606357600080fd5b50606a60a" +
+                        "8565b005b348015607757600080fd5b50607e60ba565b6040518" +
+                        "082815260200191505060405180910390f35b348015609f57600" +
+                        "080fd5b5060a660c3565b005b600160008082825401925050819" +
+                        "05550565b60008054905090565b6001600080828254039250508" +
+                        "19055505600a165627a7a7230582063e27ea8b308defeeb50719" +
+                        "f281e50a9b53ffa155e56f3249856ef7eafeb09e90029"
         var success = false
 
         //act
         echo.start { [unowned self] (result) in
-            self.echo.createContract(registrarNameOrId: "vsharaev1",
-                                     password: "newTestPass",
+            self.echo.createContract(registrarNameOrId: "vsharaev",
+                                     password: "vsharaev1",
                                      assetId: "1.3.0",
                                      assetForFee: nil,
                                      byteCode: byteCode,
+                                     supportedAssetId: nil,
+                                     ethAccuracy: false,
                                      parameters: nil,
                                      completion: { (result) in
 
@@ -489,11 +495,13 @@ class SocketCoreComponentTests: XCTestCase {
         //act
         echo.start { [unowned self] (result) in
             
-            self.echo.createContract(registrarNameOrId: "vsharaev1",
-                                     password: "newTestPass",
+            self.echo.createContract(registrarNameOrId: "vsharaev",
+                                     password: "vsharaev1",
                                      assetId: "1.3.0",
                                      assetForFee: nil,
                                      byteCode: byteCode,
+                                     supportedAssetId: nil,
+                                     ethAccuracy: false,
                                      parameters: parameters,
                                      completion: { (result) in
                 switch result {
@@ -522,7 +530,7 @@ class SocketCoreComponentTests: XCTestCase {
             $0.socketMessenger = messenger
         }))
         let exp = expectation(description: "Query contract")
-        let registrarNameOrId = "dariatest2"
+        let registrarNameOrId = "vsharaev"
         let assetId = "1.3.0"
         let contratId = "1.16.1"
         let methodName = "getCount"
@@ -557,10 +565,10 @@ class SocketCoreComponentTests: XCTestCase {
             $0.socketMessenger = messenger
         }))
         let exp = expectation(description: "Call contract")
-        let password = "P5HyvBoQJQKXmcJw5CAK8UkzwFMLK3DAecniAHH7BM6Ci"
-        let registrarNameOrId = "dariatest2"
+        let password = "vsharaev1"
+        let registrarNameOrId = "vsharaev"
         let assetId = "1.3.0"
-        let contratId = "1.16.1"
+        let contratId = "1.16.36"
         let methodName = "incrementCounter"
         let params: [AbiTypeValueInputModel] = []
         var success = false

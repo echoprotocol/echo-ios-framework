@@ -23,6 +23,7 @@ public struct AccountCreateOperation: BaseOperation {
         case options
         case extensions
         case fee
+        case edKey = "ed_key"
     }
     
     public let type: OperationType
@@ -36,6 +37,7 @@ public struct AccountCreateOperation: BaseOperation {
     public let owner: OptionalValue<Authority>
     public let active: OptionalValue<Authority>
     public let options: OptionalValue<AccountOptions>
+    public let edKey: String
     
     public init(from decoder: Decoder) throws {
         
@@ -60,6 +62,7 @@ public struct AccountCreateOperation: BaseOperation {
         options = OptionalValue(optionsValue)
         
         fee = try values.decode(AssetAmount.self, forKey: .fee)
+        edKey = try values.decode(String.self, forKey: .edKey)
     }
     
     // MARK: ECHOCodable
@@ -74,6 +77,7 @@ public struct AccountCreateOperation: BaseOperation {
                                                AccountCreateOperationCodingKeys.registrar.rawValue: registrar,
                                                AccountCreateOperationCodingKeys.referrer.rawValue: referrer,
                                                AccountCreateOperationCodingKeys.referrerPercent.rawValue: referrerPercent,
+                                               AccountCreateOperationCodingKeys.edKey.rawValue: edKey,
                                                AccountCreateOperationCodingKeys.extensions.rawValue: extensions.toJSON()]
         
         if owner.isSet() {
@@ -107,6 +111,7 @@ public struct AccountCreateOperation: BaseOperation {
         data.append(optional: Data.fromInt8(referrerPercent))
         data.append(optional: owner.toData())
         data.append(optional: active.toData())
+        data.append(optional: Data(hex: edKey))
         data.append(optional: options.toData())
         data.append(optional: extensions.toData())
         return data

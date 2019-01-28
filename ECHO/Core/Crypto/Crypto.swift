@@ -7,7 +7,6 @@
 //
 
 import ECHO.Private
-import secp256k1
 
 /// Helper class for cryptographic algorithms.
 final class Crypto {
@@ -74,5 +73,26 @@ final class Crypto {
         data.removeLast(4)
         
         return data
+    }
+    
+    /// Generates public key from private key using ed25519 elliptic curve math
+    ///
+    /// - Parameters:
+    ///   - data: 32-byte private key
+    /// - Returns: 32-byte key
+    public static func generatePublicEd25519Key(data: Data) -> Data {
+        
+        return Ed25519.generatePublicKey(withPrivateKey: data)
+    }
+    
+    /// Signs hash with private key by ed25519 curve
+    ///
+    /// - Parameters:
+    ///   - hash: Hash of a message
+    ///   - privateKey: 32-byte private key
+    /// - Returns: 64-byte signature of the hash data
+    public static func signByEd25519(_ hash: Data, privateKey: Data) -> Data {
+        
+        return Ed25519.sign(hash, privateKey: privateKey);
     }
 }

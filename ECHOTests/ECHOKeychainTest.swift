@@ -16,7 +16,7 @@ class ECHOKeychainTest: XCTestCase {
         let name = "dima1"
         let password = "P5J8pDyzznMmEdiBCdgB7VKtMBuxw5e4MAJEo3sfUbxcM"
         let cryptoCore = CryptoCoreImp()
-        let keychain = ECHOKeychain(name: name, password: password, type: .owner, core: cryptoCore)
+        let keychain = ECHOKeychainSecp256k1(name: name, password: password, type: .owner, core: cryptoCore)
         
         //act
         let publicKey = keychain?.publicAddress()
@@ -30,7 +30,7 @@ class ECHOKeychainTest: XCTestCase {
         let name = "dima1"
         let password = "P5J8pDyzznMmEdiBCdgB7VKtMBuxw5e4MAJEo3sfUbxcM"
         let cryptoCore = CryptoCoreImp()
-        let keychain = ECHOKeychain(name: name, password: password, type: .active, core: cryptoCore)
+        let keychain = ECHOKeychainSecp256k1(name: name, password: password, type: .active, core: cryptoCore)
         
         //act
         let publicKey = keychain?.publicAddress()
@@ -44,7 +44,7 @@ class ECHOKeychainTest: XCTestCase {
         let name = "dima1"
         let password = "P5J8pDyzznMmEdiBCdgB7VKtMBuxw5e4MAJEo3sfUbxcM"
         let cryptoCore = CryptoCoreImp()
-        let keychain = ECHOKeychain(name: name, password: password, type: .memo, core: cryptoCore)
+        let keychain = ECHOKeychainSecp256k1(name: name, password: password, type: .memo, core: cryptoCore)
         
         //act
         let publicKey = keychain?.publicAddress()
@@ -58,7 +58,7 @@ class ECHOKeychainTest: XCTestCase {
         let name = ""
         let password = ""
         let cryptoCore = CryptoCoreImp()
-        let keychain = ECHOKeychain(name: name, password: password, type: .memo, core: cryptoCore)
+        let keychain = ECHOKeychainSecp256k1(name: name, password: password, type: .memo, core: cryptoCore)
         
         //act
         let publicKey = keychain?.publicAddress()

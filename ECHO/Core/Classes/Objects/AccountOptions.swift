@@ -20,24 +20,31 @@ public struct AccountOptions: ECHOCodable, Decodable {
         case votes
         case votingAccount = "voting_account"
         case extensions
+        case delegatingAccount = "delegating_account"
     }
     
     let proxyToSelf = "1.2.5"
     
     let memo: Address?
     let votingAccount: Account
+    let delegatingAaccount: Account
     var witnessCount: Int = 0
     var committeeCount: Int = 0
     var votes: [Vote] = [Vote]()
     
     private var extensions = Extensions()
     
-    init(memo: Address, votingAccount: Account?) {
+    init(memo: Address, votingAccount: Account?, delegatingAccount: Account?) {
         self.memo = memo
         if let votingAccount = votingAccount {
             self.votingAccount = votingAccount
         } else {
             self.votingAccount = Account(proxyToSelf)
+        }
+        if let delegatingAccount = delegatingAccount {
+            self.delegatingAaccount = delegatingAccount
+        } else {
+            self.delegatingAaccount = Account(proxyToSelf)
         }
     }
     
@@ -50,6 +57,9 @@ public struct AccountOptions: ECHOCodable, Decodable {
         
         let voitingAccountIdString = try values.decode(String.self, forKey: .votingAccount)
         votingAccount = Account(voitingAccountIdString)
+        
+        let delegatingAccountIdString = try values.decode(String.self, forKey: .delegatingAccount)
+        delegatingAaccount = Account(delegatingAccountIdString)
         
         witnessCount = try values.decode(Int.self, forKey: .witness)
         committeeCount = try values.decode(Int.self, forKey: .committee)
@@ -70,6 +80,7 @@ public struct AccountOptions: ECHOCodable, Decodable {
                                                AccountOptionsCodingKeys.committee.rawValue: committeeCount,
                                                AccountOptionsCodingKeys.witness.rawValue: witnessCount,
                                                AccountOptionsCodingKeys.votingAccount.rawValue: votingAccount.id,
+                                               AccountOptionsCodingKeys.delegatingAccount.rawValue: delegatingAaccount.id,
                                                AccountOptionsCodingKeys.votes.rawValue: votesArray,
                                                AccountOptionsCodingKeys.extensions.rawValue: extensions.toJSON()]
         
@@ -87,6 +98,7 @@ public struct AccountOptions: ECHOCodable, Decodable {
         data.append(optional: memo.toData())
         
         data.append(optional: votingAccount.toData())
+        data.append(optional: delegatingAaccount.toData())
         
         data.append(Data.fromInt16(witnessCount))
         

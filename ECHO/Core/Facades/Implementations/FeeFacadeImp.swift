@@ -162,7 +162,7 @@ final public class FeeFacadeImp: FeeFacade, ECHOQueueble {
         
         // Operation
         callQueue.saveValue(Contract(id: contratId), forKey: FeeResultsKeys.receiverContract.rawValue)
-        let bildCreateContractOperation = createBildContractOperation(callQueue, amount ?? 0, assetId, assetForFee, completion)
+        let bildCreateContractOperation = bildCreateCallContractOperation(callQueue, amount ?? 0, assetId, assetForFee, completion)
         
         // RequiredFee
         let getRequiredFeeOperationInitParams = (callQueue,
@@ -259,11 +259,11 @@ final public class FeeFacadeImp: FeeFacade, ECHOQueueble {
         return byteCodeOperation
     }
     
-    fileprivate func createBildContractOperation(_ queue: ECHOQueue,
-                                                 _ amount: UInt,
-                                                 _ assetId: String,
-                                                 _ assetForFee: String,
-                                                 _ completion: @escaping Completion<AssetAmount>) -> Operation {
+    fileprivate func bildCreateCallContractOperation(_ queue: ECHOQueue,
+                                                     _ amount: UInt,
+                                                     _ assetId: String,
+                                                     _ assetForFee: String,
+                                                     _ completion: @escaping Completion<AssetAmount>) -> Operation {
         
         let contractOperation = BlockOperation()
         
@@ -273,17 +273,15 @@ final public class FeeFacadeImp: FeeFacade, ECHOQueueble {
             guard self != nil else { return }
             guard let account: Account = queue?.getValue(FeeResultsKeys.registrarAccount.rawValue) else { return }
             guard let byteCode: String = queue?.getValue(FeeResultsKeys.byteCode.rawValue) else { return }
+            guard let receiver: Contract = queue?.getValue(FeeResultsKeys.receiverContract.rawValue) else { return }
             
-            let receive: Contract? = queue?.getValue(FeeResultsKeys.receiverContract.rawValue)
-            
-            let operation = ContractOperation(registrar: account,
-                                              asset: Asset(assetId),
-                                              value: amount,
-                                              gasPrice: 0,
-                                              gas: 11000000,
-                                              code: byteCode,
-                                              receiver: receive,
-                                              fee: AssetAmount(amount: 0, asset: Asset(assetForFee)))    
+            let operation = CallContractOperation(registrar: account,
+                                                  value: AssetAmount(amount: amount, asset: Asset(assetId)),
+                                                  gasPrice: 0,
+                                                  gas: 11000000,
+                                                  code: byteCode,
+                                                  callee: receiver,
+                                                  fee: AssetAmount(amount: 0, asset: Asset(assetForFee)))
             
             queue?.saveValue(operation, forKey: FeeResultsKeys.operation.rawValue)
         }

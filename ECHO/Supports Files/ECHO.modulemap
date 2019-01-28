@@ -8,5 +8,6 @@ framework module ECHO {
         header "Internal.h"
         header "BTCData.h"
         link "crypto"
+        link "ed25519"
     }
 }

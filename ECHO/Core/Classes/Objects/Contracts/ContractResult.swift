@@ -46,9 +46,9 @@ public struct ExecRes: Decodable {
     public let newAddress: String?
     public let output: String?
     public let codeDeposit: String?
-    public let gasRefunded: String?
-    public let depositSize: Int?
-    public let gasForDeposit: String?
+    public let gasRefunded: UInt?
+    public let depositSize: UInt?
+    public let gasForDeposit: UInt?
     
     public init(from decoder: Decoder) throws {
         
@@ -57,9 +57,9 @@ public struct ExecRes: Decodable {
         newAddress = try? values.decode(String.self, forKey: .newAddress)
         output = try? values.decode(String.self, forKey: .output)
         codeDeposit = try? values.decode(String.self, forKey: .codeDeposit)
-        gasRefunded = try? values.decode(String.self, forKey: .gasRefunded)
-        depositSize = try? values.decode(Int.self, forKey: .depositSize)
-        gasForDeposit = try? values.decode(String.self, forKey: .gasForDeposit)
+        gasRefunded = try? values.decode(UInt.self, forKey: .gasRefunded)
+        depositSize = try? values.decode(UInt.self, forKey: .depositSize)
+        gasForDeposit = try? values.decode(UInt.self, forKey: .gasForDeposit)
     }
 }
 
@@ -75,16 +75,16 @@ public struct TrReceipt: Decodable {
         case log
     }
     
-    public let statusCode: String?
-    public let gasUsed: String?
+    public let statusCode: UInt?
+    public let gasUsed: UInt?
     public let bloom: String?
     public let log: [String]?
     
     public init(from decoder: Decoder) throws {
         
         let values = try decoder.container(keyedBy: TrReceiptCodingKeys.self)
-        statusCode = try? values.decode(String.self, forKey: .statusCode)
-        gasUsed = try? values.decode(String.self, forKey: .gasUsed)
+        statusCode = try? values.decode(UInt.self, forKey: .statusCode)
+        gasUsed = try? values.decode(UInt.self, forKey: .gasUsed)
         bloom = try? values.decode(String.self, forKey: .bloom)
         log = try? values.decode([String].self, forKey: .log)
     }

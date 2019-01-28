@@ -47,13 +47,15 @@ final public class ECHO: InterfaceFacades {
         let cryptoService = CryptoApiServiceImp(socketCore: socketCore)
         let networkBroadcastService = NetworkBroadcastApiServiceImp(socketCore: socketCore)
         let historyService = AccountHistoryApiServiceImp(socketCore: socketCore)
-        let networkNodesSetvice = NetworkNodesApiServiceImp(socketCore: socketCore)
+        let networkNodesService = NetworkNodesApiServiceImp(socketCore: socketCore)
+        let registrationService = RegistrationApiServiceImp(socketCore: socketCore)
         
         let revealServices = RevealFacadeServices(databaseService: databaseService,
                                                   cryptoService: cryptoService,
                                                   historyService: historyService,
                                                   networkBroadcastService: networkBroadcastService,
-                                                  networkNodesService: networkNodesSetvice)
+                                                  networkNodesService: networkNodesService,
+                                                  registrationService: registrationService)
         revealFacade = RevealFacadeImp(socketCore: socketCore,
                                       options: settings.apiOptions,
                                       services: revealServices)
@@ -62,8 +64,9 @@ final public class ECHO: InterfaceFacades {
         authentificationFacade = AuthentificationFacadeImp(services: authServices, cryptoCore: settings.cryproComponent, network: settings.network)
         
         let informationServices = InformationFacadeServices(databaseService: databaseService,
-                                                            historyService: historyService)
-        informationFacade = InformationFacadeImp(services: informationServices)
+                                                            historyService: historyService,
+                                                            registrationService: registrationService)
+        informationFacade = InformationFacadeImp(services: informationServices, network: settings.network, cryptoCore: settings.cryproComponent)
         
         let subscriptionServices = SubscriptionServices(databaseService: databaseService)
         subscriptionFacade = SubscriptionFacadeImp(services: subscriptionServices,
@@ -95,7 +98,8 @@ final public class ECHO: InterfaceFacades {
                                                                       cryptoService: cryptoService,
                                                                       networkBroadcastService: networkBroadcastService,
                                                                       historyService: historyService,
-                                                                      networkNodesSetvice: networkNodesSetvice)
+                                                                      networkNodesService: networkNodesService,
+                                                                      registrationService: registrationService)
         customOperationsFacade = CustomOperationsFacadeImp(services: customOperationsServices)
     }
     
@@ -155,6 +159,10 @@ final public class ECHO: InterfaceFacades {
     }
     
     // MARK: InformationFacade
+    
+    public func registerAccount(name: String, password: String, completion: @escaping Completion<Bool>) {
+        informationFacade.registerAccount(name: name, password: password, completion: completion)
+    }
     
     public func getAccount(nameOrID: String, completion: @escaping Completion<Account>) {
         informationFacade.getAccount(nameOrID: nameOrID, completion: completion)
@@ -309,6 +317,8 @@ final public class ECHO: InterfaceFacades {
                                assetId: String,
                                assetForFee: String?,
                                byteCode: String,
+                               supportedAssetId: String?,
+                               ethAccuracy: Bool,
                                parameters: [AbiTypeValueInputModel]?,
                                completion: @escaping Completion<Bool>,
                                noticeHandler: NoticeHandler?) {
@@ -318,6 +328,8 @@ final public class ECHO: InterfaceFacades {
                                        assetId: assetId,
                                        assetForFee: assetForFee,
                                        byteCode: byteCode,
+                                       supportedAssetId: supportedAssetId,
+                                       ethAccuracy: ethAccuracy,
                                        parameters: parameters,
                                        completion: completion,
                                        noticeHandler: noticeHandler)

@@ -103,6 +103,8 @@ final class SocketMessengerImp: SocketMessenger {
     
     func write(_ string: String) {
         
+        print(string)
+        
         let operation: BlockOperation = BlockOperation()
         
         operation.addExecutionBlock { [weak self, weak operation] in

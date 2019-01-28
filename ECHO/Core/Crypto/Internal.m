@@ -17,6 +17,8 @@
 #include <openssl/obj_mac.h>
 #include <openssl/bn.h>
 #include <openssl/rand.h>
+#import <ed25519.h>
+
 #import "BTCData.h"
 
 #import <CommonCrypto/CommonCrypto.h>
@@ -38,6 +40,29 @@
 + (NSData *)ripemd160:(NSData *)data {
     NSMutableData *result = [NSMutableData dataWithLength:RIPEMD160_DIGEST_LENGTH];
     RIPEMD160(data.bytes, data.length, result.mutableBytes);
+    return result;
+}
+
+@end
+
+@implementation Ed25519
+
++ (NSData *)generatePublicKeyWithPrivateKey:(NSData *)privateKeyData {
+    
+    NSMutableData *result = [NSMutableData dataWithLength:ed25519_pubkey_SIZE];
+    ed25519_derive_public_key(privateKeyData.bytes, result.mutableBytes);
+    return result;
+}
+
++ (NSData *)sign:(NSData *)hash privateKey:(NSData *)privateKeyData {
+    
+    NSMutableData *publickKeyData = [NSMutableData dataWithLength:ed25519_pubkey_SIZE];
+    ed25519_derive_public_key(privateKeyData.bytes, publickKeyData.mutableBytes);
+    
+    NSMutableData *result = [NSMutableData dataWithLength:ed25519_signature_SIZE];
+    
+    ed25519_sign(result.mutableBytes, hash.bytes, hash.length, publickKeyData.bytes, privateKeyData.bytes);
+    
     return result;
 }
 
@@ -491,7 +516,6 @@ err:
 }
 
 @end
-
 
 #define BTCBigNumberCompare(a, b) (BN_cmp(&(a->_bignum), &(b->_bignum)))
 

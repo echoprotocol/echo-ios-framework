@@ -20,7 +20,9 @@ struct GetContractSocketRequestElementStub: SocketRequestStub {
     var operationType = "get_contract"
     
     func createResponce(id: Int) -> String {
-        return "{\"id\":\(id),\"jsonrpc\":\"2.0\",\"result\":{\"contract_info\":{\"id\":\"1.16.1\",\"statistics\":\"2.20.1\",\"suicided\":false},\"code\":\"\",\"storage\":[[\"0\",\"54\"]]}}"
+        return """
+                {"id":\(id),"jsonrpc":"2.0","result":[0,{"code":"6080604052600436106053576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680635b34b966146058578063a87d942c14606c578063f5c5ad83146094575b600080fd5b348015606357600080fd5b50606a60a8565b005b348015607757600080fd5b50607e60ba565b6040518082815260200191505060405180910390f35b348015609f57600080fd5b5060a660c3565b005b60016000808282540192505081905550565b60008054905090565b600160008082825403925050819055505600a165627a7a7230582063e27ea8b308defeeb50719f281e50a9b53ffa155e56f3249856ef7eafeb09e90029","storage":[["290decd9548b62a8d60345a988386fc84ba6bc95484008f6362f93160ef3e563",["00","01"]]]}]}
+                """
     }
 }
 
@@ -29,7 +31,9 @@ struct GetContractsSocketRequestElementStub: SocketRequestStub {
     var operationType = "get_contracts"
     
     func createResponce(id: Int) -> String {
-        return "{\"id\":\(id),\"jsonrpc\":\"2.0\",\"result\":[{\"id\":\"1.16.1\",\"statistics\":\"2.20.1\",\"suicided\":false}]}"
+        return """
+                {"id":\(id),"jsonrpc":"2.0","result":[{"id":"1.16.36","statistics":"2.20.36","suicided":false,"type":"evm"}]}
+                """
     }
 }
 
@@ -38,7 +42,9 @@ struct GetAllContractsSocketRequestElementStub: SocketRequestStub {
     var operationType = "get_all_contracts"
     
     func createResponce(id: Int) -> String {
-        return "{\"id\":\(id),\"jsonrpc\":\"2.0\",\"result\":[{\"id\":\"1.16.0\",\"statistics\":\"2.20.0\",\"suicided\":false},{\"id\":\"1.16.1\",\"statistics\":\"2.20.1\",\"suicided\":false},{\"id\":\"1.16.2\",\"statistics\":\"2.20.2\",\"suicided\":false},{\"id\":\"1.16.3\",\"statistics\":\"2.20.3\",\"suicided\":false},{\"id\":\"1.16.4\",\"statistics\":\"2.20.4\",\"suicided\":false},{\"id\":\"1.16.5\",\"statistics\":\"2.20.5\",\"suicided\":false},{\"id\":\"1.16.6\",\"statistics\":\"2.20.6\",\"suicided\":false},{\"id\":\"1.16.7\",\"statistics\":\"2.20.7\",\"suicided\":false},{\"id\":\"1.16.8\",\"statistics\":\"2.20.8\",\"suicided\":false},{\"id\":\"1.16.9\",\"statistics\":\"2.20.9\",\"suicided\":false},{\"id\":\"1.16.10\",\"statistics\":\"2.20.10\",\"suicided\":false},{\"id\":\"1.16.11\",\"statistics\":\"2.20.11\",\"suicided\":false},{\"id\":\"1.16.12\",\"statistics\":\"2.20.12\",\"suicided\":false},{\"id\":\"1.16.13\",\"statistics\":\"2.20.13\",\"suicided\":false}]}"
+        return """
+                {"id":\(id),"jsonrpc":"2.0","result":[{"id":"1.16.0","statistics":"2.20.0","suicided":false,"type":"evm"},{"id":"1.16.1","statistics":"2.20.1","suicided":false,"type":"evm"},{"id":"1.16.2","statistics":"2.20.2","suicided":false,"type":"evm"},{"id":"1.16.3","statistics":"2.20.3","suicided":false,"type":"evm"},{"id":"1.16.4","statistics":"2.20.4","suicided":false,"type":"evm"},{"id":"1.16.5","statistics":"2.20.5","suicided":false,"type":"evm"},{"id":"1.16.6","statistics":"2.20.6","suicided":false,"type":"evm"},{"id":"1.16.7","statistics":"2.20.7","suicided":false,"type":"evm"},{"id":"1.16.8","statistics":"2.20.8","suicided":false,"type":"evm"},{"id":"1.16.9","statistics":"2.20.9","suicided":false,"type":"evm"}]}
+                """
     }
 }
 
@@ -47,6 +53,8 @@ struct GetAllContractResultSocketRequestElementStub: SocketRequestStub {
     var operationType = "get_contract_result"
     
     func createResponce(id: Int) -> String {
-        return "{\"id\":\(id),\"jsonrpc\":\"2.0\",\"result\":{\"exec_res\":{\"excepted\":\"None\",\"new_address\":\"0000000000000000000000000000000000000000\",\"output\":\"\",\"code_deposit\":\"None\",\"gas_refunded\":\"0000000000000000000000000000000000000000000000000000000000000000\",\"deposit_size\":0,\"gas_for_deposit\":\"0000000000000000000000000000000000000000000000000000000000000000\"},\"tr_receipt\":{\"status_code\":\"1\",\"gas_used\":\"000000000000000000000000000000000000000000000000000000000000a291\",\"bloom\":\"00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000\",\"log\":[]}}}"
+        return """
+                    {"id":\(id),"jsonrpc":"2.0","result":[0,{"exec_res":{"excepted":"None","new_address":"0100000000000000000000000000000000000024","output":"6080604052600436106053576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680635b34b966146058578063a87d942c14606c578063f5c5ad83146094575b600080fd5b348015606357600080fd5b50606a60a8565b005b348015607757600080fd5b50607e60ba565b6040518082815260200191505060405180910390f35b348015609f57600080fd5b5060a660c3565b005b60016000808282540192505081905550565b60008054905090565b600160008082825403925050819055505600a165627a7a7230582063e27ea8b308defeeb50719f281e50a9b53ffa155e56f3249856ef7eafeb09e90029","code_deposit":"Success","gas_refunded":0,"gas_for_deposit":10924973,"deposit_size":257},"tr_receipt":{"status_code":1,"gas_used":126427,"bloom":"00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000","log":[]}}]}
+                """
     }
 }
