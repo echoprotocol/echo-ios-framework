@@ -6,21 +6,6 @@
 	objectVersion = 50;
 	objects = {
 
-/* Begin PBXAggregateTarget section */
-		B31CB1AD20F377AC00FA5532 /* UniversalECHO */ = {
-			isa = PBXAggregateTarget;
-			buildConfigurationList = B31CB1AE20F377AC00FA5532 /* Build configuration list for PBXAggregateTarget "UniversalECHO" */;
-			buildPhases = (
-				B31CB1B120F377BE00FA5532 /* ShellScript */,
-				B356019220F38C820097FD38 /* CopyFiles */,
-			);
-			dependencies = (
-			);
-			name = UniversalECHO;
-			productName = UniversalECHO;
-		};
-/* End PBXAggregateTarget section */
-
 /* Begin PBXBuildFile section */
 		B30AFDB12191BD9300A657D8 /* SubscribeSocketRequestStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30AFDB02191BD9300A657D8 /* SubscribeSocketRequestStub.swift */; };
 		B30CACFA20FF74C80048E33E /* NetworkNodesApiServiceImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30CACEE20FF74C70048E33E /* NetworkNodesApiServiceImp.swift */; };
@@ -68,7 +53,6 @@
 		B313B8C1212FF9850052B266 /* ECHOInterfaceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B313B8C0212FF9850052B266 /* ECHOInterfaceTests.swift */; };
 		B313B8D32130411D0052B266 /* Internal.m in Sources */ = {isa = PBXBuildFile; fileRef = B313B8D22130411D0052B266 /* Internal.m */; };
 		B313B8D5213041250052B266 /* Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = B313B8D4213041250052B266 /* Internal.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		B313B8DA213044390052B266 /* ECHO.modulemap in CopyFiles */ = {isa = PBXBuildFile; fileRef = B313B8D9213044390052B266 /* ECHO.modulemap */; };
 		B313B8DD21305A080052B266 /* Crypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = B313B8DB21305A080052B266 /* Crypto.swift */; };
 		B31CB1A520F3772C00FA5532 /* ECHO.h in Headers */ = {isa = PBXBuildFile; fileRef = B31CB1A320F3772C00FA5532 /* ECHO.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B328FC31213FEA510022292C /* ChangePasswordSocketRequestElementStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = B328FC30213FEA510022292C /* ChangePasswordSocketRequestElementStub.swift */; };
@@ -229,16 +213,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		B356019220F38C820097FD38 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				B313B8DA213044390052B266 /* ECHO.modulemap in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		B356019820F38D330097FD38 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 12;
@@ -1012,9 +986,6 @@
 						CreatedOnToolsVersion = 9.4.1;
 						LastSwiftMigration = 0940;
 					};
-					B31CB1AD20F377AC00FA5532 = {
-						CreatedOnToolsVersion = 9.4.1;
-					};
 					B3D1C560212C9CCA00D1A7E6 = {
 						CreatedOnToolsVersion = 9.4.1;
 					};
@@ -1033,7 +1004,6 @@
 			projectRoot = "";
 			targets = (
 				B31CB19F20F3772C00FA5532 /* ECHO */,
-				B31CB1AD20F377AC00FA5532 /* UniversalECHO */,
 				B3D1C560212C9CCA00D1A7E6 /* ECHOTests */,
 			);
 		};
@@ -1057,19 +1027,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		B31CB1B120F377BE00FA5532 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "#!/bin/sh\nUNIVERSAL_OUTPUTFOLDER=${BUILD_DIR}/${CONFIGURATION}-universal\n# make sure the output directory exists\nmkdir -p \"${UNIVERSAL_OUTPUTFOLDER}\"\n# Step 1. Build Device and Simulator versions. This also include the full bitcode generation of framework\nxcodebuild BITCODE_GENERATION_MODE=bitcode OTHER_CFLAGS=\"-fembed-bitcode\" -target \"${PROJECT_NAME}\" ONLY_ACTIVE_ARCH=NO -configuration ${CONFIGURATION} -sdk iphoneos BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" clean build\nxcodebuild BITCODE_GENERATION_MODE=bitcode OTHER_CFLAGS=\"-fembed-bitcode\" -target \"${PROJECT_NAME}\" ONLY_ACTIVE_ARCH=NO -configuration ${CONFIGURATION} -sdk iphonesimulator BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" clean build\n# Step 2. Copy the framework structure (from iphoneos build) to the universal folder\ncp -R \"${BUILD_DIR}/${CONFIGURATION}-iphoneos/${PROJECT_NAME}.framework\" \"${UNIVERSAL_OUTPUTFOLDER}/\"\n# Step 3. Copy Swift modules (from iphonesimulator build) to the copied framework directory\ncp -R \"${BUILD_DIR}/${CONFIGURATION}-iphonesimulator/${PROJECT_NAME}.framework/Modules/${PROJECT_NAME}.swiftmodule/.\" \"${UNIVERSAL_OUTPUTFOLDER}/${PROJECT_NAME}.framework/Modules/${PROJECT_NAME}.swiftmodule\"\n# Step 4. Create universal binary file using lipo and place the combined executable in the copied framework directory\nlipo -create -output \"${UNIVERSAL_OUTPUTFOLDER}/${PROJECT_NAME}.framework/${PROJECT_NAME}\" \"${BUILD_DIR}/${CONFIGURATION}-iphonesimulator/${PROJECT_NAME}.framework/${PROJECT_NAME}\" \"${BUILD_DIR}/${CONFIGURATION}-iphoneos/${PROJECT_NAME}.framework/${PROJECT_NAME}\"\n# Step 5. Convenience step to copy the framework to the project's directory\ncp -R \"${UNIVERSAL_OUTPUTFOLDER}/${PROJECT_NAME}.framework\" \"${PROJECT_DIR}\"\n# Step 6. Convenience step to open the project's directory in Finder\nopen \"${PROJECT_DIR}\"\n";
-		};
 		B356019F20F39F4B0097FD38 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1541,26 +1498,6 @@
 			};
 			name = Release;
 		};
-		B31CB1AF20F377AC00FA5532 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = Q7Q43CUMWT;
-				OTHER_CFLAGS = "-fembed-bitcode";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		B31CB1B020F377AC00FA5532 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = Q7Q43CUMWT;
-				OTHER_CFLAGS = "-fembed-bitcode";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
 		B3D1C569212C9CCA00D1A7E6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1626,15 +1563,6 @@
 			buildConfigurations = (
 				B31CB1A920F3772C00FA5532 /* Debug */,
 				B31CB1AA20F3772C00FA5532 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		B31CB1AE20F377AC00FA5532 /* Build configuration list for PBXAggregateTarget "UniversalECHO" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				B31CB1AF20F377AC00FA5532 /* Debug */,
-				B31CB1B020F377AC00FA5532 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
