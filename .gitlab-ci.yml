@@ -7,7 +7,6 @@ variables:
   LANG: "en_US.UTF-8"
 
 before_script:
-  - gem install bundler
   - bundle install
 
 unit_tests:
