@@ -71,27 +71,30 @@ public struct Memo: ECHOCodable, Decodable {
         
         if let source = source,
             let destination = destination,
-            let byteMessage = byteMessage {
+            let byteMessage = byteMessage,
+            let byteMessageData = Data(hex: byteMessage) {
             
             var data = Data()
             data.append(optional: Data.fromInt8(1))
             data.append(optional: source.toData())
             data.append(optional: destination.toData())
             data.append(optional: nonceToData(nonce))
-            data.append(optional: Data.fromUIntLikeUnsignedByteArray(UInt(byteMessage.count)))
-            data.append(optional: Data(hex: byteMessage))
+            data.append(optional: Data.fromUIntLikeUnsignedByteArray(UInt(byteMessageData.count)))
+            data.append(optional: byteMessageData)
             
             return data
         }
         
-        if let byteMessage = byteMessage {
+        if let byteMessage = byteMessage,
+            let byteMessageData = Data(hex: byteMessage) {
+            
             var data = Data()
             data.append(optional: Data.fromInt8(1))
             data.append(optional: Data.fromInt8(0))
             data.append(optional: Data.fromInt8(0))
             data.append(optional: nonceToData(0))
-            data.append(optional: Data.fromUIntLikeUnsignedByteArray(UInt(byteMessage.count)))
-            data.append(optional: Data(hex: byteMessage))
+            data.append(optional: Data.fromUIntLikeUnsignedByteArray(UInt(byteMessageData.count)))
+            data.append(optional: byteMessageData)
 
             return data
         }
