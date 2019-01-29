@@ -78,7 +78,7 @@ public struct TrReceipt: Decodable {
     public let statusCode: UInt?
     public let gasUsed: UInt?
     public let bloom: String?
-    public let log: [String]?
+    public let log: [Log]?
     
     public init(from decoder: Decoder) throws {
         
@@ -86,6 +86,30 @@ public struct TrReceipt: Decodable {
         statusCode = try? values.decode(UInt.self, forKey: .statusCode)
         gasUsed = try? values.decode(UInt.self, forKey: .gasUsed)
         bloom = try? values.decode(String.self, forKey: .bloom)
-        log = try? values.decode([String].self, forKey: .log)
+        log = try? values.decode([Log].self, forKey: .log)
+    }
+}
+
+/**
+    Information about log
+ */
+public struct Log: Decodable {
+    
+    private enum LogCodingKeys: String, CodingKey {
+        case address
+        case log
+        case data
+    }
+    
+    public let data: String
+    public let address: String
+    public let log: [String]
+    
+    public init(from decoder: Decoder) throws {
+        
+        let values = try decoder.container(keyedBy: LogCodingKeys.self)
+        data = try values.decode(String.self, forKey: .data)
+        address = try values.decode(String.self, forKey: .address)
+        log = try values.decode([String].self, forKey: .log)
     }
 }

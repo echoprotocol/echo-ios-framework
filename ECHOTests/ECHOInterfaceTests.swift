@@ -901,7 +901,7 @@ class ECHOInterfaceTests: XCTestCase {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
         }))
         let exp = expectation(description: "Getting contract")
-        let historyId = "1.17.114"
+        let historyId = "1.17.945"
         var contractResult: ContractResult!
         
         //act
