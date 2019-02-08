@@ -11,18 +11,24 @@ public struct ContractInfo: ECHOObject, Decodable {
     private enum ContractInfoCodingKeys: String, CodingKey {
         case id
         case statistics
-        case suicided
+        case destroyed
+        case type
+        case supportedAssetId = "supported_asset_id"
     }
     
     public var id: String
     public let statistics: String
-    public let suicided: Bool
+    public let destroyed: Bool
+    public let type: String
+    public let supportedAssetId: String?
     
     public init(from decoder: Decoder) throws {
         
         let values = try decoder.container(keyedBy: ContractInfoCodingKeys.self)
         id = try values.decode(String.self, forKey: .id)
         statistics = try values.decode(String.self, forKey: .statistics)
-        suicided = try values.decode(Bool.self, forKey: .suicided)
+        destroyed = try values.decode(Bool.self, forKey: .destroyed)
+        type = try values.decode(String.self, forKey: .type)
+        supportedAssetId = try? values.decode(String.self, forKey: .supportedAssetId)
     }
 }

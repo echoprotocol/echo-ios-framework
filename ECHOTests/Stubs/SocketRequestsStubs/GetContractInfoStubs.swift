@@ -32,7 +32,7 @@ struct GetContractsSocketRequestElementStub: SocketRequestStub {
     
     func createResponce(id: Int) -> String {
         return """
-                {"id":\(id),"jsonrpc":"2.0","result":[{"id":"1.16.36","statistics":"2.20.36","suicided":false,"type":"evm"}]}
+                {"id":\(id),"jsonrpc":"2.0","result":[{"id":"1.16.56","statistics":"2.20.36","destroyed":false,"type":"evm"}]}
                 """
     }
 }
@@ -43,7 +43,7 @@ struct GetAllContractsSocketRequestElementStub: SocketRequestStub {
     
     func createResponce(id: Int) -> String {
         return """
-                {"id":\(id),"jsonrpc":"2.0","result":[{"id":"1.16.0","statistics":"2.20.0","suicided":false,"type":"evm"},{"id":"1.16.1","statistics":"2.20.1","suicided":false,"type":"evm"},{"id":"1.16.2","statistics":"2.20.2","suicided":false,"type":"evm"},{"id":"1.16.3","statistics":"2.20.3","suicided":false,"type":"evm"},{"id":"1.16.4","statistics":"2.20.4","suicided":false,"type":"evm"},{"id":"1.16.5","statistics":"2.20.5","suicided":false,"type":"evm"},{"id":"1.16.6","statistics":"2.20.6","suicided":false,"type":"evm"},{"id":"1.16.7","statistics":"2.20.7","suicided":false,"type":"evm"},{"id":"1.16.8","statistics":"2.20.8","suicided":false,"type":"evm"},{"id":"1.16.9","statistics":"2.20.9","suicided":false,"type":"evm"}]}
+                {"id":\(id),"jsonrpc":"2.0","result":[{"id":"1.16.0","statistics":"2.20.0","destroyed":false,"type":"evm"},{"id":"1.16.1","statistics":"2.20.1","destroyed":false,"type":"evm"},{"id":"1.16.2","statistics":"2.20.2","destroyed":false,"type":"evm"},{"id":"1.16.3","statistics":"2.20.3","destroyed":false,"type":"evm"},{"id":"1.16.4","statistics":"2.20.4","destroyed":false,"type":"evm"},{"id":"1.16.5","statistics":"2.20.5","destroyed":false,"type":"evm"},{"id":"1.16.6","statistics":"2.20.6","destroyed":false,"type":"evm"},{"id":"1.16.7","statistics":"2.20.7","destroyed":false,"type":"evm"},{"id":"1.16.8","statistics":"2.20.8","destroyed":false,"type":"evm"},{"id":"1.16.9","statistics":"2.20.9","destroyed":false,"type":"evm"}]}
                 """
     }
 }

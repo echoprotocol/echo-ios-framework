@@ -100,7 +100,7 @@ class ECHOInterfaceTests: XCTestCase {
             XCTAssertEqual(isStarted, false)
         }
     }
-//
+
 //    func testRegisterUser() {
 //
 //        //arrange
@@ -108,8 +108,8 @@ class ECHOInterfaceTests: XCTestCase {
 //            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory, .registration]
 //        }))
 //        let exp = expectation(description: "Register User")
-//        let userName = "vsharaev10"
-//        let password = "vsharaev"
+//        let userName = "vsharaev1"
+//        let password = "vsharaev1"
 //        var finalResult = false
 //
 //        //act
@@ -559,9 +559,9 @@ class ECHOInterfaceTests: XCTestCase {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
         }))
         let exp = expectation(description: "Fee For Call Сontract Getting")
-        let registrarNameOrId = "vsharaev1"
+        let registrarNameOrId = "vsharaev"
         let assetId = "1.3.0"
-        let contratId = "1.16.36"
+        let contratId = "1.16.56"
         let methodName = "incrementCounter"
         let params: [AbiTypeValueInputModel] = []
 
@@ -600,9 +600,9 @@ class ECHOInterfaceTests: XCTestCase {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
         }))
         let exp = expectation(description: "Fee For Call Сontract Getting In AnotherAsset")
-        let registrarNameOrId = "vsharaev1"
+        let registrarNameOrId = "vsharaev"
         let assetId = "1.3.1"
-        let contratId = "1.16.36"
+        let contratId = "1.16.56"
         let methodName = "incrementCounter"
         let params: [AbiTypeValueInputModel] = []
         
@@ -643,7 +643,7 @@ class ECHOInterfaceTests: XCTestCase {
         let exp = expectation(description: "Fee For Call Сontract Getting Failed")
         let registrarNameOrId = "dima1 new account unreserved"
         let assetId = "1.3.0"
-        let contratId = "1.16.36"
+        let contratId = "1.16.56"
         let methodName = "incrementCounter"
         let params: [AbiTypeValueInputModel] = []
         
@@ -682,8 +682,8 @@ class ECHOInterfaceTests: XCTestCase {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
         }))
         let exp = expectation(description: "Transfer")
-        let password = "vsharaev1"
         let fromUser = "vsharaev"
+        let password = "vsharaev1"
         let toUser = "vsharaev1"
         var isSuccess = false
         
@@ -715,8 +715,8 @@ class ECHOInterfaceTests: XCTestCase {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
         }))
         let exp = expectation(description: "Transfer")
-        let password = "vsharaev1"
         let fromUser = "vsharaev"
+        let password = "vsharaev1"
         let toUser = "vsharaev1"
         var isSuccess = false
 
@@ -863,6 +863,58 @@ class ECHOInterfaceTests: XCTestCase {
         }
     }
     
+//    func testCreateAsset() {
+//
+//        //arrange
+//        echo = ECHO(settings: Settings(build: {
+//            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+//        }))
+//        let exp = expectation(description: "Create asset")
+//        var asset = Asset("")
+//        asset.symbol = "VVSHAR"
+//        asset.precision = 4
+//        asset.issuer = Account("1.2.168")
+//        asset.setBitsassetOptions(BitassetOptions(feedLifetimeSec: 86400,
+//                                                  minimumFeeds: 7,
+//                                                  forceSettlementDelaySec: 86400,
+//                                                  forceSettlementOffsetPercent: 100,
+//                                                  maximumForceSettlementVolume: 2000,
+//                                                  shortBackingAsset: "1.3.0"))
+//        asset.predictionMarket = false
+//
+//        asset.options = AssetOptions(maxSupply: 100000,
+//                                     marketFeePercent: 0,
+//                                     maxMarketFee: 0,
+//                                     issuerPermissions: AssetOptionIssuerPermissions.committeeFedAsset.rawValue,
+//                                     flags: AssetOptionIssuerPermissions.committeeFedAsset.rawValue,
+//                                     coreExchangeRate: Price(base: AssetAmount(amount: 1, asset: Asset("1.3.0")), quote: AssetAmount(amount: 1, asset: Asset("1.3.1"))),
+//                                     description: "description")
+//        let nameOrId = "ggg3"
+//        let password = "P5kzHnA8Lp5fnt9rp6mS4XB4oudfn6skjKH6JHVjziLZnCLW3Stc"
+//        var success: Bool!
+//
+//        //act
+//        echo.start { [unowned self] (result) in
+//
+//            self.echo.createAsset(nameOrId: nameOrId, password: password, asset: asset) { (result) in
+//
+//                switch result {
+//                case .success(let isSuccess):
+//                    success = isSuccess
+//                    exp.fulfill()
+//                case .failure(_):
+//                    XCTFail("Create asset cant fail")
+//                }
+//            }
+//
+//        }
+//
+//        //assert
+//        waitForExpectations(timeout: timeout) { error in
+//            XCTAssertTrue(success)
+//        }
+//    }
+    
 //    func testChangePassword() {
 //
 //        //arrange
@@ -959,9 +1011,9 @@ class ECHOInterfaceTests: XCTestCase {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
         }))
         let exp = expectation(description: "Getting contract logs")
-        let contractId = "1.16.52"
-        let fromBlock = 1103484
-        let toBlock = 1103488
+        let contractId = "1.16.67"
+        let fromBlock = 0
+        let toBlock = 5272
         var contractLogs: [ContractLog]!
         
         //act
@@ -1053,7 +1105,7 @@ class ECHOInterfaceTests: XCTestCase {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
         }))
         let exp = expectation(description: "Getting contracts")
-        let legalContractId = "1.16.36"
+        let legalContractId = "1.16.52"
         let contractsIDs = [legalContractId]
         var contracts: [ContractInfo] = []
 
@@ -1113,7 +1165,7 @@ class ECHOInterfaceTests: XCTestCase {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
         }))
         let exp = expectation(description: "Getting contracts")
-        let legalContractId = "1.16.36"
+        let legalContractId = "1.16.56"
         var contract: ContractStruct!
         
         //act
@@ -1171,7 +1223,7 @@ class ECHOInterfaceTests: XCTestCase {
             $0.apiOptions = [.database, .networkBroadcast, .accountHistory]
         }))
         let exp = expectation(description: "Creating contract")
-        let byteCode =  "60806040526000805534801561001457600080fd5b50610101806100246000396000f3006080604052600436106053576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680635b34b966146058578063a87d942c14606c578063f5c5ad83146094575b600080fd5b348015606357600080fd5b50606a60a8565b005b348015607757600080fd5b50607e60ba565b6040518082815260200191505060405180910390f35b348015609f57600080fd5b5060a660c3565b005b60016000808282540192505081905550565b60008054905090565b600160008082825403925050819055505600a165627a7a7230582063e27ea8b308defeeb50719f281e50a9b53ffa155e56f3249856ef7eafeb09e90029"
+        let byteCode =  "6080604052348015600f57600080fd5b5061010b8061001f6000396000f300608060405260043610603f576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806329e99f07146044575b600080fd5b348015604f57600080fd5b50606c60048036038101908080359060200190929190505050606e565b005b7fa7659801d76e732d0b4c81221c99e5cf387816232f81f4ff646ba0653d65507a436040518082815260200191505060405180910390a17fa7659801d76e732d0b4c81221c99e5cf387816232f81f4ff646ba0653d65507a816040518082815260200191505060405180910390a1505600a165627a7a7230582044c4962adfce34c7d04f94696d140e8aadb29426be2d9968949d5cffc4cd43560029"
         var success = false
 
         //act
@@ -1213,7 +1265,7 @@ class ECHOInterfaceTests: XCTestCase {
         let exp = expectation(description: "Query contract")
         let registrarNameOrId = "vsharaev"
         let assetId = "1.3.0"
-        let contratId = "1.16.36"
+        let contratId = "1.16.56"
         let methodName = "getCount"
         let params = [AbiTypeValueInputModel]()
         var query: String!
@@ -1248,7 +1300,7 @@ class ECHOInterfaceTests: XCTestCase {
         let password = "vsharaev1"
         let registrarNameOrId = "vsharaev"
         let assetId = "1.3.0"
-        let contratId = "1.16.36"
+        let contratId = "1.16.56"
         let methodName = "incrementCounter"
         let params: [AbiTypeValueInputModel] = []
         var success = false

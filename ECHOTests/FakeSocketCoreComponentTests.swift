@@ -308,7 +308,7 @@ class SocketCoreComponentTests: XCTestCase {
             $0.socketMessenger = messenger
         }))
         let exp = expectation(description: "Getting contracts")
-        let legalContractId = "1.16.36"
+        let legalContractId = "1.16.56"
         var contract: ContractStruct!
         
         //act
@@ -338,7 +338,7 @@ class SocketCoreComponentTests: XCTestCase {
             $0.socketMessenger = messenger
         }))
         let exp = expectation(description: "Getting contracts")
-        let legalContractId = "1.16.36"
+        let legalContractId = "1.16.56"
         let contractsIDs = [legalContractId]
         var contracts: [ContractInfo] = []
         
@@ -568,7 +568,7 @@ class SocketCoreComponentTests: XCTestCase {
         let password = "vsharaev1"
         let registrarNameOrId = "vsharaev"
         let assetId = "1.3.0"
-        let contratId = "1.16.36"
+        let contratId = "1.16.56"
         let methodName = "incrementCounter"
         let params: [AbiTypeValueInputModel] = []
         var success = false
