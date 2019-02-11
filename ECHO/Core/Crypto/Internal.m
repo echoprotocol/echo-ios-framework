@@ -340,6 +340,11 @@
         return [NSString new];
     }
     
+    if (decodedMessageData.length == 0) {
+        NSLog(@"Decoded message lenght equls to 0");
+        return [NSString new];
+    }
+    
     NSString* string = [NSString stringWithUTF8String:[decodedMessageData bytes]];
     
     return string;

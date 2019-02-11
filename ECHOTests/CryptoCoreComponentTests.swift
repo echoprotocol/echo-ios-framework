@@ -95,6 +95,22 @@ class CryptoCoreComponentTests: XCTestCase {
         XCTAssertEqual(message, decryptedMessage)
     }
     
+    func testEncryptThenDecryptZeroMessage() {
+        
+        //arrange
+        let privateKey = Data(hex: "f33b293c58b55e7a34878d5e2fcc5b82624bef424a0ce282be10069a4a60eae5")!
+        let publicKey = Data(hex: "028d4927dde3607d75f09532ea825313dba15411f1c6f7ea355ec5265e8ea39fa1")!
+        let message = ""
+        let nonce = "0"
+        
+        //act
+        let encryptedMessage = cryptoCore.encryptMessage(privateKey: privateKey, publicKey: publicKey, nonce: nonce, message: message)
+        let decryptedMessage = cryptoCore.decryptMessage(privateKey: privateKey, publicKey: publicKey, nonce: nonce, message: encryptedMessage)
+        
+        //assert
+        XCTAssertEqual(message, decryptedMessage)
+    }
+    
     func testEd25519PublicKeyGeneration() {
         
         //arrange
