@@ -282,14 +282,9 @@ final public class ECHO: InterfaceFacades {
     
     // MARK: ContractsFacade
     
-    public func getContractResult(contractResultId: String, completion: @escaping Completion<ContractResult>) {
+    public func getContractResult(contractResultId: String, completion: @escaping Completion<ContractResultEnum>) {
         
-        contractsFacade.getContractResult(historyId: contractResultId, completion: completion)
-    }
-    
-    public func getContractResult(historyId: String, completion: @escaping Completion<ContractResult>) {
-        
-        contractsFacade.getContractResult(historyId: historyId, completion: completion)
+        contractsFacade.getContractResult(contractResultId: contractResultId, completion: completion)
     }
     
     public func getContractLogs(contractId: String, fromBlock: Int, toBlock: Int, completion: @escaping Completion<[ContractLog]>) {
@@ -307,7 +302,7 @@ final public class ECHO: InterfaceFacades {
         contractsFacade.getAllContracts(completion: completion)
     }
     
-    public func getContract(contractId: String, completion: @escaping Completion<ContractStruct>) {
+    public func getContract(contractId: String, completion: @escaping Completion<ContractStructEnum>) {
         
         contractsFacade.getContract(contractId: contractId, completion: completion)
     }

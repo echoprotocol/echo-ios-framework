@@ -15,8 +15,6 @@ public struct CallContractOperation: BaseOperation {
         case registrar
         case callee
         case value
-        case gasPrice
-        case gas
         case code
         case fee
     }
@@ -27,8 +25,6 @@ public struct CallContractOperation: BaseOperation {
     
     public var registrar: Account
     public var value: AssetAmount
-    public let gasPrice: Int
-    public let gas: Int
     public let code: String
     public let callee: Contract
     
@@ -43,8 +39,6 @@ public struct CallContractOperation: BaseOperation {
         self.type = .callContractOperation
         self.registrar = registrar
         self.value = value
-        self.gasPrice = gasPrice
-        self.gas = gas
         self.code = code
         self.fee = fee
         self.callee = callee
@@ -59,8 +53,6 @@ public struct CallContractOperation: BaseOperation {
         registrar = Account(registrarId)
         
         value = try values.decode(AssetAmount.self, forKey: .value)
-        gasPrice = try values.decode(Int.self, forKey: .gasPrice)
-        gas = try values.decode(Int.self, forKey: .gas)
         code = try values.decode(String.self, forKey: .code)
         
         let recieverContractId = try values.decode(String.self, forKey: .callee)
@@ -76,8 +68,6 @@ public struct CallContractOperation: BaseOperation {
         data.append(optional: fee.toData())
         data.append(optional: registrar.toData())
         data.append(optional: value.toData())
-        data.append(optional: Data.fromInt64(gasPrice))
-        data.append(optional: Data.fromInt64(gas))
         
         data.append(optional: Data.fromUIntLikeUnsignedByteArray(UInt(code.count)))
         data.append(optional: code.data(using: .utf8))
@@ -95,8 +85,6 @@ public struct CallContractOperation: BaseOperation {
         let dictionary: [AnyHashable: Any?] = [CallContractOperationCodingKeys.fee.rawValue: fee.toJSON(),
                                                CallContractOperationCodingKeys.registrar.rawValue: registrar.toJSON(),
                                                CallContractOperationCodingKeys.value.rawValue: value.toJSON(),
-                                               CallContractOperationCodingKeys.gasPrice.rawValue: gasPrice,
-                                               CallContractOperationCodingKeys.gas.rawValue: gas,
                                                CallContractOperationCodingKeys.code.rawValue: code,
                                                CallContractOperationCodingKeys.callee.rawValue: callee.toJSON()]
         

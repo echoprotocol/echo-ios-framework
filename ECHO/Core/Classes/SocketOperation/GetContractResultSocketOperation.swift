@@ -9,20 +9,20 @@
 /**
     Retrieves result of called contract operation
  
-    - Return: [ContractResult](ContractResult)
+    - Return: [ContractResultEVM](ContractResultEVM)
  */
 struct GetContractResultSocketOperation: SocketOperation {
     
     var method: SocketOperationType
     var operationId: Int
     var apiId: Int
-    var historyId: String
-    var completion: Completion<ContractResult>
+    var contractResultId: String
+    var completion: Completion<ContractResultEnum>
     
     func createParameters() -> [Any] {
         let array: [Any] = [apiId,
                             SocketOperationKeys.contractResult.rawValue,
-                            [historyId]]
+                            [contractResultId]]
         return array
     }
     
@@ -32,33 +32,28 @@ struct GetContractResultSocketOperation: SocketOperation {
             
             switch response.response {
             case .error(let error):
-                let result = Result<ContractResult, ECHOError>(error: ECHOError.internalError(error.message))
+                let result = Result<ContractResultEnum, ECHOError>(error: ECHOError.internalError(error.message))
                 completion(result)
             case .result(let result):
                 
                 switch result {
                 case .array(let arr):
-                    let lastElement = arr.last
-                    guard let dict = lastElement as? [String: Any] else {
-                        throw ECHOError.encodableMapping
-                    }
-                    
-                    let data = try JSONSerialization.data(withJSONObject: dict, options: [])
-                    let contractResult = try JSONDecoder().decode(ContractResult.self, from: data)
-                    let result = Result<ContractResult, ECHOError>(value: contractResult)
+                    let data = try JSONSerialization.data(withJSONObject: arr, options: [])
+                    let contractResult = try JSONDecoder().decode(ContractResultEnum.self, from: data)
+                    let result = Result<ContractResultEnum, ECHOError>(value: contractResult)
                     completion(result)
                 default:
                     throw ECHOError.encodableMapping
                 }
             }
         } catch {
-            let result = Result<ContractResult, ECHOError>(error: ECHOError.encodableMapping)
+            let result = Result<ContractResultEnum, ECHOError>(error: ECHOError.encodableMapping)
             completion(result)
         }
     }
     
     func forceEnd() {
-        let result = Result<ContractResult, ECHOError>(error: ECHOError.connectionLost)
+        let result = Result<ContractResultEnum, ECHOError>(error: ECHOError.connectionLost)
         completion(result)
     }
 }

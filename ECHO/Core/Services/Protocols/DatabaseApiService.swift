@@ -95,10 +95,10 @@ protocol DatabaseApiService: BaseApiService {
 /**
      Return result of contract operation call
      
-     - Parameter lowerBound: Hisory id for find contract result
-     - Parameter completion: Callback which returns [ContractResult](ContractResult) or error
+     - Parameter contractResultId: Contract result id
+     - Parameter completion: Callback which returns [ContractResultEnum](ContractResultEnum) or error
  */
-    func getContractResult(historyId: String, completion: @escaping Completion<ContractResult>)
+    func getContractResult(contractResultId: String, completion: @escaping Completion<ContractResultEnum>)
     
 /**
     Return list of contract logs
@@ -138,9 +138,9 @@ f */
      Return full information about contract
      
      - Parameter contractId: Identifier for contract
-     - Parameter completion: Callback which returns an [ContractStruct](ContractStruct) or error
+     - Parameter completion: Callback which returns an [ContractStructEnum](ContractStructEnum) or error
  */
-    func getContract(contractId: String, completion: @escaping Completion<ContractStruct>)
+    func getContract(contractId: String, completion: @escaping Completion<ContractStructEnum>)
     
 /**
      Calls contract method without changing state of blockchain

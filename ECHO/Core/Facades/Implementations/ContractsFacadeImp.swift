@@ -72,20 +72,20 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
         services.databaseService.getContractLogs(contractId: contractId, fromBlock: fromBlock, toBlock: toBlock, completion: completion)
     }
     
-    public func getContractResult(historyId: String, completion: @escaping Completion<ContractResult>) {
+    public func getContractResult(contractResultId: String, completion: @escaping Completion<ContractResultEnum>) {
         
         // Validate historyId
         do {
             let validator = IdentifierValidator()
-            try validator.validateId(historyId, for: .contractResult)
+            try validator.validateId(contractResultId, for: .contractResult)
         } catch let error {
             let echoError = (error as? ECHOError) ?? ECHOError.undefined
-            let result = Result<ContractResult, ECHOError>(error: echoError)
+            let result = Result<ContractResultEnum, ECHOError>(error: echoError)
             completion(result)
             return
         }
         
-        services.databaseService.getContractResult(historyId: historyId, completion: completion)
+        services.databaseService.getContractResult(contractResultId: contractResultId, completion: completion)
     }
     
     public func getContracts(contractIds: [String], completion: @escaping Completion<[ContractInfo]>) {
@@ -111,7 +111,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
         services.databaseService.getAllContracts(completion: completion)
     }
     
-    public func getContract(contractId: String, completion: @escaping Completion<ContractStruct>) {
+    public func getContract(contractId: String, completion: @escaping Completion<ContractStructEnum>) {
         
         // Validate contractId
         do {
@@ -119,7 +119,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
             try validator.validateId(contractId, for: .contract)
         } catch let error {
             let echoError = (error as? ECHOError) ?? ECHOError.undefined
-            let result = Result<ContractStruct, ECHOError>(error: echoError)
+            let result = Result<ContractStructEnum, ECHOError>(error: echoError)
             completion(result)
             return
         }
@@ -485,8 +485,6 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
             
             let operation = CreateContractOperation(registrar: account,
                                                     value: AssetAmount(amount: amount, asset: Asset(assetId)),
-                                                    gasPrice: 0,
-                                                    gas: 11000000,
                                                     code: byteCode,
                                                     fee: AssetAmount(amount: 0, asset: Asset(assetForFee)),
                                                     supportedAsset: supportedAsset,

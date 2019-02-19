@@ -244,7 +244,7 @@ class SubscribtionTests: XCTestCase {
         let password = "vsharaev1"
         let registrarNameOrId = "vsharaev"
         let assetId = "1.3.0"
-        let contratId = "1.16.67"
+        let contratId = "1.16.10"
         let methodName = "test"
         let params: [AbiTypeValueInputModel] = [AbiTypeValueInputModel(type: .uint(size: 256), value: "1")]
         
