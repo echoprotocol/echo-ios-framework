@@ -18,7 +18,7 @@ final public class Configurator {
     public var cryproComponent: CryptoCoreComponent = CryptoCoreImp()
     public var abiCoderComponent: AbiCoder = AbiCoderImp(argumentCoder: AbiArgumentCoderImp())
     public var apiOptions: APIOption = [.database, .accountHistory, .networkBroadcast, .crypto, .networkNodes, .registration]
-    public var network: ECHONetwork = ECHONetwork(url: "ws://195.201.164.54:6311/",
+    public var network: ECHONetwork = ECHONetwork(url: "ws://195.201.164.54:63101/",
                                                   prefix: ECHONetworkPrefix.echo,
                                                   echorandPrefix: .det)
 }

@@ -1,5 +1,5 @@
 //
-//  ContractResult.swift
+//  ContractResultEVM.swift
 //  ECHO
 //
 //  Created by Vladimir Sharaev on 10.09.2018.
@@ -7,11 +7,11 @@
 //
 
 /**
-    Model of contract operation result
+    Model of contract operation result for VM type Etherium
  */
-public struct ContractResult: Decodable {
+public struct ContractResultEVM: Decodable {
     
-    private enum ContractResultCodingKeys: String, CodingKey {
+    private enum ContractResultEVMCodingKeys: String, CodingKey {
         case execRes = "exec_res"
         case trReceipt = "tr_receipt"
     }
@@ -21,7 +21,7 @@ public struct ContractResult: Decodable {
     
     public init(from decoder: Decoder) throws {
         
-        let values = try decoder.container(keyedBy: ContractResultCodingKeys.self)
+        let values = try decoder.container(keyedBy: ContractResultEVMCodingKeys.self)
         execRes = try values.decode(ExecRes.self, forKey: .execRes)
         trReceipt = try values.decode(TrReceipt.self, forKey: .trReceipt)
     }

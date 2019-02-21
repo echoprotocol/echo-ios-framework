@@ -14,8 +14,6 @@ public struct CreateContractOperation: BaseOperation {
     private enum CreateContractOperationCodingKeys: String, CodingKey {
         case registrar
         case value
-        case gasPrice
-        case gas
         case code
         case fee
         case supportedAssetId = "supported_asset_id"
@@ -28,16 +26,12 @@ public struct CreateContractOperation: BaseOperation {
     
     public var registrar: Account
     public var value: AssetAmount
-    public let gasPrice: Int
-    public let gas: Int
     public let code: String
     public var supportedAsset: OptionalValue<Asset>
     public let ethAccuracy: Bool
     
     public init(registrar: Account,
                 value: AssetAmount,
-                gasPrice: Int,
-                gas: Int,
                 code: String,
                 fee: AssetAmount,
                 supportedAsset: Asset?,
@@ -46,8 +40,6 @@ public struct CreateContractOperation: BaseOperation {
         self.type = .createContractOperation
         self.registrar = registrar
         self.value = value
-        self.gasPrice = gasPrice
-        self.gas = gas
         self.code = code
         self.fee = fee
         self.supportedAsset = OptionalValue<Asset>(supportedAsset, addByteToStart: true)
@@ -63,8 +55,6 @@ public struct CreateContractOperation: BaseOperation {
         registrar = Account(registrarId)
         
         value = try values.decode(AssetAmount.self, forKey: .value)
-        gasPrice = try values.decode(Int.self, forKey: .gasPrice)
-        gas = try values.decode(Int.self, forKey: .gas)
         code = try values.decode(String.self, forKey: .code)
         
         fee = try values.decode(AssetAmount.self, forKey: .fee)
@@ -86,8 +76,6 @@ public struct CreateContractOperation: BaseOperation {
         data.append(optional: fee.toData())
         data.append(optional: registrar.toData())
         data.append(optional: value.toData())
-        data.append(optional: Data.fromInt64(gasPrice))
-        data.append(optional: Data.fromInt64(gas))
         
         data.append(optional: Data.fromUIntLikeUnsignedByteArray(UInt(code.count)))
         data.append(optional: code.data(using: .utf8))
@@ -106,8 +94,6 @@ public struct CreateContractOperation: BaseOperation {
         var dictionary: [AnyHashable: Any?] = [CreateContractOperationCodingKeys.fee.rawValue: fee.toJSON(),
                                                CreateContractOperationCodingKeys.registrar.rawValue: registrar.toJSON(),
                                                CreateContractOperationCodingKeys.value.rawValue: value.toJSON(),
-                                               CreateContractOperationCodingKeys.gasPrice.rawValue: gasPrice,
-                                               CreateContractOperationCodingKeys.gas.rawValue: gas,
                                                CreateContractOperationCodingKeys.code.rawValue: code,
                                                CreateContractOperationCodingKeys.ethAccuracy.rawValue: ethAccuracy]
         

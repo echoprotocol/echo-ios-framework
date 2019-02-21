@@ -80,10 +80,10 @@ public protocol ContractsFacade {
 /**
      Return result of contract operation call
      
-     - Parameter historyId: History operation identifier
-     - Parameter completion: Callback which returns an [ContractResult](ContractResult) or error
+     - Parameter contractResultId: Contract result identifier
+     - Parameter completion: Callback which returns an [ContractResultEnum](ContractResultEnum) or error
  */
-    func getContractResult(historyId: String, completion: @escaping Completion<ContractResult>)
+    func getContractResult(contractResultId: String, completion: @escaping Completion<ContractResultEnum>)
     
 /**
      Return list of contract logs
@@ -114,7 +114,7 @@ public protocol ContractsFacade {
      Return full information about contract
      
      - Parameter contractId: Identifier for contract
-     - Parameter completion: Callback which returns an [ContractStruct](ContractStruct) or error
+     - Parameter completion: Callback which returns an [ContractStructEnum](ContractStructEnum) or error
  */
-    func getContract(contractId: String, completion: @escaping Completion<ContractStruct>)
+    func getContract(contractId: String, completion: @escaping Completion<ContractStructEnum>)
 }

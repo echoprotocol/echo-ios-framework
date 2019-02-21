@@ -309,7 +309,7 @@ class SocketCoreComponentTests: XCTestCase {
         }))
         let exp = expectation(description: "Getting contracts")
         let legalContractId = "1.16.56"
-        var contract: ContractStruct!
+        var contract: ContractStructEnum!
         
         //act
         echo.start { [unowned self] (result) in
@@ -387,36 +387,6 @@ class SocketCoreComponentTests: XCTestCase {
         //assert
         waitForExpectations(timeout: 1) { error in
             XCTAssertTrue(contracts.count > 0)
-        }
-    }
-    
-    func testFakeGetContractResult() {
-        
-        //arrange
-        let messenger = SocketMessengerStub(state: .getContract)
-        echo = ECHO(settings: Settings(build: {
-            $0.socketMessenger = messenger
-        }))
-        let exp = expectation(description: "Getting contract")
-        let historyId = "1.17.2"
-        var contractResult: ContractResult!
-        
-        //act
-        echo.start { [unowned self] (result) in
-            self.echo.getContractResult(historyId: historyId, completion: { (result) in
-                switch result {
-                case .success(let res):
-                    contractResult = res
-                    exp.fulfill()
-                case .failure(_):
-                    XCTFail("Getting result cant fail")
-                }
-            })
-        }
-        
-        //assert
-        waitForExpectations(timeout: 1) { error in
-            XCTAssertNotNil(contractResult)
         }
     }
     
