@@ -10,7 +10,7 @@ typealias GetMemoQueueOperationInitParams = (queue: ECHOQueue,
                                              cryptoCore: CryptoCoreComponent,
                                              message: String?,
                                              saveKey: String,
-                                             password: String,
+                                             passwordOrWif: PassOrWif,
                                              networkPrefix: String,
                                              fromAccountKey: String,
                                              toAccountKey: String)
@@ -26,7 +26,7 @@ final class GetMemoQueueOperation<T>: Operation where T: Any {
     fileprivate weak var cryptoCore: CryptoCoreComponent?
     fileprivate let message: String?
     fileprivate let saveKey: String
-    fileprivate let password: String
+    fileprivate let passwordOrWif: PassOrWif
     fileprivate let networkPrefix: String
     fileprivate let fromAccountKey: String
     fileprivate let toAccountKey: String
@@ -38,7 +38,7 @@ final class GetMemoQueueOperation<T>: Operation where T: Any {
         self.cryptoCore = initParams.cryptoCore
         self.message = initParams.message
         self.saveKey = initParams.saveKey
-        self.password = initParams.password
+        self.passwordOrWif = initParams.passwordOrWif
         self.networkPrefix = initParams.networkPrefix
         self.fromAccountKey = initParams.fromAccountKey
         self.toAccountKey = initParams.toAccountKey
@@ -62,22 +62,27 @@ final class GetMemoQueueOperation<T>: Operation where T: Any {
             return
         }
         
-        guard let keyChain = ECHOKeychainSecp256k1(name: name,
-                                                   password: password,
-                                                   type: KeychainType.memo,
-                                                   core: cryptoCore) else {
-                
-                queue?.cancelAllOperations()
-                let result = Result<T, ECHOError>(error: ECHOError.invalidCredentials)
-                completion(result)
-                return
+        var keysContrainer: AddressKeysContainer?
+        switch passwordOrWif {
+        case .password(let pass):
+            keysContrainer = AddressKeysContainer(login: name, password: pass, core: cryptoCore)
+        case .wif(let wif):
+            keysContrainer = AddressKeysContainer(wif: wif, core: cryptoCore)
+        }
+        
+        guard let contrainer = keysContrainer else {
+                                                            
+            queue?.cancelAllOperations()
+            let result = Result<T, ECHOError>(error: ECHOError.invalidCredentials)
+            completion(result)
+            return
         }
         
         let fromPublicKey = cryptoCore.getPublicKeyFromAddress(fromMemoKeyString, networkPrefix: networkPrefix)
         let toPublicKey = cryptoCore.getPublicKeyFromAddress(toMemoKeyString, networkPrefix: networkPrefix)
         
         let nonce = UInt(0)
-        let byteMessage = cryptoCore.encryptMessage(privateKey: keyChain.raw,
+        let byteMessage = cryptoCore.encryptMessage(privateKey: contrainer.memoKeychain.raw,
                                                     publicKey: toPublicKey,
                                                     nonce: String(format: "%llu", nonce),
                                                     message: message)

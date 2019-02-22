@@ -13,10 +13,6 @@ final public class CryptoCoreImp: CryptoCoreComponent {
     
     public init() { }
     
-    public func generatePublicKey(withPrivateKey privateKeyData: Data, compression isCompression: Bool) -> Data {
-        return Crypto.generatePublicKey(data: privateKeyData, compressed: isCompression)
-    }
-    
     public func sha256(_ data: Data) -> Data {
         return CryptoHash.sha256(data)
     }
@@ -45,7 +41,19 @@ final public class CryptoCoreImp: CryptoCoreComponent {
         return Crypto.getPublicKeyFromAddress(address, networkPrefix: networkPrefix)
     }
     
+    public func generatePublicKey(withPrivateKey privateKeyData: Data, compression isCompression: Bool) -> Data {
+        return Crypto.generatePublicKey(data: privateKeyData, compressed: isCompression)
+    }
+    
     public func generatePublicEd25519Key(withPrivateKey privateKeyData: Data) -> Data {
         return Crypto.generatePublicEd25519Key(data: privateKeyData)
+    }
+    
+    public func getPrivateKeyFromWIF(_ wif: String) -> Data? {
+        return Crypto.getPrivateKeyFromWIF(wif)
+    }
+    
+    public func getWIFFromPrivateKey(_ privateKey: Data) -> String {
+        return Crypto.getWIFFromPrivateKey(privateKey)
     }
 }

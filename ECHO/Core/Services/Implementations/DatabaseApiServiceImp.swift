@@ -50,6 +50,17 @@ extension AccountsService {
         
         socketCore.send(operation: operation)
     }
+    
+    func getKeyReferences(keys: [String], completion: @escaping Completion<[[String]]>) {
+        
+        let operation = GetKeyReferencesSocketOperation(method: .call,
+                                                        operationId: socketCore.nextOperationId(),
+                                                        apiId: apiIdentifire,
+                                                        keys: keys,
+                                                        completion: completion)
+        
+        socketCore.send(operation: operation)
+    }
 }
 
 extension GlobalsService {

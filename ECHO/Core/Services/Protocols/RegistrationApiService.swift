@@ -30,4 +30,3 @@ protocol RegistrationApiService: BaseApiService {
                          echorandKey: String,
                          completion: @escaping Completion<Bool>)
 }
-

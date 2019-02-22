@@ -134,4 +134,66 @@ class CryptoCoreComponentTests: XCTestCase {
         //assert
         XCTAssertEqual(signature.hex, "f457ae1fd4f4ff52ea09f807bdda0eddfeb05467c2c24df1009b9d63ce6dab4fd391395be4d41540f582d937c4accea360d2be13ff7e17a084d1016aeb56f308")
     }
+    
+    func testPrivateKeyFromWIF() {
+        
+        //arrange
+        let wifString = "5HueCGU8rMjxEXxiPuD5BDku4MkFqeZyd4dZ1jvhTVqvbTLvyTJ"
+        let privString = "0c28fca386c7a227600b2fe50b7cae11ec86d3bf1fbe471be89827e19d72aa1d"
+        
+        //act
+        let privData = cryptoCore.getPrivateKeyFromWIF(wifString)
+        
+        //assert
+        XCTAssertEqual(privData?.hex, privString)
+    }
+    
+    func testWifFromPrivateKey() {
+        
+        //arrange
+        let wifString = "5HueCGU8rMjxEXxiPuD5BDku4MkFqeZyd4dZ1jvhTVqvbTLvyTJ"
+        let privatekey = Data(hex: "0c28fca386c7a227600b2fe50b7cae11ec86d3bf1fbe471be89827e19d72aa1d")!
+        
+        //act
+        let wif = cryptoCore.getWIFFromPrivateKey(privatekey)
+        
+        //assert
+        XCTAssertEqual(wif, wifString)
+    }
+    
+    func testPrivateKeyFromWIFFailChecksum() {
+        
+        //arrange
+        let wifString = "5HueCGU8rMjxEXxiPuD5BDku4MkFqeZyd4dZ1jvhTVqvbTLvyTA"
+        
+        //act
+        let privData = cryptoCore.getPrivateKeyFromWIF(wifString)
+        
+        //assert
+        XCTAssertNil(privData)
+    }
+    
+    func testPrivateKeyFromWIFFailBytesCount() {
+        
+        //arrange
+        let wifString = "5HueCGU8rMjxEXxiPuD5BDku4MkFqeZyd4djvhTVqvbTLvyTJ"
+        
+        //act
+        let privData = cryptoCore.getPrivateKeyFromWIF(wifString)
+        
+        //assert
+        XCTAssertNil(privData)
+    }
+    
+    func testPrivateKeyFromWIFFailFirstByte() {
+        
+        //arrange
+        let wifString = "25ueCGU8rMjxEXxiPuD5BDku4MkFqeZyd4dZ1jvhTVqvbTLvyTJ"
+        
+        //act
+        let privData = cryptoCore.getPrivateKeyFromWIF(wifString)
+        
+        //assert
+        XCTAssertNil(privData)
+    }
 }

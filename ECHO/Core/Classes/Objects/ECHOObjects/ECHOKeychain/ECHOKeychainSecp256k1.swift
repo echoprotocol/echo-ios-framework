@@ -33,6 +33,16 @@ final public class ECHOKeychainSecp256k1: ECHOKeychain {
         }
     }
     
+    public convenience init?(wif: String, core: CryptoCoreComponent) {
+        
+        let privateKey = core.getPrivateKeyFromWIF(wif)
+        if let privateKey = privateKey {
+            self.init(seed: privateKey, core: core)
+        } else {
+            return nil
+        }
+    }
+    
     public func publicKey() -> Data {
         
         return core.generatePublicKey(withPrivateKey: raw, compression: true)
@@ -46,5 +56,10 @@ final public class ECHOKeychainSecp256k1: ECHOKeychain {
         publicKey.append(checkSum)
         
         return Base58.encode(publicKey)
+    }
+    
+    public func wif() -> String {
+        
+        return core.getWIFFromPrivateKey(raw)
     }
 }

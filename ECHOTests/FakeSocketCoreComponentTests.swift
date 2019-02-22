@@ -156,7 +156,15 @@ class SocketCoreComponentTests: XCTestCase {
         
         //act
         echo.start { [unowned self] (result) in
-            self.echo.sendTransferOperation(fromNameOrId: fromUser, password: password, toNameOrId: toUser, amount: 1, asset: "1.3.0", assetForFee: nil,message: "", completion: { (result) in
+            self.echo.sendTransferOperation(fromNameOrId: fromUser,
+                                            passwordOrWif: PassOrWif.password(password),
+                                            toNameOrId: toUser,
+                                            amount: 1,
+                                            asset: "1.3.0",
+                                            assetForFee: nil,
+                                            message: "",
+                                            completion: { (result) in
+                                                
                 switch result {
                 case .success(let result):
                     isSuccess = result
@@ -224,7 +232,7 @@ class SocketCoreComponentTests: XCTestCase {
         //act
         echo.start { [unowned self] (result) in
             self.echo.issueAsset(issuerNameOrId: issuerNameOrId,
-                                 password: password,
+                                 passwordOrWif: PassOrWif.password(password),
                                  asset: asset,
                                  amount: amount,
                                  destinationIdOrName: destinationIdOrName,
@@ -281,7 +289,9 @@ class SocketCoreComponentTests: XCTestCase {
         //act
         echo.start { [unowned self] (result) in
             
-            self.echo.createAsset(nameOrId: nameOrId, password: password, asset: asset) { (result) in
+            self.echo.createAsset(nameOrId: nameOrId,
+                                  passwordOrWif: PassOrWif.password(password),
+                                  asset: asset) { (result) in
                 
                 switch result {
                 case .success(let isSuccess):
@@ -414,7 +424,7 @@ class SocketCoreComponentTests: XCTestCase {
         //act
         echo.start { [unowned self] (result) in
             self.echo.createContract(registrarNameOrId: "vsharaev",
-                                     password: "vsharaev1",
+                                     passwordOrWif: PassOrWif.password("vsharaev1"),
                                      assetId: "1.3.0",
                                      assetForFee: nil,
                                      byteCode: byteCode,
@@ -466,7 +476,7 @@ class SocketCoreComponentTests: XCTestCase {
         echo.start { [unowned self] (result) in
             
             self.echo.createContract(registrarNameOrId: "vsharaev",
-                                     password: "vsharaev1",
+                                     passwordOrWif: PassOrWif.password("vsharaev1"),
                                      assetId: "1.3.0",
                                      assetForFee: nil,
                                      byteCode: byteCode,
@@ -546,7 +556,7 @@ class SocketCoreComponentTests: XCTestCase {
         //act
         echo.start { [unowned self] (result) in
             self.echo.callContract(registrarNameOrId: registrarNameOrId,
-                                   password: password,
+                                   passwordOrWif: PassOrWif.password(password),
                                    assetId: assetId,
                                    amount: nil,
                                    assetForFee: nil,

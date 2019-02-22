@@ -25,10 +25,25 @@ final public class AddressKeysContainer {
 
     public init?(login: String, password: String, core: CryptoCoreComponent) {
         
-        guard let ownerKeychain = ECHOKeychainSecp256k1(name: login, password: password, type: .owner, core: core),
+        guard let ownerKeychain = ECHOKeychainSecp256k1(name: login, password: password, type: .active, core: core),
             let activeKeychain = ECHOKeychainSecp256k1(name: login, password: password, type: .active, core: core),
-            let memoKeychain = ECHOKeychainSecp256k1(name: login, password: password, type: .memo, core: core),
-            let echorandKeychain = ECHOKeychainEd25519(name: login, password: password, type: .echorand, core: core) else {
+            let memoKeychain = ECHOKeychainSecp256k1(name: login, password: password, type: .active, core: core),
+            let echorandKeychain = ECHOKeychainEd25519(name: login, password: password, type: .active, core: core) else {
+                return nil
+        }
+        
+        self.ownerKeychain = ownerKeychain
+        self.activeKeychain = activeKeychain
+        self.memoKeychain = memoKeychain
+        self.echorandKeychain = echorandKeychain
+    }
+    
+    public init?(wif: String, core: CryptoCoreComponent) {
+        
+        guard let ownerKeychain = ECHOKeychainSecp256k1(wif: wif, core: core),
+            let activeKeychain = ECHOKeychainSecp256k1(wif: wif, core: core),
+            let memoKeychain = ECHOKeychainSecp256k1(wif: wif, core: core),
+            let echorandKeychain = ECHOKeychainEd25519(wif: wif, core: core) else {
                 return nil
         }
         

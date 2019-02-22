@@ -128,7 +128,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
     }
     
     public func createContract(registrarNameOrId: String,
-                               password: String,
+                               passwordOrWif: PassOrWif,
                                assetId: String,
                                assetForFee: String?,
                                byteCode: String,
@@ -146,7 +146,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
         }
         
         createContract(registrarNameOrId: registrarNameOrId,
-                       password: password,
+                       passwordOrWif: passwordOrWif,
                        assetId: assetId,
                        assetForFee: assetForFee,
                        byteCode: byteCode,
@@ -157,7 +157,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
     }
     
     public func callContract(registrarNameOrId: String,
-                             password: String,
+                             passwordOrWif: PassOrWif,
                              assetId: String,
                              amount: UInt?,
                              assetForFee: String?,
@@ -229,7 +229,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
                                               cryptoCore: cryptoCore,
                                               keychainType: KeychainType.active,
                                               saveKey: ContractKeys.transaction.rawValue,
-                                              password: password,
+                                              passwordOrWif: passwordOrWif,
                                               networkPrefix: network.prefix.rawValue,
                                               fromAccountKey: ContractKeys.registrarAccount.rawValue,
                                               operationKey: ContractKeys.operation.rawValue,
@@ -321,7 +321,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
     }
     
     fileprivate func createContract(registrarNameOrId: String,
-                                    password: String,
+                                    passwordOrWif: PassOrWif,
                                     assetId: String,
                                     assetForFee: String?,
                                     byteCode: String,
@@ -390,7 +390,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
                                               cryptoCore: cryptoCore,
                                               keychainType: KeychainType.active,
                                               saveKey: ContractKeys.transaction.rawValue,
-                                              password: password,
+                                              passwordOrWif: passwordOrWif,
                                               networkPrefix: network.prefix.rawValue,
                                               fromAccountKey: ContractKeys.registrarAccount.rawValue,
                                               operationKey: ContractKeys.operation.rawValue,

@@ -33,6 +33,16 @@ final public class ECHOKeychainEd25519: ECHOKeychain {
         }
     }
     
+    public convenience init?(wif: String, core: CryptoCoreComponent) {
+        
+        let privateKey = core.getPrivateKeyFromWIF(wif)
+        if let privateKey = privateKey {
+            self.init(seed: privateKey, core: core)
+        } else {
+            return nil
+        }
+    }
+    
     public func publicKey() -> Data {
         
         return core.generatePublicEd25519Key(withPrivateKey: raw)
@@ -42,5 +52,10 @@ final public class ECHOKeychainEd25519: ECHOKeychain {
         
         let publicKey = self.publicKey()
         return Base58.encode(publicKey)
+    }
+    
+    public func wif() -> String {
+        
+        return core.getWIFFromPrivateKey(raw)
     }
 }

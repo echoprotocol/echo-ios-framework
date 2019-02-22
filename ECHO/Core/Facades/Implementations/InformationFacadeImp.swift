@@ -508,7 +508,7 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                 if var operation = operation as? CreateAssetOperation {
                     let feeAsset = self?.findAssetsIn(assets, assetId: operation.fee.asset.id)
                     
-                    var asset: Asset? = nil
+                    var asset: Asset?
                     
                     if let assetId = history[index].result[safe: 1] as? String {
                         asset = self?.findAssetsIn(assets, assetId: assetId)

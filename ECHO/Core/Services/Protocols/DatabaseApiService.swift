@@ -51,7 +51,14 @@ protocol DatabaseApiService: BaseApiService {
      - Parameter completion: Callback which returns accounts or error
  */
     func getFullAccount(nameOrIds: [String], shoudSubscribe: Bool, completion: @escaping Completion<[String: UserAccount]>)
-    
+
+/**
+     Fetch all account id relevant to the specified keys.
+     
+     - Parameter keys: Public keys of account for search
+     - Parameter completion: Callback which returns array of arrays of id for each key or error
+ */
+    func getKeyReferences(keys: [String], completion: @escaping Completion<[[String]]>)
 /**
     Retrieves required fee by asset for ech operation
 

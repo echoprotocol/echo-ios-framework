@@ -95,4 +95,70 @@ final class Crypto {
         
         return Ed25519.sign(hash, privateKey: privateKey);
     }
+    
+    /// Returns private key from wif
+    ///
+    /// - Parameters:
+    ///   - wif: Private key in WIF format
+    /// - Returns: 32-byte private key. If any error find, will return nil
+    public static func getPrivateKeyFromWIF(_ wif: String) -> Data? {
+        
+        var bytes = Base58.decode(wif)
+        
+        if bytes.count < 4 {
+            return nil
+        }
+    
+        let checksum = bytes.subdata(in: Range(bytes.count-4..<bytes.count))
+        bytes.removeSubrange(bytes.count-4..<bytes.count)
+        let generatedChecksum = Crypto.generateChecksumForData(bytes)
+        
+        if checksum != generatedChecksum {
+            return nil
+        }
+        
+        let firstByte = bytes.removeFirst()
+        
+        if firstByte != 0x80 {
+            return nil
+        }
+        
+        if bytes.count != 32 {
+            return nil
+        }
+        
+        return bytes
+    }
+    
+    /// Returns private key in presentedd in WIF format
+    ///
+    /// - Parameters:
+    ///   - privateKey: 32-byte private key
+    /// - Returns: Private key in presentedd in WIF format
+    public static func getWIFFromPrivateKey(_ privateKey: Data) -> String {
+        
+        var data = privateKey
+        data.insert(0x80, at: 0)
+        
+        let checksum = generateChecksumForData(data)
+        
+        data.append(checksum)
+        
+        let base58String = Base58.encode(data)
+        
+        return base58String
+    }
+    
+    // Returns checksum for data
+    ///
+    /// - Parameters:
+    ///   - data: Data for checksum generation
+    /// - Returns: 4 bytes of checksum
+    private static func generateChecksumForData(_ data: Data) -> Data {
+        
+        let firstSHA256 = CryptoHash.sha256(data)
+        let secondSHA256 = CryptoHash.sha256(firstSHA256)
+        
+        return secondSHA256[0...3]
+    }
 }

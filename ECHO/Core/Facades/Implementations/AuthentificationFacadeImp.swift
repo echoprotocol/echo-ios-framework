@@ -55,16 +55,61 @@ final public class AuthentificationFacadeImp: AuthentificationFacade, ECHOQueueb
         }
     }
     
+    public func isOwnedBy(wif: String, completion: @escaping Completion<[UserAccount]>) {
+        
+        guard let keysContainer = AddressKeysContainer(wif: wif, core: cryptoCore) else {
+            let result = Result<[UserAccount], ECHOError>(error: ECHOError.invalidCredentials)
+            completion(result)
+            return
+        }
+        
+        let publicAdderess = network.prefix.rawValue + keysContainer.activeKeychain.publicAddress()
+        
+        services.databaseService.getKeyReferences(keys: [publicAdderess]) { [weak self] (result) in
+            
+            switch result {
+            case .success(let arrayOfUserIds):
+                
+                guard let userIds = arrayOfUserIds.first else {
+                    let result = Result<[UserAccount], ECHOError>(value: [])
+                    completion(result)
+                    return
+                }
+                
+                guard let strongSelf = self else {
+                    return
+                }
+                
+                strongSelf.services.databaseService.getFullAccount(nameOrIds: userIds,
+                                                                   shoudSubscribe: false,
+                                                                   completion: { (result) in
+                    
+                    switch result {
+                    case .success(let userAccounts):
+                        let array = Array(userAccounts.values)
+                        let result = Result<[UserAccount], ECHOError>(value: array)
+                        completion(result)
+                    case .failure(let error):
+                        let result = Result<[UserAccount], ECHOError>(error: error)
+                        completion(result)
+                    }
+                })
+            case .failure(let error):
+                let result = Result<[UserAccount], ECHOError>(error: error)
+                completion(result)
+            }
+        }
+    }
+    
     fileprivate func checkAccount(account: UserAccount, name: String, password: String) -> Bool {
         
-        guard let keychain = ECHOKeychainSecp256k1(name: name,
-                                                   password: password,
-                                                   type: .owner,
-                                                   core: cryptoCore)  else {
+        guard let keysContainer = AddressKeysContainer(login: name,
+                                                        password: password,
+                                                        core: cryptoCore) else {
             return false
         }
         
-        let key = network.prefix.rawValue + keychain.publicAddress()
+        let key = network.prefix.rawValue + keysContainer.ownerKeychain.publicAddress()
         let matches = account.account.owner?.keyAuths.compactMap { $0.address.addressString == key }.filter { $0 == true }
         
         if let matches = matches {
@@ -119,7 +164,7 @@ final public class AuthentificationFacadeImp: AuthentificationFacade, ECHOQueueb
                                               cryptoCore: cryptoCore,
                                               keychainType: KeychainType.owner,
                                               saveKey: ChangePasswordKeys.transaction.rawValue,
-                                              password: old,
+                                              passwordOrWif: PassOrWif.password(old),
                                               networkPrefix: network.prefix.rawValue,
                                               fromAccountKey: ChangePasswordKeys.account.rawValue,
                                               operationKey: ChangePasswordKeys.operation.rawValue,

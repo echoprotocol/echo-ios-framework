@@ -27,7 +27,7 @@ struct FullAccountStub {
                                     "account_auths": [],
                                     "key_auths": [
                                         [
-                                            "ECHO8Fs2D8nVEW3x5knWmNKAtTJdC1Zbw7kkxiG1DX5xoFAb1f9nLH",
+                                            "ECHO6CNWcfkh4DhtbYtjZgMmwb49noxkPFwCu5pYjtNsK3K6XX6JpV",
                                             1
                                         ]
                                     ],
@@ -44,9 +44,9 @@ struct FullAccountStub {
                                     ],
                                     "address_auths": []
                                 },
-                                "ed_key": "fd91760140895c694197664baeb5388bc9d9bb70b6ee13d087e0404758708418",
+                                "ed_key": "fd9370d6384ee109765616b2ec5337b221a53a1fa3f3a076b68fcf774994a914",
                                 "options": {
-                                    "memo_key": "ECHO7iMzBkAxXJkKy8vMMZ3JZmXHJ7jBz81rNxy1jkwyYXMNJkfVVY",
+                                    "memo_key": "ECHO6CNWcfkh4DhtbYtjZgMmwb49noxkPFwCu5pYjtNsK3K6XX6JpV",
                                     "voting_account": "1.2.5",
                                     "delegating_account": "1.2.12",
                                     "num_witness": 0,

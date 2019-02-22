@@ -244,7 +244,7 @@ class SubscribtionTests: XCTestCase {
         let password = "vsharaev1"
         let registrarNameOrId = "vsharaev"
         let assetId = "1.3.0"
-        let contratId = "1.16.10"
+        let contratId = "1.16.46"
         let methodName = "test"
         let params: [AbiTypeValueInputModel] = [AbiTypeValueInputModel(type: .uint(size: 256), value: "1")]
         
@@ -255,7 +255,7 @@ class SubscribtionTests: XCTestCase {
             self.echo.subscribeToContractLogs(contractId: contratId, delegate: delegate)
             
             self.echo.callContract(registrarNameOrId: registrarNameOrId,
-                                   password: password,
+                                   passwordOrWif: PassOrWif.password(password),
                                    assetId: assetId,
                                    amount: nil,
                                    assetForFee: nil,

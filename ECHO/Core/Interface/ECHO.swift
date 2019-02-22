@@ -154,6 +154,10 @@ final public class ECHO: InterfaceFacades {
         authentificationFacade.isOwnedBy(name: name, password: password, completion: completion)
     }
     
+    public func isOwnedBy(wif: String, completion: @escaping Completion<[UserAccount]>) {
+        authentificationFacade.isOwnedBy(wif: wif, completion: completion)
+    }
+    
     public func changePassword(old: String, new: String, name: String, completion: @escaping Completion<Bool>) {
         authentificationFacade.changePassword(old: old, new: new, name: name, completion: completion)
     }
@@ -221,7 +225,7 @@ final public class ECHO: InterfaceFacades {
     // MARK: TransactionFacade
     
     public func sendTransferOperation(fromNameOrId: String,
-                                      password: String,
+                                      passwordOrWif: PassOrWif,
                                       toNameOrId: String,
                                       amount: UInt,
                                       asset: String,
@@ -231,7 +235,7 @@ final public class ECHO: InterfaceFacades {
                                       noticeHandler: NoticeHandler?) {
         
         transactionFacade.sendTransferOperation(fromNameOrId: fromNameOrId,
-                                                password: password,
+                                                passwordOrWif: passwordOrWif,
                                                 toNameOrId: toNameOrId,
                                                 amount: amount,
                                                 asset: asset,
@@ -243,15 +247,15 @@ final public class ECHO: InterfaceFacades {
     // MARK: AssetsFacade
 
     public func createAsset(nameOrId: String,
-                            password: String,
+                            passwordOrWif: PassOrWif,
                             asset: Asset,
                             completion: @escaping Completion<Bool>) {
         
-        assetsFacade.createAsset(nameOrId: nameOrId, password: password, asset: asset, completion: completion)
+        assetsFacade.createAsset(nameOrId: nameOrId, passwordOrWif: passwordOrWif, asset: asset, completion: completion)
     }
     
     public func issueAsset(issuerNameOrId: String,
-                           password: String,
+                           passwordOrWif: PassOrWif,
                            asset: String,
                            amount: UInt,
                            destinationIdOrName: String,
@@ -259,7 +263,7 @@ final public class ECHO: InterfaceFacades {
                            completion: @escaping Completion<Bool>) {
         
         assetsFacade.issueAsset(issuerNameOrId: issuerNameOrId,
-                                password: password,
+                                passwordOrWif: passwordOrWif,
                                 asset: asset,
                                 amount: amount,
                                 destinationIdOrName: destinationIdOrName,
@@ -308,7 +312,7 @@ final public class ECHO: InterfaceFacades {
     }
     
     public func createContract(registrarNameOrId: String,
-                               password: String,
+                               passwordOrWif: PassOrWif,
                                assetId: String,
                                assetForFee: String?,
                                byteCode: String,
@@ -319,7 +323,7 @@ final public class ECHO: InterfaceFacades {
                                noticeHandler: NoticeHandler?) {
         
         contractsFacade.createContract(registrarNameOrId: registrarNameOrId,
-                                       password: password,
+                                       passwordOrWif: passwordOrWif,
                                        assetId: assetId,
                                        assetForFee: assetForFee,
                                        byteCode: byteCode,
@@ -331,7 +335,7 @@ final public class ECHO: InterfaceFacades {
     }
     
     public func callContract(registrarNameOrId: String,
-                             password: String,
+                             passwordOrWif: PassOrWif,
                              assetId: String,
                              amount: UInt?,
                              assetForFee: String?,
@@ -342,7 +346,7 @@ final public class ECHO: InterfaceFacades {
                              noticeHandler: NoticeHandler?) {
         
         contractsFacade.callContract(registrarNameOrId: registrarNameOrId,
-                                     password: password,
+                                     passwordOrWif: passwordOrWif,
                                      assetId: assetId,
                                      amount: amount,
                                      assetForFee: assetForFee,

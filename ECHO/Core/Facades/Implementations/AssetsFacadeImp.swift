@@ -50,9 +50,8 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
         self.network = network
         self.queues = [ECHOQueue]()
     }
-    
-    public func createAsset(nameOrId: String, password: String, asset: Asset, completion: @escaping Completion<Bool>) {
-        
+    public func createAsset(nameOrId: String, passwordOrWif: PassOrWif, asset: Asset, completion: @escaping Completion<Bool>) {
+
         let createAssetQueue = ECHOQueue()
         queues.append(createAssetQueue)
         
@@ -91,7 +90,7 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
                                               cryptoCore: cryptoCore,
                                               keychainType: KeychainType.active,
                                               saveKey: CreateAssetKeys.transaction.rawValue,
-                                              password: password,
+                                              passwordOrWif: passwordOrWif,
                                               networkPrefix: network.prefix.rawValue,
                                               fromAccountKey: CreateAssetKeys.account.rawValue,
                                               operationKey: CreateAssetKeys.operation.rawValue,
@@ -124,7 +123,8 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
     }
     
     // swiftlint:disable function_body_length
-    public func issueAsset(issuerNameOrId: String, password: String,
+    public func issueAsset(issuerNameOrId: String,
+                           passwordOrWif: PassOrWif,
                            asset: String, amount: UInt,
                            destinationIdOrName: String, message: String?,
                            completion: @escaping Completion<Bool>) {
@@ -157,7 +157,7 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
                                           cryptoCore: cryptoCore,
                                           message: message,
                                           saveKey: IssueAssetKeys.memo.rawValue,
-                                          password: password,
+                                          passwordOrWif: passwordOrWif,
                                           networkPrefix: network.prefix.rawValue,
                                           fromAccountKey: IssueAssetKeys.issuerAccount.rawValue,
                                           toAccountKey: IssueAssetKeys.destinationAccount.rawValue)
@@ -165,7 +165,7 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
                                                            completion: completion)
         
         // Operation
-        let createIssueAssetOperation = self.createIssueAssetOperation(issueAssetQueue, password, amount, asset, message, completion)
+        let createIssueAssetOperation = self.createIssueAssetOperation(issueAssetQueue, amount, asset, message, completion)
         
         // RequiredFee
         let getRequiredFeeOperationInitParams = (issueAssetQueue,
@@ -191,7 +191,7 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
                                               cryptoCore: cryptoCore,
                                               keychainType: KeychainType.active,
                                               saveKey: IssueAssetKeys.transaction.rawValue,
-                                              password: password,
+                                              passwordOrWif: passwordOrWif,
                                               networkPrefix: network.prefix.rawValue,
                                               fromAccountKey: IssueAssetKeys.issuerAccount.rawValue,
                                               operationKey: IssueAssetKeys.operation.rawValue,
@@ -248,7 +248,6 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
     }
     
     fileprivate func createIssueAssetOperation(_ queue: ECHOQueue,
-                                               _ password: String,
                                                _ amount: UInt,
                                                _ asset: String,
                                                _ message: String?,

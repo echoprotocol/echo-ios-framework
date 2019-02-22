@@ -87,7 +87,7 @@ final public class FeeFacadeImp: FeeFacade, ECHOQueueble {
                                           cryptoCore: cryptoCore,
                                           message: message,
                                           saveKey: FeeResultsKeys.memo.rawValue,
-                                          password: UUID().uuidString,
+                                          passwordOrWif: PassOrWif.password(UUID().uuidString),
                                           networkPrefix: network.prefix.rawValue,
                                           fromAccountKey: FeeResultsKeys.loadedFromAccount.rawValue,
                                           toAccountKey: FeeResultsKeys.loadedToAccount.rawValue)

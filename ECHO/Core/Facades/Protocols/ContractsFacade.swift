@@ -14,20 +14,20 @@ public typealias NoticeHandler = (_ notice: ECHONotification) -> Void
  */
 public protocol ContractsFacade {
     
-    /**
+/**
      Creates contract on blockchain
      
      - Parameter registrarNameOrId: Name or id of account that creates the contract
-     - Parameter password: Password from account for transaction signature
+     - Parameter passwordOrWif: Password or WIF from account for transaction signature
      - Parameter assetId: Asset of contract
      - Parameter byteCode: Bytecode of the created contract
      - Parameter supportedAssetId: If you dont want to link the contract with the specified asset
      - Parameter ethAccuracy: If true all balances passing to contract with ethereum accuracy
-     - Parameter parameters: Parameters of constructor 
+     - Parameter parameters: Parameters of constructor
      - Parameter completion: Callback which returns an [Bool](Bool) result of creation or error
-     */
+ */
     func createContract(registrarNameOrId: String,
-                        password: String,
+                        passwordOrWif: PassOrWif,
                         assetId: String,
                         assetForFee: String?,
                         byteCode: String,
@@ -41,7 +41,7 @@ public protocol ContractsFacade {
      Calls to contract on blockchain
      
      - Parameter registrarNameOrId: Name or id of account that call the contract
-     - Parameter password: Password from account for transaction signature
+     - Parameter passwordOrWif: Password or WIF from account for transaction signature
      - Parameter assetId: Asset of contract
      - Parameter amount: Amount
      - Parameter contratId: Id of called contract
@@ -50,7 +50,7 @@ public protocol ContractsFacade {
      - Parameter completion: Callback which returns an [Bool](Bool) result of call or error
  */
     func callContract(registrarNameOrId: String,
-                      password: String,
+                      passwordOrWif: PassOrWif,
                       assetId: String,
                       amount: UInt?,
                       assetForFee: String?,
