@@ -54,6 +54,16 @@ extension AccountsService {
 
 extension GlobalsService {
     
+    func getGlobalProperties(completion: @escaping Completion<GlobalProperties>) {
+        
+        let operation = GetGlobalPropertiesSocketOperation(method: .call,
+                                                           operationId: socketCore.nextOperationId(),
+                                                           apiId: apiIdentifire,
+                                                           completion: completion)
+        
+        socketCore.send(operation: operation)
+    }
+    
     func getChainId(completion: @escaping Completion<String>) {
         
         let operation = GetChainIdSocketOperation(method: .call,
