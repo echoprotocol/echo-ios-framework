@@ -79,12 +79,12 @@ public protocol ECHOCodable: JSONCodable, BytesCodable { }
 /**
     Array of [IntOrString](IntOrString)
  */
-typealias IntOrStrings = [IntOrString]
+public typealias IntOrStrings = [IntOrString]
 
 /**
     Enum which contains int or string value from decoded object
  */
-enum IntOrString: Codable, Equatable {
+public enum IntOrString: Codable, Equatable {
     
     case integer(Int)
     case string(String)
@@ -128,6 +128,45 @@ enum IntOrString: Codable, Equatable {
         case .integer(let value):
             try container.encode(value)
         case .string(let value):
+            try container.encode(value)
+        }
+    }
+}
+
+/**
+    Array of [IntOrDict](IntOrDict)
+ */
+public typealias IntOrDicts = [IntOrDict]
+
+/**
+    Enum which contains int or dict value from decoded object
+ */
+public enum IntOrDict: Codable, Equatable {
+    
+    case integer(Int)
+    case dict([String: IntOrString])
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if let value = try? container.decode(Int.self) {
+            self = .integer(value)
+            return
+        }
+        if let value = try? container.decode([String: IntOrString].self) {
+            self = .dict(value)
+            return
+        }
+        throw DecodingError.typeMismatch(IntOrDict.self,
+                                         DecodingError.Context(codingPath: decoder.codingPath,
+                                                               debugDescription: "Wrong type for IntOrDict"))
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        switch self {
+        case .integer(let value):
+            try container.encode(value)
+        case .dict(let value):
             try container.encode(value)
         }
     }

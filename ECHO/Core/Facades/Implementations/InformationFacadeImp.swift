@@ -150,6 +150,11 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         }
     }
     
+    public func getGlobalProperties(completion: @escaping Completion<GlobalProperties>) {
+        
+        services.databaseService.getGlobalProperties(completion: completion)
+    }
+    
     // MARK: History
     private enum AccountHistoryResultsKeys: String {
         case account

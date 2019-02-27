@@ -22,6 +22,13 @@ protocol DatabaseApiService: BaseApiService {
     func getObjects<T>(type: T.Type, objectsIds: [String], completion: @escaping Completion<[T]>) where T: Decodable
     
 /**
+     Retrieve the current global property object.
+     
+     - Parameter completion: Callback which returns [GlobalProperties](GlobalProperties) or error
+ */
+    func getGlobalProperties(completion: @escaping Completion<GlobalProperties>)
+    
+/**
      Retrieves base block information
 
      - Parameter completion: Callback which returns current block data or error

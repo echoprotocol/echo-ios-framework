@@ -1878,4 +1878,32 @@ class ECHOInterfaceTests: XCTestCase {
             XCTAssertNotNil(errorMessage)
         }
     }
+    
+    func testGetGlobalProperties() {
+        
+        //arrange
+        echo = ECHO(settings: Settings(build: {
+            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+        }))
+        let exp = expectation(description: "Get global properties")
+        var properties: GlobalProperties?
+        
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.getGlobalProperties(completion: { (result) in
+                switch result {
+                case .success(let globalProperties):
+                    properties = globalProperties
+                    exp.fulfill()
+                case .failure(let error):
+                    XCTFail("Error in getting global properties \(error)")
+                }
+            })
+        }
+        
+        //assert
+        waitForExpectations(timeout: timeout) { error in
+            XCTAssertNotNil(properties)
+        }
+    }
 }

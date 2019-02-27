@@ -183,6 +183,10 @@ final public class ECHO: InterfaceFacades {
     public func getAccountHistroy(nameOrID: String, startId: String, stopId: String, limit: Int, completion: @escaping Completion<[HistoryItem]>) {
         informationFacade.getAccountHistroy(nameOrID: nameOrID, startId: startId, stopId: stopId, limit: limit, completion: completion)
     }
+    
+    public func getGlobalProperties(completion: @escaping Completion<GlobalProperties>) {
+        informationFacade.getGlobalProperties(completion: completion)
+    }
 
     // MARK: FeeFacade
     

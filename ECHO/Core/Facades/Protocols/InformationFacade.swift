@@ -58,4 +58,11 @@ public protocol InformationFacade {
      - Note: To get the entire history, you can specify the initial id **"1.11.0"** in the start ID and stop ID and then choose your limit
  */
     func getAccountHistroy(nameOrID: String, startId: String, stopId: String, limit: Int, completion: @escaping Completion<[HistoryItem]>)
+    
+/**
+     Retrieve the current global property object.
+
+     - Parameter completion: Callback which returns [GlobalProperties](GlobalProperties) or error
+ */
+    func getGlobalProperties(completion: @escaping Completion<GlobalProperties>)
 }
