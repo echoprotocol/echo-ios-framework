@@ -19,6 +19,12 @@ public struct ContractResultEVM: Decodable {
     public let execRes: ExecRes
     public let trReceipt: TrReceipt
     
+    public init(execRes: ExecRes, trReceipt: TrReceipt) {
+        
+        self.execRes = execRes
+        self.trReceipt = trReceipt
+    }
+    
     public init(from decoder: Decoder) throws {
         
         let values = try decoder.container(keyedBy: ContractResultEVMCodingKeys.self)
@@ -50,6 +56,23 @@ public struct ExecRes: Decodable {
     public let depositSize: UInt?
     public let gasForDeposit: UInt?
     
+    public init(excepted: String?,
+                newAddress: String?,
+                output: String?,
+                codeDeposit: String?,
+                gasRefunded: UInt?,
+                depositSize: UInt?,
+                gasForDeposit: UInt?) {
+        
+        self.excepted = excepted
+        self.newAddress = newAddress
+        self.output = output
+        self.codeDeposit = codeDeposit
+        self.gasRefunded = gasRefunded
+        self.depositSize = depositSize
+        self.gasForDeposit = gasForDeposit
+    }
+    
     public init(from decoder: Decoder) throws {
         
         let values = try decoder.container(keyedBy: ExecResCodingKeys.self)
@@ -80,6 +103,17 @@ public struct TrReceipt: Decodable {
     public let bloom: String?
     public let log: [Log]?
     
+    public init(statusCode: UInt?,
+                gasUsed: UInt?,
+                bloom: String?,
+                log: [Log]?) {
+        
+        self.statusCode = statusCode
+        self.gasUsed = gasUsed
+        self.bloom = bloom
+        self.log = log
+    }
+    
     public init(from decoder: Decoder) throws {
         
         let values = try decoder.container(keyedBy: TrReceiptCodingKeys.self)
@@ -104,6 +138,15 @@ public struct Log: Decodable {
     public let data: String
     public let address: String
     public let log: [String]
+    
+    public init(data: String,
+                address: String,
+                log: [String]) {
+        
+        self.data = data
+        self.address = address
+        self.log = log
+    }
     
     public init(from decoder: Decoder) throws {
         
