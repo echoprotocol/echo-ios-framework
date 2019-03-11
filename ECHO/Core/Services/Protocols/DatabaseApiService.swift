@@ -170,4 +170,11 @@ f */
                                      account: Account,
                                      contractCode: String,
                                      completion: @escaping Completion<String>)
+    
+/**
+     Retrieve all sidechain transfers for specific ETH Address
+     
+     - Parameter completion: Callback which returns [[SidechainTransfer]](SidechainTransfer) or error
+ */
+    func getSidechainTransfers(for ethAddress: String, completion: @escaping Completion<[SidechainTransfer]>)
 }

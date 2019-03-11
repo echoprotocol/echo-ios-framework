@@ -155,6 +155,11 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         services.databaseService.getGlobalProperties(completion: completion)
     }
     
+    public func getSidechainTransfers(for ethAddress: String, completion: @escaping Completion<[SidechainTransfer]>) {
+        
+        services.databaseService.getSidechainTransfers(for: ethAddress, completion: completion)
+    }
+    
     // MARK: History
     private enum AccountHistoryResultsKeys: String {
         case account

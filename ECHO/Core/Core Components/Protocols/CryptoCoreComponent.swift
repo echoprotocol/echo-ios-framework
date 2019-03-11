@@ -21,6 +21,7 @@ public protocol CryptoCoreComponent: class {
     
     func sha256(_ data: Data) -> Data
     func ripemd160(_ data: Data) -> Data
+    func keccak256(_ data: Data) -> Data
     
     func sign(_ hash: Data, privateKey: Data) throws -> Data
     func signByEd25519(_ hash: Data, privateKey: Data) -> Data

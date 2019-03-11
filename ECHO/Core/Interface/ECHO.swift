@@ -187,6 +187,10 @@ final public class ECHO: InterfaceFacades {
     public func getGlobalProperties(completion: @escaping Completion<GlobalProperties>) {
         informationFacade.getGlobalProperties(completion: completion)
     }
+    
+    public func getSidechainTransfers(for ethAddress: String, completion: @escaping Completion<[SidechainTransfer]>) {
+        informationFacade.getSidechainTransfers(for: ethAddress, completion: completion)
+    }
 
     // MARK: FeeFacade
     

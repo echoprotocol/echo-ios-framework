@@ -167,6 +167,10 @@
 		D061331521A2EC53009EC456 /* GetContractLogsSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D061331421A2EC53009EC456 /* GetContractLogsSocketOperation.swift */; };
 		D061331721A30052009EC456 /* SubscribeContractLogsSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D061331621A30052009EC456 /* SubscribeContractLogsSocketOperation.swift */; };
 		D0814E8C2154DD6600E248AA /* ObjectType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0814E8B2154DD6600E248AA /* ObjectType.swift */; };
+		D082303F22367FFD003A4BDC /* SidechainTransfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D082303E22367FFD003A4BDC /* SidechainTransfer.swift */; };
+		D082304122368A87003A4BDC /* GetSidechainTransfersSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D082304022368A87003A4BDC /* GetSidechainTransfersSocketOperation.swift */; };
+		D082304622368EB6003A4BDC /* ETHAddressValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D082304522368EB6003A4BDC /* ETHAddressValidator.swift */; };
+		D08230482236BA19003A4BDC /* ETHAddressValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08230472236BA19003A4BDC /* ETHAddressValidatorTests.swift */; };
 		D08B2BCD21342444000F7A9B /* FeeFacadeImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08B2BCC21342444000F7A9B /* FeeFacadeImp.swift */; };
 		D094703E212D3ECC00B55A37 /* TransferOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D094703D212D3ECC00B55A37 /* TransferOperation.swift */; };
 		D0947040212D3FEE00B55A37 /* Memo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D094703F212D3FEE00B55A37 /* Memo.swift */; };
@@ -397,6 +401,10 @@
 		D061331421A2EC53009EC456 /* GetContractLogsSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetContractLogsSocketOperation.swift; sourceTree = "<group>"; };
 		D061331621A30052009EC456 /* SubscribeContractLogsSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribeContractLogsSocketOperation.swift; sourceTree = "<group>"; };
 		D0814E8B2154DD6600E248AA /* ObjectType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectType.swift; sourceTree = "<group>"; };
+		D082303E22367FFD003A4BDC /* SidechainTransfer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidechainTransfer.swift; sourceTree = "<group>"; };
+		D082304022368A87003A4BDC /* GetSidechainTransfersSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSidechainTransfersSocketOperation.swift; sourceTree = "<group>"; };
+		D082304522368EB6003A4BDC /* ETHAddressValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETHAddressValidator.swift; sourceTree = "<group>"; };
+		D08230472236BA19003A4BDC /* ETHAddressValidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETHAddressValidatorTests.swift; sourceTree = "<group>"; };
 		D08B2BCC21342444000F7A9B /* FeeFacadeImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeeFacadeImp.swift; sourceTree = "<group>"; };
 		D094703D212D3ECC00B55A37 /* TransferOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferOperation.swift; sourceTree = "<group>"; };
 		D094703F212D3FEE00B55A37 /* Memo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Memo.swift; sourceTree = "<group>"; };
@@ -585,6 +593,7 @@
 		B348D09E21011FCC00C29AE4 /* Objects */ = {
 			isa = PBXGroup;
 			children = (
+				D082304422368EA6003A4BDC /* Validators */,
 				D0B0586C214671DB00A80CDE /* Contracts */,
 				D0BC565321429563008104E6 /* ECHOObjects */,
 				B30CAD1620FFD5790048E33E /* Account.swift */,
@@ -620,6 +629,7 @@
 				B3CA703920F4A7C300511F6A /* UserAccount.swift */,
 				D0E158E3221FFCA3004B44FF /* PassOfWif.swift */,
 				D00A58E6222520FC0089FC18 /* GlobalProperties.swift */,
+				D082303E22367FFD003A4BDC /* SidechainTransfer.swift */,
 			);
 			path = Objects;
 			sourceTree = "<group>";
@@ -782,6 +792,7 @@
 				D09DA11521EDE5210004673F /* RegisterAccountSocketOperation.swift */,
 				D0E158E1221FDF9B004B44FF /* GetKeyReferencesSocketOperation.swift */,
 				D00A58E8222522C40089FC18 /* GetGlobalPropertiesSocketOperation.swift */,
+				D082304022368A87003A4BDC /* GetSidechainTransfersSocketOperation.swift */,
 			);
 			path = SocketOperation;
 			sourceTree = "<group>";
@@ -803,6 +814,7 @@
 				B3C365432134116800FC60F4 /* CryptoCoreComponentTests.swift */,
 				B3405CB72135BB3F00C18FE6 /* SubscribtionTests.swift */,
 				B30CC38A214A8A4C003953E3 /* AbiParameterValidationTests.swift */,
+				D08230472236BA19003A4BDC /* ETHAddressValidatorTests.swift */,
 				B3D1C565212C9CCA00D1A7E6 /* Info.plist */,
 			);
 			path = ECHOTests;
@@ -870,6 +882,14 @@
 				D061330F21A2D073009EC456 /* CustomGetFullAccountSocketOperation.swift */,
 			);
 			path = CustomOperations;
+			sourceTree = "<group>";
+		};
+		D082304422368EA6003A4BDC /* Validators */ = {
+			isa = PBXGroup;
+			children = (
+				D082304522368EB6003A4BDC /* ETHAddressValidator.swift */,
+			);
+			path = Validators;
 			sourceTree = "<group>";
 		};
 		D09DA11021EDDB2C0004673F /* ECHOKeychain */ = {
@@ -1206,13 +1226,14 @@
 				B3E9A35721A2A40E001A95B4 /* NoticeEventProxy.swift in Sources */,
 				B30CC369214A5B30003953E3 /* AbiCoder.swift in Sources */,
 				B3CA702C20F4A45400511F6A /* TransactionFacade.swift in Sources */,
+				D082303F22367FFD003A4BDC /* SidechainTransfer.swift in Sources */,
+				D082304122368A87003A4BDC /* GetSidechainTransfersSocketOperation.swift in Sources */,
 				B3CA704B20F5363F00511F6A /* FullAccountSocketOperation.swift in Sources */,
 				B30CC383214A74B1003953E3 /* Utils.swift in Sources */,
 				B385970220F620B700B55E59 /* AssetOptions.swift in Sources */,
 				B30CAD0220FF74C80048E33E /* DatabaseApiService.swift in Sources */,
 				D01BF7D2212ABE4E00917DB8 /* OptionalValue.swift in Sources */,
 				D00A58E9222522C40089FC18 /* GetGlobalPropertiesSocketOperation.swift in Sources */,
-				B38596F420F5EE5C00B55E59 /* KeyReferencesSocketOperation.swift in Sources */,
 				D0B0587621468A0400A80CDE /* ContractInfo.swift in Sources */,
 				B3CA703820F4A72C00511F6A /* Error.swift in Sources */,
 				D0D8CA492141847900F0646D /* SendTransactionQueueOperation.swift in Sources */,
@@ -1229,6 +1250,7 @@
 				B30CAD2820FFF9E70048E33E /* ECHOKeychain.swift in Sources */,
 				B39554B3213E822B00CE2647 /* AssetsFacadeImp.swift in Sources */,
 				D0D8CA4C2141847900F0646D /* GetMemoQueueOperation.swift in Sources */,
+				D082304622368EB6003A4BDC /* ETHAddressValidator.swift in Sources */,
 				B30CC372214A5C29003953E3 /* AbiFunctionModel.swift in Sources */,
 				D048AE772136ABBE00441FEB /* TransactionSocketOperation.swift in Sources */,
 				B30CC364214A5B05003953E3 /* AbiArgumentCoderImp.swift in Sources */,
@@ -1261,6 +1283,7 @@
 				B30CC38B214A8A4D003953E3 /* AbiParameterValidationTests.swift in Sources */,
 				B3D1C586212DA63500D1A7E6 /* AccountStub.swift in Sources */,
 				B3C365442134116800FC60F4 /* CryptoCoreComponentTests.swift in Sources */,
+				D08230482236BA19003A4BDC /* ETHAddressValidatorTests.swift in Sources */,
 				B328FC31213FEA510022292C /* ChangePasswordSocketRequestElementStub.swift in Sources */,
 				B3DA875E2146C32E000EA228 /* GetContractInfoStubs.swift in Sources */,
 				B3306DF7214BA25E002CFFF2 /* QueryContractInfoStubs.swift in Sources */,

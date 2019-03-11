@@ -19,6 +19,7 @@ class ECHOInterfaceTests: XCTestCase {
     let defaultName = "vsharaev"
     let defaultPass = "vsharaev1"
     let defaultAnotherAsset = "1.3.14"
+    let ethAddress = "0x46Ba2677a1c982B329A81f60Cf90fBA2E8CA9fA8"
     
     override func tearDown() {
         super.tearDown()
@@ -1904,6 +1905,36 @@ class ECHOInterfaceTests: XCTestCase {
         //assert
         waitForExpectations(timeout: timeout) { error in
             XCTAssertNotNil(properties)
+        }
+    }
+    
+    func testGetSidechainTransfers() {
+        
+        //arrange
+        echo = ECHO(settings: Settings(build: {
+            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+        }))
+        let exp = expectation(description: "Get sidechain transfers")
+        let address = ethAddress
+        var transfers: [SidechainTransfer]?
+        
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.getSidechainTransfers(for: address, completion: { (result) in
+                switch result {
+                case .success(let sidechainTransfers):
+                    transfers = sidechainTransfers
+                    exp.fulfill()
+                case .failure(let error):
+                    XCTFail("Error in getting global properties \(error)")
+                }
+            })
+        }
+        
+        //assert
+        waitForExpectations(timeout: timeout) { error in
+            XCTAssertNotNil(transfers)
+            XCTAssertTrue(transfers!.count > 0)
         }
     }
 }
