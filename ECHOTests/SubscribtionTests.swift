@@ -241,10 +241,10 @@ class SubscribtionTests: XCTestCase {
         strongContractLogDelegate = delegate
         
         // Call for change logs
-        let password = "vsharaev1"
         let registrarNameOrId = "vsharaev"
+        let password = "vsharaev"
         let assetId = "1.3.0"
-        let contratId = "1.16.46"
+        let contratId = "1.16.141"
         let methodName = "test"
         let params: [AbiTypeValueInputModel] = [AbiTypeValueInputModel(type: .uint(size: 256), value: "1")]
         
