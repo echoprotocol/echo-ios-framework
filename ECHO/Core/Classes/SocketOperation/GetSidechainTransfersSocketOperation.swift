@@ -29,7 +29,6 @@ struct GetSidechainTransfersSocketOperation: SocketOperation {
     func handleResponse(_ response: ECHODirectResponse) {
         
         do {
-            
             switch response.response {
             case .error(let error):
                 let result = Result<[SidechainTransfer], ECHOError>(error: ECHOError.internalError(error.message))
@@ -38,9 +37,9 @@ struct GetSidechainTransfersSocketOperation: SocketOperation {
                 
                 switch result {
                 case .array(let array):
-//                    let data = try JSONSerialization.data(withJSONObject: array, options: [])
-//                    let transfers = try JSONDecoder().decode([SidechainTransfer].self, from: data)
-                    let result = Result<[SidechainTransfer], ECHOError>(value: [])
+                    let data = try JSONSerialization.data(withJSONObject: array, options: [])
+                    let transfers = try JSONDecoder().decode([SidechainTransfer].self, from: data)
+                    let result = Result<[SidechainTransfer], ECHOError>(value: transfers)
                     completion(result)
                 default:
                     throw ECHOError.encodableMapping

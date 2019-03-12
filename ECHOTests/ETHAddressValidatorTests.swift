@@ -21,12 +21,17 @@ class ETHAddressValidatorTests: XCTestCase {
         XCTAssertTrue(validator.isValidETHAddress(validLowerCaseAddress));
         
         //arrange
+        let validUpperCaseAddress = "0x3DE8C14C8E7A956F5CC4D82BEFF749EE65FDC358";
+        //assert
+        XCTAssertTrue(validator.isValidETHAddress(validUpperCaseAddress));
+        
+        //arrange
         let validChecksumAddress = "0xfB6916095ca1df60bB79Ce92cE3Ea74c37c5d359";
         //assert
         XCTAssertTrue(validator.isValidETHAddress(validChecksumAddress));
         
         //arrange
-        let invalidLengthAddress = "0x3de8c14c8e7a956f5cc4d82beff749ee65bac35"; 
+        let invalidLengthAddress = "0x3de8c14c8e7a956f5cc4d82beff749ee65bac35";
         //assert
         XCTAssertFalse(validator.isValidETHAddress(invalidLengthAddress));
         

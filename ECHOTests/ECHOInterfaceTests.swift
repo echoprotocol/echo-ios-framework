@@ -17,7 +17,7 @@ class ECHOInterfaceTests: XCTestCase {
     let counterContract = "1.16.40"
     let logsContract = "1.16.46"
     let defaultName = "vsharaev"
-    let defaultPass = "vsharaev1"
+    let defaultPass = "vsharaev"
     let defaultAnotherAsset = "1.3.14"
     let ethAddress = "0x46Ba2677a1c982B329A81f60Cf90fBA2E8CA9fA8"
     

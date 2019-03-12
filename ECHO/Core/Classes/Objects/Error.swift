@@ -38,5 +38,8 @@ public enum ECHOError: Swift.Error, Equatable {
     /// Indicates that object identifier have not valid type
     case identifier(ObjectType)
 
+    /// Indicates that ETH address have not valid format or checksum
+    case invalidETHAddress
+    
     case undefined
 }

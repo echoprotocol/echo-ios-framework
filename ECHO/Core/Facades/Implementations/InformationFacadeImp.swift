@@ -157,7 +157,16 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
     
     public func getSidechainTransfers(for ethAddress: String, completion: @escaping Completion<[SidechainTransfer]>) {
         
-        services.databaseService.getSidechainTransfers(for: ethAddress, completion: completion)
+        let ethValidator = ETHAddressValidator(cryptoCore: cryptoCore)
+        if !ethValidator.isValidETHAddress(ethAddress) {
+            let result = Result<[SidechainTransfer], ECHOError>.init(error: .invalidETHAddress)
+            completion(result)
+            return
+        }
+        
+        let wellFormatAddress = ethAddress.replacingOccurrences(of: "0x", with: "").lowercased()
+        
+        services.databaseService.getSidechainTransfers(for: wellFormatAddress, completion: completion)
     }
     
     // MARK: History
