@@ -2097,4 +2097,34 @@ class ECHOInterfaceTests: XCTestCase {
             XCTAssertTrue(transfers!.count > 0)
         }
     }
+    
+    func testGetObjectForSidechainTransfer() {
+        
+        //arrange
+        echo = ECHO(settings: Settings(build: {
+            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+        }))
+        let exp = expectation(description: "Get object sidechain transfers")
+        let identifier = "1.19.2"
+        var transfer: SidechainTransfer?
+        
+        //act
+        echo.start { [unowned self] (result) in
+            
+            self.echo.getObjects(type: SidechainTransfer.self, objectsIds: [identifier], completion: { (result) in
+                switch result {
+                case .success(let sidechainTransfer):
+                    transfer = sidechainTransfer.first
+                    exp.fulfill()
+                case .failure(let error):
+                    XCTFail("Error in getting global properties \(error)")
+                }
+            })
+        }
+        
+        //assert
+        waitForExpectations(timeout: timeout) { error in
+            XCTAssertNotNil(transfer)
+        }
+    }
 }

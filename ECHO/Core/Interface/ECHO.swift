@@ -164,6 +164,10 @@ final public class ECHO: InterfaceFacades {
     
     // MARK: InformationFacade
     
+    public func getObjects<T>(type: T.Type, objectsIds: [String], completion: @escaping (Result<[T], ECHOError>) -> Void) where T: Decodable {
+        informationFacade.getObjects(type: type, objectsIds: objectsIds, completion: completion)
+    }
+    
     public func registerAccount(name: String, password: String, completion: @escaping Completion<Bool>) {
         informationFacade.registerAccount(name: name, password: password, completion: completion)
     }

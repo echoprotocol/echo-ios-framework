@@ -12,6 +12,14 @@
 public protocol InformationFacade {
     
 /**
+     Get the objects corresponding to the provided IDs.
+     
+     - Parameter objectsIds: IDs of the objects to retrieve
+     - Parameter completion: Callback which returns current block data or error
+ */
+    func getObjects<T>(type: T.Type, objectsIds: [String], completion: @escaping Completion<[T]>) where T: Decodable
+    
+/**
      Register new account in blockchain
      
      - Parameter name: The name of new account

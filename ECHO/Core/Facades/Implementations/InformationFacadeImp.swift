@@ -31,6 +31,13 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         self.queues = [ECHOQueue]()
     }
     
+    public func getObjects<T>(type: T.Type,
+                              objectsIds: [String],
+                              completion: @escaping (Result<[T], ECHOError>) -> Void) where T: Decodable {
+        
+        services.databaseService.getObjects(type: type, objectsIds: objectsIds, completion: completion)
+    }
+    
     public func registerAccount(name: String, password: String, completion: @escaping Completion<Bool>) {
         
         isAccountReserved(nameOrID: name) { [weak self] (result) in

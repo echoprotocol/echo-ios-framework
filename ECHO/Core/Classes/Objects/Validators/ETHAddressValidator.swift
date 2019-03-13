@@ -1,4 +1,3 @@
-
 //
 //  ETHAddressValidator.swift
 //  ECHO

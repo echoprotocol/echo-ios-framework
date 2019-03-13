@@ -14,13 +14,13 @@ public struct SidechainTransfer: Decodable {
         case receiver
         case amount
         case signatures
-        case withdrawCode = "withdrawCode"
+        case withdrawCode = "withdraw_code"
     }
     
     var identifier: String
     let transferId: UInt
     let receiver: String
-    let amount: UInt
+    let amount: IntOrString
     let signatures: String
     let withdrawCode: String
     
@@ -31,7 +31,7 @@ public struct SidechainTransfer: Decodable {
         identifier = try values.decode(String.self, forKey: .identifier)
         transferId = try values.decode(UInt.self, forKey: .transferId)
         receiver = try values.decode(String.self, forKey: .receiver)
-        amount = try values.decode(UInt.self, forKey: .amount)
+        amount = try values.decode(IntOrString.self, forKey: .amount)
         signatures = try values.decode(String.self, forKey: .signatures)
         withdrawCode = try values.decode(String.self, forKey: .withdrawCode)
     }
