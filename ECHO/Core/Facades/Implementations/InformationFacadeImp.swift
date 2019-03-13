@@ -31,6 +31,13 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         self.queues = [ECHOQueue]()
     }
     
+    public func getObjects<T>(type: T.Type,
+                              objectsIds: [String],
+                              completion: @escaping (Result<[T], ECHOError>) -> Void) where T: Decodable {
+        
+        services.databaseService.getObjects(type: type, objectsIds: objectsIds, completion: completion)
+    }
+    
     public func registerAccount(name: String, password: String, completion: @escaping Completion<Bool>) {
         
         isAccountReserved(nameOrID: name) { [weak self] (result) in
@@ -153,6 +160,20 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
     public func getGlobalProperties(completion: @escaping Completion<GlobalProperties>) {
         
         services.databaseService.getGlobalProperties(completion: completion)
+    }
+    
+    public func getSidechainTransfers(for ethAddress: String, completion: @escaping Completion<[SidechainTransfer]>) {
+        
+        let ethValidator = ETHAddressValidator(cryptoCore: cryptoCore)
+        if !ethValidator.isValidETHAddress(ethAddress) {
+            let result = Result<[SidechainTransfer], ECHOError>.init(error: .invalidETHAddress)
+            completion(result)
+            return
+        }
+        
+        let wellFormatAddress = ethAddress.replacingOccurrences(of: "0x", with: "").lowercased()
+        
+        services.databaseService.getSidechainTransfers(for: wellFormatAddress, completion: completion)
     }
     
     // MARK: History

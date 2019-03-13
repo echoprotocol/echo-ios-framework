@@ -12,6 +12,14 @@
 public protocol InformationFacade {
     
 /**
+     Get the objects corresponding to the provided IDs.
+     
+     - Parameter objectsIds: IDs of the objects to retrieve
+     - Parameter completion: Callback which returns current block data or error
+ */
+    func getObjects<T>(type: T.Type, objectsIds: [String], completion: @escaping Completion<[T]>) where T: Decodable
+    
+/**
      Register new account in blockchain
      
      - Parameter name: The name of new account
@@ -65,4 +73,11 @@ public protocol InformationFacade {
      - Parameter completion: Callback which returns [GlobalProperties](GlobalProperties) or error
  */
     func getGlobalProperties(completion: @escaping Completion<GlobalProperties>)
+    
+/**
+     Retrieve all sidechain transfers for specific ETH Address
+     
+     - Parameter completion: Callback which returns [[SidechainTransfer]](SidechainTransfer) or error
+ */
+    func getSidechainTransfers(for ethAddress: String, completion: @escaping Completion<[SidechainTransfer]>)
 }

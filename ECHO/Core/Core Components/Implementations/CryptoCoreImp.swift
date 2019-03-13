@@ -21,6 +21,10 @@ final public class CryptoCoreImp: CryptoCoreComponent {
         return CryptoHash.ripemd160(data)
     }
     
+    public func keccak256(_ data: Data) -> Data {
+        return Data(bytes: SHA3(variant: .keccak256).calculate(for: data.bytes))
+    }
+    
     public func sign(_ hash: Data, privateKey: Data) throws -> Data {
         return try Crypto.sign(hash, privateKey: privateKey)
     }
