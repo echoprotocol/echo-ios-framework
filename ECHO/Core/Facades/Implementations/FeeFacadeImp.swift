@@ -16,6 +16,8 @@ public struct FeeFacadeServices {
 /**
     Implementation of [FeeFacade](FeeFacade), [ECHOQueueble](ECHOQueueble)
  */
+
+// swiftlint:disable type_body_length
 final public class FeeFacadeImp: FeeFacade, ECHOQueueble {
     
     var queues: [ECHOQueue]
@@ -130,6 +132,40 @@ final public class FeeFacadeImp: FeeFacade, ECHOQueueble {
                                                methodParams: [AbiTypeValueInputModel],
                                                completion: @escaping Completion<AssetAmount>) {
         
+        getFeeForCallContractOperation(registrarNameOrId: registrarNameOrId,
+                                       assetId: assetId,
+                                       amount: amount,
+                                       assetForFee: assetForFee,
+                                       contratId: contratId,
+                                       executeType: ContractExecuteType.nameAndParams(methodName, methodParams),
+                                       completion: completion)
+    }
+    
+    public func getFeeForCallContractOperation(registrarNameOrId: String,
+                                               assetId: String,
+                                               amount: UInt?,
+                                               assetForFee: String?,
+                                               contratId: String,
+                                               byteCode: String,
+                                               completion: @escaping Completion<AssetAmount>) {
+        
+        getFeeForCallContractOperation(registrarNameOrId: registrarNameOrId,
+                                       assetId: assetId,
+                                       amount: amount,
+                                       assetForFee: assetForFee,
+                                       contratId: contratId,
+                                       executeType: ContractExecuteType.code(byteCode),
+                                       completion: completion)
+    }
+    
+    fileprivate func getFeeForCallContractOperation(registrarNameOrId: String,
+                                                    assetId: String,
+                                                    amount: UInt?,
+                                                    assetForFee: String?,
+                                                    contratId: String,
+                                                    executeType: ContractExecuteType,
+                                                    completion: @escaping Completion<AssetAmount>) {
+        
         // if we don't have assetForFee, we use asset.
         let assetForFee = assetForFee ?? assetId
         
@@ -158,7 +194,14 @@ final public class FeeFacadeImp: FeeFacade, ECHOQueueble {
                                                                           completion: completion)
         
         // ByteCode
-        let byteCodeOperation = createByteCodeOperation(callQueue, methodName, methodParams, completion)
+        // ByteCode
+        var byteCodeOperation: Operation?
+        switch executeType {
+        case .code(let code):
+            callQueue.saveValue(code, forKey: FeeResultsKeys.byteCode.rawValue)
+        case .nameAndParams(let methodName, let methodParams):
+            byteCodeOperation = createByteCodeOperation(callQueue, methodName, methodParams, completion)
+        }
         
         // Operation
         callQueue.saveValue(Contract(id: contratId), forKey: FeeResultsKeys.receiverContract.rawValue)
@@ -180,7 +223,9 @@ final public class FeeFacadeImp: FeeFacade, ECHOQueueble {
         let completionOperation = createCompletionOperation(queue: callQueue)
         
         callQueue.addOperation(getAccountsOperation)
-        callQueue.addOperation(byteCodeOperation)
+        if let byteCodeOperation = byteCodeOperation {
+            callQueue.addOperation(byteCodeOperation)
+        }
         callQueue.addOperation(bildCreateContractOperation)
         callQueue.addOperation(getRequiredFeeOperation)
         callQueue.addOperation(feeCompletionOperation)
@@ -289,3 +334,4 @@ final public class FeeFacadeImp: FeeFacade, ECHOQueueble {
         return contractOperation
     }
 }
+// swiftlint:enable type_body_length

@@ -20,7 +20,7 @@ public protocol ContractsFacade {
      - Parameter registrarNameOrId: Name or id of account that creates the contract
      - Parameter passwordOrWif: Password or WIF from account for transaction signature
      - Parameter assetId: Asset of contract
-     - Parameter byteCode: Bytecode of the created contract
+     - Parameter byteCode: Bytecode of the contract
      - Parameter supportedAssetId: If you dont want to link the contract with the specified asset
      - Parameter ethAccuracy: If true all balances passing to contract with ethereum accuracy
      - Parameter parameters: Parameters of constructor
@@ -34,6 +34,27 @@ public protocol ContractsFacade {
                         supportedAssetId: String?,
                         ethAccuracy: Bool,
                         parameters: [AbiTypeValueInputModel]?,
+                        completion: @escaping Completion<Bool>,
+                        noticeHandler: NoticeHandler?)
+    
+/**
+     Creates contract on blockchain
+     
+     - Parameter registrarNameOrId: Name or id of account that creates the contract
+     - Parameter passwordOrWif: Password or WIF from account for transaction signature
+     - Parameter assetId: Asset of contract
+     - Parameter byteCode: Full bytecode for contract creation
+     - Parameter supportedAssetId: If you dont want to link the contract with the specified asset
+     - Parameter ethAccuracy: If true all balances passing to contract with ethereum accuracy
+     - Parameter completion: Callback which returns an [Bool](Bool) result of creation or error
+ */
+    func createContract(registrarNameOrId: String,
+                        passwordOrWif: PassOrWif,
+                        assetId: String,
+                        assetForFee: String?,
+                        byteCode: String,
+                        supportedAssetId: String?,
+                        ethAccuracy: Bool,
                         completion: @escaping Completion<Bool>,
                         noticeHandler: NoticeHandler?)
     
@@ -61,6 +82,27 @@ public protocol ContractsFacade {
                       noticeHandler: NoticeHandler?)
     
 /**
+     Calls to contract on blockchain
+     
+     - Parameter registrarNameOrId: Name or id of account that call the contract
+     - Parameter passwordOrWif: Password or WIF from account for transaction signature
+     - Parameter assetId: Asset of contract
+     - Parameter amount: Amount
+     - Parameter contratId: Id of called contract
+     - Parameter byteCode: Code which will be execute
+     - Parameter completion: Callback which returns an [Bool](Bool) result of call or error
+ */
+    func callContract(registrarNameOrId: String,
+                      passwordOrWif: PassOrWif,
+                      assetId: String,
+                      amount: UInt?,
+                      assetForFee: String?,
+                      contratId: String,
+                      byteCode: String,
+                      completion: @escaping Completion<Bool>,
+                      noticeHandler: NoticeHandler?)
+    
+/**
      Calls contract method without changing state of blockchain
      
      - Parameter registrarNameOrId: Name or id of account that call the contract
@@ -75,6 +117,21 @@ public protocol ContractsFacade {
                        contratId: String,
                        methodName: String,
                        methodParams: [AbiTypeValueInputModel],
+                       completion: @escaping Completion<String>)
+    
+/**
+     Calls contract method without changing state of blockchain
+     
+     - Parameter registrarNameOrId: Name or id of account that call the contract
+     - Parameter assetId: Asset of contract
+     - Parameter contratId: Id of called contract
+     - Parameter byteCode: Code which will be execute
+     - Parameter completion: Callback which returns an [Bool](Bool) result of call or error
+ */
+    func queryContract(registrarNameOrId: String,
+                       assetId: String,
+                       contratId: String,
+                       byteCode: String,
                        completion: @escaping Completion<String>)
     
 /**
