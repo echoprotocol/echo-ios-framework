@@ -149,195 +149,31 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
                        passwordOrWif: passwordOrWif,
                        assetId: assetId,
                        assetForFee: assetForFee,
-                       byteCode: byteCode,
+                       byteCode: completedBytecode,
                        supportedAssetId: supportedAssetId,
                        ethAccuracy: ethAccuracy,
                        completion: completion,
                        noticeHandler: noticeHandler)
     }
     
-    public func callContract(registrarNameOrId: String,
-                             passwordOrWif: PassOrWif,
-                             assetId: String,
-                             amount: UInt?,
-                             assetForFee: String?,
-                             contratId: String,
-                             methodName: String,
-                             methodParams: [AbiTypeValueInputModel],
-                             completion: @escaping Completion<Bool>,
-                             noticeHandler: NoticeHandler?) {
+    public func createContract(registrarNameOrId: String,
+                               passwordOrWif: PassOrWif,
+                               assetId: String,
+                               assetForFee: String?,
+                               byteCode: String,
+                               supportedAssetId: String?,
+                               ethAccuracy: Bool,
+                               completion: @escaping Completion<Bool>,
+                               noticeHandler: NoticeHandler?) {
         
         let assetForFee = assetForFee ?? Settings.defaultAsset
         
-        // Validate assetId, contratId, assetIdForFee
-        do {
-            let validator = IdentifierValidator()
-            try validator.validateId(assetId, for: .asset)
-            try validator.validateId(contratId, for: .contract)
-            try validator.validateId(assetForFee, for: .asset)
-
-        } catch let error {
-            let echoError = (error as? ECHOError) ?? ECHOError.undefined
-            let result = Result<Bool, ECHOError>(error: echoError)
-            completion(result)
-            return
-        }
-        
-        let callQueue = ECHOQueue()
-        addQueue(callQueue)
-        
-        // Accounts
-        let getAccountsNamesOrIdsWithKeys = GetAccountsNamesOrIdWithKeys([(registrarNameOrId, ContractKeys.registrarAccount.rawValue)])
-        let getAccountsOperationInitParams = (callQueue,
-                                              services.databaseService,
-                                              getAccountsNamesOrIdsWithKeys)
-        let getAccountsOperation = GetAccountsQueueOperation<Bool>(initParams: getAccountsOperationInitParams,
-                                                                   completion: completion)
-        
-        // ByteCode
-        let byteCodeOperation = createByteCodeOperation(callQueue, methodName, methodParams, completion)
-        
-        // Operation
-        callQueue.saveValue(Contract(id: contratId), forKey: ContractKeys.receiverContract.rawValue)
-        let bildCreateContractOperation = createBildCallContractOperation(callQueue,
-                                                                          amount ?? 0,
-                                                                          assetId,
-                                                                          assetForFee,
-                                                                          completion)
-        
-        // RequiredFee
-        let getRequiredFeeOperationInitParams = (callQueue,
-                                                 services.databaseService,
-                                                 Asset(assetForFee),
-                                                 ContractKeys.operation.rawValue,
-                                                 ContractKeys.fee.rawValue)
-        let getRequiredFeeOperation = GetRequiredFeeQueueOperation<Bool>(initParams: getRequiredFeeOperationInitParams,
-                                                                         completion: completion)
-        
-        // ChainId
-        let getChainIdInitParams = (callQueue, services.databaseService, ContractKeys.chainId.rawValue)
-        let getChainIdOperation = GetChainIdQueueOperation<Bool>(initParams: getChainIdInitParams,
-                                                                 completion: completion)
-        
-        // BlockData
-        let getBlockDataInitParams = (callQueue, services.databaseService, ContractKeys.blockData.rawValue)
-        let getBlockDataOperation = GetBlockDataQueueOperation<Bool>(initParams: getBlockDataInitParams,
-                                                                     completion: completion)
-        
-        // Transaciton
-        let transactionOperationInitParams = (queue: callQueue,
-                                              cryptoCore: cryptoCore,
-                                              keychainType: KeychainType.active,
-                                              saveKey: ContractKeys.transaction.rawValue,
-                                              passwordOrWif: passwordOrWif,
-                                              networkPrefix: network.prefix.rawValue,
-                                              fromAccountKey: ContractKeys.registrarAccount.rawValue,
-                                              operationKey: ContractKeys.operation.rawValue,
-                                              chainIdKey: ContractKeys.chainId.rawValue,
-                                              blockDataKey: ContractKeys.blockData.rawValue,
-                                              feeKey: ContractKeys.fee.rawValue)
-        let bildTransactionOperation = GetTransactionQueueOperation<Bool>(initParams: transactionOperationInitParams,
-                                                                          completion: completion)
-        
-        // Send transaction
-        let sendTransacionOperationInitParams = (callQueue,
-                                                 services.networkBroadcastService,
-                                                 ContractKeys.operationId.rawValue,
-                                                 ContractKeys.transaction.rawValue)
-        let sendTransactionOperation = SendTransactionQueueOperation(initParams: sendTransacionOperationInitParams,
-                                                                     completion: completion)
-        
-        //Notice handler
-        callQueue.saveValue(noticeHandler, forKey: ContractKeys.noticeHandler.rawValue)
-
-        // Completion
-        let completionOperation = createCompletionOperation(queue: callQueue)
-        
-        callQueue.addOperation(getAccountsOperation)
-        callQueue.addOperation(byteCodeOperation)
-        callQueue.addOperation(bildCreateContractOperation)
-        callQueue.addOperation(getRequiredFeeOperation)
-        callQueue.addOperation(getChainIdOperation)
-        callQueue.addOperation(getBlockDataOperation)
-        callQueue.addOperation(bildTransactionOperation)
-        callQueue.addOperation(sendTransactionOperation)
-        
-        //Notice handler
-        if let noticeHandler = noticeHandler {
-            callQueue.saveValue(noticeHandler, forKey: ContractKeys.noticeHandler.rawValue)
-            let waitOperation = createWaitingOperation(callQueue)
-            let noticeHandleOperation = createNoticeHandleOperation(callQueue)
-            callQueue.addOperation(waitOperation)
-            callQueue.addOperation(noticeHandleOperation)
-        }
-        
-        callQueue.setCompletionOperation(completionOperation)
-    }
-    
-    public func queryContract(registrarNameOrId: String,
-                              assetId: String,
-                              contratId: String,
-                              methodName: String,
-                              methodParams: [AbiTypeValueInputModel],
-                              completion: @escaping Completion<String>) {
-        
-        // Validate assetId, contratId
-        do {
-            let validator = IdentifierValidator()
-            try validator.validateId(assetId, for: .asset)
-            try validator.validateId(contratId, for: .contract)
-        } catch let error {
-            let echoError = (error as? ECHOError) ?? ECHOError.undefined
-            let result = Result<String, ECHOError>(error: echoError)
-            completion(result)
-            return
-        }
-        
-        let queryQueue = ECHOQueue()
-        addQueue(queryQueue)
-        
-        // Accounts
-        let getAccountsNamesOrIdsWithKeys = GetAccountsNamesOrIdWithKeys([(registrarNameOrId, ContractKeys.registrarAccount.rawValue)])
-        let getAccountsOperationInitParams = (queryQueue,
-                                              services.databaseService,
-                                              getAccountsNamesOrIdsWithKeys)
-        let getAccountsOperation = GetAccountsQueueOperation<String>(initParams: getAccountsOperationInitParams,
-                                                                   completion: completion)
-        
-        // ByteCode
-        let byteCodeOperation = createByteCodeOperation(queryQueue, methodName, methodParams, completion)
-        
-        // Operation
-        queryQueue.saveValue(Contract(id: contratId), forKey: ContractKeys.receiverContract.rawValue)
-        let callContractNoChangigState = createBildCallContractNoChangingState(queryQueue, assetId, completion)
-        
-        // Completion
-        let completionOperation = createCompletionOperation(queue: queryQueue)
-        
-        queryQueue.addOperation(getAccountsOperation)
-        queryQueue.addOperation(byteCodeOperation)
-        queryQueue.addOperation(callContractNoChangigState)
-        queryQueue.setCompletionOperation(completionOperation)
-    }
-    
-    fileprivate func createContract(registrarNameOrId: String,
-                                    passwordOrWif: PassOrWif,
-                                    assetId: String,
-                                    assetForFee: String?,
-                                    byteCode: String,
-                                    supportedAssetId: String?,
-                                    ethAccuracy: Bool,
-                                    completion: @escaping Completion<Bool>,
-                                    noticeHandler: NoticeHandler?) {
-        
-        let assetForFee = assetForFee ?? Settings.defaultAsset
-
         // Validate asset id, assetIdForFee
         do {
             let validator = IdentifierValidator()
             try validator.validateId(assetId, for: .asset)
             try validator.validateId(assetForFee, for: .asset)
-
+            
         } catch let error {
             let echoError = (error as? ECHOError) ?? ECHOError.undefined
             let result = Result<Bool, ECHOError>(error: echoError)
@@ -429,6 +265,254 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
         }
         
         createQueue.setCompletionOperation(completionOperation)
+    }
+    
+    public func callContract(registrarNameOrId: String,
+                             passwordOrWif: PassOrWif,
+                             assetId: String,
+                             amount: UInt?,
+                             assetForFee: String?,
+                             contratId: String,
+                             methodName: String,
+                             methodParams: [AbiTypeValueInputModel],
+                             completion: @escaping Completion<Bool>,
+                             noticeHandler: NoticeHandler?) {
+        
+        callContract(registrarNameOrId: registrarNameOrId,
+                     passwordOrWif: passwordOrWif,
+                     assetId: assetId,
+                     amount: amount,
+                     assetForFee: assetForFee,
+                     contratId: contratId,
+                     executeType: ContractExecuteType.nameAndParams(methodName, methodParams),
+                     completion: completion,
+                     noticeHandler: noticeHandler)
+    }
+    
+    public func callContract(registrarNameOrId: String,
+                             passwordOrWif: PassOrWif,
+                             assetId: String,
+                             amount: UInt?,
+                             assetForFee: String?,
+                             contratId: String,
+                             byteCode: String,
+                             completion: @escaping Completion<Bool>,
+                             noticeHandler: NoticeHandler?) {
+        
+        callContract(registrarNameOrId: registrarNameOrId,
+                     passwordOrWif: passwordOrWif,
+                     assetId: assetId,
+                     amount: amount,
+                     assetForFee: assetForFee,
+                     contratId: contratId,
+                     executeType: ContractExecuteType.code(byteCode),
+                     completion: completion,
+                     noticeHandler: noticeHandler)
+    }
+    
+    fileprivate func callContract(registrarNameOrId: String,
+                                  passwordOrWif: PassOrWif,
+                                  assetId: String,
+                                  amount: UInt?,
+                                  assetForFee: String?,
+                                  contratId: String,
+                                  executeType: ContractExecuteType,
+                                  completion: @escaping Completion<Bool>,
+                                  noticeHandler: NoticeHandler?) {
+        
+        let assetForFee = assetForFee ?? Settings.defaultAsset
+        
+        // Validate assetId, contratId, assetIdForFee
+        do {
+            let validator = IdentifierValidator()
+            try validator.validateId(assetId, for: .asset)
+            try validator.validateId(contratId, for: .contract)
+            try validator.validateId(assetForFee, for: .asset)
+            
+        } catch let error {
+            let echoError = (error as? ECHOError) ?? ECHOError.undefined
+            let result = Result<Bool, ECHOError>(error: echoError)
+            completion(result)
+            return
+        }
+        
+        let callQueue = ECHOQueue()
+        addQueue(callQueue)
+        
+        // Accounts
+        let getAccountsNamesOrIdsWithKeys = GetAccountsNamesOrIdWithKeys([(registrarNameOrId, ContractKeys.registrarAccount.rawValue)])
+        let getAccountsOperationInitParams = (callQueue,
+                                              services.databaseService,
+                                              getAccountsNamesOrIdsWithKeys)
+        let getAccountsOperation = GetAccountsQueueOperation<Bool>(initParams: getAccountsOperationInitParams,
+                                                                   completion: completion)
+        
+        // ByteCode
+        var byteCodeOperation: Operation?
+        switch executeType {
+        case .code(let code):
+            callQueue.saveValue(code, forKey: ContractKeys.byteCode.rawValue)
+        case .nameAndParams(let methodName, let methodParams):
+            byteCodeOperation = createByteCodeOperation(callQueue, methodName, methodParams, completion)
+        }
+        
+        // Operation
+        callQueue.saveValue(Contract(id: contratId), forKey: ContractKeys.receiverContract.rawValue)
+        let bildCreateContractOperation = createBildCallContractOperation(callQueue,
+                                                                          amount ?? 0,
+                                                                          assetId,
+                                                                          assetForFee,
+                                                                          completion)
+        
+        // RequiredFee
+        let getRequiredFeeOperationInitParams = (callQueue,
+                                                 services.databaseService,
+                                                 Asset(assetForFee),
+                                                 ContractKeys.operation.rawValue,
+                                                 ContractKeys.fee.rawValue)
+        let getRequiredFeeOperation = GetRequiredFeeQueueOperation<Bool>(initParams: getRequiredFeeOperationInitParams,
+                                                                         completion: completion)
+        
+        // ChainId
+        let getChainIdInitParams = (callQueue, services.databaseService, ContractKeys.chainId.rawValue)
+        let getChainIdOperation = GetChainIdQueueOperation<Bool>(initParams: getChainIdInitParams,
+                                                                 completion: completion)
+        
+        // BlockData
+        let getBlockDataInitParams = (callQueue, services.databaseService, ContractKeys.blockData.rawValue)
+        let getBlockDataOperation = GetBlockDataQueueOperation<Bool>(initParams: getBlockDataInitParams,
+                                                                     completion: completion)
+        
+        // Transaciton
+        let transactionOperationInitParams = (queue: callQueue,
+                                              cryptoCore: cryptoCore,
+                                              keychainType: KeychainType.active,
+                                              saveKey: ContractKeys.transaction.rawValue,
+                                              passwordOrWif: passwordOrWif,
+                                              networkPrefix: network.prefix.rawValue,
+                                              fromAccountKey: ContractKeys.registrarAccount.rawValue,
+                                              operationKey: ContractKeys.operation.rawValue,
+                                              chainIdKey: ContractKeys.chainId.rawValue,
+                                              blockDataKey: ContractKeys.blockData.rawValue,
+                                              feeKey: ContractKeys.fee.rawValue)
+        let bildTransactionOperation = GetTransactionQueueOperation<Bool>(initParams: transactionOperationInitParams,
+                                                                          completion: completion)
+        
+        // Send transaction
+        let sendTransacionOperationInitParams = (callQueue,
+                                                 services.networkBroadcastService,
+                                                 ContractKeys.operationId.rawValue,
+                                                 ContractKeys.transaction.rawValue)
+        let sendTransactionOperation = SendTransactionQueueOperation(initParams: sendTransacionOperationInitParams,
+                                                                     completion: completion)
+        
+        //Notice handler
+        callQueue.saveValue(noticeHandler, forKey: ContractKeys.noticeHandler.rawValue)
+        
+        // Completion
+        let completionOperation = createCompletionOperation(queue: callQueue)
+        
+        callQueue.addOperation(getAccountsOperation)
+        if let byteCodeOperation = byteCodeOperation {
+            callQueue.addOperation(byteCodeOperation)
+        }
+        callQueue.addOperation(bildCreateContractOperation)
+        callQueue.addOperation(getRequiredFeeOperation)
+        callQueue.addOperation(getChainIdOperation)
+        callQueue.addOperation(getBlockDataOperation)
+        callQueue.addOperation(bildTransactionOperation)
+        callQueue.addOperation(sendTransactionOperation)
+        
+        //Notice handler
+        if let noticeHandler = noticeHandler {
+            callQueue.saveValue(noticeHandler, forKey: ContractKeys.noticeHandler.rawValue)
+            let waitOperation = createWaitingOperation(callQueue)
+            let noticeHandleOperation = createNoticeHandleOperation(callQueue)
+            callQueue.addOperation(waitOperation)
+            callQueue.addOperation(noticeHandleOperation)
+        }
+        
+        callQueue.setCompletionOperation(completionOperation)
+    }
+    
+    public func queryContract(registrarNameOrId: String,
+                              assetId: String,
+                              contratId: String,
+                              methodName: String,
+                              methodParams: [AbiTypeValueInputModel],
+                              completion: @escaping Completion<String>) {
+        
+        queryContract(registrarNameOrId: registrarNameOrId,
+                      assetId: assetId,
+                      contratId: contratId,
+                      executeType: ContractExecuteType.nameAndParams(methodName, methodParams),
+                      completion: completion)
+    }
+    
+    public func queryContract(registrarNameOrId: String,
+                              assetId: String,
+                              contratId: String,
+                              byteCode: String,
+                              completion: @escaping Completion<String>) {
+        
+        queryContract(registrarNameOrId: registrarNameOrId,
+                      assetId: assetId,
+                      contratId: contratId,
+                      executeType: ContractExecuteType.code(byteCode),
+                      completion: completion)
+    }
+    
+    fileprivate func queryContract(registrarNameOrId: String,
+                                   assetId: String,
+                                   contratId: String,
+                                   executeType: ContractExecuteType,
+                                   completion: @escaping Completion<String>) {
+        
+        // Validate assetId, contratId
+        do {
+            let validator = IdentifierValidator()
+            try validator.validateId(assetId, for: .asset)
+            try validator.validateId(contratId, for: .contract)
+        } catch let error {
+            let echoError = (error as? ECHOError) ?? ECHOError.undefined
+            let result = Result<String, ECHOError>(error: echoError)
+            completion(result)
+            return
+        }
+        
+        let queryQueue = ECHOQueue()
+        addQueue(queryQueue)
+        
+        // Accounts
+        let getAccountsNamesOrIdsWithKeys = GetAccountsNamesOrIdWithKeys([(registrarNameOrId, ContractKeys.registrarAccount.rawValue)])
+        let getAccountsOperationInitParams = (queryQueue,
+                                              services.databaseService,
+                                              getAccountsNamesOrIdsWithKeys)
+        let getAccountsOperation = GetAccountsQueueOperation<String>(initParams: getAccountsOperationInitParams,
+                                                                     completion: completion)
+        
+        // ByteCode
+        var byteCodeOperation: Operation?
+        switch executeType {
+        case .code(let code):
+            queryQueue.saveValue(code, forKey: ContractKeys.byteCode.rawValue)
+        case .nameAndParams(let methodName, let methodParams):
+            byteCodeOperation = createByteCodeOperation(queryQueue, methodName, methodParams, completion)
+        }
+        
+        // Operation
+        queryQueue.saveValue(Contract(id: contratId), forKey: ContractKeys.receiverContract.rawValue)
+        let callContractNoChangigState = createBildCallContractNoChangingState(queryQueue, assetId, completion)
+        
+        // Completion
+        let completionOperation = createCompletionOperation(queue: queryQueue)
+        
+        queryQueue.addOperation(getAccountsOperation)
+        if let byteCodeOperation = byteCodeOperation {
+            queryQueue.addOperation(byteCodeOperation)
+        }
+        queryQueue.addOperation(callContractNoChangigState)
+        queryQueue.setCompletionOperation(completionOperation)
     }
     
     fileprivate func createBildCallContractOperation(_ queue: ECHOQueue,

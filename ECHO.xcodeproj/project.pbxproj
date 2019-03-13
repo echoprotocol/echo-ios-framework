@@ -206,6 +206,7 @@
 		D0D8CA4A2141847900F0646D /* GetAccountsQueueOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D8CA432141847900F0646D /* GetAccountsQueueOperation.swift */; };
 		D0D8CA4B2141847900F0646D /* GetBlockDataQueueOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D8CA442141847900F0646D /* GetBlockDataQueueOperation.swift */; };
 		D0D8CA4C2141847900F0646D /* GetMemoQueueOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D8CA452141847900F0646D /* GetMemoQueueOperation.swift */; };
+		D0DCC84D223908B600D20358 /* ContractExecuteType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DCC84C223908B600D20358 /* ContractExecuteType.swift */; };
 		D0E158E2221FDF9B004B44FF /* GetKeyReferencesSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E158E1221FDF9B004B44FF /* GetKeyReferencesSocketOperation.swift */; };
 		D0E158E4221FFCA3004B44FF /* PassOfWif.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E158E3221FFCA3004B44FF /* PassOfWif.swift */; };
 /* End PBXBuildFile section */
@@ -436,6 +437,7 @@
 		D0D8CA432141847900F0646D /* GetAccountsQueueOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetAccountsQueueOperation.swift; sourceTree = "<group>"; };
 		D0D8CA442141847900F0646D /* GetBlockDataQueueOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetBlockDataQueueOperation.swift; sourceTree = "<group>"; };
 		D0D8CA452141847900F0646D /* GetMemoQueueOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetMemoQueueOperation.swift; sourceTree = "<group>"; };
+		D0DCC84C223908B600D20358 /* ContractExecuteType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractExecuteType.swift; sourceTree = "<group>"; };
 		D0E158E1221FDF9B004B44FF /* GetKeyReferencesSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetKeyReferencesSocketOperation.swift; sourceTree = "<group>"; };
 		D0E158E3221FFCA3004B44FF /* PassOfWif.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassOfWif.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -895,6 +897,7 @@
 				D01AD063221C156E0062A74D /* ContractResultx86.swift */,
 				D0B0587521468A0300A80CDE /* ContractInfo.swift */,
 				D061331221A2E93F009EC456 /* ContractLog.swift */,
+				D0DCC84C223908B600D20358 /* ContractExecuteType.swift */,
 			);
 			path = Contracts;
 			sourceTree = "<group>";
@@ -1212,8 +1215,8 @@
 				B30CAD0220FF74C80048E33E /* DatabaseApiService.swift in Sources */,
 				D01BF7D2212ABE4E00917DB8 /* OptionalValue.swift in Sources */,
 				D00A58E9222522C40089FC18 /* GetGlobalPropertiesSocketOperation.swift in Sources */,
-				B38596F420F5EE5C00B55E59 /* KeyReferencesSocketOperation.swift in Sources */,
 				D0B0587621468A0400A80CDE /* ContractInfo.swift in Sources */,
+				D0DCC84D223908B600D20358 /* ContractExecuteType.swift in Sources */,
 				B3CA703820F4A72C00511F6A /* Error.swift in Sources */,
 				D0D8CA492141847900F0646D /* SendTransactionQueueOperation.swift in Sources */,
 				B30FE903212ECD780009BF57 /* ECHODirectResponse.swift in Sources */,

@@ -56,4 +56,3 @@ struct GetGlobalPropertiesSocketOperation: SocketOperation {
         completion(result)
     }
 }
-

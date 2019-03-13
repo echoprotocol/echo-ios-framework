@@ -710,6 +710,45 @@ class ECHOInterfaceTests: XCTestCase {
         }
     }
     
+    func testGetFeeForCallContractByCode() {
+        
+        //arrange
+        echo = ECHO(settings: Settings(build: {
+            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+        }))
+        let exp = expectation(description: "Fee For Call Сontract Getting")
+        let registrarNameOrId = defaultName
+        let assetId = "1.3.0"
+        let contratId = counterContract
+        let byteCode = "5b34b966"
+        
+        var fee: AssetAmount!
+        
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.getFeeForCallContractOperation(registrarNameOrId: registrarNameOrId,
+                                                     assetId: assetId,
+                                                     amount: nil,
+                                                     assetForFee: nil,
+                                                     contratId: contratId,
+                                                     byteCode: byteCode,
+                                                     completion: { (result) in
+                switch result {
+                case .success(let aFee):
+                    fee = aFee
+                    exp.fulfill()
+                case .failure(let error):
+                    XCTFail("Fee for call contract getting failed \(error)")
+                }
+            })
+        }
+        
+        //assert
+        waitForExpectations(timeout: timeout) { error in
+            XCTAssertNotNil(fee)
+        }
+    }
+    
     func testGetFeeForCallContractInAnotherAsset() {
         
         //arrange
@@ -1634,6 +1673,45 @@ class ECHOInterfaceTests: XCTestCase {
         }
     }
     
+    func testCreateContractByCode() {
+        
+        //arrange
+        echo = ECHO(settings: Settings(build: {
+            $0.apiOptions = [.database, .networkBroadcast, .accountHistory]
+        }))
+        let exp = expectation(description: "Creating contract")
+        let byteCode =  "6080604052348015600f57600080fd5b5061010b8061001f6000396000f300608060405260043610603f576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806329e99f07146044575b600080fd5b348015604f57600080fd5b50606c60048036038101908080359060200190929190505050606e565b005b7fa7659801d76e732d0b4c81221c99e5cf387816232f81f4ff646ba0653d65507a436040518082815260200191505060405180910390a17fa7659801d76e732d0b4c81221c99e5cf387816232f81f4ff646ba0653d65507a816040518082815260200191505060405180910390a1505600a165627a7a7230582044c4962adfce34c7d04f94696d140e8aadb29426be2d9968949d5cffc4cd43560029"
+        var success = false
+        
+        //act
+        echo.start { [unowned self] (result) in
+            
+            self.echo.createContract(registrarNameOrId: self.defaultName,
+                                     passwordOrWif: PassOrWif.password(self.defaultPass),
+                                     assetId: "1.3.0",
+                                     assetForFee: nil,
+                                     byteCode: byteCode,
+                                     supportedAssetId: nil,
+                                     ethAccuracy: false,
+                                     completion: { (result) in
+                                        switch result {
+                                        case .success(let isSuccess):
+                                            success = isSuccess
+                                        case .failure(let error):
+                                            XCTFail("Creating contract cant fail \(error)")
+                                        }
+            }, noticeHandler: { (notice) in
+                print(notice)
+                exp.fulfill()
+            })
+        }
+        
+        //assert
+        waitForExpectations(timeout: timeout) { error in
+            XCTAssertTrue(success)
+        }
+    }
+    
     func testCreateContractWithWIF() {
         
         //arrange
@@ -1711,6 +1789,42 @@ class ECHOInterfaceTests: XCTestCase {
         }
     }
     
+    func testQueryContractByCode() {
+        
+        //arrange
+        echo = ECHO(settings: Settings(build: {
+            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+        }))
+        let exp = expectation(description: "Query contract")
+        let registrarNameOrId = defaultName
+        let assetId = "1.3.0"
+        let contratId = counterContract
+        let byteCode = "a87d942c"
+        var query: String!
+        
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.queryContract(registrarNameOrId: registrarNameOrId,
+                                    assetId: assetId,
+                                    contratId: contratId,
+                                    byteCode: byteCode) { (result) in
+                
+                switch result {
+                case .success(let res):
+                    query = res
+                    exp.fulfill()
+                case .failure(let error):
+                    XCTFail("Query contract cant fail \(error)")
+                }
+            }
+        }
+        
+        //assert
+        waitForExpectations(timeout: timeout) { error in
+            XCTAssertNotNil(query)
+        }
+    }
+    
     func testCallContract() {
 
         //arrange
@@ -1751,6 +1865,50 @@ class ECHOInterfaceTests: XCTestCase {
             })
         }
 
+        //assert
+        waitForExpectations(timeout: timeout) { error in
+            XCTAssertTrue(success)
+        }
+    }
+    
+    func testCallContractByCode() {
+        
+        //arrange
+        echo = ECHO(settings: Settings(build: {
+            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+        }))
+        let exp = expectation(description: "Call contract")
+        let registrarNameOrId = defaultName
+        let password = defaultPass
+        let assetId = "1.3.0"
+        let contratId = counterContract
+        let byteCode = "5b34b966"
+        var success = false
+        
+        //act
+        echo.start { [unowned self] (result) in
+            
+            self.echo.callContract(registrarNameOrId: registrarNameOrId,
+                                   passwordOrWif: PassOrWif.password(password),
+                                   assetId: assetId,
+                                   amount: nil,
+                                   assetForFee: nil,
+                                   contratId: contratId,
+                                   byteCode: byteCode,
+                                   completion: { (result) in
+                                    
+                                    switch result {
+                                    case .success(let isSuccess):
+                                        success = isSuccess
+                                        exp.fulfill()
+                                    case .failure(let error):
+                                        XCTFail("Call contract cant fail \(error)")
+                                    }
+            }, noticeHandler: { (notice) in
+                print(notice)
+            })
+        }
+        
         //assert
         waitForExpectations(timeout: timeout) { error in
             XCTAssertTrue(success)

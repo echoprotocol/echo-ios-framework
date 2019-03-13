@@ -226,6 +226,23 @@ final public class ECHO: InterfaceFacades {
                                                  completion: completion)
     }
     
+    public func getFeeForCallContractOperation(registrarNameOrId: String,
+                                               assetId: String,
+                                               amount: UInt?,
+                                               assetForFee: String?,
+                                               contratId: String,
+                                               byteCode: String,
+                                               completion: @escaping Completion<AssetAmount>) {
+        
+        feeFacade.getFeeForCallContractOperation(registrarNameOrId: registrarNameOrId,
+                                                 assetId: assetId,
+                                                 amount: amount,
+                                                 assetForFee: assetForFee,
+                                                 contratId: contratId,
+                                                 byteCode: byteCode,
+                                                 completion: completion)
+    }
+    
     // MARK: TransactionFacade
     
     public func sendTransferOperation(fromNameOrId: String,
@@ -338,6 +355,27 @@ final public class ECHO: InterfaceFacades {
                                        noticeHandler: noticeHandler)
     }
     
+    public func createContract(registrarNameOrId: String,
+                               passwordOrWif: PassOrWif,
+                               assetId: String,
+                               assetForFee: String?,
+                               byteCode: String,
+                               supportedAssetId: String?,
+                               ethAccuracy: Bool,
+                               completion: @escaping Completion<Bool>,
+                               noticeHandler: NoticeHandler?) {
+        
+        contractsFacade.createContract(registrarNameOrId: registrarNameOrId,
+                                       passwordOrWif: passwordOrWif,
+                                       assetId: assetId,
+                                       assetForFee: assetForFee,
+                                       byteCode: byteCode,
+                                       supportedAssetId: supportedAssetId,
+                                       ethAccuracy: ethAccuracy,
+                                       completion: completion,
+                                       noticeHandler: noticeHandler)
+    }
+    
     public func callContract(registrarNameOrId: String,
                              passwordOrWif: PassOrWif,
                              assetId: String,
@@ -361,6 +399,27 @@ final public class ECHO: InterfaceFacades {
                                      noticeHandler: noticeHandler)
     }
     
+    public func callContract(registrarNameOrId: String,
+                             passwordOrWif: PassOrWif,
+                             assetId: String,
+                             amount: UInt?,
+                             assetForFee: String?,
+                             contratId: String,
+                             byteCode: String,
+                             completion: @escaping Completion<Bool>,
+                             noticeHandler: NoticeHandler?) {
+        
+        contractsFacade.callContract(registrarNameOrId: registrarNameOrId,
+                                     passwordOrWif: passwordOrWif,
+                                     assetId: assetId,
+                                     amount: amount,
+                                     assetForFee: assetForFee,
+                                     contratId: contratId,
+                                     byteCode: byteCode,
+                                     completion: completion,
+                                     noticeHandler: noticeHandler)
+    }
+    
     public func queryContract(registrarNameOrId: String,
                               assetId: String,
                               contratId: String,
@@ -373,6 +432,19 @@ final public class ECHO: InterfaceFacades {
                                       contratId: contratId,
                                       methodName: methodName,
                                       methodParams: methodParams,
+                                      completion: completion)
+    }
+    
+    public func queryContract(registrarNameOrId: String,
+                              assetId: String,
+                              contratId: String,
+                              byteCode: String,
+                              completion: @escaping Completion<String>) {
+        
+        contractsFacade.queryContract(registrarNameOrId: registrarNameOrId,
+                                      assetId: assetId,
+                                      contratId: contratId,
+                                      byteCode: byteCode,
                                       completion: completion)
     }
     
