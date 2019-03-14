@@ -9,7 +9,13 @@ platform :ios do
   lane :tests do
 
     libraries
-    scan
+    
+    run_tests(
+	scheme: "ECHO",
+	sdk: "iphonesimulator",
+	devices: ["iPhone X"],
+	clean: true
+    )
 
   end
 

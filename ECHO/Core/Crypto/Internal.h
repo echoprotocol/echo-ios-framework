@@ -22,6 +22,11 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSString *)decryptMessageWithPrivateKey:(NSData *)privateKey publicKey:(NSData *)publicKey nonce:(NSString *)nonce message:(NSData *)message;
 @end
 
+@interface Ed25519 : NSObject
++ (NSData *)generatePublicKeyWithPrivateKey:(NSData *)privateKeyData;
++ (NSData *)sign:(NSData *)hash privateKey:(NSData *)privateKeyData;
+@end
+
 NS_ASSUME_NONNULL_END
 
 // Bitcoin-flavoured big number wrapping OpenSSL BIGNUM.

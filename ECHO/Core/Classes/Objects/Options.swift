@@ -18,10 +18,12 @@ public struct Options: Decodable {
         case numCommittee = "num_committee"
         case votes
         case extensions
+        case delegatingAccount = "delegating_account"
     }
     
     public let memoKey: String
     public let votingAccount: String
+    public let delegatingAccount: String
     public let numWitness: Int
     public let numCommittee: Int
     public let votes = [Any]()
@@ -34,5 +36,6 @@ public struct Options: Decodable {
         votingAccount = try values.decode(String.self, forKey: .votingAccount)
         numWitness = try values.decode(Int.self, forKey: .numWitness)
         numCommittee = try values.decode(Int.self, forKey: .numCommittee)
+        delegatingAccount = try values.decode(String.self, forKey: .delegatingAccount)
     }
 }

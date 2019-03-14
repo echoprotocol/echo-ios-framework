@@ -9,6 +9,7 @@
 struct InformationFacadeServices {
     var databaseService: DatabaseApiService
     var historyService: AccountHistoryApiService
+    var registrationService: RegistrationApiService
 }
 
 /**
@@ -20,10 +21,64 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
     
     var queues: [ECHOQueue]
     let services: InformationFacadeServices
+    let network: ECHONetwork
+    let cryptoCore: CryptoCoreComponent
     
-    init(services: InformationFacadeServices) {
+    init(services: InformationFacadeServices, network: ECHONetwork, cryptoCore: CryptoCoreComponent) {
         self.services = services
+        self.network = network
+        self.cryptoCore = cryptoCore
         self.queues = [ECHOQueue]()
+    }
+    
+    public func getObjects<T>(type: T.Type,
+                              objectsIds: [String],
+                              completion: @escaping (Result<[T], ECHOError>) -> Void) where T: Decodable {
+        
+        services.databaseService.getObjects(type: type, objectsIds: objectsIds, completion: completion)
+    }
+    
+    public func registerAccount(name: String, password: String, completion: @escaping Completion<Bool>) {
+        
+        isAccountReserved(nameOrID: name) { [weak self] (result) in
+            
+            guard let strongSelf = self else {
+                return
+            }
+            
+            do {
+                let isReserved = try result.dematerialize()
+                if isReserved {
+                    let result = Result<Bool, ECHOError>(error: ECHOError.invalidCredentials)
+                    completion(result)
+                    return
+                }
+                
+                guard let contrainer = AddressKeysContainer(login: name, password: password, core: strongSelf.cryptoCore) else {
+                    let result = Result<Bool, ECHOError>(error: ECHOError.invalidCredentials)
+                    completion(result)
+                    return
+                }
+                
+                let ownerKey = strongSelf.network.prefix.rawValue + contrainer.ownerKeychain.publicAddress()
+                let activeKey = strongSelf.network.prefix.rawValue + contrainer.activeKeychain.publicAddress()
+                let memoKey = strongSelf.network.prefix.rawValue + contrainer.memoKeychain.publicAddress()
+                let echorandKey = strongSelf.network.echorandPrefix.rawValue + contrainer.echorandKeychain.publicAddress()
+                
+                strongSelf.services.registrationService.registerAccount(name: name,
+                                                                        ownerKey: ownerKey,
+                                                                        activeKey: activeKey,
+                                                                        memoKey: memoKey,
+                                                                        echorandKey: echorandKey,
+                                                                        completion: completion)
+            } catch let error as ECHOError {
+                let result = Result<Bool, ECHOError>(error: error)
+                completion(result)
+            } catch let error {
+                let result = Result<Bool, ECHOError>(error: ECHOError.internalError(error.localizedDescription))
+                completion(result)
+            }
+        }
     }
     
     public func getAccount(nameOrID: String, completion: @escaping Completion<Account>) {
@@ -100,6 +155,25 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                 completion(result)
             }
         }
+    }
+    
+    public func getGlobalProperties(completion: @escaping Completion<GlobalProperties>) {
+        
+        services.databaseService.getGlobalProperties(completion: completion)
+    }
+    
+    public func getSidechainTransfers(for ethAddress: String, completion: @escaping Completion<[SidechainTransfer]>) {
+        
+        let ethValidator = ETHAddressValidator(cryptoCore: cryptoCore)
+        if !ethValidator.isValidETHAddress(ethAddress) {
+            let result = Result<[SidechainTransfer], ECHOError>.init(error: .invalidETHAddress)
+            completion(result)
+            return
+        }
+        
+        let wellFormatAddress = ethAddress.replacingOccurrences(of: "0x", with: "").lowercased()
+        
+        services.databaseService.getSidechainTransfers(for: wellFormatAddress, completion: completion)
     }
     
     // MARK: History
@@ -377,6 +451,18 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                     historyItem.operation = operation
                 }
                 
+                if var operation = operation as? CallContractOperation {
+                    let registrar = self?.findAccountIn(accounts, accountId: operation.registrar.id)
+                    operation.changeRegistrar(registrar)
+                    historyItem.operation = operation
+                }
+                
+                if var operation = operation as? CreateContractOperation {
+                    let registrar = self?.findAccountIn(accounts, accountId: operation.registrar.id)
+                    operation.changeRegistrar(registrar)
+                    historyItem.operation = operation
+                }
+                
                 history[index] = historyItem
             }
             
@@ -408,10 +494,21 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                     historyItem.operation = operation
                 }
                 
-                if var operation = operation as? ContractOperation {
+                if var operation = operation as? CallContractOperation {
                     let feeAsset = self?.findAssetsIn(assets, assetId: operation.fee.asset.id)
-                    let asset = self?.findAssetsIn(assets, assetId: operation.asset.id)
+                    let asset = self?.findAssetsIn(assets, assetId: operation.value.asset.id)
                     operation.changeAssets(feeAsset: feeAsset, asset: asset)
+                    historyItem.operation = operation
+                }
+                
+                if var operation = operation as? CreateContractOperation {
+                    let feeAsset = self?.findAssetsIn(assets, assetId: operation.fee.asset.id)
+                    let asset = self?.findAssetsIn(assets, assetId: operation.value.asset.id)
+                    var supportedAsset: Asset?
+                    if let supportedAssetId = operation.supportedAsset.object?.id {
+                        supportedAsset = self?.findAssetsIn(assets, assetId: supportedAssetId)
+                    }
+                    operation.changeAssets(feeAsset: feeAsset, asset: asset, supportedAsset: supportedAsset)
                     historyItem.operation = operation
                 }
                 
@@ -437,7 +534,7 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                 if var operation = operation as? CreateAssetOperation {
                     let feeAsset = self?.findAssetsIn(assets, assetId: operation.fee.asset.id)
                     
-                    var asset: Asset? = nil
+                    var asset: Asset?
                     
                     if let assetId = history[index].result[safe: 1] as? String {
                         asset = self?.findAssetsIn(assets, assetId: assetId)
@@ -545,6 +642,16 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                 accountsIds.insert(operation.referrer.id)
                 return
             }
+            
+            if let operation = operation as? CallContractOperation {
+                accountsIds.insert(operation.registrar.id)
+                return
+            }
+            
+            if let operation = operation as? CreateContractOperation {
+                accountsIds.insert(operation.registrar.id)
+                return
+            }
         }
         
         return accountsIds
@@ -566,9 +673,18 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                 return
             }
             
-            if let operation = operation as? ContractOperation {
+            if let operation = operation as? CallContractOperation {
                 assetsIds.insert(operation.fee.asset.id)
-                assetsIds.insert(operation.asset.id)
+                assetsIds.insert(operation.value.asset.id)
+                return
+            }
+            
+            if let operation = operation as? CreateContractOperation {
+                assetsIds.insert(operation.fee.asset.id)
+                assetsIds.insert(operation.value.asset.id)
+                if let supportedAssetId = operation.supportedAsset.object?.id {
+                    assetsIds.insert(supportedAssetId)
+                }
                 return
             }
             

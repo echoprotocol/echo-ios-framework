@@ -47,7 +47,7 @@ struct NetworkNodesAPIRevealSocketRequestElementStub: SocketRequestStub {
     var operationType = "network_node"
     
     func createResponce(id: Int) -> String {
-        return "{\"id\":\(id),\"jsonrpc\":\"2.0\",\"result\":5}"
+        return "{\"id\":\(id),\"jsonrpc\":\"2.0\",\"result\":6}"
     }
 }
 
@@ -60,6 +60,15 @@ struct CryptoAPIRevealSocketRequestElementStub: SocketRequestStub {
     }
 }
 
+struct RegistrationAPIRevealSocketRequestElementStub: SocketRequestStub {
+    
+    var operationType = "registration"
+    
+    func createResponce(id: Int) -> String {
+        return "{\"id\":\(id),\"jsonrpc\":\"2.0\",\"result\":7}"
+    }
+}
+
 struct RevialAPISocketRequestStubHodler: SocketRequestStubHodler {
     
     var requests: [SocketRequestStub] = [LoginRevealSocketRequestElementStub(),
@@ -67,5 +76,6 @@ struct RevialAPISocketRequestStubHodler: SocketRequestStubHodler {
                                          DatabaseAPIRevealSocketRequestElementStub(),
                                          NetworkBroadcastAPIRevealSocketRequestElementStub(),
                                          NetworkNodesAPIRevealSocketRequestElementStub(),
-                                         CryptoAPIRevealSocketRequestElementStub()]
+                                         CryptoAPIRevealSocketRequestElementStub(),
+                                         RegistrationAPIRevealSocketRequestElementStub()]
 }

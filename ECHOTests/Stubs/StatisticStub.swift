@@ -20,7 +20,7 @@ struct StatisticStub {
                     "total_core_in_orders": 0,
                     "core_in_balance": "10035186229",
                     "lifetime_fees_paid": 13771,
-                    "name": "nikitatest1",
+                    "name": "vsharaev1",
                     "has_cashback_vb": false
                     }
                     """

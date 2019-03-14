@@ -26,6 +26,17 @@ public enum ECHONetworkPrefix: String {
 }
 
 /**
+    Options that configures network parameters. Indicates the prefix that is used when generating addresses for echorand.
+    ````
+    case det = "DET"
+    ````
+ */
+public enum EchorandPrefix: String {
+    /// The prefix that is used for default echorand
+    case det = "DET"
+}
+
+/**
     Class of network prefix configuration parameters
     - Parameter firstname: The first part of the full name.
     - Parameter lastname: The last part of the fullname.
@@ -34,14 +45,16 @@ final public class ECHONetwork {
     
     public let url: String
     public let prefix: ECHONetworkPrefix
+    public let echorandPrefix: EchorandPrefix
     
 /**
      A contractor that specifies network parameters.
      - Parameter url: Socket URL
      - Parameter prefix: Prefix for addresses
  */
-    public init(url: String, prefix: ECHONetworkPrefix) {
+    public init(url: String, prefix: ECHONetworkPrefix, echorandPrefix: EchorandPrefix) {
         self.prefix = prefix
         self.url = url
+        self.echorandPrefix = echorandPrefix
     }
 }

@@ -16,6 +16,8 @@ public struct FeeFacadeServices {
 /**
     Implementation of [FeeFacade](FeeFacade), [ECHOQueueble](ECHOQueueble)
  */
+
+// swiftlint:disable type_body_length
 final public class FeeFacadeImp: FeeFacade, ECHOQueueble {
     
     var queues: [ECHOQueue]
@@ -87,7 +89,7 @@ final public class FeeFacadeImp: FeeFacade, ECHOQueueble {
                                           cryptoCore: cryptoCore,
                                           message: message,
                                           saveKey: FeeResultsKeys.memo.rawValue,
-                                          password: UUID().uuidString,
+                                          passwordOrWif: PassOrWif.password(UUID().uuidString),
                                           networkPrefix: network.prefix.rawValue,
                                           fromAccountKey: FeeResultsKeys.loadedFromAccount.rawValue,
                                           toAccountKey: FeeResultsKeys.loadedToAccount.rawValue)
@@ -130,6 +132,40 @@ final public class FeeFacadeImp: FeeFacade, ECHOQueueble {
                                                methodParams: [AbiTypeValueInputModel],
                                                completion: @escaping Completion<AssetAmount>) {
         
+        getFeeForCallContractOperation(registrarNameOrId: registrarNameOrId,
+                                       assetId: assetId,
+                                       amount: amount,
+                                       assetForFee: assetForFee,
+                                       contratId: contratId,
+                                       executeType: ContractExecuteType.nameAndParams(methodName, methodParams),
+                                       completion: completion)
+    }
+    
+    public func getFeeForCallContractOperation(registrarNameOrId: String,
+                                               assetId: String,
+                                               amount: UInt?,
+                                               assetForFee: String?,
+                                               contratId: String,
+                                               byteCode: String,
+                                               completion: @escaping Completion<AssetAmount>) {
+        
+        getFeeForCallContractOperation(registrarNameOrId: registrarNameOrId,
+                                       assetId: assetId,
+                                       amount: amount,
+                                       assetForFee: assetForFee,
+                                       contratId: contratId,
+                                       executeType: ContractExecuteType.code(byteCode),
+                                       completion: completion)
+    }
+    
+    fileprivate func getFeeForCallContractOperation(registrarNameOrId: String,
+                                                    assetId: String,
+                                                    amount: UInt?,
+                                                    assetForFee: String?,
+                                                    contratId: String,
+                                                    executeType: ContractExecuteType,
+                                                    completion: @escaping Completion<AssetAmount>) {
+        
         // if we don't have assetForFee, we use asset.
         let assetForFee = assetForFee ?? assetId
         
@@ -158,11 +194,18 @@ final public class FeeFacadeImp: FeeFacade, ECHOQueueble {
                                                                           completion: completion)
         
         // ByteCode
-        let byteCodeOperation = createByteCodeOperation(callQueue, methodName, methodParams, completion)
+        // ByteCode
+        var byteCodeOperation: Operation?
+        switch executeType {
+        case .code(let code):
+            callQueue.saveValue(code, forKey: FeeResultsKeys.byteCode.rawValue)
+        case .nameAndParams(let methodName, let methodParams):
+            byteCodeOperation = createByteCodeOperation(callQueue, methodName, methodParams, completion)
+        }
         
         // Operation
         callQueue.saveValue(Contract(id: contratId), forKey: FeeResultsKeys.receiverContract.rawValue)
-        let bildCreateContractOperation = createBildContractOperation(callQueue, amount ?? 0, assetId, assetForFee, completion)
+        let bildCreateContractOperation = bildCreateCallContractOperation(callQueue, amount ?? 0, assetId, assetForFee, completion)
         
         // RequiredFee
         let getRequiredFeeOperationInitParams = (callQueue,
@@ -180,7 +223,9 @@ final public class FeeFacadeImp: FeeFacade, ECHOQueueble {
         let completionOperation = createCompletionOperation(queue: callQueue)
         
         callQueue.addOperation(getAccountsOperation)
-        callQueue.addOperation(byteCodeOperation)
+        if let byteCodeOperation = byteCodeOperation {
+            callQueue.addOperation(byteCodeOperation)
+        }
         callQueue.addOperation(bildCreateContractOperation)
         callQueue.addOperation(getRequiredFeeOperation)
         callQueue.addOperation(feeCompletionOperation)
@@ -259,11 +304,11 @@ final public class FeeFacadeImp: FeeFacade, ECHOQueueble {
         return byteCodeOperation
     }
     
-    fileprivate func createBildContractOperation(_ queue: ECHOQueue,
-                                                 _ amount: UInt,
-                                                 _ assetId: String,
-                                                 _ assetForFee: String,
-                                                 _ completion: @escaping Completion<AssetAmount>) -> Operation {
+    fileprivate func bildCreateCallContractOperation(_ queue: ECHOQueue,
+                                                     _ amount: UInt,
+                                                     _ assetId: String,
+                                                     _ assetForFee: String,
+                                                     _ completion: @escaping Completion<AssetAmount>) -> Operation {
         
         let contractOperation = BlockOperation()
         
@@ -273,17 +318,15 @@ final public class FeeFacadeImp: FeeFacade, ECHOQueueble {
             guard self != nil else { return }
             guard let account: Account = queue?.getValue(FeeResultsKeys.registrarAccount.rawValue) else { return }
             guard let byteCode: String = queue?.getValue(FeeResultsKeys.byteCode.rawValue) else { return }
+            guard let receiver: Contract = queue?.getValue(FeeResultsKeys.receiverContract.rawValue) else { return }
             
-            let receive: Contract? = queue?.getValue(FeeResultsKeys.receiverContract.rawValue)
-            
-            let operation = ContractOperation(registrar: account,
-                                              asset: Asset(assetId),
-                                              value: amount,
-                                              gasPrice: 0,
-                                              gas: 11000000,
-                                              code: byteCode,
-                                              receiver: receive,
-                                              fee: AssetAmount(amount: 0, asset: Asset(assetForFee)))    
+            let operation = CallContractOperation(registrar: account,
+                                                  value: AssetAmount(amount: amount, asset: Asset(assetId)),
+                                                  gasPrice: 0,
+                                                  gas: 11000000,
+                                                  code: byteCode,
+                                                  callee: receiver,
+                                                  fee: AssetAmount(amount: 0, asset: Asset(assetForFee)))
             
             queue?.saveValue(operation, forKey: FeeResultsKeys.operation.rawValue)
         }
@@ -291,3 +334,4 @@ final public class FeeFacadeImp: FeeFacade, ECHOQueueble {
         return contractOperation
     }
 }
+// swiftlint:enable type_body_length

@@ -12,7 +12,7 @@ public final class AbiCoderImp: AbiCoder {
     
     let argumentCoder: AbiArgumentCoder
     
-    init(argumentCoder: AbiArgumentCoder) {
+    public init(argumentCoder: AbiArgumentCoder) {
         self.argumentCoder = argumentCoder
     }
     

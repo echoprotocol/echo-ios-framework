@@ -12,7 +12,8 @@ public struct CustomOperationsFacadeServices {
     var cryptoService: CryptoApiService
     var networkBroadcastService: NetworkBroadcastApiService
     var historyService: AccountHistoryApiService
-    var networkNodesSetvice: NetworkNodesApiService
+    var networkNodesService: NetworkNodesApiService
+    var registrationService: RegistrationApiService
 }
 
 /**
@@ -41,7 +42,9 @@ final public class CustomOperationsFacadeImp: CustomOperationsFacade {
         case .networkBroadcast:
             service = services.networkBroadcastService
         case .networkNodes:
-            service = services.networkNodesSetvice
+            service = services.networkNodesService
+        case .registration:
+            service = services.registrationService
         }
         
         service.sendCustomOperation(operation: operation)

@@ -94,4 +94,106 @@ class CryptoCoreComponentTests: XCTestCase {
         //assert
         XCTAssertEqual(message, decryptedMessage)
     }
+    
+    func testEncryptThenDecryptZeroMessage() {
+        
+        //arrange
+        let privateKey = Data(hex: "f33b293c58b55e7a34878d5e2fcc5b82624bef424a0ce282be10069a4a60eae5")!
+        let publicKey = Data(hex: "028d4927dde3607d75f09532ea825313dba15411f1c6f7ea355ec5265e8ea39fa1")!
+        let message = ""
+        let nonce = "0"
+        
+        //act
+        let encryptedMessage = cryptoCore.encryptMessage(privateKey: privateKey, publicKey: publicKey, nonce: nonce, message: message)
+        let decryptedMessage = cryptoCore.decryptMessage(privateKey: privateKey, publicKey: publicKey, nonce: nonce, message: encryptedMessage)
+        
+        //assert
+        XCTAssertEqual(message, decryptedMessage)
+    }
+    
+    func testEd25519PublicKeyGeneration() {
+        
+        //arrange
+        let privateKeyData = Data(hex: "c5aa8df43f9f837bedb7442f31dcb7b166d38535076f094b85ce3a2e0b4458f7")!
+        
+        //act
+        let publicKey = cryptoCore.generatePublicEd25519Key(withPrivateKey: privateKeyData)
+        
+        //assert
+        XCTAssertEqual(publicKey.hex, "a08fd46ee534e62d08e577a84a28601903d424bdf288be45644ece293672943e")
+    }
+    
+    func testEd25519SignText() {
+
+        //arrange
+        let data = Data(hex: "746573746d7367")!
+        let privateKeyData = Data(hex: "c5aa8df43f9f837bedb7442f31dcb7b166d38535076f094b85ce3a2e0b4458f7")!
+
+        //act
+        let signature = cryptoCore.signByEd25519(data, privateKey: privateKeyData)
+        //assert
+        XCTAssertEqual(signature.hex, "f457ae1fd4f4ff52ea09f807bdda0eddfeb05467c2c24df1009b9d63ce6dab4fd391395be4d41540f582d937c4accea360d2be13ff7e17a084d1016aeb56f308")
+    }
+    
+    func testPrivateKeyFromWIF() {
+        
+        //arrange
+        let wifString = "5HueCGU8rMjxEXxiPuD5BDku4MkFqeZyd4dZ1jvhTVqvbTLvyTJ"
+        let privString = "0c28fca386c7a227600b2fe50b7cae11ec86d3bf1fbe471be89827e19d72aa1d"
+        
+        //act
+        let privData = cryptoCore.getPrivateKeyFromWIF(wifString)
+        
+        //assert
+        XCTAssertEqual(privData?.hex, privString)
+    }
+    
+    func testWifFromPrivateKey() {
+        
+        //arrange
+        let wifString = "5HueCGU8rMjxEXxiPuD5BDku4MkFqeZyd4dZ1jvhTVqvbTLvyTJ"
+        let privatekey = Data(hex: "0c28fca386c7a227600b2fe50b7cae11ec86d3bf1fbe471be89827e19d72aa1d")!
+        
+        //act
+        let wif = cryptoCore.getWIFFromPrivateKey(privatekey)
+        
+        //assert
+        XCTAssertEqual(wif, wifString)
+    }
+    
+    func testPrivateKeyFromWIFFailChecksum() {
+        
+        //arrange
+        let wifString = "5HueCGU8rMjxEXxiPuD5BDku4MkFqeZyd4dZ1jvhTVqvbTLvyTA"
+        
+        //act
+        let privData = cryptoCore.getPrivateKeyFromWIF(wifString)
+        
+        //assert
+        XCTAssertNil(privData)
+    }
+    
+    func testPrivateKeyFromWIFFailBytesCount() {
+        
+        //arrange
+        let wifString = "5HueCGU8rMjxEXxiPuD5BDku4MkFqeZyd4djvhTVqvbTLvyTJ"
+        
+        //act
+        let privData = cryptoCore.getPrivateKeyFromWIF(wifString)
+        
+        //assert
+        XCTAssertNil(privData)
+    }
+    
+    func testPrivateKeyFromWIFFailFirstByte() {
+        
+        //arrange
+        let wifString = "25ueCGU8rMjxEXxiPuD5BDku4MkFqeZyd4dZ1jvhTVqvbTLvyTJ"
+        
+        //act
+        let privData = cryptoCore.getPrivateKeyFromWIF(wifString)
+        
+        //assert
+        XCTAssertNil(privData)
+    }
 }

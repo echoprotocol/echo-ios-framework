@@ -20,6 +20,14 @@ public protocol AuthentificationFacade {
     func isOwnedBy(name: String, password: String, completion: @escaping Completion<UserAccount>)
     
 /**
+     A function that checks if accounts registered in chain with public keys from WIF and return them
+     
+     - Parameter wif: WIF of account that needs to check
+     - Parameter completion: Callback which returns an an array of accounts or error
+*/
+    func isOwnedBy(wif: String, completion: @escaping Completion<[UserAccount]>)
+    
+/**
      Function for changing the password
      
      - Parameter old: Old account password

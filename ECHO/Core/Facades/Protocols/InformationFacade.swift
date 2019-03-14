@@ -12,6 +12,25 @@
 public protocol InformationFacade {
     
 /**
+     Get the objects corresponding to the provided IDs.
+     
+     - Parameter objectsIds: IDs of the objects to retrieve
+     - Parameter completion: Callback which returns current block data or error
+ */
+    func getObjects<T>(type: T.Type, objectsIds: [String], completion: @escaping Completion<[T]>) where T: Decodable
+    
+/**
+     Register new account in blockchain
+     
+     - Parameter name: The name of new account
+     - Parameter password: The password wich will be used for create private keys
+     - Parameter completion: Callback which returns bool result or error
+ */
+    func registerAccount(name: String,
+                         password: String,
+                         completion: @escaping Completion<Bool>)
+    
+/**
      Account function
      
      - Parameter nameOrID: Name or id of the account
@@ -47,4 +66,18 @@ public protocol InformationFacade {
      - Note: To get the entire history, you can specify the initial id **"1.11.0"** in the start ID and stop ID and then choose your limit
  */
     func getAccountHistroy(nameOrID: String, startId: String, stopId: String, limit: Int, completion: @escaping Completion<[HistoryItem]>)
+    
+/**
+     Retrieve the current global property object.
+
+     - Parameter completion: Callback which returns [GlobalProperties](GlobalProperties) or error
+ */
+    func getGlobalProperties(completion: @escaping Completion<GlobalProperties>)
+    
+/**
+     Retrieve all sidechain transfers for specific ETH Address
+     
+     - Parameter completion: Callback which returns [[SidechainTransfer]](SidechainTransfer) or error
+ */
+    func getSidechainTransfers(for ethAddress: String, completion: @escaping Completion<[SidechainTransfer]>)
 }

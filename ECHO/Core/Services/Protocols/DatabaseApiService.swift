@@ -22,6 +22,13 @@ protocol DatabaseApiService: BaseApiService {
     func getObjects<T>(type: T.Type, objectsIds: [String], completion: @escaping Completion<[T]>) where T: Decodable
     
 /**
+     Retrieve the current global property object.
+     
+     - Parameter completion: Callback which returns [GlobalProperties](GlobalProperties) or error
+ */
+    func getGlobalProperties(completion: @escaping Completion<GlobalProperties>)
+    
+/**
      Retrieves base block information
 
      - Parameter completion: Callback which returns current block data or error
@@ -51,7 +58,14 @@ protocol DatabaseApiService: BaseApiService {
      - Parameter completion: Callback which returns accounts or error
  */
     func getFullAccount(nameOrIds: [String], shoudSubscribe: Bool, completion: @escaping Completion<[String: UserAccount]>)
-    
+
+/**
+     Fetch all account id relevant to the specified keys.
+     
+     - Parameter keys: Public keys of account for search
+     - Parameter completion: Callback which returns array of arrays of id for each key or error
+ */
+    func getKeyReferences(keys: [String], completion: @escaping Completion<[[String]]>)
 /**
     Retrieves required fee by asset for ech operation
 
@@ -95,10 +109,10 @@ protocol DatabaseApiService: BaseApiService {
 /**
      Return result of contract operation call
      
-     - Parameter lowerBound: Hisory id for find contract result
-     - Parameter completion: Callback which returns [ContractResult](ContractResult) or error
+     - Parameter contractResultId: Contract result id
+     - Parameter completion: Callback which returns [ContractResultEnum](ContractResultEnum) or error
  */
-    func getContractResult(historyId: String, completion: @escaping Completion<ContractResult>)
+    func getContractResult(contractResultId: String, completion: @escaping Completion<ContractResultEnum>)
     
 /**
     Return list of contract logs
@@ -138,9 +152,9 @@ f */
      Return full information about contract
      
      - Parameter contractId: Identifier for contract
-     - Parameter completion: Callback which returns an [ContractStruct](ContractStruct) or error
+     - Parameter completion: Callback which returns an [ContractStructEnum](ContractStructEnum) or error
  */
-    func getContract(contractId: String, completion: @escaping Completion<ContractStruct>)
+    func getContract(contractId: String, completion: @escaping Completion<ContractStructEnum>)
     
 /**
      Calls contract method without changing state of blockchain
@@ -156,4 +170,11 @@ f */
                                      account: Account,
                                      contractCode: String,
                                      completion: @escaping Completion<String>)
+    
+/**
+     Retrieve all sidechain transfers for specific ETH Address
+     
+     - Parameter completion: Callback which returns [[SidechainTransfer]](SidechainTransfer) or error
+ */
+    func getSidechainTransfers(for ethAddress: String, completion: @escaping Completion<[SidechainTransfer]>)
 }

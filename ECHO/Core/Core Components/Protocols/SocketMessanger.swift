@@ -25,7 +25,7 @@ public protocol SocketMessenger: class {
     var onFailedConnect: (() -> ())? { get set }
     var onDisconnect: (() -> ())? { get set }
     var onText: ((String) -> ())? { get set }
-    
+    var callbackQueue: DispatchQueue { get set }
     func connect(toUrl: String)
     func disconnect()
     

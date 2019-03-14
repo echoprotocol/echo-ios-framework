@@ -52,7 +52,7 @@ final public class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
     
     // swiftlint:disable function_body_length
     public func sendTransferOperation(fromNameOrId: String,
-                                      password: String,
+                                      passwordOrWif: PassOrWif,
                                       toNameOrId: String,
                                       amount: UInt,
                                       asset: String,
@@ -93,14 +93,14 @@ final public class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
                                           cryptoCore: cryptoCore,
                                           message: message,
                                           saveKey: TransferResultsKeys.memo.rawValue,
-                                          password: password,
+                                          passwordOrWif: passwordOrWif,
                                           networkPrefix: network.prefix.rawValue,
                                           fromAccountKey: TransferResultsKeys.loadedFromAccount.rawValue,
                                           toAccountKey: TransferResultsKeys.loadedToAccount.rawValue)
         let getMemoOperation = GetMemoQueueOperation<Bool>(initParams: getMemoOperationInitParams,
                                                            completion: completion)
         
-        let bildTransferOperation = createBildTransferOperation(transferQueue, password, message, amount, asset, completion)
+        let bildTransferOperation = createBildTransferOperation(transferQueue, message, amount, asset, completion)
         
         // RequiredFee
         let getRequiredFeeOperationInitParams = (transferQueue,
@@ -126,7 +126,7 @@ final public class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
                                               cryptoCore: cryptoCore,
                                               keychainType: KeychainType.active,
                                               saveKey: TransferResultsKeys.transaction.rawValue,
-                                              password: password,
+                                              passwordOrWif: passwordOrWif,
                                               networkPrefix: network.prefix.rawValue,
                                               fromAccountKey: TransferResultsKeys.loadedFromAccount.rawValue,
                                               operationKey: TransferResultsKeys.operation.rawValue,
@@ -170,7 +170,6 @@ final public class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
     // swiftlint:enable function_body_length
     
     fileprivate func createBildTransferOperation(_ queue: ECHOQueue,
-                                                 _ password: String,
                                                  _ message: String?,
                                                  _ amount: UInt,
                                                  _ asset: String,

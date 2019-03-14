@@ -1,15 +1,15 @@
 //
-//  ECHOKeychain.swift
+//  ECHOKeychainSecp256k1.swift
 //  ECHO
 //
-//  Created by Fedorenko Nikita on 18.07.2018.
-//  Copyright © 2018 PixelPlex. All rights reserved.
+//  Created by Vladimir Sharaev on 15/01/2019.
+//  Copyright © 2019 PixelPlex. All rights reserved.
 //
 
 /**
-    Container which create private key from name, password, type
+ Container which create private key by Secp256k1 curve from name, password, type
  */
-final public class ECHOKeychain {
+final public class ECHOKeychainSecp256k1: ECHOKeychain {
     
     public let raw: Data
     public let core: CryptoCoreComponent
@@ -22,12 +22,22 @@ final public class ECHOKeychain {
     public convenience init?(name: String, password: String, type: KeychainType, core: CryptoCoreComponent) {
         
         let seed = "\(name)" + "\(type.rawValue)" + "\(password)"
-
+        
         let seedData = seed.data(using: .utf8)
             .flatMap { core.sha256($0) }
-
+        
         if let seedData = seedData {
             self.init(seed: seedData, core: core)
+        } else {
+            return nil
+        }
+    }
+    
+    public convenience init?(wif: String, core: CryptoCoreComponent) {
+        
+        let privateKey = core.getPrivateKeyFromWIF(wif)
+        if let privateKey = privateKey {
+            self.init(seed: privateKey, core: core)
         } else {
             return nil
         }
@@ -46,5 +56,10 @@ final public class ECHOKeychain {
         publicKey.append(checkSum)
         
         return Base58.encode(publicKey)
+    }
+    
+    public func wif() -> String {
+        
+        return core.getWIFFromPrivateKey(raw)
     }
 }

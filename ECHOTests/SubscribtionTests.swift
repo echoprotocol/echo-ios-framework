@@ -102,22 +102,22 @@ class SubscribtionTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.socketMessenger = messenger
         }))
-        let userName = "nikita1994"
+        
         let delegate = SubscribeDelegateMock()
         strongDelegate = delegate
         let exp = expectation(description: "Delegate Call")
-
+        let username = "1.2.22"
         
         //act
         echo.start { [unowned self] (result) in
             print(result)
-            self.echo.subscribeToAccount(nameOrId: userName, delegate: delegate)
+            self.echo.subscribeToAccount(nameOrId: username, delegate: delegate)
             messenger.makeUserAccountChangePasswordEvent()
             exp.fulfill()
         }
         
         //assert
-        waitForExpectations(timeout: 1000) { error in
+        waitForExpectations(timeout: timeout) { error in
             XCTAssertEqual(delegate.delegateEvents, 1)
         }
     }
@@ -129,7 +129,7 @@ class SubscribtionTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.socketMessenger = messenger
         }))
-        let userName = "nikita1994"
+        let userName = "vsharaev"
         
         strongDelegate = SubscribeDelegateMock()
         weak var delegate = strongDelegate
@@ -156,7 +156,7 @@ class SubscribtionTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.socketMessenger = messenger
         }))
-        let userName = "nikita1994"
+        let userName = "1.2.22"
         let delegate = SubscribeDelegateMock()
         strongDelegate = delegate
         let exp = expectation(description: "Delegate Call")
@@ -170,8 +170,8 @@ class SubscribtionTests: XCTestCase {
         }
         
         //assert
-        waitForExpectations(timeout: 1) { error in
-            XCTAssertEqual(delegate.delegateEvents, 1)
+        waitForExpectations(timeout: timeout) { error in
+            XCTAssertEqual(delegate.delegateEvents, 2)
         }
     }
     
@@ -182,7 +182,7 @@ class SubscribtionTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.socketMessenger = messenger
         }))
-        let userName = "nikita1994"
+        let userName = "vsharaev"
         let delegate = SubscribeDelegateMock()
         strongDelegate = delegate
         let exp = expectation(description: "Delegate Call")
@@ -208,7 +208,7 @@ class SubscribtionTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.socketMessenger = messenger
         }))
-        let userName = "nikita1994"
+        let userName = "vsharaev"
         let delegate = SubscribeDelegateMock()
         strongDelegate = delegate
         let exp = expectation(description: "Delegate Call")
@@ -241,10 +241,10 @@ class SubscribtionTests: XCTestCase {
         strongContractLogDelegate = delegate
         
         // Call for change logs
-        let password = "nikitatest1"
-        let registrarNameOrId = "nikitatest1"
+        let registrarNameOrId = "vsharaev"
+        let password = "vsharaev"
         let assetId = "1.3.0"
-        let contratId = "1.16.2033"
+        let contratId = "1.16.141"
         let methodName = "test"
         let params: [AbiTypeValueInputModel] = [AbiTypeValueInputModel(type: .uint(size: 256), value: "1")]
         
@@ -255,7 +255,7 @@ class SubscribtionTests: XCTestCase {
             self.echo.subscribeToContractLogs(contractId: contratId, delegate: delegate)
             
             self.echo.callContract(registrarNameOrId: registrarNameOrId,
-                                   password: password,
+                                   passwordOrWif: PassOrWif.password(password),
                                    assetId: assetId,
                                    amount: nil,
                                    assetForFee: nil,

@@ -50,9 +50,30 @@ extension AccountsService {
         
         socketCore.send(operation: operation)
     }
+    
+    func getKeyReferences(keys: [String], completion: @escaping Completion<[[String]]>) {
+        
+        let operation = GetKeyReferencesSocketOperation(method: .call,
+                                                        operationId: socketCore.nextOperationId(),
+                                                        apiId: apiIdentifire,
+                                                        keys: keys,
+                                                        completion: completion)
+        
+        socketCore.send(operation: operation)
+    }
 }
 
 extension GlobalsService {
+    
+    func getGlobalProperties(completion: @escaping Completion<GlobalProperties>) {
+        
+        let operation = GetGlobalPropertiesSocketOperation(method: .call,
+                                                           operationId: socketCore.nextOperationId(),
+                                                           apiId: apiIdentifire,
+                                                           completion: completion)
+        
+        socketCore.send(operation: operation)
+    }
     
     func getChainId(completion: @escaping Completion<String>) {
         
@@ -133,6 +154,17 @@ extension BlocksAndTransactionsService {
         
         socketCore.send(operation: operation)
     }
+    
+    func getSidechainTransfers(for ethAddress: String, completion: @escaping Completion<[SidechainTransfer]>) {
+        
+        let operation = GetSidechainTransfersSocketOperation(method: .call,
+                                                             operationId: socketCore.nextOperationId(),
+                                                             apiId: apiIdentifire,
+                                                             ethAddress: ethAddress,
+                                                             completion: completion)
+        
+        socketCore.send(operation: operation)
+    }
 }
 
 extension SubscriptionService {
@@ -197,12 +229,12 @@ extension AssetsService {
 
 extension ContractsService {
     
-    func getContractResult(historyId: String, completion: @escaping Completion<ContractResult>) {
+    func getContractResult(contractResultId: String, completion: @escaping Completion<ContractResultEnum>) {
         
         let operation = GetContractResultSocketOperation(method: .call,
                                                          operationId: socketCore.nextOperationId(),
                                                          apiId: apiIdentifire,
-                                                         historyId: historyId,
+                                                         contractResultId: contractResultId,
                                                          completion: completion)
         
         socketCore.send(operation: operation)
@@ -223,11 +255,12 @@ extension ContractsService {
     
     func getContracts(contractIds: [String], completion: @escaping Completion<[ContractInfo]>) {
         
-        let operation = GetContractsSocketOperation(method: .call,
-                                                    operationId: socketCore.nextOperationId(),
-                                                    apiId: apiIdentifire,
-                                                    contractIds: contractIds,
-                                                    completion: completion)
+        let extractedExpr = GetContractsSocketOperation(method: .call,
+                                                        operationId: socketCore.nextOperationId(),
+                                                        apiId: apiIdentifire,
+                                                        contractIds: contractIds,
+                                                        completion: completion)
+        let operation = extractedExpr
         
         socketCore.send(operation: operation)
     }
@@ -242,7 +275,7 @@ extension ContractsService {
         socketCore.send(operation: operation)
     }
     
-    func getContract(contractId: String, completion: @escaping Completion<ContractStruct>) {
+    func getContract(contractId: String, completion: @escaping Completion<ContractStructEnum>) {
         
         let operation = GetContractSocketOperaton(method: .call,
                                                   operationId: socketCore.nextOperationId(),

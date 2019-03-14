@@ -18,6 +18,7 @@ public struct AccountUpdateOperation: BaseOperation {
         case newOptions = "new_options"
         case extensions
         case fee
+        case edKey = "ed_key"
     }
     
     public let type: OperationType
@@ -29,7 +30,14 @@ public struct AccountUpdateOperation: BaseOperation {
     public let active: OptionalValue<Authority>
     public let newOptions: OptionalValue<AccountOptions>
     
-    public init(account: Account, owner: Authority?, active: Authority?, options: AccountOptions?, fee: AssetAmount) {
+    public var edKey: String?
+    
+    public init(account: Account,
+                owner: Authority?,
+                active: Authority?,
+                edKey: String?,
+                options: AccountOptions?,
+                fee: AssetAmount) {
         
         type = .accountUpdateOperation
         
@@ -37,6 +45,7 @@ public struct AccountUpdateOperation: BaseOperation {
         self.owner = OptionalValue<Authority>(owner)
         self.active = OptionalValue<Authority>(active)
         self.newOptions = OptionalValue<AccountOptions>(options)
+        self.edKey = edKey
         
         self.fee = fee
     }
@@ -59,6 +68,7 @@ public struct AccountUpdateOperation: BaseOperation {
         newOptions = OptionalValue(newOptionsValue)
         
         fee = try values.decode(AssetAmount.self, forKey: .fee)
+        edKey = try? values.decode(String.self, forKey: .edKey)
     }
     
     mutating func changeAccount(_ account: Account?) {
@@ -75,8 +85,17 @@ public struct AccountUpdateOperation: BaseOperation {
         data.append(optional: account.toData())
         data.append(optional: owner.toData())
         data.append(optional: active.toData())
+        if let edKey = edKey {
+            data.append(1)
+            data.append(optional: Data(hex: edKey))
+        } else {
+            data.append(0)
+        }
         data.append(optional: newOptions.toData())
         data.append(optional: extensions.toData())
+        
+        print(data.hex)
+        
         return data
     }
     
@@ -87,6 +106,7 @@ public struct AccountUpdateOperation: BaseOperation {
         
         var dictionary: [AnyHashable: Any?] = [AccountUpdateOperationCodingKeys.fee.rawValue: fee.toJSON(),
                                                AccountUpdateOperationCodingKeys.account.rawValue: account.toJSON(),
+                                               AccountUpdateOperationCodingKeys.edKey.rawValue: edKey,
                                                AccountUpdateOperationCodingKeys.extensions.rawValue: extensions.toJSON()]
         
         if owner.isSet() {

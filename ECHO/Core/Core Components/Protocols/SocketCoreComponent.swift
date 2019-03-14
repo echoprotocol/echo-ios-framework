@@ -11,7 +11,10 @@
  */
 public protocol SocketCoreComponent: class {
     
-    init(messanger: SocketMessenger, url: String, noticeUpdateHandler: NoticeActionHandler?)
+    init(messanger: SocketMessenger,
+         url: String,
+         noticeUpdateHandler: NoticeActionHandler?,
+         socketQueue: DispatchQueue)
     
     func connect(options: APIOption, completion: @escaping Completion<Bool>)
     func disconnect()

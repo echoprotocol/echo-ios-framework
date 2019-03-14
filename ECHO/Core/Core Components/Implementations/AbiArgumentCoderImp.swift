@@ -16,6 +16,7 @@ final public class AbiArgumentCoderImp: AbiArgumentCoder {
     let sliceSize = 32
     let addressSize = 20
     let contractAddressFirstPartValue: UInt8 = 1
+    let ethAddressHexFirstByte = "0x"
     
     public init() { }
     
@@ -58,6 +59,9 @@ final public class AbiArgumentCoderImp: AbiArgumentCoder {
             } else if type == AbiParameterType.contractAddress {
                 
                 try encodeContractAddress(staticStack: staticData, type: type, offset: offset, data: value)
+            } else if type == AbiParameterType.ethContractAddress {
+                
+                try encodeETHContractAddress(staticStack: staticData, type: type, offset: offset, data: value)
             } else if type == AbiParameterType.string {
                 
                 offset = try encodeString(staticStack: staticData, dynamicStack: dynamicData, type: type, offset: offset, data: value)
@@ -167,6 +171,31 @@ extension Decoder {
         }
         
         let output = AbiTypeValueOutputModel(type: type, value: btcNumber.decimalString)
+        decodedOutputs.append(output)
+    }
+    
+    fileprivate func decodeETHAddress(_ data: Data,
+                                      _ sliceIndex: Int,
+                                      _ type: AbiParameterType,
+                                      _ decodedOutputs: inout [AbiTypeValueOutputModel]) throws {
+        
+        let start = sliceSize * sliceIndex
+        let end = start + sliceSize
+        
+        guard let bytesData = data[safe: start..<end] else {
+            let error = NSError(domain: "", code: 0, userInfo: nil)
+            throw error
+        }
+        
+        guard let fixedBytesData = bytesData[safe: sliceSize-addressSize..<sliceSize] else {
+            let error = NSError(domain: "", code: 0, userInfo: nil)
+            throw error
+        }
+        
+        var ethAddressHex = ethAddressHexFirstByte
+        ethAddressHex.append(fixedBytesData.hex)
+        
+        let output = AbiTypeValueOutputModel(type: type, value: ethAddressHex)
         decodedOutputs.append(output)
     }
     
@@ -408,6 +437,9 @@ extension Decoder {
             case .contractAddress:
                 
                 try decodeContractAddress(data, index, type, &decodedOutputs)
+            case .ethContractAddress:
+                
+                try decodeETHAddress(data, index, type, &decodedOutputs)
             case .string:
                 
                 try decodeStrings(data, index, type, &decodedOutputs, outputs)
@@ -497,6 +529,23 @@ extension Encoder {
         if var value = BTCBigNumber(decimalString: data).unsignedBigEndian {
             value[sliceSize - addressSize] = contractAddressFirstPartValue
             staticStack.array.append(value)
+        } else {
+            staticStack.array.append(placeholderData())
+        }
+    }
+    
+    fileprivate func encodeETHContractAddress(staticStack: ArrayOfData, type: AbiParameterType, offset: Int, data: String) throws {
+        
+        var addressHex = data
+        if addressHex.count > addressSize * 2 {
+            addressHex.removeFirst(ethAddressHexFirstByte.count)
+        }
+        
+        if var value = Data(hex: addressHex) {
+            
+            value = fillSlice(data: value)
+            staticStack.array.append(value)
+            
         } else {
             staticStack.array.append(placeholderData())
         }

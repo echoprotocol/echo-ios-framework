@@ -67,6 +67,25 @@ class AbiArgumentDecoderTest: XCTestCase {
         XCTAssertEqual(result, decodedString)
     }
     
+    func testDecodeETHContractAddress() {
+        
+        //arrange
+        let encodedString = "000000000000000000000000ca35b7d915458ef540ade6068dfe2f44e8fa733c"
+        let decodedString = "0xca35b7d915458ef540ade6068dfe2f44e8fa733c"
+        
+        let type = AbiParameterType.ethContractAddress
+        let outputs = [AbiFunctionEntries(name: "", typeString: type.description, type: type)]
+        var result: String?
+        
+        //act
+        let values = try? interpretator.getValueTypes(string: encodedString, outputs: outputs)
+        result = values?[safe: 0]?.value as? String
+        
+        //assert
+        XCTAssertNotNil(result)
+        XCTAssertEqual(result, decodedString)
+    }
+    
     func testDecodedNameProperty() {
         
         //arrange

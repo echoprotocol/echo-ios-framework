@@ -9,6 +9,9 @@
 /**
     The class used to initialize the library. Sets the implementation of modules.
  */
+
+import Foundation
+
 final public class Settings {
     
     public let socketMessenger: SocketMessenger
@@ -16,7 +19,8 @@ final public class Settings {
     public let abiCoderComponent: AbiCoder
     public let apiOptions: APIOption
     public let network: ECHONetwork
-    
+    public let workingQueue: DispatchQueue
+
     public typealias BuildConfiguratorClosure = (Configurator) -> Void
     
     public init(build: BuildConfiguratorClosure = {_ in }) {
@@ -28,6 +32,7 @@ final public class Settings {
         cryproComponent = configurator.cryproComponent
         apiOptions = configurator.apiOptions
         abiCoderComponent = configurator.abiCoderComponent
+        workingQueue = configurator.workingQueue
     }
     
     public static let defaultDateFormat = "yyyy-MM-dd'T'H:mm:ss"

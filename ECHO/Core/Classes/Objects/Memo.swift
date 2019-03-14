@@ -25,15 +25,15 @@ public struct Memo: ECHOCodable, Decodable {
     
     public var source: Address?
     public var destination: Address?
-    public let nonce: Int
-    public var byteMessage: Data?
+    public let nonce: UInt
+    public var byteMessage: String?
     public var plaintextMessage: String?
     
     init() {
         nonce = 0
     }
     
-    init(source: Address?, destination: Address?, nonce: Int, byteMessage: Data?) {
+    init(source: Address?, destination: Address?, nonce: UInt, byteMessage: String?) {
         
         self.source = source
         self.destination = destination
@@ -50,10 +50,19 @@ public struct Memo: ECHOCodable, Decodable {
         if let fromAddress = fromAddress { source = Address(fromAddress, data: nil) }
         if let toAddress = toAddress { destination = Address(toAddress, data: nil) }
         
-        let nonceValue = try? values.decode(Int.self, forKey: .nonce)
-        nonce = nonceValue ?? 0
+        if let nonceString = try? values.decode(String.self, forKey: .nonce) {
+            nonce = UInt(nonceString) ?? 0
+        } else if let nonceValue = try? values.decode(UInt.self, forKey: .nonce) {
+            nonce = nonceValue
+        } else {
+            nonce = 0
+        }
         
-        byteMessage = try values.decode(Data.self, forKey: .message)
+        if let byteMessageString = try? values.decode(String.self, forKey: .message) {
+            byteMessage = byteMessageString
+        } else {
+            byteMessage = (try values.decode(Data.self, forKey: .message)).hex
+        }
     }
     
     // MARK: ECHOCodable
@@ -62,35 +71,38 @@ public struct Memo: ECHOCodable, Decodable {
         
         if let source = source,
             let destination = destination,
-            let byteMessage = byteMessage {
+            let byteMessage = byteMessage,
+            let byteMessageData = Data(hex: byteMessage) {
             
             var data = Data()
             data.append(optional: Data.fromInt8(1))
             data.append(optional: source.toData())
             data.append(optional: destination.toData())
             data.append(optional: nonceToData(nonce))
-            data.append(optional: Data.fromUIntLikeUnsignedByteArray(UInt(byteMessage.count)))
-            data.append(optional: byteMessage)
+            data.append(optional: Data.fromUIntLikeUnsignedByteArray(UInt(byteMessageData.count)))
+            data.append(optional: byteMessageData)
             
             return data
         }
         
-        if let byteMessage = byteMessage {
+        if let byteMessage = byteMessage,
+            let byteMessageData = Data(hex: byteMessage) {
+            
             var data = Data()
             data.append(optional: Data.fromInt8(1))
             data.append(optional: Data.fromInt8(0))
             data.append(optional: Data.fromInt8(0))
             data.append(optional: nonceToData(0))
-            data.append(optional: Data.fromUIntLikeUnsignedByteArray(UInt(byteMessage.count)))
-            data.append(optional: byteMessage)
-            
+            data.append(optional: Data.fromUIntLikeUnsignedByteArray(UInt(byteMessageData.count)))
+            data.append(optional: byteMessageData)
+
             return data
         }
         
         return Data(count: 1)
     }
     
-    func nonceToData(_ nonce: Int) -> Data {
+    func nonceToData(_ nonce: UInt) -> Data {
         
         var paddedNonceBytes = Data(count: 8)
         var originalNonceBytes = Data(from: nonce)
@@ -105,7 +117,7 @@ public struct Memo: ECHOCodable, Decodable {
         let dictionary: [AnyHashable: Any?] = [MemoCodingKeys.fromAccount.rawValue: source?.toJSON(),
                                                MemoCodingKeys.toAccount.rawValue: destination?.toJSON(),
                                                MemoCodingKeys.nonce.rawValue: nonce,
-                                               MemoCodingKeys.message.rawValue: byteMessage?.hex]
+                                               MemoCodingKeys.message.rawValue: byteMessage]
         
         return dictionary
     }
