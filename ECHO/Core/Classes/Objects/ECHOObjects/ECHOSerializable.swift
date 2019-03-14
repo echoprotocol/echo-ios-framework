@@ -89,7 +89,7 @@ public enum IntOrString: Codable, Equatable {
     case integer(Int)
     case string(String)
     
-    var stringValue: String {
+    public var stringValue: String {
         switch self {
         case .integer(let int):
             return String(int)
@@ -98,7 +98,7 @@ public enum IntOrString: Codable, Equatable {
         }
     }
     
-    var intValue: Int {
+    public var intValue: Int {
         switch self {
         case .integer(let int):
             return int
