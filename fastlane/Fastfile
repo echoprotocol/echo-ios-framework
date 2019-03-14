@@ -1,4 +1,4 @@
-fastlane_version "2.66.2"
+fastlane_version "2.105.2"
 
 setup_travis
 
@@ -9,7 +9,6 @@ platform :ios do
   lane :tests do
 
     libraries
-    clear_derived_data
     scan
 
   end
@@ -21,13 +20,13 @@ platform :ios do
 
     change_configs_for_release(version_number: version_number)
 
-    #TODO: Need valid config file
-    #config_documentation
+    # #TODO: Need valid config file
+    # #config_documentation
 
-    commit_to_master(version_number: version_number)
-    push_to_master
-    tag_setup(version_number: version_number)
-    push_to_release
+    # commit_to_master(version_number: version_number)
+    # push_to_master
+    # tag_setup(version_number: version_number)
+    # push_to_release
 
   end
 
@@ -52,15 +51,15 @@ platform :ios do
 
   end
 
-  lane :config_documentation do
+  private_lane lane :config_documentation do
 
     jazzy(
-      config: ENV['JAZZY_CONFIG_PATH']
+      config: ".jazzy.yaml"
     )
 
   end
 
-  lane :commit_to_master do |options|
+  private_lane lane :commit_to_master do |options|
 
     git_add(
       path: "docs/*"
@@ -74,7 +73,7 @@ platform :ios do
 
   end
 
-  lane :push_to_master do 
+  private_lane lane :push_to_master do 
 
     push_to_git_remote(
       remote_branch: "master"
@@ -82,7 +81,7 @@ platform :ios do
 
   end
 
-  lane :push_to_release do
+  private_lane lane :push_to_release do
 
     push_to_git_remote(
       remote_branch: "release"
@@ -90,7 +89,7 @@ platform :ios do
     
   end
 
-  lane :tag_setup do |options|
+  private_lane lane :tag_setup do |options|
 
     add_git_tag(
       tag: options[:version_number]
@@ -100,23 +99,23 @@ platform :ios do
 
   end 
 
-  lane :get_next_version do
+  private_lane lane :get_next_version do
 
     sh('git pull origin master --tags')
-    get_tags_command = "git tag -l #{ENV['VERSION_MAIN_PART']}* | sort -V"
+    get_tags_command = "git tag -l #{ENV['BUNDLE_VERSION']}* | sort -V"
     tags = sh(get_tags_command)
 
     tags_array = tags.split
 
     if tags_array.count == 0
-      "#{ENV['VERSION_MAIN_PART']}0"
+      "#{ENV['BUNDLE_VERSION']}0"
     else
       last_tag = tags_array.last
       tag_numbers_array = last_tag.split('.')
       last_tag_number = tag_numbers_array.last
       new_last_tag_number = last_tag_number.to_i + 1
 
-      "#{ENV['VERSION_MAIN_PART']}#{new_last_tag_number}"
+      "#{ENV['BUNDLE_VERSION']}.#{new_last_tag_number}"
     end
 
   end
