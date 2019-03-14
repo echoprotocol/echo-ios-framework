@@ -17,12 +17,12 @@ public struct SidechainTransfer: Decodable {
         case withdrawCode = "withdraw_code"
     }
     
-    var identifier: String
-    let transferId: UInt
-    let receiver: String
-    let amount: IntOrString
-    let signatures: String
-    let withdrawCode: String
+    public var identifier: String
+    public let transferId: UInt
+    public let receiver: String
+    public let amount: IntOrString
+    public let signatures: String
+    public let withdrawCode: String
     
     public init(from decoder: Decoder) throws {
         
