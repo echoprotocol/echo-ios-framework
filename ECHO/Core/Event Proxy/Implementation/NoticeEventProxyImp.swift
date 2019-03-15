@@ -8,9 +8,9 @@
 
 import Foundation
 
-final class NoticeEventProxyImp: NoticeEventProxy {
+public final class NoticeEventProxyImp: NoticeEventProxy {
     
-    weak var delegate: NoticeEventDelegate? {
+    public weak var delegate: NoticeEventDelegate? {
         didSet {
             delegates.addObject(delegate)
         }
@@ -18,7 +18,7 @@ final class NoticeEventProxyImp: NoticeEventProxy {
     
     fileprivate var delegates = NSPointerArray.weakObjects()
     
-    func actionReceiveNotice(notification: ECHONotification) {
+    public func actionReceiveNotice(notification: ECHONotification) {
         delegates.compact()
         
         for index in 0..<delegates.count {

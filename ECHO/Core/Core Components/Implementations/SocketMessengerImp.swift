@@ -12,15 +12,15 @@ import Starscream
 /**
  Implementation of [SocketMessenger](SocketMessenger)
  */
-final class SocketMessengerImp: SocketMessenger {
+public final class SocketMessengerImp: SocketMessenger {
     
-    var callbackQueue: DispatchQueue = DispatchQueue.main
-    var state: SocketConnectionState = .notConnected
-    var onConnect: (() -> ())?
-    var onReconnect: (() -> ())?
-    var onDisconnect: (() -> ())?
-    var onFailedConnect: (() -> ())?
-    var onText: ((String) -> ())?
+    public var callbackQueue: DispatchQueue = DispatchQueue.main
+    public var state: SocketConnectionState = .notConnected
+    public var onConnect: (() -> ())?
+    public var onReconnect: (() -> ())?
+    public var onDisconnect: (() -> ())?
+    public var onFailedConnect: (() -> ())?
+    public var onText: ((String) -> ())?
 
     var timeout: Double = 3
     
@@ -36,7 +36,7 @@ final class SocketMessengerImp: SocketMessenger {
         return DispatchSemaphore(value: 0)
     }()
     
-    func connect(toUrl: String) {
+    public func connect(toUrl: String) {
         
         clearPreviousState()
         
@@ -81,7 +81,7 @@ final class SocketMessengerImp: SocketMessenger {
         workingQueue.addOperation(operation)
     }
     
-    func disconnect() {
+    public func disconnect() {
         
         let operation: BlockOperation = BlockOperation()
         
@@ -101,7 +101,7 @@ final class SocketMessengerImp: SocketMessenger {
         workingQueue.addOperation(operation)
     }
     
-    func write(_ string: String) {
+    public func write(_ string: String) {
         
         print(string)
         
