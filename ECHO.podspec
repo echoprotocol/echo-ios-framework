@@ -21,7 +21,7 @@ Pod::Spec.new do |spec|
 	'LIBRARY_SEARCH_PATHS[sdk=iphoneos*]' => '$(SRCROOT)/ECHO/Libraries/secp256k1/lib $(SRCROOT)/ECHO/Libraries/openssl/lib $(SRCROOT)/ECHO/Libraries/ed25519/lib/OSRelease',
 	'LIBRARY_SEARCH_PATHS[sdk=iphonesimulator*]' => '$(SRCROOT)/ECHO/Libraries/secp256k1/lib $(SRCROOT)/ECHO/Libraries/openssl/lib $(SRCROOT)/ECHO/Libraries/ed25519/lib/SimulatorRelease'}
   spec.preserve_paths = ['Libraries']
-  spec.dependency 'Starscream', :git => 'https://github.com/pixelplex-mobile/Starscream', :commit => "82ba1bcfc8e3ab59ef80de1be416362324f62e73"
+  spec.dependency 'Starscream', :git => 'https://github.com/pixelplex-mobile/Starscream', :commit => '82ba1bcfc8e3ab59ef80de1be416362324f62e73'
   spec.source_files  = 'ECHO/**/*.{h,swift,m}'
 
 end
