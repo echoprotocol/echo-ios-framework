@@ -36,6 +36,8 @@ public final class SocketMessengerImp: SocketMessenger {
         return DispatchSemaphore(value: 0)
     }()
     
+    public init() {}
+    
     public func connect(toUrl: String) {
         
         clearPreviousState()

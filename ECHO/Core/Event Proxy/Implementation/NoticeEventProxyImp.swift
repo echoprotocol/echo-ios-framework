@@ -10,6 +10,8 @@ import Foundation
 
 public final class NoticeEventProxyImp: NoticeEventProxy {
     
+    public init() {}
+
     public weak var delegate: NoticeEventDelegate? {
         didSet {
             delegates.addObject(delegate)
