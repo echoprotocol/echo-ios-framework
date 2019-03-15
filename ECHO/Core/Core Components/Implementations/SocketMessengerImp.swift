@@ -57,6 +57,8 @@ final class SocketMessengerImp: SocketMessenger {
                 let socket = WebSocket(url: url)
                 strongSelf.socket = socket
                 strongSelf.state = .connecting
+                
+                socket.pingTimeInterval = 30
                 socket.callbackQueue = strongSelf.callbackQueue
                 
                 socket.onConnect = { [weak self] in
