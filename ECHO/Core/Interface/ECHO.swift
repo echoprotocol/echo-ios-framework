@@ -6,7 +6,7 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
-typealias InterfaceFacades = AuthentificationFacade
+public typealias InterfaceFacades = AuthentificationFacade
     & InformationFacade
     & SubscriptionFacade
     & FeeFacade
