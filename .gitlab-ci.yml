@@ -22,13 +22,10 @@ unit_tests:
 
 release:
   stage: release
-  before_script:
-    - get_env_settings.sh $SETTINGS_URL $SETTINGS_BRANCH_MASTER
-    - git remote set-url origin $GITLAB_SSH_LINK
   script:
     - fastlane release
   tags:
     - ios
   only:
-    - master
+    - /^release-[0-9]+(?:.[0-9]+)+$/
   when: manual

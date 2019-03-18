@@ -1,14 +1,14 @@
 Pod::Spec.new do |spec|
   spec.name = "ECHO"
-  spec.version = "2.0.0"
+  spec.version = "3.0.6"
   spec.summary = "Echo iOS Framework"
-  spec.homepage = "https://gitlab.pixelplex.by/646_echo_mobile_library/ios"
+  spec.homepage = "https://github.com/echoprotocol/echo-ios-framework"
   spec.license = { :type => 'MIT', :file => 'LICENSE' }
   spec.authors = {
-    "Fedorenko Nikita" => '',
-    "Sharaev Vladimir" => '',
+    "Fedorenko Nikita" => 'n.fedorenko@pixelplex.io',
+    "Sharaev Vladimir" => 'v.sharaev@pixelplex.io',
   }
-  spec.source = { :git => 'https://gitlab.pixelplex.by/646_echo_mobile_library/ios.git' }
+  spec.source = { :git => 'https://github.com/echoprotocol/echo-ios-framework' }
   spec.requires_arc = true
   spec.platform     = :ios
   spec.ios.deployment_target = "9.0"

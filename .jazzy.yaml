@@ -1,0 +1,30 @@
+# About
+# module: Echo_ios_framework
+author: pixelplex.inc
+author_url: https://pixelplex.io
+xcodebuild_arguments: '-scheme ECHO'
+
+# Generation
+clean: true
+output: docs1
+# hide_documentation_coverage: true
+# skip_undocumented: false
+
+# objc: true
+# sdk: iphonesimulator
+
+
+
+output: docs2
+clean: true
+xcodebuild_arguments: [clean,build,-scheme,ECHO]
+author: pixelplex.inc
+author_url: https://pixelplex.io
+# module: ZXFoundation
+# module_version: 0.23.0
+# copyright: 2019 [pixelplex inc](pixelplex.io)
+readme: README.md
+podspec: ECHO.podspec
+github_url: https://github.com/echoprotocol/echo-ios-framework
+# min_acl: internal
+# theme: fullwidth

@@ -1,3 +1,4 @@
+fastlane_require 'yaml'
 fastlane_version "2.105.2"
 
 setup_travis
@@ -11,28 +12,51 @@ platform :ios do
     libraries
     
     run_tests(
-	scheme: "ECHO",
-	sdk: "iphonesimulator",
-	devices: ["iPhone X"],
-	clean: true
+      scheme: ENV['PROJECT_SCHEME'],
+      sdk: "iphonesimulator",
+      devices: ["iPhone X"],
+      clean: true
     )
 
   end
 
   lane :release do
 
-    version_number = get_next_version
-    print version_number
+    libraries
+    
+    increment_version
 
-    change_configs_for_release(version_number: version_number)
+    config_documentation
 
-    # #TODO: Need valid config file
-    # #config_documentation
+  end
 
-    # commit_to_master(version_number: version_number)
-    # push_to_master
-    # tag_setup(version_number: version_number)
-    # push_to_release
+  lane :config_documentation do
+
+    jazzy(
+      config: ".jazzy.yaml"
+    )
+
+  end
+
+  private_lane :increment_version do 
+
+    version_number = (YAML::load_file(File.join(__dir__, ENV['VERSION_FILE'])))['version']
+    
+    major, minor, patch = version_number.split(".")
+    patch = patch.to_i + 1
+
+    version_number = "#{major}.#{minor}.#{patch}"
+
+    File.open(ENV['VERSION_FILE'], 'w') {|f| f.write "version: #{version_number}" }
+
+    increment_version_number(
+      version_number: version_number
+    )
+
+    version_bump_podspec(
+      path: ENV['PODSPEC_NAME'],
+      version_number: version_number
+    )
 
   end
 
@@ -41,88 +65,6 @@ platform :ios do
     carthage(
       platform: "iOS"
     )
-
-  end
-
-  lane :change_configs_for_release do |options|
-
-    increment_version_number(
-      version_number: options[:version_number]
-    )
-
-    version_bump_podspec(
-      path: ENV['PODSPEC_NAME'],
-      version_number: options[:version_number]
-    )
-
-  end
-
-  private_lane lane :config_documentation do
-
-    jazzy(
-      config: ".jazzy.yaml"
-    )
-
-  end
-
-  private_lane lane :commit_to_master do |options|
-
-    git_add(
-      path: "docs/*"
-    )
-
-    git_commit(path: ["ECHO.podspec",
-                      "ECHO/Info.plist",
-                      "ECHOTests/Info.plist",
-                      "docs/*"], 
-                message: "Version: #{options[:version_number]}")
-
-  end
-
-  private_lane lane :push_to_master do 
-
-    push_to_git_remote(
-      remote_branch: "master"
-    )
-
-  end
-
-  private_lane lane :push_to_release do
-
-    push_to_git_remote(
-      remote_branch: "release"
-    )
-    
-  end
-
-  private_lane lane :tag_setup do |options|
-
-    add_git_tag(
-      tag: options[:version_number]
-    )
-
-    push_git_tags
-
-  end 
-
-  private_lane lane :get_next_version do
-
-    sh('git pull origin master --tags')
-    get_tags_command = "git tag -l #{ENV['BUNDLE_VERSION']}* | sort -V"
-    tags = sh(get_tags_command)
-
-    tags_array = tags.split
-
-    if tags_array.count == 0
-      "#{ENV['BUNDLE_VERSION']}0"
-    else
-      last_tag = tags_array.last
-      tag_numbers_array = last_tag.split('.')
-      last_tag_number = tag_numbers_array.last
-      new_last_tag_number = last_tag_number.to_i + 1
-
-      "#{ENV['BUNDLE_VERSION']}.#{new_last_tag_number}"
-    end
 
   end
 
