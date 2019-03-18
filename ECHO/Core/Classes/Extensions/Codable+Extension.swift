@@ -50,7 +50,7 @@ struct AnyDecodable: Decodable {
             } else if let stringVal = try? container.decode(String.self) {
                 value = stringVal
             } else {
-                throw DecodingError.dataCorruptedError(in: container, debugDescription: "the container contains nothing serialisable")
+                value = NSNull()
             }
         } else {
             throw DecodingError.dataCorrupted(DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Could not serialise"))

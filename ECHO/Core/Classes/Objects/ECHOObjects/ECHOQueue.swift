@@ -71,7 +71,7 @@ public final class ECHOQueue: NSObject {
     fileprivate var completionOperation: Operation?
     fileprivate var obs: NSKeyValueObservation?
     
-    let uuid: String
+    public let uuid: String
     
     public override init() {
         
