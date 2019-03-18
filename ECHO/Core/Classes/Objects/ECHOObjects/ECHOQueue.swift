@@ -63,7 +63,7 @@ extension ECHOQueueble {
     - Stop queue while async operation working
     - Storage for values between operations
  */
-final class ECHOQueue: NSObject {
+public final class ECHOQueue: NSObject {
 
     fileprivate let workingQueue: OperationQueue
     fileprivate var valuesContainer: [String: Any?]
@@ -71,9 +71,9 @@ final class ECHOQueue: NSObject {
     fileprivate var completionOperation: Operation?
     fileprivate var obs: NSKeyValueObservation?
     
-    let uuid: String
+    public let uuid: String
     
-    override init() {
+    public override init() {
         
         uuid = NSUUID().uuidString
         
@@ -91,12 +91,12 @@ final class ECHOQueue: NSObject {
     
     // MARK: Save and get operations results
     
-    func saveValue<T>(_ value: T, forKey key: String) {
+    public func saveValue<T>(_ value: T, forKey key: String) {
 
         valuesContainer[key] = value
     }
     
-    func getValue<T>(_ key: String) -> T? {
+    public func getValue<T>(_ key: String) -> T? {
         
         guard let anyValue = valuesContainer[key] else {
             return nil
@@ -111,19 +111,19 @@ final class ECHOQueue: NSObject {
     
     // MARK: Semaphore
     
-    func waitStartNextOperation() {
+    public func waitStartNextOperation() {
         
         _ = semaphore.wait(timeout: .distantFuture)
     }
     
-    func startNextOperation() {
+    public func startNextOperation() {
         
         semaphore.signal()
     }
     
     // MARK: Operations
     
-    func setCompletionOperation(_ completionOperation: Operation) {
+    public func setCompletionOperation(_ completionOperation: Operation) {
         
         self.completionOperation = completionOperation
         
@@ -137,11 +137,11 @@ final class ECHOQueue: NSObject {
         }
     }
     
-    func addOperation(_ operation: Operation) {
+    public func addOperation(_ operation: Operation) {
         workingQueue.addOperation(operation)
     }
     
-    func cancelAllOperations() {
+    public func cancelAllOperations() {
         
         workingQueue.cancelAllOperations()
     }
