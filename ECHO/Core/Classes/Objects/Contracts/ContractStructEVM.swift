@@ -15,6 +15,12 @@ public struct ContractStructEVM: Decodable {
     public let code: String
     public let storage: [String: [String]]?
     
+    public init(code: String, storage: [String: [String]]?) {
+        
+        self.code = code
+        self.storage = storage
+    }
+    
     public init(from decoder: Decoder) throws {
         
         let values = try decoder.container(keyedBy: ContractStructEVMCodingKeys.self)

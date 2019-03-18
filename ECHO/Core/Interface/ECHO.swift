@@ -458,7 +458,7 @@ final public class ECHO: InterfaceFacades {
     
     // MARK: CustomOperationsFacade
     
-    func sendCustomOperation(operation: CustomSocketOperation, for specificAPI: API) {
+    public func sendCustomOperation(operation: CustomSocketOperation, for specificAPI: API) {
         
         customOperationsFacade.sendCustomOperation(operation: operation, for: specificAPI)
     }

@@ -28,7 +28,7 @@ final public class CustomOperationsFacadeImp: CustomOperationsFacade {
         self.services = services
     }
     
-    func sendCustomOperation(operation: CustomSocketOperation, for specificAPI: API) {
+    public func sendCustomOperation(operation: CustomSocketOperation, for specificAPI: API) {
         
         var service: BaseApiService
         
