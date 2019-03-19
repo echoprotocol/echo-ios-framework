@@ -6,6 +6,7 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
+/// All facades in framework
 public typealias InterfaceFacades = AuthentificationFacade
     & InformationFacade
     & SubscriptionFacade
@@ -15,6 +16,10 @@ public typealias InterfaceFacades = AuthentificationFacade
     & ContractsFacade
     & CustomOperationsFacade
 
+public protocol Startable {
+    func start(completion: @escaping Completion<Bool>)
+}
+
 /**
      This is an  entry point of library.
  
@@ -23,7 +28,7 @@ public typealias InterfaceFacades = AuthentificationFacade
      2. It is possible to replace standard classes of work with cryptography and a socket
      3. Modification of the library parameters is done using the **Settings** class in the constructor of the class
  */
-final public class ECHO: InterfaceFacades {
+final public class ECHO: InterfaceFacades, Startable {
     
     let revealFacade: RevealApiFacade
     let subscriptionFacade: SubscriptionFacade
