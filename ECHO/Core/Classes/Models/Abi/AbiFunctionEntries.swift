@@ -10,9 +10,9 @@ import Foundation
 
 public class AbiFunctionEntries: Equatable, Hashable {
     
-    var name: String
-    var typeString: String
-    var type: AbiParameterType
+    public var name: String
+    public var typeString: String
+    public var type: AbiParameterType
     
     public init(name: String, typeString: String, type: AbiParameterType) {
         self.name = name

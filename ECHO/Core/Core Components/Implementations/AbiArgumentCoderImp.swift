@@ -335,7 +335,7 @@ extension Decoder {
             throw error
         }
         
-        let output = AbiTypeValueOutputModel(type: type, value: fixedBytesData.hex)
+        let output = AbiTypeValueOutputModel(type: type, value: String(data: bytesData, encoding: .utf8))
         decodedOutputs.append(output)
     }
     
