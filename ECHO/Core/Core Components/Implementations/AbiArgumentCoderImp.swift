@@ -335,7 +335,7 @@ extension Decoder {
             throw error
         }
         
-        let output = AbiTypeValueOutputModel(type: type, value: fixedBytesData.hex)
+        let output = AbiTypeValueOutputModel(type: type, value: String(data: bytesData, encoding: .utf8))
         decodedOutputs.append(output)
     }
     
@@ -499,20 +499,16 @@ extension Encoder {
             }
         case .fixedBytes(let size):
             
-            if var value = Data(hex: data) {
-                
-                if value.count > size {
-                    value = value.subdata(in: 0..<size)
-                }
-                
-                let fillData = Data(count: sliceSize - value.count)
-                value.append(fillData)
-                
-                staticStack.array.append(value)
-
-            } else {
-                staticStack.array.append(placeholderData())
+            var value = Data(data.utf8)
+            
+            if value.count > size {
+                value = value.subdata(in: 0..<size)
             }
+            
+            let fillData = Data(count: sliceSize - value.count)
+            value.append(fillData)
+            
+            staticStack.array.append(value)
 
         default:
             break
