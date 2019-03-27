@@ -61,7 +61,8 @@ public enum OperationType: Int {
     case executeBidOperation                        //Virtual
     case createContractOperation
     case callContractOperation
-    case contractTransferOperation                  //Virtual //49
+    case contractTransferOperation                  //Virtual
+    case changeSidechainConfigOperation             // 50
 }
 
 struct OperationDecoder {
@@ -80,6 +81,7 @@ struct OperationDecoder {
         case .assetIssueOperation: return decode(IssueAssetOperation.self, container: container)
         case .createContractOperation: return decode(CreateContractOperation.self, container: container)
         case .callContractOperation: return decode(CallContractOperation.self, container: container)
+        case .contractTransferOperation: return decode(ContractTransferOperation.self, container: container)
         default: return nil
         }
     }
@@ -113,6 +115,8 @@ struct OperationDecoder {
                 baseOperation = try? JSONDecoder().decode(CreateContractOperation.self, from: data)
             case .callContractOperation:
                 baseOperation = try? JSONDecoder().decode(CallContractOperation.self, from: data)
+            case .contractTransferOperation:
+                baseOperation = try? JSONDecoder().decode(ContractTransferOperation.self, from: data)
             default:
                 break
             }
