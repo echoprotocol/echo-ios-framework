@@ -9,10 +9,10 @@ platform :ios do
     libraries
     
     run_tests(
-	scheme: "ECHO",
-	sdk: "iphonesimulator",
-	devices: ["iPhone X"],
-	clean: true
+	     scheme: "ECHO",
+	     sdk: "iphonesimulator",
+	     devices: ["iPhone X"],
+	     clean: true
     )
 
   end
@@ -37,6 +37,7 @@ platform :ios do
   private_lane :libraries do 
 
     carthage(
+      comamnd: "update",
       platform: "iOS"
     )
 
