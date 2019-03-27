@@ -37,7 +37,7 @@ platform :ios do
   private_lane :libraries do 
 
     carthage(
-      comamnd: "update",
+      command: "update",
       platform: "iOS"
     )
 
