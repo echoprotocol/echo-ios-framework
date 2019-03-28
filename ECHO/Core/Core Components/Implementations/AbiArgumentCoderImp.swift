@@ -335,7 +335,12 @@ extension Decoder {
             throw error
         }
         
-        let output = AbiTypeValueOutputModel(type: type, value: String(data: bytesData, encoding: .utf8))
+        guard let fixedString = String(data: fixedBytesData, encoding: .utf8) else {
+            let error = NSError(domain: "", code: 0, userInfo: nil)
+            throw error
+        }
+        
+        let output = AbiTypeValueOutputModel(type: type, value: fixedString)
         decodedOutputs.append(output)
     }
     

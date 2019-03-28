@@ -110,7 +110,7 @@ final public class AuthentificationFacadeImp: AuthentificationFacade, ECHOQueueb
         }
         
         let key = network.prefix.rawValue + keysContainer.ownerKeychain.publicAddress()
-        let matches = account.account.owner?.keyAuths.compactMap { $0.address.addressString == key }.filter { $0 == true }
+        let matches = account.account.active?.keyAuths.compactMap { $0.address.addressString == key }.filter { $0 == true }
         
         if let matches = matches {
             return matches.count > 0
