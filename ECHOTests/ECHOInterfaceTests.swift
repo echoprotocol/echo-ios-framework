@@ -2105,7 +2105,7 @@ class ECHOInterfaceTests: XCTestCase {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
         }))
         let exp = expectation(description: "Get object sidechain transfers")
-        let identifier = "1.19.2"
+        let identifier = "1.19.0"
         var transfer: SidechainTransfer?
         
         //act
