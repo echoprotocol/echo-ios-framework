@@ -14,8 +14,8 @@ class SubscribtionTests: XCTestCase {
     
     var echo: ECHO!
     let timeout: Double = 20
-    var strongDelegate: SubscribeDelegateMock?
-    var strongContractLogDelegate: SubscribeContractLogsDelegateMock?
+    var strongDelegate: SubscribeAccountDelegateStub?
+    var strongContractLogDelegate: SubscribeContractLogsDelegateStub?
     
     override func tearDown() {
         super.tearDown()
@@ -23,87 +23,15 @@ class SubscribtionTests: XCTestCase {
         strongContractLogDelegate = nil
     }
     
-    class SubscribeDelegateMock: SubscribeAccountDelegate {
-        
-        var subscribeNameOrIds = [String]()
-        var delegateEvents = 0
-        var rightDelegateEvents = 0
-        
-        func didUpdateAccount(userAccount: UserAccount) {
-            
-            delegateEvents += 1
-            
-            if let _ = subscribeNameOrIds.first(where: {userAccount.account.id == $0 && userAccount.account.name == $0 }) {
-                rightDelegateEvents += 1
-            }
-        }
-        
-        func addSubscribe(nameOrId: String) {
-            subscribeNameOrIds.append(nameOrId)
-        }
-        
-        deinit {
-            print("DEINIT")
-        }
-    }
-    
-    class SubscribeContractLogsDelegateMock: SubscribeContractLogsDelegate {
-        
-        var contractId = ""
-        var delegateEvents = 0
-        var rightDelegateEvents = 0
-        let exp: XCTestExpectation
-        
-        init(exp: XCTestExpectation) {
-            self.exp = exp
-        }
-        
-        func didCreateLogs(logs: [ContractLog]) {
-            
-            delegateEvents += 1
-            
-            var isRight = true
-            for log in logs {
-                let interpretator = AbiArgumentCoderImp()
-                let type = AbiParameterType.contractAddress
-                let outputs = [AbiFunctionEntries(name: "", typeString: type.description, type: type)]
-                
-                let values = try? interpretator.getValueTypes(string: log.address, outputs: outputs)
-                
-                guard let contractIdLastPart = values?[safe: 0]?.value as? String else {
-                    return                }
-                
-                let idString = ObjectType.contract.getFullObjectIdByLastPart(contractIdLastPart)
-                if idString != contractId {
-                    isRight = false
-                }
-            }
-            
-            if isRight {
-                rightDelegateEvents += 1
-            }
-            
-            exp.fulfill()
-        }
-        
-        func addSubscribe(contractId: String) {
-            self.contractId = contractId
-        }
-        
-        deinit {
-            print("DEINIT")
-        }
-    }
-    
     func testSubscribe() {
   
         //arrange
-        let messenger = SocketMessengerStub(state: .subscribe)
+        let messenger = SocketMessengerStub(state: .subscribeToAccount)
         echo = ECHO(settings: Settings(build: {
             $0.socketMessenger = messenger
         }))
         
-        let delegate = SubscribeDelegateMock()
+        let delegate = SubscribeAccountDelegateStub()
         strongDelegate = delegate
         let exp = expectation(description: "Delegate Call")
         let username = "1.2.22"
@@ -125,13 +53,13 @@ class SubscribtionTests: XCTestCase {
     func testUnretainedSubscribe() {
         
         //arrange
-        let messenger = SocketMessengerStub()
+        let messenger = SocketMessengerStub(state: .subscribeToAccount)
         echo = ECHO(settings: Settings(build: {
             $0.socketMessenger = messenger
         }))
         let userName = "vsharaev"
         
-        strongDelegate = SubscribeDelegateMock()
+        strongDelegate = SubscribeAccountDelegateStub()
         weak var delegate = strongDelegate
 
         let exp = expectation(description: "Delegate Call")
@@ -152,12 +80,12 @@ class SubscribtionTests: XCTestCase {
     func testSubscribe2() {
         
         //arrange
-        let messenger = SocketMessengerStub(state: .subscribe)
+        let messenger = SocketMessengerStub(state: .subscribeToAccount)
         echo = ECHO(settings: Settings(build: {
             $0.socketMessenger = messenger
         }))
         let userName = "1.2.22"
-        let delegate = SubscribeDelegateMock()
+        let delegate = SubscribeAccountDelegateStub()
         strongDelegate = delegate
         let exp = expectation(description: "Delegate Call")
         
@@ -178,12 +106,12 @@ class SubscribtionTests: XCTestCase {
     func testUnsubscribe() {
         
         //arrange
-        let messenger = SocketMessengerStub()
+        let messenger = SocketMessengerStub(state: .subscribeToAccount)
         echo = ECHO(settings: Settings(build: {
             $0.socketMessenger = messenger
         }))
         let userName = "vsharaev"
-        let delegate = SubscribeDelegateMock()
+        let delegate = SubscribeAccountDelegateStub()
         strongDelegate = delegate
         let exp = expectation(description: "Delegate Call")
         
@@ -204,12 +132,12 @@ class SubscribtionTests: XCTestCase {
         
     func testUnsubscribeAll() {
         //arrange
-        let messenger = SocketMessengerStub()
+        let messenger = SocketMessengerStub(state: .subscribeToAccount)
         echo = ECHO(settings: Settings(build: {
             $0.socketMessenger = messenger
         }))
         let userName = "vsharaev"
-        let delegate = SubscribeDelegateMock()
+        let delegate = SubscribeAccountDelegateStub()
         strongDelegate = delegate
         let exp = expectation(description: "Delegate Call")
         
@@ -237,7 +165,7 @@ class SubscribtionTests: XCTestCase {
         
         // Logs
         let exp = expectation(description: "Contract logs")
-        let delegate = SubscribeContractLogsDelegateMock(exp: exp)
+        let delegate = SubscribeContractLogsDelegateStub(exp: exp)
         strongContractLogDelegate = delegate
         
         // Call for change logs

@@ -1,6 +1,6 @@
 //
 //  ECHOInterfaceTests.swift
-//  ECHOTests
+//  ECHONetworkTests
 //
 //  Created by Fedorenko Nikita on 24.08.2018.
 //  Copyright © 2018 PixelPlex. All rights reserved.

@@ -22,7 +22,7 @@ class SocketCoreComponentTests: XCTestCase {
 
         //arrange
         let fakeUrl = "fakeUrl"
-        let messenger = SocketMessengerStub()
+        let messenger = SocketMessengerStub(state: .reveal)
         echo = ECHO(settings: Settings(build: {
             $0.network = ECHONetwork(url: fakeUrl, prefix: ECHONetworkPrefix.echo, echorandPrefix: .det)
                 $0.socketMessenger = messenger
@@ -43,7 +43,7 @@ class SocketCoreComponentTests: XCTestCase {
     func testConnectingCount() {
         
         //arrange
-        let messenger = SocketMessengerStub()
+        let messenger = SocketMessengerStub(state: .reveal)
         echo = ECHO(settings: Settings(build: {
             $0.socketMessenger = messenger
         }))
