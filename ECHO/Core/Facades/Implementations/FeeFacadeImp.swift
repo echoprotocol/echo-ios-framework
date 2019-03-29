@@ -25,16 +25,19 @@ final public class FeeFacadeImp: FeeFacade, ECHOQueueble {
     let network: ECHONetwork
     let cryptoCore: CryptoCoreComponent
     let abiCoderCore: AbiCoder
+    let settings: Settings
     
     init(services: FeeFacadeServices,
          cryptoCore: CryptoCoreComponent,
          network: ECHONetwork,
-         abiCoderCore: AbiCoder) {
+         abiCoderCore: AbiCoder,
+         settings: Settings) {
 
         self.services = services
         self.network = network
         self.cryptoCore = cryptoCore
         self.abiCoderCore = abiCoderCore
+        self.settings = settings
         self.queues = [ECHOQueue]()
     }
     
@@ -104,7 +107,8 @@ final public class FeeFacadeImp: FeeFacade, ECHOQueueble {
                                                  services.databaseService,
                                                  Asset(assetForFee),
                                                  FeeResultsKeys.operation.rawValue,
-                                                 FeeResultsKeys.fee.rawValue)
+                                                 FeeResultsKeys.fee.rawValue,
+                                                 UInt(1))
         let getRequiredFeeOperation = GetRequiredFeeQueueOperation<AssetAmount>(initParams: getRequiredFeeOperationInitParams,
                                                                          completion: completion)
         
@@ -212,7 +216,8 @@ final public class FeeFacadeImp: FeeFacade, ECHOQueueble {
                                                  services.databaseService,
                                                  Asset(assetForFee),
                                                  FeeResultsKeys.operation.rawValue,
-                                                 FeeResultsKeys.fee.rawValue)
+                                                 FeeResultsKeys.fee.rawValue,
+                                                 settings.callContractFeeMultiplier)
         let getRequiredFeeOperation = GetRequiredFeeQueueOperation<AssetAmount>(initParams: getRequiredFeeOperationInitParams,
                                                                                 completion: completion)
         

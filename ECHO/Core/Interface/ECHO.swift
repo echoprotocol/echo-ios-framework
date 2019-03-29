@@ -81,7 +81,8 @@ final public class ECHO: InterfaceFacades, Startable {
         feeFacade = FeeFacadeImp(services: feeServices,
                                  cryptoCore: settings.cryproComponent,
                                  network: settings.network,
-                                 abiCoderCore: settings.abiCoderComponent)
+                                 abiCoderCore: settings.abiCoderComponent,
+                                 settings: settings)
         
         let transactoinServices = TransactionFacadeServices(databaseService: databaseService, networkBroadcastService: networkBroadcastService)
         transactionFacade = TransactionFacadeImp(services: transactoinServices,
@@ -97,7 +98,8 @@ final public class ECHO: InterfaceFacades, Startable {
                                              cryptoCore: settings.cryproComponent,
                                              network: settings.network,
                                              abiCoder: settings.abiCoderComponent,
-                                             noticeDelegateHandler: noticeEventProxy)
+                                             noticeDelegateHandler: noticeEventProxy,
+                                             settings: settings)
         
         let customOperationsServices = CustomOperationsFacadeServices(databaseService: databaseService,
                                                                       cryptoService: cryptoService,

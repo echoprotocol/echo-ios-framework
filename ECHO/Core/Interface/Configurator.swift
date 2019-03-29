@@ -21,4 +21,5 @@ final public class Configurator {
     public var network: ECHONetwork = ECHONetwork(url: "wss://devnet.echo-dev.io/ws",
                                                   prefix: ECHONetworkPrefix.echo,
                                                   echorandPrefix: .det)
+    public var callContractFeeMultiplier: UInt = 1
 }

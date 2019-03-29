@@ -145,7 +145,8 @@ final public class AuthentificationFacadeImp: AuthentificationFacade, ECHOQueueb
                                                  services.databaseService,
                                                  Asset(Settings.defaultAsset),
                                                  ChangePasswordKeys.operation.rawValue,
-                                                 ChangePasswordKeys.fee.rawValue)
+                                                 ChangePasswordKeys.fee.rawValue,
+                                                 UInt(1))
         let getRequiredFeeOperation = GetRequiredFeeQueueOperation<Bool>(initParams: getRequiredFeeOperationInitParams,
                                                                          completion: completion)
         
