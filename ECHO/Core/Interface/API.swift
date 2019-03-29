@@ -16,7 +16,7 @@
     4. Network Broadcast API
     5. Network Nodes API
  */
-enum API {
+public enum API {
     case database
     case accountHistory
     case crypto

@@ -22,6 +22,20 @@ public struct GlobalProperties: Decodable {
     public let activeCommitteeMembers: [String]
     public let activeWitnesses: [String]
     
+    public init(identifier: String,
+                parameters: GlobalPropertiesParameters,
+                nextAvailableVoteId: IntOrString,
+                activeCommitteeMembers: [String],
+                activeWitnesses: [String]
+                ) {
+        
+        self.identifier = identifier
+        self.parameters = parameters
+        self.nextAvailableVoteId = nextAvailableVoteId
+        self.activeCommitteeMembers = activeCommitteeMembers
+        self.activeWitnesses = activeWitnesses
+    }
+    
     public init(from decoder: Decoder) throws {
         
         let values = try decoder.container(keyedBy: GlobalPropertiesCodingKeys.self)
@@ -102,6 +116,71 @@ public struct GlobalPropertiesParameters: Decodable {
     public let sidechainConfig: SidechainConfig
     public let gasPrice: GasPriceGlobalProperties
     
+    public init(currentFees: CurrentFeesGlobalPropertiesParameters,
+                blockInterval: IntOrString,
+                maintenanceInterval: IntOrString,
+                maintenanceSkipSlots: IntOrString,
+                committeeProposalReviewPeriod: IntOrString,
+                maximumTransactionSize: IntOrString,
+                maximumBlockSize: IntOrString,
+                maximumTimeUntilExpiration: IntOrString,
+                maximumProposalLifetime: IntOrString,
+                maximumAssetWhitelistAuthorities: IntOrString,
+                maximumAssetFeedPublishers: IntOrString,
+                maximumWitnessCount: IntOrString,
+                maximumCommitteeCount: IntOrString,
+                maximumAuthorityMembership: IntOrString,
+                reservePercentOfFee: IntOrString,
+                networkPercentOfFee: IntOrString,
+                lifetimeReferrerPercentOfFee: IntOrString,
+                cashbackVestingPeriodSeconds: IntOrString,
+                cashbackVestingThreshold: IntOrString,
+                countNonMemberVotes: Bool,
+                allowNonMemberWhitelists: Bool,
+                witnessPayPerBlock: IntOrString,
+                workerBudgetPerDay: IntOrString,
+                maxPredicateOpcode: IntOrString,
+                feeLiquidationThreshold: IntOrString,
+                accountsPerFeeScale: IntOrString,
+                accountFeeScaleBitshifts: IntOrString,
+                maxAuthorityDepth: IntOrString,
+                echorandConfig: EchorandConfig,
+                sidechainConfig: SidechainConfig,
+                gasPrice: GasPriceGlobalProperties) {
+        
+        self.currentFees = currentFees
+        self.blockInterval = blockInterval
+        self.maintenanceInterval = maintenanceInterval
+        self.maintenanceSkipSlots = maintenanceSkipSlots
+        self.committeeProposalReviewPeriod = committeeProposalReviewPeriod
+        self.maximumTransactionSize = maximumTransactionSize
+        self.maximumBlockSize = maximumBlockSize
+        self.maximumTimeUntilExpiration = maximumTimeUntilExpiration
+        self.maximumProposalLifetime = maximumProposalLifetime
+        self.maximumAssetWhitelistAuthorities = maximumAssetWhitelistAuthorities
+        self.maximumAssetFeedPublishers = maximumAssetFeedPublishers
+        self.maximumWitnessCount = maximumWitnessCount
+        self.maximumCommitteeCount = maximumCommitteeCount
+        self.maximumAuthorityMembership = maximumAuthorityMembership
+        self.reservePercentOfFee = reservePercentOfFee
+        self.networkPercentOfFee = networkPercentOfFee
+        self.lifetimeReferrerPercentOfFee = lifetimeReferrerPercentOfFee
+        self.cashbackVestingPeriodSeconds = cashbackVestingPeriodSeconds
+        self.cashbackVestingThreshold = cashbackVestingThreshold
+        self.countNonMemberVotes = countNonMemberVotes
+        self.allowNonMemberWhitelists = allowNonMemberWhitelists
+        self.witnessPayPerBlock = witnessPayPerBlock
+        self.workerBudgetPerDay = workerBudgetPerDay
+        self.maxPredicateOpcode = maxPredicateOpcode
+        self.feeLiquidationThreshold = feeLiquidationThreshold
+        self.accountsPerFeeScale = accountsPerFeeScale
+        self.accountFeeScaleBitshifts = accountFeeScaleBitshifts
+        self.maxAuthorityDepth = maxAuthorityDepth
+        self.echorandConfig = echorandConfig
+        self.sidechainConfig = sidechainConfig
+        self.gasPrice = gasPrice
+    }
+    
     public init(from decoder: Decoder) throws {
         
         let values = try decoder.container(keyedBy: GlobalPropertiesParametersCodingKeys.self)
@@ -150,6 +229,13 @@ public struct CurrentFeesGlobalPropertiesParameters: Decodable {
     public let parameters: [[IntOrDict]]
     public let scale: IntOrString
     
+    public init(parameters: [[IntOrDict]],
+                scale: IntOrString) {
+        
+        self.parameters = parameters
+        self.scale = scale
+    }
+    
     public init(from decoder: Decoder) throws {
         
         let values = try decoder.container(keyedBy: CurrentFeesGlobalPropertiesCodingKeys.self)
@@ -178,6 +264,23 @@ public struct EchorandConfig: Decodable {
     public let okThreshold: IntOrString
     public let maxBbaSteps: IntOrString
     public let gc1Delay: IntOrString
+    
+    public init(timeNet1mb: IntOrString,
+                timeNet256b: IntOrString,
+                creatorCount: IntOrString,
+                verifierCount: IntOrString,
+                okThreshold: IntOrString,
+                maxBbaSteps: IntOrString,
+                gc1Delay: IntOrString) {
+        
+        self.timeNet1mb = timeNet1mb
+        self.timeNet256b = timeNet256b
+        self.creatorCount = creatorCount
+        self.verifierCount = verifierCount
+        self.okThreshold = okThreshold
+        self.maxBbaSteps = maxBbaSteps
+        self.gc1Delay = gc1Delay
+    }
     
     public init(from decoder: Decoder) throws {
         
@@ -215,6 +318,25 @@ public struct SidechainConfig: Decodable {
     public let ethCommitteeMethod: String
     public let ethTransferTopic: String
     
+    public init(echoContractId: String,
+                echoVoteMethod: String,
+                echoSignMethod: String,
+                echoTransferTopic: String,
+                echoTransferReadyTopic: String,
+                ethContractAddress: String,
+                ethCommitteeMethod: String,
+                ethTransferTopic: String) {
+        
+        self.echoContractId = echoContractId
+        self.echoVoteMethod = echoVoteMethod
+        self.echoSignMethod = echoSignMethod
+        self.echoTransferTopic = echoTransferTopic
+        self.echoTransferReadyTopic = echoTransferReadyTopic
+        self.ethContractAddress = ethContractAddress
+        self.ethCommitteeMethod = ethCommitteeMethod
+        self.ethTransferTopic = ethTransferTopic
+    }
+    
     public init(from decoder: Decoder) throws {
         
         let values = try decoder.container(keyedBy: SidechainConfigCodingKeys.self)
@@ -239,6 +361,13 @@ public struct GasPriceGlobalProperties: Decodable {
     
     public let price: IntOrString
     public let gasAmount: IntOrString
+    
+    public init(price: IntOrString,
+                gasAmount: IntOrString) {
+        
+        self.price = price
+        self.gasAmount = gasAmount
+    }
     
     public init(from decoder: Decoder) throws {
         

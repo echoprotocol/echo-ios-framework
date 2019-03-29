@@ -19,6 +19,12 @@ public struct UserAccount: Decodable {
     public let account: Account
     public let balances: [AccountBalance]
     
+    public init(account: Account, balances: [AccountBalance]) {
+        
+        self.account = account
+        self.balances = balances
+    }
+    
     public init(from decoder: Decoder) throws {
         
         let values = try decoder.container(keyedBy: UserAccountCodingKeys.self)

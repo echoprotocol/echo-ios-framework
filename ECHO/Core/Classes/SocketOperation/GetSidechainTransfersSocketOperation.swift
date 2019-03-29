@@ -56,4 +56,3 @@ struct GetSidechainTransfersSocketOperation: SocketOperation {
         completion(result)
     }
 }
-

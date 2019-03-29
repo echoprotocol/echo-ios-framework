@@ -140,7 +140,18 @@ final class GetTransactionQueueOperation<T>: Operation where T: Any {
         }
         
         let key = networkPrefix + contrainer.ownerKeychain.publicAddress()
-        let matches = account.owner?.keyAuths.compactMap { $0.address.addressString == key }.filter { $0 == true }
+        
+        let authority: Authority?
+        switch keychainType {
+        case .active:
+            authority = account.active
+        case .owner:
+            authority = account.owner
+        default:
+            authority = nil
+        }
+        
+        let matches = authority?.keyAuths.compactMap { $0.address.addressString == key }.filter { $0 == true }
         
         if let matches = matches {
             return matches.count > 0
