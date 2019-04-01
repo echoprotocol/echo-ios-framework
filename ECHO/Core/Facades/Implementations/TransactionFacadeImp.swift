@@ -107,7 +107,8 @@ final public class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
                                                  services.databaseService,
                                                  Asset(assetForFee),
                                                  TransferResultsKeys.operation.rawValue,
-                                                 TransferResultsKeys.fee.rawValue)
+                                                 TransferResultsKeys.fee.rawValue,
+                                                 UInt(1))
         let getRequiredFeeOperation = GetRequiredFeeQueueOperation<Bool>(initParams: getRequiredFeeOperationInitParams,
                                                                                 completion: completion)
         

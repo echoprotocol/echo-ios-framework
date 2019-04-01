@@ -10,7 +10,8 @@ typealias GetRequiredFeeQueueOperationInitParams = (queue: ECHOQueue,
                                                     databaseService: DatabaseApiService,
                                                     asset: Asset,
                                                     operationKey: String,
-                                                    saveKey: String)
+                                                    saveKey: String,
+                                                    feeMultiplier: UInt)
 
 /**
     Operation for [ECHOQueue](ECHOQueue) whitch load and save required fee for [Operation](Operation)
@@ -24,6 +25,7 @@ final class GetRequiredFeeQueueOperation<T>: Operation where T: Any {
     fileprivate let asset: Asset
     fileprivate let operationKey: String
     fileprivate let saveKey: String
+    fileprivate let feeMultiplier: UInt
     fileprivate let completion: Completion<T>
     
     required init(initParams: GetRequiredFeeQueueOperationInitParams,
@@ -34,6 +36,7 @@ final class GetRequiredFeeQueueOperation<T>: Operation where T: Any {
         self.asset = initParams.asset
         self.operationKey = initParams.operationKey
         self.saveKey = initParams.saveKey
+        self.feeMultiplier = initParams.feeMultiplier
         self.completion = completion
     }
     
@@ -57,7 +60,11 @@ final class GetRequiredFeeQueueOperation<T>: Operation where T: Any {
                 }
                 
                 if let strongSelf = self {
-                    strongSelf.queue?.saveValue(fee, forKey: strongSelf.saveKey)
+                    
+                    let multipliedFee = AssetAmount(amount: fee.amount * strongSelf.feeMultiplier,
+                                                    asset: fee.asset)
+                    
+                    strongSelf.queue?.saveValue(multipliedFee, forKey: strongSelf.saveKey)
                 }
             case .failure(let error):
                 self?.queue?.cancelAllOperations()

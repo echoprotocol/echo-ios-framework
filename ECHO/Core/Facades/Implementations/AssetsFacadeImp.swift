@@ -71,7 +71,8 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
                                                  services.databaseService,
                                                  Asset(Settings.defaultAsset),
                                                  CreateAssetKeys.operation.rawValue,
-                                                 CreateAssetKeys.fee.rawValue)
+                                                 CreateAssetKeys.fee.rawValue,
+                                                 UInt(1))
         let getRequiredFeeOperation = GetRequiredFeeQueueOperation<Bool>(initParams: getRequiredFeeOperationInitParams,
                                                                          completion: completion)
         
@@ -172,7 +173,8 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
                                                  services.databaseService,
                                                  Asset(Settings.defaultAsset),
                                                  IssueAssetKeys.operation.rawValue,
-                                                 IssueAssetKeys.fee.rawValue)
+                                                 IssueAssetKeys.fee.rawValue,
+                                                 UInt(1))
         let getRequiredFeeOperation = GetRequiredFeeQueueOperation<Bool>(initParams: getRequiredFeeOperationInitParams,
                                                                          completion: completion)
         

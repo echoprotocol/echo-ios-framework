@@ -41,17 +41,20 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
     let network: ECHONetwork
     let cryptoCore: CryptoCoreComponent
     let abiCoderCore: AbiCoder
+    let settings: Settings
     
     public init(services: ContractsFacadeServices,
                 cryptoCore: CryptoCoreComponent,
                 network: ECHONetwork,
                 abiCoder: AbiCoder,
-                noticeDelegateHandler: NoticeEventDelegateHandler) {
+                noticeDelegateHandler: NoticeEventDelegateHandler,
+                settings: Settings) {
         
         self.services = services
         self.network = network
         self.cryptoCore = cryptoCore
         self.abiCoderCore = abiCoder
+        self.settings = settings
         self.queues = [ECHOQueue]()
         noticeDelegateHandler.delegate = self
     }
@@ -207,7 +210,8 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
                                                  services.databaseService,
                                                  Asset(assetForFee),
                                                  ContractKeys.operation.rawValue,
-                                                 ContractKeys.fee.rawValue)
+                                                 ContractKeys.fee.rawValue,
+                                                 UInt(1))
         let getRequiredFeeOperation = GetRequiredFeeQueueOperation<Bool>(initParams: getRequiredFeeOperationInitParams,
                                                                          completion: completion)
         
@@ -358,18 +362,19 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
         
         // Operation
         callQueue.saveValue(Contract(id: contratId), forKey: ContractKeys.receiverContract.rawValue)
-        let bildCreateContractOperation = createBildCallContractOperation(callQueue,
-                                                                          amount ?? 0,
-                                                                          assetId,
-                                                                          assetForFee,
-                                                                          completion)
+        let bildCallContractOperation = createBildCallContractOperation(callQueue,
+                                                                        amount ?? 0,
+                                                                        assetId,
+                                                                        assetForFee,
+                                                                        completion)
         
         // RequiredFee
         let getRequiredFeeOperationInitParams = (callQueue,
                                                  services.databaseService,
                                                  Asset(assetForFee),
                                                  ContractKeys.operation.rawValue,
-                                                 ContractKeys.fee.rawValue)
+                                                 ContractKeys.fee.rawValue,
+                                                 settings.callContractFeeMultiplier)
         let getRequiredFeeOperation = GetRequiredFeeQueueOperation<Bool>(initParams: getRequiredFeeOperationInitParams,
                                                                          completion: completion)
         
@@ -416,7 +421,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
         if let byteCodeOperation = byteCodeOperation {
             callQueue.addOperation(byteCodeOperation)
         }
-        callQueue.addOperation(bildCreateContractOperation)
+        callQueue.addOperation(bildCallContractOperation)
         callQueue.addOperation(getRequiredFeeOperation)
         callQueue.addOperation(getChainIdOperation)
         callQueue.addOperation(getBlockDataOperation)
