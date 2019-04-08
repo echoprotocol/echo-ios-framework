@@ -91,7 +91,7 @@ final class SocketMessengerStub: SocketMessenger {
         case .getAccount:
             response = getAccountResponse(request: string)
         case .subscribeToConsractLogs:
-            response = getSubscribeToConstractLogsResponse(request: tring)
+            response = getSubscribeToConstractLogsResponse(request: string)
         }
     
         if let response = response {
@@ -106,63 +106,12 @@ final class SocketMessengerStub: SocketMessenger {
         onText?(TransactionEventEventNotificationStub.response1)
         onText?(TransactionEventEventNotificationStub.response2)
         onText?(TransactionEventEventNotificationStub.response3)
+        onText?(TransactionEventEventNotificationStub.response4)
     }
     
-    func makeUserAccountChangePasswordEvent() {
-        onText?(ChangePasswordEventNotificationStub.response1)
-        onText?(ChangePasswordEventNotificationStub.response2)
-        onText?(ChangePasswordEventNotificationStub.response3)
-        onText?(ChangePasswordEventNotificationStub.response4)
-    }
-    
-    fileprivate func getConstantResponse(request: String) -> String? {
-        
-        switch request {
-        case AccountSocketRequestStub.request:
-            return AccountSocketRequestStub.response
-        case LoginRevealSocketRequestStub.request:
-            login = true
-            return LoginRevealSocketRequestStub.response
-        case DatabaseAPIRevealSocketRequestStub.request:
-            revealDatabaseApi = true
-            return DatabaseAPIRevealSocketRequestStub.response
-        case NetworkBroadcastAPIRevealSocketRequestStub.request:
-            revealNetBroadcastsApi = true
-            return NetworkBroadcastAPIRevealSocketRequestStub.response
-        case RegistrationAPIRevealSocketRequestStub.request:
-            registrationApi = true
-            return RegistrationAPIRevealSocketRequestStub.response
-        case NetworkNodesAPIRevealSocketRequestStub.request:
-            revealNetNodesApi = true
-            return NetworkNodesAPIRevealSocketRequestStub.response
-        case CryptoAPIRevealSocketRequestStub.request:
-            revealCryptoApi = true
-            return CryptoAPIRevealSocketRequestStub.response
-        case AccountHistorySocketRequestStub.request:
-            return AccountHistorySocketRequestStub.response
-        case AccountSocketRequestForNotificationStub.request:
-            return AccountSocketRequestForNotificationStub.response
-        case AccountSocketRequestForNotificationStub2.request:
-            return AccountSocketRequestForNotificationStub2.response
-        case AccountSocketRequestForNotificationStub3.request:
-            return AccountSocketRequestForNotificationStub3.response
-        case SubscribeSuccesNotificationStub.request:
-            return SubscribeSuccesNotificationStub.response
-        default:
-            break
-        }
-        
-        guard let tuple = parceRequest(request: request) else {
-            return nil
-        }
-        
-        let revealHolder = RevialAPISocketRequestStubHodler()
-        
-        if let revealResponse = revealHolder.response(id: tuple.id, operationType: tuple.operationType) {
-            return revealResponse
-        }
-        
-        return nil
+    func makeContractLogCreateEvent() {
+        onText?(ContractLogsEventNotificationStub.response1)
+        onText?(ContractLogsEventNotificationStub.response2)
     }
     
     fileprivate func parceRequest(request: String) -> (id: Int, operationType: String)? {
@@ -412,7 +361,7 @@ final class SocketMessengerStub: SocketMessenger {
         }
         
         let revealHolder = RevialAPISocketRequestStubHodler()
-        let stubHolder = GetAccountStubHolder()
+        let stubHolder = SubscribeToLogsSocketRequestStubHodler()
         
         if let revealResponse = revealHolder.response(id: tuple.id, operationType: tuple.operationType) {
             return revealResponse

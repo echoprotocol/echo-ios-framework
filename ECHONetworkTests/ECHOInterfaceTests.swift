@@ -12,14 +12,6 @@ import XCTest
 class ECHOInterfaceTests: XCTestCase {
     
     var echo: ECHO!
-    let timeout: Double = 20
-    
-    let counterContract = "1.16.139"
-    let logsContract = "1.16.141"
-    let defaultName = "vsharaev"
-    let defaultPass = "vsharaev"
-    let defaultAnotherAsset = "1.3.20"
-    let ethAddress = "0x46Ba2677a1c982B329A81f60Cf90fBA2E8CA9fA8"
     
     override func tearDown() {
         super.tearDown()
@@ -32,7 +24,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .accountHistory]
         }))
-        let exp = expectation(description: "Start")
+        let exp = expectation(description: "testStartingLib")
         var isStarted = false
         
         //act
@@ -47,7 +39,7 @@ class ECHOInterfaceTests: XCTestCase {
         }
         
         //assert
-        waitForExpectations(timeout: timeout) { error in
+        waitForExpectations(timeout: Constants.timeout) { error in
             XCTAssertEqual(isStarted, true)
         }
     }
@@ -59,7 +51,7 @@ class ECHOInterfaceTests: XCTestCase {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: "wss://echo-devnet-node.pixelplx.io", prefix: ECHONetworkPrefix.bitshares, echorandPrefix: .det)
         }))
-        let exp = expectation(description: "Start")
+        let exp = expectation(description: "testStartingLibInvalidUrl")
         var isStarted = false
         
         //act
@@ -75,7 +67,7 @@ class ECHOInterfaceTests: XCTestCase {
         }
         
         //assert
-        waitForExpectations(timeout: timeout) { error in
+        waitForExpectations(timeout: Constants.timeout) { error in
             XCTAssertEqual(isStarted, false)
         }
     }
@@ -87,7 +79,7 @@ class ECHOInterfaceTests: XCTestCase {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: "fake url", prefix: ECHONetworkPrefix.bitshares, echorandPrefix: .det)
         }))
-        let exp = expectation(description: "Start")
+        let exp = expectation(description: "testStartingLibBrokenUrl")
         var isStarted = false
         
         //act
@@ -103,7 +95,7 @@ class ECHOInterfaceTests: XCTestCase {
         }
         
         //assert
-        waitForExpectations(timeout: timeout) { error in
+        waitForExpectations(timeout: Constants.timeout) { error in
             XCTAssertEqual(isStarted, false)
         }
     }
@@ -114,9 +106,9 @@ class ECHOInterfaceTests: XCTestCase {
 //        echo = ECHO(settings: Settings(build: {
 //            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory, .registration]
 //        }))
-//        let exp = expectation(description: "Register User")
+//        let exp = expectation(description: "testRegisterUser")
 //        let userName = "vsharaev1"
-//        let password = defaultPass
+//        let password = Constants.defaultPass
 //        var finalResult = false
 //
 //        //act
@@ -133,7 +125,7 @@ class ECHOInterfaceTests: XCTestCase {
 //        }
 //
 //        //assert
-//        waitForExpectations(timeout: timeout) { error in
+//        waitForExpectations(timeout: Constants.timeout) { error in
 //            XCTAssertEqual(finalResult, true)
 //        }
 //    }
@@ -144,9 +136,9 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory, .registration]
         }))
-        let exp = expectation(description: "Register Registered User")
-        let userName = defaultName
-        let password = defaultName
+        let exp = expectation(description: "testRegisterRegisteredUser")
+        let userName = Constants.defaultName
+        let password = Constants.defaultName
         var errorMessage: String?
         
         //act
@@ -163,7 +155,7 @@ class ECHOInterfaceTests: XCTestCase {
         }
         
         //assert
-        waitForExpectations(timeout: timeout) { error in
+        waitForExpectations(timeout: Constants.timeout) { error in
             XCTAssertNotNil(errorMessage)
         }
     }
@@ -174,9 +166,9 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
         }))
-        let exp = expectation(description: "Account Getting")
+        let exp = expectation(description: "testGettingUser")
         var account: Account?
-        let userName = defaultName
+        let userName = Constants.defaultName
         
         //act
         echo.start { [unowned self] (result) in
@@ -192,7 +184,7 @@ class ECHOInterfaceTests: XCTestCase {
         }
         
         //assert
-        waitForExpectations(timeout: timeout) { error in
+        waitForExpectations(timeout: Constants.timeout) { error in
             XCTAssertEqual(account?.name, userName)
         }
     }
@@ -203,7 +195,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
         }))
-        let exp = expectation(description: "Account Getting")
+        let exp = expectation(description: "testGettingUserFailed")
         let userName = "vsharaev new account unreserved"
         var errorMessage: String?
 
@@ -221,7 +213,7 @@ class ECHOInterfaceTests: XCTestCase {
         }
         
         //assert
-        waitForExpectations(timeout: timeout) { error in
+        waitForExpectations(timeout: Constants.timeout) { error in
             XCTAssertNotNil(errorMessage)
         }
     }
@@ -232,8 +224,8 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
         }))
-        let exp = expectation(description: "History Getting")
-        let userId = defaultName
+        let exp = expectation(description: "testGettingAccountHistory")
+        let userId = Constants.defaultName
         let startId = "1.11.0"
         let stopId = "1.11.0"
         let limit = 100
@@ -253,7 +245,7 @@ class ECHOInterfaceTests: XCTestCase {
         }
         
         //assert
-        waitForExpectations(timeout: timeout) { error in
+        waitForExpectations(timeout: Constants.timeout) { error in
             XCTAssertTrue(history?.count ?? 0 > 0)
         }
     }
@@ -264,7 +256,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
         }))
-        let exp = expectation(description: "History Getting")
+        let exp = expectation(description: "testGettingAccountHistoryFailed")
         let userId = "1.2.1234567"
         let startId = "1.11.0"
         let stopId = "1.11.0"
@@ -285,7 +277,7 @@ class ECHOInterfaceTests: XCTestCase {
         }
         
         //assert
-        waitForExpectations(timeout: timeout) { error in
+        waitForExpectations(timeout: Constants.timeout) { error in
             XCTAssertNotNil(errorMessage)
         }
     }
@@ -296,9 +288,9 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
         }))
-        let exp = expectation(description: "Account balances Getting")
+        let exp = expectation(description: "testGettingAccountBalance")
         var accountBalaces: [AccountBalance]!
-        let userName = defaultName
+        let userName = Constants.defaultName
         
         //act
         echo.start { [unowned self] (result) in
@@ -314,7 +306,7 @@ class ECHOInterfaceTests: XCTestCase {
         }
         
         //assert
-        waitForExpectations(timeout: timeout) { error in
+        waitForExpectations(timeout: Constants.timeout) { error in
             XCTAssertNotNil(accountBalaces)
         }
     }
@@ -326,7 +318,7 @@ class ECHOInterfaceTests: XCTestCase {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
         }))
         var errorMessage: String?
-        let exp = expectation(description: "Account balances Getting")
+        let exp = expectation(description: "testGettingAccountBalanceFailed")
         let userName = "dima1 new account unreserved"
 
         //act
@@ -343,7 +335,7 @@ class ECHOInterfaceTests: XCTestCase {
         }
         
         //assert
-        waitForExpectations(timeout: timeout) { error in
+        waitForExpectations(timeout: Constants.timeout) { error in
             XCTAssertNotNil(errorMessage)
         }
     }
@@ -354,9 +346,9 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
         }))
-        let exp = expectation(description: "Account Getting")
+        let exp = expectation(description: "testIsAccountReserved")
         var isAccReserved = false
-        let userName = defaultName
+        let userName = Constants.defaultName
         
         //act
         echo.start { [unowned self] (result) in
@@ -372,7 +364,7 @@ class ECHOInterfaceTests: XCTestCase {
         }
         
         //assert
-        waitForExpectations(timeout: timeout) { error in
+        waitForExpectations(timeout: Constants.timeout) { error in
             XCTAssertTrue(isAccReserved)
         }
     }
@@ -383,7 +375,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
         }))
-        let exp = expectation(description: "Account Getting")
+        let exp = expectation(description: "testIsAccountReservedWithNewUser")
         var isAccReserved = false
         let userName = "dima1 new account unreserved"
         
@@ -401,7 +393,7 @@ class ECHOInterfaceTests: XCTestCase {
         }
         
         //assert
-        waitForExpectations(timeout: timeout) { error in
+        waitForExpectations(timeout: Constants.timeout) { error in
             XCTAssertFalse(isAccReserved)
         }
     }
@@ -412,10 +404,10 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
         }))
-        let exp = expectation(description: "Account Getting")
+        let exp = expectation(description: "testIsOwnedBy")
         var owned = false
-        let userName = defaultName
-        let password = defaultPass
+        let userName = Constants.defaultName
+        let password = Constants.defaultPass
         
         //act
         echo.start { [unowned self] (result) in
@@ -431,7 +423,7 @@ class ECHOInterfaceTests: XCTestCase {
         }
         
         //assert
-        waitForExpectations(timeout: timeout) { error in
+        waitForExpectations(timeout: Constants.timeout) { error in
             XCTAssertTrue(owned)
         }
     }
@@ -442,9 +434,9 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
         }))
-        let exp = expectation(description: "Account Getting")
+        let exp = expectation(description: "testIsOwnedByFailed")
         var owned = false
-        let userName = defaultName
+        let userName = Constants.defaultName
         let password = "fake password"
         
         //act
@@ -462,7 +454,7 @@ class ECHOInterfaceTests: XCTestCase {
         }
         
         //assert
-        waitForExpectations(timeout: timeout) { error in
+        waitForExpectations(timeout: Constants.timeout) { error in
             XCTAssertFalse(owned)
         }
     }
@@ -473,9 +465,9 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
         }))
-        let exp = expectation(description: "If owned by WIF")
-        let name = defaultName
-        let password = defaultPass
+        let exp = expectation(description: "testIsOwnedByWIF")
+        let name = Constants.defaultName
+        let password = Constants.defaultPass
         let keysContainer = AddressKeysContainer(login: name, password: password, core: CryptoCoreImp())!
         let wif = keysContainer.activeKeychain.wif()
         var findedAccount: UserAccount!
@@ -497,7 +489,7 @@ class ECHOInterfaceTests: XCTestCase {
         }
         
         //assert
-        waitForExpectations(timeout: timeout) { error in
+        waitForExpectations(timeout: Constants.timeout) { error in
             XCTAssertNotNil(findedAccount)
         }
     }
@@ -508,9 +500,9 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
         }))
-        let exp = expectation(description: "If owned by WIF")
+        let exp = expectation(description: "testIsOwnedByWIFAccountNotCreated")
         let name = "vsharaev100500"
-        let password = defaultPass
+        let password = Constants.defaultPass
         let keysContainer = AddressKeysContainer(login: name, password: password, core: CryptoCoreImp())!
         let wif = keysContainer.activeKeychain.wif()
         var count = -1
@@ -529,7 +521,7 @@ class ECHOInterfaceTests: XCTestCase {
         }
         
         //assert
-        waitForExpectations(timeout: timeout) { error in
+        waitForExpectations(timeout: Constants.timeout) { error in
             XCTAssertEqual(count, 0)
         }
     }
@@ -540,9 +532,9 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
         }))
-        let exp = expectation(description: "If owned by WIF")
+        let exp = expectation(description: "testIsOwnedByWIFFailedWIF")
         let name = "vsharaev100500"
-        let password = defaultPass
+        let password = Constants.defaultPass
         let keysContainer = AddressKeysContainer(login: name, password: password, core: CryptoCoreImp())!
         var wif = keysContainer.activeKeychain.wif()
         wif.removeLast()
@@ -567,7 +559,7 @@ class ECHOInterfaceTests: XCTestCase {
         }
         
         //assert
-        waitForExpectations(timeout: timeout) { error in
+        waitForExpectations(timeout: Constants.timeout) { error in
             XCTAssertTrue(wasInvalidCredintials)
         }
     }
@@ -578,8 +570,8 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
         }))
-        let exp = expectation(description: "Fee Getting")
-        let fromUser = defaultName
+        let exp = expectation(description: "testGetFee")
+        let fromUser = Constants.defaultName
         let toUser = "vsharaev1"
         var fee: AssetAmount!
         
@@ -588,7 +580,7 @@ class ECHOInterfaceTests: XCTestCase {
             self.echo.getFeeForTransferOperation(fromNameOrId: fromUser,
                                                  toNameOrId: toUser,
                                                  amount: 1,
-                                                 asset: self.defaultAnotherAsset,
+                                                 asset: Constants.defaultAnotherAsset,
                                                  assetForFee: nil,
                                                  message: nil,
                                                  completion: { (result) in
@@ -603,7 +595,7 @@ class ECHOInterfaceTests: XCTestCase {
         }
         
         //assert
-        waitForExpectations(timeout: timeout) { error in
+        waitForExpectations(timeout: Constants.timeout) { error in
             XCTAssertNotNil(fee)
         }
     }
@@ -614,15 +606,15 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
         }))
-        let exp = expectation(description: "Fee Getting In Another Asset")
-        let fromUser = defaultName
+        let exp = expectation(description: "testGetFeeInAnotherAsset")
+        let fromUser = Constants.defaultName
         let toUser = "vsharaev1"
         let assetForFee = "1.3.1"
         var fee: AssetAmount!
         
         //act
         echo.start { [unowned self] (result) in
-            self.echo.getFeeForTransferOperation(fromNameOrId: fromUser, toNameOrId: toUser, amount: 1, asset: "1.3.0", assetForFee: assetForFee, message: nil, completion: { (result) in
+            self.echo.getFeeForTransferOperation(fromNameOrId: fromUser, toNameOrId: toUser, amount: 1, asset: Constants.defaultAsset, assetForFee: assetForFee, message: nil, completion: { (result) in
                 switch result {
                 case .success(let aFee):
                     fee = aFee
@@ -634,7 +626,7 @@ class ECHOInterfaceTests: XCTestCase {
         }
         
         //assert
-        waitForExpectations(timeout: timeout) { error in
+        waitForExpectations(timeout: Constants.timeout) { error in
             XCTAssertNotNil(fee)
             XCTAssertEqual(fee?.asset.id, assetForFee)
         }
@@ -646,14 +638,14 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
         }))
-        let exp = expectation(description: "Fee Getting")
+        let exp = expectation(description: "testGetFeeFailed")
         let fromUser = "dima1 new account unreserved"
-        let toUser = defaultName
+        let toUser = Constants.defaultName
         var userError: Error!
         
         //act
         echo.start { [unowned self] (result) in
-            self.echo.getFeeForTransferOperation(fromNameOrId: fromUser, toNameOrId: toUser, amount: 1, asset: "1.3.0", assetForFee: nil, message: nil, completion: { (result) in
+            self.echo.getFeeForTransferOperation(fromNameOrId: fromUser, toNameOrId: toUser, amount: 1, asset: Constants.defaultAsset, assetForFee: nil, message: nil, completion: { (result) in
                 switch result {
                 case .success(_):
                     XCTFail("Getting fee for transfer with undefining user must fail")
@@ -665,7 +657,7 @@ class ECHOInterfaceTests: XCTestCase {
         }
         
         //assert
-        waitForExpectations(timeout: timeout) { error in
+        waitForExpectations(timeout: Constants.timeout) { error in
             XCTAssertNotNil(userError)
         }
     }
@@ -676,10 +668,10 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
         }))
-        let exp = expectation(description: "Fee For Call Сontract Getting")
-        let registrarNameOrId = defaultName
-        let assetId = "1.3.0"
-        let contratId = counterContract
+        let exp = expectation(description: "testGetFeeForCallContract")
+        let registrarNameOrId = Constants.defaultName
+        let assetId = Constants.defaultAsset
+        let contratId = Constants.counterContract
         let methodName = "incrementCounter"
         let params: [AbiTypeValueInputModel] = []
 
@@ -706,7 +698,7 @@ class ECHOInterfaceTests: XCTestCase {
         }
         
         //assert
-        waitForExpectations(timeout: timeout) { error in
+        waitForExpectations(timeout: Constants.timeout) { error in
             XCTAssertNotNil(fee)
         }
     }
@@ -717,10 +709,10 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
         }))
-        let exp = expectation(description: "Fee For Call Сontract Getting")
-        let registrarNameOrId = defaultName
-        let assetId = "1.3.0"
-        let contratId = counterContract
+        let exp = expectation(description: "testGetFeeForCallContractByCode")
+        let registrarNameOrId = Constants.defaultName
+        let assetId = Constants.defaultAsset
+        let contratId = Constants.counterContract
         let byteCode = "5b34b966"
         
         var fee: AssetAmount!
@@ -745,7 +737,7 @@ class ECHOInterfaceTests: XCTestCase {
         }
         
         //assert
-        waitForExpectations(timeout: timeout) { error in
+        waitForExpectations(timeout: Constants.timeout) { error in
             XCTAssertNotNil(fee)
         }
     }
@@ -756,10 +748,10 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
         }))
-        let exp = expectation(description: "Fee For Call Сontract Getting In AnotherAsset")
-        let registrarNameOrId = defaultName
-        let assetId = defaultAnotherAsset
-        let contratId = counterContract
+        let exp = expectation(description: "testGetFeeForCallContractInAnotherAsset")
+        let registrarNameOrId = Constants.defaultName
+        let assetId = Constants.defaultAnotherAsset
+        let contratId = Constants.counterContract
         let methodName = "incrementCounter"
         let params: [AbiTypeValueInputModel] = []
         
@@ -786,7 +778,7 @@ class ECHOInterfaceTests: XCTestCase {
         }
         
         //assert
-        waitForExpectations(timeout: timeout) { error in
+        waitForExpectations(timeout: Constants.timeout) { error in
             XCTAssertNotNil(fee)
         }
     }
@@ -797,10 +789,10 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
         }))
-        let exp = expectation(description: "Fee For Call Сontract Getting Failed")
+        let exp = expectation(description: "testGetFeeForCallContractFailed")
         let registrarNameOrId = "dima1 new account unreserved"
-        let assetId = "1.3.0"
-        let contratId = counterContract
+        let assetId = Constants.defaultAsset
+        let contratId = Constants.counterContract
         let methodName = "incrementCounter"
         let params: [AbiTypeValueInputModel] = []
         
@@ -827,7 +819,7 @@ class ECHOInterfaceTests: XCTestCase {
         }
         
         //assert
-        waitForExpectations(timeout: timeout) { error in
+        waitForExpectations(timeout: Constants.timeout) { error in
             XCTAssertNotNil(userError)
         }
     }
@@ -838,9 +830,9 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
         }))
-        let exp = expectation(description: "Transfer")
-        let fromUser = defaultName
-        let password = defaultPass
+        let exp = expectation(description: "testTransfer")
+        let fromUser = Constants.defaultName
+        let password = Constants.defaultPass
         let toUser = "vsharaev1"
         var isSuccess = false
         
@@ -851,7 +843,7 @@ class ECHOInterfaceTests: XCTestCase {
                                             passwordOrWif: PassOrWif.password(password),
                                             toNameOrId: toUser,
                                             amount: 1,
-                                            asset: "1.3.0",
+                                            asset: Constants.defaultAsset,
                                             assetForFee: nil,
                                             message: "test",
                                             completion: { (result) in
@@ -867,7 +859,7 @@ class ECHOInterfaceTests: XCTestCase {
         }
         
         //assert
-        waitForExpectations(timeout: timeout) { error in
+        waitForExpectations(timeout: Constants.timeout) { error in
             XCTAssertTrue(isSuccess)
         }
     }
@@ -878,9 +870,9 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
         }))
-        let exp = expectation(description: "Transfer")
-        let fromUser = defaultName
-        let password = defaultPass
+        let exp = expectation(description: "testTransferWithWIF")
+        let fromUser = Constants.defaultName
+        let password = Constants.defaultPass
         let keysContainer = AddressKeysContainer(login: fromUser, password: password, core: CryptoCoreImp())!
         let wif = keysContainer.activeKeychain.wif()
         let toUser = "vsharaev1"
@@ -893,7 +885,7 @@ class ECHOInterfaceTests: XCTestCase {
                                             passwordOrWif: PassOrWif.wif(wif),
                                             toNameOrId: toUser,
                                             amount: 1,
-                                            asset: "1.3.0",
+                                            asset: Constants.defaultAsset,
                                             assetForFee: nil,
                                             message: "test",
                                             completion: { (result) in
@@ -909,7 +901,7 @@ class ECHOInterfaceTests: XCTestCase {
         }
         
         //assert
-        waitForExpectations(timeout: timeout) { error in
+        waitForExpectations(timeout: Constants.timeout) { error in
             XCTAssertTrue(isSuccess)
         }
     }
@@ -920,9 +912,9 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
         }))
-        let exp = expectation(description: "Transfer")
-        let fromUser = defaultName
-        let password = defaultPass
+        let exp = expectation(description: "testTransferWithAssetForFee")
+        let fromUser = Constants.defaultName
+        let password = Constants.defaultPass
         let toUser = "vsharaev1"
         var isSuccess = false
 
@@ -932,8 +924,8 @@ class ECHOInterfaceTests: XCTestCase {
                                             passwordOrWif: PassOrWif.password(password),
                                             toNameOrId: toUser,
                                             amount: 1,
-                                            asset: "1.3.0",
-                                            assetForFee: self.defaultAnotherAsset,
+                                            asset: Constants.defaultAsset,
+                                            assetForFee: Constants.defaultAnotherAsset,
                                             message: nil,
                                             completion: { (result) in
                 switch result {
@@ -949,7 +941,7 @@ class ECHOInterfaceTests: XCTestCase {
         }
 
         //assert
-        waitForExpectations(timeout: timeout) { error in
+        waitForExpectations(timeout: Constants.timeout) { error in
             XCTAssertTrue(isSuccess)
         }
     }
@@ -960,9 +952,9 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
         }))
-        let exp = expectation(description: "Transfer")
-        let fromUser = defaultName
-        let password = defaultPass
+        let exp = expectation(description: "testTransferWithAssetForFeeWithWIF")
+        let fromUser = Constants.defaultName
+        let password = Constants.defaultPass
         let keysContainer = AddressKeysContainer(login: fromUser, password: password, core: CryptoCoreImp())!
         let wif = keysContainer.activeKeychain.wif()
         let toUser = "vsharaev1"
@@ -974,8 +966,8 @@ class ECHOInterfaceTests: XCTestCase {
                                             passwordOrWif: PassOrWif.wif(wif),
                                             toNameOrId: toUser,
                                             amount: 1,
-                                            asset: "1.3.0",
-                                            assetForFee: self.defaultAnotherAsset,
+                                            asset: Constants.defaultAsset,
+                                            assetForFee: Constants.defaultAnotherAsset,
                                             message: nil,
                                             completion: { (result) in
                 switch result {
@@ -991,7 +983,7 @@ class ECHOInterfaceTests: XCTestCase {
         }
         
         //assert
-        waitForExpectations(timeout: timeout) { error in
+        waitForExpectations(timeout: Constants.timeout) { error in
             XCTAssertTrue(isSuccess)
         }
     }
@@ -1002,9 +994,9 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
         }))
-        let exp = expectation(description: "Transfer")
+        let exp = expectation(description: "testFailedTransfer")
         let password = "wrongPassword"
-        let fromUser = defaultName
+        let fromUser = Constants.defaultName
         let toUser = "vsharaev1"
         var isSuccess = false
         
@@ -1015,7 +1007,7 @@ class ECHOInterfaceTests: XCTestCase {
                                             passwordOrWif: PassOrWif.password(password),
                                             toNameOrId: toUser,
                                             amount: 1,
-                                            asset: "1.3.0",
+                                            asset: Constants.defaultAsset,
                                             assetForFee: nil,
                                             message: "",
                                             completion: { (result) in
@@ -1030,7 +1022,7 @@ class ECHOInterfaceTests: XCTestCase {
         }
         
         //assert
-        waitForExpectations(timeout: timeout) { error in
+        waitForExpectations(timeout: Constants.timeout) { error in
             XCTAssertFalse(isSuccess)
         }
     }
@@ -1041,9 +1033,9 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
         }))
-        let exp = expectation(description: "Transfer")
+        let exp = expectation(description: "testFailedTransferWithWif")
         let password = "wrongPassword"
-        let fromUser = defaultName
+        let fromUser = Constants.defaultName
         let keysContainer = AddressKeysContainer(login: fromUser, password: password, core: CryptoCoreImp())!
         let wif = keysContainer.activeKeychain.wif()
         let toUser = "vsharaev1"
@@ -1056,7 +1048,7 @@ class ECHOInterfaceTests: XCTestCase {
                                             passwordOrWif: PassOrWif.wif(wif),
                                             toNameOrId: toUser,
                                             amount: 1,
-                                            asset: "1.3.0",
+                                            asset: Constants.defaultAsset,
                                             assetForFee: nil,
                                             message: "",
                                             completion: { (result) in
@@ -1071,7 +1063,7 @@ class ECHOInterfaceTests: XCTestCase {
         }
         
         //assert
-        waitForExpectations(timeout: timeout) { error in
+        waitForExpectations(timeout: Constants.timeout) { error in
             XCTAssertFalse(isSuccess)
         }
     }
@@ -1082,8 +1074,8 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
         }))
-        let exp = expectation(description: "Getting Asset")
-        let assetsIds = ["1.3.0", "1.3.1"]
+        let exp = expectation(description: "testGetAssets")
+        let assetsIds = [Constants.defaultAsset, "1.3.1"]
         var assets: [Asset] = []
         
         //act
@@ -1100,7 +1092,7 @@ class ECHOInterfaceTests: XCTestCase {
         }
         
         //assert
-        waitForExpectations(timeout: timeout) { error in
+        waitForExpectations(timeout: Constants.timeout) { error in
             XCTAssertEqual(assets.count, assetsIds.count)
         }
     }
@@ -1111,7 +1103,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
         }))
-        let exp = expectation(description: "Getting Asset")
+        let exp = expectation(description: "testFailedGetAssets")
         let assetsIds = ["2.3.0", "2.3.2"]
         var error: ECHOError = ECHOError.undefined
 
@@ -1130,7 +1122,7 @@ class ECHOInterfaceTests: XCTestCase {
         }
         
         //assert
-        waitForExpectations(timeout: timeout) { _ in
+        waitForExpectations(timeout: Constants.timeout) { _ in
             XCTAssertEqual(error, ECHOError.identifier(.asset))
         }
     }
@@ -1141,7 +1133,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
         }))
-        let exp = expectation(description: "Getting list Asset")
+        let exp = expectation(description: "testGetListAssets")
         let lowerBound = "ECHO"
         let limit = 10
         var assets: [Asset] = []
@@ -1160,7 +1152,7 @@ class ECHOInterfaceTests: XCTestCase {
         }
         
         //assert
-        waitForExpectations(timeout: timeout) { error in
+        waitForExpectations(timeout: Constants.timeout) { error in
             XCTAssertTrue(assets.count > 0 && assets.count <= limit)
         }
     }
@@ -1171,7 +1163,7 @@ class ECHOInterfaceTests: XCTestCase {
 //        echo = ECHO(settings: Settings(build: {
 //            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
 //        }))
-//        let exp = expectation(description: "Create asset")
+//        let exp = expectation(description: "testCreateAsset")
 //        var asset = Asset("")
 //        asset.symbol = "VSHAR"
 //        asset.precision = 4
@@ -1181,7 +1173,7 @@ class ECHOInterfaceTests: XCTestCase {
 ////                                                  forceSettlementDelaySec: 86400,
 ////                                                  forceSettlementOffsetPercent: 100,
 ////                                                  maximumForceSettlementVolume: 2000,
-////                                                  shortBackingAsset: "1.3.0"))
+////                                                  shortBackingAsset: Constants.defaultAsset))
 //        asset.predictionMarket = false
 //
 //        asset.options = AssetOptions(maxSupply: 10000000,
@@ -1189,10 +1181,10 @@ class ECHOInterfaceTests: XCTestCase {
 //                                     maxMarketFee: 0,
 //                                     issuerPermissions: AssetOptionIssuerPermissions.committeeFedAsset.rawValue,
 //                                     flags: AssetOptionIssuerPermissions.committeeFedAsset.rawValue,
-//                                     coreExchangeRate: Price(base: AssetAmount(amount: 1, asset: Asset("1.3.0")), quote: AssetAmount(amount: 1, asset: Asset("1.3.1"))),
+//                                     coreExchangeRate: Price(base: AssetAmount(amount: 1, asset: Asset(Constants.defaultAsset)), quote: AssetAmount(amount: 1, asset: Asset("1.3.1"))),
 //                                     description: "description")
-//        let nameOrId = defaultName
-//        let password = defaultPass
+//        let nameOrId = Constants.defaultName
+//        let password = Constants.defaultPass
 //        var success: Bool!
 //
 //        //act
@@ -1212,7 +1204,7 @@ class ECHOInterfaceTests: XCTestCase {
 //        }
 //
 //        //assert
-//        waitForExpectations(timeout: timeout) { error in
+//        waitForExpectations(timeout: Constants.timeout) { error in
 //            XCTAssertTrue(success)
 //        }
 //    }
@@ -1222,10 +1214,10 @@ class ECHOInterfaceTests: XCTestCase {
 //        echo = ECHO(settings: Settings(build: {
 //            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
 //        }))
-//        let exp = expectation(description: "Issue asset")
+//        let exp = expectation(description: "testIssueAsset")
 //
-//        let nameOrId = defaultName
-//        let password = defaultPass
+//        let nameOrId = Constants.defaultName
+//        let password = Constants.defaultPass
 //        var success: Bool!
 //
 //        //act
@@ -1235,7 +1227,7 @@ class ECHOInterfaceTests: XCTestCase {
 //                                 passwordOrWif: PassOrWif.password(password),
 //                                 asset: "1.3.20",
 //                                 amount: 10000000,
-//                                 destinationIdOrName: self.defaultName,
+//                                 destinationIdOrName: Constants.defaultName,
 //                                 message: nil, completion: { (result) in
 //
 //                switch result {
@@ -1249,7 +1241,7 @@ class ECHOInterfaceTests: XCTestCase {
 //        }
 //
 //        //assert
-//        waitForExpectations(timeout: timeout) { error in
+//        waitForExpectations(timeout: Constants.timeout) { error in
 //            XCTAssertTrue(success)
 //        }
 //    }
@@ -1260,10 +1252,10 @@ class ECHOInterfaceTests: XCTestCase {
 //        echo = ECHO(settings: Settings(build: {
 //            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
 //        }))
-//        let exp = expectation(description: "Change password")
-//        let userName = defaultName
-//        let password = defaultName
-//        let newPassword = defaultPass
+//        let exp = expectation(description: "testChangePassword")
+//        let userName = Constants.defaultName
+//        let password = Constants.defaultName
+//        let newPassword = Constants.defaultPass
 //        var success: Bool!
 //
 //        //act
@@ -1280,7 +1272,7 @@ class ECHOInterfaceTests: XCTestCase {
 //        }
 //
 //        //assert
-//        waitForExpectations(timeout: timeout) { error in
+//        waitForExpectations(timeout: Constants.timeout) { error in
 //            XCTAssertTrue(success)
 //        }
 //    }
@@ -1291,7 +1283,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
         }))
-        let exp = expectation(description: "Getting contract")
+        let exp = expectation(description: "testGetContractResult")
         let contractResultId = "1.17.362"
         var contractResult: ContractResultEVM!
         
@@ -1314,7 +1306,7 @@ class ECHOInterfaceTests: XCTestCase {
         }
         
         //assert
-        waitForExpectations(timeout: timeout) { error in
+        waitForExpectations(timeout: Constants.timeout) { error in
             XCTAssertNotNil(contractResult)
         }
     }
@@ -1326,7 +1318,7 @@ class ECHOInterfaceTests: XCTestCase {
 //        echo = ECHO(settings: Settings(build: {
 //            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
 //        }))
-//        let exp = expectation(description: "Getting contract")
+//        let exp = expectation(description: "testGetx86ContractResult")
 //        let contractResultId = "1.17.0"
 //        var contractResult: ContractResultx86!
 //
@@ -1349,7 +1341,7 @@ class ECHOInterfaceTests: XCTestCase {
 //        }
 //
 //        //assert
-//        waitForExpectations(timeout: timeout) { error in
+//        waitForExpectations(timeout: Constants.timeout) { error in
 //            XCTAssertNotNil(contractResult)
 //        }
 //    }
@@ -1360,7 +1352,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
         }))
-        let exp = expectation(description: "Fail getting contract")
+        let exp = expectation(description: "testFailGetContractResult")
         let contractResultId = "3.17.2"
         var error: ECHOError = ECHOError.undefined
 
@@ -1378,7 +1370,7 @@ class ECHOInterfaceTests: XCTestCase {
         }
         
         //assert
-        waitForExpectations(timeout: timeout) { _ in
+        waitForExpectations(timeout: Constants.timeout) { _ in
             XCTAssertNotEqual(error, ECHOError.undefined)
         }
     }
@@ -1389,8 +1381,8 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
         }))
-        let exp = expectation(description: "Getting contract logs")
-        let contractId = logsContract
+        let exp = expectation(description: "testGetContractLogs")
+        let contractId = Constants.logsContract
         let fromBlock = 62102
         let toBlock = 62103
         var contractLogs: [ContractLog]!
@@ -1410,7 +1402,7 @@ class ECHOInterfaceTests: XCTestCase {
         }
         
         //assert
-        waitForExpectations(timeout: timeout) { error in
+        waitForExpectations(timeout: Constants.timeout) { error in
             XCTAssertNotNil(contractLogs)
             XCTAssertEqual(contractLogs.count, 2)
         }
@@ -1422,7 +1414,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
         }))
-        let exp = expectation(description: "Getting contract logs")
+        let exp = expectation(description: "testFailGetContractLogs")
         let contractId = "1.13.1880"
         let fromBlock = 53500
         let toBlock = 53580
@@ -1444,7 +1436,7 @@ class ECHOInterfaceTests: XCTestCase {
         }
         
         //assert
-        waitForExpectations(timeout: timeout) { _ in
+        waitForExpectations(timeout: Constants.timeout) { _ in
             XCTAssertNotEqual(error, ECHOError.undefined)
         }
     }
@@ -1455,7 +1447,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
         }))
-        let exp = expectation(description: "Getting contracts")
+        let exp = expectation(description: "testGetAllContracts")
         var contracts: [ContractInfo] = []
         
         //act
@@ -1472,7 +1464,7 @@ class ECHOInterfaceTests: XCTestCase {
         }
         
         //assert
-        waitForExpectations(timeout: timeout) { error in
+        waitForExpectations(timeout: Constants.timeout) { error in
             XCTAssertTrue(contracts.count > 0)
         }
     }
@@ -1483,8 +1475,8 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
         }))
-        let exp = expectation(description: "Getting contracts")
-        let legalContractId = counterContract
+        let exp = expectation(description: "testGetContracts")
+        let legalContractId = Constants.counterContract
         let contractsIDs = [legalContractId]
         var contracts: [ContractInfo] = []
 
@@ -1502,7 +1494,7 @@ class ECHOInterfaceTests: XCTestCase {
         }
         
         //assert
-        waitForExpectations(timeout: timeout) { error in
+        waitForExpectations(timeout: Constants.timeout) { error in
             XCTAssertTrue(contracts.count == 1)
         }
     }
@@ -1513,7 +1505,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
         }))
-        let exp = expectation(description: "Getting contracts")
+        let exp = expectation(description: "testFailGetContracts")
         let illegalContractId = "3.16.1"
         let contractsIDs = [illegalContractId]
         var error: ECHOError = ECHOError.undefined
@@ -1532,7 +1524,7 @@ class ECHOInterfaceTests: XCTestCase {
         }
         
         //assert
-        waitForExpectations(timeout: timeout) { _ in
+        waitForExpectations(timeout: Constants.timeout) { _ in
             XCTAssertNotEqual(error, ECHOError.undefined)
         }
     }
@@ -1543,8 +1535,8 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
         }))
-        let exp = expectation(description: "Getting contracts")
-        let legalContractId = counterContract
+        let exp = expectation(description: "testGetContract")
+        let legalContractId = Constants.counterContract
         var contract: ContractStructEVM!
         
         //act
@@ -1566,7 +1558,7 @@ class ECHOInterfaceTests: XCTestCase {
         }
         
         //assert
-        waitForExpectations(timeout: timeout) { error in
+        waitForExpectations(timeout: Constants.timeout) { error in
             XCTAssertNotNil(contract)
         }
     }
@@ -1578,7 +1570,7 @@ class ECHOInterfaceTests: XCTestCase {
 //        echo = ECHO(settings: Settings(build: {
 //            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
 //        }))
-//        let exp = expectation(description: "Getting contracts")
+//        let exp = expectation(description: "testGetx86Contract")
 //        let legalContractId = "1.16.0"
 //        var contract: ContractStructx86!
 //
@@ -1601,7 +1593,7 @@ class ECHOInterfaceTests: XCTestCase {
 //        }
 //
 //        //assert
-//        waitForExpectations(timeout: timeout) { error in
+//        waitForExpectations(timeout: Constants.timeout) { error in
 //            XCTAssertNotNil(contract)
 //        }
 //    }
@@ -1612,7 +1604,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
         }))
-        let exp = expectation(description: "Getting contracts")
+        let exp = expectation(description: "testFailGetContract")
         let illegalContractId = "3.16.1"
         var error: ECHOError = ECHOError.undefined
         
@@ -1630,7 +1622,7 @@ class ECHOInterfaceTests: XCTestCase {
         }
         
         //assert
-        waitForExpectations(timeout: timeout) { _ in
+        waitForExpectations(timeout: Constants.timeout) { _ in
             XCTAssertEqual(error, ECHOError.identifier(.contract))
         }
     }
@@ -1641,16 +1633,16 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .accountHistory]
         }))
-        let exp = expectation(description: "Creating contract")
+        let exp = expectation(description: "testCreateContract")
         let byteCode =  "6080604052348015600f57600080fd5b5061010b8061001f6000396000f300608060405260043610603f576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806329e99f07146044575b600080fd5b348015604f57600080fd5b50606c60048036038101908080359060200190929190505050606e565b005b7fa7659801d76e732d0b4c81221c99e5cf387816232f81f4ff646ba0653d65507a436040518082815260200191505060405180910390a17fa7659801d76e732d0b4c81221c99e5cf387816232f81f4ff646ba0653d65507a816040518082815260200191505060405180910390a1505600a165627a7a7230582044c4962adfce34c7d04f94696d140e8aadb29426be2d9968949d5cffc4cd43560029"
         var success = false
 
         //act
         echo.start { [unowned self] (result) in
 
-            self.echo.createContract(registrarNameOrId: self.defaultName,
-                                     passwordOrWif: PassOrWif.password(self.defaultPass),
-                                     assetId: "1.3.0",
+            self.echo.createContract(registrarNameOrId: Constants.defaultName,
+                                     passwordOrWif: PassOrWif.password(Constants.defaultPass),
+                                     assetId: Constants.defaultAsset,
                                      assetForFee: nil,
                                      byteCode: byteCode,
                                      supportedAssetId: nil,
@@ -1670,7 +1662,7 @@ class ECHOInterfaceTests: XCTestCase {
         }
 
         //assert
-        waitForExpectations(timeout: timeout) { error in
+        waitForExpectations(timeout: Constants.timeout) { error in
             XCTAssertTrue(success)
         }
     }
@@ -1681,16 +1673,16 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .accountHistory]
         }))
-        let exp = expectation(description: "Creating contract")
+        let exp = expectation(description: "testCreateContractByCode")
         let byteCode =  "6080604052348015600f57600080fd5b5061010b8061001f6000396000f300608060405260043610603f576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806329e99f07146044575b600080fd5b348015604f57600080fd5b50606c60048036038101908080359060200190929190505050606e565b005b7fa7659801d76e732d0b4c81221c99e5cf387816232f81f4ff646ba0653d65507a436040518082815260200191505060405180910390a17fa7659801d76e732d0b4c81221c99e5cf387816232f81f4ff646ba0653d65507a816040518082815260200191505060405180910390a1505600a165627a7a7230582044c4962adfce34c7d04f94696d140e8aadb29426be2d9968949d5cffc4cd43560029"
         var success = false
         
         //act
         echo.start { [unowned self] (result) in
             
-            self.echo.createContract(registrarNameOrId: self.defaultName,
-                                     passwordOrWif: PassOrWif.password(self.defaultPass),
-                                     assetId: "1.3.0",
+            self.echo.createContract(registrarNameOrId: Constants.defaultName,
+                                     passwordOrWif: PassOrWif.password(Constants.defaultPass),
+                                     assetId: Constants.defaultAsset,
                                      assetForFee: nil,
                                      byteCode: byteCode,
                                      supportedAssetId: nil,
@@ -1709,7 +1701,7 @@ class ECHOInterfaceTests: XCTestCase {
         }
         
         //assert
-        waitForExpectations(timeout: timeout) { error in
+        waitForExpectations(timeout: Constants.timeout) { error in
             XCTAssertTrue(success)
         }
     }
@@ -1720,7 +1712,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .accountHistory]
         }))
-        let exp = expectation(description: "Creating contract")
+        let exp = expectation(description: "testCreateContractWithWIF")
         let byteCode =  "6080604052348015600f57600080fd5b5061010b8061001f6000396000f300608060405260043610603f576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806329e99f07146044575b600080fd5b348015604f57600080fd5b50606c60048036038101908080359060200190929190505050606e565b005b7fa7659801d76e732d0b4c81221c99e5cf387816232f81f4ff646ba0653d65507a436040518082815260200191505060405180910390a17fa7659801d76e732d0b4c81221c99e5cf387816232f81f4ff646ba0653d65507a816040518082815260200191505060405180910390a1505600a165627a7a7230582044c4962adfce34c7d04f94696d140e8aadb29426be2d9968949d5cffc4cd43560029"
         var success = false
         
@@ -1730,9 +1722,9 @@ class ECHOInterfaceTests: XCTestCase {
         //act
         echo.start { [unowned self] (result) in
             
-            self.echo.createContract(registrarNameOrId: self.defaultName,
+            self.echo.createContract(registrarNameOrId: Constants.defaultName,
                                      passwordOrWif: PassOrWif.wif(wif),
-                                     assetId: "1.3.0",
+                                     assetId: Constants.defaultAsset,
                                      assetForFee: nil,
                                      byteCode: byteCode,
                                      supportedAssetId: nil,
@@ -1752,7 +1744,7 @@ class ECHOInterfaceTests: XCTestCase {
         }
         
         //assert
-        waitForExpectations(timeout: timeout) { error in
+        waitForExpectations(timeout: Constants.timeout) { error in
             XCTAssertTrue(success)
         }
     }
@@ -1763,10 +1755,10 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
         }))
-        let exp = expectation(description: "Query contract")
-        let registrarNameOrId = defaultName
-        let assetId = "1.3.0"
-        let contratId = counterContract
+        let exp = expectation(description: "testQueryContract")
+        let registrarNameOrId = Constants.defaultName
+        let assetId = Constants.defaultAsset
+        let contratId = Constants.counterContract
         let methodName = "getCount"
         let params = [AbiTypeValueInputModel]()
         var query: String!
@@ -1786,7 +1778,7 @@ class ECHOInterfaceTests: XCTestCase {
         }
 
         //assert
-        waitForExpectations(timeout: timeout) { error in
+        waitForExpectations(timeout: Constants.timeout) { error in
             XCTAssertNotNil(query)
         }
     }
@@ -1797,10 +1789,10 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
         }))
-        let exp = expectation(description: "Query contract")
-        let registrarNameOrId = defaultName
-        let assetId = "1.3.0"
-        let contratId = counterContract
+        let exp = expectation(description: "testQueryContractByCode")
+        let registrarNameOrId = Constants.defaultName
+        let assetId = Constants.defaultAsset
+        let contratId = Constants.counterContract
         let byteCode = "a87d942c"
         var query: String!
         
@@ -1822,7 +1814,7 @@ class ECHOInterfaceTests: XCTestCase {
         }
         
         //assert
-        waitForExpectations(timeout: timeout) { error in
+        waitForExpectations(timeout: Constants.timeout) { error in
             XCTAssertNotNil(query)
         }
     }
@@ -1833,11 +1825,11 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
         }))
-        let exp = expectation(description: "Call contract")
-        let registrarNameOrId = defaultName
-        let password = defaultPass
-        let assetId = "1.3.0"
-        let contratId = counterContract
+        let exp = expectation(description: "testCallContract")
+        let registrarNameOrId = Constants.defaultName
+        let password = Constants.defaultPass
+        let assetId = Constants.defaultAsset
+        let contratId = Constants.counterContract
         let methodName = "incrementCounter"
         let params: [AbiTypeValueInputModel] = []
         var success = false
@@ -1868,7 +1860,7 @@ class ECHOInterfaceTests: XCTestCase {
         }
 
         //assert
-        waitForExpectations(timeout: timeout) { error in
+        waitForExpectations(timeout: Constants.timeout) { error in
             XCTAssertTrue(success)
         }
     }
@@ -1879,11 +1871,11 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
         }))
-        let exp = expectation(description: "Call contract")
-        let registrarNameOrId = defaultName
-        let password = defaultPass
-        let assetId = "1.3.0"
-        let contratId = counterContract
+        let exp = expectation(description: "testCallContractByCode")
+        let registrarNameOrId = Constants.defaultName
+        let password = Constants.defaultPass
+        let assetId = Constants.defaultAsset
+        let contratId = Constants.counterContract
         let byteCode = "5b34b966"
         var success = false
         
@@ -1912,7 +1904,7 @@ class ECHOInterfaceTests: XCTestCase {
         }
         
         //assert
-        waitForExpectations(timeout: timeout) { error in
+        waitForExpectations(timeout: Constants.timeout) { error in
             XCTAssertTrue(success)
         }
     }
@@ -1923,13 +1915,13 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
         }))
-        let exp = expectation(description: "Call contract")
-        let registrarNameOrId = defaultName
-        let password = defaultPass
+        let exp = expectation(description: "testCallContractWithWIF")
+        let registrarNameOrId = Constants.defaultName
+        let password = Constants.defaultPass
         let keysContainer = AddressKeysContainer(login: registrarNameOrId, password: password, core: CryptoCoreImp())!
         let wif = keysContainer.activeKeychain.wif()
-        let assetId = "1.3.0"
-        let contratId = counterContract
+        let assetId = Constants.defaultAsset
+        let contratId = Constants.counterContract
         let methodName = "incrementCounter"
         let params: [AbiTypeValueInputModel] = []
         var success = false
@@ -1960,7 +1952,7 @@ class ECHOInterfaceTests: XCTestCase {
         }
         
         //assert
-        waitForExpectations(timeout: timeout) { error in
+        waitForExpectations(timeout: Constants.timeout) { error in
             XCTAssertTrue(success)
         }
     }
@@ -1972,9 +1964,9 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
         }))
-        let exp = expectation(description: "Account Getting")
+        let exp = expectation(description: "testCustomGetUser")
         var account: UserAccount?
-        let accountName = defaultName
+        let accountName = Constants.defaultName
         let accountsIds = [accountName]
         
         let operation = CustomGetFullAccountSocketOperation(accountsIds: accountsIds) { (result) in
@@ -1994,7 +1986,7 @@ class ECHOInterfaceTests: XCTestCase {
         }
         
         //assert
-        waitForExpectations(timeout: timeout) { error in
+        waitForExpectations(timeout: Constants.timeout) { error in
             XCTAssertEqual(account?.account.name, accountName)
         }
     }
@@ -2006,7 +1998,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
         }))
-        let exp = expectation(description: "Account Getting")
+        let exp = expectation(description: "testCustomGetUserFailed")
         var account: UserAccount?
         let accountName = "vsharaev new account unreserved"
         let accountsIds = [accountName]
@@ -2035,7 +2027,7 @@ class ECHOInterfaceTests: XCTestCase {
         }
         
         //assert
-        waitForExpectations(timeout: timeout) { error in
+        waitForExpectations(timeout: Constants.timeout) { error in
             XCTAssertNotNil(errorMessage)
         }
     }
@@ -2046,7 +2038,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
         }))
-        let exp = expectation(description: "Get global properties")
+        let exp = expectation(description: "testGetGlobalProperties")
         var properties: GlobalProperties?
         
         //act
@@ -2063,7 +2055,7 @@ class ECHOInterfaceTests: XCTestCase {
         }
         
         //assert
-        waitForExpectations(timeout: timeout) { error in
+        waitForExpectations(timeout: Constants.timeout) { error in
             XCTAssertNotNil(properties)
         }
     }
@@ -2074,8 +2066,8 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
         }))
-        let exp = expectation(description: "Get sidechain transfers")
-        let address = ethAddress
+        let exp = expectation(description: "testGetSidechainTransfers")
+        let address = Constants.defaultETHAddress
         var transfers: [SidechainTransfer]?
         
         //act
@@ -2092,7 +2084,7 @@ class ECHOInterfaceTests: XCTestCase {
         }
         
         //assert
-        waitForExpectations(timeout: timeout) { error in
+        waitForExpectations(timeout: Constants.timeout) { error in
             XCTAssertNotNil(transfers)
             XCTAssertTrue(transfers!.count > 0)
         }
@@ -2104,7 +2096,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
         }))
-        let exp = expectation(description: "Get object sidechain transfers")
+        let exp = expectation(description: "testGetObjectForSidechainTransfer")
         let identifier = "1.19.0"
         var transfer: SidechainTransfer?
         
@@ -2123,7 +2115,7 @@ class ECHOInterfaceTests: XCTestCase {
         }
         
         //assert
-        waitForExpectations(timeout: timeout) { error in
+        waitForExpectations(timeout: Constants.timeout) { error in
             XCTAssertNotNil(transfer)
         }
     }

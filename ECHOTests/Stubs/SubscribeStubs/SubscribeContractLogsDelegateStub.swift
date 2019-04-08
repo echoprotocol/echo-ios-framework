@@ -33,7 +33,8 @@ class SubscribeContractLogsDelegateStub: SubscribeContractLogsDelegate {
             let values = try? interpretator.getValueTypes(string: log.address, outputs: outputs)
             
             guard let contractIdLastPart = values?[safe: 0]?.value as? String else {
-                return                }
+                return                
+            }
             
             let idString = ObjectType.contract.getFullObjectIdByLastPart(contractIdLastPart)
             if idString != contractId {

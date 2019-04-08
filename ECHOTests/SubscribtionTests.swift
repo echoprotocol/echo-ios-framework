@@ -34,19 +34,23 @@ class SubscribtionTests: XCTestCase {
         let delegate = SubscribeAccountDelegateStub()
         strongDelegate = delegate
         let exp = expectation(description: "Delegate Call")
-        let username = "1.2.22"
+        let username = "1.2.33"
         
         //act
         echo.start { [unowned self] (result) in
-            print(result)
             self.echo.subscribeToAccount(nameOrId: username, delegate: delegate)
-            messenger.makeUserAccountChangePasswordEvent()
-            exp.fulfill()
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
+                messenger.makeUserAccountTransferChangeEvent()
+                DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
+                    exp.fulfill()
+                }
+            }
         }
         
         //assert
         waitForExpectations(timeout: timeout) { error in
-            XCTAssertEqual(delegate.delegateEvents, 1)
+            XCTAssertEqual(delegate.delegateEvents, 3)
         }
     }
     
@@ -57,7 +61,7 @@ class SubscribtionTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.socketMessenger = messenger
         }))
-        let userName = "vsharaev"
+        let userName = "1.2.33"
         
         strongDelegate = SubscribeAccountDelegateStub()
         weak var delegate = strongDelegate
@@ -67,39 +71,16 @@ class SubscribtionTests: XCTestCase {
         //act
         echo.start { [unowned self] (result) in
             self.echo.subscribeToAccount(nameOrId: userName, delegate: self.strongDelegate!)
-            self.strongDelegate = nil
-            exp.fulfill()
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
+                self.strongDelegate = nil
+                exp.fulfill()
+            }
         }
 
         //assert
-        waitForExpectations(timeout: 1) { [weak delegate] error in
+        waitForExpectations(timeout: timeout) { [weak delegate] error in
             XCTAssertNil(delegate, "Delegate must be released")
-        }
-    }
-    
-    func testSubscribe2() {
-        
-        //arrange
-        let messenger = SocketMessengerStub(state: .subscribeToAccount)
-        echo = ECHO(settings: Settings(build: {
-            $0.socketMessenger = messenger
-        }))
-        let userName = "1.2.22"
-        let delegate = SubscribeAccountDelegateStub()
-        strongDelegate = delegate
-        let exp = expectation(description: "Delegate Call")
-        
-        
-        //act
-        echo.start { [unowned self] (result) in
-            self.echo.subscribeToAccount(nameOrId: userName, delegate: delegate)
-            messenger.makeUserAccountTransferChangeEvent()
-            exp.fulfill()
-        }
-        
-        //assert
-        waitForExpectations(timeout: timeout) { error in
-            XCTAssertEqual(delegate.delegateEvents, 2)
         }
     }
     
@@ -159,8 +140,9 @@ class SubscribtionTests: XCTestCase {
     func testSubscribeContractLogs() {
         
         //arrange
+        let messenger = SocketMessengerStub(state: .subscribeToConsractLogs)
         echo = ECHO(settings: Settings(build: {
-            $0.apiOptions = [.database, .networkBroadcast, .accountHistory]
+            $0.socketMessenger = messenger
         }))
         
         // Logs
@@ -168,13 +150,7 @@ class SubscribtionTests: XCTestCase {
         let delegate = SubscribeContractLogsDelegateStub(exp: exp)
         strongContractLogDelegate = delegate
         
-        // Call for change logs
-        let registrarNameOrId = "vsharaev"
-        let password = "vsharaev"
-        let assetId = "1.3.0"
-        let contratId = "1.16.141"
-        let methodName = "test"
-        let params: [AbiTypeValueInputModel] = [AbiTypeValueInputModel(type: .uint(size: 256), value: "1")]
+        let contratId = "1.16.804"
         
         //act
         echo.start { [unowned self] (result) in
@@ -182,23 +158,12 @@ class SubscribtionTests: XCTestCase {
             delegate.addSubscribe(contractId: contratId)
             self.echo.subscribeToContractLogs(contractId: contratId, delegate: delegate)
             
-            self.echo.callContract(registrarNameOrId: registrarNameOrId,
-                                   passwordOrWif: PassOrWif.password(password),
-                                   assetId: assetId,
-                                   amount: nil,
-                                   assetForFee: nil,
-                                   contratId: contratId,
-                                   methodName: methodName,
-                                   methodParams: params,
-                                   completion: { (result) in
-                                    
-                switch result {
-                case .success(_):
-                    print("Logs must be changed")
-                case .failure(let error):
-                    XCTFail("Change logs cant fail \(error)")
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
+                messenger.makeContractLogCreateEvent()
+                DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
+                    exp.fulfill()
                 }
-            }, noticeHandler: nil)
+            }
         }
         
         //assert
