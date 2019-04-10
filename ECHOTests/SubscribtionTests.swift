@@ -54,36 +54,6 @@ class SubscribtionTests: XCTestCase {
         }
     }
     
-    func testUnretainedSubscribe() {
-        
-        //arrange
-        let messenger = SocketMessengerStub(state: .subscribeToAccount)
-        echo = ECHO(settings: Settings(build: {
-            $0.socketMessenger = messenger
-        }))
-        let userName = "1.2.33"
-        
-        strongDelegate = SubscribeAccountDelegateStub()
-        weak var delegate = strongDelegate
-
-        let exp = expectation(description: "Delegate Call")
-        
-        //act
-        echo.start { [unowned self] (result) in
-            self.echo.subscribeToAccount(nameOrId: userName, delegate: self.strongDelegate!)
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
-                self.strongDelegate = nil
-                exp.fulfill()
-            }
-        }
-
-        //assert
-        waitForExpectations(timeout: timeout) { [weak delegate] error in
-            XCTAssertNil(delegate, "Delegate must be released")
-        }
-    }
-    
     func testUnsubscribe() {
         
         //arrange
