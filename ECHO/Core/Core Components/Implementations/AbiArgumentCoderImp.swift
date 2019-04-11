@@ -126,6 +126,11 @@ extension Decoder {
                                    _ type: AbiParameterType,
                                    _ decodedOutputs: inout [AbiTypeValueOutputModel]) throws {
         
+        if data.bytes.first == 1 {
+            try decodeContractAddress(data, sliceIndex, .contractAddress, &decodedOutputs)
+            return
+        }
+        
         let start = sliceSize * sliceIndex
         var end = start + sliceSize
         
