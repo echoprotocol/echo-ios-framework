@@ -126,11 +126,6 @@ extension Decoder {
                                    _ type: AbiParameterType,
                                    _ decodedOutputs: inout [AbiTypeValueOutputModel]) throws {
         
-        if data.bytes.first == 1 {
-            try decodeContractAddress(data, sliceIndex, .contractAddress, &decodedOutputs)
-            return
-        }
-        
         let start = sliceSize * sliceIndex
         var end = start + sliceSize
         
@@ -138,7 +133,21 @@ extension Decoder {
             end = start + addressSize
         }
         
-        guard let btcNumber = BTCBigNumber(unsignedBigEndian: data[safe: start..<end]) else {
+        guard var addressData = data[safe: start..<end] else {
+            let error = NSError(domain: "", code: 0, userInfo: nil)
+            throw error
+        }
+        
+        if addressData.count == sliceSize {
+            addressData.removeFirst(sliceSize - addressSize)
+        }
+        
+        if addressData.bytes.first == 1 {
+            try decodeContractAddress(data, sliceIndex, .contractAddress, &decodedOutputs)
+            return
+        }
+        
+        guard let btcNumber = BTCBigNumber(unsignedBigEndian: addressData) else {
             let error = NSError(domain: "", code: 0, userInfo: nil)
             throw error
         }
