@@ -2,6 +2,24 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NODE_URL</key>
+	<string>$(NODE_URL)</string>
+	<key>TIMEOUT</key>
+	<string>$(TIMEOUT)</string>
+	<key>COUNTER_CONTRACT</key>
+	<string>$(COUNTER_CONTRACT)</string>
+	<key>LOGS_CONTRACT</key>
+	<string>$(LOGS_CONTRACT)</string>
+	<key>DEFAULT_NAME</key>
+	<string>$(DEFAULT_NAME)</string>
+	<key>DEFAULT_PASS</key>
+	<string>$(DEFAULT_PASS)</string>
+	<key>DEFAULT_ASSET</key>
+	<string>$(DEFAULT_ASSET)</string>
+	<key>DEFAULT_ANOTHER_ASSET</key>
+	<string>$(DEFAULT_ANOTHER_ASSET)</string>
+	<key>DEFAULT_ETH_ADDRESS</key>
+	<string>$(DEFAULT_ETH_ADDRESS)</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>

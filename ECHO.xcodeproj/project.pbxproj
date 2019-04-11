@@ -462,6 +462,7 @@
 		D0A0C504225E2844000BA64D /* CallContractNoChangingStateSocketRequestStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallContractNoChangingStateSocketRequestStub.swift; sourceTree = "<group>"; };
 		D0A0C506225E2976000BA64D /* SetSubscribeCallbackSocketRequestStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetSubscribeCallbackSocketRequestStub.swift; sourceTree = "<group>"; };
 		D0A0C508225E29F5000BA64D /* SubscribeContractLogsSocketRequestStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribeContractLogsSocketRequestStub.swift; sourceTree = "<group>"; };
+		D0A0C50A225E2D5A000BA64D /* TestConstantsConfig.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = TestConstantsConfig.xcconfig; sourceTree = "<group>"; };
 		D0A1B440212E9C5300294683 /* ECHOQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ECHOQueue.swift; sourceTree = "<group>"; };
 		D0A1B446212FF04600294683 /* Block.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Block.swift; sourceTree = "<group>"; };
 		D0B058682146714800A80CDE /* ContractsFacade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractsFacade.swift; sourceTree = "<group>"; };
@@ -938,8 +939,9 @@
 				D061331121A2D72E009EC456 /* CustomOperations */,
 				B313B8C0212FF9850052B266 /* ECHOInterfaceTests.swift */,
 				D0B42A3A2252527600A14784 /* SubscribtionTests.swift */,
-				D077FE08224CC080009F2F27 /* Info.plist */,
 				D0B42A3C225252A900A14784 /* Constants.swift */,
+				D077FE08224CC080009F2F27 /* Info.plist */,
+				D0A0C50A225E2D5A000BA64D /* TestConstantsConfig.xcconfig */,
 			);
 			path = ECHONetworkTests;
 			sourceTree = "<group>";
@@ -1782,6 +1784,7 @@
 		};
 		D077FE0D224CC080009F2F27 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D0A0C50A225E2D5A000BA64D /* TestConstantsConfig.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = Q7Q43CUMWT;
@@ -1803,6 +1806,7 @@
 		};
 		D077FE0E224CC080009F2F27 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D0A0C50A225E2D5A000BA64D /* TestConstantsConfig.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = Q7Q43CUMWT;

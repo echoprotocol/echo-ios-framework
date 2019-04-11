@@ -1,0 +1,25 @@
+//
+//  TestConstantsConfig.xcconfig
+//  ECHO
+//
+//  Created by Vladimir Sharaev on 10/04/2019.
+//  Copyright © 2019 PixelPlex. All rights reserved.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+NODE_URL = wss:\/\/testnet.echo-dev.io
+
+TIMEOUT = 20
+
+COUNTER_CONTRACT = 1.16.139
+LOGS_CONTRACT = 1.16.141
+
+DEFAULT_NAME = vsharaev
+DEFAULT_PASS = vsharaev
+
+DEFAULT_ASSET = 1.3.0
+DEFAULT_ANOTHER_ASSET = 1.3.20
+
+DEFAULT_ETH_ADDRESS = 0x46Ba2677a1c982B329A81f60Cf90fBA2E8CA9fA8
