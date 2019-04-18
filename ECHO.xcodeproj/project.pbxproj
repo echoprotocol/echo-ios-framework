@@ -163,6 +163,8 @@
 		D061331321A2E93F009EC456 /* ContractLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = D061331221A2E93F009EC456 /* ContractLog.swift */; };
 		D061331521A2EC53009EC456 /* GetContractLogsSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D061331421A2EC53009EC456 /* GetContractLogsSocketOperation.swift */; };
 		D061331721A30052009EC456 /* SubscribeContractLogsSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D061331621A30052009EC456 /* SubscribeContractLogsSocketOperation.swift */; };
+		D071EE032268AFC000928D86 /* ConstantsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D071EE022268AFC000928D86 /* ConstantsTests.swift */; };
+		D071EE042268B4F600928D86 /* TestConstantsConfig.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = D0A0C50A225E2D5A000BA64D /* TestConstantsConfig.xcconfig */; };
 		D073F516224CD7F50025AE6A /* SubscribeAccountDelegateStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = D073F515224CD7F50025AE6A /* SubscribeAccountDelegateStub.swift */; };
 		D073F518224CD8530025AE6A /* SubscribeContractLogsDelegateStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = D073F517224CD8530025AE6A /* SubscribeContractLogsDelegateStub.swift */; };
 		D073F51A224CDB420025AE6A /* SubscribeToLogsStubHodler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D073F519224CDB420025AE6A /* SubscribeToLogsStubHodler.swift */; };
@@ -426,6 +428,7 @@
 		D061331221A2E93F009EC456 /* ContractLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractLog.swift; sourceTree = "<group>"; };
 		D061331421A2EC53009EC456 /* GetContractLogsSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetContractLogsSocketOperation.swift; sourceTree = "<group>"; };
 		D061331621A30052009EC456 /* SubscribeContractLogsSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribeContractLogsSocketOperation.swift; sourceTree = "<group>"; };
+		D071EE022268AFC000928D86 /* ConstantsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstantsTests.swift; sourceTree = "<group>"; };
 		D073F515224CD7F50025AE6A /* SubscribeAccountDelegateStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribeAccountDelegateStub.swift; sourceTree = "<group>"; };
 		D073F517224CD8530025AE6A /* SubscribeContractLogsDelegateStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribeContractLogsDelegateStub.swift; sourceTree = "<group>"; };
 		D073F519224CDB420025AE6A /* SubscribeToLogsStubHodler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribeToLogsStubHodler.swift; sourceTree = "<group>"; };
@@ -940,6 +943,7 @@
 				B313B8C0212FF9850052B266 /* ECHOInterfaceTests.swift */,
 				D0B42A3A2252527600A14784 /* SubscribtionTests.swift */,
 				D0B42A3C225252A900A14784 /* Constants.swift */,
+				D071EE022268AFC000928D86 /* ConstantsTests.swift */,
 				D077FE08224CC080009F2F27 /* Info.plist */,
 				D0A0C50A225E2D5A000BA64D /* TestConstantsConfig.xcconfig */,
 			);
@@ -1214,6 +1218,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D071EE042268B4F600928D86 /* TestConstantsConfig.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1491,6 +1496,7 @@
 				D0B42A3B2252527600A14784 /* SubscribtionTests.swift in Sources */,
 				D07EBA09224CC4240005C00C /* CustomGetFullAccountSocketOperation.swift in Sources */,
 				D0B42A3D225252A900A14784 /* Constants.swift in Sources */,
+				D071EE032268AFC000928D86 /* ConstantsTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

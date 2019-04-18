@@ -109,7 +109,7 @@ class ECHOInterfaceTests: XCTestCase {
 //            $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .det)
 //        }))
 //        let exp = expectation(description: "testRegisterUser")
-//        let userName = "vsharaev1"
+//        let userName = Constants.defaultName
 //        let password = Constants.defaultPass
 //        var finalResult = false
 //
@@ -328,7 +328,7 @@ class ECHOInterfaceTests: XCTestCase {
         }))
         var errorMessage: String?
         let exp = expectation(description: "testGettingAccountBalanceFailed")
-        let userName = "dima1 new account unreserved"
+        let userName = "new account unreserved"
 
         //act
         echo.start { [unowned self] (result) in
@@ -388,7 +388,7 @@ class ECHOInterfaceTests: XCTestCase {
         }))
         let exp = expectation(description: "testIsAccountReservedWithNewUser")
         var isAccReserved = false
-        let userName = "vsharaev new account unreserved"
+        let userName = "new account unreserved"
         
         //act
         echo.start { [unowned self] (result) in
@@ -589,7 +589,7 @@ class ECHOInterfaceTests: XCTestCase {
         }))
         let exp = expectation(description: "testGetFee")
         let fromUser = Constants.defaultName
-        let toUser = "vsharaev1"
+        let toUser = Constants.defaultToName
         var fee: AssetAmount!
         
         //act
@@ -626,7 +626,7 @@ class ECHOInterfaceTests: XCTestCase {
         }))
         let exp = expectation(description: "testGetFeeInAnotherAsset")
         let fromUser = Constants.defaultName
-        let toUser = "vsharaev1"
+        let toUser = Constants.defaultToName
         let assetForFee = Constants.defaultAnotherAsset
         var fee: AssetAmount!
         
@@ -698,7 +698,7 @@ class ECHOInterfaceTests: XCTestCase {
         let registrarNameOrId = Constants.defaultName
         let assetId = Constants.defaultAsset
         let contratId = Constants.counterContract
-        let methodName = "incrementCounter"
+        let methodName = Constants.defaultCallContractMethod
         let params: [AbiTypeValueInputModel] = []
 
         var fee: AssetAmount!
@@ -740,7 +740,7 @@ class ECHOInterfaceTests: XCTestCase {
         let registrarNameOrId = Constants.defaultName
         let assetId = Constants.defaultAsset
         let contratId = Constants.counterContract
-        let byteCode = "5b34b966"
+        let byteCode = Constants.defaultCallContractBytecode
         
         var fee: AssetAmount!
         
@@ -780,7 +780,7 @@ class ECHOInterfaceTests: XCTestCase {
         let registrarNameOrId = Constants.defaultName
         let assetId = Constants.defaultAnotherAsset
         let contratId = Constants.counterContract
-        let methodName = "incrementCounter"
+        let methodName = Constants.defaultCallContractMethod
         let params: [AbiTypeValueInputModel] = []
         
         var fee: AssetAmount!
@@ -822,7 +822,7 @@ class ECHOInterfaceTests: XCTestCase {
         let registrarNameOrId = Constants.defaultName + "someString"
         let assetId = Constants.defaultAsset
         let contratId = Constants.counterContract
-        let methodName = "incrementCounter"
+        let methodName = Constants.defaultCallContractMethod
         let params: [AbiTypeValueInputModel] = []
         
         var userError: Error!
@@ -863,7 +863,7 @@ class ECHOInterfaceTests: XCTestCase {
         let exp = expectation(description: "testTransfer")
         let fromUser = Constants.defaultName
         let password = Constants.defaultPass
-        let toUser = "vsharaev1"
+        let toUser = Constants.defaultToName
         var isSuccess = false
         
         
@@ -906,7 +906,7 @@ class ECHOInterfaceTests: XCTestCase {
         let password = Constants.defaultPass
         let keysContainer = AddressKeysContainer(login: fromUser, password: password, core: CryptoCoreImp())!
         let wif = keysContainer.activeKeychain.wif()
-        let toUser = "vsharaev1"
+        let toUser = Constants.defaultToName
         var isSuccess = false
         
         
@@ -920,12 +920,12 @@ class ECHOInterfaceTests: XCTestCase {
                                             assetForFee: nil,
                                             message: "test",
                                             completion: { (result) in
-                                                switch result {
-                                                case .success(let result):
-                                                    isSuccess = result
-                                                case .failure(let error):
-                                                    XCTFail("Transfer must be valid \(error)")
-                                                }
+                switch result {
+                case .success(let result):
+                    isSuccess = result
+                case .failure(let error):
+                    XCTFail("Transfer must be valid \(error)")
+                }
             }, noticeHandler: { notice in
                 exp.fulfill()
             })
@@ -947,7 +947,7 @@ class ECHOInterfaceTests: XCTestCase {
         let exp = expectation(description: "testTransferWithAssetForFee")
         let fromUser = Constants.defaultName
         let password = Constants.defaultPass
-        let toUser = "vsharaev1"
+        let toUser = Constants.defaultToName
         var isSuccess = false
 
         //act
@@ -990,7 +990,7 @@ class ECHOInterfaceTests: XCTestCase {
         let password = Constants.defaultPass
         let keysContainer = AddressKeysContainer(login: fromUser, password: password, core: CryptoCoreImp())!
         let wif = keysContainer.activeKeychain.wif()
-        let toUser = "vsharaev1"
+        let toUser = Constants.defaultToName
         var isSuccess = false
         
         //act
@@ -1031,7 +1031,7 @@ class ECHOInterfaceTests: XCTestCase {
         let exp = expectation(description: "testFailedTransfer")
         let password = Constants.defaultPass + "someString"
         let fromUser = Constants.defaultName
-        let toUser = "vsharaev1"
+        let toUser = Constants.defaultToName
         var isSuccess = false
         
         
@@ -1073,7 +1073,7 @@ class ECHOInterfaceTests: XCTestCase {
         let fromUser = Constants.defaultName
         let keysContainer = AddressKeysContainer(login: fromUser, password: password, core: CryptoCoreImp())!
         let wif = keysContainer.activeKeychain.wif()
-        let toUser = "vsharaev1"
+        let toUser = Constants.defaultToName
         var isSuccess = false
         
         
@@ -1172,7 +1172,7 @@ class ECHOInterfaceTests: XCTestCase {
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .det)
         }))
         let exp = expectation(description: "testGetListAssets")
-        let lowerBound = "ECHO"
+        let lowerBound = Constants.defaultAssetLowerBound
         let limit = 10
         var assets: [Asset] = []
         
@@ -1326,7 +1326,7 @@ class ECHOInterfaceTests: XCTestCase {
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .det)
         }))
         let exp = expectation(description: "testGetContractResult")
-        let contractResultId = "1.17.362"
+        let contractResultId = Constants.evmContractResult
         var contractResult: ContractResultEVM!
         
         //act
@@ -1362,7 +1362,7 @@ class ECHOInterfaceTests: XCTestCase {
 //            $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .det)
 //        }))
 //        let exp = expectation(description: "testGetx86ContractResult")
-//        let contractResultId = "1.17.0"
+//        let contractResultId = Constants.x86ContractResult
 //        var contractResult: ContractResultx86!
 //
 //        //act
@@ -1428,8 +1428,8 @@ class ECHOInterfaceTests: XCTestCase {
         }))
         let exp = expectation(description: "testGetContractLogs")
         let contractId = Constants.logsContract
-        let fromBlock = 62102
-        let toBlock = 62103
+        let fromBlock = Constants.contractLogsFromBlock
+        let toBlock = Constants.contractLogsToBlock
         var contractLogs: [ContractLog]!
         
         //act
@@ -1462,8 +1462,8 @@ class ECHOInterfaceTests: XCTestCase {
         }))
         let exp = expectation(description: "testFailGetContractLogs")
         let contractId = "1.13.1880"
-        let fromBlock = 53500
-        let toBlock = 53580
+        let fromBlock = Constants.contractLogsFromBlock - 10
+        let toBlock = Constants.contractLogsToBlock - 10
         var error: ECHOError = ECHOError.undefined
         
         //act
@@ -1622,7 +1622,7 @@ class ECHOInterfaceTests: XCTestCase {
 //            $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .det)
 //        }))
 //        let exp = expectation(description: "testGetx86Contract")
-//        let legalContractId = "1.16.0"
+//        let legalContractId = Constants.x86Contract
 //        var contract: ContractStructx86!
 //
 //        //act
@@ -1687,7 +1687,7 @@ class ECHOInterfaceTests: XCTestCase {
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .det)
         }))
         let exp = expectation(description: "testCreateContract")
-        let byteCode =  "6080604052348015600f57600080fd5b5061010b8061001f6000396000f300608060405260043610603f576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806329e99f07146044575b600080fd5b348015604f57600080fd5b50606c60048036038101908080359060200190929190505050606e565b005b7fa7659801d76e732d0b4c81221c99e5cf387816232f81f4ff646ba0653d65507a436040518082815260200191505060405180910390a17fa7659801d76e732d0b4c81221c99e5cf387816232f81f4ff646ba0653d65507a816040518082815260200191505060405180910390a1505600a165627a7a7230582044c4962adfce34c7d04f94696d140e8aadb29426be2d9968949d5cffc4cd43560029"
+        let byteCode = Constants.logContractByteCode
         var success = false
 
         //act
@@ -1728,7 +1728,7 @@ class ECHOInterfaceTests: XCTestCase {
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .det)
         }))
         let exp = expectation(description: "testCreateContractByCode")
-        let byteCode =  "6080604052348015600f57600080fd5b5061010b8061001f6000396000f300608060405260043610603f576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806329e99f07146044575b600080fd5b348015604f57600080fd5b50606c60048036038101908080359060200190929190505050606e565b005b7fa7659801d76e732d0b4c81221c99e5cf387816232f81f4ff646ba0653d65507a436040518082815260200191505060405180910390a17fa7659801d76e732d0b4c81221c99e5cf387816232f81f4ff646ba0653d65507a816040518082815260200191505060405180910390a1505600a165627a7a7230582044c4962adfce34c7d04f94696d140e8aadb29426be2d9968949d5cffc4cd43560029"
+        let byteCode = Constants.logContractByteCode
         var success = false
         
         //act
@@ -1768,7 +1768,7 @@ class ECHOInterfaceTests: XCTestCase {
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .det)
         }))
         let exp = expectation(description: "testCreateContractWithWIF")
-        let byteCode =  "6080604052348015600f57600080fd5b5061010b8061001f6000396000f300608060405260043610603f576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806329e99f07146044575b600080fd5b348015604f57600080fd5b50606c60048036038101908080359060200190929190505050606e565b005b7fa7659801d76e732d0b4c81221c99e5cf387816232f81f4ff646ba0653d65507a436040518082815260200191505060405180910390a17fa7659801d76e732d0b4c81221c99e5cf387816232f81f4ff646ba0653d65507a816040518082815260200191505060405180910390a1505600a165627a7a7230582044c4962adfce34c7d04f94696d140e8aadb29426be2d9968949d5cffc4cd43560029"
+        let byteCode = Constants.logContractByteCode
         var success = false
         
         let keysContainer = AddressKeysContainer(login: Constants.defaultName, password: Constants.defaultPass, core: CryptoCoreImp())!
@@ -1809,13 +1809,13 @@ class ECHOInterfaceTests: XCTestCase {
         //arrange
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+            $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .det)
         }))
-        $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .det)
         let exp = expectation(description: "testQueryContract")
         let registrarNameOrId = Constants.defaultName
         let assetId = Constants.defaultAsset
         let contratId = Constants.counterContract
-        let methodName = "getCount"
+        let methodName = Constants.defaultQueryContractMethod
         let params = [AbiTypeValueInputModel]()
         var query: String!
 
@@ -1850,7 +1850,7 @@ class ECHOInterfaceTests: XCTestCase {
         let registrarNameOrId = Constants.defaultName
         let assetId = Constants.defaultAsset
         let contratId = Constants.counterContract
-        let byteCode = "a87d942c"
+        let byteCode = Constants.defaultQueryContractBytecode
         var query: String!
         
         //act
@@ -1888,7 +1888,7 @@ class ECHOInterfaceTests: XCTestCase {
         let password = Constants.defaultPass
         let assetId = Constants.defaultAsset
         let contratId = Constants.counterContract
-        let methodName = "incrementCounter"
+        let methodName = Constants.defaultCallContractMethod
         let params: [AbiTypeValueInputModel] = []
         var success = false
 
@@ -1935,7 +1935,7 @@ class ECHOInterfaceTests: XCTestCase {
         let password = Constants.defaultPass
         let assetId = Constants.defaultAsset
         let contratId = Constants.counterContract
-        let byteCode = "5b34b966"
+        let byteCode = Constants.defaultCallContractBytecode
         var success = false
         
         //act
@@ -1950,13 +1950,13 @@ class ECHOInterfaceTests: XCTestCase {
                                    byteCode: byteCode,
                                    completion: { (result) in
                                     
-                                    switch result {
-                                    case .success(let isSuccess):
-                                        success = isSuccess
-                                        exp.fulfill()
-                                    case .failure(let error):
-                                        XCTFail("Call contract cant fail \(error)")
-                                    }
+                switch result {
+                case .success(let isSuccess):
+                    success = isSuccess
+                    exp.fulfill()
+                case .failure(let error):
+                    XCTFail("Call contract cant fail \(error)")
+                }
             }, noticeHandler: { (notice) in
                 print(notice)
             })
@@ -1982,7 +1982,7 @@ class ECHOInterfaceTests: XCTestCase {
         let wif = keysContainer.activeKeychain.wif()
         let assetId = Constants.defaultAsset
         let contratId = Constants.counterContract
-        let methodName = "incrementCounter"
+        let methodName = Constants.defaultCallContractMethod
         let params: [AbiTypeValueInputModel] = []
         var success = false
         
@@ -1999,13 +1999,13 @@ class ECHOInterfaceTests: XCTestCase {
                                    methodParams: params,
                                    completion: { (result) in
                                     
-                                    switch result {
-                                    case .success(let isSuccess):
-                                        success = isSuccess
-                                        exp.fulfill()
-                                    case .failure(let error):
-                                        XCTFail("Call contract cant fail \(error)")
-                                    }
+                switch result {
+                case .success(let isSuccess):
+                    success = isSuccess
+                    exp.fulfill()
+                case .failure(let error):
+                    XCTFail("Call contract cant fail \(error)")
+                }
             }, noticeHandler: { (notice) in
                 print(notice)
             })
@@ -2162,7 +2162,7 @@ class ECHOInterfaceTests: XCTestCase {
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .det)
         }))
         let exp = expectation(description: "testGetObjectForSidechainTransfer")
-        let identifier = "1.19.0"
+        let identifier = Constants.sidechainTransferObject
         var transfer: SidechainTransfer?
         
         //act
