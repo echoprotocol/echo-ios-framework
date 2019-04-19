@@ -67,7 +67,7 @@ struct Constants {
         if let value = Constants.infoForKey(ConstantsKeys.counterContract) {
             return value
         } else {
-            return "1.16.139"
+            return "1.16.1840"
         }
     }
     
@@ -75,7 +75,7 @@ struct Constants {
         if let value = Constants.infoForKey(ConstantsKeys.logsContract) {
             return value
         } else {
-            return "1.16.141"
+            return "1.16.1839"
         }
     }
     
@@ -139,7 +139,7 @@ struct Constants {
         if let value = Constants.infoForKey(ConstantsKeys.defaultAnotherAsset) {
             return value
         } else {
-            return "1.3.20"
+            return "1.3.57"
         }
     }
     
@@ -204,7 +204,7 @@ struct Constants {
             let value = Int(valueString) {
             return value
         } else {
-            return 62102
+            return 1264311
         }
     }
     
@@ -213,7 +213,7 @@ struct Constants {
             let value = Int(valueString) {
             return value
         } else {
-            return 62103
+            return 1264313
         }
     }
     

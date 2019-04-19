@@ -50,7 +50,7 @@ class ECHOInterfaceTests: XCTestCase {
         //arrange
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
-            $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .bitshares, echorandPrefix: .det)
+            $0.network = ECHONetwork(url: "Fake network url", prefix: .bitshares, echorandPrefix: .det)
         }))
         let exp = expectation(description: "testStartingLibInvalidUrl")
         var isStarted = false
@@ -1204,9 +1204,9 @@ class ECHOInterfaceTests: XCTestCase {
 //        }))
 //        let exp = expectation(description: "testCreateAsset")
 //        var asset = Asset("")
-//        asset.symbol = "VSHAR"
+//        asset.symbol = "SHAR"
 //        asset.precision = 4
-//        asset.issuer = Account("1.2.33")
+//        asset.issuer = Account("1.2.264")
 ////        asset.setBitsassetOptions(BitassetOptions(feedLifetimeSec: 86400,
 ////                                                  minimumFeeds: 7,
 ////                                                  forceSettlementDelaySec: 86400,
@@ -1265,7 +1265,7 @@ class ECHOInterfaceTests: XCTestCase {
 //
 //            self.echo.issueAsset(issuerNameOrId: nameOrId,
 //                                 passwordOrWif: PassOrWif.password(password),
-//                                 asset: "1.3.20",
+//                                 asset: Constants.defaultAnotherAsset,
 //                                 amount: 10000000,
 //                                 destinationIdOrName: Constants.defaultName,
 //                                 message: nil, completion: { (result) in
@@ -1728,7 +1728,7 @@ class ECHOInterfaceTests: XCTestCase {
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .det)
         }))
         let exp = expectation(description: "testCreateContractByCode")
-        let byteCode = Constants.logContractByteCode
+        let byteCode = Constants.counterContractByteCode
         var success = false
         
         //act
@@ -1742,12 +1742,12 @@ class ECHOInterfaceTests: XCTestCase {
                                      supportedAssetId: nil,
                                      ethAccuracy: false,
                                      completion: { (result) in
-                                        switch result {
-                                        case .success(let isSuccess):
-                                            success = isSuccess
-                                        case .failure(let error):
-                                            XCTFail("Creating contract cant fail \(error)")
-                                        }
+                switch result {
+                case .success(let isSuccess):
+                    success = isSuccess
+                case .failure(let error):
+                    XCTFail("Creating contract cant fail \(error)")
+                }
             }, noticeHandler: { (notice) in
                 print(notice)
                 exp.fulfill()
