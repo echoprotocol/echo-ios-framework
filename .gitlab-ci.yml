@@ -1,6 +1,7 @@
 stages:
   - unit_tests
   - release
+  - network_tests
 
 variables:
   LC_ALL: "en_US.UTF-8"
@@ -13,12 +14,23 @@ unit_tests:
   stage: unit_tests
   artifacts:
     paths:
-      - fastlane/test_output
+      - fastlane/tests_output
   script:
     - fastlane tests
   tags:
     - ios
 
+network_tests:
+  stage: network_tests
+  artifacts:
+    paths:
+      - fastlane/network_tests_output
+  script:
+    - fastlane network_tests
+  only:
+    - schedules
+  tags:
+    - ios
 
 release:
   stage: release

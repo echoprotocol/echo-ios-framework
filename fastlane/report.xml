@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="fastlane.lanes">
+    
+    
+    
+      
+      <testcase classname="fastlane.lanes" name="00: Verifying fastlane version" time="0.022561">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="01: default_platform" time="0.001654">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="02: Switch to ios config_project_for_network_test lane" time="0.001534">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="03: ./appendConstantsToConfig.sh NODE_URL testnet.echo-dev.io true" time="0.015648">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="04: ./appendConstantsToConfig.sh TIMEOUT 20" time="0.007798">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="05: ./appendConstantsToConfig.sh COUNTER_CONTRACT 1.16.139" time="0.008409">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="06: ./appendConstantsToConfig.sh LOGS_CONTRACT 1.16.141" time="0.008579">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="07: ./appendConstantsToConfig.sh X86_CONTRACT 1.16.0" time="0.007048">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="08: ./appendConstantsToConfig.sh SIDECHAIN_TRANSFER_OBJECT 1.19.0" time="0.010738">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="09: ./appendConstantsToConfig.sh DEFAULT_NAME vsharaev" time="0.012083">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="10: ./appendConstantsToConfig.sh DEFAULT_TO_NAME vsharaev1" time="0.009146">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="11: ./appendConstantsToConfig.sh DEFAULT_PASS vsharaev" time="0.01029">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="12: ./appendConstantsToConfig.sh DEFAULT_ASSET 1.3.0" time="0.01424">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="13: ./appendConstantsToConfig.sh DEFAULT_ASSET_LOWER_BOUND ECHO" time="0.008684">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="14: ./appendConstantsToConfig.sh DEFAULT_ANOTHER_ASSET 1.3.20" time="0.008701">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="15: ./appendConstantsToConfig.sh DEFAULT_ETH_ADDRESS 0x46Ba2677a1c982B329A81f60Cf90fBA2E8CA9fA8" time="0.006854">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="16: ./appendConstantsToConfig.sh DEFAULT_CALL_CONTRACT_METHOD incrementCounter" time="0.009348">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="17: ./appendConstantsToConfig.sh DEFAULT_CALL_CONTRACT_BYTECODE 5b34b966" time="0.007317">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="18: ./appendConstantsToConfig.sh DEFAULT_QUERY_CONTRACT_METHOD getCount" time="0.007532">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="19: ./appendConstantsToConfig.sh DEFAULT_QUERY_CONTRACT_BYTECODE a87d942c" time="0.013037">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="20: ./appendConstantsToConfig.sh EVM_CONTRACT_RESULT 1.17.362" time="0.018459">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="21: ./appendConstantsToConfig.sh X86_CONTRACT_RESULT 1.17.0" time="0.014237">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="22: ./appendConstantsToConfig.sh CONTRACT_LOGS_FROM_BLOCK 62102" time="0.010239">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="23: ./appendConstantsToConfig.sh CONTRACT_LOGS_TO_BLOCK 62103" time="0.014635">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="24: ./appendConstantsToConfig.sh LOGS_CONTRACT_BYTECODE 6080604052348015600f57600080fd5b5061010b8061001f6000396000f300608060405260043610603f576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806329e99f07146044575b600080fd5b348015604f57600080fd5b50606c60048036038101908080359060200190929190505050606e565b005b7fa7659801d76e732d0b4c81221c99e5cf387816232f81f4ff646ba0653d65507a436040518082815260200191505060405180910390a17fa7659801d76e732d0b4c81221c99e5cf387816232f81f4ff646ba0653d65507a816040518082815260200191505060405180910390a1505600a165627a7a723058202ee0ce6afeec3577644075456c235804fa783dcdbb61a981edaf50333f5ef6710029" time="0.010815">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="25: ./appendConstantsToConfig.sh COUNTER_CONTRACT_BYTECODE 60806040526000805534801561001457600080fd5b50610101806100246000396000f3006080604052600436106053576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680635b34b966146058578063a87d942c14606c578063f5c5ad83146094575b600080fd5b348015606357600080fd5b50606a60a8565b005b348015607757600080fd5b50607e60ba565b6040518082815260200191505060405180910390f35b348015609f57600080fd5b5060a660c3565b005b60016000808282540192505081905550565b60008054905090565b600160008082825403925050819055505600a165627a7a7230582063e27ea8b308defeeb50719f281e50a9b53ffa155e56f3249856ef7eafeb09e90029" time="0.016474">
+        
+      </testcase>
+    
+  </testsuite>
+</testsuites>
