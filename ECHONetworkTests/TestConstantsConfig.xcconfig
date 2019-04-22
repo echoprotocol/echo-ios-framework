@@ -9,7 +9,7 @@
 // Configuration settings file format documentation can be found at:
 // https://help.apple.com/xcode/#/dev745c5c974
 
-NODE_URL = testnet.echo-dev.io
+NODE_URL = devnet.echo-dev.io
 
 TIMEOUT = 20
 

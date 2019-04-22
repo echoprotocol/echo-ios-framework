@@ -22,6 +22,7 @@ final class GetAccountsQueueOperation<T>: Operation where T: Any {
     fileprivate weak var databaseService: DatabaseApiService?
     fileprivate let namesOrIdsWithKeys: GetAccountsNamesOrIdWithKeys
     fileprivate let completion: Completion<T>
+    var defaultError: ECHOError = .resultNotFound
     
     required init(initParams: GetAccountsQueueOperationInitParams, completion: @escaping Completion<T>) {
         
@@ -57,9 +58,9 @@ final class GetAccountsQueueOperation<T>: Operation where T: Any {
                 }
                 
                 if wasNotFound {
-                    self?.queue?.cancelAllOperations()
-                    let result = Result<T, ECHOError>(error: ECHOError.resultNotFound)
-                    self?.completion(result)
+                    strongSelf.queue?.cancelAllOperations()
+                    let result = Result<T, ECHOError>(error: strongSelf.defaultError)
+                    strongSelf.completion(result)
                 }
             case .failure(let error):
                 self?.queue?.cancelAllOperations()

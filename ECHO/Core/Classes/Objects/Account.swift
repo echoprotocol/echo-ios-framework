@@ -39,7 +39,7 @@ public struct Account: ECHOObject, ECHOCodable, Decodable, Hashable {
     public var lifetimeReferrerFeePercentage: Int?
     public var referrerRewardsPercentage: Int?
     public var name: String?
-    public var owner: Authority?
+    //public var owner: Authority?
     public var active: Authority?
     public var options: Options?
     public var edKey: String?
@@ -61,7 +61,7 @@ public struct Account: ECHOObject, ECHOCodable, Decodable, Hashable {
         lifetimeReferrerFeePercentage = try values.decode(Int.self, forKey: .lifetimeReferrerFeePercentage)
         referrerRewardsPercentage = try values.decode(Int.self, forKey: .referrerRewardsPercentage)
         name = try values.decode(String.self, forKey: .name)
-        owner = try values.decode(Authority.self, forKey: .owner)
+        //owner = try values.decode(Authority.self, forKey: .owner)
         active = try values.decode(Authority.self, forKey: .active)
         options = try values.decode(Options.self, forKey: .options)
         edKey = try values.decode(String.self, forKey: .edKey)

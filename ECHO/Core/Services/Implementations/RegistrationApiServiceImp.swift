@@ -34,10 +34,11 @@ final class RegistrationApiServiceImp: RegistrationApiService {
                          activeKey: String,
                          memoKey: String,
                          echorandKey: String,
-                         completion: @escaping Completion<Bool>) {
+                         completion: @escaping Completion<Bool>) -> Int {
         
+        let operationID = socketCore.nextOperationId()
         let operation = RegisterAccountSocketOperation(method: .call,
-                                                       operationId: socketCore.nextOperationId(),
+                                                       operationId: operationID,
                                                        apiId: apiIdentifire,
                                                        name: name,
                                                        ownerKey: ownerKey,
@@ -47,5 +48,6 @@ final class RegistrationApiServiceImp: RegistrationApiService {
                                                        completion: completion)
         
         socketCore.send(operation: operation)
+        return operationID
     }
 }

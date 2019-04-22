@@ -145,8 +145,6 @@ final class GetTransactionQueueOperation<T>: Operation where T: Any {
         switch keychainType {
         case .active:
             authority = account.active
-        case .owner:
-            authority = account.owner
         default:
             authority = nil
         }

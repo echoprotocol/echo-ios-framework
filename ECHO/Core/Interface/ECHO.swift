@@ -71,7 +71,10 @@ final public class ECHO: InterfaceFacades, Startable {
         let informationServices = InformationFacadeServices(databaseService: databaseService,
                                                             historyService: historyService,
                                                             registrationService: registrationService)
-        informationFacade = InformationFacadeImp(services: informationServices, network: settings.network, cryptoCore: settings.cryproComponent)
+        informationFacade = InformationFacadeImp(services: informationServices,
+                                                 network: settings.network,
+                                                 cryptoCore: settings.cryproComponent,
+                                                 noticeDelegateHandler: noticeEventProxy)
         
         let subscriptionServices = SubscriptionServices(databaseService: databaseService)
         subscriptionFacade = SubscriptionFacadeImp(services: subscriptionServices,
@@ -175,8 +178,8 @@ final public class ECHO: InterfaceFacades, Startable {
         informationFacade.getObjects(type: type, objectsIds: objectsIds, completion: completion)
     }
     
-    public func registerAccount(name: String, password: String, completion: @escaping Completion<Bool>) {
-        informationFacade.registerAccount(name: name, password: password, completion: completion)
+    public func registerAccount(name: String, password: String, completion: @escaping Completion<Bool>, noticeHandler: NoticeHandler?) {
+        informationFacade.registerAccount(name: name, password: password, completion: completion, noticeHandler: noticeHandler)
     }
     
     public func getAccount(nameOrID: String, completion: @escaping Completion<Account>) {
