@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>NODE_URL</key>
+	<string>$(NODE_URL)</string>
+	<key>TIMEOUT</key>
+	<string>$(TIMEOUT)</string>
+	<key>COUNTER_CONTRACT</key>
+	<string>$(COUNTER_CONTRACT)</string>
+	<key>X86_CONTRACT</key>
+	<string>$(X86_CONTRACT)</string>
+	<key>LOGS_CONTRACT</key>
+	<string>$(LOGS_CONTRACT)</string>
+	<key>SIDECHAIN_TRANSFER_OBJECT</key>
+	<string>$(SIDECHAIN_TRANSFER_OBJECT)</string>
+	<key>DEFAULT_NAME</key>
+	<string>$(DEFAULT_NAME)</string>
+	<key>DEFAULT_TO_NAME</key>
+	<string>$(DEFAULT_TO_NAME)</string>
+	<key>DEFAULT_PASS</key>
+	<string>$(DEFAULT_PASS)</string>
+	<key>DEFAULT_ASSET</key>
+	<string>$(DEFAULT_ASSET)</string>
+	<key>DEFAULT_ASSET_LOWER_BOUND</key>
+	<string>$(DEFAULT_ASSET_LOWER_BOUND)</string>
+	<key>DEFAULT_ANOTHER_ASSET</key>
+	<string>$(DEFAULT_ANOTHER_ASSET)</string>
+	<key>DEFAULT_ETH_ADDRESS</key>
+	<string>$(DEFAULT_ETH_ADDRESS)</string>
+	<key>DEFAULT_CALL_CONTRACT_METHOD</key>
+	<string>$(DEFAULT_CALL_CONTRACT_METHOD)</string>
+	<key>DEFAULT_CALL_CONTRACT_BYTECODE</key>
+	<string>$(DEFAULT_CALL_CONTRACT_BYTECODE)</string>
+	<key>DEFAULT_QUERY_CONTRACT_METHOD</key>
+	<string>$(DEFAULT_QUERY_CONTRACT_METHOD)</string>
+	<key>DEFAULT_QUERY_CONTRACT_BYTECODE</key>
+	<string>$(DEFAULT_QUERY_CONTRACT_BYTECODE)</string>
+	<key>EVM_CONTRACT_RESULT</key>
+	<string>$(EVM_CONTRACT_RESULT)</string>
+	<key>X86_CONTRACT_RESULT - 2</key>
+	<string>$(X86_CONTRACT_RESULT)</string>
+	<key>CONTRACT_LOGS_FROM_BLOCK</key>
+	<string>$(CONTRACT_LOGS_FROM_BLOCK)</string>
+	<key>CONTRACT_LOGS_TO_BLOCK</key>
+	<string>$(CONTRACT_LOGS_TO_BLOCK)</string>
+	<key>LOGS_CONTRACT_BYTECODE</key>
+	<string>$(LOGS_CONTRACT_BYTECODE)</string>
+	<key>COUNTER_CONTRACT_BYTECODE</key>
+	<string>$(COUNTER_CONTRACT_BYTECODE)</string>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>$(PRODUCT_NAME)</string>
+	<key>CFBundlePackageType</key>
+	<string>BNDL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>2.0.0</string>
+	<key>CFBundleVersion</key>
+	<string>1</string>
+</dict>
+</plist>
