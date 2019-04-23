@@ -26,7 +26,6 @@ class AddressKeysContainerTests: XCTestCase {
         let container = AddressKeysContainer(login: name, password: password, core: cryptoCore)
         
         //assert
-        XCTAssertEqual(keychainActive?.publicAddress(), container?.ownerKeychain.publicAddress())
         XCTAssertEqual(keychainActive?.publicAddress(), container?.activeKeychain.publicAddress())
         XCTAssertEqual(keychainActive?.publicAddress(), container?.memoKeychain.publicAddress())
         XCTAssertEqual(keychainEchorand?.publicAddress(), container?.echorandKeychain.publicAddress())

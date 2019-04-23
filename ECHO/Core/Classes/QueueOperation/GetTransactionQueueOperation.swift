@@ -101,8 +101,6 @@ final class GetTransactionQueueOperation<T>: Operation where T: Any {
             keyChain = contrainer.activeKeychain
         case .memo:
             keyChain = contrainer.memoKeychain
-        case .owner:
-            keyChain = contrainer.ownerKeychain
         case .echorand:
             keyChain = contrainer.echorandKeychain
         }
@@ -139,7 +137,7 @@ final class GetTransactionQueueOperation<T>: Operation where T: Any {
             return false
         }
         
-        let key = networkPrefix + contrainer.ownerKeychain.publicAddress()
+        let key = networkPrefix + contrainer.activeKeychain.publicAddress()
         
         let authority: Authority?
         switch keychainType {

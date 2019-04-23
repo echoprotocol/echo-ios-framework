@@ -28,10 +28,12 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
          network: ECHONetwork,
          cryptoCore: CryptoCoreComponent,
          noticeDelegateHandler: NoticeEventDelegateHandler) {
+        
         self.services = services
         self.network = network
         self.cryptoCore = cryptoCore
         self.queues = [ECHOQueue]()
+        
         noticeDelegateHandler.delegate = self
     }
     
@@ -83,48 +85,6 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         }
         
         createAccountQueue.setCompletionOperation(completionOperation)
-        
-//        ////////////////
-//
-//        isAccountReserved(nameOrID: name) { [weak self] (result) in
-//
-//            guard let strongSelf = self else {
-//                return
-//            }
-//
-//            do {
-//                let isReserved = try result.dematerialize()
-//                if isReserved {
-//                    let result = Result<Bool, ECHOError>(error: ECHOError.invalidCredentials)
-//                    completion(result)
-//                    return
-//                }
-//
-//                guard let contrainer = AddressKeysContainer(login: name, password: password, core: strongSelf.cryptoCore) else {
-//                    let result = Result<Bool, ECHOError>(error: ECHOError.invalidCredentials)
-//                    completion(result)
-//                    return
-//                }
-//
-//                let ownerKey = strongSelf.network.echorandPrefix.rawValue + contrainer.ownerKeychain.publicAddress()
-//                let activeKey = strongSelf.network.echorandPrefix.rawValue + contrainer.activeKeychain.publicAddress()
-//                let memoKey = strongSelf.network.prefix.rawValue + contrainer.memoKeychain.publicAddress()
-//                let echorandKey = strongSelf.network.echorandPrefix.rawValue + contrainer.echorandKeychain.publicAddress()
-//
-//                strongSelf.services.registrationService.registerAccount(name: name,
-//                                                                        ownerKey: ownerKey,
-//                                                                        activeKey: activeKey,
-//                                                                        memoKey: memoKey,
-//                                                                        echorandKey: echorandKey,
-//                                                                        completion: completion)
-//            } catch let error as ECHOError {
-//                let result = Result<Bool, ECHOError>(error: error)
-//                completion(result)
-//            } catch let error {
-//                let result = Result<Bool, ECHOError>(error: ECHOError.internalError(error.localizedDescription))
-//                completion(result)
-//            }
-//        }
     }
     
     fileprivate func createAccountCreationOperation(_ queue: ECHOQueue,
@@ -153,7 +113,7 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                 return
             }
             
-            let ownerKey = strongSelf.network.echorandPrefix.rawValue + contrainer.ownerKeychain.publicAddress()
+            let ownerKey = strongSelf.network.echorandPrefix.rawValue + contrainer.activeKeychain.publicAddress()
             let activeKey = strongSelf.network.echorandPrefix.rawValue + contrainer.activeKeychain.publicAddress()
             let memoKey = strongSelf.network.prefix.rawValue + contrainer.memoKeychain.publicAddress()
             let echorandKey = strongSelf.network.echorandPrefix.rawValue + contrainer.echorandKeychain.publicAddress()

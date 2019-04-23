@@ -210,7 +210,6 @@
 		D0B0586E2146728800A80CDE /* ContractResultEVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B0586D2146728800A80CDE /* ContractResultEVM.swift */; };
 		D0B05874214689F600A80CDE /* GetContractsSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B05873214689F500A80CDE /* GetContractsSocketOperation.swift */; };
 		D0B0587621468A0400A80CDE /* ContractInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B0587521468A0300A80CDE /* ContractInfo.swift */; };
-		D0B0587A2146970300A80CDE /* GetAllContractsSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B058792146970300A80CDE /* GetAllContractsSocketOperation.swift */; };
 		D0B0587E214698F900A80CDE /* ContractStructEVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B0587D214698F900A80CDE /* ContractStructEVM.swift */; };
 		D0B0588221469A0900A80CDE /* GetContractSocketOperaton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B0588121469A0900A80CDE /* GetContractSocketOperaton.swift */; };
 		D0B42A3B2252527600A14784 /* SubscribtionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B42A3A2252527600A14784 /* SubscribtionTests.swift */; };
@@ -474,7 +473,6 @@
 		D0B0586D2146728800A80CDE /* ContractResultEVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractResultEVM.swift; sourceTree = "<group>"; };
 		D0B05873214689F500A80CDE /* GetContractsSocketOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetContractsSocketOperation.swift; sourceTree = "<group>"; };
 		D0B0587521468A0300A80CDE /* ContractInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContractInfo.swift; sourceTree = "<group>"; };
-		D0B058792146970300A80CDE /* GetAllContractsSocketOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetAllContractsSocketOperation.swift; sourceTree = "<group>"; };
 		D0B0587D214698F900A80CDE /* ContractStructEVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContractStructEVM.swift; sourceTree = "<group>"; };
 		D0B0588121469A0900A80CDE /* GetContractSocketOperaton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetContractSocketOperaton.swift; sourceTree = "<group>"; };
 		D0B42A3A2252527600A14784 /* SubscribtionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribtionTests.swift; sourceTree = "<group>"; };
@@ -830,7 +828,6 @@
 				B38596ED20F5ED9A00B55E59 /* GetChainIdSocketOperation.swift */,
 				B38596EF20F5EDCD00B55E59 /* GetContractResultSocketOperation.swift */,
 				D0B05873214689F500A80CDE /* GetContractsSocketOperation.swift */,
-				D0B058792146970300A80CDE /* GetAllContractsSocketOperation.swift */,
 				B38596F120F5EE1400B55E59 /* GetObjectsSocketOperation.swift */,
 				B38596F520F5EEAC00B55E59 /* RequiredFeeSocketOperation.swift */,
 				B38596F720F5F54100B55E59 /* SetSubscribeCallbackSocketOperation.swift */,
@@ -1316,7 +1313,6 @@
 				D01BF7D8212AE77B00917DB8 /* BitassetOptions.swift in Sources */,
 				D0B6A0CE2126CD5500A78E4B /* AccountOptions.swift in Sources */,
 				D0A1B447212FF04600294683 /* Block.swift in Sources */,
-				D0B0587A2146970300A80CDE /* GetAllContractsSocketOperation.swift in Sources */,
 				B358CD062139786B0046327F /* Configurator.swift in Sources */,
 				B370BB5B20F76853004C4A26 /* SocketCoreComponentImp.swift in Sources */,
 				D0814E8C2154DD6600E248AA /* ObjectType.swift in Sources */,

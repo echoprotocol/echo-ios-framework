@@ -101,38 +101,38 @@ class ECHOInterfaceTests: XCTestCase {
         }
     }
 
-    func testRegisterUser() {
-
-        //arrange
-        echo = ECHO(settings: Settings(build: {
-            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory, .registration]
-            $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .det)
-        }))
-        let exp = expectation(description: "testRegisterUser")
-        let userName = Constants.defaultName
-        let password = Constants.defaultPass
-        var finalResult = false
-
-        //act
-        echo.start { [unowned self] (result) in
-            self.echo.registerAccount(name: userName, password: password, completion: { (result) in
-                switch result {
-                case .success(let boolResult):
-                    finalResult = boolResult
-                case .failure(let error):
-                    XCTFail("Getting account cant fail \(error)")
-                    exp.fulfill()
-                }
-            }, noticeHandler: { notice in
-                exp.fulfill()
-            })
-        }
-
-        //assert
-        waitForExpectations(timeout: 1000) { error in
-            XCTAssertEqual(finalResult, true)
-        }
-    }
+//    func testRegisterUser() {
+//
+//        //arrange
+//        echo = ECHO(settings: Settings(build: {
+//            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory, .registration]
+//            $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .det)
+//        }))
+//        let exp = expectation(description: "testRegisterUser")
+//        let userName = Constants.defaultName
+//        let password = Constants.defaultPass
+//        var finalResult = false
+//
+//        //act
+//        echo.start { [unowned self] (result) in
+//            self.echo.registerAccount(name: userName, password: password, completion: { (result) in
+//                switch result {
+//                case .success(let boolResult):
+//                    finalResult = boolResult
+//                case .failure(let error):
+//                    XCTFail("Getting account cant fail \(error)")
+//                    exp.fulfill()
+//                }
+//            }, noticeHandler: { notice in
+//                exp.fulfill()
+//            })
+//        }
+//
+//        //assert
+//        waitForExpectations(timeout: Constants.timeout) { error in
+//            XCTAssertEqual(finalResult, true)
+//        }
+//    }
     
     func testRegisterRegisteredUser() {
         

@@ -18,6 +18,7 @@ final class GetIsReservedAccountQueueOperation<T>: Operation where T: Any {
     fileprivate weak var databaseService: DatabaseApiService?
     fileprivate let namesOrId: String
     fileprivate let completion: Completion<T>
+    
     var defaultError: ECHOError = .resultNotFound
     
     required init(initParams: GetIsAccountReservedQueueOperationInitParams, completion: @escaping Completion<T>) {
@@ -38,10 +39,12 @@ final class GetIsReservedAccountQueueOperation<T>: Operation where T: Any {
             case .success(let accounts):
                 
                 if accounts.count > 0 {
+                    
                     guard let strongSelf = self else { break }
-                    self?.queue?.cancelAllOperations()
+                    
+                    strongSelf.queue?.cancelAllOperations()
                     let result = Result<T, ECHOError>(error: strongSelf.defaultError)
-                    self?.completion(result)
+                    strongSelf.completion(result)
                 } else {
                     self?.queue?.startNextOperation()
                 }

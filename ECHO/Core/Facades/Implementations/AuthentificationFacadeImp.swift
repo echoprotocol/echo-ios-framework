@@ -109,7 +109,7 @@ final public class AuthentificationFacadeImp: AuthentificationFacade, ECHOQueueb
             return false
         }
         
-        let key = network.prefix.rawValue + keysContainer.ownerKeychain.publicAddress()
+        let key = network.prefix.rawValue + keysContainer.activeKeychain.publicAddress()
         let matches = account.account.active?.keyAuths.compactMap { $0.address.addressString == key }.filter { $0 == true }
         
         if let matches = matches {
@@ -163,7 +163,7 @@ final public class AuthentificationFacadeImp: AuthentificationFacade, ECHOQueueb
         // Transaciton
         let transactionOperationInitParams = (queue: changePasswordQueue,
                                               cryptoCore: cryptoCore,
-                                              keychainType: KeychainType.owner,
+                                              keychainType: KeychainType.active,
                                               saveKey: ChangePasswordKeys.transaction.rawValue,
                                               passwordOrWif: PassOrWif.password(old),
                                               networkPrefix: network.prefix.rawValue,
@@ -252,12 +252,12 @@ final public class AuthentificationFacadeImp: AuthentificationFacade, ECHOQueueb
             
             let memoAddressString = network.prefix.rawValue + addressContainer.memoKeychain.publicAddress()
             let activeAddressString = network.prefix.rawValue + addressContainer.activeKeychain.publicAddress()
-            let ownerAddressString = network.prefix.rawValue + addressContainer.ownerKeychain.publicAddress()
+            let ownerAddressString = network.prefix.rawValue + addressContainer.activeKeychain.publicAddress()
             let echorandKey = addressContainer.echorandKeychain.publicKey().hex
             
             let memoAddress = Address(memoAddressString, data: addressContainer.memoKeychain.publicKey())
             let activeAddress = Address(activeAddressString, data: addressContainer.activeKeychain.publicKey())
-            let ownerAddress = Address(ownerAddressString, data: addressContainer.ownerKeychain.publicKey())
+            let ownerAddress = Address(ownerAddressString, data: addressContainer.activeKeychain.publicKey())
             
             let activeKeyAddressAuth = AddressAuthority(address: activeAddress, value: 1)
             let ownerKeyAddressAuth = AddressAuthority(address: ownerAddress, value: 1)

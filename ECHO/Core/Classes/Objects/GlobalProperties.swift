@@ -62,7 +62,6 @@ public struct GlobalPropertiesParameters: Decodable {
         case maximumProposalLifetime = "maximum_proposal_lifetime"
         case maximumAssetWhitelistAuthorities = "maximum_asset_whitelist_authorities"
         case maximumAssetFeedPublishers = "maximum_asset_feed_publishers"
-        case maximumWitnessCount = "maximum_witness_count"
         case maximumCommitteeCount = "maximum_committee_count"
         case maximumAuthorityMembership = "maximum_authority_membership"
         case reservePercentOfFee = "reserve_percent_of_fee"
@@ -72,8 +71,6 @@ public struct GlobalPropertiesParameters: Decodable {
         case cashbackVestingThreshold = "cashback_vesting_threshold"
         case countNonMemberVotes = "count_non_member_votes"
         case allowNonMemberWhitelists = "allow_non_member_whitelists"
-        case witnessPayPerBlock = "witness_pay_per_block"
-        case workerBudgetPerDay = "worker_budget_per_day"
         case maxPredicateOpcode = "max_predicate_opcode"
         case feeLiquidationThreshold = "fee_liquidation_threshold"
         case accountsPerFeeScale = "accounts_per_fee_scale"
@@ -95,7 +92,6 @@ public struct GlobalPropertiesParameters: Decodable {
     public let maximumProposalLifetime: IntOrString
     public let maximumAssetWhitelistAuthorities: IntOrString
     public let maximumAssetFeedPublishers: IntOrString
-    public let maximumWitnessCount: IntOrString
     public let maximumCommitteeCount: IntOrString
     public let maximumAuthorityMembership: IntOrString
     public let reservePercentOfFee: IntOrString
@@ -105,8 +101,6 @@ public struct GlobalPropertiesParameters: Decodable {
     public let cashbackVestingThreshold: IntOrString
     public let countNonMemberVotes: Bool
     public let allowNonMemberWhitelists: Bool
-    public let witnessPayPerBlock: IntOrString
-    public let workerBudgetPerDay: IntOrString
     public let maxPredicateOpcode: IntOrString
     public let feeLiquidationThreshold: IntOrString
     public let accountsPerFeeScale: IntOrString
@@ -127,7 +121,6 @@ public struct GlobalPropertiesParameters: Decodable {
                 maximumProposalLifetime: IntOrString,
                 maximumAssetWhitelistAuthorities: IntOrString,
                 maximumAssetFeedPublishers: IntOrString,
-                maximumWitnessCount: IntOrString,
                 maximumCommitteeCount: IntOrString,
                 maximumAuthorityMembership: IntOrString,
                 reservePercentOfFee: IntOrString,
@@ -137,8 +130,6 @@ public struct GlobalPropertiesParameters: Decodable {
                 cashbackVestingThreshold: IntOrString,
                 countNonMemberVotes: Bool,
                 allowNonMemberWhitelists: Bool,
-                witnessPayPerBlock: IntOrString,
-                workerBudgetPerDay: IntOrString,
                 maxPredicateOpcode: IntOrString,
                 feeLiquidationThreshold: IntOrString,
                 accountsPerFeeScale: IntOrString,
@@ -159,7 +150,6 @@ public struct GlobalPropertiesParameters: Decodable {
         self.maximumProposalLifetime = maximumProposalLifetime
         self.maximumAssetWhitelistAuthorities = maximumAssetWhitelistAuthorities
         self.maximumAssetFeedPublishers = maximumAssetFeedPublishers
-        self.maximumWitnessCount = maximumWitnessCount
         self.maximumCommitteeCount = maximumCommitteeCount
         self.maximumAuthorityMembership = maximumAuthorityMembership
         self.reservePercentOfFee = reservePercentOfFee
@@ -169,8 +159,6 @@ public struct GlobalPropertiesParameters: Decodable {
         self.cashbackVestingThreshold = cashbackVestingThreshold
         self.countNonMemberVotes = countNonMemberVotes
         self.allowNonMemberWhitelists = allowNonMemberWhitelists
-        self.witnessPayPerBlock = witnessPayPerBlock
-        self.workerBudgetPerDay = workerBudgetPerDay
         self.maxPredicateOpcode = maxPredicateOpcode
         self.feeLiquidationThreshold = feeLiquidationThreshold
         self.accountsPerFeeScale = accountsPerFeeScale
@@ -196,7 +184,6 @@ public struct GlobalPropertiesParameters: Decodable {
         maximumProposalLifetime = try values.decode(IntOrString.self, forKey: .maximumProposalLifetime)
         maximumAssetWhitelistAuthorities = try values.decode(IntOrString.self, forKey: .maximumAssetWhitelistAuthorities)
         maximumAssetFeedPublishers = try values.decode(IntOrString.self, forKey: .maximumAssetFeedPublishers)
-        maximumWitnessCount = try values.decode(IntOrString.self, forKey: .maximumWitnessCount)
         maximumCommitteeCount = try values.decode(IntOrString.self, forKey: .maximumCommitteeCount)
         maximumAuthorityMembership = try values.decode(IntOrString.self, forKey: .maximumAuthorityMembership)
         reservePercentOfFee = try values.decode(IntOrString.self, forKey: .reservePercentOfFee)
@@ -206,8 +193,6 @@ public struct GlobalPropertiesParameters: Decodable {
         cashbackVestingThreshold = try values.decode(IntOrString.self, forKey: .cashbackVestingThreshold)
         countNonMemberVotes = try values.decode(Bool.self, forKey: .countNonMemberVotes)
         allowNonMemberWhitelists = try values.decode(Bool.self, forKey: .allowNonMemberWhitelists)
-        witnessPayPerBlock = try values.decode(IntOrString.self, forKey: .witnessPayPerBlock)
-        workerBudgetPerDay = try values.decode(IntOrString.self, forKey: .workerBudgetPerDay)
         maxPredicateOpcode = try values.decode(IntOrString.self, forKey: .maxPredicateOpcode)
         feeLiquidationThreshold = try values.decode(IntOrString.self, forKey: .feeLiquidationThreshold)
         accountsPerFeeScale = try values.decode(IntOrString.self, forKey: .accountsPerFeeScale)

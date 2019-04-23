@@ -32,7 +32,6 @@ enum SocketOperationKeys: String {
     case transaction = "broadcast_transaction"
     case transactionWithCallBack = "broadcast_transaction_with_callback"
     case listAssets = "list_assets"
-    case getAllContracts = "get_all_contracts"
     case getContracts = "get_contracts"
     case getContract = "get_contract"
     case callContractNoChangingState = "call_contract_no_changing_state"
