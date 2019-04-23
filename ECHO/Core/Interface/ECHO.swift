@@ -175,6 +175,10 @@ final public class ECHO: InterfaceFacades, Startable {
         informationFacade.getObjects(type: type, objectsIds: objectsIds, completion: completion)
     }
     
+    public func getBlock(blockNumber: Int, completion: @escaping Completion<Block>) {
+        informationFacade.getBlock(blockNumber: blockNumber, completion: completion)
+    }
+    
     public func registerAccount(name: String, password: String, completion: @escaping Completion<Bool>) {
         informationFacade.registerAccount(name: name, password: password, completion: completion)
     }

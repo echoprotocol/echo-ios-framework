@@ -581,4 +581,36 @@ class SocketCoreComponentTests: XCTestCase {
             XCTAssertTrue(success)
         }
     }
+    
+    func testFakeGetBlock() {
+        
+        //arrange
+        let messenger = SocketMessengerStub(state: .getBlock)
+        echo = ECHO(settings: Settings(build: {
+            $0.socketMessenger = messenger
+        }))
+        let exp = expectation(description: "Get block")
+        let blockNum = 1377170
+        var block: Block!
+        
+        //act
+        echo.start { [unowned self] (result) in
+            
+            self.echo.getBlock(blockNumber: blockNum, completion: { (result) in
+                
+                switch result {
+                case .success(let res):
+                    block = res
+                    exp.fulfill()
+                case .failure(let error):
+                    XCTFail("Get block can't fail \(error)")
+                }
+            })
+        }
+        
+        //assert
+        waitForExpectations(timeout: 1) { error in
+            XCTAssertNotNil(block)
+        }
+    }
 }

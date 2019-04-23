@@ -22,6 +22,7 @@ enum OperationsState {
     case callContract
     case subscribeToAccount
     case subscribeToConsractLogs
+    case getBlock
 }
 
 final class SocketMessengerStub: SocketMessenger {
@@ -92,6 +93,8 @@ final class SocketMessengerStub: SocketMessenger {
             response = getAccountResponse(request: string)
         case .subscribeToConsractLogs:
             response = getSubscribeToConstractLogsResponse(request: string)
+        case .getBlock:
+            response = getGetBlockResponce(request: string)
         }
     
         if let response = response {
@@ -319,6 +322,26 @@ final class SocketMessengerStub: SocketMessenger {
         
         return nil
         
+    }
+    
+    fileprivate func getGetBlockResponce(request: String) -> String? {
+        
+        guard let tuple = parceRequest(request: request) else {
+            return nil
+        }
+        
+        let revealHolder = RevealAPISocketStubsHolder()
+        let requestStub = GetBlockSocketRequestStub()
+        
+        print(tuple)
+        
+        if let revealResponse = revealHolder.response(id: tuple.id, operationType: tuple.operationType) {
+            return revealResponse
+        } else if tuple.operationType == requestStub.operationType {
+            return requestStub.createResponce(id: tuple.id)
+        }
+        
+        return nil
     }
     
     fileprivate func getRevealResponse(request: String) -> String? {

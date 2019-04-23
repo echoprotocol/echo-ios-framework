@@ -144,6 +144,7 @@
 		D0116C5821353C460004A491 /* TransactionFacadeImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0116C5721353C460004A491 /* TransactionFacadeImp.swift */; };
 		D0116C5A213561490004A491 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0116C59213561490004A491 /* Transaction.swift */; };
 		D0116C5C21358F120004A491 /* BlockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0116C5B21358F120004A491 /* BlockData.swift */; };
+		D01A5CD2226F50BB004A8472 /* GetBlockSocketRequestStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01A5CD1226F50BB004A8472 /* GetBlockSocketRequestStub.swift */; };
 		D01AD05E221C0D320062A74D /* ContractStructEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01AD05D221C0D320062A74D /* ContractStructEnum.swift */; };
 		D01AD060221C0DCE0062A74D /* ContractStructx86.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01AD05F221C0DCE0062A74D /* ContractStructx86.swift */; };
 		D01AD062221C12340062A74D /* ContractVMType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01AD061221C12340062A74D /* ContractVMType.swift */; };
@@ -407,6 +408,7 @@
 		D0116C5721353C460004A491 /* TransactionFacadeImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionFacadeImp.swift; sourceTree = "<group>"; };
 		D0116C59213561490004A491 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
 		D0116C5B21358F120004A491 /* BlockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockData.swift; sourceTree = "<group>"; };
+		D01A5CD1226F50BB004A8472 /* GetBlockSocketRequestStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetBlockSocketRequestStub.swift; sourceTree = "<group>"; };
 		D01AD05D221C0D320062A74D /* ContractStructEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractStructEnum.swift; sourceTree = "<group>"; };
 		D01AD05F221C0DCE0062A74D /* ContractStructx86.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractStructx86.swift; sourceTree = "<group>"; };
 		D01AD061221C12340062A74D /* ContractVMType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractVMType.swift; sourceTree = "<group>"; };
@@ -997,6 +999,7 @@
 				B35D4C0C215248BF00FC7B27 /* ErrorSocketRequestStub.swift */,
 				D0A0C506225E2976000BA64D /* SetSubscribeCallbackSocketRequestStub.swift */,
 				D0A0C508225E29F5000BA64D /* SubscribeContractLogsSocketRequestStub.swift */,
+				D01A5CD1226F50BB004A8472 /* GetBlockSocketRequestStub.swift */,
 			);
 			path = Stubs;
 			sourceTree = "<group>";
@@ -1432,6 +1435,7 @@
 			files = (
 				D0A0C509225E29F5000BA64D /* SubscribeContractLogsSocketRequestStub.swift in Sources */,
 				D0A0C4F7225E2536000BA64D /* GetFullAccountsSocketRequestStub.swift in Sources */,
+				D01A5CD2226F50BB004A8472 /* GetBlockSocketRequestStub.swift in Sources */,
 				B3D7612C21366F3A00860C62 /* SocketNotificationsEventsStub.swift in Sources */,
 				B390C2C72141312D00BD6CDC /* Collection+Extension.swift in Sources */,
 				D0A0C4FF225E275E000BA64D /* GetContractsSocketRequestStub.swift in Sources */,

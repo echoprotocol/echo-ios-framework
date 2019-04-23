@@ -2174,7 +2174,7 @@ class ECHOInterfaceTests: XCTestCase {
                     transfer = sidechainTransfer.first
                     exp.fulfill()
                 case .failure(let error):
-                    XCTFail("Error in getting global properties \(error)")
+                    XCTFail("Error in getting sidechain transfers \(error)")
                 }
             })
         }
@@ -2182,6 +2182,37 @@ class ECHOInterfaceTests: XCTestCase {
         //assert
         waitForExpectations(timeout: Constants.timeout) { error in
             XCTAssertNotNil(transfer)
+        }
+    }
+    
+    func testGetBlock() {
+        
+        //arrange
+        echo = ECHO(settings: Settings(build: {
+            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+            $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .det)
+        }))
+        let exp = expectation(description: "testGetBlock")
+        let blockNumber = Constants.defaultBlockNumber
+        var block: Block?
+        
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.getBlock(blockNumber: blockNumber, completion: { (result) in
+                
+                switch result {
+                case .success(let findedBlock):
+                    block = findedBlock
+                    exp.fulfill()
+                case .failure(let error):
+                    XCTFail("Error in getting block \(error)")
+                }
+            })
+        }
+        
+        //assert
+        waitForExpectations(timeout: Constants.timeout) { error in
+            XCTAssertNotNil(block)
         }
     }
 }

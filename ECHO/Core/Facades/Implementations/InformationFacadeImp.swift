@@ -38,6 +38,11 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         services.databaseService.getObjects(type: type, objectsIds: objectsIds, completion: completion)
     }
     
+    public func getBlock(blockNumber: Int, completion: @escaping Completion<Block>) {
+        
+        services.databaseService.getBlock(blockNumber: blockNumber, completion: completion)
+    }
+    
     public func registerAccount(name: String, password: String, completion: @escaping Completion<Bool>) {
         
         isAccountReserved(nameOrID: name) { [weak self] (result) in

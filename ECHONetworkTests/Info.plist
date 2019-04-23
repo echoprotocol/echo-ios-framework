@@ -48,6 +48,8 @@
 	<string>$(LOGS_CONTRACT_BYTECODE)</string>
 	<key>COUNTER_CONTRACT_BYTECODE</key>
 	<string>$(COUNTER_CONTRACT_BYTECODE)</string>
+	<key>DEFAULT_BLOCK_NUMBER</key>
+	<string>$(DEFAULT_BLOCK_NUMBER)</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>

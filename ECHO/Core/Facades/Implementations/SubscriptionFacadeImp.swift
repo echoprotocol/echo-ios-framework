@@ -336,7 +336,7 @@ final public class SubscriptionFacadeImp: SubscriptionFacade {
         services.databaseService.getBlock(blockNumber: globalProperties.headBlockNumber) { (result) in
             
             if let block = try? result.dematerialize() {
-                createBlockSubscriber.didCreateBlock(block: block)
+                createBlockSubscriber.didCreateBlock(block: block, blockNumber: globalProperties.headBlockNumber)
             }
         }
     }
