@@ -42,6 +42,8 @@ struct ConstantsKeys {
     
     static let logContractByteCode = "LOGS_CONTRACT_BYTECODE"
     static let counterContractByteCode = "COUNTER_CONTRACT_BYTECODE"
+    
+    static let defaultBlockNumber = "DEFAULT_BLOCK_NUMBER"
 }
 
 struct Constants {
@@ -230,6 +232,15 @@ struct Constants {
             return value
         } else {
             return "60806040526000805534801561001457600080fd5b50610101806100246000396000f3006080604052600436106053576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680635b34b966146058578063a87d942c14606c578063f5c5ad83146094575b600080fd5b348015606357600080fd5b50606a60a8565b005b348015607757600080fd5b50607e60ba565b6040518082815260200191505060405180910390f35b348015609f57600080fd5b5060a660c3565b005b60016000808282540192505081905550565b60008054905090565b600160008082825403925050819055505600a165627a7a7230582063e27ea8b308defeeb50719f281e50a9b53ffa155e56f3249856ef7eafeb09e90029"
+        }
+    }
+    
+    static var defaultBlockNumber: Int {
+        if let valueString = Constants.infoForKey(ConstantsKeys.defaultBlockNumber),
+            let value = Int(valueString) {
+            return value
+        } else {
+            return 1377170
         }
     }
     

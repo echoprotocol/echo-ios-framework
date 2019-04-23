@@ -21,10 +21,10 @@ public protocol SubscribeDynamicGlobalPropertiesDelegate: class {
 }
 
 /**
-    The interface of the class that allows you to receive notification about the create new block
+    The interface of the class that allows you to receive notification about the create new block with his number
  */
 public protocol SubscribeBlockDelegate: class {
-    func didCreateBlock(block: Block)
+    func didCreateBlock(block: Block, blockNumber: Int)
 }
 
 /**

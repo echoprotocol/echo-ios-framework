@@ -161,13 +161,6 @@ public protocol ContractsFacade {
     func getContracts(contractIds: [String], completion: @escaping Completion<[ContractInfo]>)
     
 /**
-     Returns all existing contracts from blockchain
-     
-     - Parameter completion: Callback which returns an [[ContractInfo](ContractInfo)] or error
- */
-    func getAllContracts(completion: @escaping Completion<[ContractInfo]>)
-    
-/**
      Return full information about contract
      
      - Parameter contractId: Identifier for contract

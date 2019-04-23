@@ -44,6 +44,11 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         services.databaseService.getObjects(type: type, objectsIds: objectsIds, completion: completion)
     }
     
+    public func getBlock(blockNumber: Int, completion: @escaping Completion<Block>) {
+        
+        services.databaseService.getBlock(blockNumber: blockNumber, completion: completion)
+    }
+    
     private enum CreationAccountResultsKeys: String {
         case isReserved
         case account
@@ -93,7 +98,7 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                                                     completion: @escaping Completion<Bool>) -> Operation {
         
         let operation = BlockOperation()
-        
+
         operation.addExecutionBlock { [weak operation, weak queue, weak self] in
             
             guard operation?.isCancelled == false else { return }

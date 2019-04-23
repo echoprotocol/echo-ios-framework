@@ -178,6 +178,10 @@ final public class ECHO: InterfaceFacades, Startable {
         informationFacade.getObjects(type: type, objectsIds: objectsIds, completion: completion)
     }
     
+    public func getBlock(blockNumber: Int, completion: @escaping Completion<Block>) {
+        informationFacade.getBlock(blockNumber: blockNumber, completion: completion)
+    }
+    
     public func registerAccount(name: String, password: String, completion: @escaping Completion<Bool>, noticeHandler: NoticeHandler?) {
         informationFacade.registerAccount(name: name, password: password, completion: completion, noticeHandler: noticeHandler)
     }
@@ -338,11 +342,6 @@ final public class ECHO: InterfaceFacades, Startable {
     public func getContracts(contractIds: [String], completion: @escaping Completion<[ContractInfo]>) {
         
         contractsFacade.getContracts(contractIds: contractIds, completion: completion)
-    }
-
-    public func getAllContracts(completion: @escaping Completion<[ContractInfo]>) {
-        
-        contractsFacade.getAllContracts(completion: completion)
     }
     
     public func getContract(contractId: String, completion: @escaping Completion<ContractStructEnum>) {

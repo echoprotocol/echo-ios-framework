@@ -20,6 +20,14 @@ public protocol InformationFacade {
     func getObjects<T>(type: T.Type, objectsIds: [String], completion: @escaping Completion<[T]>) where T: Decodable
     
 /**
+     Retrieves full signed block
+     
+     - Parameter blockNumber: Height of the block to be returned
+     - Parameter completion: Callback which returns Block or error
+ */
+    func getBlock(blockNumber: Int, completion: @escaping Completion<Block>)
+    
+/**
      Register new account in blockchain
      
      - Parameter name: The name of new account

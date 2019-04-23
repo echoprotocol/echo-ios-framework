@@ -265,16 +265,6 @@ extension ContractsService {
         socketCore.send(operation: operation)
     }
     
-    func getAllContracts(completion: @escaping Completion<[ContractInfo]>) {
-        
-        let operation = GetAllContractsSocketOperation(method: .call,
-                                                       operationId: socketCore.nextOperationId(),
-                                                       apiId: apiIdentifire,
-                                                       completion: completion)
-        
-        socketCore.send(operation: operation)
-    }
-    
     func getContract(contractId: String, completion: @escaping Completion<ContractStructEnum>) {
         
         let operation = GetContractSocketOperaton(method: .call,

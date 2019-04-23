@@ -109,11 +109,6 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
         services.databaseService.getContracts(contractIds: contractIds, completion: completion)
     }
     
-    public func getAllContracts(completion: @escaping Completion<[ContractInfo]>) {
-        
-        services.databaseService.getAllContracts(completion: completion)
-    }
-    
     public func getContract(contractId: String, completion: @escaping Completion<ContractStructEnum>) {
         
         // Validate contractId

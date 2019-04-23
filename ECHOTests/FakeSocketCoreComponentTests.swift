@@ -371,35 +371,6 @@ class SocketCoreComponentTests: XCTestCase {
         }
     }
     
-    func testFakeGetAllContracts() {
-        
-        //arrange
-        let messenger = SocketMessengerStub(state: .getContract)
-        echo = ECHO(settings: Settings(build: {
-            $0.socketMessenger = messenger
-        }))
-        let exp = expectation(description: "Getting contracts")
-        var contracts: [ContractInfo] = []
-        
-        //act
-        echo.start { [unowned self] (result) in
-            self.echo.getAllContracts(completion: { (result) in
-                switch result {
-                case .success(let res):
-                    contracts = res
-                    exp.fulfill()
-                case .failure(let error):
-                    XCTFail("Getting contracts result cant fail \(error)")
-                }
-            })
-        }
-        
-        //assert
-        waitForExpectations(timeout: 1) { error in
-            XCTAssertTrue(contracts.count > 0)
-        }
-    }
-    
     func testFakeCreateContract() {
 
         //arrange
@@ -579,6 +550,38 @@ class SocketCoreComponentTests: XCTestCase {
         //assert
         waitForExpectations(timeout: 1) { error in
             XCTAssertTrue(success)
+        }
+    }
+    
+    func testFakeGetBlock() {
+        
+        //arrange
+        let messenger = SocketMessengerStub(state: .getBlock)
+        echo = ECHO(settings: Settings(build: {
+            $0.socketMessenger = messenger
+        }))
+        let exp = expectation(description: "Get block")
+        let blockNum = 1377170
+        var block: Block!
+        
+        //act
+        echo.start { [unowned self] (result) in
+            
+            self.echo.getBlock(blockNumber: blockNum, completion: { (result) in
+                
+                switch result {
+                case .success(let res):
+                    block = res
+                    exp.fulfill()
+                case .failure(let error):
+                    XCTFail("Get block can't fail \(error)")
+                }
+            })
+        }
+        
+        //assert
+        waitForExpectations(timeout: 1) { error in
+            XCTAssertNotNil(block)
         }
     }
 }
