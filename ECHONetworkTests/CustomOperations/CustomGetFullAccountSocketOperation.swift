@@ -1,6 +1,6 @@
 //
 //  CustomGetFullAccountSocketOperation.swift
-//  ECHOTests
+//  ECHONetworkTests
 //
 //  Created by Vladimir Sharaev on 19/11/2018.
 //  Copyright © 2018 PixelPlex. All rights reserved.
@@ -60,8 +60,8 @@ class CustomGetFullAccountSocketOperation: CustomSocketOperation {
                     
                     for container in array {
                         if let containerArray = container as? [Any],
-                            let nameOrId = containerArray[safe: 0] as? String,
-                            let fullAccountDict = containerArray[safe: 1] as? [String: Any] {
+                            let nameOrId = containerArray[0] as? String,
+                            let fullAccountDict = containerArray[1] as? [String: Any] {
                             
                             let data = try JSONSerialization.data(withJSONObject: fullAccountDict, options: [])
                             let fullAccount = try JSONDecoder().decode(UserAccount.self, from: data)

@@ -17,6 +17,21 @@ platform :ios do
 
   end
 
+  lane :network_tests do 
+
+    config_project_for_network_test
+
+    libraries
+    
+    run_tests(
+       scheme: "ECHONetworkTests",
+       sdk: "iphonesimulator",
+       devices: ["iPhone X"],
+       clean: true
+    )
+
+  end
+
   lane :release do
 
     version_number = get_next_version
@@ -43,7 +58,26 @@ platform :ios do
 
   end
 
-  lane :change_configs_for_release do |options|
+  private_lane :config_project_for_network_test do
+
+    constants_keys = ENV['CONSTANTS_KEYS']
+    constants_array = constants_keys.split(' ')
+
+    first_constant_key = constants_array.first
+    first_constant_value = ENV[first_constant_key]
+
+    sh("./appendConstantsToConfig.sh #{first_constant_key} #{first_constant_value} true")
+
+    for i in 1..constants_array.count-1
+      constant_key = constants_array[i]
+      constant_value = ENV[constant_key]
+
+      sh("./appendConstantsToConfig.sh #{constant_key} #{constant_value}")
+    end
+
+  end
+
+  private_lane :change_configs_for_release do |options|
 
     increment_version_number(
       version_number: options[:version_number]
@@ -64,7 +98,7 @@ platform :ios do
 
   end
 
-  lane :commit_to_master do |options|
+  private_lane :commit_to_master do |options|
 
     git_add(
       path: "docs/*"
@@ -74,11 +108,11 @@ platform :ios do
                       "ECHO/Info.plist",
                       "ECHOTests/Info.plist",
                       "docs/*"], 
-                message: "Version: #{options[:version_number]}")
+              message: "Version: #{options[:version_number]}")
 
   end
 
-  lane :push_to_master do 
+  private_lane :push_to_master do 
 
     push_to_git_remote(
       remote_branch: "master"
@@ -86,7 +120,7 @@ platform :ios do
 
   end
 
-  lane :push_to_release do
+  private_lane :push_to_release do
 
     push_to_git_remote(
       remote_branch: "release"
@@ -94,7 +128,7 @@ platform :ios do
     
   end
 
-  lane :tag_setup do |options|
+  private_lane :tag_setup do |options|
 
     add_git_tag(
       tag: options[:version_number]
@@ -104,7 +138,7 @@ platform :ios do
 
   end 
 
-  lane :get_next_version do
+  private_lane :get_next_version do
 
     sh('git pull origin master --tags')
     get_tags_command = "git tag -l #{ENV['VERSION_MAIN_PART']}* | sort -V"

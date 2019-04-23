@@ -90,7 +90,8 @@ final public class SubscriptionFacadeImp: SubscriptionFacade {
     fileprivate func getUserIdAndSetSubscriber(nameOrId: String, delegate: SubscribeAccountDelegate) {
         
         services.databaseService.getFullAccount(nameOrIds: [nameOrId], shoudSubscribe: true) { [weak self] (result) in
-            if let userAccounts = try? result.dematerialize(), let userAccount = userAccounts[nameOrId] {
+            if let userAccounts = try? result.dematerialize(),
+                let userAccount = userAccounts[nameOrId] {
                 self?.addAccountDelegate(id: userAccount.account.id, delegate: delegate)
             }
         }

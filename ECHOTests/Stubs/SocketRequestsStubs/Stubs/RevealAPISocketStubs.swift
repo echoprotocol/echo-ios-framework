@@ -6,7 +6,7 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
-struct LoginRevealSocketRequestElementStub: SocketRequestStub {
+struct LoginRevealSocketRequestStub: SocketRequestStub {
     
     var operationType = "login"
     
@@ -15,7 +15,7 @@ struct LoginRevealSocketRequestElementStub: SocketRequestStub {
     }
 }
 
-struct HistoryAPIRevealSocketRequestElementStub: SocketRequestStub {
+struct HistoryAPIRevealSocketRequestStub: SocketRequestStub {
     
     var operationType = "history"
 
@@ -24,7 +24,7 @@ struct HistoryAPIRevealSocketRequestElementStub: SocketRequestStub {
     }
 }
 
-struct DatabaseAPIRevealSocketRequestElementStub: SocketRequestStub {
+struct DatabaseAPIRevealSocketRequestStub: SocketRequestStub {
     
     var operationType = "database"
 
@@ -33,7 +33,7 @@ struct DatabaseAPIRevealSocketRequestElementStub: SocketRequestStub {
     }
 }
 
-struct NetworkBroadcastAPIRevealSocketRequestElementStub: SocketRequestStub {
+struct NetworkBroadcastAPIRevealSocketRequestStub: SocketRequestStub {
     
     var operationType = "network_broadcast"
 
@@ -42,7 +42,7 @@ struct NetworkBroadcastAPIRevealSocketRequestElementStub: SocketRequestStub {
     }
 }
 
-struct NetworkNodesAPIRevealSocketRequestElementStub: SocketRequestStub {
+struct NetworkNodesAPIRevealSocketRequestStub: SocketRequestStub {
     
     var operationType = "network_node"
     
@@ -51,7 +51,7 @@ struct NetworkNodesAPIRevealSocketRequestElementStub: SocketRequestStub {
     }
 }
 
-struct CryptoAPIRevealSocketRequestElementStub: SocketRequestStub {
+struct CryptoAPIRevealSocketRequestStub: SocketRequestStub {
     
     var operationType = "crypto"
 
@@ -60,22 +60,11 @@ struct CryptoAPIRevealSocketRequestElementStub: SocketRequestStub {
     }
 }
 
-struct RegistrationAPIRevealSocketRequestElementStub: SocketRequestStub {
+struct RegistrationAPIRevealSocketRequestStub: SocketRequestStub {
     
     var operationType = "registration"
     
     func createResponce(id: Int) -> String {
         return "{\"id\":\(id),\"jsonrpc\":\"2.0\",\"result\":7}"
     }
-}
-
-struct RevialAPISocketRequestStubHodler: SocketRequestStubHodler {
-    
-    var requests: [SocketRequestStub] = [LoginRevealSocketRequestElementStub(),
-                                         HistoryAPIRevealSocketRequestElementStub(),
-                                         DatabaseAPIRevealSocketRequestElementStub(),
-                                         NetworkBroadcastAPIRevealSocketRequestElementStub(),
-                                         NetworkNodesAPIRevealSocketRequestElementStub(),
-                                         CryptoAPIRevealSocketRequestElementStub(),
-                                         RegistrationAPIRevealSocketRequestElementStub()]
 }
