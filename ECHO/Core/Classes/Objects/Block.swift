@@ -21,11 +21,11 @@ public struct Block: Decodable {
         case round
     }
     
-    let previous: String
-    let timestamp: String
-    let transactionMerkleRoot: String
-    let transactions: [Transaction]
-    let round: Int
+    public let previous: String
+    public let timestamp: String
+    public let transactionMerkleRoot: String
+    public let transactions: [Transaction]
+    public let round: Int
     
     public init(from decoder: Decoder) throws {
         
