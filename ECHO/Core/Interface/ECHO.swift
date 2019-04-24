@@ -127,6 +127,10 @@ final public class ECHO: InterfaceFacades, Startable {
     
     // MARK: SubscriptionFacade
     
+    public func setSubscribeCallback(completion: @escaping Completion<Bool>) {
+        subscriptionFacade.setSubscribeCallback(completion: completion)
+    }
+    
     public func subscribeToAccount(nameOrId: String, delegate: SubscribeAccountDelegate) {
         subscriptionFacade.subscribeToAccount(nameOrId: nameOrId, delegate: delegate)
     }
