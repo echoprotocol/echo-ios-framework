@@ -60,7 +60,8 @@ final public class RevealFacadeImp: RevealApiFacade {
                 self?.registerAPIs()
             case .failure(let error):
                 let error = Result<Bool, ECHOError>(error: error)
-                self?.registrationCompletion?(error)            }
+                self?.registrationCompletion?(error)
+            }
         }
         
         socketCore.send(operation: operation)

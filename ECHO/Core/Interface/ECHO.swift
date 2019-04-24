@@ -114,7 +114,15 @@ final public class ECHO: InterfaceFacades, Startable {
      Starts socket connection, connects to blockchain apis
  */
     public func start(completion: @escaping Completion<Bool>) {
-        revealFacade.revealApi(completion: completion)
+        
+        revealFacade.revealApi { [weak self] (result) in
+            switch result {
+            case .success(_):
+                self?.subscriptionFacade.setSubscribeCallback(completion: completion )
+            case .failure(_):
+                completion(result)
+            }
+        }
     }
     
     // MARK: SubscriptionFacade
