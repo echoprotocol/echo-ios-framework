@@ -30,9 +30,7 @@ public enum OperationType: Int {
     case assetSettleOperation
     case assetGlobalSettleOperation
     case assetPublishFeedOperation
-    case witnessCreateOperation                     //20
-    case witnessUpdateOperation
-    case proposalCreateOperation
+    case proposalCreateOperation                    //20
     case proposalUpdateOperation
     case proposalDeleteOperation
     case withdrawPermissionCreateOperation
@@ -40,29 +38,24 @@ public enum OperationType: Int {
     case withdrawPermissionClaimOperation
     case withdrawPermissionDeleteOperation
     case committeeMemberCreateOperation
-    case committeeMemberUpdateOperation             //30
+    case committeeMemberUpdateOperation
     // swiftlint:disable variable_name
     case committeeMemberUpdateGlobalParametersOperation
     // swiftlint:enable variable_name
-    case vestingBalanceCreateOperation
+    case vestingBalanceCreateOperation              //30
     case vestingBalanceWithdrawOperation
-    case workerCreateOperation
     case customOperation
     case assertOperation
     case balanceClaimOperation
     case overrideTransferOperation
-    case transferToBlindOperation
-    case blindTransferOperation                     //40
-    case transferFromBlindOperation
     case assetSettleCancelOperation                 //Virtual
     case assetClaimFeesOperation
-    case fbaDistributeOperation                     //Virtual
     case bidCollateralOperation
     case executeBidOperation                        //Virtual
-    case createContractOperation
+    case createContractOperation                    //40
     case callContractOperation
     case contractTransferOperation                  //Virtual
-    case changeSidechainConfigOperation             // 50
+    case changeSidechainConfigOperation             //43
 }
 
 struct OperationDecoder {

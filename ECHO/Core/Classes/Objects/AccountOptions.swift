@@ -16,7 +16,6 @@ public struct AccountOptions: ECHOCodable, Decodable {
     enum AccountOptionsCodingKeys: String, CodingKey {
         case memo = "memo_key"
         case committee = "num_committee"
-        case witness = "num_witness"
         case votes
         case votingAccount = "voting_account"
         case extensions
@@ -28,7 +27,6 @@ public struct AccountOptions: ECHOCodable, Decodable {
     let memo: Address?
     let votingAccount: Account
     let delegatingAaccount: Account
-    var witnessCount: Int = 0
     var committeeCount: Int = 0
     var votes: [Vote] = [Vote]()
     
@@ -61,7 +59,6 @@ public struct AccountOptions: ECHOCodable, Decodable {
         let delegatingAccountIdString = try values.decode(String.self, forKey: .delegatingAccount)
         delegatingAaccount = Account(delegatingAccountIdString)
         
-        witnessCount = try values.decode(Int.self, forKey: .witness)
         committeeCount = try values.decode(Int.self, forKey: .committee)
     }
     
@@ -78,7 +75,6 @@ public struct AccountOptions: ECHOCodable, Decodable {
         
         let dictionary: [AnyHashable: Any?] = [AccountOptionsCodingKeys.memo.rawValue: memo?.addressString,
                                                AccountOptionsCodingKeys.committee.rawValue: committeeCount,
-                                               AccountOptionsCodingKeys.witness.rawValue: witnessCount,
                                                AccountOptionsCodingKeys.votingAccount.rawValue: votingAccount.id,
                                                AccountOptionsCodingKeys.delegatingAccount.rawValue: delegatingAaccount.id,
                                                AccountOptionsCodingKeys.votes.rawValue: votesArray,
@@ -99,8 +95,6 @@ public struct AccountOptions: ECHOCodable, Decodable {
         
         data.append(optional: votingAccount.toData())
         data.append(optional: delegatingAaccount.toData())
-        
-        data.append(Data.fromInt16(witnessCount))
         
         data.append(Data.fromInt16(committeeCount))
 

@@ -19,7 +19,6 @@ public struct DynamicGlobalProperties: ECHOObject, Decodable {
         case id
         case accountsRegisteredThisInterval = "accounts_registered_this_interval"
         case currentAslot = "current_aslot"
-        case currentWitness = "current_witness"
         case dynamicFlags = "dynamic_flags"
         case headBlockId = "head_block_id"
         case headBlockNumber = "head_block_number"
@@ -29,13 +28,12 @@ public struct DynamicGlobalProperties: ECHOObject, Decodable {
         case recentSlotsFilled = "recent_slots_filled"
         case recentlyMissedCount = "recently_missed_count"
         case time
-        case witnessBudget = "witness_budget"
+        case committeeBudget = "committee_budget"
     }
     
     public let id: String
     public let accountsRegisteredThisInterval: Int
     public let currentAslot: Int
-    public let currentWitness: String
     public let dynamicFlags: Int
     public let headBlockId: String
     public let headBlockNumber: Int
@@ -45,7 +43,7 @@ public struct DynamicGlobalProperties: ECHOObject, Decodable {
     public let recentSlotsFilled: String
     public let recentlyMissedCount: Int
     public let time: String
-    public let witnessBudget: Int
+    public let committeeBudget: Int
     
     public init(from decoder: Decoder) throws {
         
@@ -58,8 +56,7 @@ public struct DynamicGlobalProperties: ECHOObject, Decodable {
         lastIrreversibleBlockNum = try values.decode(Int.self, forKey: .lastIrreversibleBlockNum)
         recentSlotsFilled = try values.decode(String.self, forKey: .recentSlotsFilled)
         recentlyMissedCount = try values.decode(Int.self, forKey: .recentlyMissedCount)
-        witnessBudget = try values.decode(Int.self, forKey: .witnessBudget)
-        currentWitness = try values.decode(String.self, forKey: .currentWitness)
+        committeeBudget = try values.decode(Int.self, forKey: .committeeBudget)
         headBlockId = try values.decode(String.self, forKey: .headBlockId)
         lastBudgetTime = try values.decode(String.self, forKey: .lastBudgetTime)
         nextMaintenanceTime = try values.decode(String.self, forKey: .nextMaintenanceTime)

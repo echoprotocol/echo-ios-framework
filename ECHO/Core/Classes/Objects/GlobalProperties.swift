@@ -13,27 +13,23 @@ public struct GlobalProperties: Decodable {
         case parameters
         case nextAvailableVoteId = "next_available_vote_id"
         case activeCommitteeMembers = "active_committee_members"
-        case activeWitnesses = "active_witnesses"
     }
     
     public let identifier: String
     public let parameters: GlobalPropertiesParameters
     public let nextAvailableVoteId: IntOrString
     public let activeCommitteeMembers: [String]
-    public let activeWitnesses: [String]
     
     public init(identifier: String,
                 parameters: GlobalPropertiesParameters,
                 nextAvailableVoteId: IntOrString,
-                activeCommitteeMembers: [String],
-                activeWitnesses: [String]
+                activeCommitteeMembers: [String]
                 ) {
         
         self.identifier = identifier
         self.parameters = parameters
         self.nextAvailableVoteId = nextAvailableVoteId
         self.activeCommitteeMembers = activeCommitteeMembers
-        self.activeWitnesses = activeWitnesses
     }
     
     public init(from decoder: Decoder) throws {
@@ -44,7 +40,6 @@ public struct GlobalProperties: Decodable {
         parameters = try values.decode(GlobalPropertiesParameters.self, forKey: .parameters)
         nextAvailableVoteId = try values.decode(IntOrString.self, forKey: .nextAvailableVoteId)
         activeCommitteeMembers = try values.decode([String].self, forKey: .activeCommitteeMembers)
-        activeWitnesses = try values.decode([String].self, forKey: .activeWitnesses)
     }
 }
 
