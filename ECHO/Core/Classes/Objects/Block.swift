@@ -20,14 +20,16 @@ public struct Block: Decodable {
         case transactionMerkleRoot = "transaction_merkle_root"
         case witnessSignature = "witness_signature"
         case transactions
+        case round
     }
     
-    let previous: String
-    let timestamp: String
-    let witness: String
-    let transactionMerkleRoot: String
-    let witnessSignature: String
-    let transactions: [Transaction]
+    public let previous: String
+    public let timestamp: String
+    public let witness: String
+    public let transactionMerkleRoot: String
+    public let witnessSignature: String
+    public let transactions: [Transaction]
+    public let round: Int
     
     public init(from decoder: Decoder) throws {
         
@@ -38,5 +40,6 @@ public struct Block: Decodable {
         transactionMerkleRoot = try values.decode(String.self, forKey: .transactionMerkleRoot)
         witnessSignature = try values.decode(String.self, forKey: .witnessSignature)
         transactions = try values.decode([Transaction].self, forKey: .transactions)
+        round = try values.decode(Int.self, forKey: .round)
     }
 }
