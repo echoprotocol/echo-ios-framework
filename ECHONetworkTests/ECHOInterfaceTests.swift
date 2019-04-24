@@ -109,7 +109,7 @@ class ECHOInterfaceTests: XCTestCase {
 //            $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .det)
 //        }))
 //        let exp = expectation(description: "testRegisterUser")
-//        let userName = Constants.defaultName
+//        let userName = Constants.defaultName + "101"
 //        let password = Constants.defaultPass
 //        var finalResult = false
 //
@@ -234,9 +234,9 @@ class ECHOInterfaceTests: XCTestCase {
         }))
         let exp = expectation(description: "testGettingAccountHistory")
         let userId = Constants.defaultName
-        let startId = "1.11.0"
-        let stopId = "1.11.0"
-        let limit = 100
+        let startId = "1.10.0"
+        let stopId = "1.10.0"
+        let limit = 2
         var history: [HistoryItem]!
         
         //act
@@ -1208,7 +1208,7 @@ class ECHOInterfaceTests: XCTestCase {
 //        var asset = Asset("")
 //        asset.symbol = "SHAR"
 //        asset.precision = 4
-//        asset.issuer = Account("1.2.264")
+//        asset.issuer = Account("1.2.15")
 ////        asset.setBitsassetOptions(BitassetOptions(feedLifetimeSec: 86400,
 ////                                                  minimumFeeds: 7,
 ////                                                  forceSettlementDelaySec: 86400,
@@ -1237,8 +1237,8 @@ class ECHOInterfaceTests: XCTestCase {
 //                case .success(let isSuccess):
 //                    success = isSuccess
 //                    exp.fulfill()
-//                case .failure(_):
-//                    XCTFail("Create asset cant fail")
+//                case .failure(let error):
+//                    XCTFail("Create asset cant fail \(error)")
 //                }
 //            }
 //
@@ -1276,8 +1276,8 @@ class ECHOInterfaceTests: XCTestCase {
 //                case .success(let isSuccess):
 //                    success = isSuccess
 //                    exp.fulfill()
-//                case .failure(_):
-//                    XCTFail("Issue asset cant fail")
+//                case .failure(let error):
+//                    XCTFail("Issue asset cant fail \(error)")
 //                }
 //            })
 //        }
@@ -1296,9 +1296,9 @@ class ECHOInterfaceTests: XCTestCase {
 //            $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .det)
 //        }))
 //        let exp = expectation(description: "testChangePassword")
-//        let userName = Constants.defaultName
-//        let password = Constants.defaultName
-//        let newPassword = Constants.defaultPass
+//        let userName = Constants.defaultName + "101"
+//        let password = Constants.defaultPass
+//        let newPassword = Constants.defaultPass + "1"
 //        var success: Bool!
 //
 //        //act
@@ -1430,8 +1430,8 @@ class ECHOInterfaceTests: XCTestCase {
         }))
         let exp = expectation(description: "testGetContractLogs")
         let contractId = Constants.logsContract
-        let fromBlock = Constants.contractLogsFromBlock
-        let toBlock = Constants.contractLogsToBlock
+        let fromBlock = 175840//Constants.contractLogsFromBlock - 10
+        let toBlock = 175850//Constants.contractLogsToBlock + 10
         var contractLogs: [ContractLog]!
         
         //act
@@ -1464,8 +1464,8 @@ class ECHOInterfaceTests: XCTestCase {
         }))
         let exp = expectation(description: "testFailGetContractLogs")
         let contractId = "1.13.1880"
-        let fromBlock = Constants.contractLogsFromBlock - 10
-        let toBlock = Constants.contractLogsToBlock - 10
+        let fromBlock = 175708 - 10//Constants.contractLogsFromBlock - 10
+        let toBlock = 175708 + 10//Constants.contractLogsToBlock - 10
         var error: ECHOError = ECHOError.undefined
         
         //act
@@ -1660,7 +1660,7 @@ class ECHOInterfaceTests: XCTestCase {
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .det)
         }))
         let exp = expectation(description: "testCreateContract")
-        let byteCode = Constants.logContractByteCode
+        let byteCode = Constants.counterContractByteCode
         var success = false
 
         //act

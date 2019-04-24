@@ -69,7 +69,7 @@ struct Constants {
         if let value = Constants.infoForKey(ConstantsKeys.counterContract) {
             return value
         } else {
-            return "1.16.1840"
+            return "1.14.6"
         }
     }
     
@@ -77,7 +77,7 @@ struct Constants {
         if let value = Constants.infoForKey(ConstantsKeys.logsContract) {
             return value
         } else {
-            return "1.16.1839"
+            return "1.14.5"
         }
     }
     
@@ -85,7 +85,7 @@ struct Constants {
         if let value = Constants.infoForKey(ConstantsKeys.x86Contract) {
             return value
         } else {
-            return "1.16.0"
+            return "1.14.0"
         }
     }
     
@@ -93,7 +93,7 @@ struct Constants {
         if let value = Constants.infoForKey(ConstantsKeys.sidechainTransferObject) {
             return value
         } else {
-            return "1.19.0"
+            return "1.17.0"
         }
     }
     
@@ -141,7 +141,7 @@ struct Constants {
         if let value = Constants.infoForKey(ConstantsKeys.defaultAnotherAsset) {
             return value
         } else {
-            return "1.3.57"
+            return "1.3.7"
         }
     }
     
@@ -189,7 +189,7 @@ struct Constants {
         if let value = Constants.infoForKey(ConstantsKeys.evmContractResult) {
             return value
         } else {
-            return "1.17.362"
+            return "1.15.32"
         }
     }
     
@@ -197,7 +197,7 @@ struct Constants {
         if let value = Constants.infoForKey(ConstantsKeys.x86ContractResult) {
             return value
         } else {
-            return "1.17.0"
+            return "1.15.0"
         }
     }
     
@@ -206,7 +206,7 @@ struct Constants {
             let value = Int(valueString) {
             return value
         } else {
-            return 1264311
+            return 175840
         }
     }
     
@@ -215,7 +215,7 @@ struct Constants {
             let value = Int(valueString) {
             return value
         } else {
-            return 1264313
+            return 175850
         }
     }
     
@@ -240,7 +240,7 @@ struct Constants {
             let value = Int(valueString) {
             return value
         } else {
-            return 1377170
+            return 10
         }
     }
     

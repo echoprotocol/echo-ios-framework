@@ -128,7 +128,7 @@ final public class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
                                               keychainType: KeychainType.active,
                                               saveKey: TransferResultsKeys.transaction.rawValue,
                                               passwordOrWif: passwordOrWif,
-                                              networkPrefix: network.prefix.rawValue,
+                                              networkPrefix: network.echorandPrefix.rawValue,
                                               fromAccountKey: TransferResultsKeys.loadedFromAccount.rawValue,
                                               operationKey: TransferResultsKeys.operation.rawValue,
                                               chainIdKey: TransferResultsKeys.chainId.rawValue,
