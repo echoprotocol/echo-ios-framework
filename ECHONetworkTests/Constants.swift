@@ -206,7 +206,7 @@ struct Constants {
             let value = Int(valueString) {
             return value
         } else {
-            return 1264311
+            return 1687943
         }
     }
     
@@ -215,7 +215,7 @@ struct Constants {
             let value = Int(valueString) {
             return value
         } else {
-            return 1264313
+            return 1687945
         }
     }
     
