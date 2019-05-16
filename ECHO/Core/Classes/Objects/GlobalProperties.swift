@@ -279,56 +279,87 @@ public struct EchorandConfig: Decodable {
 public struct SidechainConfig: Decodable {
     
     private enum SidechainConfigCodingKeys: String, CodingKey {
-        case echoContractId = "echo_contract_id"
-        case echoVoteMethod = "echo_vote_method"
-        case echoSignMethod = "echo_sign_method"
-        case echoTransferTopic = "echo_transfer_topic"
-        case echoTransferReadyTopic = "echo_transfer_ready_topic"
+        
         case ethContractAddress = "eth_contract_address"
-        case ethCommitteeMethod = "eth_committee_method"
-        case ethTransferTopic = "eth_transfer_topic"
+        case ethCommitteeUpdateMethod = "eth_committee_update_method"
+        case ethGenAddressMethod = "eth_gen_address_method"
+        case ethWithdrawMethod = "eth_withdraw_method"
+        case ethCommitteeUpdatedTopic = "eth_committee_updated_topic"
+        case ethGenAddressTopic = "eth_gen_address_topic"
+        case ethDepositTopic = "eth_deposit_topic"
+        case ethWithdrawTopic = "eth_withdraw_topic"
+        case ETHAssetId = "ETH_asset_id"
     }
     
-    public let echoContractId: String
-    public let echoVoteMethod: String
-    public let echoSignMethod: String
-    public let echoTransferTopic: String
-    public let echoTransferReadyTopic: String
-    public let ethContractAddress: String
-    public let ethCommitteeMethod: String
-    public let ethTransferTopic: String
+    let ethContractAddress: String
+    let ethCommitteeUpdateMethod: SidechainMethod
+    let ethGenAddressMethod: SidechainMethod
+    let ethWithdrawMethod: SidechainMethod
+    let ethCommitteeUpdatedTopic: String
+    let ethGenAddressTopic: String
+    let ethDepositTopic: String
+    let ethWithdrawTopic: String
+    let ETHAssetId: String
     
-    public init(echoContractId: String,
-                echoVoteMethod: String,
-                echoSignMethod: String,
-                echoTransferTopic: String,
-                echoTransferReadyTopic: String,
-                ethContractAddress: String,
-                ethCommitteeMethod: String,
-                ethTransferTopic: String) {
+    public init(ethContractAddress: String,
+                ethCommitteeUpdateMethod: SidechainMethod,
+                ethGenAddressMethod: SidechainMethod,
+                ethWithdrawMethod: SidechainMethod,
+                ethCommitteeUpdatedTopic: String,
+                ethGenAddressTopic: String,
+                ethDepositTopic: String,
+                ethWithdrawTopic: String,
+                ETHAssetId: String) {
         
-        self.echoContractId = echoContractId
-        self.echoVoteMethod = echoVoteMethod
-        self.echoSignMethod = echoSignMethod
-        self.echoTransferTopic = echoTransferTopic
-        self.echoTransferReadyTopic = echoTransferReadyTopic
         self.ethContractAddress = ethContractAddress
-        self.ethCommitteeMethod = ethCommitteeMethod
-        self.ethTransferTopic = ethTransferTopic
+        self.ethCommitteeUpdateMethod = ethCommitteeUpdateMethod
+        self.ethGenAddressMethod = ethGenAddressMethod
+        self.ethWithdrawMethod = ethWithdrawMethod
+        self.ethCommitteeUpdatedTopic = ethCommitteeUpdatedTopic
+        self.ethGenAddressTopic = ethGenAddressTopic
+        self.ethDepositTopic = ethDepositTopic
+        self.ethWithdrawTopic = ethWithdrawTopic
+        self.ETHAssetId = ETHAssetId
     }
     
     public init(from decoder: Decoder) throws {
         
         let values = try decoder.container(keyedBy: SidechainConfigCodingKeys.self)
         
-        echoContractId = try values.decode(String.self, forKey: .echoContractId)
-        echoVoteMethod = try values.decode(String.self, forKey: .echoVoteMethod)
-        echoSignMethod = try values.decode(String.self, forKey: .echoSignMethod)
-        echoTransferTopic = try values.decode(String.self, forKey: .echoTransferTopic)
-        echoTransferReadyTopic = try values.decode(String.self, forKey: .echoTransferReadyTopic)
         ethContractAddress = try values.decode(String.self, forKey: .ethContractAddress)
-        ethCommitteeMethod = try values.decode(String.self, forKey: .ethCommitteeMethod)
-        ethTransferTopic = try values.decode(String.self, forKey: .ethTransferTopic)
+        ethCommitteeUpdateMethod = try values.decode(SidechainMethod.self, forKey: .ethCommitteeUpdateMethod)
+        ethGenAddressMethod = try values.decode(SidechainMethod.self, forKey: .ethGenAddressMethod)
+        ethWithdrawMethod = try values.decode(SidechainMethod.self, forKey: .ethWithdrawMethod)
+        ethCommitteeUpdatedTopic = try values.decode(String.self, forKey: .ethCommitteeUpdatedTopic)
+        ethGenAddressTopic = try values.decode(String.self, forKey: .ethGenAddressTopic)
+        ethDepositTopic = try values.decode(String.self, forKey: .ethDepositTopic)
+        ethWithdrawTopic = try values.decode(String.self, forKey: .ethWithdrawTopic)
+        ETHAssetId = try values.decode(String.self, forKey: .ETHAssetId)
+    }
+}
+
+public struct SidechainMethod: Decodable {
+    
+    private enum SidechainMethodCodingKeys: String, CodingKey {
+        case method
+        case gas
+    }
+    
+    public let method: String
+    public let gas: IntOrString
+    
+    public init(method: String, gas: IntOrString) {
+        
+        self.method = method
+        self.gas = gas
+    }
+    
+    public init(from decoder: Decoder) throws {
+        
+        let values = try decoder.container(keyedBy: SidechainMethodCodingKeys.self)
+        
+        method = try values.decode(String.self, forKey: .method)
+        gas = try values.decode(IntOrString.self, forKey: .gas)
     }
 }
 

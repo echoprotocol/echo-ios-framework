@@ -51,17 +51,17 @@ public struct Account: ECHOObject, ECHOCodable, Decodable, Hashable {
         
         let values = try decoder.container(keyedBy: AccountCodingKeys.self)
         id = try values.decode(String.self, forKey: .id)
-        membershipExperationDate = try values.decode(String.self, forKey: .membershipExperationDate)
-        registrarId = try values.decode(String.self, forKey: .registrar)
-        referrerId = try values.decode(String.self, forKey: .referrer)
-        lifetimeReferrer = try values.decode(String.self, forKey: .lifetimeReferrer)
-        networkFeePercentage = try values.decode(Int.self, forKey: .networkFeePercentage)
-        lifetimeReferrerFeePercentage = try values.decode(Int.self, forKey: .lifetimeReferrerFeePercentage)
-        referrerRewardsPercentage = try values.decode(Int.self, forKey: .referrerRewardsPercentage)
-        name = try values.decode(String.self, forKey: .name)
-        active = try values.decode(Authority.self, forKey: .active)
-        options = try values.decode(Options.self, forKey: .options)
-        edKey = try values.decode(String.self, forKey: .edKey)
+        membershipExperationDate = try? values.decode(String.self, forKey: .membershipExperationDate)
+        registrarId = try? values.decode(String.self, forKey: .registrar)
+        referrerId = try? values.decode(String.self, forKey: .referrer)
+        lifetimeReferrer = try? values.decode(String.self, forKey: .lifetimeReferrer)
+        networkFeePercentage = try? values.decode(Int.self, forKey: .networkFeePercentage)
+        lifetimeReferrerFeePercentage = try? values.decode(Int.self, forKey: .lifetimeReferrerFeePercentage)
+        referrerRewardsPercentage = try? values.decode(Int.self, forKey: .referrerRewardsPercentage)
+        name = try? values.decode(String.self, forKey: .name)
+        active = try? values.decode(Authority.self, forKey: .active)
+        options = try? values.decode(Options.self, forKey: .options)
+        edKey = try? values.decode(String.self, forKey: .edKey)
     }
     
     // MARK: Hashable

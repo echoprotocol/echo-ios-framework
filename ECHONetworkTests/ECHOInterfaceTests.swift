@@ -109,7 +109,7 @@ class ECHOInterfaceTests: XCTestCase {
 //            $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .det)
 //        }))
 //        let exp = expectation(description: "testRegisterUser")
-//        let userName = Constants.defaultName + "101"
+//        let userName = Constants.defaultName + "1"
 //        let password = Constants.defaultPass
 //        var finalResult = false
 //
@@ -599,7 +599,7 @@ class ECHOInterfaceTests: XCTestCase {
             self.echo.getFeeForTransferOperation(fromNameOrId: fromUser,
                                                  toNameOrId: toUser,
                                                  amount: 1,
-                                                 asset: Constants.defaultAnotherAsset,
+                                                 asset: Constants.defaultAsset,
                                                  assetForFee: nil,
                                                  message: nil,
                                                  completion: { (result) in
@@ -634,7 +634,13 @@ class ECHOInterfaceTests: XCTestCase {
         
         //act
         echo.start { [unowned self] (result) in
-            self.echo.getFeeForTransferOperation(fromNameOrId: fromUser, toNameOrId: toUser, amount: 1, asset: Constants.defaultAsset, assetForFee: assetForFee, message: nil, completion: { (result) in
+            self.echo.getFeeForTransferOperation(fromNameOrId: fromUser,
+                                                 toNameOrId: toUser,
+                                                 amount: 1,
+                                                 asset: Constants.defaultAsset,
+                                                 assetForFee: assetForFee,
+                                                 message: nil,
+                                                 completion: { (result) in
                 switch result {
                 case .success(let aFee):
                     fee = aFee
@@ -1208,7 +1214,7 @@ class ECHOInterfaceTests: XCTestCase {
 //        var asset = Asset("")
 //        asset.symbol = "SHAR"
 //        asset.precision = 4
-//        asset.issuer = Account("1.2.15")
+//        asset.issuer = Account("1.2.32")
 ////        asset.setBitsassetOptions(BitassetOptions(feedLifetimeSec: 86400,
 ////                                                  minimumFeeds: 7,
 ////                                                  forceSettlementDelaySec: 86400,
@@ -1267,7 +1273,7 @@ class ECHOInterfaceTests: XCTestCase {
 //
 //            self.echo.issueAsset(issuerNameOrId: nameOrId,
 //                                 passwordOrWif: PassOrWif.password(password),
-//                                 asset: Constants.defaultAnotherAsset,
+//                                 asset: "1.3.2",//Constants.defaultAnotherAsset,
 //                                 amount: 10000000,
 //                                 destinationIdOrName: Constants.defaultName,
 //                                 message: nil, completion: { (result) in
@@ -1296,7 +1302,7 @@ class ECHOInterfaceTests: XCTestCase {
 //            $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .det)
 //        }))
 //        let exp = expectation(description: "testChangePassword")
-//        let userName = Constants.defaultName + "101"
+//        let userName = Constants.defaultName + "1"
 //        let password = Constants.defaultPass
 //        let newPassword = Constants.defaultPass + "1"
 //        var success: Bool!
@@ -1430,8 +1436,8 @@ class ECHOInterfaceTests: XCTestCase {
         }))
         let exp = expectation(description: "testGetContractLogs")
         let contractId = Constants.logsContract
-        let fromBlock = 175840//Constants.contractLogsFromBlock - 10
-        let toBlock = 175850//Constants.contractLogsToBlock + 10
+        let fromBlock = Constants.contractLogsFromBlock
+        let toBlock = Constants.contractLogsToBlock
         var contractLogs: [ContractLog]!
         
         //act

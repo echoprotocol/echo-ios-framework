@@ -25,7 +25,7 @@ final public class AddressKeysContainer {
         
         guard let activeKeychain = ECHOKeychainEd25519(name: login, password: password, type: .active, core: core),
             let memoKeychain = ECHOKeychainSecp256k1(name: login, password: password, type: .active, core: core),
-            let echorandKeychain = ECHOKeychainEd25519(name: login, password: password, type: .active, core: core) else {
+            let echorandKeychain = ECHOKeychainEd25519(name: login, password: password, type: .echorand, core: core) else {
                 return nil
         }
         
