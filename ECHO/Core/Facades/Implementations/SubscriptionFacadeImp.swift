@@ -67,6 +67,14 @@ final public class SubscriptionFacadeImp: SubscriptionFacade {
         createBlockSubscriber = nil
     }
     
+    public func subscribeContracts(contractsIds: [String], delegate: SubscribeContractsDelegate) {
+        
+    }
+    
+    public func unsubscribeToContracts(contractIds: [String]) {
+        
+    }
+    
     public func subscribeToContractLogs(contractId: String, delegate: SubscribeContractLogsDelegate) {
         
         services.databaseService.setSubscribeCallback { [weak self] (_) in
