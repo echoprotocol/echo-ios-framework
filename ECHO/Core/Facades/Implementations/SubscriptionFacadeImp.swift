@@ -29,11 +29,14 @@ final public class SubscriptionFacadeImp: SubscriptionFacade {
         noticeDelegateHandler.delegate = self
     }
     
+    public func setSubscribeCallback(completion: @escaping Completion<Bool>) {
+        
+        services.databaseService.setSubscribeCallback(completion: completion)
+    }
+    
     public func subscribeToAccount(nameOrId: String, delegate: SubscribeAccountDelegate) {
         
-        services.databaseService.setSubscribeCallback { [weak self] (_) in
-            self?.getUserIdAndSetSubscriber(nameOrId: nameOrId, delegate: delegate)
-        }
+        getUserIdAndSetSubscriber(nameOrId: nameOrId, delegate: delegate)
     }
     
     public func unsubscribeToAccount(nameOrId: String, delegate: SubscribeAccountDelegate) {
@@ -47,23 +50,21 @@ final public class SubscriptionFacadeImp: SubscriptionFacade {
     
     public func subscribeToDynamicGlobalProperties(delegate: SubscribeDynamicGlobalPropertiesDelegate) {
         
-        services.databaseService.setSubscribeCallback { [weak self] (_) in
-            self?.getDynamicGlobalPropertiesAndSetSubscriber(delegate: delegate)
-        }
+        getDynamicGlobalPropertiesAndSetSubscriber(delegate: delegate)
     }
     
     public func unsubscribeToDynamicGlobalProperties() {
+        
         dynamicGlobalPropertiesSubscriber = nil
     }
     
     public func subscribeToBlock(delegate: SubscribeBlockDelegate) {
         
-        services.databaseService.setSubscribeCallback { [weak self] (_) in
-            self?.getDynamicGlobalPropertiesAndSetSubscriber(delegate: delegate)
-        }
+        getDynamicGlobalPropertiesAndSetSubscriber(delegate: delegate)
     }
     
     public func unsubscribeToBlock() {
+        
         createBlockSubscriber = nil
     }
     
@@ -77,9 +78,7 @@ final public class SubscriptionFacadeImp: SubscriptionFacade {
     
     public func subscribeToContractLogs(contractId: String, delegate: SubscribeContractLogsDelegate) {
         
-        services.databaseService.setSubscribeCallback { [weak self] (_) in
-            self?.getSubscribeToContractLogsAndSetSubscriber(contractId: contractId, delegate: delegate)
-        }
+        getSubscribeToContractLogsAndSetSubscriber(contractId: contractId, delegate: delegate)
     }
     
     public func unsubscribeToContractLogs(contractId: String, delegate: SubscribeContractLogsDelegate) {

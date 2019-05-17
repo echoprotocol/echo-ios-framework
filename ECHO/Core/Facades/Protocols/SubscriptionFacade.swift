@@ -47,6 +47,14 @@ public protocol SubscribeContractLogsDelegate: class {
     A class interface that allows you to track the change to an account
  */
 public protocol SubscriptionFacade {
+    
+/**
+     Subscribes to listening chain objects
+     
+     - Parameter completion: Callback which returns status of subscription
+ */
+    func setSubscribeCallback(completion: @escaping Completion<Bool>)
+    
 /**
      Adding a listener to the account change
      
