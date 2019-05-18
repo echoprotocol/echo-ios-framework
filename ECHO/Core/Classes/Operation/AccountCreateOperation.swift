@@ -35,7 +35,7 @@ public struct AccountCreateOperation: BaseOperation {
     public let referrerPercent: Int = 0
     public let active: OptionalValue<Authority>
     public let options: OptionalValue<AccountOptions>
-    public let edKey: String
+    public let edKey: Address
     
     public init(from decoder: Decoder) throws {
         
@@ -58,7 +58,8 @@ public struct AccountCreateOperation: BaseOperation {
         options = OptionalValue(optionsValue)
         
         fee = try values.decode(AssetAmount.self, forKey: .fee)
-        edKey = try values.decode(String.self, forKey: .edKey)
+        let edKeyString = try values.decode(String.self, forKey: .edKey)
+        edKey = Address(edKeyString, data: nil)
     }
     
     // MARK: ECHOCodable
@@ -73,7 +74,7 @@ public struct AccountCreateOperation: BaseOperation {
                                                AccountCreateOperationCodingKeys.registrar.rawValue: registrar,
                                                AccountCreateOperationCodingKeys.referrer.rawValue: referrer,
                                                AccountCreateOperationCodingKeys.referrerPercent.rawValue: referrerPercent,
-                                               AccountCreateOperationCodingKeys.edKey.rawValue: edKey,
+                                               AccountCreateOperationCodingKeys.edKey.rawValue: edKey.toJSON(),
                                                AccountCreateOperationCodingKeys.extensions.rawValue: extensions.toJSON()]
         
         if active.isSet() {
@@ -102,7 +103,7 @@ public struct AccountCreateOperation: BaseOperation {
         data.append(optional: Data.fromString(referrer.id))
         data.append(optional: Data.fromInt8(referrerPercent))
         data.append(optional: active.toData())
-        data.append(optional: Data(hex: edKey))
+        data.append(optional: edKey.toData())
         data.append(optional: options.toData())
         data.append(optional: extensions.toData())
         return data

@@ -252,10 +252,11 @@ final public class AuthentificationFacadeImp: AuthentificationFacade, ECHOQueueb
             
             let memoAddressString = network.prefix.rawValue + addressContainer.memoKeychain.publicAddress()
             let activeAddressString = network.echorandPrefix.rawValue + addressContainer.activeKeychain.publicAddress()
-            let echorandKey = network.echorandPrefix.rawValue + addressContainer.echorandKeychain.publicAddress()
+            let edAddressString = network.echorandPrefix.rawValue + addressContainer.echorandKeychain.publicAddress()
             
             let memoAddress = Address(memoAddressString, data: addressContainer.memoKeychain.publicKey())
             let activeAddress = Address(activeAddressString, data: addressContainer.activeKeychain.publicKey())
+            let edAddress = Address(edAddressString, data: addressContainer.echorandKeychain.publicKey())
             
             let activeKeyAddressAuth = AddressAuthority(address: activeAddress, value: 1)
             let activeAuthority = Authority(weight: 1, keyAuth: [activeKeyAddressAuth], accountAuth: [])
@@ -277,7 +278,7 @@ final public class AuthentificationFacadeImp: AuthentificationFacade, ECHOQueueb
             
             let operation = AccountUpdateOperation(account: account,
                                                    active: activeAuthority,
-                                                   edKey: echorandKey,
+                                                   edKey: edAddress,
                                                    options: options,
                                                    fee: fee)
             

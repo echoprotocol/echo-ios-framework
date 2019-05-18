@@ -28,11 +28,11 @@ public struct AccountUpdateOperation: BaseOperation {
     public let active: OptionalValue<Authority>
     public let newOptions: OptionalValue<AccountOptions>
     
-    public var edKey: String?
+    public var edKey: Address?
     
     public init(account: Account,
                 active: Authority?,
-                edKey: String?,
+                edKey: Address?,
                 options: AccountOptions?,
                 fee: AssetAmount) {
         
@@ -62,7 +62,9 @@ public struct AccountUpdateOperation: BaseOperation {
         newOptions = OptionalValue(newOptionsValue)
         
         fee = try values.decode(AssetAmount.self, forKey: .fee)
-        edKey = try? values.decode(String.self, forKey: .edKey)
+        if let edKeyString = try? values.decode(String.self, forKey: .edKey) {
+            edKey = Address(edKeyString, data: nil)
+        }
     }
     
     mutating func changeAccount(_ account: Account?) {
@@ -80,7 +82,7 @@ public struct AccountUpdateOperation: BaseOperation {
         data.append(optional: active.toData())
         if let edKey = edKey {
             data.append(1)
-            data.append(optional: Data(hex: edKey))
+            data.append(optional: edKey.toData())
         } else {
             data.append(0)
         }
@@ -99,7 +101,7 @@ public struct AccountUpdateOperation: BaseOperation {
         
         var dictionary: [AnyHashable: Any?] = [AccountUpdateOperationCodingKeys.fee.rawValue: fee.toJSON(),
                                                AccountUpdateOperationCodingKeys.account.rawValue: account.toJSON(),
-                                               AccountUpdateOperationCodingKeys.edKey.rawValue: edKey,
+                                               AccountUpdateOperationCodingKeys.edKey.rawValue: edKey?.toJSON(),
                                                AccountUpdateOperationCodingKeys.extensions.rawValue: extensions.toJSON()]
         
         if active.isSet() {

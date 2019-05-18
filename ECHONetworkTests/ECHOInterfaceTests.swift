@@ -1294,37 +1294,37 @@ class ECHOInterfaceTests: XCTestCase {
 //        }
 //    }
     
-//    func testChangePassword() {
-//
-//        //arrange
-//        echo = ECHO(settings: Settings(build: {
-//            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
-//            $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .det)
-//        }))
-//        let exp = expectation(description: "testChangePassword")
-//        let userName = Constants.defaultName + "1"
-//        let password = Constants.defaultPass
-//        let newPassword = Constants.defaultPass + "1"
-//        var success: Bool!
-//
-//        //act
-//        echo.start { [unowned self] (result) in
-//            self.echo.changePassword(old: password, new: newPassword, name: userName, completion: { (result) in
-//                switch result {
-//                case .success(let isSuccess):
-//                    success = isSuccess
-//                    exp.fulfill()
-//                case .failure(let error):
-//                    XCTFail("Change password cant fail \(error)")
-//                }
-//            })
-//        }
-//
-//        //assert
-//        waitForExpectations(timeout: Constants.timeout) { error in
-//            XCTAssertTrue(success)
-//        }
-//    }
+    func testChangePassword() {
+
+        //arrange
+        echo = ECHO(settings: Settings(build: {
+            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+            $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .det)
+        }))
+        let exp = expectation(description: "testChangePassword")
+        let userName = Constants.defaultName
+        let password = Constants.defaultPass
+        let newPassword = Constants.defaultPass
+        var success: Bool!
+
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.changePassword(old: password, new: newPassword, name: userName, completion: { (result) in
+                switch result {
+                case .success(let isSuccess):
+                    success = isSuccess
+                    exp.fulfill()
+                case .failure(let error):
+                    XCTFail("Change password cant fail \(error)")
+                }
+            })
+        }
+
+        //assert
+        waitForExpectations(timeout: Constants.timeout) { error in
+            XCTAssertTrue(success)
+        }
+    }
     
     func testGetContractResult() {
         
