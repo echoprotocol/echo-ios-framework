@@ -17,6 +17,7 @@ final public class SubscriptionFacadeImp: SubscriptionFacade {
     
     let services: SubscriptionServices
     var accountSubscribers = [String: NSPointerArray]()
+    var contractsSubscribers = [String: NSPointerArray]()
     var contractLogsSubscribers = [String: NSPointerArray]()
     
     weak var dynamicGlobalPropertiesSubscriber: SubscribeDynamicGlobalPropertiesDelegate?
@@ -70,10 +71,17 @@ final public class SubscriptionFacadeImp: SubscriptionFacade {
     
     public func subscribeContracts(contractsIds: [String], delegate: SubscribeContractsDelegate) {
         
+        services.databaseService.subscribeContracts(contractsIds: contractsIds) { [weak self] (result) in
+            if let boolResult = try? result.dematerialize(),
+                boolResult {
+                self?.addContractsDelegate(ids: contractsIds, delegate: delegate)
+            }
+        }
     }
     
-    public func unsubscribeToContracts(contractIds: [String]) {
+    public func unsubscribeToContracts(contractIds: [String], delegate: SubscribeContractsDelegate) {
         
+        removeContractsDelegate(ids: contractIds, delegate: delegate)
     }
     
     public func subscribeToContractLogs(contractId: String, delegate: SubscribeContractLogsDelegate) {
@@ -89,6 +97,7 @@ final public class SubscriptionFacadeImp: SubscriptionFacade {
     public func unsubscribeAll() {
         
         accountSubscribers = [String: NSPointerArray]()
+        contractsSubscribers = [String: NSPointerArray]()
         contractLogsSubscribers = [String: NSPointerArray]()
         dynamicGlobalPropertiesSubscriber = nil
         createBlockSubscriber = nil
@@ -139,6 +148,8 @@ final public class SubscriptionFacadeImp: SubscriptionFacade {
                 var userIds = Set<String>()
                 var dynamicGlobalProperties: DynamicGlobalProperties?
                 var contractsLogs = [String: [ContractLog]]()
+                var contracts = [String: Contract]()
+                var contractsHistory = [ContractHistory]()
                 
                 for object in objectsArray {
                     
@@ -149,6 +160,16 @@ final public class SubscriptionFacadeImp: SubscriptionFacade {
                     
                     // Find dynamic global properties changes
                     dynamicGlobalProperties = findDynamicGlobalPropeties(object: object)
+                    
+                    // Find contract
+                    if let contract = findContracts(object: object) {
+                        contracts[contract.id] = contract
+                    }
+                    
+                    // Find contract history
+                    if let contractHistory = findContractsHistory(object: object) {
+                        contractsHistory.append(contractHistory)
+                    }
                     
                     // Find contracts logs
                     if let contractIdAndLog = findContractLogs(object: object) {
@@ -163,6 +184,7 @@ final public class SubscriptionFacadeImp: SubscriptionFacade {
                 
                 getAccountAndNotify(ids: userIds)
                 getBlockIfNeededAndNotify(dynamicGlobalProperties: dynamicGlobalProperties)
+                notifyContracts(contracts: contracts, histories: contractsHistory)
                 notifyContractLogsCreated(contractsMap: contractsLogs)
             }
         default:
@@ -189,6 +211,30 @@ final public class SubscriptionFacadeImp: SubscriptionFacade {
             .flatMap({ try? JSONDecoder().decode(DynamicGlobalProperties.self, from: $0) }) {
             
             return globalProperties
+        }
+        
+        return nil
+    }
+    
+    fileprivate func findContracts(object: Any) -> Contract? {
+        
+        if let contract = (object as? [String: Any])
+            .flatMap({ try? JSONSerialization.data(withJSONObject: $0, options: [])})
+            .flatMap({ try? JSONDecoder().decode(Contract.self, from: $0) }) {
+            
+            return contract
+        }
+        
+        return nil
+    }
+    
+    fileprivate func findContractsHistory(object: Any) -> ContractHistory? {
+        
+        if let contract = (object as? [String: Any])
+            .flatMap({ try? JSONSerialization.data(withJSONObject: $0, options: [])})
+            .flatMap({ try? JSONDecoder().decode(ContractHistory.self, from: $0) }) {
+            
+            return contract
         }
         
         return nil
@@ -250,6 +296,22 @@ final public class SubscriptionFacadeImp: SubscriptionFacade {
         accountSubscribers[id] = delegates
     }
     
+    fileprivate func addContractsDelegate(ids: [String], delegate: SubscribeContractsDelegate) {
+        
+        for id in ids {
+            let delegates: NSPointerArray
+            
+            if let settedDelegates = contractsSubscribers[id] {
+                delegates = settedDelegates
+            } else {
+                delegates = NSPointerArray.weakObjects()
+            }
+            
+            delegates.addObject(delegate)
+            contractsSubscribers[id] = delegates
+        }
+    }
+    
     fileprivate func addContractLogsDelegate(id: String, delegate: SubscribeContractLogsDelegate) {
         
         let delegates: NSPointerArray
@@ -275,6 +337,19 @@ final public class SubscriptionFacadeImp: SubscriptionFacade {
         accountSubscribers[id] = delegates
     }
     
+    fileprivate func removeContractsDelegate(ids: [String], delegate: SubscribeContractsDelegate) {
+        
+        for id in ids {
+            guard let delegates = contractsSubscribers[id] else {
+                return
+            }
+            
+            let index = delegates.index(ofAccessibilityElement: delegates)
+            delegates.removeObject(at: index)
+            contractsSubscribers[id] = delegates
+        }
+    }
+    
     fileprivate func removeContractLogsDelegate(id: String, delegate: SubscribeContractLogsDelegate) {
         
         guard let delegates = contractLogsSubscribers[id] else {
@@ -298,6 +373,35 @@ final public class SubscriptionFacadeImp: SubscriptionFacade {
             
             if let delegate = delegates.object(at: index) as? SubscribeAccountDelegate {
                 delegate.didUpdateAccount(userAccount: userAccount)
+            }
+        }
+    }
+    
+    fileprivate func notifyContracts(contracts: [String: Contract], histories: [ContractHistory]) {
+        
+        for identifier in contracts.keys {
+            
+            guard let delegates = contractsSubscribers[identifier],
+                let contract = contracts[identifier] else {
+                continue
+            }
+            
+            for index in 0..<delegates.count {
+                if let delegate = delegates.object(at: index) as? SubscribeContractsDelegate {
+                    delegate.contractUpdated(contract: contract)
+                }
+            }
+        }
+        
+        for history in histories {
+            guard let delegates = contractsSubscribers[history.contract.id] else {
+                continue
+            }
+            
+            for index in 0..<delegates.count {
+                if let delegate = delegates.object(at: index) as? SubscribeContractsDelegate {
+                    delegate.contractHistoryCreated(historyObject: history)
+                }
             }
         }
     }

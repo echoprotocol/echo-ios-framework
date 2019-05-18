@@ -33,7 +33,7 @@ public struct DynamicGlobalProperties: ECHOObject, Decodable {
     
     public let id: String
     public let accountsRegisteredThisInterval: Int
-    public let currentAslot: Int
+    public let currentAslot: IntOrString
     public let dynamicFlags: Int
     public let headBlockId: String
     public let headBlockNumber: Int
@@ -50,7 +50,7 @@ public struct DynamicGlobalProperties: ECHOObject, Decodable {
         let values = try decoder.container(keyedBy: DynamicGlobalPropertiesCodingKeys.self)
         id = try values.decode(String.self, forKey: .id)
         accountsRegisteredThisInterval = try values.decode(Int.self, forKey: .accountsRegisteredThisInterval)
-        currentAslot = try values.decode(Int.self, forKey: .currentAslot)
+        currentAslot = try values.decode(IntOrString.self, forKey: .currentAslot)
         dynamicFlags = try values.decode(Int.self, forKey: .dynamicFlags)
         headBlockNumber = try values.decode(Int.self, forKey: .headBlockNumber)
         lastIrreversibleBlockNum = try values.decode(Int.self, forKey: .lastIrreversibleBlockNum)

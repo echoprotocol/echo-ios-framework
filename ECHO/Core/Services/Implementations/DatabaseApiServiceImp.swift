@@ -200,6 +200,16 @@ extension SubscriptionService {
         
         socketCore.send(operation: operation)
     }
+    
+    func subscribeContracts(contractsIds: [String], completion: @escaping Completion<Bool>) {
+        
+        let operation = SubscribeContractsSocketOperation(method: .call,
+                                                          operationId: socketCore.nextOperationId(),
+                                                          apiId: apiIdentifire,
+                                                          contractIds: contractsIds,
+                                                          completion: completion)
+        socketCore.send(operation: operation)
+    }
 }
 
 extension AssetsService {

@@ -178,6 +178,8 @@
 		D082304122368A87003A4BDC /* GetSidechainTransfersSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D082304022368A87003A4BDC /* GetSidechainTransfersSocketOperation.swift */; };
 		D082304622368EB6003A4BDC /* ETHAddressValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D082304522368EB6003A4BDC /* ETHAddressValidator.swift */; };
 		D08230482236BA19003A4BDC /* ETHAddressValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08230472236BA19003A4BDC /* ETHAddressValidatorTests.swift */; };
+		D0880DE1228FF8F6003B9E28 /* ContractHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0880DE0228FF8F6003B9E28 /* ContractHistory.swift */; };
+		D0880DE322902913003B9E28 /* ContractsSubscribeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0880DE222902913003B9E28 /* ContractsSubscribeTests.swift */; };
 		D08B2BCD21342444000F7A9B /* FeeFacadeImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08B2BCC21342444000F7A9B /* FeeFacadeImp.swift */; };
 		D094703E212D3ECC00B55A37 /* TransferOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D094703D212D3ECC00B55A37 /* TransferOperation.swift */; };
 		D0947040212D3FEE00B55A37 /* Memo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D094703F212D3FEE00B55A37 /* Memo.swift */; };
@@ -441,6 +443,8 @@
 		D082304022368A87003A4BDC /* GetSidechainTransfersSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSidechainTransfersSocketOperation.swift; sourceTree = "<group>"; };
 		D082304522368EB6003A4BDC /* ETHAddressValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETHAddressValidator.swift; sourceTree = "<group>"; };
 		D08230472236BA19003A4BDC /* ETHAddressValidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETHAddressValidatorTests.swift; sourceTree = "<group>"; };
+		D0880DE0228FF8F6003B9E28 /* ContractHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractHistory.swift; sourceTree = "<group>"; };
+		D0880DE222902913003B9E28 /* ContractsSubscribeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ContractsSubscribeTests.swift; path = CustomOperations/ContractsSubscribeTests.swift; sourceTree = "<group>"; };
 		D08B2BCC21342444000F7A9B /* FeeFacadeImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeeFacadeImp.swift; sourceTree = "<group>"; };
 		D094703D212D3ECC00B55A37 /* TransferOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferOperation.swift; sourceTree = "<group>"; };
 		D094703F212D3FEE00B55A37 /* Memo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Memo.swift; sourceTree = "<group>"; };
@@ -942,6 +946,7 @@
 				D061331121A2D72E009EC456 /* CustomOperations */,
 				B313B8C0212FF9850052B266 /* ECHOInterfaceTests.swift */,
 				D0B42A3A2252527600A14784 /* SubscribtionTests.swift */,
+				D0880DE222902913003B9E28 /* ContractsSubscribeTests.swift */,
 				D0A19AFF2269F2320030F442 /* Constants.swift */,
 				D077FE08224CC080009F2F27 /* Info.plist */,
 				D0A0C50A225E2D5A000BA64D /* TestConstantsConfig.xcconfig */,
@@ -1036,6 +1041,7 @@
 				D0B0587521468A0300A80CDE /* ContractInfo.swift */,
 				D061331221A2E93F009EC456 /* ContractLog.swift */,
 				D0DCC84C223908B600D20358 /* ContractExecuteType.swift */,
+				D0880DE0228FF8F6003B9E28 /* ContractHistory.swift */,
 			);
 			path = Contracts;
 			sourceTree = "<group>";
@@ -1405,6 +1411,7 @@
 				B30CC373214A5C29003953E3 /* AbiInterfaceModel.swift in Sources */,
 				B313B8DD21305A080052B266 /* Crypto.swift in Sources */,
 				B30CAD2820FFF9E70048E33E /* ECHOKeychain.swift in Sources */,
+				D0880DE1228FF8F6003B9E28 /* ContractHistory.swift in Sources */,
 				B39554B3213E822B00CE2647 /* AssetsFacadeImp.swift in Sources */,
 				D0D8CA4C2141847900F0646D /* GetMemoQueueOperation.swift in Sources */,
 				D082304622368EB6003A4BDC /* ETHAddressValidator.swift in Sources */,
@@ -1494,6 +1501,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D0A19B002269F2330030F442 /* Constants.swift in Sources */,
+				D0880DE322902913003B9E28 /* ContractsSubscribeTests.swift in Sources */,
 				D07EBA08224CC30F0005C00C /* ECHOInterfaceTests.swift in Sources */,
 				D0B42A3B2252527600A14784 /* SubscribtionTests.swift in Sources */,
 				D07EBA09224CC4240005C00C /* CustomGetFullAccountSocketOperation.swift in Sources */,

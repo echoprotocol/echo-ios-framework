@@ -131,7 +131,7 @@ protocol DatabaseApiService: BaseApiService {
      - Parameter fromBlockId: Number of the earliest block to retrieve
      - Parameter toBlockId: Number of the most recent block to retrieve
      - Parameter completion: Callback which returns an array of [ContractLog](ContractLog) result of call or error
-f */
+ */
     func subscribeContractLogs(contractId: String, fromBlock: Int, toBlock: Int, completion: @escaping Completion<[ContractLog]>)
 /**
      Returns contracts called by ids
@@ -170,4 +170,12 @@ f */
      - Parameter completion: Callback which returns [[SidechainTransfer]](SidechainTransfer) or error
  */
     func getSidechainTransfers(for ethAddress: String, completion: @escaping Completion<[SidechainTransfer]>)
+    
+/**
+     Subscribes to listening contracts changes
+     
+     - Parameter contractsIds: Contracts ids for subscribe
+     - Parameter completion: Callback which [Bool](Bool) as result of call or error
+ */
+    func subscribeContracts(contractsIds: [String], completion: @escaping Completion<Bool>)
 }

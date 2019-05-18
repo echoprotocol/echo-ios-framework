@@ -158,6 +158,14 @@ final public class ECHO: InterfaceFacades, Startable {
         subscriptionFacade.unsubscribeToBlock()
     }
     
+    public func subscribeContracts(contractsIds: [String], delegate: SubscribeContractsDelegate) {
+        subscriptionFacade.subscribeContracts(contractsIds: contractsIds, delegate: delegate)
+    }
+    
+    public func unsubscribeToContracts(contractIds: [String], delegate: SubscribeContractsDelegate) {
+        subscriptionFacade.unsubscribeToContracts(contractIds: contractIds, delegate: delegate)
+    }
+    
     public func subscribeToContractLogs(contractId: String, delegate: SubscribeContractLogsDelegate) {
         subscriptionFacade.subscribeToContractLogs(contractId: contractId, delegate: delegate)
     }

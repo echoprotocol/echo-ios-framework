@@ -33,7 +33,7 @@ public protocol SubscribeBlockDelegate: class {
 public protocol SubscribeContractsDelegate: class {
     
     func contractUpdated(contract: Contract)
-    func contractHistoryUpdated(historyObject: Contract)
+    func contractHistoryCreated(historyObject: ContractHistory)
 }
 
 /**
@@ -118,9 +118,10 @@ public protocol SubscriptionFacade {
 /**
      Removing a listener to the contracts changes
      
-     - Parameter contractId: Ids of the contracts for unsubscribe
+     - Parameter contractIds: Ids of the contracts for unsubscribe
+     - Parameter delegate: The class that will receive contracts change notifications
  */
-    func unsubscribeToContracts(contractIds: [String])
+    func unsubscribeToContracts(contractIds: [String], delegate: SubscribeContractsDelegate)
     
 /**
      Adding a listener to the new contract logs
