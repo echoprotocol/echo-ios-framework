@@ -55,7 +55,14 @@ public enum OperationType: Int {
     case createContractOperation                    //40
     case callContractOperation
     case contractTransferOperation                  //Virtual
-    case changeSidechainConfigOperation             //43
+    case changeSidechainConfigOperation             //43 // temporary operation for tests
+    case accountAddressCreateOperation
+    case transferToAddressOperation
+    case generateEthAddressOperation
+    case createEthAddressOperation
+    case depositEthOperation
+    case withdrawEthOperation
+    case approveWithdrawEthOperation
 }
 
 struct OperationDecoder {

@@ -53,4 +53,3 @@ struct SubscribeContractsSocketOperation: SocketOperation {
         completion(result)
     }
 }
-

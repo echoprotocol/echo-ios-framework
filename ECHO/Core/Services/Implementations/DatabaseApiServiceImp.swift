@@ -13,6 +13,7 @@ private typealias SubscriptionService = DatabaseApiServiceImp
 private typealias AuthorityAndValidationService = DatabaseApiServiceImp
 private typealias BlocksAndTransactionsService = DatabaseApiServiceImp
 private typealias ContractsService = DatabaseApiServiceImp
+private typealias EthService = DatabaseApiServiceImp
 
 /**
      Implementation of [DatabaseApiService](DatabaseApiService)
@@ -300,6 +301,20 @@ extension ContractsService {
                                                     assetId: asset.id,
                                                     code: contractCode,
                                                     completion: completion)
+        
+        socketCore.send(operation: operation)
+    }
+}
+
+extension EthService {
+    
+    func getEthAddress(accountId: String, completion: @escaping Completion<[EthAddress]>) {
+        
+        let operation = GetEthAddressSocketOperation(method: .call,
+                                                     operationId: socketCore.nextOperationId(),
+                                                     apiId: apiIdentifire,
+                                                     accountId: accountId,
+                                                     completion: completion)
         
         socketCore.send(operation: operation)
     }

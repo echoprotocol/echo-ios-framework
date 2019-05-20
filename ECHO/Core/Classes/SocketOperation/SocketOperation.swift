@@ -42,6 +42,7 @@ enum SocketOperationKeys: String {
     case getGlobalProperties = "get_global_properties"
     case getSidechainTransfers = "get_sidechain_transfers"
     case subscribeContracts = "subscribe_contracts"
+    case getEthAddress = "get_eth_address"
 }
 
 typealias OperationResult<T> = (operation: SocketOperation, result: Result<T, ECHOError>)

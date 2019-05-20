@@ -2194,4 +2194,105 @@ class ECHOInterfaceTests: XCTestCase {
             XCTAssertNotNil(block)
         }
     }
+    
+    func testGenerateEthAddress() {
+        
+        //arrange
+        echo = ECHO(settings: Settings(build: {
+            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+            $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .det)
+        }))
+        let exp = expectation(description: "testGenerateEthAddress")
+        var isSuccess = false
+        
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.generateEthAddress(nameOrId: Constants.defaultName,
+                                         passwordOrWif: .password(Constants.defaultPass),
+                                         assetForFee: nil,
+                                         completion: { (result) in
+                
+                switch result {
+                case .success(let result):
+                    isSuccess = result
+                case .failure(let error):
+                    XCTFail("Generate eth address must be valid \(error)")
+                }
+            }, noticeHandler: { (_) in
+                exp.fulfill()
+            })
+        }
+        
+        //assert
+        waitForExpectations(timeout: Constants.timeout) { error in
+            XCTAssertTrue(isSuccess)
+        }
+    }
+    
+    func testGetEthAddress() {
+        
+        //arrange
+        echo = ECHO(settings: Settings(build: {
+            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+            $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .det)
+        }))
+        let exp = expectation(description: "testGetEthAddress")
+        var addresses: [EthAddress]? = nil
+        
+        //act
+        echo.start { [unowned self] (result) in
+            
+            self.echo.getEthAddress(nameOrId: Constants.defaultName, completion: { (result) in
+                switch result {
+                case .success(let result):
+                    addresses = result
+                    exp.fulfill()
+                case .failure(let error):
+                    XCTFail("Get eth address must be valid \(error)")
+                }
+            })
+        }
+        
+        //assert
+        waitForExpectations(timeout: Constants.timeout) { error in
+            XCTAssertNotNil(addresses)
+            XCTAssertTrue(addresses?.count == 1)
+        }
+    }
+    
+    func testWithdrawalEth() {
+        
+        //arrange
+        echo = ECHO(settings: Settings(build: {
+            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+            $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .det)
+        }))
+        let exp = expectation(description: "testWithdrawalEth")
+        var isSuccess = false
+        
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.withdrawalEth(nameOrId: Constants.defaultName,
+                                    passwordOrWif: .password(Constants.defaultPass),
+                                    toEthAddress: Constants.defaultETHAddress,
+                                    amount: 1,
+                                    assetForFee: nil,
+                                    completion: { (result) in
+                
+                switch result {
+                case .success(let result):
+                    isSuccess = result
+                case .failure(let error):
+                    XCTFail("Generate eth address must be valid \(error)")
+                }
+            }, noticeHandler: { (_) in
+                exp.fulfill()
+            })
+        }
+        
+        //assert
+        waitForExpectations(timeout: Constants.timeout) { error in
+            XCTAssertTrue(isSuccess)
+        }
+    }
 }

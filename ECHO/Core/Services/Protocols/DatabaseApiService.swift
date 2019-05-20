@@ -178,4 +178,13 @@ protocol DatabaseApiService: BaseApiService {
      - Parameter completion: Callback which [Bool](Bool) as result of call or error
  */
     func subscribeContracts(contractsIds: [String], completion: @escaping Completion<Bool>)
+    
+/**
+     Get created ETH addresses
+     
+     - Parameter accountId: Accoint id
+     - Parameter completion: Callback in which the information will return [EthAddress](EthAddress) objects or error
+ */
+    func getEthAddress(accountId: String,
+                       completion: @escaping Completion<[EthAddress]>)
 }

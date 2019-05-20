@@ -50,9 +50,9 @@ struct Constants {
     
     static var nodeUrl: String {
         if let value = Constants.infoForKey(ConstantsKeys.nodeUrlKey) {
-            return "wss://" + value
+            return "ws://" + value
         } else {
-            return "wss://testnet.echo-dev.io"
+            return "ws://testnet.echo-dev.io"
         }
     }
     

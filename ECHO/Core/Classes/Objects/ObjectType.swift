@@ -37,7 +37,9 @@ public enum ObjectType: Int {
     case contract
     case contractResult
     case blockResult
-    case sidechainTransfer
+    case ethAddress
+    case depositEth
+    case withdrawEth
     case globalProperty
     case dynamicGlobalProperty
     case reserved0
@@ -56,6 +58,7 @@ public enum ObjectType: Int {
     case contractBalance
     case contractHistory
     case contractStatistics
+    case accountAddress
     case undefined
     
     func getGenericObjectId() -> String? {
@@ -90,7 +93,9 @@ public enum ObjectType: Int {
              .contract,
              .contractResult,
              .blockResult,
-             .sidechainTransfer:
+             .ethAddress,
+             .depositEth,
+             .withdrawEth:
             space = .protocolSpace
         case .globalProperty,
              .dynamicGlobalProperty,
@@ -109,7 +114,8 @@ public enum ObjectType: Int {
              .collateralBid,
              .contractBalance,
              .contractHistory,
-             .contractStatistics:
+             .contractStatistics,
+             .accountAddress:
             space = .implementationSpace
         case .undefined:
             space = .undefined

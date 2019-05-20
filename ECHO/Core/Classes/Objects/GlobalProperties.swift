@@ -292,9 +292,9 @@ public struct SidechainConfig: Decodable {
     }
     
     let ethContractAddress: String
-    let ethCommitteeUpdateMethod: SidechainMethod
-    let ethGenAddressMethod: SidechainMethod
-    let ethWithdrawMethod: SidechainMethod
+    let ethCommitteeUpdateMethod: EthMethod
+    let ethGenAddressMethod: EthMethod
+    let ethWithdrawMethod: EthMethod
     let ethCommitteeUpdatedTopic: String
     let ethGenAddressTopic: String
     let ethDepositTopic: String
@@ -302,9 +302,9 @@ public struct SidechainConfig: Decodable {
     let ETHAssetId: String
     
     public init(ethContractAddress: String,
-                ethCommitteeUpdateMethod: SidechainMethod,
-                ethGenAddressMethod: SidechainMethod,
-                ethWithdrawMethod: SidechainMethod,
+                ethCommitteeUpdateMethod: EthMethod,
+                ethGenAddressMethod: EthMethod,
+                ethWithdrawMethod: EthMethod,
                 ethCommitteeUpdatedTopic: String,
                 ethGenAddressTopic: String,
                 ethDepositTopic: String,
@@ -327,9 +327,9 @@ public struct SidechainConfig: Decodable {
         let values = try decoder.container(keyedBy: SidechainConfigCodingKeys.self)
         
         ethContractAddress = try values.decode(String.self, forKey: .ethContractAddress)
-        ethCommitteeUpdateMethod = try values.decode(SidechainMethod.self, forKey: .ethCommitteeUpdateMethod)
-        ethGenAddressMethod = try values.decode(SidechainMethod.self, forKey: .ethGenAddressMethod)
-        ethWithdrawMethod = try values.decode(SidechainMethod.self, forKey: .ethWithdrawMethod)
+        ethCommitteeUpdateMethod = try values.decode(EthMethod.self, forKey: .ethCommitteeUpdateMethod)
+        ethGenAddressMethod = try values.decode(EthMethod.self, forKey: .ethGenAddressMethod)
+        ethWithdrawMethod = try values.decode(EthMethod.self, forKey: .ethWithdrawMethod)
         ethCommitteeUpdatedTopic = try values.decode(String.self, forKey: .ethCommitteeUpdatedTopic)
         ethGenAddressTopic = try values.decode(String.self, forKey: .ethGenAddressTopic)
         ethDepositTopic = try values.decode(String.self, forKey: .ethDepositTopic)
@@ -338,9 +338,9 @@ public struct SidechainConfig: Decodable {
     }
 }
 
-public struct SidechainMethod: Decodable {
+public struct EthMethod: Decodable {
     
-    private enum SidechainMethodCodingKeys: String, CodingKey {
+    private enum EthMethodCodingKeys: String, CodingKey {
         case method
         case gas
     }
@@ -356,7 +356,7 @@ public struct SidechainMethod: Decodable {
     
     public init(from decoder: Decoder) throws {
         
-        let values = try decoder.container(keyedBy: SidechainMethodCodingKeys.self)
+        let values = try decoder.container(keyedBy: EthMethodCodingKeys.self)
         
         method = try values.decode(String.self, forKey: .method)
         gas = try values.decode(IntOrString.self, forKey: .gas)
