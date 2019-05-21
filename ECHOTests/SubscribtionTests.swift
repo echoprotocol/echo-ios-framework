@@ -50,7 +50,7 @@ class SubscribtionTests: XCTestCase {
         
         //assert
         waitForExpectations(timeout: timeout) { error in
-            XCTAssertEqual(delegate.delegateEvents, 3)
+            XCTAssertEqual(delegate.delegateEvents, 2)
         }
     }
     

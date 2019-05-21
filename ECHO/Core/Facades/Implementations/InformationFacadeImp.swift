@@ -527,6 +527,18 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                     historyItem.operation = operation
                 }
                 
+                if var operation = operation as? GenerateEthAddressOperation {
+                    let account = self?.findAccountIn(accounts, accountId: operation.account.id)
+                    operation.changeAccount(account: account)
+                    historyItem.operation = operation
+                }
+                
+                if var operation = operation as? WithdrawalEthOperation {
+                    let account = self?.findAccountIn(accounts, accountId: operation.account.id)
+                    operation.changeAccount(account: account)
+                    historyItem.operation = operation
+                }
+                
                 history[index] = historyItem
             }
             
@@ -618,6 +630,18 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                     let feeAsset = self?.findAssetsIn(assets, assetId: operation.fee.asset.id)
                     let transferAsset = self?.findAssetsIn(assets, assetId: operation.transferAmount.asset.id)
                     operation.changeAssets(feeAsset: feeAsset, transferAmount: transferAsset)
+                    historyItem.operation = operation
+                }
+                
+                if var operation = operation as? GenerateEthAddressOperation {
+                    let feeAsset = self?.findAssetsIn(assets, assetId: operation.fee.asset.id)
+                    operation.changeAssets(feeAsset: feeAsset)
+                    historyItem.operation = operation
+                }
+                
+                if var operation = operation as? WithdrawalEthOperation {
+                    let feeAsset = self?.findAssetsIn(assets, assetId: operation.fee.asset.id)
+                    operation.changeAssets(feeAsset: feeAsset)
                     historyItem.operation = operation
                 }
 
@@ -728,6 +752,16 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                 accountsIds.insert(operation.toAccount.id)
                 return
             }
+            
+            if let operation = operation as? GenerateEthAddressOperation {
+                accountsIds.insert(operation.account.id)
+                return
+            }
+            
+            if let operation = operation as? WithdrawalEthOperation {
+                accountsIds.insert(operation.account.id)
+                return
+            }
         }
         
         return accountsIds
@@ -743,20 +777,19 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                 return
             }
             
+            assetsIds.insert(operation.fee.asset.id)
+            
             if let operation = operation as? TransferOperation {
-                assetsIds.insert(operation.fee.asset.id)
                 assetsIds.insert(operation.transferAmount.asset.id)
                 return
             }
             
             if let operation = operation as? CallContractOperation {
-                assetsIds.insert(operation.fee.asset.id)
                 assetsIds.insert(operation.value.asset.id)
                 return
             }
             
             if let operation = operation as? CreateContractOperation {
-                assetsIds.insert(operation.fee.asset.id)
                 assetsIds.insert(operation.value.asset.id)
                 if let supportedAssetId = operation.supportedAsset.object?.id {
                     assetsIds.insert(supportedAssetId)
@@ -764,31 +797,18 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                 return
             }
             
-            if let operation = operation as? AccountCreateOperation {
-                assetsIds.insert(operation.fee.asset.id)
-                return
-            }
-            
-            if let operation = operation as? AccountUpdateOperation {
-                assetsIds.insert(operation.fee.asset.id)
-                return
-            }
-            
             if let operation = operation as? CreateAssetOperation {
-                assetsIds.insert(operation.fee.asset.id)
                 if let assetId = $0.result[safe: 1] as? String {
                     assetsIds.insert(assetId)
                 }
             }
             
             if let operation = operation as? IssueAssetOperation {
-                assetsIds.insert(operation.fee.asset.id)
                 assetsIds.insert(operation.assetToIssue.asset.id)
                 return
             }
             
             if let operation = operation as? ContractTransferOperation {
-                assetsIds.insert(operation.fee.asset.id)
                 assetsIds.insert(operation.transferAmount.asset.id)
                 return
             }

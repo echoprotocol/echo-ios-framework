@@ -55,6 +55,11 @@ public struct WithdrawalEthOperation: BaseOperation {
         if let account = account { self.account = account }
     }
     
+    mutating func changeAssets(feeAsset: Asset?) {
+        
+        if let feeAsset = feeAsset { self.fee = AssetAmount(amount: fee.amount, asset: feeAsset) }
+    }
+    
     // MARK: ECHOCodable
     
     public func toData() -> Data? {

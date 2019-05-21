@@ -117,8 +117,6 @@ final class SocketMessengerStub: SocketMessenger {
     func makeUserAccountTransferChangeEvent() {
         onText?(TransactionEventEventNotificationStub.response1)
         onText?(TransactionEventEventNotificationStub.response2)
-        onText?(TransactionEventEventNotificationStub.response3)
-        onText?(TransactionEventEventNotificationStub.response4)
     }
     
     func makeContractLogCreateEvent() {
@@ -303,7 +301,7 @@ final class SocketMessengerStub: SocketMessenger {
         }
         
         let revealHolder = RevealAPISocketStubsHolder()
-        let stubHolder = CreateEthAddressStubHolder()
+        let stubHolder = SubscribeToAccountStubHodler()
         
         if let revealResponse = revealHolder.response(id: tuple.id, operationType: tuple.operationType) {
             return revealResponse
