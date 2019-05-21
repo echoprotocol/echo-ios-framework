@@ -52,7 +52,7 @@ public struct GenerateEthAddressOperation: BaseOperation {
     public func toData() -> Data? {
         
         var data = Data()
-//        data.append(optional: fee.toData())
+        data.append(optional: fee.toData())
         data.append(optional: account.toData())
         
         data.append(optional: extensions.toData())

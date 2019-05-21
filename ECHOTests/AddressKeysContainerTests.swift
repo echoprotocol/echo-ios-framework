@@ -21,13 +21,14 @@ class AddressKeysContainerTests: XCTestCase {
         // If you want to use different seed change params into AddressKeysContainer
         
         //act
-        let keychainActive = ECHOKeychainSecp256k1(name: name, password: password, type: .active, core: cryptoCore)
-        let keychainEchorand = ECHOKeychainEd25519(name: name, password: password, type: .active, core: cryptoCore)
+        let keychainActive = ECHOKeychainEd25519(name: name, password: password, type: .active, core: cryptoCore)
+        let edcaKeychainActive = ECHOKeychainSecp256k1(name: name, password: password, type: .active, core: cryptoCore)
+        let keychainEchorand = ECHOKeychainEd25519(name: name, password: password, type: .echorand, core: cryptoCore)
         let container = AddressKeysContainer(login: name, password: password, core: cryptoCore)
         
         //assert
         XCTAssertEqual(keychainActive?.publicAddress(), container?.activeKeychain.publicAddress())
-        XCTAssertEqual(keychainActive?.publicAddress(), container?.memoKeychain.publicAddress())
+        XCTAssertEqual(edcaKeychainActive?.publicAddress(), container?.memoKeychain.publicAddress())
         XCTAssertEqual(keychainEchorand?.publicAddress(), container?.echorandKeychain.publicAddress())
     }    
 }

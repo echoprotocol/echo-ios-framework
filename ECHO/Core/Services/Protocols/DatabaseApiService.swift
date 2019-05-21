@@ -165,13 +165,6 @@ protocol DatabaseApiService: BaseApiService {
                                      completion: @escaping Completion<String>)
     
 /**
-     Retrieve all sidechain transfers for specific ETH Address
-     
-     - Parameter completion: Callback which returns [[SidechainTransfer]](SidechainTransfer) or error
- */
-    func getSidechainTransfers(for ethAddress: String, completion: @escaping Completion<[SidechainTransfer]>)
-    
-/**
      Subscribes to listening contracts changes
      
      - Parameter contractsIds: Contracts ids for subscribe

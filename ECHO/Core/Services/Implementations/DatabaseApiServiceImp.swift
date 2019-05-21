@@ -155,17 +155,6 @@ extension BlocksAndTransactionsService {
         
         socketCore.send(operation: operation)
     }
-    
-    func getSidechainTransfers(for ethAddress: String, completion: @escaping Completion<[SidechainTransfer]>) {
-        
-        let operation = GetSidechainTransfersSocketOperation(method: .call,
-                                                             operationId: socketCore.nextOperationId(),
-                                                             apiId: apiIdentifire,
-                                                             ethAddress: ethAddress,
-                                                             completion: completion)
-        
-        socketCore.send(operation: operation)
-    }
 }
 
 extension SubscriptionService {

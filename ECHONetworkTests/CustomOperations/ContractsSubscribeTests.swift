@@ -53,7 +53,7 @@ class ContractsSubscribeTests: XCTestCase, SubscribeContractsDelegate {
                                        amount: 0,
                                        assetForFee: nil,
                                        contratId: Constants.logsContract,
-                                       methodName: "test",
+                                       methodName: Constants.defaultLogsContractMethod,
                                        methodParams: [AbiTypeValueInputModel.init(type: .uint(size: 256), value: "1")],
                                        completion: { (result) in
                     switch result {

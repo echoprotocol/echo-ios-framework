@@ -60,7 +60,7 @@ public struct WithdrawalEthOperation: BaseOperation {
     public func toData() -> Data? {
         
         var data = Data()
-//        data.append(optional: fee.toData())
+        data.append(optional: fee.toData())
         data.append(optional: account.toData())
         
         data.append(optional: Data.fromUIntLikeUnsignedByteArray(UInt(ethAddress.count)))

@@ -23,6 +23,9 @@ enum OperationsState {
     case subscribeToAccount
     case subscribeToConsractLogs
     case getBlock
+    case createEthAddress
+    case getEthAddress
+    case withdrawalEth
 }
 
 final class SocketMessengerStub: SocketMessenger {
@@ -95,6 +98,12 @@ final class SocketMessengerStub: SocketMessenger {
             response = getSubscribeToConstractLogsResponse(request: string)
         case .getBlock:
             response = getGetBlockResponce(request: string)
+        case .createEthAddress:
+            response = getCreateEthAddressRespone(request: string)
+        case .getEthAddress:
+            response = getEthAddressRespone(request: string)
+        case .withdrawalEth:
+            response = getWithdrawalEthRespone(request: string)
         }
     
         if let response = response {
@@ -294,7 +303,7 @@ final class SocketMessengerStub: SocketMessenger {
         }
         
         let revealHolder = RevealAPISocketStubsHolder()
-        let stubHolder = SubscribeToAccountStubHodler()
+        let stubHolder = CreateEthAddressStubHolder()
         
         if let revealResponse = revealHolder.response(id: tuple.id, operationType: tuple.operationType) {
             return revealResponse
@@ -390,6 +399,60 @@ final class SocketMessengerStub: SocketMessenger {
             return revealResponse
         } else if let response = stubHolder.response(id: tuple.id, operationType: tuple.operationType) {
             return response
+        }
+        
+        return nil
+    }
+    
+    fileprivate func getCreateEthAddressRespone(request: String) -> String? {
+        
+        guard let tuple = parceRequest(request: request) else {
+            return nil
+        }
+        
+        let revealHolder = RevealAPISocketStubsHolder()
+        let stubHolder = CreateEthAddressStubHolder()
+        
+        if let revealResponse = revealHolder.response(id: tuple.id, operationType: tuple.operationType) {
+            return revealResponse
+        } else if let transferResponse = stubHolder.response(id: tuple.id, operationType: tuple.operationType) {
+            return transferResponse
+        }
+        
+        return nil
+    }
+    
+    fileprivate func getEthAddressRespone(request: String) -> String? {
+        
+        guard let tuple = parceRequest(request: request) else {
+            return nil
+        }
+        
+        let revealHolder = RevealAPISocketStubsHolder()
+        let stubHolder = GetEthAddressStubHolder()
+        
+        if let revealResponse = revealHolder.response(id: tuple.id, operationType: tuple.operationType) {
+            return revealResponse
+        } else if let transferResponse = stubHolder.response(id: tuple.id, operationType: tuple.operationType) {
+            return transferResponse
+        }
+        
+        return nil
+    }
+    
+    fileprivate func getWithdrawalEthRespone(request: String) -> String? {
+        
+        guard let tuple = parceRequest(request: request) else {
+            return nil
+        }
+        
+        let revealHolder = RevealAPISocketStubsHolder()
+        let stubHolder = WithdrawalEthStubHolder()
+        
+        if let revealResponse = revealHolder.response(id: tuple.id, operationType: tuple.operationType) {
+            return revealResponse
+        } else if let transferResponse = stubHolder.response(id: tuple.id, operationType: tuple.operationType) {
+            return transferResponse
         }
         
         return nil

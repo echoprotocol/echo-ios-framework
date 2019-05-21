@@ -34,7 +34,7 @@ class SubscribtionTests: XCTestCase {
         let delegate = SubscribeAccountDelegateStub()
         strongDelegate = delegate
         let exp = expectation(description: "Delegate Call")
-        let username = "1.2.33"
+        let username = "1.2.29"
         
         //act
         echo.start { [unowned self] (result) in
@@ -120,7 +120,7 @@ class SubscribtionTests: XCTestCase {
         let delegate = SubscribeContractLogsDelegateStub(exp: exp)
         strongContractLogDelegate = delegate
         
-        let contratId = "1.16.804"
+        let contratId = "1.14.804"
         
         //act
         echo.start { [unowned self] (result) in

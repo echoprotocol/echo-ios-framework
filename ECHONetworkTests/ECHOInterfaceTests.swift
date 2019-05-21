@@ -236,7 +236,7 @@ class ECHOInterfaceTests: XCTestCase {
         let userId = Constants.defaultName
         let startId = "1.10.0"
         let stopId = "1.10.0"
-        let limit = 2
+        let limit = 100
         var history: [HistoryItem]!
         
         //act
@@ -1214,7 +1214,7 @@ class ECHOInterfaceTests: XCTestCase {
 //        var asset = Asset("")
 //        asset.symbol = "SHAR"
 //        asset.precision = 4
-//        asset.issuer = Account("1.2.32")
+//        asset.issuer = Account("1.2.29")
 ////        asset.setBitsassetOptions(BitassetOptions(feedLifetimeSec: 86400,
 ////                                                  minimumFeeds: 7,
 ////                                                  forceSettlementDelaySec: 86400,
@@ -1273,7 +1273,7 @@ class ECHOInterfaceTests: XCTestCase {
 //
 //            self.echo.issueAsset(issuerNameOrId: nameOrId,
 //                                 passwordOrWif: PassOrWif.password(password),
-//                                 asset: "1.3.2",//Constants.defaultAnotherAsset,
+//                                 asset: Constants.defaultAnotherAsset,
 //                                 amount: 10000000,
 //                                 destinationIdOrName: Constants.defaultName,
 //                                 message: nil, completion: { (result) in
@@ -1666,7 +1666,7 @@ class ECHOInterfaceTests: XCTestCase {
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .det)
         }))
         let exp = expectation(description: "testCreateContract")
-        let byteCode = Constants.counterContractByteCode
+        let byteCode = Constants.logContractByteCode
         var success = false
 
         //act
@@ -1866,9 +1866,9 @@ class ECHOInterfaceTests: XCTestCase {
         let registrarNameOrId = Constants.defaultName
         let password = Constants.defaultPass
         let assetId = Constants.defaultAsset
-        let contratId = Constants.counterContract
-        let methodName = Constants.defaultCallContractMethod
-        let params: [AbiTypeValueInputModel] = []
+        let contratId = Constants.logsContract//Constants.counterContract
+        let methodName = "test"//Constants.defaultCallContractMethod
+        let params: [AbiTypeValueInputModel] = [AbiTypeValueInputModel.init(type: .uint(size: 256), value: "1")]
         var success = false
 
         //act
@@ -2195,39 +2195,39 @@ class ECHOInterfaceTests: XCTestCase {
         }
     }
     
-    func testGenerateEthAddress() {
-        
-        //arrange
-        echo = ECHO(settings: Settings(build: {
-            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
-            $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .det)
-        }))
-        let exp = expectation(description: "testGenerateEthAddress")
-        var isSuccess = false
-        
-        //act
-        echo.start { [unowned self] (result) in
-            self.echo.generateEthAddress(nameOrId: Constants.defaultName,
-                                         passwordOrWif: .password(Constants.defaultPass),
-                                         assetForFee: nil,
-                                         completion: { (result) in
-                
-                switch result {
-                case .success(let result):
-                    isSuccess = result
-                case .failure(let error):
-                    XCTFail("Generate eth address must be valid \(error)")
-                }
-            }, noticeHandler: { (_) in
-                exp.fulfill()
-            })
-        }
-        
-        //assert
-        waitForExpectations(timeout: Constants.timeout) { error in
-            XCTAssertTrue(isSuccess)
-        }
-    }
+//    func testGenerateEthAddress() {
+//
+//        //arrange
+//        echo = ECHO(settings: Settings(build: {
+//            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+//            $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .det)
+//        }))
+//        let exp = expectation(description: "testGenerateEthAddress")
+//        var isSuccess = false
+//
+//        //act
+//        echo.start { [unowned self] (result) in
+//            self.echo.generateEthAddress(nameOrId: Constants.defaultName,
+//                                         passwordOrWif: .password(Constants.defaultPass),
+//                                         assetForFee: nil,
+//                                         completion: { (result) in
+//
+//                switch result {
+//                case .success(let result):
+//                    isSuccess = result
+//                case .failure(let error):
+//                    XCTFail("Generate eth address must be valid \(error)")
+//                }
+//            }, noticeHandler: { (_) in
+//                exp.fulfill()
+//            })
+//        }
+//
+//        //assert
+//        waitForExpectations(timeout: Constants.timeout) { error in
+//            XCTAssertTrue(isSuccess)
+//        }
+//    }
     
     func testGetEthAddress() {
         
