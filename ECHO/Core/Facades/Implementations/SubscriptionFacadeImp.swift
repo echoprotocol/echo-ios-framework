@@ -159,7 +159,9 @@ final public class SubscriptionFacadeImp: SubscriptionFacade {
                     }
                     
                     // Find dynamic global properties changes
-                    dynamicGlobalProperties = findDynamicGlobalPropeties(object: object)
+                    if let findedDynamicGlobalProperties = findDynamicGlobalPropeties(object: object) {
+                        dynamicGlobalProperties = findedDynamicGlobalProperties
+                    }
                     
                     // Find contract
                     if let contract = findContracts(object: object) {
