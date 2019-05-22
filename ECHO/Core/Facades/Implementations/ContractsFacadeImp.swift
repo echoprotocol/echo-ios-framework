@@ -128,6 +128,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
     public func createContract(registrarNameOrId: String,
                                passwordOrWif: PassOrWif,
                                assetId: String,
+                               amount: UInt?,
                                assetForFee: String?,
                                byteCode: String,
                                supportedAssetId: String?,
@@ -146,6 +147,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
         createContract(registrarNameOrId: registrarNameOrId,
                        passwordOrWif: passwordOrWif,
                        assetId: assetId,
+                       amount: amount,
                        assetForFee: assetForFee,
                        byteCode: completedBytecode,
                        supportedAssetId: supportedAssetId,
@@ -157,6 +159,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
     public func createContract(registrarNameOrId: String,
                                passwordOrWif: PassOrWif,
                                assetId: String,
+                               amount: UInt?,
                                assetForFee: String?,
                                byteCode: String,
                                supportedAssetId: String?,
@@ -193,7 +196,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
         // Operation
         createQueue.saveValue(byteCode, forKey: ContractKeys.byteCode.rawValue)
         let bildCreateContractOperation = createBildCreateContractOperation(createQueue,
-                                                                            0,
+                                                                            amount ?? 0,
                                                                             assetId,
                                                                             assetForFee,
                                                                             supportedAssetId,

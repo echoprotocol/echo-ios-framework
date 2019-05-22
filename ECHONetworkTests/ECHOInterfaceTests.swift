@@ -1470,8 +1470,8 @@ class ECHOInterfaceTests: XCTestCase {
         }))
         let exp = expectation(description: "testFailGetContractLogs")
         let contractId = "1.13.1880"
-        let fromBlock = 175708 - 10//Constants.contractLogsFromBlock - 10
-        let toBlock = 175708 + 10//Constants.contractLogsToBlock - 10
+        let fromBlock = Constants.contractLogsFromBlock - 100
+        let toBlock = Constants.contractLogsToBlock - 100
         var error: ECHOError = ECHOError.undefined
         
         //act
@@ -1675,6 +1675,7 @@ class ECHOInterfaceTests: XCTestCase {
             self.echo.createContract(registrarNameOrId: Constants.defaultName,
                                      passwordOrWif: PassOrWif.password(Constants.defaultPass),
                                      assetId: Constants.defaultAsset,
+                                     amount: nil,
                                      assetForFee: nil,
                                      byteCode: byteCode,
                                      supportedAssetId: nil,
@@ -1716,6 +1717,7 @@ class ECHOInterfaceTests: XCTestCase {
             self.echo.createContract(registrarNameOrId: Constants.defaultName,
                                      passwordOrWif: PassOrWif.password(Constants.defaultPass),
                                      assetId: Constants.defaultAsset,
+                                     amount: nil,
                                      assetForFee: nil,
                                      byteCode: byteCode,
                                      supportedAssetId: nil,
@@ -1759,6 +1761,7 @@ class ECHOInterfaceTests: XCTestCase {
             self.echo.createContract(registrarNameOrId: Constants.defaultName,
                                      passwordOrWif: PassOrWif.wif(wif),
                                      assetId: Constants.defaultAsset,
+                                     amount: nil,
                                      assetForFee: nil,
                                      byteCode: byteCode,
                                      supportedAssetId: nil,
