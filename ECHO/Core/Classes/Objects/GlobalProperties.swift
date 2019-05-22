@@ -291,15 +291,15 @@ public struct SidechainConfig: Decodable {
         case ETHAssetId = "ETH_asset_id"
     }
     
-    let ethContractAddress: String
-    let ethCommitteeUpdateMethod: EthMethod
-    let ethGenAddressMethod: EthMethod
-    let ethWithdrawMethod: EthMethod
-    let ethCommitteeUpdatedTopic: String
-    let ethGenAddressTopic: String
-    let ethDepositTopic: String
-    let ethWithdrawTopic: String
-    let ETHAssetId: String
+    public let ethContractAddress: String
+    public let ethCommitteeUpdateMethod: EthMethod
+    public let ethGenAddressMethod: EthMethod
+    public let ethWithdrawMethod: EthMethod
+    public let ethCommitteeUpdatedTopic: String
+    public let ethGenAddressTopic: String
+    public let ethDepositTopic: String
+    public let ethWithdrawTopic: String
+    public let ETHAssetId: String
     
     public init(ethContractAddress: String,
                 ethCommitteeUpdateMethod: EthMethod,
