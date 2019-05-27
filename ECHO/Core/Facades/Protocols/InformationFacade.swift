@@ -33,10 +33,12 @@ public protocol InformationFacade {
      - Parameter name: The name of new account
      - Parameter password: The password wich will be used for create private keys
      - Parameter completion: Callback which returns bool result or error
+     - Parameter noticeHandler: Callback which returns wher account has been created
  */
     func registerAccount(name: String,
                          password: String,
-                         completion: @escaping Completion<Bool>)
+                         completion: @escaping Completion<Bool>,
+                         noticeHandler: NoticeHandler?)
     
 /**
      Account function
@@ -81,11 +83,4 @@ public protocol InformationFacade {
      - Parameter completion: Callback which returns [GlobalProperties](GlobalProperties) or error
  */
     func getGlobalProperties(completion: @escaping Completion<GlobalProperties>)
-    
-/**
-     Retrieve all sidechain transfers for specific ETH Address
-     
-     - Parameter completion: Callback which returns [[SidechainTransfer]](SidechainTransfer) or error
- */
-    func getSidechainTransfers(for ethAddress: String, completion: @escaping Completion<[SidechainTransfer]>)
 }

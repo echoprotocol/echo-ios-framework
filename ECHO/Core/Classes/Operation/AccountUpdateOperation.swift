@@ -13,7 +13,6 @@ public struct AccountUpdateOperation: BaseOperation {
     
     enum AccountUpdateOperationCodingKeys: String, CodingKey {
         case account
-        case owner
         case active
         case newOptions = "new_options"
         case extensions
@@ -26,23 +25,20 @@ public struct AccountUpdateOperation: BaseOperation {
     public var fee: AssetAmount
     
     public var account: Account
-    public let owner: OptionalValue<Authority>
     public let active: OptionalValue<Authority>
     public let newOptions: OptionalValue<AccountOptions>
     
-    public var edKey: String?
+    public var edKey: Address?
     
     public init(account: Account,
-                owner: Authority?,
                 active: Authority?,
-                edKey: String?,
+                edKey: Address?,
                 options: AccountOptions?,
                 fee: AssetAmount) {
         
         type = .accountUpdateOperation
         
         self.account = account
-        self.owner = OptionalValue<Authority>(owner)
         self.active = OptionalValue<Authority>(active)
         self.newOptions = OptionalValue<AccountOptions>(options)
         self.edKey = edKey
@@ -59,16 +55,16 @@ public struct AccountUpdateOperation: BaseOperation {
         let accountId = try values.decode(String.self, forKey: .account)
         account = Account(accountId)
         
-        let ownerValue = try values.decode(Authority.self, forKey: .owner)
         let activeValue = try values.decode(Authority.self, forKey: .active)
         let newOptionsValue = try values.decode(AccountOptions.self, forKey: .newOptions)
         
-        owner = OptionalValue(ownerValue)
         active = OptionalValue(activeValue)
         newOptions = OptionalValue(newOptionsValue)
         
         fee = try values.decode(AssetAmount.self, forKey: .fee)
-        edKey = try? values.decode(String.self, forKey: .edKey)
+        if let edKeyString = try? values.decode(String.self, forKey: .edKey) {
+            edKey = Address(edKeyString, data: nil)
+        }
     }
     
     mutating func changeAccount(_ account: Account?) {
@@ -83,11 +79,10 @@ public struct AccountUpdateOperation: BaseOperation {
         var data = Data()
         data.append(optional: fee.toData())
         data.append(optional: account.toData())
-        data.append(optional: owner.toData())
         data.append(optional: active.toData())
         if let edKey = edKey {
             data.append(1)
-            data.append(optional: Data(hex: edKey))
+            data.append(optional: edKey.toData())
         } else {
             data.append(0)
         }
@@ -106,12 +101,8 @@ public struct AccountUpdateOperation: BaseOperation {
         
         var dictionary: [AnyHashable: Any?] = [AccountUpdateOperationCodingKeys.fee.rawValue: fee.toJSON(),
                                                AccountUpdateOperationCodingKeys.account.rawValue: account.toJSON(),
-                                               AccountUpdateOperationCodingKeys.edKey.rawValue: edKey,
+                                               AccountUpdateOperationCodingKeys.edKey.rawValue: edKey?.toJSON(),
                                                AccountUpdateOperationCodingKeys.extensions.rawValue: extensions.toJSON()]
-        
-        if owner.isSet() {
-            dictionary[AccountUpdateOperationCodingKeys.owner.rawValue] = owner.toJSON()
-        }
         
         if active.isSet() {
             dictionary[AccountUpdateOperationCodingKeys.active.rawValue] = active.toJSON()

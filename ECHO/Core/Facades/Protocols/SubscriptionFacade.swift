@@ -28,6 +28,15 @@ public protocol SubscribeBlockDelegate: class {
 }
 
 /**
+    The interface of the class that allows you to receive notification about contracts changes
+ */
+public protocol SubscribeContractsDelegate: class {
+    
+    func contractUpdated(contract: Contract)
+    func contractHistoryCreated(historyObject: ContractHistory)
+}
+
+/**
     The interface of the class that allows you to receive notification about the create new logs from specific contract
  */
 public protocol SubscribeContractLogsDelegate: class {
@@ -94,6 +103,25 @@ public protocol SubscriptionFacade {
      Removing a listener to the block create
  */
     func unsubscribeToBlock()
+    
+/**
+     Adding a listener to contracts changes by contracts ids
+     
+     - Parameter contractsIds: Ids of the contracts for subscribe
+     - Parameter delegate: The class that will receive notifications
+     
+     - Remark:
+     Delegate must be a class
+ */
+    func subscribeContracts(contractsIds: [String], delegate: SubscribeContractsDelegate)
+    
+/**
+     Removing a listener to the contracts changes
+     
+     - Parameter contractIds: Ids of the contracts for unsubscribe
+     - Parameter delegate: The class that will receive contracts change notifications
+ */
+    func unsubscribeToContracts(contractIds: [String], delegate: SubscribeContractsDelegate)
     
 /**
      Adding a listener to the new contract logs

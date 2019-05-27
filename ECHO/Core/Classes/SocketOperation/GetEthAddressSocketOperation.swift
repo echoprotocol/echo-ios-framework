@@ -1,58 +1,59 @@
 //
-//  GetSidechainTransfersSocketOperation.swift
+//  GetEthAddressSocketOperation.swift
 //  ECHO
 //
-//  Created by Vladimir Sharaev on 11/03/2019.
+//  Created by Vladimir Sharaev on 20/05/2019.
 //  Copyright © 2019 PixelPlex. All rights reserved.
 //
 
 /**
- Retrieve all sidechain transfers for ETH Address
+    Get created ETH addresses for account by ID
  
- - Return: [[SidechainTransfer]](SidechainTransfer)
+    - Return: [[EthAddress]](EthAddress)
  */
-struct GetSidechainTransfersSocketOperation: SocketOperation {
+struct GetEthAddressSocketOperation: SocketOperation {
     
     var method: SocketOperationType
     var operationId: Int
     var apiId: Int
-    var ethAddress: String
-    var completion: Completion<[SidechainTransfer]>
+    var accountId: String
+    var completion: Completion<[EthAddress]>
     
     func createParameters() -> [Any] {
         let array: [Any] = [apiId,
-                            SocketOperationKeys.getSidechainTransfers.rawValue,
-                            [ethAddress]]
+                            SocketOperationKeys.getEthAddress.rawValue,
+                            [accountId]]
         return array
     }
     
     func handleResponse(_ response: ECHODirectResponse) {
         
         do {
+            
             switch response.response {
             case .error(let error):
-                let result = Result<[SidechainTransfer], ECHOError>(error: ECHOError.internalError(error.message))
+                let result = Result<[EthAddress], ECHOError>(error: ECHOError.internalError(error.message))
                 completion(result)
             case .result(let result):
                 
                 switch result {
                 case .array(let array):
                     let data = try JSONSerialization.data(withJSONObject: array, options: [])
-                    let transfers = try JSONDecoder().decode([SidechainTransfer].self, from: data)
-                    let result = Result<[SidechainTransfer], ECHOError>(value: transfers)
+                    let accountIds = try JSONDecoder().decode([EthAddress].self, from: data)
+                    let result = Result<[EthAddress], ECHOError>(value: accountIds)
                     completion(result)
                 default:
                     throw ECHOError.encodableMapping
                 }
             }
         } catch {
-            let result = Result<[SidechainTransfer], ECHOError>(error: ECHOError.encodableMapping)
+            let result = Result<[EthAddress], ECHOError>(error: ECHOError.encodableMapping)
             completion(result)
         }
     }
     
     func forceEnd() {
-        let result = Result<[SidechainTransfer], ECHOError>(error: ECHOError.connectionLost)
+        let result = Result<[EthAddress], ECHOError>(error: ECHOError.connectionLost)
         completion(result)
     }
 }

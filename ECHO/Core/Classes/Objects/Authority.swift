@@ -16,13 +16,11 @@ public struct Authority: ECHOCodable, Decodable {
         case weightThreshold = "weight_threshold"
         case accountAuths = "account_auths"
         case keyAuths = "key_auths"
-        case extensions
     }
     
     public let weightThreshold: Int
     public let accountAuths: [AccountAuthority]
     public let keyAuths: [AddressAuthority]
-    public let extensions = Extensions()
     
     public init (weight: Int, keyAuth: [AddressAuthority], accountAuth: [AccountAuthority]) {
         
@@ -48,12 +46,15 @@ public struct Authority: ECHOCodable, Decodable {
         let authsCount = accountAuths.count + keyAuths.count
         data.append(optional: Data.fromInt8(authsCount))
         
+        // If the authority is not empty of references, we serialize its contents
+        // otherwise its only contribution will be a zero byte
         if authsCount == 0 {
             return data
         }
         
         data.append(optional: Data.fromInt32(weightThreshold))
         
+        // Serializing individual accounts and their corresponding weights
         let accountAuthsData = Data.fromArray(accountAuths) {
             return $0.toData()
         }
@@ -63,8 +64,6 @@ public struct Authority: ECHOCodable, Decodable {
             return $0.toData()
         }
         data.append(optional: addressAuthsData)
-        
-        data.append(optional: Data.fromInt8(extensions.size()))
         
         return data
     }
@@ -83,8 +82,7 @@ public struct Authority: ECHOCodable, Decodable {
         
         let dictionary: [AnyHashable: Any?] = [AuthorityCodingKeys.weightThreshold.rawValue: weightThreshold,
                                                AuthorityCodingKeys.keyAuths.rawValue: keyAuthsJSON,
-                                               AuthorityCodingKeys.accountAuths.rawValue: accountsAuthsJSON,
-                                               AuthorityCodingKeys.extensions.rawValue: extensions.toJSON()]
+                                               AuthorityCodingKeys.accountAuths.rawValue: accountsAuthsJSON]
         
         return dictionary
     }

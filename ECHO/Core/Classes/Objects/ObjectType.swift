@@ -20,12 +20,12 @@ public enum ObjectSpace: Int {
     Every element contains information about it's type and space
  */
 public enum ObjectType: Int {
-    case base = 1
+    case null = 0
+    case base
     case account
     case asset
     case forceSettlement
     case committeeMember
-    case witness
     case limitOrder
     case callOrder
     case custom
@@ -33,12 +33,16 @@ public enum ObjectType: Int {
     case operationHistory
     case withdrawPermission
     case vestingBalance
-    case worker
     case balance
     case contract
     case contractResult
+    case blockResult
+    case ethAddress
+    case depositEth
+    case withdrawEth
     case globalProperty
     case dynamicGlobalProperty
+    case reserved0
     case assetDynamicData
     case assetBitassetData
     case accountBalance
@@ -46,11 +50,15 @@ public enum ObjectType: Int {
     case transaction
     case blockSummary
     case accountTransactionHistory
-    case blindedBalance
     case chainProperty
-    case witnessSchedule
     case budgetRecord
     case specialAuthority
+    case buyback
+    case collateralBid
+    case contractBalance
+    case contractHistory
+    case contractStatistics
+    case accountAddress
     case undefined
     
     func getGenericObjectId() -> String? {
@@ -68,25 +76,30 @@ public enum ObjectType: Int {
     static func getSpace(type: ObjectType) -> ObjectSpace {
         var space: ObjectSpace
         switch type {
-        case .base,
+        case .null,
+             .base,
              .account,
              .asset,
              .forceSettlement,
              .committeeMember,
-             .witness, .limitOrder,
+             .limitOrder,
              .callOrder,
              .custom,
              .proposal,
              .operationHistory,
              .withdrawPermission,
              .vestingBalance,
-             .worker,
              .balance,
              .contract,
-             .contractResult:
+             .contractResult,
+             .blockResult,
+             .ethAddress,
+             .depositEth,
+             .withdrawEth:
             space = .protocolSpace
         case .globalProperty,
              .dynamicGlobalProperty,
+             .reserved0,
              .assetDynamicData,
              .assetBitassetData,
              .accountBalance,
@@ -94,11 +107,15 @@ public enum ObjectType: Int {
              .transaction,
              .blockSummary,
              .accountTransactionHistory,
-             .blindedBalance,
              .chainProperty,
-             .witnessSchedule,
              .budgetRecord,
-             .specialAuthority:
+             .specialAuthority,
+             .buyback,
+             .collateralBid,
+             .contractBalance,
+             .contractHistory,
+             .contractStatistics,
+             .accountAddress:
             space = .implementationSpace
         case .undefined:
             space = .undefined

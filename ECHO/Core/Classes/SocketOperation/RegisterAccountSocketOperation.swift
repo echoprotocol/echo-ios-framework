@@ -21,7 +21,7 @@ struct RegisterAccountSocketOperation: SocketOperation {
     func createParameters() -> [Any] {
         let array: [Any] = [apiId,
                             SocketOperationKeys.registerAccount.rawValue,
-                            [name, ownerKey, activeKey, memoKey, echorandKey]]
+                            [operationId, name, ownerKey, activeKey, memoKey, echorandKey]]
         return array
     }
     

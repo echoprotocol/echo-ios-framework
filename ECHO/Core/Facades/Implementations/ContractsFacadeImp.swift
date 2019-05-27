@@ -109,11 +109,6 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
         services.databaseService.getContracts(contractIds: contractIds, completion: completion)
     }
     
-    public func getAllContracts(completion: @escaping Completion<[ContractInfo]>) {
-        
-        services.databaseService.getAllContracts(completion: completion)
-    }
-    
     public func getContract(contractId: String, completion: @escaping Completion<ContractStructEnum>) {
         
         // Validate contractId
@@ -133,6 +128,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
     public func createContract(registrarNameOrId: String,
                                passwordOrWif: PassOrWif,
                                assetId: String,
+                               amount: UInt?,
                                assetForFee: String?,
                                byteCode: String,
                                supportedAssetId: String?,
@@ -151,6 +147,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
         createContract(registrarNameOrId: registrarNameOrId,
                        passwordOrWif: passwordOrWif,
                        assetId: assetId,
+                       amount: amount,
                        assetForFee: assetForFee,
                        byteCode: completedBytecode,
                        supportedAssetId: supportedAssetId,
@@ -162,6 +159,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
     public func createContract(registrarNameOrId: String,
                                passwordOrWif: PassOrWif,
                                assetId: String,
+                               amount: UInt?,
                                assetForFee: String?,
                                byteCode: String,
                                supportedAssetId: String?,
@@ -198,7 +196,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
         // Operation
         createQueue.saveValue(byteCode, forKey: ContractKeys.byteCode.rawValue)
         let bildCreateContractOperation = createBildCreateContractOperation(createQueue,
-                                                                            0,
+                                                                            amount ?? 0,
                                                                             assetId,
                                                                             assetForFee,
                                                                             supportedAssetId,
@@ -231,7 +229,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
                                               keychainType: KeychainType.active,
                                               saveKey: ContractKeys.transaction.rawValue,
                                               passwordOrWif: passwordOrWif,
-                                              networkPrefix: network.prefix.rawValue,
+                                              networkPrefix: network.echorandPrefix.rawValue,
                                               fromAccountKey: ContractKeys.registrarAccount.rawValue,
                                               operationKey: ContractKeys.operation.rawValue,
                                               chainIdKey: ContractKeys.chainId.rawValue,
@@ -394,7 +392,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
                                               keychainType: KeychainType.active,
                                               saveKey: ContractKeys.transaction.rawValue,
                                               passwordOrWif: passwordOrWif,
-                                              networkPrefix: network.prefix.rawValue,
+                                              networkPrefix: network.echorandPrefix.rawValue,
                                               fromAccountKey: ContractKeys.registrarAccount.rawValue,
                                               operationKey: ContractKeys.operation.rawValue,
                                               chainIdKey: ContractKeys.chainId.rawValue,

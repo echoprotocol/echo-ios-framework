@@ -10,6 +10,5 @@ struct GetContractInfoStubHodler: SocketRequestStubHodler {
     
     var requests: [SocketRequestStub] = [GetContractSocketRequestStub(),
                                          GetContractsSocketRequestStub(),
-                                         GetAllContractsSocketRequestStub(),
                                          GetContractResultSocketRequestStub()]
 }

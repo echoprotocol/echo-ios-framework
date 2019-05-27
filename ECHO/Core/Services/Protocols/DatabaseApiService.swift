@@ -131,7 +131,7 @@ protocol DatabaseApiService: BaseApiService {
      - Parameter fromBlockId: Number of the earliest block to retrieve
      - Parameter toBlockId: Number of the most recent block to retrieve
      - Parameter completion: Callback which returns an array of [ContractLog](ContractLog) result of call or error
-f */
+ */
     func subscribeContractLogs(contractId: String, fromBlock: Int, toBlock: Int, completion: @escaping Completion<[ContractLog]>)
 /**
      Returns contracts called by ids
@@ -140,13 +140,6 @@ f */
      - Parameter completion: Callback which returns an [[ContractInfo](ContractInfo)] or error
  */
     func getContracts(contractIds: [String], completion: @escaping Completion<[ContractInfo]>)
-    
-/**
-     Returns all existing contracts from blockchain
-     
-     - Parameter completion: Callback which returns an [[ContractInfo](ContractInfo)] or error
- */
-    func getAllContracts(completion: @escaping Completion<[ContractInfo]>)
     
 /**
      Return full information about contract
@@ -172,9 +165,19 @@ f */
                                      completion: @escaping Completion<String>)
     
 /**
-     Retrieve all sidechain transfers for specific ETH Address
+     Subscribes to listening contracts changes
      
-     - Parameter completion: Callback which returns [[SidechainTransfer]](SidechainTransfer) or error
+     - Parameter contractsIds: Contracts ids for subscribe
+     - Parameter completion: Callback which [Bool](Bool) as result of call or error
  */
-    func getSidechainTransfers(for ethAddress: String, completion: @escaping Completion<[SidechainTransfer]>)
+    func subscribeContracts(contractsIds: [String], completion: @escaping Completion<Bool>)
+    
+/**
+     Get created ETH addresses
+     
+     - Parameter accountId: Accoint id
+     - Parameter completion: Callback in which the information will return [EthAddress](EthAddress) objects or error
+ */
+    func getEthAddress(accountId: String,
+                       completion: @escaping Completion<[EthAddress]>)
 }

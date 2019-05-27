@@ -18,7 +18,6 @@ public struct AccountCreateOperation: BaseOperation {
         case registrar
         case referrer
         case referrerPercent = "referrer_percent"
-        case owner
         case active
         case options
         case extensions
@@ -34,10 +33,9 @@ public struct AccountCreateOperation: BaseOperation {
     public var registrar: Account
     public var referrer: Account
     public let referrerPercent: Int = 0
-    public let owner: OptionalValue<Authority>
     public let active: OptionalValue<Authority>
     public let options: OptionalValue<AccountOptions>
-    public let edKey: String
+    public let edKey: Address
     
     public init(from decoder: Decoder) throws {
         
@@ -53,16 +51,15 @@ public struct AccountCreateOperation: BaseOperation {
         registrar = Account(registrarId)
         referrer = Account(referrerId)
         
-        let ownerValue = try values.decode(Authority.self, forKey: .owner)
         let activeValue = try values.decode(Authority.self, forKey: .active)
         let optionsValue = try values.decode(AccountOptions.self, forKey: .options)
         
-        owner = OptionalValue(ownerValue)
         active = OptionalValue(activeValue)
         options = OptionalValue(optionsValue)
         
         fee = try values.decode(AssetAmount.self, forKey: .fee)
-        edKey = try values.decode(String.self, forKey: .edKey)
+        let edKeyString = try values.decode(String.self, forKey: .edKey)
+        edKey = Address(edKeyString, data: nil)
     }
     
     // MARK: ECHOCodable
@@ -77,12 +74,8 @@ public struct AccountCreateOperation: BaseOperation {
                                                AccountCreateOperationCodingKeys.registrar.rawValue: registrar,
                                                AccountCreateOperationCodingKeys.referrer.rawValue: referrer,
                                                AccountCreateOperationCodingKeys.referrerPercent.rawValue: referrerPercent,
-                                               AccountCreateOperationCodingKeys.edKey.rawValue: edKey,
+                                               AccountCreateOperationCodingKeys.edKey.rawValue: edKey.toJSON(),
                                                AccountCreateOperationCodingKeys.extensions.rawValue: extensions.toJSON()]
-        
-        if owner.isSet() {
-            dictionary[AccountCreateOperationCodingKeys.owner.rawValue] = owner.toJSON()
-        }
         
         if active.isSet() {
             dictionary[AccountCreateOperationCodingKeys.active.rawValue] = active.toJSON()
@@ -109,9 +102,8 @@ public struct AccountCreateOperation: BaseOperation {
         data.append(optional: Data.fromString(registrar.id))
         data.append(optional: Data.fromString(referrer.id))
         data.append(optional: Data.fromInt8(referrerPercent))
-        data.append(optional: owner.toData())
         data.append(optional: active.toData())
-        data.append(optional: Data(hex: edKey))
+        data.append(optional: edKey.toData())
         data.append(optional: options.toData())
         data.append(optional: extensions.toData())
         return data

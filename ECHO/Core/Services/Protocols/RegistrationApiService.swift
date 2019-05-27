@@ -22,11 +22,12 @@ protocol RegistrationApiService: BaseApiService {
      - Parameter memoKey: The ECDSA key used for memo role
      - Parameter echorandKey: The ed25519 key used for echorand
      - Parameter completion: Callback which returns bool result or error
+     - Returns: ID of operation
      */
     func registerAccount(name: String,
                          ownerKey: String,
                          activeKey: String,
                          memoKey: String,
                          echorandKey: String,
-                         completion: @escaping Completion<Bool>)
+                         completion: @escaping Completion<Bool>) -> Int
 }
