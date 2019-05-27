@@ -394,10 +394,11 @@ class SocketCoreComponentTests: XCTestCase {
         var success = false
 
         //act
-        echo.start { [unowned self] (result) in
+        echo.start { (result) in
             self.echo.createContract(registrarNameOrId: "vsharaev",
                                      passwordOrWif: PassOrWif.password("vsharaev"),
                                      assetId: "1.3.0",
+                                     amount: nil,
                                      assetForFee: nil,
                                      byteCode: byteCode,
                                      supportedAssetId: nil,
@@ -445,11 +446,12 @@ class SocketCoreComponentTests: XCTestCase {
         var success = false
         
         //act
-        echo.start { [unowned self] (result) in
+        echo.start { (result) in
             
             self.echo.createContract(registrarNameOrId: "vsharaev",
                                      passwordOrWif: PassOrWif.password("vsharaev"),
                                      assetId: "1.3.0",
+                                     amount: nil,
                                      assetForFee: nil,
                                      byteCode: byteCode,
                                      supportedAssetId: nil,
