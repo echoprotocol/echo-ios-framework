@@ -2136,37 +2136,6 @@ class ECHOInterfaceTests: XCTestCase {
 //        }
 //    }
     
-//    func testGetObjectForSidechainTransfer() {
-//
-//        //arrange
-//        echo = ECHO(settings: Settings(build: {
-//            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
-//            $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .det)
-//        }))
-//        let exp = expectation(description: "testGetObjectForSidechainTransfer")
-//        let identifier = Constants.sidechainTransferObject
-//        var transfer: SidechainTransfer?
-//
-//        //act
-//        echo.start { [unowned self] (result) in
-//
-//            self.echo.getObjects(type: SidechainTransfer.self, objectsIds: [identifier], completion: { (result) in
-//                switch result {
-//                case .success(let sidechainTransfer):
-//                    transfer = sidechainTransfer.first
-//                    exp.fulfill()
-//                case .failure(let error):
-//                    XCTFail("Error in getting sidechain transfers \(error)")
-//                }
-//            })
-//        }
-//
-//        //assert
-//        waitForExpectations(timeout: Constants.timeout) { error in
-//            XCTAssertNotNil(transfer)
-//        }
-//    }
-    
     func testGetBlock() {
         
         //arrange
