@@ -13,6 +13,7 @@ private typealias SubscriptionService = DatabaseApiServiceImp
 private typealias AuthorityAndValidationService = DatabaseApiServiceImp
 private typealias BlocksAndTransactionsService = DatabaseApiServiceImp
 private typealias ContractsService = DatabaseApiServiceImp
+private typealias EthService = DatabaseApiServiceImp
 
 /**
      Implementation of [DatabaseApiService](DatabaseApiService)
@@ -154,17 +155,6 @@ extension BlocksAndTransactionsService {
         
         socketCore.send(operation: operation)
     }
-    
-    func getSidechainTransfers(for ethAddress: String, completion: @escaping Completion<[SidechainTransfer]>) {
-        
-        let operation = GetSidechainTransfersSocketOperation(method: .call,
-                                                             operationId: socketCore.nextOperationId(),
-                                                             apiId: apiIdentifire,
-                                                             ethAddress: ethAddress,
-                                                             completion: completion)
-        
-        socketCore.send(operation: operation)
-    }
 }
 
 extension SubscriptionService {
@@ -198,6 +188,16 @@ extension SubscriptionService {
                                                              toBlock: toBlock,
                                                              completion: completion)
         
+        socketCore.send(operation: operation)
+    }
+    
+    func subscribeContracts(contractsIds: [String], completion: @escaping Completion<Bool>) {
+        
+        let operation = SubscribeContractsSocketOperation(method: .call,
+                                                          operationId: socketCore.nextOperationId(),
+                                                          apiId: apiIdentifire,
+                                                          contractIds: contractsIds,
+                                                          completion: completion)
         socketCore.send(operation: operation)
     }
 }
@@ -265,16 +265,6 @@ extension ContractsService {
         socketCore.send(operation: operation)
     }
     
-    func getAllContracts(completion: @escaping Completion<[ContractInfo]>) {
-        
-        let operation = GetAllContractsSocketOperation(method: .call,
-                                                       operationId: socketCore.nextOperationId(),
-                                                       apiId: apiIdentifire,
-                                                       completion: completion)
-        
-        socketCore.send(operation: operation)
-    }
-    
     func getContract(contractId: String, completion: @escaping Completion<ContractStructEnum>) {
         
         let operation = GetContractSocketOperaton(method: .call,
@@ -300,6 +290,20 @@ extension ContractsService {
                                                     assetId: asset.id,
                                                     code: contractCode,
                                                     completion: completion)
+        
+        socketCore.send(operation: operation)
+    }
+}
+
+extension EthService {
+    
+    func getEthAddress(accountId: String, completion: @escaping Completion<[EthAddress]>) {
+        
+        let operation = GetEthAddressSocketOperation(method: .call,
+                                                     operationId: socketCore.nextOperationId(),
+                                                     apiId: apiIdentifire,
+                                                     accountId: accountId,
+                                                     completion: completion)
         
         socketCore.send(operation: operation)
     }

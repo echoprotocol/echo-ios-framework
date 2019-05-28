@@ -107,7 +107,8 @@ final public class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
                                                  services.databaseService,
                                                  Asset(assetForFee),
                                                  TransferResultsKeys.operation.rawValue,
-                                                 TransferResultsKeys.fee.rawValue)
+                                                 TransferResultsKeys.fee.rawValue,
+                                                 UInt(1))
         let getRequiredFeeOperation = GetRequiredFeeQueueOperation<Bool>(initParams: getRequiredFeeOperationInitParams,
                                                                                 completion: completion)
         
@@ -127,7 +128,7 @@ final public class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
                                               keychainType: KeychainType.active,
                                               saveKey: TransferResultsKeys.transaction.rawValue,
                                               passwordOrWif: passwordOrWif,
-                                              networkPrefix: network.prefix.rawValue,
+                                              networkPrefix: network.echorandPrefix.rawValue,
                                               fromAccountKey: TransferResultsKeys.loadedFromAccount.rawValue,
                                               operationKey: TransferResultsKeys.operation.rawValue,
                                               chainIdKey: TransferResultsKeys.chainId.rawValue,

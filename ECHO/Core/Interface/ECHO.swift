@@ -6,7 +6,8 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
-typealias InterfaceFacades = AuthentificationFacade
+/// All facades in framework
+public typealias InterfaceFacades = AuthentificationFacade
     & InformationFacade
     & SubscriptionFacade
     & FeeFacade
@@ -14,6 +15,11 @@ typealias InterfaceFacades = AuthentificationFacade
     & AssetsFacade
     & ContractsFacade
     & CustomOperationsFacade
+    & EthFacade
+
+public protocol Startable {
+    func start(completion: @escaping Completion<Bool>)
+}
 
 /**
      This is an  entry point of library.
@@ -23,7 +29,9 @@ typealias InterfaceFacades = AuthentificationFacade
      2. It is possible to replace standard classes of work with cryptography and a socket
      3. Modification of the library parameters is done using the **Settings** class in the constructor of the class
  */
-final public class ECHO: InterfaceFacades {
+// swiftlint:disable function_body_length
+// swiftlint:disable type_body_length
+final public class ECHO: InterfaceFacades, Startable {
     
     let revealFacade: RevealApiFacade
     let subscriptionFacade: SubscriptionFacade
@@ -34,6 +42,7 @@ final public class ECHO: InterfaceFacades {
     let assetsFacade: AssetsFacade
     let contractsFacade: ContractsFacade
     let customOperationsFacade: CustomOperationsFacade
+    let ethFacade: EthFacade
 
     public init(settings: Settings) {
 
@@ -66,7 +75,10 @@ final public class ECHO: InterfaceFacades {
         let informationServices = InformationFacadeServices(databaseService: databaseService,
                                                             historyService: historyService,
                                                             registrationService: registrationService)
-        informationFacade = InformationFacadeImp(services: informationServices, network: settings.network, cryptoCore: settings.cryproComponent)
+        informationFacade = InformationFacadeImp(services: informationServices,
+                                                 network: settings.network,
+                                                 cryptoCore: settings.cryproComponent,
+                                                 noticeDelegateHandler: noticeEventProxy)
         
         let subscriptionServices = SubscriptionServices(databaseService: databaseService)
         subscriptionFacade = SubscriptionFacadeImp(services: subscriptionServices,
@@ -76,7 +88,8 @@ final public class ECHO: InterfaceFacades {
         feeFacade = FeeFacadeImp(services: feeServices,
                                  cryptoCore: settings.cryproComponent,
                                  network: settings.network,
-                                 abiCoderCore: settings.abiCoderComponent)
+                                 abiCoderCore: settings.abiCoderComponent,
+                                 settings: settings)
         
         let transactoinServices = TransactionFacadeServices(databaseService: databaseService, networkBroadcastService: networkBroadcastService)
         transactionFacade = TransactionFacadeImp(services: transactoinServices,
@@ -92,7 +105,15 @@ final public class ECHO: InterfaceFacades {
                                              cryptoCore: settings.cryproComponent,
                                              network: settings.network,
                                              abiCoder: settings.abiCoderComponent,
-                                             noticeDelegateHandler: noticeEventProxy)
+                                             noticeDelegateHandler: noticeEventProxy,
+                                             settings: settings)
+        
+        let ethFacadeServices = EthFacadeServices(databaseService: databaseService, networkBroadcastService: networkBroadcastService)
+        
+        ethFacade = EthFacadeImp(services: ethFacadeServices,
+                                 cryptoCore: settings.cryproComponent,
+                                 network: settings.network,
+                                 noticeDelegateHandler: noticeEventProxy)
         
         let customOperationsServices = CustomOperationsFacadeServices(databaseService: databaseService,
                                                                       cryptoService: cryptoService,
@@ -107,10 +128,22 @@ final public class ECHO: InterfaceFacades {
      Starts socket connection, connects to blockchain apis
  */
     public func start(completion: @escaping Completion<Bool>) {
-        revealFacade.revealApi(completion: completion)
+        
+        revealFacade.revealApi { [weak self] (result) in
+            switch result {
+            case .success(_):
+                self?.subscriptionFacade.setSubscribeCallback(completion: completion )
+            case .failure(_):
+                completion(result)
+            }
+        }
     }
     
     // MARK: SubscriptionFacade
+    
+    public func setSubscribeCallback(completion: @escaping Completion<Bool>) {
+        subscriptionFacade.setSubscribeCallback(completion: completion)
+    }
     
     public func subscribeToAccount(nameOrId: String, delegate: SubscribeAccountDelegate) {
         subscriptionFacade.subscribeToAccount(nameOrId: nameOrId, delegate: delegate)
@@ -134,6 +167,14 @@ final public class ECHO: InterfaceFacades {
     
     public func unsubscribeToBlock() {
         subscriptionFacade.unsubscribeToBlock()
+    }
+    
+    public func subscribeContracts(contractsIds: [String], delegate: SubscribeContractsDelegate) {
+        subscriptionFacade.subscribeContracts(contractsIds: contractsIds, delegate: delegate)
+    }
+    
+    public func unsubscribeToContracts(contractIds: [String], delegate: SubscribeContractsDelegate) {
+        subscriptionFacade.unsubscribeToContracts(contractIds: contractIds, delegate: delegate)
     }
     
     public func subscribeToContractLogs(contractId: String, delegate: SubscribeContractLogsDelegate) {
@@ -168,8 +209,12 @@ final public class ECHO: InterfaceFacades {
         informationFacade.getObjects(type: type, objectsIds: objectsIds, completion: completion)
     }
     
-    public func registerAccount(name: String, password: String, completion: @escaping Completion<Bool>) {
-        informationFacade.registerAccount(name: name, password: password, completion: completion)
+    public func getBlock(blockNumber: Int, completion: @escaping Completion<Block>) {
+        informationFacade.getBlock(blockNumber: blockNumber, completion: completion)
+    }
+    
+    public func registerAccount(name: String, password: String, completion: @escaping Completion<Bool>, noticeHandler: NoticeHandler?) {
+        informationFacade.registerAccount(name: name, password: password, completion: completion, noticeHandler: noticeHandler)
     }
     
     public func getAccount(nameOrID: String, completion: @escaping Completion<Account>) {
@@ -190,10 +235,6 @@ final public class ECHO: InterfaceFacades {
     
     public func getGlobalProperties(completion: @escaping Completion<GlobalProperties>) {
         informationFacade.getGlobalProperties(completion: completion)
-    }
-    
-    public func getSidechainTransfers(for ethAddress: String, completion: @escaping Completion<[SidechainTransfer]>) {
-        informationFacade.getSidechainTransfers(for: ethAddress, completion: completion)
     }
 
     // MARK: FeeFacade
@@ -329,11 +370,6 @@ final public class ECHO: InterfaceFacades {
         
         contractsFacade.getContracts(contractIds: contractIds, completion: completion)
     }
-
-    public func getAllContracts(completion: @escaping Completion<[ContractInfo]>) {
-        
-        contractsFacade.getAllContracts(completion: completion)
-    }
     
     public func getContract(contractId: String, completion: @escaping Completion<ContractStructEnum>) {
         
@@ -343,6 +379,7 @@ final public class ECHO: InterfaceFacades {
     public func createContract(registrarNameOrId: String,
                                passwordOrWif: PassOrWif,
                                assetId: String,
+                               amount: UInt?,
                                assetForFee: String?,
                                byteCode: String,
                                supportedAssetId: String?,
@@ -354,6 +391,7 @@ final public class ECHO: InterfaceFacades {
         contractsFacade.createContract(registrarNameOrId: registrarNameOrId,
                                        passwordOrWif: passwordOrWif,
                                        assetId: assetId,
+                                       amount: amount,
                                        assetForFee: assetForFee,
                                        byteCode: byteCode,
                                        supportedAssetId: supportedAssetId,
@@ -366,6 +404,7 @@ final public class ECHO: InterfaceFacades {
     public func createContract(registrarNameOrId: String,
                                passwordOrWif: PassOrWif,
                                assetId: String,
+                               amount: UInt?,
                                assetForFee: String?,
                                byteCode: String,
                                supportedAssetId: String?,
@@ -376,6 +415,7 @@ final public class ECHO: InterfaceFacades {
         contractsFacade.createContract(registrarNameOrId: registrarNameOrId,
                                        passwordOrWif: passwordOrWif,
                                        assetId: assetId,
+                                       amount: amount,
                                        assetForFee: assetForFee,
                                        byteCode: byteCode,
                                        supportedAssetId: supportedAssetId,
@@ -456,10 +496,49 @@ final public class ECHO: InterfaceFacades {
                                       completion: completion)
     }
     
+    // MARK: EthFacade
+    
+    public func generateEthAddress(nameOrId: String,
+                                   passwordOrWif: PassOrWif,
+                                   assetForFee: String?,
+                                   completion: @escaping Completion<Bool>,
+                                   noticeHandler: NoticeHandler?) {
+        
+        ethFacade.generateEthAddress(nameOrId: nameOrId,
+                                     passwordOrWif: passwordOrWif,
+                                     assetForFee: assetForFee,
+                                     completion: completion,
+                                     noticeHandler: noticeHandler)
+    }
+    
+    public func getEthAddress(nameOrId: String, completion: @escaping Completion<[EthAddress]>) {
+        
+        ethFacade.getEthAddress(nameOrId: nameOrId, completion: completion)
+    }
+    
+    public func withdrawalEth(nameOrId: String,
+                              passwordOrWif: PassOrWif,
+                              toEthAddress: String,
+                              amount: UInt,
+                              assetForFee: String?,
+                              completion: @escaping Completion<Bool>,
+                              noticeHandler: NoticeHandler?) {
+        
+        ethFacade.withdrawalEth(nameOrId: nameOrId,
+                                passwordOrWif: passwordOrWif,
+                                toEthAddress: toEthAddress,
+                                amount: amount,
+                                assetForFee: assetForFee,
+                                completion: completion,
+                                noticeHandler: noticeHandler)
+    }
+    
     // MARK: CustomOperationsFacade
     
-    func sendCustomOperation(operation: CustomSocketOperation, for specificAPI: API) {
+    public func sendCustomOperation(operation: CustomSocketOperation, for specificAPI: API) {
         
         customOperationsFacade.sendCustomOperation(operation: operation, for: specificAPI)
     }
 }
+// swiftlint:enable function_body_length
+// swiftlint:enable type_body_length

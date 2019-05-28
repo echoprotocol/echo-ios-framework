@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ETHAddressValidator {
+public struct ETHAddressValidator {
     
     let cryptoCore: CryptoCoreComponent
     
@@ -16,12 +16,12 @@ struct ETHAddressValidator {
     fileprivate let lowerCaseAddressPattern = "^(0x)?[0-9a-f]{40}$"
     fileprivate let upperCaseAddressPattern = "^(0x)?[0-9A-F]{40}$"
     
-    init(cryptoCore: CryptoCoreComponent) {
+    public init(cryptoCore: CryptoCoreComponent) {
         
         self.cryptoCore = cryptoCore
     }
     
-    func isValidETHAddress(_ ethAddress: String) -> Bool {
+    public func isValidETHAddress(_ ethAddress: String) -> Bool {
         
         if !matchesPattern(ethAddress) {
             return false

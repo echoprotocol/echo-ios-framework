@@ -45,8 +45,10 @@ struct Vote: ECHOCodable {
     
     func toData() -> Data? {
         var data = Data()
-        data.append(optional: Data.fromInt16(type))
-        data.append(optional: Data.fromInt16(instance))
+        data.append(0)
+        data.append(optional: Data.fromInt8(type))
+        data.append(0)
+        data.append(optional: Data.fromInt8(instance))
         return data
     }
 }

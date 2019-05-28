@@ -63,7 +63,7 @@ final public class AuthentificationFacadeImp: AuthentificationFacade, ECHOQueueb
             return
         }
         
-        let publicAdderess = network.prefix.rawValue + keysContainer.activeKeychain.publicAddress()
+        let publicAdderess = network.echorandPrefix.rawValue + keysContainer.activeKeychain.publicAddress()
         
         services.databaseService.getKeyReferences(keys: [publicAdderess]) { [weak self] (result) in
             
@@ -109,8 +109,8 @@ final public class AuthentificationFacadeImp: AuthentificationFacade, ECHOQueueb
             return false
         }
         
-        let key = network.prefix.rawValue + keysContainer.ownerKeychain.publicAddress()
-        let matches = account.account.owner?.keyAuths.compactMap { $0.address.addressString == key }.filter { $0 == true }
+        let key = network.echorandPrefix.rawValue + keysContainer.activeKeychain.publicAddress()
+        let matches = account.account.active?.keyAuths.compactMap { $0.address.addressString == key }.filter { $0 == true }
         
         if let matches = matches {
             return matches.count > 0
@@ -145,7 +145,8 @@ final public class AuthentificationFacadeImp: AuthentificationFacade, ECHOQueueb
                                                  services.databaseService,
                                                  Asset(Settings.defaultAsset),
                                                  ChangePasswordKeys.operation.rawValue,
-                                                 ChangePasswordKeys.fee.rawValue)
+                                                 ChangePasswordKeys.fee.rawValue,
+                                                 UInt(1))
         let getRequiredFeeOperation = GetRequiredFeeQueueOperation<Bool>(initParams: getRequiredFeeOperationInitParams,
                                                                          completion: completion)
         
@@ -162,10 +163,10 @@ final public class AuthentificationFacadeImp: AuthentificationFacade, ECHOQueueb
         // Transaciton
         let transactionOperationInitParams = (queue: changePasswordQueue,
                                               cryptoCore: cryptoCore,
-                                              keychainType: KeychainType.owner,
+                                              keychainType: KeychainType.active,
                                               saveKey: ChangePasswordKeys.transaction.rawValue,
                                               passwordOrWif: PassOrWif.password(old),
-                                              networkPrefix: network.prefix.rawValue,
+                                              networkPrefix: network.echorandPrefix.rawValue,
                                               fromAccountKey: ChangePasswordKeys.account.rawValue,
                                               operationKey: ChangePasswordKeys.operation.rawValue,
                                               chainIdKey: ChangePasswordKeys.chainId.rawValue,
@@ -250,19 +251,15 @@ final public class AuthentificationFacadeImp: AuthentificationFacade, ECHOQueueb
             }
             
             let memoAddressString = network.prefix.rawValue + addressContainer.memoKeychain.publicAddress()
-            let activeAddressString = network.prefix.rawValue + addressContainer.activeKeychain.publicAddress()
-            let ownerAddressString = network.prefix.rawValue + addressContainer.ownerKeychain.publicAddress()
-            let echorandKey = addressContainer.echorandKeychain.publicKey().hex
+            let activeAddressString = network.echorandPrefix.rawValue + addressContainer.activeKeychain.publicAddress()
+            let edAddressString = network.echorandPrefix.rawValue + addressContainer.echorandKeychain.publicAddress()
             
             let memoAddress = Address(memoAddressString, data: addressContainer.memoKeychain.publicKey())
             let activeAddress = Address(activeAddressString, data: addressContainer.activeKeychain.publicKey())
-            let ownerAddress = Address(ownerAddressString, data: addressContainer.ownerKeychain.publicKey())
+            let edAddress = Address(edAddressString, data: addressContainer.echorandKeychain.publicKey())
             
             let activeKeyAddressAuth = AddressAuthority(address: activeAddress, value: 1)
-            let ownerKeyAddressAuth = AddressAuthority(address: ownerAddress, value: 1)
-            
             let activeAuthority = Authority(weight: 1, keyAuth: [activeKeyAddressAuth], accountAuth: [])
-            let ownerAuthority = Authority(weight: 1, keyAuth: [ownerKeyAddressAuth], accountAuth: [])
             
             var delegatingAccount: Account?
             if let delegatingAccountId = account.options?.delegatingAccount {
@@ -280,9 +277,8 @@ final public class AuthentificationFacadeImp: AuthentificationFacade, ECHOQueueb
             let fee = AssetAmount(amount: 0, asset: Asset(Settings.defaultAsset))
             
             let operation = AccountUpdateOperation(account: account,
-                                                   owner: ownerAuthority,
                                                    active: activeAuthority,
-                                                   edKey: echorandKey,
+                                                   edKey: edAddress,
                                                    options: options,
                                                    fee: fee)
             

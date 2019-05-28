@@ -29,6 +29,7 @@ public protocol ContractsFacade {
     func createContract(registrarNameOrId: String,
                         passwordOrWif: PassOrWif,
                         assetId: String,
+                        amount: UInt?,
                         assetForFee: String?,
                         byteCode: String,
                         supportedAssetId: String?,
@@ -51,6 +52,7 @@ public protocol ContractsFacade {
     func createContract(registrarNameOrId: String,
                         passwordOrWif: PassOrWif,
                         assetId: String,
+                        amount: UInt?,
                         assetForFee: String?,
                         byteCode: String,
                         supportedAssetId: String?,
@@ -159,13 +161,6 @@ public protocol ContractsFacade {
      - Parameter completion: Callback which returns an [[ContractInfo](ContractInfo)] or error
  */
     func getContracts(contractIds: [String], completion: @escaping Completion<[ContractInfo]>)
-    
-/**
-     Returns all existing contracts from blockchain
-     
-     - Parameter completion: Callback which returns an [[ContractInfo](ContractInfo)] or error
- */
-    func getAllContracts(completion: @escaping Completion<[ContractInfo]>)
     
 /**
      Return full information about contract

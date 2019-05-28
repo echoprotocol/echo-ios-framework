@@ -9,7 +9,7 @@
 /**
     The interface of the class that allows you to send custom operations to network.
  */
-protocol CustomOperationsFacade {
+public protocol CustomOperationsFacade {
     
     /**
         Function for send custom operation for specific API

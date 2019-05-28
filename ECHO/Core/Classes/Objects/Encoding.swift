@@ -10,7 +10,7 @@
     The Base58 encoding used is home made, and has some differences. Especially,
     leading zeroes are kept as single zeroes when conversion happens.
  */
-struct Base58 {
+public struct Base58 {
     private static let base58Alphabet = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz"
 
     private init() {}

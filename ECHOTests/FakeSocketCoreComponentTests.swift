@@ -22,7 +22,7 @@ class SocketCoreComponentTests: XCTestCase {
 
         //arrange
         let fakeUrl = "fakeUrl"
-        let messenger = SocketMessengerStub()
+        let messenger = SocketMessengerStub(state: .reveal)
         echo = ECHO(settings: Settings(build: {
             $0.network = ECHONetwork(url: fakeUrl, prefix: ECHONetworkPrefix.echo, echorandPrefix: .det)
                 $0.socketMessenger = messenger
@@ -43,7 +43,7 @@ class SocketCoreComponentTests: XCTestCase {
     func testConnectingCount() {
         
         //arrange
-        let messenger = SocketMessengerStub()
+        let messenger = SocketMessengerStub(state: .reveal)
         echo = ECHO(settings: Settings(build: {
             $0.socketMessenger = messenger
         }))
@@ -148,8 +148,8 @@ class SocketCoreComponentTests: XCTestCase {
             $0.socketMessenger = messenger
         }))
         let exp = expectation(description: "Transfer")
-        let password = "vsharaev1"
         let fromUser = "vsharaev"
+        let password = "vsharaev"
         let toUser = "vsharaev"
         var isSuccess = false
         
@@ -190,7 +190,7 @@ class SocketCoreComponentTests: XCTestCase {
         }))
         let exp = expectation(description: "Change password")
         let userName = "vsharaev"
-        let password = "vsharaev1"
+        let password = "vsharaev"
         let newPassword = "newPassword"
         var success: Bool!
 
@@ -209,6 +209,7 @@ class SocketCoreComponentTests: XCTestCase {
 
         //assert
         waitForExpectations(timeout: 1) { error in
+            XCTAssertNotNil(success)
             XCTAssertTrue(success)
         }
     }
@@ -222,7 +223,7 @@ class SocketCoreComponentTests: XCTestCase {
         }))
         let exp = expectation(description: "Issue asset")
         let issuerNameOrId = "vsharaev"
-        let password = "vsharaev1"
+        let password = "vsharaev"
         let asset = "1.3.1"
         let amount: UInt = 1
         let destinationIdOrName = "vsharaev"
@@ -283,7 +284,7 @@ class SocketCoreComponentTests: XCTestCase {
                                      coreExchangeRate: Price(base: AssetAmount(amount: 1, asset: Asset("1.3.0")), quote: AssetAmount(amount: 1, asset: Asset("1.3.1"))),
                                      description: "description")
         let nameOrId = "vsharaev"
-        let password = "vsharaev1"
+        let password = "vsharaev"
         var success: Bool!
         
         //act
@@ -318,7 +319,7 @@ class SocketCoreComponentTests: XCTestCase {
             $0.socketMessenger = messenger
         }))
         let exp = expectation(description: "Getting contracts")
-        let legalContractId = "1.16.56"
+        let legalContractId = "1.14.56"
         var contract: ContractStructEnum!
         
         //act
@@ -328,8 +329,8 @@ class SocketCoreComponentTests: XCTestCase {
                 case .success(let res):
                     contract = res
                     exp.fulfill()
-                case .failure(_):
-                    XCTFail("Getting contracts result cant fail")
+                case .failure(let error):
+                    XCTFail("Getting contracts result cant fail \(error)")
                 }
             })
         }
@@ -348,7 +349,7 @@ class SocketCoreComponentTests: XCTestCase {
             $0.socketMessenger = messenger
         }))
         let exp = expectation(description: "Getting contracts")
-        let legalContractId = "1.16.56"
+        let legalContractId = "1.14.56"
         let contractsIDs = [legalContractId]
         var contracts: [ContractInfo] = []
         
@@ -368,35 +369,6 @@ class SocketCoreComponentTests: XCTestCase {
         //assert
         waitForExpectations(timeout: 1) { error in
             XCTAssertTrue(contracts.count == 1)
-        }
-    }
-    
-    func testFakeGetAllContracts() {
-        
-        //arrange
-        let messenger = SocketMessengerStub(state: .getContract)
-        echo = ECHO(settings: Settings(build: {
-            $0.socketMessenger = messenger
-        }))
-        let exp = expectation(description: "Getting contracts")
-        var contracts: [ContractInfo] = []
-        
-        //act
-        echo.start { [unowned self] (result) in
-            self.echo.getAllContracts(completion: { (result) in
-                switch result {
-                case .success(let res):
-                    contracts = res
-                    exp.fulfill()
-                case .failure(let error):
-                    XCTFail("Getting contracts result cant fail \(error)")
-                }
-            })
-        }
-        
-        //assert
-        waitForExpectations(timeout: 1) { error in
-            XCTAssertTrue(contracts.count > 0)
         }
     }
     
@@ -422,10 +394,11 @@ class SocketCoreComponentTests: XCTestCase {
         var success = false
 
         //act
-        echo.start { [unowned self] (result) in
+        echo.start { (result) in
             self.echo.createContract(registrarNameOrId: "vsharaev",
-                                     passwordOrWif: PassOrWif.password("vsharaev1"),
+                                     passwordOrWif: PassOrWif.password("vsharaev"),
                                      assetId: "1.3.0",
+                                     amount: nil,
                                      assetForFee: nil,
                                      byteCode: byteCode,
                                      supportedAssetId: nil,
@@ -473,11 +446,12 @@ class SocketCoreComponentTests: XCTestCase {
         var success = false
         
         //act
-        echo.start { [unowned self] (result) in
+        echo.start { (result) in
             
             self.echo.createContract(registrarNameOrId: "vsharaev",
-                                     passwordOrWif: PassOrWif.password("vsharaev1"),
+                                     passwordOrWif: PassOrWif.password("vsharaev"),
                                      assetId: "1.3.0",
+                                     amount: nil,
                                      assetForFee: nil,
                                      byteCode: byteCode,
                                      supportedAssetId: nil,
@@ -512,7 +486,7 @@ class SocketCoreComponentTests: XCTestCase {
         let exp = expectation(description: "Query contract")
         let registrarNameOrId = "vsharaev"
         let assetId = "1.3.0"
-        let contratId = "1.16.1"
+        let contratId = "1.14.1"
         let methodName = "getCount"
         let params: [AbiTypeValueInputModel] = []
         var query: String!
@@ -545,10 +519,10 @@ class SocketCoreComponentTests: XCTestCase {
             $0.socketMessenger = messenger
         }))
         let exp = expectation(description: "Call contract")
-        let password = "vsharaev1"
         let registrarNameOrId = "vsharaev"
+        let password = "vsharaev"
         let assetId = "1.3.0"
-        let contratId = "1.16.56"
+        let contratId = "1.14.56"
         let methodName = "incrementCounter"
         let params: [AbiTypeValueInputModel] = []
         var success = false
@@ -579,6 +553,136 @@ class SocketCoreComponentTests: XCTestCase {
         //assert
         waitForExpectations(timeout: 1) { error in
             XCTAssertTrue(success)
+        }
+    }
+    
+    func testFakeGetBlock() {
+        
+        //arrange
+        let messenger = SocketMessengerStub(state: .getBlock)
+        echo = ECHO(settings: Settings(build: {
+            $0.socketMessenger = messenger
+        }))
+        let exp = expectation(description: "Get block")
+        let blockNum = 1377170
+        var block: Block!
+        
+        //act
+        echo.start { [unowned self] (result) in
+            
+            self.echo.getBlock(blockNumber: blockNum, completion: { (result) in
+                
+                switch result {
+                case .success(let res):
+                    block = res
+                    exp.fulfill()
+                case .failure(let error):
+                    XCTFail("Get block can't fail \(error)")
+                }
+            })
+        }
+        
+        //assert
+        waitForExpectations(timeout: 1) { error in
+            XCTAssertNotNil(block)
+        }
+    }
+    
+    func testFakeCreateEthAddress() {
+        
+        //arrange
+        let messenger = SocketMessengerStub(state: .createEthAddress)
+        echo = ECHO(settings: Settings(build: {
+            $0.socketMessenger = messenger
+        }))
+        let exp = expectation(description: "testFakeCreateEthAddress")
+        var success: Bool!
+        
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.generateEthAddress(nameOrId: "vsharaev",
+                                         passwordOrWif: .password("vsharaev"),
+                                         assetForFee: nil,
+                                         completion: { (result) in
+                                            
+                switch result {
+                case .success(let res):
+                    success = res
+                    exp.fulfill()
+                case .failure(let error):
+                    XCTFail("Create eth address can't fail \(error)")
+                }
+            }, noticeHandler: nil)
+        }
+        
+        //assert
+        waitForExpectations(timeout: 1) { error in
+            XCTAssertNotNil(success)
+        }
+    }
+    
+    func testFakeGetEthAddress() {
+        
+        //arrange
+        let messenger = SocketMessengerStub(state: .getEthAddress)
+        echo = ECHO(settings: Settings(build: {
+            $0.socketMessenger = messenger
+        }))
+        let exp = expectation(description: "testFakeGetEthAddress")
+        var addresses: [EthAddress]!
+        
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.getEthAddress(nameOrId: "vsharaev", completion: { (result) in
+                switch result {
+                case .success(let res):
+                    addresses = res
+                    exp.fulfill()
+                case .failure(let error):
+                    XCTFail("Get eth address can't fail \(error)")
+                }
+            })
+        }
+        
+        //assert
+        waitForExpectations(timeout: 1) { error in
+            XCTAssertNotNil(addresses)
+            XCTAssertTrue(addresses.count == 1)
+        }
+    }
+    
+    func testFakeWithdrawalEth() {
+        
+        //arrange
+        let messenger = SocketMessengerStub(state: .createEthAddress)
+        echo = ECHO(settings: Settings(build: {
+            $0.socketMessenger = messenger
+        }))
+        let exp = expectation(description: "testFakeWithdrawalEth")
+        var success: Bool!
+        
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.withdrawalEth(nameOrId: "vsharaev",
+                                    passwordOrWif: .password("vsharaev"),
+                                    toEthAddress: "0x46Ba2677a1c982B329A81f60Cf90fBA2E8CA9fA8",
+                                    amount: 1,
+                                    assetForFee: nil,
+                                    completion: { (result) in
+                
+                switch result {
+                case .success(let res):
+                    success = res
+                    exp.fulfill()
+                case .failure(let error):
+                    XCTFail("Create eth address can't fail \(error)")
+                }
+            }, noticeHandler: nil)
+        }
+        
+        //assert
+        waitForExpectations(timeout: 1) { error in
+            XCTAssertNotNil(success)
         }
     }
 }

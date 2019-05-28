@@ -17,6 +17,12 @@ final class SocketCoreComponentImp: SocketCoreComponent {
     var currentOperationId: Int = 0
     let noticeUpdateHandler: NoticeActionHandler?
     
+    var workingQueue: OperationQueue = {
+        var queue = OperationQueue()
+        queue.maxConcurrentOperationCount = 1
+        return queue
+    }()
+    
     required init(messanger: SocketMessenger, url: String,
                   noticeUpdateHandler: NoticeActionHandler?, socketQueue: DispatchQueue) {
         self.messenger = messanger
@@ -32,7 +38,7 @@ final class SocketCoreComponentImp: SocketCoreComponent {
     
     func connect(options: APIOption, completion: @escaping Completion<Bool>) {
         
-        messenger.onConnect = { 
+        messenger.onConnect = {
             let result = Result<Bool, ECHOError>(value: true)
             completion(result)
         }
@@ -43,8 +49,9 @@ final class SocketCoreComponentImp: SocketCoreComponent {
         }
         
         messenger.onText = { [weak self] (result) in
-            
-            self?.handleMessage(result)
+            self?.workingQueue.addOperation { [weak self] in
+                self?.handleMessage(result)
+            }
         }
         
         messenger.onFailedConnect = {
@@ -61,17 +68,19 @@ final class SocketCoreComponentImp: SocketCoreComponent {
     
     func send(operation: SocketOperation) {
         
-        guard let jsonString: String = operation.toJSON() else {
-            return
+        workingQueue.addOperation { [weak self] in
+            guard let jsonString: String = operation.toJSON() else {
+                return
+            }
+            
+            guard self?.messenger.state == .connected else {
+                operation.forceEnd()
+                return
+            }
+            
+            self?.operationsMap[operation.operationId] = operation
+            self?.messenger.write(jsonString)
         }
-        
-        guard messenger.state == .connected else {
-            operation.forceEnd()
-            return
-        }
-        
-        operationsMap[operation.operationId] = operation
-        messenger.write(jsonString)
     }
     
     fileprivate func handleMessage(_ string: String) {
@@ -84,7 +93,7 @@ final class SocketCoreComponentImp: SocketCoreComponent {
         
         guard let json = converToJSON(string),
             let data = try? JSONSerialization.data(withJSONObject: json, options: []) else {
-            return
+                return
         }
         
         if let response = decodeDirectResopnse(data: data) {

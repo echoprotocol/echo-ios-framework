@@ -16,27 +16,28 @@ public struct Block: Decodable {
     enum BlockCodingKeys: String, CodingKey {
         case previous
         case timestamp
-        case witness
         case transactionMerkleRoot = "transaction_merkle_root"
-        case witnessSignature = "witness_signature"
         case transactions
+        case round
+        case account
     }
     
-    let previous: String
-    let timestamp: String
-    let witness: String
-    let transactionMerkleRoot: String
-    let witnessSignature: String
-    let transactions: [Transaction]
+    public let previous: String
+    public let timestamp: String
+    public let transactionMerkleRoot: String
+    public let transactions: [Transaction]
+    public let round: Int
+    public let account: Account
     
     public init(from decoder: Decoder) throws {
         
         let values = try decoder.container(keyedBy: BlockCodingKeys.self)
         previous = try values.decode(String.self, forKey: .previous)
         timestamp = try values.decode(String.self, forKey: .timestamp)
-        witness = try values.decode(String.self, forKey: .witness)
         transactionMerkleRoot = try values.decode(String.self, forKey: .transactionMerkleRoot)
-        witnessSignature = try values.decode(String.self, forKey: .witnessSignature)
         transactions = try values.decode([Transaction].self, forKey: .transactions)
+        round = try values.decode(Int.self, forKey: .round)
+        let accountId = try values.decode(String.self, forKey: .account)
+        account = Account(accountId)
     }
 }

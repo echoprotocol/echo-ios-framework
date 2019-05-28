@@ -20,6 +20,7 @@ final public class Settings {
     public let apiOptions: APIOption
     public let network: ECHONetwork
     public let workingQueue: DispatchQueue
+    public let callContractFeeMultiplier: UInt
 
     public typealias BuildConfiguratorClosure = (Configurator) -> Void
     
@@ -33,6 +34,7 @@ final public class Settings {
         apiOptions = configurator.apiOptions
         abiCoderComponent = configurator.abiCoderComponent
         workingQueue = configurator.workingQueue
+        callContractFeeMultiplier = configurator.callContractFeeMultiplier
     }
     
     public static let defaultDateFormat = "yyyy-MM-dd'T'H:mm:ss"

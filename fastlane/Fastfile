@@ -20,6 +20,40 @@ platform :ios do
 
   end
 
+  lane :network_tests do 
+
+    config_project_for_network_test
+
+    libraries
+    
+    run_tests(
+       scheme: ENV['PROJECT_NETWORK_SCHEME'] 
+       sdk: "iphonesimulator",
+       devices: ["iPhone X"],
+       clean: true
+    )
+
+  end
+
+  private_lane :config_project_for_network_test do
+
+    constants_keys = ENV['CONSTANTS_KEYS']
+    constants_array = constants_keys.split(' ')
+
+    first_constant_key = constants_array.first
+    first_constant_value = ENV[first_constant_key]
+
+    sh("./appendConstantsToConfig.sh #{first_constant_key} #{first_constant_value} true")
+
+    for i in 1..constants_array.count-1
+      constant_key = constants_array[i]
+      constant_value = ENV[constant_key]
+
+      sh("./appendConstantsToConfig.sh #{constant_key} #{constant_value}")
+    end
+
+  end
+
   lane :release do
 
     libraries

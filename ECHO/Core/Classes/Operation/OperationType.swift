@@ -30,9 +30,7 @@ public enum OperationType: Int {
     case assetSettleOperation
     case assetGlobalSettleOperation
     case assetPublishFeedOperation
-    case witnessCreateOperation                     //20
-    case witnessUpdateOperation
-    case proposalCreateOperation
+    case proposalCreateOperation                    //20
     case proposalUpdateOperation
     case proposalDeleteOperation
     case withdrawPermissionCreateOperation
@@ -40,28 +38,31 @@ public enum OperationType: Int {
     case withdrawPermissionClaimOperation
     case withdrawPermissionDeleteOperation
     case committeeMemberCreateOperation
-    case committeeMemberUpdateOperation             //30
+    case committeeMemberUpdateOperation
     // swiftlint:disable variable_name
     case committeeMemberUpdateGlobalParametersOperation
     // swiftlint:enable variable_name
-    case vestingBalanceCreateOperation
+    case vestingBalanceCreateOperation              //30
     case vestingBalanceWithdrawOperation
-    case workerCreateOperation
     case customOperation
     case assertOperation
     case balanceClaimOperation
     case overrideTransferOperation
-    case transferToBlindOperation
-    case blindTransferOperation                     //40
-    case transferFromBlindOperation
     case assetSettleCancelOperation                 //Virtual
     case assetClaimFeesOperation
-    case fbaDistributeOperation                     //Virtual
     case bidCollateralOperation
     case executeBidOperation                        //Virtual
-    case createContractOperation
+    case createContractOperation                    //40
     case callContractOperation
-    case contractTransferOperation                  //Virtual //49
+    case contractTransferOperation                  //Virtual
+    case changeSidechainConfigOperation             //43 // temporary operation for tests
+    case accountAddressCreateOperation
+    case transferToAddressOperation
+    case generateEthAddressOperation
+    case createEthAddressOperation
+    case depositEthOperation
+    case withdrawEthOperation
+    case approveWithdrawEthOperation
 }
 
 struct OperationDecoder {
@@ -80,6 +81,9 @@ struct OperationDecoder {
         case .assetIssueOperation: return decode(IssueAssetOperation.self, container: container)
         case .createContractOperation: return decode(CreateContractOperation.self, container: container)
         case .callContractOperation: return decode(CallContractOperation.self, container: container)
+        case .contractTransferOperation: return decode(ContractTransferOperation.self, container: container)
+        case .generateEthAddressOperation: return decode(GenerateEthAddressOperation.self, container: container)
+        case .withdrawEthOperation: return decode(WithdrawalEthOperation.self, container: container)
         default: return nil
         }
     }
@@ -113,6 +117,12 @@ struct OperationDecoder {
                 baseOperation = try? JSONDecoder().decode(CreateContractOperation.self, from: data)
             case .callContractOperation:
                 baseOperation = try? JSONDecoder().decode(CallContractOperation.self, from: data)
+            case .contractTransferOperation:
+                baseOperation = try? JSONDecoder().decode(ContractTransferOperation.self, from: data)
+            case .generateEthAddressOperation:
+                baseOperation = try? JSONDecoder().decode(GenerateEthAddressOperation.self, from: data)
+            case .withdrawEthOperation:
+                baseOperation = try? JSONDecoder().decode(WithdrawalEthOperation.self, from: data)
             default:
                 break
             }

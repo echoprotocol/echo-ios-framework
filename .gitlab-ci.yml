@@ -1,6 +1,7 @@
 stages:
   - unit_tests
   - release
+  - network_tests
 
 variables:
   LC_ALL: "en_US.UTF-8"
@@ -13,12 +14,25 @@ unit_tests:
   stage: unit_tests
   artifacts:
     paths:
-      - fastlane/test_output
+      - fastlane/tests_output
   script:
     - fastlane tests
   tags:
     - ios
 
+network_tests:
+  stage: network_tests
+  artifacts:
+    paths:
+      - fastlane/network_tests_output
+  before_script:
+    - get_env_settings.sh $SETTINGS_URL $SETTINGS_BRANCH_MASTER
+  script:
+    - fastlane network_tests
+  only:
+    - schedules
+  tags:
+    - ios
 
 release:
   stage: release

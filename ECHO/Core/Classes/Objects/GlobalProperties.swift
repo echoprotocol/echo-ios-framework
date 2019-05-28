@@ -13,14 +13,24 @@ public struct GlobalProperties: Decodable {
         case parameters
         case nextAvailableVoteId = "next_available_vote_id"
         case activeCommitteeMembers = "active_committee_members"
-        case activeWitnesses = "active_witnesses"
     }
     
     public let identifier: String
     public let parameters: GlobalPropertiesParameters
     public let nextAvailableVoteId: IntOrString
     public let activeCommitteeMembers: [String]
-    public let activeWitnesses: [String]
+    
+    public init(identifier: String,
+                parameters: GlobalPropertiesParameters,
+                nextAvailableVoteId: IntOrString,
+                activeCommitteeMembers: [String]
+                ) {
+        
+        self.identifier = identifier
+        self.parameters = parameters
+        self.nextAvailableVoteId = nextAvailableVoteId
+        self.activeCommitteeMembers = activeCommitteeMembers
+    }
     
     public init(from decoder: Decoder) throws {
         
@@ -30,7 +40,6 @@ public struct GlobalProperties: Decodable {
         parameters = try values.decode(GlobalPropertiesParameters.self, forKey: .parameters)
         nextAvailableVoteId = try values.decode(IntOrString.self, forKey: .nextAvailableVoteId)
         activeCommitteeMembers = try values.decode([String].self, forKey: .activeCommitteeMembers)
-        activeWitnesses = try values.decode([String].self, forKey: .activeWitnesses)
     }
 }
 
@@ -48,7 +57,6 @@ public struct GlobalPropertiesParameters: Decodable {
         case maximumProposalLifetime = "maximum_proposal_lifetime"
         case maximumAssetWhitelistAuthorities = "maximum_asset_whitelist_authorities"
         case maximumAssetFeedPublishers = "maximum_asset_feed_publishers"
-        case maximumWitnessCount = "maximum_witness_count"
         case maximumCommitteeCount = "maximum_committee_count"
         case maximumAuthorityMembership = "maximum_authority_membership"
         case reservePercentOfFee = "reserve_percent_of_fee"
@@ -58,8 +66,6 @@ public struct GlobalPropertiesParameters: Decodable {
         case cashbackVestingThreshold = "cashback_vesting_threshold"
         case countNonMemberVotes = "count_non_member_votes"
         case allowNonMemberWhitelists = "allow_non_member_whitelists"
-        case witnessPayPerBlock = "witness_pay_per_block"
-        case workerBudgetPerDay = "worker_budget_per_day"
         case maxPredicateOpcode = "max_predicate_opcode"
         case feeLiquidationThreshold = "fee_liquidation_threshold"
         case accountsPerFeeScale = "accounts_per_fee_scale"
@@ -81,7 +87,6 @@ public struct GlobalPropertiesParameters: Decodable {
     public let maximumProposalLifetime: IntOrString
     public let maximumAssetWhitelistAuthorities: IntOrString
     public let maximumAssetFeedPublishers: IntOrString
-    public let maximumWitnessCount: IntOrString
     public let maximumCommitteeCount: IntOrString
     public let maximumAuthorityMembership: IntOrString
     public let reservePercentOfFee: IntOrString
@@ -91,8 +96,6 @@ public struct GlobalPropertiesParameters: Decodable {
     public let cashbackVestingThreshold: IntOrString
     public let countNonMemberVotes: Bool
     public let allowNonMemberWhitelists: Bool
-    public let witnessPayPerBlock: IntOrString
-    public let workerBudgetPerDay: IntOrString
     public let maxPredicateOpcode: IntOrString
     public let feeLiquidationThreshold: IntOrString
     public let accountsPerFeeScale: IntOrString
@@ -101,6 +104,65 @@ public struct GlobalPropertiesParameters: Decodable {
     public let echorandConfig: EchorandConfig
     public let sidechainConfig: SidechainConfig
     public let gasPrice: GasPriceGlobalProperties
+    
+    public init(currentFees: CurrentFeesGlobalPropertiesParameters,
+                blockInterval: IntOrString,
+                maintenanceInterval: IntOrString,
+                maintenanceSkipSlots: IntOrString,
+                committeeProposalReviewPeriod: IntOrString,
+                maximumTransactionSize: IntOrString,
+                maximumBlockSize: IntOrString,
+                maximumTimeUntilExpiration: IntOrString,
+                maximumProposalLifetime: IntOrString,
+                maximumAssetWhitelistAuthorities: IntOrString,
+                maximumAssetFeedPublishers: IntOrString,
+                maximumCommitteeCount: IntOrString,
+                maximumAuthorityMembership: IntOrString,
+                reservePercentOfFee: IntOrString,
+                networkPercentOfFee: IntOrString,
+                lifetimeReferrerPercentOfFee: IntOrString,
+                cashbackVestingPeriodSeconds: IntOrString,
+                cashbackVestingThreshold: IntOrString,
+                countNonMemberVotes: Bool,
+                allowNonMemberWhitelists: Bool,
+                maxPredicateOpcode: IntOrString,
+                feeLiquidationThreshold: IntOrString,
+                accountsPerFeeScale: IntOrString,
+                accountFeeScaleBitshifts: IntOrString,
+                maxAuthorityDepth: IntOrString,
+                echorandConfig: EchorandConfig,
+                sidechainConfig: SidechainConfig,
+                gasPrice: GasPriceGlobalProperties) {
+        
+        self.currentFees = currentFees
+        self.blockInterval = blockInterval
+        self.maintenanceInterval = maintenanceInterval
+        self.maintenanceSkipSlots = maintenanceSkipSlots
+        self.committeeProposalReviewPeriod = committeeProposalReviewPeriod
+        self.maximumTransactionSize = maximumTransactionSize
+        self.maximumBlockSize = maximumBlockSize
+        self.maximumTimeUntilExpiration = maximumTimeUntilExpiration
+        self.maximumProposalLifetime = maximumProposalLifetime
+        self.maximumAssetWhitelistAuthorities = maximumAssetWhitelistAuthorities
+        self.maximumAssetFeedPublishers = maximumAssetFeedPublishers
+        self.maximumCommitteeCount = maximumCommitteeCount
+        self.maximumAuthorityMembership = maximumAuthorityMembership
+        self.reservePercentOfFee = reservePercentOfFee
+        self.networkPercentOfFee = networkPercentOfFee
+        self.lifetimeReferrerPercentOfFee = lifetimeReferrerPercentOfFee
+        self.cashbackVestingPeriodSeconds = cashbackVestingPeriodSeconds
+        self.cashbackVestingThreshold = cashbackVestingThreshold
+        self.countNonMemberVotes = countNonMemberVotes
+        self.allowNonMemberWhitelists = allowNonMemberWhitelists
+        self.maxPredicateOpcode = maxPredicateOpcode
+        self.feeLiquidationThreshold = feeLiquidationThreshold
+        self.accountsPerFeeScale = accountsPerFeeScale
+        self.accountFeeScaleBitshifts = accountFeeScaleBitshifts
+        self.maxAuthorityDepth = maxAuthorityDepth
+        self.echorandConfig = echorandConfig
+        self.sidechainConfig = sidechainConfig
+        self.gasPrice = gasPrice
+    }
     
     public init(from decoder: Decoder) throws {
         
@@ -117,7 +179,6 @@ public struct GlobalPropertiesParameters: Decodable {
         maximumProposalLifetime = try values.decode(IntOrString.self, forKey: .maximumProposalLifetime)
         maximumAssetWhitelistAuthorities = try values.decode(IntOrString.self, forKey: .maximumAssetWhitelistAuthorities)
         maximumAssetFeedPublishers = try values.decode(IntOrString.self, forKey: .maximumAssetFeedPublishers)
-        maximumWitnessCount = try values.decode(IntOrString.self, forKey: .maximumWitnessCount)
         maximumCommitteeCount = try values.decode(IntOrString.self, forKey: .maximumCommitteeCount)
         maximumAuthorityMembership = try values.decode(IntOrString.self, forKey: .maximumAuthorityMembership)
         reservePercentOfFee = try values.decode(IntOrString.self, forKey: .reservePercentOfFee)
@@ -127,8 +188,6 @@ public struct GlobalPropertiesParameters: Decodable {
         cashbackVestingThreshold = try values.decode(IntOrString.self, forKey: .cashbackVestingThreshold)
         countNonMemberVotes = try values.decode(Bool.self, forKey: .countNonMemberVotes)
         allowNonMemberWhitelists = try values.decode(Bool.self, forKey: .allowNonMemberWhitelists)
-        witnessPayPerBlock = try values.decode(IntOrString.self, forKey: .witnessPayPerBlock)
-        workerBudgetPerDay = try values.decode(IntOrString.self, forKey: .workerBudgetPerDay)
         maxPredicateOpcode = try values.decode(IntOrString.self, forKey: .maxPredicateOpcode)
         feeLiquidationThreshold = try values.decode(IntOrString.self, forKey: .feeLiquidationThreshold)
         accountsPerFeeScale = try values.decode(IntOrString.self, forKey: .accountsPerFeeScale)
@@ -149,6 +208,13 @@ public struct CurrentFeesGlobalPropertiesParameters: Decodable {
     
     public let parameters: [[IntOrDict]]
     public let scale: IntOrString
+    
+    public init(parameters: [[IntOrDict]],
+                scale: IntOrString) {
+        
+        self.parameters = parameters
+        self.scale = scale
+    }
     
     public init(from decoder: Decoder) throws {
         
@@ -179,6 +245,23 @@ public struct EchorandConfig: Decodable {
     public let maxBbaSteps: IntOrString
     public let gc1Delay: IntOrString
     
+    public init(timeNet1mb: IntOrString,
+                timeNet256b: IntOrString,
+                creatorCount: IntOrString,
+                verifierCount: IntOrString,
+                okThreshold: IntOrString,
+                maxBbaSteps: IntOrString,
+                gc1Delay: IntOrString) {
+        
+        self.timeNet1mb = timeNet1mb
+        self.timeNet256b = timeNet256b
+        self.creatorCount = creatorCount
+        self.verifierCount = verifierCount
+        self.okThreshold = okThreshold
+        self.maxBbaSteps = maxBbaSteps
+        self.gc1Delay = gc1Delay
+    }
+    
     public init(from decoder: Decoder) throws {
         
         let values = try decoder.container(keyedBy: EchorandConfigCodingKeys.self)
@@ -196,37 +279,87 @@ public struct EchorandConfig: Decodable {
 public struct SidechainConfig: Decodable {
     
     private enum SidechainConfigCodingKeys: String, CodingKey {
-        case echoContractId = "echo_contract_id"
-        case echoVoteMethod = "echo_vote_method"
-        case echoSignMethod = "echo_sign_method"
-        case echoTransferTopic = "echo_transfer_topic"
-        case echoTransferReadyTopic = "echo_transfer_ready_topic"
+        
         case ethContractAddress = "eth_contract_address"
-        case ethCommitteeMethod = "eth_committee_method"
-        case ethTransferTopic = "eth_transfer_topic"
+        case ethCommitteeUpdateMethod = "eth_committee_update_method"
+        case ethGenAddressMethod = "eth_gen_address_method"
+        case ethWithdrawMethod = "eth_withdraw_method"
+        case ethCommitteeUpdatedTopic = "eth_committee_updated_topic"
+        case ethGenAddressTopic = "eth_gen_address_topic"
+        case ethDepositTopic = "eth_deposit_topic"
+        case ethWithdrawTopic = "eth_withdraw_topic"
+        case ETHAssetId = "ETH_asset_id"
     }
     
-    public let echoContractId: String
-    public let echoVoteMethod: String
-    public let echoSignMethod: String
-    public let echoTransferTopic: String
-    public let echoTransferReadyTopic: String
     public let ethContractAddress: String
-    public let ethCommitteeMethod: String
-    public let ethTransferTopic: String
+    public let ethCommitteeUpdateMethod: EthMethod
+    public let ethGenAddressMethod: EthMethod
+    public let ethWithdrawMethod: EthMethod
+    public let ethCommitteeUpdatedTopic: String
+    public let ethGenAddressTopic: String
+    public let ethDepositTopic: String
+    public let ethWithdrawTopic: String
+    public let ETHAssetId: String
+    
+    public init(ethContractAddress: String,
+                ethCommitteeUpdateMethod: EthMethod,
+                ethGenAddressMethod: EthMethod,
+                ethWithdrawMethod: EthMethod,
+                ethCommitteeUpdatedTopic: String,
+                ethGenAddressTopic: String,
+                ethDepositTopic: String,
+                ethWithdrawTopic: String,
+                ETHAssetId: String) {
+        
+        self.ethContractAddress = ethContractAddress
+        self.ethCommitteeUpdateMethod = ethCommitteeUpdateMethod
+        self.ethGenAddressMethod = ethGenAddressMethod
+        self.ethWithdrawMethod = ethWithdrawMethod
+        self.ethCommitteeUpdatedTopic = ethCommitteeUpdatedTopic
+        self.ethGenAddressTopic = ethGenAddressTopic
+        self.ethDepositTopic = ethDepositTopic
+        self.ethWithdrawTopic = ethWithdrawTopic
+        self.ETHAssetId = ETHAssetId
+    }
     
     public init(from decoder: Decoder) throws {
         
         let values = try decoder.container(keyedBy: SidechainConfigCodingKeys.self)
         
-        echoContractId = try values.decode(String.self, forKey: .echoContractId)
-        echoVoteMethod = try values.decode(String.self, forKey: .echoVoteMethod)
-        echoSignMethod = try values.decode(String.self, forKey: .echoSignMethod)
-        echoTransferTopic = try values.decode(String.self, forKey: .echoTransferTopic)
-        echoTransferReadyTopic = try values.decode(String.self, forKey: .echoTransferReadyTopic)
         ethContractAddress = try values.decode(String.self, forKey: .ethContractAddress)
-        ethCommitteeMethod = try values.decode(String.self, forKey: .ethCommitteeMethod)
-        ethTransferTopic = try values.decode(String.self, forKey: .ethTransferTopic)
+        ethCommitteeUpdateMethod = try values.decode(EthMethod.self, forKey: .ethCommitteeUpdateMethod)
+        ethGenAddressMethod = try values.decode(EthMethod.self, forKey: .ethGenAddressMethod)
+        ethWithdrawMethod = try values.decode(EthMethod.self, forKey: .ethWithdrawMethod)
+        ethCommitteeUpdatedTopic = try values.decode(String.self, forKey: .ethCommitteeUpdatedTopic)
+        ethGenAddressTopic = try values.decode(String.self, forKey: .ethGenAddressTopic)
+        ethDepositTopic = try values.decode(String.self, forKey: .ethDepositTopic)
+        ethWithdrawTopic = try values.decode(String.self, forKey: .ethWithdrawTopic)
+        ETHAssetId = try values.decode(String.self, forKey: .ETHAssetId)
+    }
+}
+
+public struct EthMethod: Decodable {
+    
+    private enum EthMethodCodingKeys: String, CodingKey {
+        case method
+        case gas
+    }
+    
+    public let method: String
+    public let gas: IntOrString
+    
+    public init(method: String, gas: IntOrString) {
+        
+        self.method = method
+        self.gas = gas
+    }
+    
+    public init(from decoder: Decoder) throws {
+        
+        let values = try decoder.container(keyedBy: EthMethodCodingKeys.self)
+        
+        method = try values.decode(String.self, forKey: .method)
+        gas = try values.decode(IntOrString.self, forKey: .gas)
     }
 }
 
@@ -239,6 +372,13 @@ public struct GasPriceGlobalProperties: Decodable {
     
     public let price: IntOrString
     public let gasAmount: IntOrString
+    
+    public init(price: IntOrString,
+                gasAmount: IntOrString) {
+        
+        self.price = price
+        self.gasAmount = gasAmount
+    }
     
     public init(from decoder: Decoder) throws {
         

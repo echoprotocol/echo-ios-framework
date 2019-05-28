@@ -71,7 +71,8 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
                                                  services.databaseService,
                                                  Asset(Settings.defaultAsset),
                                                  CreateAssetKeys.operation.rawValue,
-                                                 CreateAssetKeys.fee.rawValue)
+                                                 CreateAssetKeys.fee.rawValue,
+                                                 UInt(1))
         let getRequiredFeeOperation = GetRequiredFeeQueueOperation<Bool>(initParams: getRequiredFeeOperationInitParams,
                                                                          completion: completion)
         
@@ -91,7 +92,7 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
                                               keychainType: KeychainType.active,
                                               saveKey: CreateAssetKeys.transaction.rawValue,
                                               passwordOrWif: passwordOrWif,
-                                              networkPrefix: network.prefix.rawValue,
+                                              networkPrefix: network.echorandPrefix.rawValue,
                                               fromAccountKey: CreateAssetKeys.account.rawValue,
                                               operationKey: CreateAssetKeys.operation.rawValue,
                                               chainIdKey: CreateAssetKeys.chainId.rawValue,
@@ -172,7 +173,8 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
                                                  services.databaseService,
                                                  Asset(Settings.defaultAsset),
                                                  IssueAssetKeys.operation.rawValue,
-                                                 IssueAssetKeys.fee.rawValue)
+                                                 IssueAssetKeys.fee.rawValue,
+                                                 UInt(1))
         let getRequiredFeeOperation = GetRequiredFeeQueueOperation<Bool>(initParams: getRequiredFeeOperationInitParams,
                                                                          completion: completion)
         
@@ -192,7 +194,7 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
                                               keychainType: KeychainType.active,
                                               saveKey: IssueAssetKeys.transaction.rawValue,
                                               passwordOrWif: passwordOrWif,
-                                              networkPrefix: network.prefix.rawValue,
+                                              networkPrefix: network.echorandPrefix.rawValue,
                                               fromAccountKey: IssueAssetKeys.issuerAccount.rawValue,
                                               operationKey: IssueAssetKeys.operation.rawValue,
                                               chainIdKey: IssueAssetKeys.chainId.rawValue,

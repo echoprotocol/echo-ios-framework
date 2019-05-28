@@ -133,7 +133,21 @@ extension Decoder {
             end = start + addressSize
         }
         
-        guard let btcNumber = BTCBigNumber(unsignedBigEndian: data[safe: start..<end]) else {
+        guard var addressData = data[safe: start..<end] else {
+            let error = NSError(domain: "", code: 0, userInfo: nil)
+            throw error
+        }
+        
+        if addressData.count == sliceSize {
+            addressData.removeFirst(sliceSize - addressSize)
+        }
+        
+        if addressData.bytes.first == 1 {
+            try decodeContractAddress(data, sliceIndex, .contractAddress, &decodedOutputs)
+            return
+        }
+        
+        guard let btcNumber = BTCBigNumber(unsignedBigEndian: addressData) else {
             let error = NSError(domain: "", code: 0, userInfo: nil)
             throw error
         }
@@ -335,7 +349,12 @@ extension Decoder {
             throw error
         }
         
-        let output = AbiTypeValueOutputModel(type: type, value: fixedBytesData.hex)
+        guard let fixedString = String(data: fixedBytesData, encoding: .utf8) else {
+            let error = NSError(domain: "", code: 0, userInfo: nil)
+            throw error
+        }
+        
+        let output = AbiTypeValueOutputModel(type: type, value: fixedString)
         decodedOutputs.append(output)
     }
     
@@ -499,20 +518,16 @@ extension Encoder {
             }
         case .fixedBytes(let size):
             
-            if var value = Data(hex: data) {
-                
-                if value.count > size {
-                    value = value.subdata(in: 0..<size)
-                }
-                
-                let fillData = Data(count: sliceSize - value.count)
-                value.append(fillData)
-                
-                staticStack.array.append(value)
-
-            } else {
-                staticStack.array.append(placeholderData())
+            var value = Data(data.utf8)
+            
+            if value.count > size {
+                value = value.subdata(in: 0..<size)
             }
+            
+            let fillData = Data(count: sliceSize - value.count)
+            value.append(fillData)
+            
+            staticStack.array.append(value)
 
         default:
             break

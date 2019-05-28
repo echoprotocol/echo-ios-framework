@@ -20,8 +20,12 @@ enum OperationsState {
     case createContract
     case queryContract
     case callContract
-    case subscribe
-    case `default`
+    case subscribeToAccount
+    case subscribeToConsractLogs
+    case getBlock
+    case createEthAddress
+    case getEthAddress
+    case withdrawalEth
 }
 
 final class SocketMessengerStub: SocketMessenger {
@@ -47,7 +51,7 @@ final class SocketMessengerStub: SocketMessenger {
     var onFailedConnect: (() -> ())?
     var onText: ((String) -> ())?
     
-    init(state: OperationsState = .default) {
+    init(state: OperationsState) {
         operationState = state
         callbackQueue = DispatchQueue(label: "SocketMessengerStub")
     }
@@ -68,8 +72,6 @@ final class SocketMessengerStub: SocketMessenger {
         let response: String?
         
         switch operationState {
-        case .default:
-            response = getConstantResponse(request: string)
         case .reveal:
             response = getRevealResponse(request: string)
         case .changePassword:
@@ -88,10 +90,20 @@ final class SocketMessengerStub: SocketMessenger {
             response = getQueryContractResponse(request: string)
         case .callContract:
             response = getCallContractResponse(request: string)
-        case .subscribe:
+        case .subscribeToAccount:
             response = getSubscribeResponse(request: string)
         case .getAccount:
             response = getAccountResponse(request: string)
+        case .subscribeToConsractLogs:
+            response = getSubscribeToConstractLogsResponse(request: string)
+        case .getBlock:
+            response = getGetBlockResponce(request: string)
+        case .createEthAddress:
+            response = getCreateEthAddressRespone(request: string)
+        case .getEthAddress:
+            response = getEthAddressRespone(request: string)
+        case .withdrawalEth:
+            response = getWithdrawalEthRespone(request: string)
         }
     
         if let response = response {
@@ -105,67 +117,11 @@ final class SocketMessengerStub: SocketMessenger {
     func makeUserAccountTransferChangeEvent() {
         onText?(TransactionEventEventNotificationStub.response1)
         onText?(TransactionEventEventNotificationStub.response2)
-        onText?(TransactionEventEventNotificationStub.response3)
     }
     
-    func makeUserAccountChangePasswordEvent() {
-        onText?(ChangePasswordEventNotificationStub.response1)
-        onText?(ChangePasswordEventNotificationStub.response2)
-        onText?(ChangePasswordEventNotificationStub.response3)
-        onText?(ChangePasswordEventNotificationStub.response4)
-    }
-    
-    fileprivate func getConstantResponse(request: String) -> String? {
-        
-        switch request {
-        case HistoryAPIRevealSocketRequestStub.request:
-            revealHistoryApi = true
-            return HistoryAPIRevealSocketRequestStub.response
-        case AccountSocketRequestStub.request:
-            return AccountSocketRequestStub.response
-        case LoginRevealSocketRequestStub.request:
-            login = true
-            return LoginRevealSocketRequestStub.response
-        case DatabaseAPIRevealSocketRequestStub.request:
-            revealDatabaseApi = true
-            return DatabaseAPIRevealSocketRequestStub.response
-        case NetworkBroadcastAPIRevealSocketRequestStub.request:
-            revealNetBroadcastsApi = true
-            return NetworkBroadcastAPIRevealSocketRequestStub.response
-        case RegistrationAPIRevealSocketRequestStub.request:
-            registrationApi = true
-            return RegistrationAPIRevealSocketRequestStub.response
-        case NetworkNodesAPIRevealSocketRequestStub.request:
-            revealNetNodesApi = true
-            return NetworkNodesAPIRevealSocketRequestStub.response
-        case CryptoAPIRevealSocketRequestStub.request:
-            revealCryptoApi = true
-            return CryptoAPIRevealSocketRequestStub.response
-        case AccountHistorySocketRequestStub.request:
-            return AccountHistorySocketRequestStub.response
-        case AccountSocketRequestForNotificationStub.request:
-            return AccountSocketRequestForNotificationStub.response
-        case AccountSocketRequestForNotificationStub2.request:
-            return AccountSocketRequestForNotificationStub2.response
-        case AccountSocketRequestForNotificationStub3.request:
-            return AccountSocketRequestForNotificationStub3.response
-        case SubscribeSuccesNotificationStub.request:
-            return SubscribeSuccesNotificationStub.response
-        default:
-            break
-        }
-        
-        guard let tuple = parceRequest(request: request) else {
-            return nil
-        }
-        
-        let revealHodler = RevialAPISocketRequestStubHodler()
-        
-        if let revealResponse = revealHodler.response(id: tuple.id, operationType: tuple.operationType) {
-            return revealResponse
-        }
-        
-        return nil
+    func makeContractLogCreateEvent() {
+        onText?(ContractLogsEventNotificationStub.response1)
+        onText?(ContractLogsEventNotificationStub.response2)
     }
     
     fileprivate func parceRequest(request: String) -> (id: Int, operationType: String)? {
@@ -190,10 +146,10 @@ final class SocketMessengerStub: SocketMessenger {
             return nil
         }
         
-        let revealHodler = RevialAPISocketRequestStubHodler()
-        let changePasswordHodler = ChangePasswordSocketRequestHodlerStub()
+        let revealHolder = RevealAPISocketStubsHolder()
+        let changePasswordHodler = ChangePasswordSocketRequestStubHodler()
 
-        if let revealResponse = revealHodler.response(id: tuple.id, operationType: tuple.operationType) {
+        if let revealResponse = revealHolder.response(id: tuple.id, operationType: tuple.operationType) {
             return revealResponse
         } else if let changePasswordResponse = changePasswordHodler.response(id: tuple.id, operationType: tuple.operationType) {
             return changePasswordResponse
@@ -208,7 +164,7 @@ final class SocketMessengerStub: SocketMessenger {
             return ""
         }
         
-        let error = ErrorResponseStub.getError(id: String(tuple.id), request: request)
+        let error = ErrorSocketRequestStub.getError(id: String(tuple.id), request: request)
         return error
     }
     
@@ -218,10 +174,10 @@ final class SocketMessengerStub: SocketMessenger {
             return nil
         }
         
-        let revealHodler = RevialAPISocketRequestStubHodler()
+        let revealHolder = RevealAPISocketStubsHolder()
         let transferHodler = TransferSocketRequestStubHodler()
         
-        if let revealResponse = revealHodler.response(id: tuple.id, operationType: tuple.operationType) {
+        if let revealResponse = revealHolder.response(id: tuple.id, operationType: tuple.operationType) {
             return revealResponse
         } else if let transferResponse = transferHodler.response(id: tuple.id, operationType: tuple.operationType) {
             return transferResponse
@@ -236,10 +192,10 @@ final class SocketMessengerStub: SocketMessenger {
             return nil
         }
         
-        let revealHodler = RevialAPISocketRequestStubHodler()
+        let revealHolder = RevealAPISocketStubsHolder()
         let issueAssetHodler = IssueAssetSocketRequestStubHodler()
         
-        if let revealResponse = revealHodler.response(id: tuple.id, operationType: tuple.operationType) {
+        if let revealResponse = revealHolder.response(id: tuple.id, operationType: tuple.operationType) {
             return revealResponse
         } else if let issueAssetResponse = issueAssetHodler.response(id: tuple.id, operationType: tuple.operationType) {
             return issueAssetResponse
@@ -254,10 +210,10 @@ final class SocketMessengerStub: SocketMessenger {
             return nil
         }
         
-        let revealHodler = RevialAPISocketRequestStubHodler()
+        let revealHolder = RevealAPISocketStubsHolder()
         let createAssetHodler = CreateAssetSocketRequestStubHodler()
         
-        if let revealResponse = revealHodler.response(id: tuple.id, operationType: tuple.operationType) {
+        if let revealResponse = revealHolder.response(id: tuple.id, operationType: tuple.operationType) {
             return revealResponse
         } else if let createAssetResponse = createAssetHodler.response(id: tuple.id, operationType: tuple.operationType) {
             return createAssetResponse
@@ -272,10 +228,10 @@ final class SocketMessengerStub: SocketMessenger {
             return nil
         }
         
-        let revealHodler = RevialAPISocketRequestStubHodler()
+        let revealHolder = RevealAPISocketStubsHolder()
         let getContractHodler = GetContractInfoStubHodler()
         
-        if let revealResponse = revealHodler.response(id: tuple.id, operationType: tuple.operationType) {
+        if let revealResponse = revealHolder.response(id: tuple.id, operationType: tuple.operationType) {
             return revealResponse
         } else if let getContractResponse = getContractHodler.response(id: tuple.id, operationType: tuple.operationType) {
             return getContractResponse
@@ -290,10 +246,10 @@ final class SocketMessengerStub: SocketMessenger {
             return nil
         }
         
-        let revealHodler = RevialAPISocketRequestStubHodler()
+        let revealHolder = RevealAPISocketStubsHolder()
         let createContractHodler = CreateContractInfoStubHolder()
         
-        if let revealResponse = revealHodler.response(id: tuple.id, operationType: tuple.operationType) {
+        if let revealResponse = revealHolder.response(id: tuple.id, operationType: tuple.operationType) {
             return revealResponse
         } else if let createContractResponse = createContractHodler.response(id: tuple.id, operationType: tuple.operationType) {
             return createContractResponse
@@ -308,10 +264,10 @@ final class SocketMessengerStub: SocketMessenger {
             return nil
         }
         
-        let revealHodler = RevialAPISocketRequestStubHodler()
-        let queryContractHodler = QueryContractStubs()
+        let revealHolder = RevealAPISocketStubsHolder()
+        let queryContractHodler = QueryContractStubHolder()
         
-        if let revealResponse = revealHodler.response(id: tuple.id, operationType: tuple.operationType) {
+        if let revealResponse = revealHolder.response(id: tuple.id, operationType: tuple.operationType) {
             return revealResponse
         } else if let queryContractResponse = queryContractHodler.response(id: tuple.id, operationType: tuple.operationType) {
             return queryContractResponse
@@ -326,10 +282,10 @@ final class SocketMessengerStub: SocketMessenger {
             return nil
         }
         
-        let revealHodler = RevialAPISocketRequestStubHodler()
-        let callContractHodler = CallContractStubs()
+        let revealHolder = RevealAPISocketStubsHolder()
+        let callContractHodler = CallContractStubHolder()
         
-        if let revealResponse = revealHodler.response(id: tuple.id, operationType: tuple.operationType) {
+        if let revealResponse = revealHolder.response(id: tuple.id, operationType: tuple.operationType) {
             return revealResponse
         } else if let callContractResponse = callContractHodler.response(id: tuple.id, operationType: tuple.operationType) {
             return callContractResponse
@@ -344,13 +300,52 @@ final class SocketMessengerStub: SocketMessenger {
             return nil
         }
         
-        let revealHodler = RevialAPISocketRequestStubHodler()
-        let stubHolder = SubscribeSocketRequestStubHodler()
+        let revealHolder = RevealAPISocketStubsHolder()
+        let stubHolder = SubscribeToAccountStubHodler()
         
-        if let revealResponse = revealHodler.response(id: tuple.id, operationType: tuple.operationType) {
+        if let revealResponse = revealHolder.response(id: tuple.id, operationType: tuple.operationType) {
             return revealResponse
         } else if let response = stubHolder.response(id: tuple.id, operationType: tuple.operationType) {
             return response
+        }
+        
+        return nil
+    }
+    
+    fileprivate func getSubscribeToConstractLogsResponse(request: String) -> String? {
+        
+        guard let tuple = parceRequest(request: request) else {
+            return nil
+        }
+        
+        let revealHolder = RevealAPISocketStubsHolder()
+        let stubHolder = SubscribeToAccountStubHodler()
+        
+        if let revealResponse = revealHolder.response(id: tuple.id, operationType: tuple.operationType) {
+            return revealResponse
+        } else if let response = stubHolder.response(id: tuple.id, operationType: tuple.operationType) {
+            return response
+        }
+        
+        return nil
+        
+    }
+    
+    fileprivate func getGetBlockResponce(request: String) -> String? {
+        
+        guard let tuple = parceRequest(request: request) else {
+            return nil
+        }
+        
+        let revealHolder = RevealAPISocketStubsHolder()
+        let requestStub = GetBlockSocketRequestStub()
+        
+        print(tuple)
+        
+        if let revealResponse = revealHolder.response(id: tuple.id, operationType: tuple.operationType) {
+            return revealResponse
+        } else if tuple.operationType == requestStub.operationType {
+            return requestStub.createResponce(id: tuple.id)
         }
         
         return nil
@@ -362,9 +357,9 @@ final class SocketMessengerStub: SocketMessenger {
             return nil
         }
         
-        let revealHodler = RevialAPISocketRequestStubHodler()
+        let revealHolder = RevealAPISocketStubsHolder()
         
-        if let revealResponse = revealHodler.response(id: tuple.id, operationType: tuple.operationType) {
+        if let revealResponse = revealHolder.response(id: tuple.id, operationType: tuple.operationType) {
             
             switch tuple.operationType {
             case "crypto":
@@ -395,13 +390,67 @@ final class SocketMessengerStub: SocketMessenger {
             return nil
         }
         
-        let revealHodler = RevialAPISocketRequestStubHodler()
+        let revealHolder = RevealAPISocketStubsHolder()
         let stubHolder = GetAccountStubHolder()
         
-        if let revealResponse = revealHodler.response(id: tuple.id, operationType: tuple.operationType) {
+        if let revealResponse = revealHolder.response(id: tuple.id, operationType: tuple.operationType) {
             return revealResponse
         } else if let response = stubHolder.response(id: tuple.id, operationType: tuple.operationType) {
             return response
+        }
+        
+        return nil
+    }
+    
+    fileprivate func getCreateEthAddressRespone(request: String) -> String? {
+        
+        guard let tuple = parceRequest(request: request) else {
+            return nil
+        }
+        
+        let revealHolder = RevealAPISocketStubsHolder()
+        let stubHolder = CreateEthAddressStubHolder()
+        
+        if let revealResponse = revealHolder.response(id: tuple.id, operationType: tuple.operationType) {
+            return revealResponse
+        } else if let transferResponse = stubHolder.response(id: tuple.id, operationType: tuple.operationType) {
+            return transferResponse
+        }
+        
+        return nil
+    }
+    
+    fileprivate func getEthAddressRespone(request: String) -> String? {
+        
+        guard let tuple = parceRequest(request: request) else {
+            return nil
+        }
+        
+        let revealHolder = RevealAPISocketStubsHolder()
+        let stubHolder = GetEthAddressStubHolder()
+        
+        if let revealResponse = revealHolder.response(id: tuple.id, operationType: tuple.operationType) {
+            return revealResponse
+        } else if let transferResponse = stubHolder.response(id: tuple.id, operationType: tuple.operationType) {
+            return transferResponse
+        }
+        
+        return nil
+    }
+    
+    fileprivate func getWithdrawalEthRespone(request: String) -> String? {
+        
+        guard let tuple = parceRequest(request: request) else {
+            return nil
+        }
+        
+        let revealHolder = RevealAPISocketStubsHolder()
+        let stubHolder = WithdrawalEthStubHolder()
+        
+        if let revealResponse = revealHolder.response(id: tuple.id, operationType: tuple.operationType) {
+            return revealResponse
+        } else if let transferResponse = stubHolder.response(id: tuple.id, operationType: tuple.operationType) {
+            return transferResponse
         }
         
         return nil

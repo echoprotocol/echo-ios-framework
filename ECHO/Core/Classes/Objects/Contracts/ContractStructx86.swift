@@ -14,6 +14,11 @@ public struct ContractStructx86: Decodable {
     
     public let code: String
     
+    public init(code: String) {
+        
+        self.code = code
+    }
+    
     public init(from decoder: Decoder) throws {
         
         let values = try decoder.container(keyedBy: ContractStructx86CodingKeys.self)
