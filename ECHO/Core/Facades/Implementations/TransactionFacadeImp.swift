@@ -45,7 +45,6 @@ final public class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
         case fee
         case transaction
         case operationId
-        case memo
         case notice
         case noticeHandler
     }
@@ -57,7 +56,6 @@ final public class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
                                       amount: UInt,
                                       asset: String,
                                       assetForFee: String?,
-                                      message: String?,
                                       completion: @escaping Completion<Bool>,
                                       noticeHandler: NoticeHandler?) {
         
@@ -88,19 +86,7 @@ final public class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
         let getAccountsOperation = GetAccountsQueueOperation<Bool>(initParams: getAccountsOperationInitParams,
                                                                           completion: completion)
         
-        // Memo
-        let getMemoOperationInitParams = (queue: transferQueue,
-                                          cryptoCore: cryptoCore,
-                                          message: message,
-                                          saveKey: TransferResultsKeys.memo.rawValue,
-                                          passwordOrWif: passwordOrWif,
-                                          networkPrefix: network.prefix.rawValue,
-                                          fromAccountKey: TransferResultsKeys.loadedFromAccount.rawValue,
-                                          toAccountKey: TransferResultsKeys.loadedToAccount.rawValue)
-        let getMemoOperation = GetMemoQueueOperation<Bool>(initParams: getMemoOperationInitParams,
-                                                           completion: completion)
-        
-        let bildTransferOperation = createBildTransferOperation(transferQueue, message, amount, asset, completion)
+        let bildTransferOperation = createBildTransferOperation(transferQueue, amount, asset, completion)
         
         // RequiredFee
         let getRequiredFeeOperationInitParams = (transferQueue,
@@ -149,7 +135,6 @@ final public class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
         let completionOperation = createCompletionOperation(queue: transferQueue)
         
         transferQueue.addOperation(getAccountsOperation)
-        transferQueue.addOperation(getMemoOperation)
         transferQueue.addOperation(bildTransferOperation)
         transferQueue.addOperation(getRequiredFeeOperation)
         transferQueue.addOperation(getChainIdOperation)
@@ -171,7 +156,6 @@ final public class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
     // swiftlint:enable function_body_length
     
     fileprivate func createBildTransferOperation(_ queue: ECHOQueue,
-                                                 _ message: String?,
                                                  _ amount: UInt,
                                                  _ asset: String,
                                                  _ completion: @escaping Completion<Bool>) -> Operation {
@@ -184,15 +168,13 @@ final public class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
             
             guard let fromAccount: Account = queue?.getValue(TransferResultsKeys.loadedFromAccount.rawValue) else { return }
             guard let toAccount: Account = queue?.getValue(TransferResultsKeys.loadedToAccount.rawValue) else { return }
-            guard let memo: Memo = queue?.getValue(TransferResultsKeys.memo.rawValue) else { return }
             
             let fee = AssetAmount(amount: 0, asset: Asset(asset))
             let amount = AssetAmount(amount: amount, asset: Asset(asset))
-            let extractedExpr: TransferOperation = TransferOperation(fromAccount: fromAccount,
+            let extractedExpr: TransferOperation = TransferOperation(fromAccount:           fromAccount,
                                                                      toAccount: toAccount,
                                                                      transferAmount: amount,
-                                                                     fee: fee,
-                                                                     memo: memo)
+                                                                     fee: fee)
             let transferOperation = extractedExpr
             
             queue?.saveValue(transferOperation, forKey: TransferResultsKeys.operation.rawValue)

@@ -35,7 +35,7 @@ class ContractsSubscribeTests: XCTestCase, SubscribeContractsDelegate {
         //arrange
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .accountHistory]
-            $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .det)
+            $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
         }))
         
         let exp = expectation(description: "testStartingLib")

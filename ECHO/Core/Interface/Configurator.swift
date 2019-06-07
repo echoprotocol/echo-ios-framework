@@ -20,6 +20,6 @@ final public class Configurator {
     public var apiOptions: APIOption = [.database, .accountHistory, .networkBroadcast, .crypto, .networkNodes, .registration]
     public var network: ECHONetwork = ECHONetwork(url: "wss://devnet.echo-dev.io/ws",
                                                   prefix: ECHONetworkPrefix.echo,
-                                                  echorandPrefix: .det)
+                                                  echorandPrefix: .echo)
     public var callContractFeeMultiplier: UInt = 1
 }

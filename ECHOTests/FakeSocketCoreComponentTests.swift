@@ -24,7 +24,7 @@ class SocketCoreComponentTests: XCTestCase {
         let fakeUrl = "fakeUrl"
         let messenger = SocketMessengerStub(state: .reveal)
         echo = ECHO(settings: Settings(build: {
-            $0.network = ECHONetwork(url: fakeUrl, prefix: ECHONetworkPrefix.echo, echorandPrefix: .det)
+            $0.network = ECHONetwork(url: fakeUrl, prefix: ECHONetworkPrefix.echo, echorandPrefix: .echo)
                 $0.socketMessenger = messenger
             }))
         let exp = expectation(description: "Start with url \(fakeUrl)")

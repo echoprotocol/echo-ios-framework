@@ -234,7 +234,6 @@
 		D0D8CA492141847900F0646D /* SendTransactionQueueOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D8CA422141847900F0646D /* SendTransactionQueueOperation.swift */; };
 		D0D8CA4A2141847900F0646D /* GetAccountsQueueOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D8CA432141847900F0646D /* GetAccountsQueueOperation.swift */; };
 		D0D8CA4B2141847900F0646D /* GetBlockDataQueueOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D8CA442141847900F0646D /* GetBlockDataQueueOperation.swift */; };
-		D0D8CA4C2141847900F0646D /* GetMemoQueueOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D8CA452141847900F0646D /* GetMemoQueueOperation.swift */; };
 		D0DCC84D223908B600D20358 /* ContractExecuteType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DCC84C223908B600D20358 /* ContractExecuteType.swift */; };
 		D0E158E2221FDF9B004B44FF /* GetKeyReferencesSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E158E1221FDF9B004B44FF /* GetKeyReferencesSocketOperation.swift */; };
 		D0E158E4221FFCA3004B44FF /* PassOfWif.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E158E3221FFCA3004B44FF /* PassOfWif.swift */; };
@@ -508,7 +507,6 @@
 		D0D8CA422141847900F0646D /* SendTransactionQueueOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendTransactionQueueOperation.swift; sourceTree = "<group>"; };
 		D0D8CA432141847900F0646D /* GetAccountsQueueOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetAccountsQueueOperation.swift; sourceTree = "<group>"; };
 		D0D8CA442141847900F0646D /* GetBlockDataQueueOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetBlockDataQueueOperation.swift; sourceTree = "<group>"; };
-		D0D8CA452141847900F0646D /* GetMemoQueueOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetMemoQueueOperation.swift; sourceTree = "<group>"; };
 		D0DCC84C223908B600D20358 /* ContractExecuteType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractExecuteType.swift; sourceTree = "<group>"; };
 		D0E158E1221FDF9B004B44FF /* GetKeyReferencesSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetKeyReferencesSocketOperation.swift; sourceTree = "<group>"; };
 		D0E158E3221FFCA3004B44FF /* PassOfWif.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassOfWif.swift; sourceTree = "<group>"; };
@@ -1108,7 +1106,6 @@
 				D0D8CA422141847900F0646D /* SendTransactionQueueOperation.swift */,
 				D0D8CA432141847900F0646D /* GetAccountsQueueOperation.swift */,
 				D0D8CA442141847900F0646D /* GetBlockDataQueueOperation.swift */,
-				D0D8CA452141847900F0646D /* GetMemoQueueOperation.swift */,
 				B3D20DA2226E01DF00F50CF9 /* GetIsReservedAccountQueueOperation.swift */,
 			);
 			path = QueueOperation;
@@ -1449,7 +1446,6 @@
 				B30CAD2820FFF9E70048E33E /* ECHOKeychain.swift in Sources */,
 				D0880DE1228FF8F6003B9E28 /* ContractHistory.swift in Sources */,
 				B39554B3213E822B00CE2647 /* AssetsFacadeImp.swift in Sources */,
-				D0D8CA4C2141847900F0646D /* GetMemoQueueOperation.swift in Sources */,
 				D082304622368EB6003A4BDC /* ETHAddressValidator.swift in Sources */,
 				B30CC372214A5C29003953E3 /* AbiFunctionModel.swift in Sources */,
 				D048AE772136ABBE00441FEB /* TransactionSocketOperation.swift in Sources */,

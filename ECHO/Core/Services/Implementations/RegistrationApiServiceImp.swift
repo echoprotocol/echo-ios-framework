@@ -41,9 +41,7 @@ final class RegistrationApiServiceImp: RegistrationApiService {
                                                        operationId: operationID,
                                                        apiId: apiIdentifire,
                                                        name: name,
-                                                       ownerKey: ownerKey,
                                                        activeKey: activeKey,
-                                                       memoKey: memoKey,
                                                        echorandKey: echorandKey,
                                                        completion: completion)
         

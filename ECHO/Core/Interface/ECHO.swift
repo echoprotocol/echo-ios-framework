@@ -244,7 +244,6 @@ final public class ECHO: InterfaceFacades, Startable {
                                            amount: UInt,
                                            asset: String,
                                            assetForFee: String?,
-                                           message: String?,
                                            completion: @escaping Completion<AssetAmount>) {
         
         feeFacade.getFeeForTransferOperation(fromNameOrId: fromNameOrId,
@@ -252,7 +251,6 @@ final public class ECHO: InterfaceFacades, Startable {
                                              amount: amount,
                                              asset: asset,
                                              assetForFee: assetForFee,
-                                             message: message,
                                              completion: completion)
     }
     
@@ -300,7 +298,6 @@ final public class ECHO: InterfaceFacades, Startable {
                                       amount: UInt,
                                       asset: String,
                                       assetForFee: String?,
-                                      message: String?,
                                       completion: @escaping Completion<Bool>,
                                       noticeHandler: NoticeHandler?) {
         
@@ -310,7 +307,6 @@ final public class ECHO: InterfaceFacades, Startable {
                                                 amount: amount,
                                                 asset: asset,
                                                 assetForFee: assetForFee,
-                                                message: message,
                                                 completion: completion, noticeHandler: noticeHandler)
     }
     
@@ -329,7 +325,6 @@ final public class ECHO: InterfaceFacades, Startable {
                            asset: String,
                            amount: UInt,
                            destinationIdOrName: String,
-                           message: String?,
                            completion: @escaping Completion<Bool>) {
         
         assetsFacade.issueAsset(issuerNameOrId: issuerNameOrId,
@@ -337,7 +332,6 @@ final public class ECHO: InterfaceFacades, Startable {
                                 asset: asset,
                                 amount: amount,
                                 destinationIdOrName: destinationIdOrName,
-                                message: message,
                                 completion: completion)
     }
     
