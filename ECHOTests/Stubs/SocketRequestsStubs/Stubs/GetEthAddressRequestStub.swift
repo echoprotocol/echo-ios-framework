@@ -13,7 +13,7 @@ struct GetEthAddressRequestStub: SocketRequestStub {
     func createResponce(id: Int) -> String {
         
         return """
-        {"id":\(id),"jsonrpc":"2.0","result":[{"id":"1.17.11","acc_id":"1.2.29","eth_addr":"2f6ec2244bc1ceef401b0abf9345a0decdfd8d8f","is_approved":true,"approves":["1.2.9","1.2.10","1.2.11","1.2.6"]}]}
+        {"id":\(id),"jsonrpc":"2.0","result":[{"id":"1.17.11","account":"1.2.29","eth_addr":"2f6ec2244bc1ceef401b0abf9345a0decdfd8d8f","is_approved":true,"approves":["1.2.9","1.2.10","1.2.11","1.2.6"]}]}
         """
     }
 }

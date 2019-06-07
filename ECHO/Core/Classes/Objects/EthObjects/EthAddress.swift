@@ -9,7 +9,7 @@
 public struct EthAddress: ECHOObject, Decodable {
     
     enum EthAddressgKeys: String, CodingKey {
-        case accountId = "acc_id"
+        case accountId = "account"
         case address = "eth_addr"
         case isApproved = "is_approved"
         case approves

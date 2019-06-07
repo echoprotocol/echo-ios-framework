@@ -63,6 +63,11 @@ public enum OperationType: Int {
     case depositEthOperation
     case withdrawEthOperation
     case approveWithdrawEthOperation
+    case contractFundPoolOperation
+    case contractWhitelistOperation
+    case sidechainIssueOperation                    // VIRTUAL
+    case sidechainBurnOperation                     // VIRTUAL
+
 }
 
 struct OperationDecoder {

@@ -12,7 +12,7 @@
 public struct GenerateEthAddressOperation: BaseOperation {
     
     enum AccountAddressCreateOperationCodingKeys: String, CodingKey {
-        case account = "account_id"
+        case account = "account"
         case extensions
         case fee
     }
