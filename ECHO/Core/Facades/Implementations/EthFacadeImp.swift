@@ -36,21 +36,21 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble {
         noticeDelegateHandler.delegate = self
     }
     
-    public func getEthAddress(nameOrId: String, completion: @escaping Completion<[EthAddress]>) {
+    public func getEthAddress(nameOrId: String, completion: @escaping Completion<EthAddress?>) {
         
         services.databaseService.getFullAccount(nameOrIds: [nameOrId], shoudSubscribe: false) { [weak self] (result) in
             
             switch result {
             case .success(let accounts):
                 guard let account = accounts[nameOrId] else {
-                    let result = Result<[EthAddress], ECHOError>(error: .resultNotFound)
+                    let result = Result<EthAddress?, ECHOError>(error: .resultNotFound)
                     completion(result)
                     return
                 }
                 
                 self?.services.databaseService.getEthAddress(accountId: account.account.id, completion: completion)
             case .failure(let error):
-                let result = Result<[EthAddress], ECHOError>(error: error)
+                let result = Result<EthAddress?, ECHOError>(error: error)
                 completion(result)
             }
         }

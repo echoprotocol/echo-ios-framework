@@ -119,7 +119,7 @@ final public class FeeFacadeImp: FeeFacade, ECHOQueueble {
                                                contratId: String,
                                                methodName: String,
                                                methodParams: [AbiTypeValueInputModel],
-                                               completion: @escaping Completion<AssetAmount>) {
+                                               completion: @escaping Completion<CallContractFee>) {
         
         getFeeForCallContractOperation(registrarNameOrId: registrarNameOrId,
                                        assetId: assetId,
@@ -136,7 +136,7 @@ final public class FeeFacadeImp: FeeFacade, ECHOQueueble {
                                                assetForFee: String?,
                                                contratId: String,
                                                byteCode: String,
-                                               completion: @escaping Completion<AssetAmount>) {
+                                               completion: @escaping Completion<CallContractFee>) {
         
         getFeeForCallContractOperation(registrarNameOrId: registrarNameOrId,
                                        assetId: assetId,
@@ -153,7 +153,7 @@ final public class FeeFacadeImp: FeeFacade, ECHOQueueble {
                                                     assetForFee: String?,
                                                     contratId: String,
                                                     executeType: ContractExecuteType,
-                                                    completion: @escaping Completion<AssetAmount>) {
+                                                    completion: @escaping Completion<CallContractFee>) {
         
         // if we don't have assetForFee, we use asset.
         let assetForFee = assetForFee ?? assetId
@@ -166,7 +166,7 @@ final public class FeeFacadeImp: FeeFacade, ECHOQueueble {
             try validator.validateId(contratId, for: .contract)
         } catch let error {
             let echoError = (error as? ECHOError) ?? ECHOError.undefined
-            let result = Result<AssetAmount, ECHOError>(error: echoError)
+            let result = Result<CallContractFee, ECHOError>(error: echoError)
             completion(result)
             return
         }
@@ -179,8 +179,8 @@ final public class FeeFacadeImp: FeeFacade, ECHOQueueble {
         let getAccountsOperationInitParams = (callQueue,
                                               services.databaseService,
                                               getAccountsNamesOrIdsWithKeys)
-        let getAccountsOperation = GetAccountsQueueOperation<AssetAmount>(initParams: getAccountsOperationInitParams,
-                                                                          completion: completion)
+        let getAccountsOperation = GetAccountsQueueOperation<CallContractFee>(initParams: getAccountsOperationInitParams,
+                                                                              completion: completion)
         
         // ByteCode
         // ByteCode
@@ -203,8 +203,8 @@ final public class FeeFacadeImp: FeeFacade, ECHOQueueble {
                                                  FeeResultsKeys.operation.rawValue,
                                                  FeeResultsKeys.fee.rawValue,
                                                  settings.callContractFeeMultiplier)
-        let getRequiredFeeOperation = GetRequiredFeeQueueOperation<AssetAmount>(initParams: getRequiredFeeOperationInitParams,
-                                                                                completion: completion)
+        let getRequiredFeeOperation = GetRequiredFeeQueueOperation<CallContractFee>(initParams: getRequiredFeeOperationInitParams,
+                                                                                    completion: completion)
         
         // FeeCompletion
         let feeCompletionOperation = createFeeComletionOperation(callQueue, completion)
@@ -250,16 +250,31 @@ final public class FeeFacadeImp: FeeFacade, ECHOQueueble {
         return bildTransferOperation
     }
     
-    fileprivate func createFeeComletionOperation(_ queue: ECHOQueue, _ completion: @escaping Completion<AssetAmount>) -> Operation {
+    fileprivate func createFeeComletionOperation<T>(_ queue: ECHOQueue, _ completion: @escaping Completion<T>) -> Operation {
         
         let feeCompletionOperation = BlockOperation()
         
         feeCompletionOperation.addExecutionBlock { [weak feeCompletionOperation, weak queue] in
             
             guard feeCompletionOperation?.isCancelled == false else { return }
-            guard let fee: AssetAmount = queue?.getValue(FeeResultsKeys.fee.rawValue) else { return }
+            guard let fee: FeeType = queue?.getValue(FeeResultsKeys.fee.rawValue) else { return }
             
-            let result = Result<AssetAmount, ECHOError>(value: fee)
+            switch fee {
+            case .defaultFee(let assetAmount):
+                if let fee = assetAmount as? T {
+                    let result = Result<T, ECHOError>(value: fee)
+                    completion(result)
+                    return
+                }
+            case .callContractFee(let callContractFee):
+                if let fee = callContractFee as? T {
+                    let result = Result<T, ECHOError>(value: fee)
+                    completion(result)
+                    return
+                }
+            }
+            
+            let result = Result<T, ECHOError>(error: ECHOError.encodableMapping)
             completion(result)
         }
         
@@ -296,7 +311,7 @@ final public class FeeFacadeImp: FeeFacade, ECHOQueueble {
                                                      _ amount: UInt,
                                                      _ assetId: String,
                                                      _ assetForFee: String,
-                                                     _ completion: @escaping Completion<AssetAmount>) -> Operation {
+                                                     _ completion: @escaping Completion<CallContractFee>) -> Operation {
         
         let contractOperation = BlockOperation()
         

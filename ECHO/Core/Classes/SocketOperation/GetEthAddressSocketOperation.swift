@@ -17,7 +17,7 @@ struct GetEthAddressSocketOperation: SocketOperation {
     var operationId: Int
     var apiId: Int
     var accountId: String
-    var completion: Completion<[EthAddress]>
+    var completion: Completion<EthAddress?>
     
     func createParameters() -> [Any] {
         let array: [Any] = [apiId,
@@ -32,28 +32,31 @@ struct GetEthAddressSocketOperation: SocketOperation {
             
             switch response.response {
             case .error(let error):
-                let result = Result<[EthAddress], ECHOError>(error: ECHOError.internalError(error.message))
+                let result = Result<EthAddress?, ECHOError>(error: ECHOError.internalError(error.message))
                 completion(result)
             case .result(let result):
                 
                 switch result {
-                case .array(let array):
-                    let data = try JSONSerialization.data(withJSONObject: array, options: [])
-                    let accountIds = try JSONDecoder().decode([EthAddress].self, from: data)
-                    let result = Result<[EthAddress], ECHOError>(value: accountIds)
+                case .dictionary(let dictionary):
+                    let data = try JSONSerialization.data(withJSONObject: dictionary, options: [])
+                    let accountIds = try JSONDecoder().decode(EthAddress.self, from: data)
+                    let result = Result<EthAddress?, ECHOError>(value: accountIds)
+                    completion(result)
+                case .undefined:
+                    let result = Result<EthAddress?, ECHOError>(value: nil)
                     completion(result)
                 default:
                     throw ECHOError.encodableMapping
                 }
             }
         } catch {
-            let result = Result<[EthAddress], ECHOError>(error: ECHOError.encodableMapping)
+            let result = Result<EthAddress?, ECHOError>(error: ECHOError.encodableMapping)
             completion(result)
         }
     }
     
     func forceEnd() {
-        let result = Result<[EthAddress], ECHOError>(error: ECHOError.connectionLost)
+        let result = Result<EthAddress?, ECHOError>(error: ECHOError.connectionLost)
         completion(result)
     }
 }

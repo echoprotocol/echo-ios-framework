@@ -48,7 +48,7 @@ public protocol FeeFacade {
                                         contratId: String,
                                         methodName: String,
                                         methodParams: [AbiTypeValueInputModel],
-                                        completion: @escaping Completion<AssetAmount>)
+                                        completion: @escaping Completion<CallContractFee>)
     
 /**
      Function for evaluating the fee of call contract operation
@@ -68,5 +68,5 @@ public protocol FeeFacade {
                                         assetForFee: String?,
                                         contratId: String,
                                         byteCode: String,
-                                        completion: @escaping Completion<AssetAmount>)
+                                        completion: @escaping Completion<CallContractFee>)
 }

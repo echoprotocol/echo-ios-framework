@@ -19,8 +19,6 @@
     CORE asset and get USD in return.
 
     - Note: Taken from the Graphene doxygen.
- 
-    [Memo model documentations](https://dev-doc.myecho.app/structgraphene_1_1chain_1_1price.html)
  */
 
 public struct Price: ECHOCodable, Decodable {

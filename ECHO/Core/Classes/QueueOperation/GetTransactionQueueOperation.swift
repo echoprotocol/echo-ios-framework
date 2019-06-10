@@ -63,7 +63,7 @@ final class GetTransactionQueueOperation<T>: Operation where T: Any {
         guard var operation: BaseOperation = queue?.getValue(operationKey) else { return }
         guard let chainId: String = queue?.getValue(chainIdKey) else { return }
         guard let blockData: BlockData = queue?.getValue(blockDataKey) else { return }
-        guard let fee: AssetAmount = queue?.getValue(feeKey) else { return }
+        guard let fee: FeeType = queue?.getValue(feeKey) else { return }
         
         if !checkAccount(account: account, name: account.name) {
             
@@ -73,7 +73,12 @@ final class GetTransactionQueueOperation<T>: Operation where T: Any {
             return
         }
         
-        operation.fee = fee
+        switch fee {
+        case .defaultFee(let assetAmount):
+            operation.fee = assetAmount
+        case .callContractFee(let callContractFee):
+            operation.fee = callContractFee.fee
+        }
         
         let transaction = Transaction(operations: [operation], blockData: blockData, chainId: chainId)
         
@@ -99,8 +104,6 @@ final class GetTransactionQueueOperation<T>: Operation where T: Any {
         switch keychainType {
         case .active:
             keyChain = contrainer.activeKeychain
-        case .memo:
-            keyChain = contrainer.memoKeychain
         case .echorand:
             keyChain = contrainer.echorandKeychain
         }

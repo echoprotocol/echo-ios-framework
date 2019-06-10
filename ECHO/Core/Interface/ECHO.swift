@@ -261,7 +261,7 @@ final public class ECHO: InterfaceFacades, Startable {
                                                contratId: String,
                                                methodName: String,
                                                methodParams: [AbiTypeValueInputModel],
-                                               completion: @escaping Completion<AssetAmount>) {
+                                               completion: @escaping Completion<CallContractFee>) {
         
         feeFacade.getFeeForCallContractOperation(registrarNameOrId: registrarNameOrId,
                                                  assetId: assetId,
@@ -279,7 +279,7 @@ final public class ECHO: InterfaceFacades, Startable {
                                                assetForFee: String?,
                                                contratId: String,
                                                byteCode: String,
-                                               completion: @escaping Completion<AssetAmount>) {
+                                               completion: @escaping Completion<CallContractFee>) {
         
         feeFacade.getFeeForCallContractOperation(registrarNameOrId: registrarNameOrId,
                                                  assetId: assetId,
@@ -505,7 +505,7 @@ final public class ECHO: InterfaceFacades, Startable {
                                      noticeHandler: noticeHandler)
     }
     
-    public func getEthAddress(nameOrId: String, completion: @escaping Completion<[EthAddress]>) {
+    public func getEthAddress(nameOrId: String, completion: @escaping Completion<EthAddress?>) {
         
         ethFacade.getEthAddress(nameOrId: nameOrId, completion: completion)
     }

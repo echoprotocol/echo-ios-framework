@@ -296,7 +296,7 @@ public struct SidechainConfig: Decodable {
     public let ethCommitteeUpdateMethod: EthMethod
     public let ethGenAddressMethod: EthMethod
     public let ethWithdrawMethod: EthMethod
-    public let ethUpdateAddressMethod: EthMethod
+    public let ethUpdateAddressMethod: EthMethod?
     public let ethCommitteeUpdatedTopic: String
     public let ethGenAddressTopic: String
     public let ethDepositTopic: String
@@ -307,7 +307,7 @@ public struct SidechainConfig: Decodable {
                 ethCommitteeUpdateMethod: EthMethod,
                 ethGenAddressMethod: EthMethod,
                 ethWithdrawMethod: EthMethod,
-                ethUpdateAddressMethod: EthMethod,
+                ethUpdateAddressMethod: EthMethod?,
                 ethCommitteeUpdatedTopic: String,
                 ethGenAddressTopic: String,
                 ethDepositTopic: String,
@@ -334,7 +334,7 @@ public struct SidechainConfig: Decodable {
         ethCommitteeUpdateMethod = try values.decode(EthMethod.self, forKey: .ethCommitteeUpdateMethod)
         ethGenAddressMethod = try values.decode(EthMethod.self, forKey: .ethGenAddressMethod)
         ethWithdrawMethod = try values.decode(EthMethod.self, forKey: .ethWithdrawMethod)
-        ethUpdateAddressMethod = try values.decode(EthMethod.self, forKey: .ethUpdateAddressMethod)
+        ethUpdateAddressMethod = try? values.decode(EthMethod.self, forKey: .ethUpdateAddressMethod)
         ethCommitteeUpdatedTopic = try values.decode(String.self, forKey: .ethCommitteeUpdatedTopic)
         ethGenAddressTopic = try values.decode(String.self, forKey: .ethGenAddressTopic)
         ethDepositTopic = try values.decode(String.self, forKey: .ethDepositTopic)

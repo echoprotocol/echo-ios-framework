@@ -100,7 +100,7 @@ extension GlobalsService {
 
 extension AuthorityAndValidationService {
     
-    func getRequiredFees(operations: [BaseOperation], asset: Asset, completion: @escaping Completion<[AssetAmount]>) {
+    func getRequiredFees(operations: [BaseOperation], asset: Asset, completion: @escaping Completion<[FeeType]>) {
         
         let operation = RequiredFeeSocketOperation(method: .call,
                                                    operationId: socketCore.nextOperationId(),
@@ -297,7 +297,7 @@ extension ContractsService {
 
 extension EthService {
     
-    func getEthAddress(accountId: String, completion: @escaping Completion<[EthAddress]>) {
+    func getEthAddress(accountId: String, completion: @escaping Completion<EthAddress?>) {
         
         let operation = GetEthAddressSocketOperation(method: .call,
                                                      operationId: socketCore.nextOperationId(),

@@ -32,10 +32,10 @@ public protocol EthFacade {
      Get created ETH addresses
  
      - Parameter nameOrId: Name or id
-     - Parameter completion: Callback in which the information will return [EthAddress](EthAddress) objects or error
+     - Parameter completion: Callback in which the information will return [EthAddress](EthAddress) object (if it created) or error
  */
     func getEthAddress(nameOrId: String,
-                       completion: @escaping Completion<[EthAddress]>)
+                       completion: @escaping Completion<EthAddress?>)
     
 /**
      Send ETH to Ethereum network to ethAddress

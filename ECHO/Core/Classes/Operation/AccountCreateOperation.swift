@@ -22,7 +22,7 @@ public struct AccountCreateOperation: BaseOperation {
         case options
         case extensions
         case fee
-        case edKey = "ed_key"
+        case edKey = "echorand_key"
     }
     
     public let type: OperationType

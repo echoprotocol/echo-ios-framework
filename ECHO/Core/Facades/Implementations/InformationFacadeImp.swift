@@ -118,15 +118,11 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                 return
             }
             
-            let ownerKey = strongSelf.network.echorandPrefix.rawValue + contrainer.activeKeychain.publicAddress()
             let activeKey = strongSelf.network.echorandPrefix.rawValue + contrainer.activeKeychain.publicAddress()
-            let memoKey = strongSelf.network.prefix.rawValue + contrainer.memoKeychain.publicAddress()
             let echorandKey = strongSelf.network.echorandPrefix.rawValue + contrainer.echorandKeychain.publicAddress()
             
             let operationID = strongSelf.services.registrationService.registerAccount(name: name,
-                                                                                      ownerKey: ownerKey,
                                                                                       activeKey: activeKey,
-                                                                                      memoKey: memoKey,
                                                                                       echorandKey: echorandKey,
                                                                                       completion: completion)
             queue?.saveValue(operationID, forKey: CreationAccountResultsKeys.operationID.rawValue)

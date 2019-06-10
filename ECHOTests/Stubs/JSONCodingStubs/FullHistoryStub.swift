@@ -20,17 +20,6 @@ struct FullHistoryStub {
                     "asset_id": "1.3.0"
                     },
                     "account": "1.2.18",
-                    "owner": {
-                    "weight_threshold": 1,
-                    "account_auths": [],
-                    "key_auths": [
-                    [
-                    "ECHO6r8aCcMXqYbV1hCVh9ny7Xx3eXCqiaR1wjPH1Atra4JyLDL9mK",
-                    1
-                    ]
-                    ],
-                    "address_auths": []
-                    },
                     "active": {
                     "weight_threshold": 1,
                     "account_auths": [],
@@ -43,7 +32,6 @@ struct FullHistoryStub {
                     "address_auths": []
                     },
                     "new_options": {
-                    "memo_key": "ECHO5xiJsHy6r2m4XBJiRHmpMUqJHrNjzw3aJe6KE5gzwFn1mwKUR9",
                     "voting_account": "1.2.5",
                     "num_witness": 0,
                     "num_committee": 0,
@@ -77,12 +65,6 @@ struct FullHistoryStub {
                     "amount": 1,
                     "asset_id": "1.3.0"
                     },
-                    "memo": {
-                    "from": "ECHO5xiJsHy6r2m4XBJiRHmpMUqJHrNjzw3aJe6KE5gzwFn1mwKUR9",
-                    "to": "ECHO64LTyVAJSpQGYn1PftVdYpsG2NabcuDUdhH5jFcdZcRF97M8ic",
-                    "nonce": 0,
-                    "message": "b77b3c909c21d3036f35b3a1b8c82657"
-                    },
                     "extensions": []
                     }
                     ],
@@ -105,17 +87,6 @@ struct FullHistoryStub {
                     "asset_id": "1.3.0"
                     },
                     "account": "1.2.18",
-                    "owner": {
-                    "weight_threshold": 1,
-                    "account_auths": [],
-                    "key_auths": [
-                    [
-                    "ECHO6r8aCcMXqYbV1hCVh9ny7Xx3eXCqiaR1wjPH1Atra4JyLDL9mK",
-                    1
-                    ]
-                    ],
-                    "address_auths": []
-                    },
                     "active": {
                     "weight_threshold": 1,
                     "account_auths": [],
@@ -128,7 +99,6 @@ struct FullHistoryStub {
                     "address_auths": []
                     },
                     "new_options": {
-                    "memo_key": "ECHO5xiJsHy6r2m4XBJiRHmpMUqJHrNjzw3aJe6KE5gzwFn1mwKUR9",
                     "voting_account": "1.2.5",
                     "num_witness": 0,
                     "num_committee": 0,
@@ -162,12 +132,6 @@ struct FullHistoryStub {
                     "asset_id": "1.3.1"
                     },
                     "issue_to_account": "1.2.18",
-                    "memo": {
-                    "from": "ECHO64LTyVAJSpQGYn1PftVdYpsG2NabcuDUdhH5jFcdZcRF97M8ic",
-                    "to": "ECHO5xiJsHy6r2m4XBJiRHmpMUqJHrNjzw3aJe6KE5gzwFn1mwKUR9",
-                    "nonce": 0,
-                    "message": "557261e1f993de02cd6f23a92c3739d4"
-                    },
                     "extensions": []
                     }
                     ],
@@ -190,17 +154,6 @@ struct FullHistoryStub {
                     "asset_id": "1.3.0"
                     },
                     "account": "1.2.18",
-                    "owner": {
-                    "weight_threshold": 1,
-                    "account_auths": [],
-                    "key_auths": [
-                    [
-                    "ECHO6r8aCcMXqYbV1hCVh9ny7Xx3eXCqiaR1wjPH1Atra4JyLDL9mK",
-                    1
-                    ]
-                    ],
-                    "address_auths": []
-                    },
                     "active": {
                     "weight_threshold": 1,
                     "account_auths": [],
@@ -213,7 +166,6 @@ struct FullHistoryStub {
                     "address_auths": []
                     },
                     "new_options": {
-                    "memo_key": "ECHO5xiJsHy6r2m4XBJiRHmpMUqJHrNjzw3aJe6KE5gzwFn1mwKUR9",
                     "voting_account": "1.2.5",
                     "num_witness": 0,
                     "num_committee": 0,
@@ -247,12 +199,6 @@ struct FullHistoryStub {
                     "asset_id": "1.3.1"
                     },
                     "issue_to_account": "1.2.18",
-                    "memo": {
-                    "from": "ECHO64LTyVAJSpQGYn1PftVdYpsG2NabcuDUdhH5jFcdZcRF97M8ic",
-                    "to": "ECHO5xiJsHy6r2m4XBJiRHmpMUqJHrNjzw3aJe6KE5gzwFn1mwKUR9",
-                    "nonce": 0,
-                    "message": "557261e1f993de02cd6f23a92c3739d4"
-                    },
                     "extensions": []
                             }
                     ],
@@ -275,17 +221,6 @@ struct FullHistoryStub {
                     "asset_id": "1.3.0"
                     },
                     "account": "1.2.18",
-                    "owner": {
-                    "weight_threshold": 1,
-                    "account_auths": [],
-                    "key_auths": [
-                    [
-                    "ECHO6r8aCcMXqYbV1hCVh9ny7Xx3eXCqiaR1wjPH1Atra4JyLDL9mK",
-                    1
-                    ]
-                    ],
-                    "address_auths": []
-                    },
                     "active": {
                     "weight_threshold": 1,
                     "account_auths": [],
@@ -298,7 +233,6 @@ struct FullHistoryStub {
                     "address_auths": []
                     },
                     "new_options": {
-                    "memo_key": "ECHO5xiJsHy6r2m4XBJiRHmpMUqJHrNjzw3aJe6KE5gzwFn1mwKUR9",
                     "voting_account": "1.2.5",
                     "num_witness": 0,
                     "num_committee": 0,
@@ -327,17 +261,6 @@ struct FullHistoryStub {
                     "asset_id": "1.3.0"
                     },
                     "account": "1.2.18",
-                    "owner": {
-                    "weight_threshold": 1,
-                    "account_auths": [],
-                    "key_auths": [
-                    [
-                    "ECHO6r8aCcMXqYbV1hCVh9ny7Xx3eXCqiaR1wjPH1Atra4JyLDL9mK",
-                    1
-                    ]
-                    ],
-                    "address_auths": []
-                    },
                     "active": {
                     "weight_threshold": 1,
                     "account_auths": [],
@@ -350,7 +273,6 @@ struct FullHistoryStub {
                     "address_auths": []
                     },
                     "new_options": {
-                    "memo_key": "ECHO5xiJsHy6r2m4XBJiRHmpMUqJHrNjzw3aJe6KE5gzwFn1mwKUR9",
                     "voting_account": "1.2.5",
                     "num_witness": 0,
                     "num_committee": 0,
@@ -379,17 +301,6 @@ struct FullHistoryStub {
                     "asset_id": "1.3.0"
                     },
                     "account": "1.2.18",
-                    "owner": {
-                    "weight_threshold": 1,
-                    "account_auths": [],
-                    "key_auths": [
-                    [
-                    "ECHO6r8aCcMXqYbV1hCVh9ny7Xx3eXCqiaR1wjPH1Atra4JyLDL9mK",
-                    1
-                    ]
-                    ],
-                    "address_auths": []
-                    },
                     "active": {
                     "weight_threshold": 1,
                     "account_auths": [],
@@ -402,7 +313,6 @@ struct FullHistoryStub {
                     "address_auths": []
                     },
                     "new_options": {
-                    "memo_key": "ECHO5xiJsHy6r2m4XBJiRHmpMUqJHrNjzw3aJe6KE5gzwFn1mwKUR9",
                     "voting_account": "1.2.5",
                     "num_witness": 0,
                     "num_committee": 0,
@@ -435,12 +345,6 @@ struct FullHistoryStub {
                     "amount": {
                     "amount": 1,
                     "asset_id": "1.3.0"
-                    },
-                    "memo": {
-                    "from": "ECHO5xiJsHy6r2m4XBJiRHmpMUqJHrNjzw3aJe6KE5gzwFn1mwKUR9",
-                    "to": "ECHO64LTyVAJSpQGYn1PftVdYpsG2NabcuDUdhH5jFcdZcRF97M8ic",
-                    "nonce": 0,
-                    "message": "b77b3c909c21d3036f35b3a1b8c82657"
                     },
                     "extensions": []
                     }

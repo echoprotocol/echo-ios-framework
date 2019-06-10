@@ -14,7 +14,6 @@
 public struct AccountOptions: ECHOCodable, Decodable {
     
     enum AccountOptionsCodingKeys: String, CodingKey {
-        case memo = "memo_key"
         case committee = "num_committee"
         case votes
         case votingAccount = "voting_account"
@@ -24,7 +23,6 @@ public struct AccountOptions: ECHOCodable, Decodable {
     
     let proxyToSelf = "1.2.5"
     
-    let memo: Address?
     let votingAccount: Account
     let delegatingAaccount: Account
     var committeeCount: Int = 0
@@ -32,8 +30,8 @@ public struct AccountOptions: ECHOCodable, Decodable {
     
     private var extensions = Extensions()
     
-    init(memo: Address, votingAccount: Account?, delegatingAccount: Account?) {
-        self.memo = memo
+    init(votingAccount: Account?, delegatingAccount: Account?) {
+        
         if let votingAccount = votingAccount {
             self.votingAccount = votingAccount
         } else {
@@ -49,9 +47,6 @@ public struct AccountOptions: ECHOCodable, Decodable {
     public init(from decoder: Decoder) throws {
 
         let values = try decoder.container(keyedBy: AccountOptionsCodingKeys.self)
-        
-        let memoString = try values.decode(String.self, forKey: .memo)
-        memo = Address(memoString, data: nil)
         
         let voitingAccountIdString = try values.decode(String.self, forKey: .votingAccount)
         votingAccount = Account(voitingAccountIdString)
@@ -73,8 +68,7 @@ public struct AccountOptions: ECHOCodable, Decodable {
             }
         }
         
-        let dictionary: [AnyHashable: Any?] = [AccountOptionsCodingKeys.memo.rawValue: memo?.addressString,
-                                               AccountOptionsCodingKeys.committee.rawValue: committeeCount,
+        let dictionary: [AnyHashable: Any?] = [AccountOptionsCodingKeys.committee.rawValue: committeeCount,
                                                AccountOptionsCodingKeys.votingAccount.rawValue: votingAccount.id,
                                                AccountOptionsCodingKeys.delegatingAccount.rawValue: delegatingAaccount.id,
                                                AccountOptionsCodingKeys.votes.rawValue: votesArray,
@@ -85,14 +79,8 @@ public struct AccountOptions: ECHOCodable, Decodable {
     
     public func toData() -> Data? {
         
-        guard let memo = memo else {
-            return Data.init(count: 1)
-        }
-        
         var data = Data()
-        data.append(1)
-        data.append(optional: memo.toData())
-        
+
         data.append(optional: votingAccount.toData())
         data.append(optional: delegatingAaccount.toData())
         

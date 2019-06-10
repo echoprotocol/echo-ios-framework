@@ -162,7 +162,6 @@ class SocketCoreComponentTests: XCTestCase {
                                             amount: 1,
                                             asset: "1.3.0",
                                             assetForFee: nil,
-                                            message: "",
                                             completion: { (result) in
                                                 
                 switch result {
@@ -227,7 +226,6 @@ class SocketCoreComponentTests: XCTestCase {
         let asset = "1.3.1"
         let amount: UInt = 1
         let destinationIdOrName = "vsharaev"
-        let message = "Issue asset message"
         var success: Bool!
         
         //act
@@ -236,8 +234,7 @@ class SocketCoreComponentTests: XCTestCase {
                                  passwordOrWif: PassOrWif.password(password),
                                  asset: asset,
                                  amount: amount,
-                                 destinationIdOrName: destinationIdOrName,
-                                 message: message) { (result) in
+                                 destinationIdOrName: destinationIdOrName) { (result) in
                                 
                 switch result {
                 case .success(let isSuccess):
@@ -629,7 +626,7 @@ class SocketCoreComponentTests: XCTestCase {
             $0.socketMessenger = messenger
         }))
         let exp = expectation(description: "testFakeGetEthAddress")
-        var addresses: [EthAddress]!
+        var addresses: EthAddress?
         
         //act
         echo.start { [unowned self] (result) in
@@ -647,7 +644,6 @@ class SocketCoreComponentTests: XCTestCase {
         //assert
         waitForExpectations(timeout: 1) { error in
             XCTAssertNotNil(addresses)
-            XCTAssertTrue(addresses.count == 1)
         }
     }
     
