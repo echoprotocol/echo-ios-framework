@@ -50,219 +50,144 @@ struct ConstantsKeys {
 struct Constants {
     
     static var nodeUrl: String {
-        if let value = Constants.infoForKey(ConstantsKeys.nodeUrlKey) {
-            return "wss://" + value
-        } else {
-            return "wss://testnet.echo-dev.io"
-        }
+        let value = Constants.infoForKey(ConstantsKeys.nodeUrlKey)
+        return "wss://" + value
     }
     
     static var timeout: Double {
-        if let valueString = Constants.infoForKey(ConstantsKeys.timeout),
-            let value = Double(valueString) {
-            return value
-        } else {
-            return 20
-        }
+        let valueString = Constants.infoForKey(ConstantsKeys.timeout)
+        let value = Double(valueString) ?? 20
+        return value
     }
     
     static var counterContract: String {
-        if let value = Constants.infoForKey(ConstantsKeys.counterContract) {
-            return value
-        } else {
-            return "1.14.8"
-        }
+        let value = Constants.infoForKey(ConstantsKeys.counterContract)
+        return value
     }
     
     static var logsContract: String {
-        if let value = Constants.infoForKey(ConstantsKeys.logsContract) {
-            return value
-        } else {
-            return "1.14.9"
-        }
+        let value = Constants.infoForKey(ConstantsKeys.logsContract)
+        return value
     }
     
     static var x86Contract: String {
-        if let value = Constants.infoForKey(ConstantsKeys.x86Contract) {
-            return value
-        } else {
-            return "1.14.0"
-        }
+        let value = Constants.infoForKey(ConstantsKeys.x86Contract)
+        return value
     }
     
     static var sidechainTransferObject: String {
-        if let value = Constants.infoForKey(ConstantsKeys.sidechainTransferObject) {
-            return value
-        } else {
-            return "1.17.0"
-        }
+        let value = Constants.infoForKey(ConstantsKeys.sidechainTransferObject)
+        return value
     }
     
     static var defaultName: String {
-        if let value = Constants.infoForKey(ConstantsKeys.defaultName) {
-            return value
-        } else {
-            return "vsharaev"
-        }
+        let value = Constants.infoForKey(ConstantsKeys.defaultName)
+        return value
     }
     
     static var defaultToName: String {
-        if let value = Constants.infoForKey(ConstantsKeys.defaultToName) {
-            return value
-        } else {
-            return "vsharaev1"
-        }
+        let value = Constants.infoForKey(ConstantsKeys.defaultToName)
+        return value
     }
     
     static var defaultPass: String {
-        if let value = Constants.infoForKey(ConstantsKeys.defaultPass) {
-            return value
-        } else {
-            return "vsharaev"
-        }
+        let value = Constants.infoForKey(ConstantsKeys.defaultPass)
+        return value
     }
     
     static var defaultAsset: String {
-        if let value = Constants.infoForKey(ConstantsKeys.defaultAsset) {
-            return value
-        } else {
-            return "1.3.0"
-        }
+        let value = Constants.infoForKey(ConstantsKeys.defaultAsset)
+        return value
     }
     
     static var defaultAssetLowerBound: String {
-        if let value = Constants.infoForKey(ConstantsKeys.defaultAssetLowerBound) {
-            return value
-        } else {
-            return "ECHO"
-        }
+        let value = Constants.infoForKey(ConstantsKeys.defaultAssetLowerBound)
+        return value
     }
     
     static var defaultAnotherAsset: String {
-        if let value = Constants.infoForKey(ConstantsKeys.defaultAnotherAsset) {
-            return value
-        } else {
-            return "1.3.3"
-        }
+        let value = Constants.infoForKey(ConstantsKeys.defaultAnotherAsset)
+        return value
     }
     
     static var defaultETHAddress: String {
-        if let value = Constants.infoForKey(ConstantsKeys.defaultETHAddress) {
-            return value
-        } else {
-            return "0x46Ba2677a1c982B329A81f60Cf90fBA2E8CA9fA8"
-        }
+        let value = Constants.infoForKey(ConstantsKeys.defaultETHAddress)
+        return value
     }
     
     static var defaultCallContractMethod: String {
-        if let value = Constants.infoForKey(ConstantsKeys.defaultCallContractMethod) {
-            return value
-        } else {
-            return "incrementCounter"
-        }
+        let value = Constants.infoForKey(ConstantsKeys.defaultCallContractMethod)
+        return value
     }
     
     static var defaultLogsContractMethod: String {
-        if let value = Constants.infoForKey(ConstantsKeys.defaultLogsContractMethod) {
-            return value
-        } else {
-            return "test"
-        }
+        let value = Constants.infoForKey(ConstantsKeys.defaultLogsContractMethod)
+        return value
     }
     
     static var defaultCallContractBytecode: String {
-        if let value = Constants.infoForKey(ConstantsKeys.defaultCallContractBytecode) {
-            return value
-        } else {
-            return "5b34b966"
-        }
+        let value = Constants.infoForKey(ConstantsKeys.defaultCallContractBytecode)
+        return value
     }
     
     static var defaultQueryContractMethod: String {
-        if let value = Constants.infoForKey(ConstantsKeys.defaultQueryContractMethod) {
-            return value
-        } else {
-            return "getCount"
-        }
+        let value = Constants.infoForKey(ConstantsKeys.defaultQueryContractMethod)
+        return value
     }
     
     static var defaultQueryContractBytecode: String {
-        if let value = Constants.infoForKey(ConstantsKeys.defaultQueryContractBytecode) {
-            return value
-        } else {
-            return "a87d942c"
-        }
+        let value = Constants.infoForKey(ConstantsKeys.defaultQueryContractBytecode)
+        return value
     }
     
     static var evmContractResult: String {
-        if let value = Constants.infoForKey(ConstantsKeys.evmContractResult) {
-            return value
-        } else {
-            return "1.15.32"
-        }
+        let value = Constants.infoForKey(ConstantsKeys.evmContractResult)
+        return value
     }
     
     static var x86ContractResult: String {
-        if let value = Constants.infoForKey(ConstantsKeys.x86ContractResult) {
-            return value
-        } else {
-            return "1.15.0"
-        }
+        let value = Constants.infoForKey(ConstantsKeys.x86ContractResult)
+        return value
     }
     
     static var contractLogsFromBlock: Int {
-        if let valueString = Constants.infoForKey(ConstantsKeys.contractLogsFromBlock),
-            let value = Int(valueString) {
-            return value
-        } else {
-            return 5230
-        }
+        let valueString = Constants.infoForKey(ConstantsKeys.contractLogsFromBlock)
+        let value = Int(valueString) ?? 0
+        return value
     }
     
     static var contractLogsToBlock: Int {
-        if let valueString = Constants.infoForKey(ConstantsKeys.contractLogsToBlock),
-            let value = Int(valueString) {
-            return value
-        } else {
-            return 5240
-        }
+        let valueString = Constants.infoForKey(ConstantsKeys.contractLogsToBlock)
+        let value = Int(valueString) ?? 0
+        return value
     }
     
     static var logContractByteCode: String {
-        if let value = Constants.infoForKey(ConstantsKeys.logContractByteCode) {
-            return value
-        } else {
-            return "6080604052348015600f57600080fd5b5061010b8061001f6000396000f300608060405260043610603f576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806329e99f07146044575b600080fd5b348015604f57600080fd5b50606c60048036038101908080359060200190929190505050606e565b005b7fa7659801d76e732d0b4c81221c99e5cf387816232f81f4ff646ba0653d65507a436040518082815260200191505060405180910390a17fa7659801d76e732d0b4c81221c99e5cf387816232f81f4ff646ba0653d65507a816040518082815260200191505060405180910390a1505600a165627a7a723058202ee0ce6afeec3577644075456c235804fa783dcdbb61a981edaf50333f5ef6710029"
-        }
+        let value = Constants.infoForKey(ConstantsKeys.logContractByteCode)
+        return value
     }
     
     static var counterContractByteCode: String {
-        if let value = Constants.infoForKey(ConstantsKeys.counterContractByteCode) {
-            return value
-        } else {
-            return "60806040526000805534801561001457600080fd5b50610101806100246000396000f3006080604052600436106053576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680635b34b966146058578063a87d942c14606c578063f5c5ad83146094575b600080fd5b348015606357600080fd5b50606a60a8565b005b348015607757600080fd5b50607e60ba565b6040518082815260200191505060405180910390f35b348015609f57600080fd5b5060a660c3565b005b60016000808282540192505081905550565b60008054905090565b600160008082825403925050819055505600a165627a7a7230582063e27ea8b308defeeb50719f281e50a9b53ffa155e56f3249856ef7eafeb09e90029"
-        }
+        let value = Constants.infoForKey(ConstantsKeys.counterContractByteCode)
+        return value
     }
     
     static var defaultBlockNumber: Int {
-        if let valueString = Constants.infoForKey(ConstantsKeys.defaultBlockNumber),
-            let value = Int(valueString) {
-            return value
-        } else {
-            return 10
-        }
+        let valueString = Constants.infoForKey(ConstantsKeys.defaultBlockNumber)
+        let value = Int(valueString) ?? 0
+        return value
     }
     
-    static func infoForKey(_ key: String) -> String? {
+    static func infoForKey(_ key: String) -> String {
         
         let findedBundle = Bundle.allBundles.first { (bundle) -> Bool in
             return bundle.bundlePath.contains("ECHONetworkTests.xctest")
         }
         
-        guard let infoPlist = findedBundle?.infoDictionary else {
-            return nil
-        }
+        let infoPlist = findedBundle!.infoDictionary!
+        let anyValue = infoPlist[key]!
+        let stringValue = anyValue as! String
         
-        return (infoPlist[key] as? String)?.replacingOccurrences(of: "\\", with: "")
+        return stringValue.replacingOccurrences(of: "\\", with: "")
     }
 }
