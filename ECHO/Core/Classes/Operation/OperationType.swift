@@ -89,6 +89,8 @@ struct OperationDecoder {
         case .contractTransferOperation: return decode(ContractTransferOperation.self, container: container)
         case .generateEthAddressOperation: return decode(GenerateEthAddressOperation.self, container: container)
         case .withdrawEthOperation: return decode(WithdrawalEthOperation.self, container: container)
+        case .sidechainIssueOperation: return decode(SidechainIssueOperation.self, container: container)
+        case .sidechainBurnOperation: return decode(SidechainBurnOperation.self, container: container)
         default: return nil
         }
     }
@@ -128,6 +130,10 @@ struct OperationDecoder {
                 baseOperation = try? JSONDecoder().decode(GenerateEthAddressOperation.self, from: data)
             case .withdrawEthOperation:
                 baseOperation = try? JSONDecoder().decode(WithdrawalEthOperation.self, from: data)
+            case .sidechainIssueOperation:
+                baseOperation = try? JSONDecoder().decode(SidechainIssueOperation.self, from: data)
+            case .sidechainBurnOperation:
+                baseOperation = try? JSONDecoder().decode(SidechainBurnOperation.self, from: data)
             default:
                 break
             }

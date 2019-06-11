@@ -16,6 +16,7 @@ struct InformationFacadeServices {
     Implementation of [InformationFacade](InformationFacade), [ECHOQueueble](ECHOQueueble)
  */
 
+// swiftlint:disable file_length
 // swiftlint:disable type_body_length
 final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
     
@@ -237,7 +238,11 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         case findedBlockNums
         case loadedBlocks
         case findedAccountIds
+        case findedDepositsIds
+        case findedWithdrawalsIds
         case loadedAccounts
+        case loadedDepositsIds
+        case loadedWithdrawalsIds
         case findedAssetIds
         case loadedAssets
     }
@@ -264,9 +269,13 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         let getBlocksOperation = createGetBlocksOperation(accountHistoryQueue, completion)
         let getAccountsOperation = createGetAccountsOperation(accountHistoryQueue, completion)
         let getAssetsOperation = createGetAssetsOperation(accountHistoryQueue, completion)
+        let getDepositsEthOperation = createGetDepositsEthOperation(accountHistoryQueue, completion)
+        let getWithdrawsEthOperation = createGetWithdrawsEthOperation(accountHistoryQueue, completion)
         let mergeBlocksToHistoryOperation = createMergeBlocksInHistoryOperation(accountHistoryQueue, completion)
         let mergeAccountsToHistoryOperation = createMergeAccountsInHistoryOperation(accountHistoryQueue, completion)
         let mergeAssetsToHistoryOperation = createMergeAssetsInHistoryOperation(accountHistoryQueue, completion)
+        let mergeDepositsEthToHistoryOperation = createMergeDepositsEthInHistoryOperation(accountHistoryQueue, completion)
+        let mergeWithdrawEthInHistoryOperation = createMergeWithdrawEthInHistoryOperation(accountHistoryQueue, completion)
         
         // Completion
         let historyCompletionOperation = createHistoryComletionOperation(accountHistoryQueue, completion)
@@ -277,9 +286,13 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         accountHistoryQueue.addOperation(getBlocksOperation)
         accountHistoryQueue.addOperation(getAccountsOperation)
         accountHistoryQueue.addOperation(getAssetsOperation)
+        accountHistoryQueue.addOperation(getDepositsEthOperation)
+        accountHistoryQueue.addOperation(getWithdrawsEthOperation)
         accountHistoryQueue.addOperation(mergeBlocksToHistoryOperation)
         accountHistoryQueue.addOperation(mergeAccountsToHistoryOperation)
         accountHistoryQueue.addOperation(mergeAssetsToHistoryOperation)
+        accountHistoryQueue.addOperation(mergeDepositsEthToHistoryOperation)
+        accountHistoryQueue.addOperation(mergeWithdrawEthInHistoryOperation)
         accountHistoryQueue.addOperation(historyCompletionOperation)
     
         accountHistoryQueue.setCompletionOperation(completionOperation)
@@ -304,6 +317,8 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                         queue?.saveValue(findedData.blockNums, forKey: AccountHistoryResultsKeys.findedBlockNums.rawValue)
                         queue?.saveValue(findedData.accountIds, forKey: AccountHistoryResultsKeys.findedAccountIds.rawValue)
                         queue?.saveValue(findedData.assetIds, forKey: AccountHistoryResultsKeys.findedAssetIds.rawValue)
+                        queue?.saveValue(findedData.depositsIds, forKey: AccountHistoryResultsKeys.findedDepositsIds.rawValue)
+                        queue?.saveValue(findedData.withdrawsIds, forKey: AccountHistoryResultsKeys.findedWithdrawalsIds.rawValue)
                     }
                 case .failure(let error):
                     queue?.cancelAllOperations()
@@ -424,6 +439,72 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         return getAccountsOperation
     }
     
+    fileprivate func createGetDepositsEthOperation(_ queue: ECHOQueue, _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
+        
+        let getDepositsEthOperation = BlockOperation()
+        
+        getDepositsEthOperation.addExecutionBlock { [weak getDepositsEthOperation, weak queue, weak self] in
+            
+            guard getDepositsEthOperation?.isCancelled == false else { return }
+            guard let depositsIds: Set<String> = queue?.getValue(AccountHistoryResultsKeys.findedDepositsIds.rawValue) else { return }
+            
+            let depositsIdsArray = depositsIds.map { $0 }
+            
+            self?.services.databaseService.getObjects(type: DepositEth.self,
+                                                      objectsIds: depositsIdsArray,
+                                                      completion: { (result) in
+                
+                switch result {
+                case .success(let deposits):
+                    queue?.saveValue(deposits, forKey: AccountHistoryResultsKeys.loadedDepositsIds.rawValue)
+                case .failure(let error):
+                    queue?.cancelAllOperations()
+                    let result = Result<[HistoryItem], ECHOError>(error: error)
+                    completion(result)
+                }
+                
+                queue?.startNextOperation()
+            })
+            
+            queue?.waitStartNextOperation()
+        }
+        
+        return getDepositsEthOperation
+    }
+    
+    fileprivate func createGetWithdrawsEthOperation(_ queue: ECHOQueue, _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
+        
+        let getWithdrawsEthOperation = BlockOperation()
+        
+        getWithdrawsEthOperation.addExecutionBlock { [weak getWithdrawsEthOperation, weak queue, weak self] in
+            
+            guard getWithdrawsEthOperation?.isCancelled == false else { return }
+            guard let withdrawsIds: Set<String> = queue?.getValue(AccountHistoryResultsKeys.findedWithdrawalsIds.rawValue) else { return }
+            
+            let withdrawsIdsArray = withdrawsIds.map { $0 }
+            
+            self?.services.databaseService.getObjects(type: WithdrawalEth.self,
+                                                      objectsIds: withdrawsIdsArray,
+                                                      completion: { (result) in
+                                                        
+                switch result {
+                case .success(let deposits):
+                    queue?.saveValue(deposits, forKey: AccountHistoryResultsKeys.loadedWithdrawalsIds.rawValue)
+                case .failure(let error):
+                    queue?.cancelAllOperations()
+                    let result = Result<[HistoryItem], ECHOError>(error: error)
+                    completion(result)
+                }
+                
+                queue?.startNextOperation()
+            })
+            
+            queue?.waitStartNextOperation()
+        }
+        
+        return getWithdrawsEthOperation
+    }
+    
     fileprivate func createMergeBlocksInHistoryOperation(_ queue: ECHOQueue, _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
         
         let mergeBlocksInHistoryOperation = BlockOperation()
@@ -535,6 +616,18 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                     historyItem.operation = operation
                 }
                 
+                if var operation = operation as? SidechainIssueOperation {
+                    let account = self?.findAccountIn(accounts, accountId: operation.account.id)
+                    operation.changeAccount(account: account)
+                    historyItem.operation = operation
+                }
+                
+                if var operation = operation as? SidechainBurnOperation {
+                    let account = self?.findAccountIn(accounts, accountId: operation.account.id)
+                    operation.changeAccount(account: account)
+                    historyItem.operation = operation
+                }
+                
                 history[index] = historyItem
             }
             
@@ -544,6 +637,69 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         return mergeAccountsInHistoryOperation
     }
     
+    fileprivate func createMergeDepositsEthInHistoryOperation(_ queue: ECHOQueue, _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
+        
+        let mergeDepositsEthInHistoryOperation = BlockOperation()
+        
+        mergeDepositsEthInHistoryOperation.addExecutionBlock { [weak mergeDepositsEthInHistoryOperation, weak self, weak queue] in
+            
+            guard mergeDepositsEthInHistoryOperation?.isCancelled == false else { return }
+            guard var history: [HistoryItem] = queue?.getValue(AccountHistoryResultsKeys.historyItems.rawValue) else { return }
+            guard let deposits: [DepositEth] = queue?.getValue(AccountHistoryResultsKeys.loadedDepositsIds.rawValue) else { return }
+            
+            for index in 0..<history.count {
+                
+                var historyItem = history[index]
+                
+                guard let operation = historyItem.operation else { continue }
+                
+                if var operation = operation as? SidechainIssueOperation {
+                    let deposit = self?.findDepositEthIn(deposits, depositId: operation.depositId)
+                    operation.deposit = deposit
+                    historyItem.operation = operation
+                }
+                
+                history[index] = historyItem
+            }
+            
+            queue?.saveValue(history, forKey: AccountHistoryResultsKeys.historyItems.rawValue)
+        }
+        
+        return mergeDepositsEthInHistoryOperation
+    }
+    
+    fileprivate func createMergeWithdrawEthInHistoryOperation(_ queue: ECHOQueue, _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
+        
+        let mergeDepositsEthInHistoryOperation = BlockOperation()
+        
+        mergeDepositsEthInHistoryOperation.addExecutionBlock { [weak mergeDepositsEthInHistoryOperation, weak self, weak queue] in
+            
+            guard mergeDepositsEthInHistoryOperation?.isCancelled == false else { return }
+            guard var history: [HistoryItem] = queue?.getValue(AccountHistoryResultsKeys.historyItems.rawValue) else { return }
+            guard let withdraws: [WithdrawalEth] = queue?.getValue(AccountHistoryResultsKeys.loadedWithdrawalsIds.rawValue) else { return }
+            
+            for index in 0..<history.count {
+                
+                var historyItem = history[index]
+                
+                guard let operation = historyItem.operation else { continue }
+                
+                if var operation = operation as? SidechainBurnOperation {
+                    let withdraw = self?.findWithdrawsEthIn(withdraws, withdrawId: operation.withdrawId)
+                    operation.withdraw = withdraw
+                    historyItem.operation = operation
+                }
+                
+                history[index] = historyItem
+            }
+            
+            queue?.saveValue(history, forKey: AccountHistoryResultsKeys.historyItems.rawValue)
+        }
+        
+        return mergeDepositsEthInHistoryOperation
+    }
+    
+    // swiftlint:disable function_body_length
     fileprivate func createMergeAssetsInHistoryOperation(_ queue: ECHOQueue, _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
         
         let mergeAssetsInHistoryOperation = BlockOperation()
@@ -640,6 +796,20 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                     operation.changeAssets(feeAsset: feeAsset)
                     historyItem.operation = operation
                 }
+                
+                if var operation = operation as? SidechainIssueOperation {
+                    let feeAsset = self?.findAssetsIn(assets, assetId: operation.fee.asset.id)
+                    let valueAsset = self?.findAssetsIn(assets, assetId: operation.value.asset.id)
+                    operation.changeAssets(valueAsset: valueAsset, feeAsset: feeAsset)
+                    historyItem.operation = operation
+                }
+                
+                if var operation = operation as? SidechainBurnOperation {
+                    let feeAsset = self?.findAssetsIn(assets, assetId: operation.fee.asset.id)
+                    let valueAsset = self?.findAssetsIn(assets, assetId: operation.value.asset.id)
+                    operation.changeAssets(valueAsset: valueAsset, feeAsset: feeAsset)
+                    historyItem.operation = operation
+                }
 
                 history[index] = historyItem
             }
@@ -649,6 +819,7 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         
         return mergeAssetsInHistoryOperation
     }
+    // swiftlint:enable function_body_length
     
     fileprivate func createHistoryComletionOperation(_ queue: ECHOQueue, _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
         
@@ -676,12 +847,28 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         return array.first(where: {$0.id == assetId})
     }
     
-    fileprivate func findDataToLoadFromHistoryItems(_ items: [HistoryItem]) -> (blockNums: Set<Int>, accountIds: Set<String>, assetIds: Set<String>) {
+    fileprivate func findDepositEthIn(_ array: [DepositEth], depositId: String) -> DepositEth? {
+        
+        return array.first(where: {$0.id == depositId})
+    }
+    
+    fileprivate func findWithdrawsEthIn(_ array: [WithdrawalEth], withdrawId: String) -> WithdrawalEth? {
+        
+        return array.first(where: {$0.id == withdrawId})
+    }
+    
+    fileprivate func findDataToLoadFromHistoryItems(_ items: [HistoryItem]) -> (blockNums: Set<Int>,
+                                                                                accountIds: Set<String>,
+                                                                                assetIds: Set<String>,
+                                                                                depositsIds: Set<String>,
+                                                                                withdrawsIds: Set<String>) {
         
         let blockNums = fingBlockNumsFromHistoryItems(items)
         let accountIds = findAccountsIds(items)
         let assetIds = findAssetsIds(items)
-        return (blockNums, accountIds, assetIds)
+        let depositsIds = findDepositsEth(items)
+        let withdrawsIds = findWithdrawalsEth(items)
+        return (blockNums, accountIds, assetIds, depositsIds, withdrawsIds)
     }
     
     fileprivate func fingBlockNumsFromHistoryItems(_ items: [HistoryItem]) -> Set<Int> {
@@ -758,6 +945,16 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                 accountsIds.insert(operation.account.id)
                 return
             }
+            
+            if let operation = operation as? SidechainIssueOperation {
+                accountsIds.insert(operation.account.id)
+                return
+            }
+            
+            if let operation = operation as? SidechainBurnOperation {
+                accountsIds.insert(operation.account.id)
+                return
+            }
         }
         
         return accountsIds
@@ -793,10 +990,11 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                 return
             }
             
-            if let operation = operation as? CreateAssetOperation {
+            if operation is CreateAssetOperation {
                 if let assetId = $0.result[safe: 1] as? String {
                     assetsIds.insert(assetId)
                 }
+                return
             }
             
             if let operation = operation as? IssueAssetOperation {
@@ -808,9 +1006,57 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                 assetsIds.insert(operation.transferAmount.asset.id)
                 return
             }
+            
+            if let operation = operation as? SidechainIssueOperation {
+                assetsIds.insert(operation.value.asset.id)
+                return
+            }
+            
+            if let operation = operation as? SidechainBurnOperation {
+                assetsIds.insert(operation.value.asset.id)
+                return
+            }
         }
         
         return assetsIds
+    }
+    
+    fileprivate func findDepositsEth(_ items: [HistoryItem]) -> Set<String> {
+        
+        var depositsId = Set<String>()
+        
+        items.forEach {
+            
+            guard let operation = $0.operation else {
+                return
+            }
+            
+            if let operation = operation as? SidechainIssueOperation {
+                depositsId.insert(operation.depositId)
+                return
+            }
+        }
+        
+        return depositsId
+    }
+    
+    fileprivate func findWithdrawalsEth(_ items: [HistoryItem]) -> Set<String> {
+        
+        var withdrawalsId = Set<String>()
+        
+        items.forEach {
+            
+            guard let operation = $0.operation else {
+                return
+            }
+            
+            if let operation = operation as? SidechainBurnOperation {
+                withdrawalsId.insert(operation.withdrawId)
+                return
+            }
+        }
+        
+        return withdrawalsId
     }
 }
 
@@ -838,3 +1084,4 @@ extension InformationFacadeImp: NoticeEventDelegate {
 }
 
 // swiftlint:enable type_body_length
+// swiftlint:enable file_length

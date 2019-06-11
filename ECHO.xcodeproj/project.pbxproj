@@ -217,6 +217,8 @@
 		D0A4933722AF9552006DF77B /* GetAccountWithdrawalsRequestStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A4933622AF9552006DF77B /* GetAccountWithdrawalsRequestStub.swift */; };
 		D0A4933922AF95B0006DF77B /* GetAccountDepositsStubHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A4933822AF95B0006DF77B /* GetAccountDepositsStubHolder.swift */; };
 		D0A4933B22AF95BD006DF77B /* GetAccountWithdrawalsStubHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A4933A22AF95BD006DF77B /* GetAccountWithdrawalsStubHolder.swift */; };
+		D0A4933D22AFA029006DF77B /* SidechainIssueOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A4933C22AFA029006DF77B /* SidechainIssueOperation.swift */; };
+		D0A4933F22AFBE56006DF77B /* SidechainBurnOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A4933E22AFBE56006DF77B /* SidechainBurnOperation.swift */; };
 		D0B058692146714800A80CDE /* ContractsFacade.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B058682146714800A80CDE /* ContractsFacade.swift */; };
 		D0B0586B2146715500A80CDE /* ContractsFacadeImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B0586A2146715500A80CDE /* ContractsFacadeImp.swift */; };
 		D0B0586E2146728800A80CDE /* ContractResultEVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B0586D2146728800A80CDE /* ContractResultEVM.swift */; };
@@ -499,6 +501,8 @@
 		D0A4933622AF9552006DF77B /* GetAccountWithdrawalsRequestStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAccountWithdrawalsRequestStub.swift; sourceTree = "<group>"; };
 		D0A4933822AF95B0006DF77B /* GetAccountDepositsStubHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAccountDepositsStubHolder.swift; sourceTree = "<group>"; };
 		D0A4933A22AF95BD006DF77B /* GetAccountWithdrawalsStubHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAccountWithdrawalsStubHolder.swift; sourceTree = "<group>"; };
+		D0A4933C22AFA029006DF77B /* SidechainIssueOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidechainIssueOperation.swift; sourceTree = "<group>"; };
+		D0A4933E22AFBE56006DF77B /* SidechainBurnOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidechainBurnOperation.swift; sourceTree = "<group>"; };
 		D0B058682146714800A80CDE /* ContractsFacade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractsFacade.swift; sourceTree = "<group>"; };
 		D0B0586A2146715500A80CDE /* ContractsFacadeImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractsFacadeImp.swift; sourceTree = "<group>"; };
 		D0B0586D2146728800A80CDE /* ContractResultEVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractResultEVM.swift; sourceTree = "<group>"; };
@@ -1105,6 +1109,8 @@
 				D0D5711D224BA58B007F6CC3 /* ContractTransferOperation.swift */,
 				D0ED8C1D2292A1EF002EC3EA /* AccountAddressCreateOperation.swift */,
 				D0ED8C292292EE82002EC3EA /* WithdrawalEthOperation.swift */,
+				D0A4933C22AFA029006DF77B /* SidechainIssueOperation.swift */,
+				D0A4933E22AFBE56006DF77B /* SidechainBurnOperation.swift */,
 			);
 			path = Operation;
 			sourceTree = "<group>";
@@ -1424,6 +1430,7 @@
 				B30CAD2020FFD5DB0048E33E /* AuthentificationFacadeImp.swift in Sources */,
 				D0B0588221469A0900A80CDE /* GetContractSocketOperaton.swift in Sources */,
 				B348D0AC210207ED00C29AE4 /* Encoding.swift in Sources */,
+				D0A4933F22AFBE56006DF77B /* SidechainBurnOperation.swift in Sources */,
 				B348D09D21011EBD00C29AE4 /* InformationFacadeImp.swift in Sources */,
 				B3BEA1FF21A05C0300CB9021 /* TransactionWithCallbackSocketOperation.swift in Sources */,
 				D0D8CA4A2141847900F0646D /* GetAccountsQueueOperation.swift in Sources */,
@@ -1433,6 +1440,7 @@
 				B3CA703C20F4AA3700511F6A /* HistoryItem.swift in Sources */,
 				D01AD062221C12340062A74D /* ContractVMType.swift in Sources */,
 				D0ED8C262292D8DE002EC3EA /* EthAddress.swift in Sources */,
+				D0A4933D22AFA029006DF77B /* SidechainIssueOperation.swift in Sources */,
 				D0A4933322AF8DB4006DF77B /* GetAccountWithdrawalsSocketOperation.swift in Sources */,
 				D00C3D282147B4F90053A636 /* Contract.swift in Sources */,
 				D0D8CA462141847900F0646D /* GetTransactionQueueOperation.swift in Sources */,

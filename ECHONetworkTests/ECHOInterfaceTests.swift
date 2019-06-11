@@ -1862,7 +1862,7 @@ class ECHOInterfaceTests: XCTestCase {
         let assetId = Constants.defaultAsset
         let contratId = Constants.counterContract
         let methodName = Constants.defaultCallContractMethod
-        let params: [AbiTypeValueInputModel] = [AbiTypeValueInputModel.init(type: .uint(size: 256), value: "1")]
+        let params: [AbiTypeValueInputModel] = []
         var success = false
 
         //act
