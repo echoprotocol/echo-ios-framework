@@ -53,4 +53,22 @@ public protocol EthFacade {
                        assetForFee: String?,
                        completion: @escaping Completion<Bool>,
                        noticeHandler: NoticeHandler?)
+    
+/**
+     Returns all approved deposits, for the given account id or name.
+ 
+     - Parameter nameOrId: Name or id
+     - Parameter completion: Callback in which return Deposits objects or error.
+ */
+    func getAccountDeposits(nameOrId: String,
+                            completion: @escaping Completion<[DepositEth]>)
+    
+/**
+     Returns all approved withdrawals, for the given account id or name.
+     
+     - Parameter nameOrId: Name or id
+     - Parameter completion: Callback in which return Withdrawals objects or error.
+ */
+    func getAccountWithdrawals(nameOrId: String,
+                               completion: @escaping Completion<[WithdrawalEth]>)
 }

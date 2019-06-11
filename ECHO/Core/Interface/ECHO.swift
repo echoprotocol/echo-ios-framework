@@ -527,6 +527,16 @@ final public class ECHO: InterfaceFacades, Startable {
                                 noticeHandler: noticeHandler)
     }
     
+    public func getAccountDeposits(nameOrId: String, completion: @escaping Completion<[DepositEth]>) {
+        
+        ethFacade.getAccountDeposits(nameOrId: nameOrId, completion: completion)
+    }
+    
+    public func getAccountWithdrawals(nameOrId: String, completion: @escaping Completion<[WithdrawalEth]>) {
+        
+        ethFacade.getAccountWithdrawals(nameOrId: nameOrId, completion: completion)
+    }
+    
     // MARK: CustomOperationsFacade
     
     public func sendCustomOperation(operation: CustomSocketOperation, for specificAPI: API) {

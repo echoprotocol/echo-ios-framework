@@ -307,4 +307,26 @@ extension EthService {
         
         socketCore.send(operation: operation)
     }
+    
+    func getAccountDeposits(accountId: String, completion: @escaping Completion<[DepositEth]>) {
+        
+        let operation = GetAccountDepositsSocketOperation(method: .call,
+                                                          operationId: socketCore.nextOperationId(),
+                                                          apiId: apiIdentifire,
+                                                          accountId: accountId,
+                                                          completion: completion)
+        
+        socketCore.send(operation: operation)
+    }
+    
+    func getAccountWithdrawals(accountId: String, completion: @escaping Completion<[WithdrawalEth]>) {
+        
+        let operation = GetAccountWithdrawalsSocketOperation(method: .call,
+                                                            operationId: socketCore.nextOperationId(),
+                                                            apiId: apiIdentifire,
+                                                            accountId: accountId,
+                                                            completion: completion)
+        
+        socketCore.send(operation: operation)
+    }
 }

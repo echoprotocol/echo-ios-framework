@@ -2257,4 +2257,68 @@ class ECHOInterfaceTests: XCTestCase {
             XCTAssertTrue(isSuccess)
         }
     }
+    
+    func testGetAccountDeposits() {
+        
+        //arrange
+        echo = ECHO(settings: Settings(build: {
+            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+            $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+        }))
+        let exp = expectation(description: "testGetAccountDeposits")
+        var deposits: [DepositEth]?
+        
+        //act
+        echo.start { [unowned self] (result) in
+            
+            self.echo.getAccountDeposits(nameOrId: Constants.defaultName, completion: { (result) in
+                
+                switch result {
+                case .success(let result):
+                    deposits = result
+                    exp.fulfill()
+                case .failure(let error):
+                    XCTFail("testGetAccountDeposits must be valid \(error)")
+                }
+            })
+        }
+        
+        //assert
+        waitForExpectations(timeout: Constants.timeout) { error in
+            XCTAssertNotNil(deposits)
+            XCTAssertTrue(deposits?.count != 0)
+        }
+    }
+    
+    func testGetAccountWithdrawals() {
+        
+        //arrange
+        echo = ECHO(settings: Settings(build: {
+            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+            $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+        }))
+        let exp = expectation(description: "testGetAccountDeposits")
+        var withdrawals: [WithdrawalEth]?
+        
+        //act
+        echo.start { [unowned self] (result) in
+            
+            self.echo.getAccountWithdrawals(nameOrId: Constants.defaultName, completion: { (result) in
+                
+                switch result {
+                case .success(let result):
+                    withdrawals = result
+                    exp.fulfill()
+                case .failure(let error):
+                    XCTFail("testGetAccountDeposits must be valid \(error)")
+                }
+            })
+        }
+        
+        //assert
+        waitForExpectations(timeout: Constants.timeout) { error in
+            XCTAssertNotNil(withdrawals)
+            XCTAssertTrue(withdrawals?.count != 0)
+        }
+    }
 }

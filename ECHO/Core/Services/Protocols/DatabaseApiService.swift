@@ -180,4 +180,22 @@ protocol DatabaseApiService: BaseApiService {
  */
     func getEthAddress(accountId: String,
                        completion: @escaping Completion<EthAddress?>)
+    
+/**
+     Returns all approved deposits, for the given account id.
+     
+     - Parameter accountId: Accoint id
+     - Parameter completion: Callback in which return Deposits objects or error.
+ */
+    func getAccountDeposits(accountId: String,
+                            completion: @escaping Completion<[DepositEth]>)
+    
+/**
+     Returns all approved withdrawals, for the given account id.
+     
+     - Parameter accountId: Accoint id
+     - Parameter completion: Callback in which return Withdrawals objects or error.
+ */
+    func getAccountWithdrawals(accountId: String,
+                               completion: @escaping Completion<[WithdrawalEth]>)
 }

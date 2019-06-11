@@ -9,7 +9,7 @@
 /**
     Get created ETH addresses for account by ID
  
-    - Return: [[EthAddress]](EthAddress)
+    - Return: [EthAddress](EthAddress)
  */
 struct GetEthAddressSocketOperation: SocketOperation {
     

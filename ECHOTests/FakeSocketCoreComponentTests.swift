@@ -681,4 +681,68 @@ class SocketCoreComponentTests: XCTestCase {
             XCTAssertNotNil(success)
         }
     }
+    
+    func testFakeGetAccountDeposits() {
+        
+        //arrange
+        let messenger = SocketMessengerStub(state: .getAccountDeposits)
+        echo = ECHO(settings: Settings(build: {
+            $0.socketMessenger = messenger
+        }))
+        let exp = expectation(description: "testFakeGetAccountDeposits")
+        var deposits: [DepositEth]?
+        
+        //act
+        echo.start { [unowned self] (result) in
+            
+            self.echo.getAccountDeposits(nameOrId: "vsharaev", completion: { (result) in
+                
+                switch result {
+                case .success(let result):
+                    deposits = result
+                    exp.fulfill()
+                case .failure(let error):
+                    XCTFail("testGetAccountDeposits must be valid \(error)")
+                }
+            })
+        }
+        
+        //assert
+        waitForExpectations(timeout: 1) { error in
+            XCTAssertNotNil(deposits)
+            XCTAssertTrue(deposits?.count != 0)
+        }
+    }
+    
+    func testFakeGetAccountWithdrawals() {
+        
+        //arrange
+        let messenger = SocketMessengerStub(state: .getAccountWithdrawals)
+        echo = ECHO(settings: Settings(build: {
+            $0.socketMessenger = messenger
+        }))
+        let exp = expectation(description: "testFakeGetAccountWithdrawals")
+        var withdrawals: [WithdrawalEth]?
+        
+        //act
+        echo.start { [unowned self] (result) in
+            
+            self.echo.getAccountWithdrawals(nameOrId: "vsharaev", completion: { (result) in
+                
+                switch result {
+                case .success(let result):
+                    withdrawals = result
+                    exp.fulfill()
+                case .failure(let error):
+                    XCTFail("testGetAccountDeposits must be valid \(error)")
+                }
+            })
+        }
+        
+        //assert
+        waitForExpectations(timeout: 1) { error in
+            XCTAssertNotNil(withdrawals)
+            XCTAssertTrue(withdrawals?.count != 0)
+        }
+    }
 }

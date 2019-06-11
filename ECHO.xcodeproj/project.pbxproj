@@ -209,6 +209,14 @@
 		D0A19B002269F2330030F442 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A19AFF2269F2320030F442 /* Constants.swift */; };
 		D0A1B441212E9C5300294683 /* ECHOQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A1B440212E9C5300294683 /* ECHOQueue.swift */; };
 		D0A1B447212FF04600294683 /* Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A1B446212FF04600294683 /* Block.swift */; };
+		D0A4932D22AF88F6006DF77B /* DepositEth.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A4932C22AF88F6006DF77B /* DepositEth.swift */; };
+		D0A4932F22AF8A41006DF77B /* WithdrawalEth.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A4932E22AF8A41006DF77B /* WithdrawalEth.swift */; };
+		D0A4933122AF8DA0006DF77B /* GetAccountDepositsSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A4933022AF8DA0006DF77B /* GetAccountDepositsSocketOperation.swift */; };
+		D0A4933322AF8DB4006DF77B /* GetAccountWithdrawalsSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A4933222AF8DB4006DF77B /* GetAccountWithdrawalsSocketOperation.swift */; };
+		D0A4933522AF9543006DF77B /* GetAccountDepositsRequestStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A4933422AF9543006DF77B /* GetAccountDepositsRequestStub.swift */; };
+		D0A4933722AF9552006DF77B /* GetAccountWithdrawalsRequestStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A4933622AF9552006DF77B /* GetAccountWithdrawalsRequestStub.swift */; };
+		D0A4933922AF95B0006DF77B /* GetAccountDepositsStubHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A4933822AF95B0006DF77B /* GetAccountDepositsStubHolder.swift */; };
+		D0A4933B22AF95BD006DF77B /* GetAccountWithdrawalsStubHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A4933A22AF95BD006DF77B /* GetAccountWithdrawalsStubHolder.swift */; };
 		D0B058692146714800A80CDE /* ContractsFacade.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B058682146714800A80CDE /* ContractsFacade.swift */; };
 		D0B0586B2146715500A80CDE /* ContractsFacadeImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B0586A2146715500A80CDE /* ContractsFacadeImp.swift */; };
 		D0B0586E2146728800A80CDE /* ContractResultEVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B0586D2146728800A80CDE /* ContractResultEVM.swift */; };
@@ -483,6 +491,14 @@
 		D0A19AFF2269F2320030F442 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		D0A1B440212E9C5300294683 /* ECHOQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ECHOQueue.swift; sourceTree = "<group>"; };
 		D0A1B446212FF04600294683 /* Block.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Block.swift; sourceTree = "<group>"; };
+		D0A4932C22AF88F6006DF77B /* DepositEth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepositEth.swift; sourceTree = "<group>"; };
+		D0A4932E22AF8A41006DF77B /* WithdrawalEth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawalEth.swift; sourceTree = "<group>"; };
+		D0A4933022AF8DA0006DF77B /* GetAccountDepositsSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAccountDepositsSocketOperation.swift; sourceTree = "<group>"; };
+		D0A4933222AF8DB4006DF77B /* GetAccountWithdrawalsSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAccountWithdrawalsSocketOperation.swift; sourceTree = "<group>"; };
+		D0A4933422AF9543006DF77B /* GetAccountDepositsRequestStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAccountDepositsRequestStub.swift; sourceTree = "<group>"; };
+		D0A4933622AF9552006DF77B /* GetAccountWithdrawalsRequestStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAccountWithdrawalsRequestStub.swift; sourceTree = "<group>"; };
+		D0A4933822AF95B0006DF77B /* GetAccountDepositsStubHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAccountDepositsStubHolder.swift; sourceTree = "<group>"; };
+		D0A4933A22AF95BD006DF77B /* GetAccountWithdrawalsStubHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAccountWithdrawalsStubHolder.swift; sourceTree = "<group>"; };
 		D0B058682146714800A80CDE /* ContractsFacade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractsFacade.swift; sourceTree = "<group>"; };
 		D0B0586A2146715500A80CDE /* ContractsFacadeImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractsFacadeImp.swift; sourceTree = "<group>"; };
 		D0B0586D2146728800A80CDE /* ContractResultEVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractResultEVM.swift; sourceTree = "<group>"; };
@@ -865,6 +881,8 @@
 				D00A58E8222522C40089FC18 /* GetGlobalPropertiesSocketOperation.swift */,
 				D05C20BC228EEB51004A2EB0 /* SubscribeContractsSocketOperation.swift */,
 				D0ED8C272292DFF9002EC3EA /* GetEthAddressSocketOperation.swift */,
+				D0A4933022AF8DA0006DF77B /* GetAccountDepositsSocketOperation.swift */,
+				D0A4933222AF8DB4006DF77B /* GetAccountWithdrawalsSocketOperation.swift */,
 			);
 			path = SocketOperation;
 			sourceTree = "<group>";
@@ -1023,6 +1041,8 @@
 				D0A0C508225E29F5000BA64D /* SubscribeContractLogsSocketRequestStub.swift */,
 				D01A5CD1226F50BB004A8472 /* GetBlockSocketRequestStub.swift */,
 				D097081C22942191009DF152 /* GetEthAddressRequestStub.swift */,
+				D0A4933422AF9543006DF77B /* GetAccountDepositsRequestStub.swift */,
+				D0A4933622AF9552006DF77B /* GetAccountWithdrawalsRequestStub.swift */,
 			);
 			path = Stubs;
 			sourceTree = "<group>";
@@ -1045,6 +1065,8 @@
 				D097081A22941C3B009DF152 /* CreateEthAddressStupHolder.swift */,
 				D097081E229421BD009DF152 /* GetEthAddressStubHolder.swift */,
 				D097082022942304009DF152 /* WithdrawalEthStubHolder.swift */,
+				D0A4933822AF95B0006DF77B /* GetAccountDepositsStubHolder.swift */,
+				D0A4933A22AF95BD006DF77B /* GetAccountWithdrawalsStubHolder.swift */,
 			);
 			path = StubsHolders;
 			sourceTree = "<group>";
@@ -1117,6 +1139,8 @@
 			isa = PBXGroup;
 			children = (
 				D0ED8C252292D8DE002EC3EA /* EthAddress.swift */,
+				D0A4932C22AF88F6006DF77B /* DepositEth.swift */,
+				D0A4932E22AF8A41006DF77B /* WithdrawalEth.swift */,
 			);
 			path = EthObjects;
 			sourceTree = "<group>";
@@ -1324,6 +1348,7 @@
 				D09DA11C21EDE6870004673F /* RegistrationApiServiceImp.swift in Sources */,
 				B39554B5213EBAED00CE2647 /* ListAssetsSocketOperation.swift in Sources */,
 				B385970420F6270000B55E59 /* ECHOObject.swift in Sources */,
+				D0A4932F22AF8A41006DF77B /* WithdrawalEth.swift in Sources */,
 				D0947048212D931800B55A37 /* AccountUpdateOperation.swift in Sources */,
 				B358CD0A213978990046327F /* ECHONetwork.swift in Sources */,
 				B3CA702A20F4A44900511F6A /* InformationFacade.swift in Sources */,
@@ -1377,6 +1402,7 @@
 				B38596EC20F5ED6000B55E59 /* GetBlockSocketOperation.swift in Sources */,
 				D05C20BD228EEB51004A2EB0 /* SubscribeContractsSocketOperation.swift in Sources */,
 				D0B0587E214698F900A80CDE /* ContractStructEVM.swift in Sources */,
+				D0A4932D22AF88F6006DF77B /* DepositEth.swift in Sources */,
 				B38596FE20F6009A00B55E59 /* Asset.swift in Sources */,
 				B358CD08213978800046327F /* Settings.swift in Sources */,
 				B39A7C0B2105F5F7003CC14D /* SubscriptionFacadeImp.swift in Sources */,
@@ -1407,10 +1433,12 @@
 				B3CA703C20F4AA3700511F6A /* HistoryItem.swift in Sources */,
 				D01AD062221C12340062A74D /* ContractVMType.swift in Sources */,
 				D0ED8C262292D8DE002EC3EA /* EthAddress.swift in Sources */,
+				D0A4933322AF8DB4006DF77B /* GetAccountWithdrawalsSocketOperation.swift in Sources */,
 				D00C3D282147B4F90053A636 /* Contract.swift in Sources */,
 				D0D8CA462141847900F0646D /* GetTransactionQueueOperation.swift in Sources */,
 				B30CAD1A20FFD58E0048E33E /* Options.swift in Sources */,
 				D061331721A30052009EC456 /* SubscribeContractLogsSocketOperation.swift in Sources */,
+				D0A4933122AF8DA0006DF77B /* GetAccountDepositsSocketOperation.swift in Sources */,
 				D094704A212D932500B55A37 /* CreateAssetOperation.swift in Sources */,
 				B30CAD1720FFD5790048E33E /* AccountBalance.swift in Sources */,
 				D0FAC41722AE3E5300C8BF49 /* CallContractFee.swift in Sources */,
@@ -1491,6 +1519,7 @@
 				B3D7612C21366F3A00860C62 /* SocketNotificationsEventsStub.swift in Sources */,
 				B390C2C72141312D00BD6CDC /* Collection+Extension.swift in Sources */,
 				D0A0C4FF225E275E000BA64D /* GetContractsSocketRequestStub.swift in Sources */,
+				D0A4933922AF95B0006DF77B /* GetAccountDepositsStubHolder.swift in Sources */,
 				D073F518224CD8530025AE6A /* SubscribeContractLogsDelegateStub.swift in Sources */,
 				D0A0C4FB225E267A000BA64D /* RevealAPISocketStubsHolder.swift in Sources */,
 				D073F51A224CDB420025AE6A /* SubscribeToLogsStubHodler.swift in Sources */,
@@ -1501,6 +1530,7 @@
 				B3C365442134116800FC60F4 /* CryptoCoreComponentTests.swift in Sources */,
 				D08230482236BA19003A4BDC /* ETHAddressValidatorTests.swift in Sources */,
 				B328FC31213FEA510022292C /* ChangePasswordSocketRequestStubHodler.swift in Sources */,
+				D0A4933522AF9543006DF77B /* GetAccountDepositsRequestStub.swift in Sources */,
 				B3DA875E2146C32E000EA228 /* GetContractInfoStubHodler.swift in Sources */,
 				D0A0C4F5225E2509000BA64D /* GetRequiredFeesSocketRequestStub.swift in Sources */,
 				D073F516224CD7F50025AE6A /* SubscribeAccountDelegateStub.swift in Sources */,
@@ -1529,6 +1559,7 @@
 				D0A0C4F1225E2475000BA64D /* GetDynamicGlobalPropertiesSocketRequestStub.swift in Sources */,
 				D097081F229421BD009DF152 /* GetEthAddressStubHolder.swift in Sources */,
 				B3405CB82135BB3F00C18FE6 /* SubscribtionTests.swift in Sources */,
+				D0A4933722AF9552006DF77B /* GetAccountWithdrawalsRequestStub.swift in Sources */,
 				D097082122942304009DF152 /* WithdrawalEthStubHolder.swift in Sources */,
 				B390C2C92141385700BD6CDC /* IssueAssetSocketRequestStubHodler.swift in Sources */,
 				B350E3A621341FD600408728 /* AddressKeysContainerTests.swift in Sources */,
@@ -1537,6 +1568,7 @@
 				B390C2C421411F9600BD6CDC /* SocketRequestProtocol.swift in Sources */,
 				D0A0C503225E27A9000BA64D /* GetContractResultSocketRequestStub.swift in Sources */,
 				B3DFFB9721941F8000BC67D7 /* GetAccountStubHolder.swift in Sources */,
+				D0A4933B22AF95BD006DF77B /* GetAccountWithdrawalsStubHolder.swift in Sources */,
 				B30FE90E212F2DAE0009BF57 /* FakeSocketCoreComponentTests.swift in Sources */,
 				B3D1C57A212C9D4900D1A7E6 /* JsonDecodingTests.swift in Sources */,
 				B356E28D2148143900314E4A /* CreateContractInfoStubHolder.swift in Sources */,
