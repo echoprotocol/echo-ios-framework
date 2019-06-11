@@ -26,6 +26,8 @@ enum OperationsState {
     case createEthAddress
     case getEthAddress
     case withdrawalEth
+    case getAccountDeposits
+    case getAccountWithdrawals
 }
 
 final class SocketMessengerStub: SocketMessenger {
@@ -104,6 +106,10 @@ final class SocketMessengerStub: SocketMessenger {
             response = getEthAddressRespone(request: string)
         case .withdrawalEth:
             response = getWithdrawalEthRespone(request: string)
+        case .getAccountDeposits:
+            response = getAccountDepositsRespone(request: string)
+        case .getAccountWithdrawals:
+            response = getAccountWithdrawalsRespone(request: string)
         }
     
         if let response = response {
@@ -446,6 +452,42 @@ final class SocketMessengerStub: SocketMessenger {
         
         let revealHolder = RevealAPISocketStubsHolder()
         let stubHolder = WithdrawalEthStubHolder()
+        
+        if let revealResponse = revealHolder.response(id: tuple.id, operationType: tuple.operationType) {
+            return revealResponse
+        } else if let transferResponse = stubHolder.response(id: tuple.id, operationType: tuple.operationType) {
+            return transferResponse
+        }
+        
+        return nil
+    }
+    
+    fileprivate func getAccountDepositsRespone(request: String) -> String? {
+        
+        guard let tuple = parceRequest(request: request) else {
+            return nil
+        }
+        
+        let revealHolder = RevealAPISocketStubsHolder()
+        let stubHolder = GetAccountDepositsStubHolder()
+        
+        if let revealResponse = revealHolder.response(id: tuple.id, operationType: tuple.operationType) {
+            return revealResponse
+        } else if let transferResponse = stubHolder.response(id: tuple.id, operationType: tuple.operationType) {
+            return transferResponse
+        }
+        
+        return nil
+    }
+    
+    fileprivate func getAccountWithdrawalsRespone(request: String) -> String? {
+        
+        guard let tuple = parceRequest(request: request) else {
+            return nil
+        }
+        
+        let revealHolder = RevealAPISocketStubsHolder()
+        let stubHolder = GetAccountWithdrawalsStubHolder()
         
         if let revealResponse = revealHolder.response(id: tuple.id, operationType: tuple.operationType) {
             return revealResponse

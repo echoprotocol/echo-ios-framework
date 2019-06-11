@@ -73,7 +73,7 @@ protocol DatabaseApiService: BaseApiService {
      - Parameter asset: Asset type for fee paying
      - Parameter completion: Callback which returns amounts or error
  */
-    func getRequiredFees(operations: [BaseOperation], asset: Asset, completion: @escaping Completion<[AssetAmount]>)
+    func getRequiredFees(operations: [BaseOperation], asset: Asset, completion: @escaping Completion<[FeeType]>)
     
 /**
      Subscribes to listening chain objects
@@ -176,8 +176,26 @@ protocol DatabaseApiService: BaseApiService {
      Get created ETH addresses
      
      - Parameter accountId: Accoint id
-     - Parameter completion: Callback in which the information will return [EthAddress](EthAddress) objects or error
+     - Parameter completion: Callback in which the information will return [EthAddress](EthAddress) object if it created or error
  */
     func getEthAddress(accountId: String,
-                       completion: @escaping Completion<[EthAddress]>)
+                       completion: @escaping Completion<EthAddress?>)
+    
+/**
+     Returns all approved deposits, for the given account id.
+     
+     - Parameter accountId: Accoint id
+     - Parameter completion: Callback in which return Deposits objects or error.
+ */
+    func getAccountDeposits(accountId: String,
+                            completion: @escaping Completion<[DepositEth]>)
+    
+/**
+     Returns all approved withdrawals, for the given account id.
+     
+     - Parameter accountId: Accoint id
+     - Parameter completion: Callback in which return Withdrawals objects or error.
+ */
+    func getAccountWithdrawals(accountId: String,
+                               completion: @escaping Completion<[WithdrawalEth]>)
 }

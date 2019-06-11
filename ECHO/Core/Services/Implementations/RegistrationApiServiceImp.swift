@@ -30,9 +30,7 @@ final class RegistrationApiServiceImp: RegistrationApiService {
     }
     
     func registerAccount(name: String,
-                         ownerKey: String,
                          activeKey: String,
-                         memoKey: String,
                          echorandKey: String,
                          completion: @escaping Completion<Bool>) -> Int {
         
@@ -41,9 +39,7 @@ final class RegistrationApiServiceImp: RegistrationApiService {
                                                        operationId: operationID,
                                                        apiId: apiIdentifire,
                                                        name: name,
-                                                       ownerKey: ownerKey,
                                                        activeKey: activeKey,
-                                                       memoKey: memoKey,
                                                        echorandKey: echorandKey,
                                                        completion: completion)
         

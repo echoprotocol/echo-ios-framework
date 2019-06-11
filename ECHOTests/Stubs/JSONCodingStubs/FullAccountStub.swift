@@ -22,17 +22,6 @@ struct FullAccountStub {
                                 "lifetime_referrer_fee_percentage": 3000,
                                 "referrer_rewards_percentage": 7500,
                                 "name": "vsharaev",
-                                "owner": {
-                                    "weight_threshold": 1,
-                                    "account_auths": [],
-                                    "key_auths": [
-                                        [
-                                            "ECHO6CNWcfkh4DhtbYtjZgMmwb49noxkPFwCu5pYjtNsK3K6XX6JpV",
-                                            1
-                                        ]
-                                    ],
-                                    "address_auths": []
-                                },
                                 "active": {
                                     "weight_threshold": 1,
                                     "account_auths": [],
@@ -44,9 +33,8 @@ struct FullAccountStub {
                                     ],
                                     "address_auths": []
                                 },
-                                "ed_key": "fd9370d6384ee109765616b2ec5337b221a53a1fa3f3a076b68fcf774994a914",
+                                "echorand_key": "fd9370d6384ee109765616b2ec5337b221a53a1fa3f3a076b68fcf774994a914",
                                 "options": {
-                                    "memo_key": "ECHO6CNWcfkh4DhtbYtjZgMmwb49noxkPFwCu5pYjtNsK3K6XX6JpV",
                                     "voting_account": "1.2.5",
                                     "delegating_account": "1.2.12",
                                     "num_witness": 0,

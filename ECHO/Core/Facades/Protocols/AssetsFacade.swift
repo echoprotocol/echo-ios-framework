@@ -27,7 +27,6 @@ public protocol AssetsFacade {
                     asset: String,
                     amount: UInt,
                     destinationIdOrName: String,
-                    message: String?,
                     completion: @escaping Completion<Bool>)
     
 /**

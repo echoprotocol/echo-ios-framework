@@ -288,6 +288,7 @@ public struct SidechainConfig: Decodable {
         case ethGenAddressTopic = "eth_gen_address_topic"
         case ethDepositTopic = "eth_deposit_topic"
         case ethWithdrawTopic = "eth_withdraw_topic"
+        case ethUpdateAddressMethod = "eth_update_addr_method"
         case ETHAssetId = "ETH_asset_id"
     }
     
@@ -295,6 +296,7 @@ public struct SidechainConfig: Decodable {
     public let ethCommitteeUpdateMethod: EthMethod
     public let ethGenAddressMethod: EthMethod
     public let ethWithdrawMethod: EthMethod
+    public let ethUpdateAddressMethod: EthMethod?
     public let ethCommitteeUpdatedTopic: String
     public let ethGenAddressTopic: String
     public let ethDepositTopic: String
@@ -305,6 +307,7 @@ public struct SidechainConfig: Decodable {
                 ethCommitteeUpdateMethod: EthMethod,
                 ethGenAddressMethod: EthMethod,
                 ethWithdrawMethod: EthMethod,
+                ethUpdateAddressMethod: EthMethod?,
                 ethCommitteeUpdatedTopic: String,
                 ethGenAddressTopic: String,
                 ethDepositTopic: String,
@@ -315,6 +318,7 @@ public struct SidechainConfig: Decodable {
         self.ethCommitteeUpdateMethod = ethCommitteeUpdateMethod
         self.ethGenAddressMethod = ethGenAddressMethod
         self.ethWithdrawMethod = ethWithdrawMethod
+        self.ethUpdateAddressMethod = ethUpdateAddressMethod
         self.ethCommitteeUpdatedTopic = ethCommitteeUpdatedTopic
         self.ethGenAddressTopic = ethGenAddressTopic
         self.ethDepositTopic = ethDepositTopic
@@ -330,6 +334,7 @@ public struct SidechainConfig: Decodable {
         ethCommitteeUpdateMethod = try values.decode(EthMethod.self, forKey: .ethCommitteeUpdateMethod)
         ethGenAddressMethod = try values.decode(EthMethod.self, forKey: .ethGenAddressMethod)
         ethWithdrawMethod = try values.decode(EthMethod.self, forKey: .ethWithdrawMethod)
+        ethUpdateAddressMethod = try? values.decode(EthMethod.self, forKey: .ethUpdateAddressMethod)
         ethCommitteeUpdatedTopic = try values.decode(String.self, forKey: .ethCommitteeUpdatedTopic)
         ethGenAddressTopic = try values.decode(String.self, forKey: .ethGenAddressTopic)
         ethDepositTopic = try values.decode(String.self, forKey: .ethDepositTopic)

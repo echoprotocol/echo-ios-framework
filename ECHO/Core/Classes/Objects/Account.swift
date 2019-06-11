@@ -26,7 +26,7 @@ public struct Account: ECHOObject, ECHOCodable, Decodable, Hashable {
         case active
         case options
         case statistics
-        case edKey = "ed_key"
+        case edKey = "echorand_key"
     }
     
     public var id: String

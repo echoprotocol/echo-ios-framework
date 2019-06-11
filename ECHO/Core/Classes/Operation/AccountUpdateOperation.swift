@@ -17,7 +17,7 @@ public struct AccountUpdateOperation: BaseOperation {
         case newOptions = "new_options"
         case extensions
         case fee
-        case edKey = "ed_key"
+        case edKey = "echorand_key"
     }
     
     public let type: OperationType
@@ -40,7 +40,7 @@ public struct AccountUpdateOperation: BaseOperation {
         
         self.account = account
         self.active = OptionalValue<Authority>(active)
-        self.newOptions = OptionalValue<AccountOptions>(options)
+        self.newOptions = OptionalValue<AccountOptions>(options, addByteToStart: true)
         self.edKey = edKey
         
         self.fee = fee

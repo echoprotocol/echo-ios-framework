@@ -12,7 +12,7 @@
 public struct WithdrawalEthOperation: BaseOperation {
     
     enum WithdrawalEthOperationCodingKeys: String, CodingKey {
-        case account = "acc_id"
+        case account = "account"
         case ethAddress = "eth_addr"
         case value
         case extensions

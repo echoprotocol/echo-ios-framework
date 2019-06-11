@@ -250,11 +250,9 @@ final public class AuthentificationFacadeImp: AuthentificationFacade, ECHOQueueb
                 return
             }
             
-            let memoAddressString = network.prefix.rawValue + addressContainer.memoKeychain.publicAddress()
             let activeAddressString = network.echorandPrefix.rawValue + addressContainer.activeKeychain.publicAddress()
             let edAddressString = network.echorandPrefix.rawValue + addressContainer.echorandKeychain.publicAddress()
             
-            let memoAddress = Address(memoAddressString, data: addressContainer.memoKeychain.publicKey())
             let activeAddress = Address(activeAddressString, data: addressContainer.activeKeychain.publicKey())
             let edAddress = Address(edAddressString, data: addressContainer.echorandKeychain.publicKey())
             
@@ -270,8 +268,7 @@ final public class AuthentificationFacadeImp: AuthentificationFacade, ECHOQueueb
                 votingAccount = Account(votingAccountId)
             }
             
-            let options = AccountOptions(memo: memoAddress,
-                                         votingAccount: votingAccount,
+            let options = AccountOptions(votingAccount: votingAccount,
                                          delegatingAccount: delegatingAccount)
             
             let fee = AssetAmount(amount: 0, asset: Asset(Settings.defaultAsset))

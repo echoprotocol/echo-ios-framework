@@ -9,7 +9,6 @@
 struct OptionsStub {
     let initialJson = """
                                 {
-                        "memo_key": "ECHO6CNWcfkh4DhtbYtjZgMmwb49noxkPFwCu5pYjtNsK3K6XX6JpV",
                         "voting_account": "1.2.5",
                         "delegating_account": "1.2.12",
                         "num_witness": 0,

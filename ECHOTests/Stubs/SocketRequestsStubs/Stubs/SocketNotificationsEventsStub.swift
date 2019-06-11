@@ -9,11 +9,11 @@
 struct TransactionEventEventNotificationStub {
     
     static let response1 = """
-                            {"method":"notice","params":[8,[[{"id":"2.6.29","owner":"1.2.29","most_recent_op":"2.9.520","total_ops":45,"removed_ops":0,"total_blocks":52,"total_core_in_orders":0,"lifetime_fees_paid":0,"pending_fees":0,"pending_vested_fees":6027813},{"id":"2.5.13","owner":"1.2.29","asset_type":"1.3.0","balance":993972107}]]]}
+                            {"method":"notice","params":[8,[[{"id":"2.6.29","owner":"1.2.48","most_recent_op":"2.9.520","total_ops":45,"removed_ops":0,"total_blocks":52,"total_core_in_orders":0,"lifetime_fees_paid":0,"pending_fees":0,"pending_vested_fees":6027813},{"id":"2.5.13","owner":"1.2.48","asset_type":"1.3.0","balance":993972107}]]]}
                         """
     
     static let response2 = """
-                            {"method":"notice","params":[8,[[{"id":"2.6.29","owner":"1.2.29","most_recent_op":"2.9.520","total_ops":45,"removed_ops":0,"total_blocks":53,"total_core_in_orders":0,"lifetime_fees_paid":0,"pending_fees":0,"pending_vested_fees":6027813}]]]}
+                            {"method":"notice","params":[8,[[{"id":"2.6.29","owner":"1.2.48","most_recent_op":"2.9.520","total_ops":45,"removed_ops":0,"total_blocks":53,"total_core_in_orders":0,"lifetime_fees_paid":0,"pending_fees":0,"pending_vested_fees":6027813}]]]}
                             """
 }
 
