@@ -5,6 +5,7 @@ Pod::Spec.new do |spec|
   spec.homepage = "https://github.com/echoprotocol/echo-ios-framework"
   spec.license = { :type => 'MIT', :file => 'LICENSE' }
   spec.authors = {
+    "Pixelplex Developer" => 
     "Fedorenko Nikita" => 'n.fedorenko@pixelplex.io',
     "Sharaev Vladimir" => 'v.sharaev@pixelplex.io',
   }

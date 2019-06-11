@@ -7,56 +7,116 @@ default_platform(:ios)
 
 platform :ios do
 
-  lane :tests do
+  lane :iamdeveloper do
 
-    libraries
-    
-    run_tests(
-      scheme: ENV['PROJECT_SCHEME'],
-      sdk: "iphonesimulator",
-      devices: ["iPhone X"],
-      clean: true
-    )
+    UI.header "Initialization of configuration files"
 
-  end
+    url = UI.input("Git URL (ssh):")
 
-  lane :network_tests do 
+    branch = UI.input("Git branch (if empty will be used \"HEAD\"):")
 
-    config_project_for_network_test
-
-    libraries
-    
-    run_tests(
-       scheme: ENV['PROJECT_NETWORK_SCHEME'] 
-       sdk: "iphonesimulator",
-       devices: ["iPhone X"],
-       clean: true
-    )
-
-  end
-
-  private_lane :config_project_for_network_test do
-
-    constants_keys = ENV['CONSTANTS_KEYS']
-    constants_array = constants_keys.split(' ')
-
-    first_constant_key = constants_array.first
-    first_constant_value = ENV[first_constant_key]
-
-    sh("./appendConstantsToConfig.sh #{first_constant_key} #{first_constant_value} true")
-
-    for i in 1..constants_array.count-1
-      constant_key = constants_array[i]
-      constant_value = ENV[constant_key]
-
-      sh("./appendConstantsToConfig.sh #{constant_key} #{constant_value}")
+    if branch.empty?
+      branch = "HEAD"
     end
 
+    UI.message "File download begins"
+    print sh("git archive --format=tar --remote=#{url} #{branch} | gzip > ./../config.tar.gz")
+    
+    UI.message "Unpacking files"
+
+    print sh("tar xf ./../config.tar.gz -C ./..")
+    print sh("rm ./../config.tar.gz")
+
+    UI.message "Generate xcconfig" 
+  
+    config_project_for_network_test(type: ENV['DEVNET_TITLE'])
+
+  end
+
+  before_all do |lane, options|
+    
+    print lane
+
+    libraries
+
+  end
+
+  lane :tests do
+    
+    go_test(
+      scheme: ENV['PROJECT_SCHEME']
+    ) 
+
+  end
+
+  lane :network_tests do
+
+    go_test(
+      scheme: ENV['PROJECT_NETWORK_SCHEME'],
+      output: ENV['OUTPUT_TEST_REPORT_NETWORK'],
+      type: ENV['DEVNET_TITLE']
+    )
+
+  end
+
+  lane :analysis do
+
+    sonar(
+      project_key: "org.echo.mobile.framework",
+      project_version: "3.1",
+      project_name: "ECHO",
+      sources_path: File.expand_path("../ECHO")
+    )
+
+  end
+
+
+  private_lane :go_test do | options |
+
+    if options[:type]
+      config_project_for_network_test(type: options[:type])
+    end
+
+    if options[:output].nil? 
+      output = ENV['OUTPUT_TEST_REPORT']
+    end
+
+    run_tests(
+      scheme: options[:scheme],
+      sdk: "iphonesimulator",
+      devices: ["iPhone X"],
+      clean: true,
+      output_directory: options[:output]
+    )
+  
+  end
+
+  private_lane :config_project_for_network_test do | options |
+
+    case options[:type]
+    when "devnet"
+      properties = YAML.load_file(ENV['DEVNET_PROPERTIES'])
+    when "testnet"
+      properties = YAML.load_file(ENV['TESTNET_PROPERTIES'])
+    end
+
+    app_config = ENV['XCCONFIG_NETWORK_TEST_CONFIG_DEFAULT']
+
+    configuration = Xcodeproj::Config.new(app_config)
+    
+    properties.each do | key, value |
+      configuration.attributes["#{key}"] = "#{value}"
+    end
+
+    temp_configuration_path = ENV['XCCONFIG_NETWORK_TEST_CONFIG_LOCAL']
+
+    File.open(temp_configuration_path, "w") do |f|     
+      f.write(configuration.to_s())   
+    end
+  
   end
 
   lane :release do
-
-    libraries
     
     increment_version
 

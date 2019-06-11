@@ -65,6 +65,27 @@
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Models/Abi/AbiFunctionEntries.swift",
+      "line": 13,
+      "symbol": "AbiFunctionEntries.name",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Models/Abi/AbiFunctionEntries.swift",
+      "line": 14,
+      "symbol": "AbiFunctionEntries.typeString",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Models/Abi/AbiFunctionEntries.swift",
+      "line": 15,
+      "symbol": "AbiFunctionEntries.type",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Models/Abi/AbiFunctionEntries.swift",
       "line": 17,
       "symbol": "AbiFunctionEntries.init(name:typeString:type:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
@@ -394,112 +415,105 @@
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/Account.swift",
-      "line": 33,
+      "line": 32,
       "symbol": "Account.id",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/Account.swift",
-      "line": 34,
+      "line": 33,
       "symbol": "Account.membershipExperationDate",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/Account.swift",
-      "line": 35,
+      "line": 34,
       "symbol": "Account.registrarId",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/Account.swift",
-      "line": 36,
+      "line": 35,
       "symbol": "Account.referrerId",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/Account.swift",
-      "line": 37,
+      "line": 36,
       "symbol": "Account.lifetimeReferrer",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/Account.swift",
-      "line": 38,
+      "line": 37,
       "symbol": "Account.networkFeePercentage",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/Account.swift",
-      "line": 39,
+      "line": 38,
       "symbol": "Account.lifetimeReferrerFeePercentage",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/Account.swift",
-      "line": 40,
+      "line": 39,
       "symbol": "Account.referrerRewardsPercentage",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/Account.swift",
-      "line": 41,
+      "line": 40,
       "symbol": "Account.name",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/Account.swift",
-      "line": 42,
-      "symbol": "Account.owner",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/Account.swift",
-      "line": 43,
+      "line": 41,
       "symbol": "Account.active",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/Account.swift",
-      "line": 44,
+      "line": 42,
       "symbol": "Account.options",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/Account.swift",
-      "line": 45,
+      "line": 43,
       "symbol": "Account.edKey",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/Account.swift",
-      "line": 47,
+      "line": 45,
       "symbol": "Account.init(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/Account.swift",
-      "line": 84,
+      "line": 81,
       "symbol": "Account.toJSON()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/Account.swift",
-      "line": 88,
+      "line": 85,
       "symbol": "Account.toJSON()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -535,41 +549,48 @@
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/AccountBalance.swift",
       "line": 23,
-      "symbol": "AccountBalance.assetType",
+      "symbol": "AccountBalance.id",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/AccountBalance.swift",
       "line": 24,
-      "symbol": "AccountBalance.owner",
+      "symbol": "AccountBalance.assetType",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/AccountBalance.swift",
       "line": 25,
-      "symbol": "AccountBalance.balance",
+      "symbol": "AccountBalance.owner",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/AccountBalance.swift",
       "line": 26,
-      "symbol": "AccountBalance.id",
+      "symbol": "AccountBalance.balance",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/AccountBalance.swift",
+      "line": 28,
+      "symbol": "AccountBalance.init(id:assetType:owner:balance:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/AccountOptions.swift",
-      "line": 70,
+      "line": 67,
       "symbol": "AccountOptions.toJSON()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/AccountOptions.swift",
-      "line": 90,
+      "line": 86,
       "symbol": "AccountOptions.toData()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -668,69 +689,55 @@
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/AddressKeysContainer.swift",
       "line": 10,
-      "symbol": "KeychainType.owner",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/AddressKeysContainer.swift",
-      "line": 11,
       "symbol": "KeychainType.active",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/AddressKeysContainer.swift",
-      "line": 12,
+      "line": 11,
       "symbol": "KeychainType.memo",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/AddressKeysContainer.swift",
-      "line": 13,
+      "line": 12,
       "symbol": "KeychainType.echorand",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/AddressKeysContainer.swift",
-      "line": 21,
-      "symbol": "AddressKeysContainer.ownerKeychain",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/AddressKeysContainer.swift",
-      "line": 22,
+      "line": 20,
       "symbol": "AddressKeysContainer.activeKeychain",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/AddressKeysContainer.swift",
-      "line": 23,
+      "line": 21,
       "symbol": "AddressKeysContainer.memoKeychain",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/AddressKeysContainer.swift",
-      "line": 24,
+      "line": 22,
       "symbol": "AddressKeysContainer.echorandKeychain",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/AddressKeysContainer.swift",
-      "line": 26,
+      "line": 24,
       "symbol": "AddressKeysContainer.init(login:password:core:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/AddressKeysContainer.swift",
-      "line": 41,
+      "line": 37,
       "symbol": "AddressKeysContainer.init(wif:core:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -968,21 +975,21 @@
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/Authority.swift",
-      "line": 22,
+      "line": 21,
       "symbol": "Authority.weightThreshold",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/Authority.swift",
-      "line": 23,
+      "line": 22,
       "symbol": "Authority.accountAuths",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/Authority.swift",
-      "line": 24,
+      "line": 23,
       "symbol": "Authority.keyAuths",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
@@ -990,27 +997,20 @@
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/Authority.swift",
       "line": 25,
-      "symbol": "Authority.extensions",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/Authority.swift",
-      "line": 27,
       "symbol": "Authority.init(weight:keyAuth:accountAuth:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/Authority.swift",
-      "line": 44,
+      "line": 42,
       "symbol": "Authority.toData()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/Authority.swift",
-      "line": 72,
+      "line": 71,
       "symbol": "Authority.toJSON()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -1034,6 +1034,48 @@
       "line": 75,
       "symbol": "BitassetOptions.toData()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/Block.swift",
+      "line": 25,
+      "symbol": "Block.previous",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/Block.swift",
+      "line": 26,
+      "symbol": "Block.timestamp",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/Block.swift",
+      "line": 27,
+      "symbol": "Block.transactionMerkleRoot",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/Block.swift",
+      "line": 28,
+      "symbol": "Block.transactions",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/Block.swift",
+      "line": 29,
+      "symbol": "Block.round",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/Block.swift",
+      "line": 30,
+      "symbol": "Block.account",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
@@ -1061,6 +1103,48 @@
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/Contracts/Contract.swift",
       "line": 23,
       "symbol": "Contract.init(id:contractCode:assetAmount:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/Contracts/ContractHistory.swift",
+      "line": 24,
+      "symbol": "ContractHistory.id",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/Contracts/ContractHistory.swift",
+      "line": 25,
+      "symbol": "ContractHistory.contract",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/Contracts/ContractHistory.swift",
+      "line": 26,
+      "symbol": "ContractHistory.operationId",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/Contracts/ContractHistory.swift",
+      "line": 27,
+      "symbol": "ContractHistory.sequence",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/Contracts/ContractHistory.swift",
+      "line": 28,
+      "symbol": "ContractHistory.nextId",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/Contracts/ContractHistory.swift",
+      "line": 30,
+      "symbol": "ContractHistory.init(id:contract:operationId:sequence:nextId:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
@@ -1324,6 +1408,13 @@
       "warning": "undocumented"
     },
     {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/Contracts/ContractStructEVM.swift",
+      "line": 18,
+      "symbol": "ContractStructEVM.init(code:storage:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/Contracts/ContractStructEnum.swift",
       "line": 14,
       "symbol": "ContractStructEnum.evm(_:)",
@@ -1352,6 +1443,13 @@
       "warning": "undocumented"
     },
     {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/Contracts/ContractStructx86.swift",
+      "line": 17,
+      "symbol": "ContractStructx86.init(code:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/DynamicGlobalProperties.swift",
       "line": 16,
       "symbol": "DynamicGlobalProperties.defaultIdentifier",
@@ -1360,99 +1458,92 @@
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/DynamicGlobalProperties.swift",
-      "line": 35,
+      "line": 34,
       "symbol": "DynamicGlobalProperties.id",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/DynamicGlobalProperties.swift",
-      "line": 36,
+      "line": 35,
       "symbol": "DynamicGlobalProperties.accountsRegisteredThisInterval",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/DynamicGlobalProperties.swift",
-      "line": 37,
+      "line": 36,
       "symbol": "DynamicGlobalProperties.currentAslot",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/DynamicGlobalProperties.swift",
-      "line": 38,
-      "symbol": "DynamicGlobalProperties.currentWitness",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/DynamicGlobalProperties.swift",
-      "line": 39,
+      "line": 37,
       "symbol": "DynamicGlobalProperties.dynamicFlags",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/DynamicGlobalProperties.swift",
-      "line": 40,
+      "line": 38,
       "symbol": "DynamicGlobalProperties.headBlockId",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/DynamicGlobalProperties.swift",
-      "line": 41,
+      "line": 39,
       "symbol": "DynamicGlobalProperties.headBlockNumber",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/DynamicGlobalProperties.swift",
-      "line": 42,
+      "line": 40,
       "symbol": "DynamicGlobalProperties.lastBudgetTime",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/DynamicGlobalProperties.swift",
-      "line": 43,
+      "line": 41,
       "symbol": "DynamicGlobalProperties.lastIrreversibleBlockNum",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/DynamicGlobalProperties.swift",
-      "line": 44,
+      "line": 42,
       "symbol": "DynamicGlobalProperties.nextMaintenanceTime",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/DynamicGlobalProperties.swift",
-      "line": 45,
+      "line": 43,
       "symbol": "DynamicGlobalProperties.recentSlotsFilled",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/DynamicGlobalProperties.swift",
-      "line": 46,
+      "line": 44,
       "symbol": "DynamicGlobalProperties.recentlyMissedCount",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/DynamicGlobalProperties.swift",
-      "line": 47,
+      "line": 45,
       "symbol": "DynamicGlobalProperties.time",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/DynamicGlobalProperties.swift",
-      "line": 48,
-      "symbol": "DynamicGlobalProperties.witnessBudget",
+      "line": 46,
+      "symbol": "DynamicGlobalProperties.committeeBudget",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
@@ -1759,6 +1850,13 @@
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/ECHOObjects/ECHOQueue.swift",
+      "line": 88,
+      "symbol": "ECHOQueue.deinit",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/ECHOObjects/ECHOQueue.swift",
       "line": 94,
       "symbol": "ECHOQueue.saveValue(_:forKey:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
@@ -1905,10 +2003,66 @@
       "warning": "undocumented"
     },
     {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/Encoding.swift",
+      "line": 18,
+      "symbol": "Base58.encode(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/Encoding.swift",
+      "line": 70,
+      "symbol": "Base58.decode(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/Error.swift",
       "line": 44,
       "symbol": "ECHOError.undefined",
       "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/EthObjects/EthAddress.swift",
+      "line": 9,
+      "symbol": "EthAddress",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/EthObjects/EthAddress.swift",
+      "line": 19,
+      "symbol": "EthAddress.id",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/EthObjects/EthAddress.swift",
+      "line": 20,
+      "symbol": "EthAddress.accountId",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/EthObjects/EthAddress.swift",
+      "line": 21,
+      "symbol": "EthAddress.address",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/EthObjects/EthAddress.swift",
+      "line": 22,
+      "symbol": "EthAddress.isApproved",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/EthObjects/EthAddress.swift",
+      "line": 23,
+      "symbol": "EthAddress.approves",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
@@ -1941,28 +2095,28 @@
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
-      "line": 19,
+      "line": 18,
       "symbol": "GlobalProperties.identifier",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
-      "line": 20,
+      "line": 19,
       "symbol": "GlobalProperties.parameters",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
-      "line": 21,
+      "line": 20,
       "symbol": "GlobalProperties.nextAvailableVoteId",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
-      "line": 22,
+      "line": 21,
       "symbol": "GlobalProperties.activeCommitteeMembers",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
@@ -1970,393 +2124,442 @@
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
       "line": 23,
-      "symbol": "GlobalProperties.activeWitnesses",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "symbol": "GlobalProperties.init(identifier:parameters:nextAvailableVoteId:activeCommitteeMembers:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
-      "line": 37,
+      "line": 46,
       "symbol": "GlobalPropertiesParameters",
       "symbol_kind": "source.lang.swift.decl.struct",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
-      "line": 73,
+      "line": 79,
       "symbol": "GlobalPropertiesParameters.currentFees",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
-      "line": 74,
+      "line": 80,
       "symbol": "GlobalPropertiesParameters.blockInterval",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
-      "line": 75,
+      "line": 81,
       "symbol": "GlobalPropertiesParameters.maintenanceInterval",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
-      "line": 76,
+      "line": 82,
       "symbol": "GlobalPropertiesParameters.maintenanceSkipSlots",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
-      "line": 77,
+      "line": 83,
       "symbol": "GlobalPropertiesParameters.committeeProposalReviewPeriod",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
-      "line": 78,
+      "line": 84,
       "symbol": "GlobalPropertiesParameters.maximumTransactionSize",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
-      "line": 79,
+      "line": 85,
       "symbol": "GlobalPropertiesParameters.maximumBlockSize",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
-      "line": 80,
+      "line": 86,
       "symbol": "GlobalPropertiesParameters.maximumTimeUntilExpiration",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
-      "line": 81,
+      "line": 87,
       "symbol": "GlobalPropertiesParameters.maximumProposalLifetime",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
-      "line": 82,
+      "line": 88,
       "symbol": "GlobalPropertiesParameters.maximumAssetWhitelistAuthorities",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
-      "line": 83,
+      "line": 89,
       "symbol": "GlobalPropertiesParameters.maximumAssetFeedPublishers",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
-      "line": 84,
-      "symbol": "GlobalPropertiesParameters.maximumWitnessCount",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
-      "line": 85,
+      "line": 90,
       "symbol": "GlobalPropertiesParameters.maximumCommitteeCount",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
-      "line": 86,
+      "line": 91,
       "symbol": "GlobalPropertiesParameters.maximumAuthorityMembership",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
-      "line": 87,
+      "line": 92,
       "symbol": "GlobalPropertiesParameters.reservePercentOfFee",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
-      "line": 88,
+      "line": 93,
       "symbol": "GlobalPropertiesParameters.networkPercentOfFee",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
-      "line": 89,
+      "line": 94,
       "symbol": "GlobalPropertiesParameters.lifetimeReferrerPercentOfFee",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
-      "line": 90,
+      "line": 95,
       "symbol": "GlobalPropertiesParameters.cashbackVestingPeriodSeconds",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
-      "line": 91,
+      "line": 96,
       "symbol": "GlobalPropertiesParameters.cashbackVestingThreshold",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
-      "line": 92,
+      "line": 97,
       "symbol": "GlobalPropertiesParameters.countNonMemberVotes",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
-      "line": 93,
+      "line": 98,
       "symbol": "GlobalPropertiesParameters.allowNonMemberWhitelists",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
-      "line": 94,
-      "symbol": "GlobalPropertiesParameters.witnessPayPerBlock",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
-      "line": 95,
-      "symbol": "GlobalPropertiesParameters.workerBudgetPerDay",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
-      "line": 96,
+      "line": 99,
       "symbol": "GlobalPropertiesParameters.maxPredicateOpcode",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
-      "line": 97,
+      "line": 100,
       "symbol": "GlobalPropertiesParameters.feeLiquidationThreshold",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
-      "line": 98,
+      "line": 101,
       "symbol": "GlobalPropertiesParameters.accountsPerFeeScale",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
-      "line": 99,
+      "line": 102,
       "symbol": "GlobalPropertiesParameters.accountFeeScaleBitshifts",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
-      "line": 100,
+      "line": 103,
       "symbol": "GlobalPropertiesParameters.maxAuthorityDepth",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
-      "line": 101,
+      "line": 104,
       "symbol": "GlobalPropertiesParameters.echorandConfig",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
-      "line": 102,
+      "line": 105,
       "symbol": "GlobalPropertiesParameters.sidechainConfig",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
-      "line": 103,
+      "line": 106,
       "symbol": "GlobalPropertiesParameters.gasPrice",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
-      "line": 143,
+      "line": 108,
+      "symbol": "GlobalPropertiesParameters.init(currentFees:blockInterval:maintenanceInterval:maintenanceSkipSlots:committeeProposalReviewPeriod:maximumTransactionSize:maximumBlockSize:maximumTimeUntilExpiration:maximumProposalLifetime:maximumAssetWhitelistAuthorities:maximumAssetFeedPublishers:maximumCommitteeCount:maximumAuthorityMembership:reservePercentOfFee:networkPercentOfFee:lifetimeReferrerPercentOfFee:cashbackVestingPeriodSeconds:cashbackVestingThreshold:countNonMemberVotes:allowNonMemberWhitelists:maxPredicateOpcode:feeLiquidationThreshold:accountsPerFeeScale:accountFeeScaleBitshifts:maxAuthorityDepth:echorandConfig:sidechainConfig:gasPrice:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
+      "line": 202,
       "symbol": "CurrentFeesGlobalPropertiesParameters",
       "symbol_kind": "source.lang.swift.decl.struct",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
-      "line": 150,
+      "line": 209,
       "symbol": "CurrentFeesGlobalPropertiesParameters.parameters",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
-      "line": 151,
+      "line": 210,
       "symbol": "CurrentFeesGlobalPropertiesParameters.scale",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
-      "line": 162,
+      "line": 212,
+      "symbol": "CurrentFeesGlobalPropertiesParameters.init(parameters:scale:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
+      "line": 228,
       "symbol": "EchorandConfig",
       "symbol_kind": "source.lang.swift.decl.struct",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
-      "line": 174,
+      "line": 240,
       "symbol": "EchorandConfig.timeNet1mb",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
-      "line": 175,
+      "line": 241,
       "symbol": "EchorandConfig.timeNet256b",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
-      "line": 176,
+      "line": 242,
       "symbol": "EchorandConfig.creatorCount",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
-      "line": 177,
+      "line": 243,
       "symbol": "EchorandConfig.verifierCount",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
-      "line": 178,
+      "line": 244,
       "symbol": "EchorandConfig.okThreshold",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
-      "line": 179,
+      "line": 245,
       "symbol": "EchorandConfig.maxBbaSteps",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
-      "line": 180,
+      "line": 246,
       "symbol": "EchorandConfig.gc1Delay",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
-      "line": 196,
+      "line": 248,
+      "symbol": "EchorandConfig.init(timeNet1mb:timeNet256b:creatorCount:verifierCount:okThreshold:maxBbaSteps:gc1Delay:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
+      "line": 279,
       "symbol": "SidechainConfig",
       "symbol_kind": "source.lang.swift.decl.struct",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
-      "line": 209,
-      "symbol": "SidechainConfig.echoContractId",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
-      "line": 210,
-      "symbol": "SidechainConfig.echoVoteMethod",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
-      "line": 211,
-      "symbol": "SidechainConfig.echoSignMethod",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
-      "line": 212,
-      "symbol": "SidechainConfig.echoTransferTopic",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
-      "line": 213,
-      "symbol": "SidechainConfig.echoTransferReadyTopic",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
-      "line": 214,
+      "line": 294,
       "symbol": "SidechainConfig.ethContractAddress",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
-      "line": 215,
-      "symbol": "SidechainConfig.ethCommitteeMethod",
+      "line": 295,
+      "symbol": "SidechainConfig.ethCommitteeUpdateMethod",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
-      "line": 216,
-      "symbol": "SidechainConfig.ethTransferTopic",
+      "line": 296,
+      "symbol": "SidechainConfig.ethGenAddressMethod",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
-      "line": 233,
+      "line": 297,
+      "symbol": "SidechainConfig.ethWithdrawMethod",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
+      "line": 298,
+      "symbol": "SidechainConfig.ethCommitteeUpdatedTopic",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
+      "line": 299,
+      "symbol": "SidechainConfig.ethGenAddressTopic",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
+      "line": 300,
+      "symbol": "SidechainConfig.ethDepositTopic",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
+      "line": 301,
+      "symbol": "SidechainConfig.ethWithdrawTopic",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
+      "line": 302,
+      "symbol": "SidechainConfig.ETHAssetId",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
+      "line": 304,
+      "symbol": "SidechainConfig.init(ethContractAddress:ethCommitteeUpdateMethod:ethGenAddressMethod:ethWithdrawMethod:ethCommitteeUpdatedTopic:ethGenAddressTopic:ethDepositTopic:ethWithdrawTopic:ETHAssetId:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
+      "line": 341,
+      "symbol": "EthMethod",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
+      "line": 348,
+      "symbol": "EthMethod.method",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
+      "line": 349,
+      "symbol": "EthMethod.gas",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
+      "line": 351,
+      "symbol": "EthMethod.init(method:gas:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
+      "line": 366,
       "symbol": "GasPriceGlobalProperties",
       "symbol_kind": "source.lang.swift.decl.struct",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
-      "line": 240,
+      "line": 373,
       "symbol": "GasPriceGlobalProperties.price",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
-      "line": 241,
+      "line": 374,
       "symbol": "GasPriceGlobalProperties.gasAmount",
       "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/GlobalProperties.swift",
+      "line": 376,
+      "symbol": "GasPriceGlobalProperties.init(price:gasAmount:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
@@ -2502,42 +2705,42 @@
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/ObjectType.swift",
       "line": 23,
-      "symbol": "ObjectType.base",
+      "symbol": "ObjectType.null",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/ObjectType.swift",
       "line": 24,
-      "symbol": "ObjectType.account",
+      "symbol": "ObjectType.base",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/ObjectType.swift",
       "line": 25,
-      "symbol": "ObjectType.asset",
+      "symbol": "ObjectType.account",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/ObjectType.swift",
       "line": 26,
-      "symbol": "ObjectType.forceSettlement",
+      "symbol": "ObjectType.asset",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/ObjectType.swift",
       "line": 27,
-      "symbol": "ObjectType.committeeMember",
+      "symbol": "ObjectType.forceSettlement",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/ObjectType.swift",
       "line": 28,
-      "symbol": "ObjectType.witness",
+      "symbol": "ObjectType.committeeMember",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
@@ -2593,132 +2796,188 @@
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/ObjectType.swift",
       "line": 36,
-      "symbol": "ObjectType.worker",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/ObjectType.swift",
-      "line": 37,
       "symbol": "ObjectType.balance",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/ObjectType.swift",
-      "line": 38,
+      "line": 37,
       "symbol": "ObjectType.contract",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/ObjectType.swift",
-      "line": 39,
+      "line": 38,
       "symbol": "ObjectType.contractResult",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/ObjectType.swift",
+      "line": 39,
+      "symbol": "ObjectType.blockResult",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/ObjectType.swift",
       "line": 40,
-      "symbol": "ObjectType.globalProperty",
+      "symbol": "ObjectType.ethAddress",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/ObjectType.swift",
       "line": 41,
-      "symbol": "ObjectType.dynamicGlobalProperty",
+      "symbol": "ObjectType.depositEth",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/ObjectType.swift",
       "line": 42,
-      "symbol": "ObjectType.assetDynamicData",
+      "symbol": "ObjectType.withdrawEth",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/ObjectType.swift",
       "line": 43,
-      "symbol": "ObjectType.assetBitassetData",
+      "symbol": "ObjectType.globalProperty",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/ObjectType.swift",
       "line": 44,
-      "symbol": "ObjectType.accountBalance",
+      "symbol": "ObjectType.dynamicGlobalProperty",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/ObjectType.swift",
       "line": 45,
-      "symbol": "ObjectType.accountStatistics",
+      "symbol": "ObjectType.reserved0",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/ObjectType.swift",
       "line": 46,
-      "symbol": "ObjectType.transaction",
+      "symbol": "ObjectType.assetDynamicData",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/ObjectType.swift",
       "line": 47,
-      "symbol": "ObjectType.blockSummary",
+      "symbol": "ObjectType.assetBitassetData",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/ObjectType.swift",
       "line": 48,
-      "symbol": "ObjectType.accountTransactionHistory",
+      "symbol": "ObjectType.accountBalance",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/ObjectType.swift",
       "line": 49,
-      "symbol": "ObjectType.blindedBalance",
+      "symbol": "ObjectType.accountStatistics",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/ObjectType.swift",
       "line": 50,
-      "symbol": "ObjectType.chainProperty",
+      "symbol": "ObjectType.transaction",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/ObjectType.swift",
       "line": 51,
-      "symbol": "ObjectType.witnessSchedule",
+      "symbol": "ObjectType.blockSummary",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/ObjectType.swift",
       "line": 52,
-      "symbol": "ObjectType.budgetRecord",
+      "symbol": "ObjectType.accountTransactionHistory",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/ObjectType.swift",
       "line": 53,
-      "symbol": "ObjectType.specialAuthority",
+      "symbol": "ObjectType.chainProperty",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/ObjectType.swift",
       "line": 54,
+      "symbol": "ObjectType.budgetRecord",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/ObjectType.swift",
+      "line": 55,
+      "symbol": "ObjectType.specialAuthority",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/ObjectType.swift",
+      "line": 56,
+      "symbol": "ObjectType.buyback",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/ObjectType.swift",
+      "line": 57,
+      "symbol": "ObjectType.collateralBid",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/ObjectType.swift",
+      "line": 58,
+      "symbol": "ObjectType.contractBalance",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/ObjectType.swift",
+      "line": 59,
+      "symbol": "ObjectType.contractHistory",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/ObjectType.swift",
+      "line": 60,
+      "symbol": "ObjectType.contractStatistics",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/ObjectType.swift",
+      "line": 61,
+      "symbol": "ObjectType.accountAddress",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/ObjectType.swift",
+      "line": 62,
       "symbol": "ObjectType.undefined",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
@@ -2767,49 +3026,42 @@
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/Options.swift",
-      "line": 24,
+      "line": 23,
       "symbol": "Options.memoKey",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/Options.swift",
-      "line": 25,
+      "line": 24,
       "symbol": "Options.votingAccount",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/Options.swift",
-      "line": 26,
+      "line": 25,
       "symbol": "Options.delegatingAccount",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/Options.swift",
-      "line": 27,
-      "symbol": "Options.numWitness",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/Options.swift",
-      "line": 28,
+      "line": 26,
       "symbol": "Options.numCommittee",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/Options.swift",
-      "line": 29,
+      "line": 27,
       "symbol": "Options.votes",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/Options.swift",
-      "line": 30,
+      "line": 28,
       "symbol": "Options.extensions",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
@@ -2868,55 +3120,6 @@
       "line": 19,
       "symbol": "Result.failure(_:)",
       "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/SidechainTransfer.swift",
-      "line": 9,
-      "symbol": "SidechainTransfer",
-      "symbol_kind": "source.lang.swift.decl.struct",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/SidechainTransfer.swift",
-      "line": 20,
-      "symbol": "SidechainTransfer.identifier",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/SidechainTransfer.swift",
-      "line": 21,
-      "symbol": "SidechainTransfer.transferId",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/SidechainTransfer.swift",
-      "line": 22,
-      "symbol": "SidechainTransfer.receiver",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/SidechainTransfer.swift",
-      "line": 23,
-      "symbol": "SidechainTransfer.amount",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/SidechainTransfer.swift",
-      "line": 24,
-      "symbol": "SidechainTransfer.signatures",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/SidechainTransfer.swift",
-      "line": 25,
-      "symbol": "SidechainTransfer.withdrawCode",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
@@ -3011,169 +3214,225 @@
       "warning": "undocumented"
     },
     {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/UserAccount.swift",
+      "line": 22,
+      "symbol": "UserAccount.init(account:balances:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/Validators/ETHAddressValidator.swift",
+      "line": 11,
+      "symbol": "ETHAddressValidator",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/Validators/ETHAddressValidator.swift",
+      "line": 19,
+      "symbol": "ETHAddressValidator.init(cryptoCore:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Objects/Validators/ETHAddressValidator.swift",
+      "line": 24,
+      "symbol": "ETHAddressValidator.isValidETHAddress(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/AccountAddressCreateOperation.swift",
+      "line": 20,
+      "symbol": "GenerateEthAddressOperation.type",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/AccountAddressCreateOperation.swift",
+      "line": 21,
+      "symbol": "GenerateEthAddressOperation.extensions",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/AccountAddressCreateOperation.swift",
+      "line": 22,
+      "symbol": "GenerateEthAddressOperation.fee",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/AccountAddressCreateOperation.swift",
+      "line": 24,
+      "symbol": "GenerateEthAddressOperation.account",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/AccountAddressCreateOperation.swift",
+      "line": 57,
+      "symbol": "GenerateEthAddressOperation.toData()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/AccountAddressCreateOperation.swift",
+      "line": 67,
+      "symbol": "GenerateEthAddressOperation.toJSON()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/AccountCreateOperation.swift",
-      "line": 29,
+      "line": 28,
       "symbol": "AccountCreateOperation.type",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/AccountCreateOperation.swift",
-      "line": 30,
+      "line": 29,
       "symbol": "AccountCreateOperation.extensions",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/AccountCreateOperation.swift",
-      "line": 31,
+      "line": 30,
       "symbol": "AccountCreateOperation.fee",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/AccountCreateOperation.swift",
-      "line": 33,
+      "line": 32,
       "symbol": "AccountCreateOperation.name",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/AccountCreateOperation.swift",
-      "line": 34,
+      "line": 33,
       "symbol": "AccountCreateOperation.registrar",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/AccountCreateOperation.swift",
-      "line": 35,
+      "line": 34,
       "symbol": "AccountCreateOperation.referrer",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/AccountCreateOperation.swift",
-      "line": 36,
+      "line": 35,
       "symbol": "AccountCreateOperation.referrerPercent",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/AccountCreateOperation.swift",
-      "line": 37,
-      "symbol": "AccountCreateOperation.owner",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/AccountCreateOperation.swift",
-      "line": 38,
+      "line": 36,
       "symbol": "AccountCreateOperation.active",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/AccountCreateOperation.swift",
-      "line": 39,
+      "line": 37,
       "symbol": "AccountCreateOperation.options",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/AccountCreateOperation.swift",
-      "line": 40,
+      "line": 38,
       "symbol": "AccountCreateOperation.edKey",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/AccountCreateOperation.swift",
-      "line": 70,
+      "line": 67,
       "symbol": "AccountCreateOperation.toJSON()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/AccountCreateOperation.swift",
-      "line": 104,
+      "line": 97,
       "symbol": "AccountCreateOperation.toData()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/AccountUpdateOperation.swift",
-      "line": 24,
+      "line": 23,
       "symbol": "AccountUpdateOperation.type",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/AccountUpdateOperation.swift",
-      "line": 25,
+      "line": 24,
       "symbol": "AccountUpdateOperation.extensions",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/AccountUpdateOperation.swift",
-      "line": 26,
+      "line": 25,
       "symbol": "AccountUpdateOperation.fee",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/AccountUpdateOperation.swift",
-      "line": 28,
+      "line": 27,
       "symbol": "AccountUpdateOperation.account",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/AccountUpdateOperation.swift",
-      "line": 29,
-      "symbol": "AccountUpdateOperation.owner",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/AccountUpdateOperation.swift",
-      "line": 30,
+      "line": 28,
       "symbol": "AccountUpdateOperation.active",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/AccountUpdateOperation.swift",
-      "line": 31,
+      "line": 29,
       "symbol": "AccountUpdateOperation.newOptions",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/AccountUpdateOperation.swift",
-      "line": 33,
+      "line": 31,
       "symbol": "AccountUpdateOperation.edKey",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/AccountUpdateOperation.swift",
-      "line": 35,
-      "symbol": "AccountUpdateOperation.init(account:owner:active:edKey:options:fee:)",
+      "line": 33,
+      "symbol": "AccountUpdateOperation.init(account:active:edKey:options:fee:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/AccountUpdateOperation.swift",
-      "line": 81,
+      "line": 77,
       "symbol": "AccountUpdateOperation.toData()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/AccountUpdateOperation.swift",
-      "line": 102,
+      "line": 97,
       "symbol": "AccountUpdateOperation.toJSON()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -3280,6 +3539,69 @@
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/CallContractOperation.swift",
       "line": 80,
       "symbol": "CallContractOperation.toJSON()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/ContractTransferOperation.swift",
+      "line": 23,
+      "symbol": "ContractTransferOperation.type",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/ContractTransferOperation.swift",
+      "line": 24,
+      "symbol": "ContractTransferOperation.extensions",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/ContractTransferOperation.swift",
+      "line": 25,
+      "symbol": "ContractTransferOperation.fee",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/ContractTransferOperation.swift",
+      "line": 27,
+      "symbol": "ContractTransferOperation.fromContract",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/ContractTransferOperation.swift",
+      "line": 28,
+      "symbol": "ContractTransferOperation.toAccount",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/ContractTransferOperation.swift",
+      "line": 29,
+      "symbol": "ContractTransferOperation.transferAmount",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/ContractTransferOperation.swift",
+      "line": 69,
+      "symbol": "ContractTransferOperation.toJSON()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/ContractTransferOperation.swift",
+      "line": 85,
+      "symbol": "ContractTransferOperation.toJSON()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/ContractTransferOperation.swift",
+      "line": 95,
+      "symbol": "ContractTransferOperation.toData()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
@@ -3608,210 +3930,217 @@
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/OperationType.swift",
       "line": 33,
-      "symbol": "OperationType.witnessCreateOperation",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/OperationType.swift",
-      "line": 34,
-      "symbol": "OperationType.witnessUpdateOperation",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/OperationType.swift",
-      "line": 35,
       "symbol": "OperationType.proposalCreateOperation",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/OperationType.swift",
-      "line": 36,
+      "line": 34,
       "symbol": "OperationType.proposalUpdateOperation",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/OperationType.swift",
-      "line": 37,
+      "line": 35,
       "symbol": "OperationType.proposalDeleteOperation",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/OperationType.swift",
-      "line": 38,
+      "line": 36,
       "symbol": "OperationType.withdrawPermissionCreateOperation",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/OperationType.swift",
-      "line": 39,
+      "line": 37,
       "symbol": "OperationType.withdrawPermissionUpdateOperation",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/OperationType.swift",
-      "line": 40,
+      "line": 38,
       "symbol": "OperationType.withdrawPermissionClaimOperation",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/OperationType.swift",
-      "line": 41,
+      "line": 39,
       "symbol": "OperationType.withdrawPermissionDeleteOperation",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/OperationType.swift",
-      "line": 42,
+      "line": 40,
       "symbol": "OperationType.committeeMemberCreateOperation",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/OperationType.swift",
-      "line": 43,
+      "line": 41,
       "symbol": "OperationType.committeeMemberUpdateOperation",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/OperationType.swift",
-      "line": 45,
+      "line": 43,
       "symbol": "OperationType.committeeMemberUpdateGlobalParametersOperation",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/OperationType.swift",
-      "line": 47,
+      "line": 45,
       "symbol": "OperationType.vestingBalanceCreateOperation",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/OperationType.swift",
-      "line": 48,
+      "line": 46,
       "symbol": "OperationType.vestingBalanceWithdrawOperation",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/OperationType.swift",
-      "line": 49,
-      "symbol": "OperationType.workerCreateOperation",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/OperationType.swift",
-      "line": 50,
+      "line": 47,
       "symbol": "OperationType.customOperation",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/OperationType.swift",
-      "line": 51,
+      "line": 48,
       "symbol": "OperationType.assertOperation",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/OperationType.swift",
-      "line": 52,
+      "line": 49,
       "symbol": "OperationType.balanceClaimOperation",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/OperationType.swift",
-      "line": 53,
+      "line": 50,
       "symbol": "OperationType.overrideTransferOperation",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/OperationType.swift",
-      "line": 54,
-      "symbol": "OperationType.transferToBlindOperation",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/OperationType.swift",
-      "line": 55,
-      "symbol": "OperationType.blindTransferOperation",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/OperationType.swift",
-      "line": 56,
-      "symbol": "OperationType.transferFromBlindOperation",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/OperationType.swift",
-      "line": 57,
+      "line": 51,
       "symbol": "OperationType.assetSettleCancelOperation",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/OperationType.swift",
-      "line": 58,
+      "line": 52,
       "symbol": "OperationType.assetClaimFeesOperation",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/OperationType.swift",
-      "line": 59,
-      "symbol": "OperationType.fbaDistributeOperation",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/OperationType.swift",
-      "line": 60,
+      "line": 53,
       "symbol": "OperationType.bidCollateralOperation",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/OperationType.swift",
-      "line": 61,
+      "line": 54,
       "symbol": "OperationType.executeBidOperation",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/OperationType.swift",
-      "line": 62,
+      "line": 55,
       "symbol": "OperationType.createContractOperation",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/OperationType.swift",
-      "line": 63,
+      "line": 56,
       "symbol": "OperationType.callContractOperation",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/OperationType.swift",
-      "line": 64,
+      "line": 57,
       "symbol": "OperationType.contractTransferOperation",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/OperationType.swift",
+      "line": 58,
+      "symbol": "OperationType.changeSidechainConfigOperation",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/OperationType.swift",
+      "line": 59,
+      "symbol": "OperationType.accountAddressCreateOperation",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/OperationType.swift",
+      "line": 60,
+      "symbol": "OperationType.transferToAddressOperation",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/OperationType.swift",
+      "line": 61,
+      "symbol": "OperationType.generateEthAddressOperation",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/OperationType.swift",
+      "line": 62,
+      "symbol": "OperationType.createEthAddressOperation",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/OperationType.swift",
+      "line": 63,
+      "symbol": "OperationType.depositEthOperation",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/OperationType.swift",
+      "line": 64,
+      "symbol": "OperationType.withdrawEthOperation",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/OperationType.swift",
+      "line": 65,
+      "symbol": "OperationType.approveWithdrawEthOperation",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
@@ -3886,6 +4215,62 @@
       "warning": "undocumented"
     },
     {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/WithdrawalEthOperation.swift",
+      "line": 22,
+      "symbol": "WithdrawalEthOperation.type",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/WithdrawalEthOperation.swift",
+      "line": 23,
+      "symbol": "WithdrawalEthOperation.extensions",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/WithdrawalEthOperation.swift",
+      "line": 24,
+      "symbol": "WithdrawalEthOperation.fee",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/WithdrawalEthOperation.swift",
+      "line": 26,
+      "symbol": "WithdrawalEthOperation.account",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/WithdrawalEthOperation.swift",
+      "line": 27,
+      "symbol": "WithdrawalEthOperation.ethAddress",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/WithdrawalEthOperation.swift",
+      "line": 28,
+      "symbol": "WithdrawalEthOperation.value",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/WithdrawalEthOperation.swift",
+      "line": 65,
+      "symbol": "WithdrawalEthOperation.toData()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/Operation/WithdrawalEthOperation.swift",
+      "line": 79,
+      "symbol": "WithdrawalEthOperation.toJSON()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/SocketOperation/SocketOperation.swift",
       "line": 13,
       "symbol": "SocketOperationType.call",
@@ -3901,91 +4286,91 @@
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/SocketOperation/SocketOperation.swift",
-      "line": 54,
+      "line": 55,
       "symbol": "SocketOperation.method",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/SocketOperation/SocketOperation.swift",
-      "line": 55,
+      "line": 56,
       "symbol": "SocketOperation.operationId",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/SocketOperation/SocketOperation.swift",
-      "line": 56,
+      "line": 57,
       "symbol": "SocketOperation.apiId",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/SocketOperation/SocketOperation.swift",
-      "line": 57,
+      "line": 58,
       "symbol": "SocketOperation.createParameters()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/SocketOperation/SocketOperation.swift",
-      "line": 58,
+      "line": 59,
       "symbol": "SocketOperation.handleResponse(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/SocketOperation/SocketOperation.swift",
-      "line": 59,
+      "line": 60,
       "symbol": "SocketOperation.forceEnd()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/SocketOperation/SocketOperation.swift",
-      "line": 67,
+      "line": 68,
       "symbol": "CustomSocketOperation.setOperationId(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/SocketOperation/SocketOperation.swift",
-      "line": 68,
+      "line": 69,
       "symbol": "CustomSocketOperation.setApiId(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/SocketOperation/SocketOperation.swift",
-      "line": 75,
+      "line": 76,
       "symbol": "OperationCodingKeys.method",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/SocketOperation/SocketOperation.swift",
-      "line": 76,
+      "line": 77,
       "symbol": "OperationCodingKeys.params",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/SocketOperation/SocketOperation.swift",
-      "line": 77,
+      "line": 78,
       "symbol": "OperationCodingKeys.id",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/SocketOperation/SocketOperation.swift",
-      "line": 82,
+      "line": 83,
       "symbol": "SocketOperation.toJSON()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Classes/SocketOperation/SocketOperation.swift",
-      "line": 91,
+      "line": 92,
       "symbol": "SocketOperation.forceEnd()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -4853,14 +5238,14 @@
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Facades/Implementations/ContractsFacadeImp.swift",
-      "line": 45,
-      "symbol": "ContractsFacadeImp.init(services:cryptoCore:network:abiCoder:noticeDelegateHandler:)",
+      "line": 46,
+      "symbol": "ContractsFacadeImp.init(services:cryptoCore:network:abiCoder:noticeDelegateHandler:settings:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Facades/Implementations/ContractsFacadeImp.swift",
-      "line": 669,
+      "line": 672,
       "symbol": "ContractsFacadeImp.didReceiveNotification(notification:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -4880,10 +5265,31 @@
       "warning": "undocumented"
     },
     {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Facades/Implementations/EthFacadeImp.swift",
+      "line": 27,
+      "symbol": "EthFacadeImp.init(services:cryptoCore:network:noticeDelegateHandler:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Facades/Implementations/EthFacadeImp.swift",
+      "line": 372,
+      "symbol": "EthFacadeImp.didReceiveNotification(notification:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Facades/Implementations/FeeFacadeImp.swift",
       "line": 21,
       "symbol": "FeeFacadeImp",
       "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Facades/Implementations/InformationFacadeImp.swift",
+      "line": null,
+      "symbol": "InformationFacadeImp",
+      "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
@@ -4894,8 +5300,15 @@
       "warning": "undocumented"
     },
     {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Facades/Implementations/InformationFacadeImp.swift",
+      "line": 823,
+      "symbol": "InformationFacadeImp.didReceiveNotification(notification:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Facades/Implementations/SubscriptionFacadeImp.swift",
-      "line": 346,
+      "line": 460,
       "symbol": "SubscriptionFacadeImp.didReceiveNotification(notification:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -4909,7 +5322,7 @@
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Facades/Implementations/TransactionFacadeImp.swift",
-      "line": 237,
+      "line": 238,
       "symbol": "TransactionFacadeImp.didReceiveNotification(notification:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -4937,9 +5350,65 @@
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Facades/Protocols/SubscriptionFacade.swift",
-      "line": 34,
+      "line": 35,
+      "symbol": "SubscribeContractsDelegate.contractUpdated(contract:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Facades/Protocols/SubscriptionFacade.swift",
+      "line": 36,
+      "symbol": "SubscribeContractsDelegate.contractHistoryCreated(historyObject:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Facades/Protocols/SubscriptionFacade.swift",
+      "line": 43,
       "symbol": "SubscribeContractLogsDelegate.didCreateLogs(logs:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Interface/API.swift",
+      "line": 20,
+      "symbol": "API.database",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Interface/API.swift",
+      "line": 21,
+      "symbol": "API.accountHistory",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Interface/API.swift",
+      "line": 22,
+      "symbol": "API.crypto",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Interface/API.swift",
+      "line": 23,
+      "symbol": "API.networkBroadcast",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Interface/API.swift",
+      "line": 24,
+      "symbol": "API.networkNodes",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Interface/API.swift",
+      "line": 25,
+      "symbol": "API.registration",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
@@ -5034,8 +5503,36 @@
       "warning": "undocumented"
     },
     {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Interface/Configurator.swift",
+      "line": 24,
+      "symbol": "Configurator.callContractFeeMultiplier",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Interface/ECHO.swift",
-      "line": 38,
+      "line": 20,
+      "symbol": "Startable",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Interface/ECHO.swift",
+      "line": 21,
+      "symbol": "Startable.start(completion:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Interface/ECHO.swift",
+      "line": 34,
+      "symbol": "ECHO",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Interface/ECHO.swift",
+      "line": 47,
       "symbol": "ECHO.init(settings:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -5112,35 +5609,42 @@
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Interface/Settings.swift",
-      "line": 24,
+      "line": 23,
+      "symbol": "Settings.callContractFeeMultiplier",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Interface/Settings.swift",
+      "line": 25,
       "symbol": "Settings.BuildConfiguratorClosure",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Interface/Settings.swift",
-      "line": 26,
+      "line": 27,
       "symbol": "Settings.init(build:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Interface/Settings.swift",
-      "line": 38,
+      "line": 40,
       "symbol": "Settings.defaultDateFormat",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Interface/Settings.swift",
-      "line": 39,
+      "line": 41,
       "symbol": "Settings.defaultAsset",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/vladimir/project/_echo/framework/ios/ECHO/Core/Interface/Settings.swift",
-      "line": 40,
+      "line": 42,
       "symbol": "Settings.localeIdentifier",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"

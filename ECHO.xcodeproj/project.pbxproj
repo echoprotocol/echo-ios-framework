@@ -166,7 +166,6 @@
 		D061331321A2E93F009EC456 /* ContractLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = D061331221A2E93F009EC456 /* ContractLog.swift */; };
 		D061331521A2EC53009EC456 /* GetContractLogsSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D061331421A2EC53009EC456 /* GetContractLogsSocketOperation.swift */; };
 		D061331721A30052009EC456 /* SubscribeContractLogsSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D061331621A30052009EC456 /* SubscribeContractLogsSocketOperation.swift */; };
-		D071EE042268B4F600928D86 /* TestConstantsConfig.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = D0A0C50A225E2D5A000BA64D /* TestConstantsConfig.xcconfig */; };
 		D073F516224CD7F50025AE6A /* SubscribeAccountDelegateStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = D073F515224CD7F50025AE6A /* SubscribeAccountDelegateStub.swift */; };
 		D073F518224CD8530025AE6A /* SubscribeContractLogsDelegateStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = D073F517224CD8530025AE6A /* SubscribeContractLogsDelegateStub.swift */; };
 		D073F51A224CDB420025AE6A /* SubscribeToLogsStubHodler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D073F519224CDB420025AE6A /* SubscribeToLogsStubHodler.swift */; };
@@ -244,6 +243,7 @@
 		D0ED8C262292D8DE002EC3EA /* EthAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0ED8C252292D8DE002EC3EA /* EthAddress.swift */; };
 		D0ED8C282292DFF9002EC3EA /* GetEthAddressSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0ED8C272292DFF9002EC3EA /* GetEthAddressSocketOperation.swift */; };
 		D0ED8C2A2292EE82002EC3EA /* WithdrawalEthOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0ED8C292292EE82002EC3EA /* WithdrawalEthOperation.swift */; };
+		E7C96858229D5F6A00B9F780 /* ECHONetworkTestsConfig.local.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = E7C96857229D5F6A00B9F780 /* ECHONetworkTestsConfig.local.xcconfig */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -480,7 +480,6 @@
 		D0A0C504225E2844000BA64D /* CallContractNoChangingStateSocketRequestStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallContractNoChangingStateSocketRequestStub.swift; sourceTree = "<group>"; };
 		D0A0C506225E2976000BA64D /* SetSubscribeCallbackSocketRequestStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetSubscribeCallbackSocketRequestStub.swift; sourceTree = "<group>"; };
 		D0A0C508225E29F5000BA64D /* SubscribeContractLogsSocketRequestStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribeContractLogsSocketRequestStub.swift; sourceTree = "<group>"; };
-		D0A0C50A225E2D5A000BA64D /* TestConstantsConfig.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = TestConstantsConfig.xcconfig; sourceTree = "<group>"; };
 		D0A19AFF2269F2320030F442 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		D0A1B440212E9C5300294683 /* ECHOQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ECHOQueue.swift; sourceTree = "<group>"; };
 		D0A1B446212FF04600294683 /* Block.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Block.swift; sourceTree = "<group>"; };
@@ -518,6 +517,7 @@
 		D0ED8C252292D8DE002EC3EA /* EthAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EthAddress.swift; sourceTree = "<group>"; };
 		D0ED8C272292DFF9002EC3EA /* GetEthAddressSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetEthAddressSocketOperation.swift; sourceTree = "<group>"; };
 		D0ED8C292292EE82002EC3EA /* WithdrawalEthOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawalEthOperation.swift; sourceTree = "<group>"; };
+		E7C96857229D5F6A00B9F780 /* ECHONetworkTestsConfig.local.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = ECHONetworkTestsConfig.local.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -961,13 +961,13 @@
 		D077FE05224CC080009F2F27 /* ECHONetworkTests */ = {
 			isa = PBXGroup;
 			children = (
+				E7C96857229D5F6A00B9F780 /* ECHONetworkTestsConfig.local.xcconfig */,
 				D061331121A2D72E009EC456 /* CustomOperations */,
 				B313B8C0212FF9850052B266 /* ECHOInterfaceTests.swift */,
 				D0B42A3A2252527600A14784 /* SubscribtionTests.swift */,
 				D0880DE222902913003B9E28 /* ContractsSubscribeTests.swift */,
 				D0A19AFF2269F2320030F442 /* Constants.swift */,
 				D077FE08224CC080009F2F27 /* Info.plist */,
-				D0A0C50A225E2D5A000BA64D /* TestConstantsConfig.xcconfig */,
 			);
 			path = ECHONetworkTests;
 			sourceTree = "<group>";
@@ -1256,7 +1256,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D071EE042268B4F600928D86 /* TestConstantsConfig.xcconfig in Resources */,
+				E7C96858229D5F6A00B9F780 /* ECHONetworkTestsConfig.local.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1692,7 +1692,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = Q7Q43CUMWT;
@@ -1730,6 +1730,7 @@
 				MODULEMAP_FILE = "./ECHO/Supports Files/ECHO.modulemap";
 				PRODUCT_BUNDLE_IDENTIFIER = org.echo.mobile.framework;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_INCLUDE_PATHS = "$(SRCROOT) $(SRCROOT)/Libraries";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1742,7 +1743,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = Q7Q43CUMWT;
@@ -1778,9 +1779,10 @@
 					"$(SRCROOT)/Libraries/ed25519/lib/SimulatorRelease/",
 				);
 				MODULEMAP_FILE = "./ECHO/Supports Files/ECHO.modulemap";
-				PRODUCT_BUNDLE_IDENTIFIER = org.echo.mobile.framework;
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = org.echo.mobile.framework;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_INCLUDE_PATHS = "$(SRCROOT) $(SRCROOT)/Libraries";
 				SWIFT_VERSION = 4.0;
@@ -1838,7 +1840,7 @@
 		};
 		D077FE0D224CC080009F2F27 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D0A0C50A225E2D5A000BA64D /* TestConstantsConfig.xcconfig */;
+			baseConfigurationReference = E7C96857229D5F6A00B9F780 /* ECHONetworkTestsConfig.local.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = Q7Q43CUMWT;
@@ -1860,7 +1862,7 @@
 		};
 		D077FE0E224CC080009F2F27 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D0A0C50A225E2D5A000BA64D /* TestConstantsConfig.xcconfig */;
+			baseConfigurationReference = E7C96857229D5F6A00B9F780 /* ECHONetworkTestsConfig.local.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = Q7Q43CUMWT;

@@ -32,6 +32,7 @@ fastlane/Appfile
 fastlane/README.md
 fastlane/report
 fastlane/test_output
+fastlane/
 
 ## Obj-C/Swift specific
 *.hmap
@@ -42,3 +43,9 @@ fastlane/test_output
 
 # Carthage
 Carthage/
+
+# NetworkTestsConfig
+ECHONetworkTests/ECHONetworkTestsConfig.local.xcconfig
+
+#idea
+.idea/
