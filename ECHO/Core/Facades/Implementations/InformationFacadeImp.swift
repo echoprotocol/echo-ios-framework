@@ -409,7 +409,8 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         return getAssetsOperation
     }
     
-    fileprivate func createGetAccountsOperation(_ queue: ECHOQueue, _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
+    fileprivate func createGetAccountsOperation(_ queue: ECHOQueue,
+                                                _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
         
         let getAccountsOperation = BlockOperation()
         
@@ -439,7 +440,8 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         return getAccountsOperation
     }
     
-    fileprivate func createGetDepositsEthOperation(_ queue: ECHOQueue, _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
+    fileprivate func createGetDepositsEthOperation(_ queue: ECHOQueue,
+                                                   _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
         
         let getDepositsEthOperation = BlockOperation()
         
@@ -505,7 +507,8 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         return getWithdrawsEthOperation
     }
     
-    fileprivate func createMergeBlocksInHistoryOperation(_ queue: ECHOQueue, _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
+    fileprivate func createMergeBlocksInHistoryOperation(_ queue: ECHOQueue,
+                                                         _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
         
         let mergeBlocksInHistoryOperation = BlockOperation()
         
@@ -536,7 +539,8 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         return mergeBlocksInHistoryOperation
     }
     
-    fileprivate func createMergeAccountsInHistoryOperation(_ queue: ECHOQueue, _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
+    fileprivate func createMergeAccountsInHistoryOperation(_ queue: ECHOQueue,
+                                                           _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
         
         let mergeAccountsInHistoryOperation = BlockOperation()
         

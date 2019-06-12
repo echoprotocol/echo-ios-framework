@@ -171,7 +171,7 @@ final public class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
             
             let fee = AssetAmount(amount: 0, asset: Asset(asset))
             let amount = AssetAmount(amount: amount, asset: Asset(asset))
-            let extractedExpr: TransferOperation = TransferOperation(fromAccount:           fromAccount,
+            let extractedExpr: TransferOperation = TransferOperation(fromAccount: fromAccount,
                                                                      toAccount: toAccount,
                                                                      transferAmount: amount,
                                                                      fee: fee)
