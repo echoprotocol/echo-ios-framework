@@ -65,7 +65,15 @@ platform :ios do
       project_key: "org.echo.mobile.framework",
       project_version: "3.1",
       project_name: "ECHO",
-      sources_path: File.expand_path("../ECHO")
+      sources_path: File.expand_path("../ECHO"),
+      branch_name: "test-branch"
+    )
+
+    slather(
+      build_directory: File.expand_path("../ECHO"),
+      input_format: "bah",
+      scheme: "Echo",
+      proj: "Echo.xcodeproj"
     )
 
   end
