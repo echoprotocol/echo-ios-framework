@@ -17,6 +17,7 @@ public struct CallContractOperation: BaseOperation {
         case value
         case code
         case fee
+        case extensions
     }
     
     public var type: OperationType
@@ -73,6 +74,7 @@ public struct CallContractOperation: BaseOperation {
         data.append(optional: code.data(using: .utf8))
         
         data.append(optional: callee.toData())
+        data.append(optional: extensions.toData())
         
         return data
     }
@@ -86,7 +88,8 @@ public struct CallContractOperation: BaseOperation {
                                                CallContractOperationCodingKeys.registrar.rawValue: registrar.toJSON(),
                                                CallContractOperationCodingKeys.value.rawValue: value.toJSON(),
                                                CallContractOperationCodingKeys.code.rawValue: code,
-                                               CallContractOperationCodingKeys.callee.rawValue: callee.toJSON()]
+                                               CallContractOperationCodingKeys.callee.rawValue: callee.toJSON(),
+                                               CallContractOperationCodingKeys.extensions.rawValue: extensions.toJSON()]
         
         array.append(dictionary)
         

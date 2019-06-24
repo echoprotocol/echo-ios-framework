@@ -18,6 +18,7 @@ public struct CreateContractOperation: BaseOperation {
         case fee
         case supportedAssetId = "supported_asset_id"
         case ethAccuracy = "eth_accuracy"
+        case extensions
     }
     
     public var type: OperationType
@@ -82,6 +83,7 @@ public struct CreateContractOperation: BaseOperation {
         
         data.append(optional: supportedAsset.toData())
         data.append(optional: Data.fromBool(ethAccuracy))
+        data.append(optional: extensions.toData())
         
         return data
     }
@@ -95,7 +97,8 @@ public struct CreateContractOperation: BaseOperation {
                                                CreateContractOperationCodingKeys.registrar.rawValue: registrar.toJSON(),
                                                CreateContractOperationCodingKeys.value.rawValue: value.toJSON(),
                                                CreateContractOperationCodingKeys.code.rawValue: code,
-                                               CreateContractOperationCodingKeys.ethAccuracy.rawValue: ethAccuracy]
+                                               CreateContractOperationCodingKeys.ethAccuracy.rawValue: ethAccuracy,
+                                               CreateContractOperationCodingKeys.extensions.rawValue: extensions.toJSON()]
         
         if supportedAsset.isSet() {
             dictionary[CreateContractOperationCodingKeys.supportedAssetId.rawValue] = supportedAsset.toJSON()

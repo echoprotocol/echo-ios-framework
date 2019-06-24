@@ -15,6 +15,7 @@ public struct SidechainBurnOperation: BaseOperation {
         case withdrawId = "withdraw_id"
         case value
         case fee
+        case extensions
     }
     
     public var type: OperationType

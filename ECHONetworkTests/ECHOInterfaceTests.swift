@@ -121,7 +121,6 @@ class ECHOInterfaceTests: XCTestCase {
 //                    finalResult = boolResult
 //                case .failure(let error):
 //                    XCTFail("Getting account cant fail \(error)")
-////                    exp.fulfill()
 //                }
 //            }, noticeHandler: { notice in
 //                exp.fulfill()
@@ -300,7 +299,7 @@ class ECHOInterfaceTests: XCTestCase {
         }))
         let exp = expectation(description: "testGettingAccountBalance")
         var accountBalaces: [AccountBalance]!
-        let userName = Constants.defaultName
+        let userName = Constants.defaultToName
         
         //act
         echo.start { [unowned self] (result) in
@@ -877,7 +876,7 @@ class ECHOInterfaceTests: XCTestCase {
             self.echo.sendTransferOperation(fromNameOrId: fromUser,
                                             passwordOrWif: PassOrWif.password(password),
                                             toNameOrId: toUser,
-                                            amount: 1,
+                                            amount: 1000000,
                                             asset: Constants.defaultAsset,
                                             assetForFee: nil,
                                             completion: { (result) in
@@ -1193,7 +1192,7 @@ class ECHOInterfaceTests: XCTestCase {
             XCTAssertTrue(assets.count > 0 && assets.count <= limit)
         }
     }
-    
+//
 //    func testCreateAsset() {
 //
 //        //arrange
@@ -1205,7 +1204,7 @@ class ECHOInterfaceTests: XCTestCase {
 //        var asset = Asset("")
 //        asset.symbol = "SHAR"
 //        asset.precision = 4
-//        asset.issuer = Account("1.2.48")
+//        asset.issuer = Account("1.2.26")
 ////        asset.setBitsassetOptions(BitassetOptions(feedLifetimeSec: 86400,
 ////                                                  minimumFeeds: 7,
 ////                                                  forceSettlementDelaySec: 86400,
@@ -1325,7 +1324,7 @@ class ECHOInterfaceTests: XCTestCase {
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
         }))
         let exp = expectation(description: "testGetContractResult")
-        let contractResultId = "1.15.105"//Constants.evmContractResult
+        let contractResultId = Constants.evmContractResult
         var contractResult: ContractResultEVM!
         
         //act
@@ -2170,7 +2169,7 @@ class ECHOInterfaceTests: XCTestCase {
 //
 //        //act
 //        echo.start { [unowned self] (result) in
-//            self.echo.generateEthAddress(nameOrId: Constants.defaultToName,
+//            self.echo.generateEthAddress(nameOrId: Constants.defaultName,
 //                                         passwordOrWif: .password(Constants.defaultPass),
 //                                         assetForFee: nil,
 //                                         completion: { (result) in
@@ -2191,7 +2190,7 @@ class ECHOInterfaceTests: XCTestCase {
 //            XCTAssertTrue(isSuccess)
 //        }
 //    }
-//
+
     func testGetEthAddress() {
         
         //arrange

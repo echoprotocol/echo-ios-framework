@@ -49,7 +49,6 @@ public struct GlobalPropertiesParameters: Decodable {
         case currentFees = "current_fees"
         case blockInterval = "block_interval"
         case maintenanceInterval = "maintenance_interval"
-        case maintenanceSkipSlots = "maintenance_skip_slots"
         case committeeProposalReviewPeriod = "committee_proposal_review_period"
         case maximumTransactionSize = "maximum_transaction_size"
         case maximumBlockSize = "maximum_block_size"
@@ -79,7 +78,6 @@ public struct GlobalPropertiesParameters: Decodable {
     public let currentFees: CurrentFeesGlobalPropertiesParameters
     public let blockInterval: IntOrString
     public let maintenanceInterval: IntOrString
-    public let maintenanceSkipSlots: IntOrString
     public let committeeProposalReviewPeriod: IntOrString
     public let maximumTransactionSize: IntOrString
     public let maximumBlockSize: IntOrString
@@ -137,7 +135,6 @@ public struct GlobalPropertiesParameters: Decodable {
         self.currentFees = currentFees
         self.blockInterval = blockInterval
         self.maintenanceInterval = maintenanceInterval
-        self.maintenanceSkipSlots = maintenanceSkipSlots
         self.committeeProposalReviewPeriod = committeeProposalReviewPeriod
         self.maximumTransactionSize = maximumTransactionSize
         self.maximumBlockSize = maximumBlockSize
@@ -171,7 +168,6 @@ public struct GlobalPropertiesParameters: Decodable {
         currentFees = try values.decode(CurrentFeesGlobalPropertiesParameters.self, forKey: .currentFees)
         blockInterval = try values.decode(IntOrString.self, forKey: .blockInterval)
         maintenanceInterval = try values.decode(IntOrString.self, forKey: .maintenanceInterval)
-        maintenanceSkipSlots = try values.decode(IntOrString.self, forKey: .maintenanceSkipSlots)
         committeeProposalReviewPeriod = try values.decode(IntOrString.self, forKey: .committeeProposalReviewPeriod)
         maximumTransactionSize = try values.decode(IntOrString.self, forKey: .maximumTransactionSize)
         maximumBlockSize = try values.decode(IntOrString.self, forKey: .maximumBlockSize)

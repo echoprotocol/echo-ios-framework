@@ -15,6 +15,7 @@ public struct SidechainIssueOperation: BaseOperation {
         case depositId = "deposit_id"
         case value
         case fee
+        case extensions
     }
     
     public var type: OperationType

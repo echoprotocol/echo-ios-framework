@@ -68,8 +68,9 @@ public struct WithdrawalEthOperation: BaseOperation {
         data.append(optional: fee.toData())
         data.append(optional: account.toData())
         
-        data.append(optional: Data.fromUIntLikeUnsignedByteArray(UInt(ethAddress.count)))
-        data.append(optional: ethAddress.data(using: .utf8))
+        let addressData = Data(hex: ethAddress)
+        data.append(optional: Data.fromUIntLikeUnsignedByteArray(UInt(addressData?.count ?? 0)))
+        data.append(optional: addressData)
         
         data.append(optional: Data.fromUint64(value))
         data.append(optional: extensions.toData())
