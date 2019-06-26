@@ -32,10 +32,10 @@ public protocol EthFacade {
      Get created ETH addresses
  
      - Parameter nameOrId: Name or id
-     - Parameter completion: Callback in which the information will return [EthAddress](EthAddress) objects or error
+     - Parameter completion: Callback in which the information will return [EthAddress](EthAddress) object (if it created) or error
  */
     func getEthAddress(nameOrId: String,
-                       completion: @escaping Completion<[EthAddress]>)
+                       completion: @escaping Completion<EthAddress?>)
     
 /**
      Send ETH to Ethereum network to ethAddress
@@ -53,4 +53,22 @@ public protocol EthFacade {
                        assetForFee: String?,
                        completion: @escaping Completion<Bool>,
                        noticeHandler: NoticeHandler?)
+    
+/**
+     Returns all approved deposits, for the given account id or name.
+ 
+     - Parameter nameOrId: Name or id
+     - Parameter completion: Callback in which return Deposits objects or error.
+ */
+    func getAccountDeposits(nameOrId: String,
+                            completion: @escaping Completion<[DepositEth]>)
+    
+/**
+     Returns all approved withdrawals, for the given account id or name.
+     
+     - Parameter nameOrId: Name or id
+     - Parameter completion: Callback in which return Withdrawals objects or error.
+ */
+    func getAccountWithdrawals(nameOrId: String,
+                               completion: @escaping Completion<[WithdrawalEth]>)
 }

@@ -19,7 +19,6 @@ public protocol FeeFacade {
      - Parameter amount: Amount
      - Parameter asset: Id of asset which is sent
      - Parameter assetForFee: Id of asset which is pay fee
-     - Parameter message: Message into transaction
      - Parameter completion: Callback which returns fee for operation or error
  */
     func getFeeForTransferOperation(fromNameOrId: String,
@@ -27,7 +26,6 @@ public protocol FeeFacade {
                                     amount: UInt,
                                     asset: String,
                                     assetForFee: String?,
-                                    message: String?,
                                     completion: @escaping Completion<AssetAmount>)
     
 /**
@@ -50,7 +48,7 @@ public protocol FeeFacade {
                                         contratId: String,
                                         methodName: String,
                                         methodParams: [AbiTypeValueInputModel],
-                                        completion: @escaping Completion<AssetAmount>)
+                                        completion: @escaping Completion<CallContractFee>)
     
 /**
      Function for evaluating the fee of call contract operation
@@ -70,5 +68,5 @@ public protocol FeeFacade {
                                         assetForFee: String?,
                                         contratId: String,
                                         byteCode: String,
-                                        completion: @escaping Completion<AssetAmount>)
+                                        completion: @escaping Completion<CallContractFee>)
 }

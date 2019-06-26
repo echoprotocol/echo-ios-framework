@@ -12,7 +12,6 @@
 public struct Options: Decodable {
     
     enum OptionsCodingKeys: String, CodingKey {
-        case memoKey = "memo_key"
         case votingAccount = "voting_account"
         case numCommittee = "num_committee"
         case votes
@@ -20,7 +19,6 @@ public struct Options: Decodable {
         case delegatingAccount = "delegating_account"
     }
     
-    public let memoKey: String
     public let votingAccount: String
     public let delegatingAccount: String
     public let numCommittee: Int
@@ -30,7 +28,6 @@ public struct Options: Decodable {
     public init(from decoder: Decoder) throws {
         
         let values = try decoder.container(keyedBy: OptionsCodingKeys.self)
-        memoKey = try values.decode(String.self, forKey: .memoKey)
         votingAccount = try values.decode(String.self, forKey: .votingAccount)
         numCommittee = try values.decode(Int.self, forKey: .numCommittee)
         delegatingAccount = try values.decode(String.self, forKey: .delegatingAccount)

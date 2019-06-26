@@ -59,6 +59,7 @@ public enum ObjectType: Int {
     case contractHistory
     case contractStatistics
     case accountAddress
+    case contractPool
     case undefined
     
     func getGenericObjectId() -> String? {
@@ -115,7 +116,8 @@ public enum ObjectType: Int {
              .contractBalance,
              .contractHistory,
              .contractStatistics,
-             .accountAddress:
+             .accountAddress,
+             .contractPool:
             space = .implementationSpace
         case .undefined:
             space = .undefined

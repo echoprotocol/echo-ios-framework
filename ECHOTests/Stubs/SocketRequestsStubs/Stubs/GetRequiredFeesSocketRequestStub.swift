@@ -16,3 +16,12 @@ struct GetRequiredFeesSocketRequestStub: SocketRequestStub {
         return "{\"id\":\(id),\"jsonrpc\":\"2.0\",\"result\":[{\"amount\":20,\"asset_id\":\"1.3.0\"}]}"
     }
 }
+
+struct GetRequiredFeesForCallContractSocketRequestStub: SocketRequestStub {
+    
+    var operationType = "get_required_fees"
+    
+    func createResponce(id: Int) -> String {
+        return "{\"id\":\(id),\"jsonrpc\":\"2.0\",\"result\":[{\"amount\":20,\"asset_id\":\"1.3.0\"}]}"
+    }
+}

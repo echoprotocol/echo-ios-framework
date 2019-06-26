@@ -244,7 +244,6 @@ final public class ECHO: InterfaceFacades, Startable {
                                            amount: UInt,
                                            asset: String,
                                            assetForFee: String?,
-                                           message: String?,
                                            completion: @escaping Completion<AssetAmount>) {
         
         feeFacade.getFeeForTransferOperation(fromNameOrId: fromNameOrId,
@@ -252,7 +251,6 @@ final public class ECHO: InterfaceFacades, Startable {
                                              amount: amount,
                                              asset: asset,
                                              assetForFee: assetForFee,
-                                             message: message,
                                              completion: completion)
     }
     
@@ -263,7 +261,7 @@ final public class ECHO: InterfaceFacades, Startable {
                                                contratId: String,
                                                methodName: String,
                                                methodParams: [AbiTypeValueInputModel],
-                                               completion: @escaping Completion<AssetAmount>) {
+                                               completion: @escaping Completion<CallContractFee>) {
         
         feeFacade.getFeeForCallContractOperation(registrarNameOrId: registrarNameOrId,
                                                  assetId: assetId,
@@ -281,7 +279,7 @@ final public class ECHO: InterfaceFacades, Startable {
                                                assetForFee: String?,
                                                contratId: String,
                                                byteCode: String,
-                                               completion: @escaping Completion<AssetAmount>) {
+                                               completion: @escaping Completion<CallContractFee>) {
         
         feeFacade.getFeeForCallContractOperation(registrarNameOrId: registrarNameOrId,
                                                  assetId: assetId,
@@ -300,7 +298,6 @@ final public class ECHO: InterfaceFacades, Startable {
                                       amount: UInt,
                                       asset: String,
                                       assetForFee: String?,
-                                      message: String?,
                                       completion: @escaping Completion<Bool>,
                                       noticeHandler: NoticeHandler?) {
         
@@ -310,7 +307,6 @@ final public class ECHO: InterfaceFacades, Startable {
                                                 amount: amount,
                                                 asset: asset,
                                                 assetForFee: assetForFee,
-                                                message: message,
                                                 completion: completion, noticeHandler: noticeHandler)
     }
     
@@ -329,7 +325,6 @@ final public class ECHO: InterfaceFacades, Startable {
                            asset: String,
                            amount: UInt,
                            destinationIdOrName: String,
-                           message: String?,
                            completion: @escaping Completion<Bool>) {
         
         assetsFacade.issueAsset(issuerNameOrId: issuerNameOrId,
@@ -337,7 +332,6 @@ final public class ECHO: InterfaceFacades, Startable {
                                 asset: asset,
                                 amount: amount,
                                 destinationIdOrName: destinationIdOrName,
-                                message: message,
                                 completion: completion)
     }
     
@@ -511,7 +505,7 @@ final public class ECHO: InterfaceFacades, Startable {
                                      noticeHandler: noticeHandler)
     }
     
-    public func getEthAddress(nameOrId: String, completion: @escaping Completion<[EthAddress]>) {
+    public func getEthAddress(nameOrId: String, completion: @escaping Completion<EthAddress?>) {
         
         ethFacade.getEthAddress(nameOrId: nameOrId, completion: completion)
     }
@@ -531,6 +525,16 @@ final public class ECHO: InterfaceFacades, Startable {
                                 assetForFee: assetForFee,
                                 completion: completion,
                                 noticeHandler: noticeHandler)
+    }
+    
+    public func getAccountDeposits(nameOrId: String, completion: @escaping Completion<[DepositEth]>) {
+        
+        ethFacade.getAccountDeposits(nameOrId: nameOrId, completion: completion)
+    }
+    
+    public func getAccountWithdrawals(nameOrId: String, completion: @escaping Completion<[WithdrawalEth]>) {
+        
+        ethFacade.getAccountWithdrawals(nameOrId: nameOrId, completion: completion)
     }
     
     // MARK: CustomOperationsFacade

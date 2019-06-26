@@ -28,12 +28,12 @@ public enum ECHONetworkPrefix: String {
 /**
     Options that configures network parameters. Indicates the prefix that is used when generating addresses for echorand.
     ````
-    case det = "DET"
+    case echo = "ECHO"
     ````
  */
 public enum EchorandPrefix: String {
     /// The prefix that is used for default echorand
-    case det = "DET"
+    case echo = "ECHO"
 }
 
 /**

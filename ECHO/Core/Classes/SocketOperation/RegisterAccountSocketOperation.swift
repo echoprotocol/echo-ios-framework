@@ -12,16 +12,14 @@ struct RegisterAccountSocketOperation: SocketOperation {
     var operationId: Int
     var apiId: Int
     var name: String
-    var ownerKey: String
     var activeKey: String
-    var memoKey: String
     var echorandKey: String
     var completion: Completion<Bool>
     
     func createParameters() -> [Any] {
         let array: [Any] = [apiId,
                             SocketOperationKeys.registerAccount.rawValue,
-                            [operationId, name, ownerKey, activeKey, memoKey, echorandKey]]
+                            [operationId, name, activeKey, echorandKey]]
         return array
     }
     

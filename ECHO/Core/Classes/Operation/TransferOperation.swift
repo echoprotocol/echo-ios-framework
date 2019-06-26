@@ -15,7 +15,6 @@ public struct TransferOperation: BaseOperation {
         case amount
         case fromAccount = "from"
         case toAccount = "to"
-        case memo
         case extensions
         case fee
     }
@@ -27,9 +26,8 @@ public struct TransferOperation: BaseOperation {
     public var fromAccount: Account
     public var toAccount: Account
     public var transferAmount: AssetAmount
-    public var memo: Memo = Memo()
     
-    init(fromAccount: Account, toAccount: Account, transferAmount: AssetAmount, fee: AssetAmount, memo: Memo?) {
+    init(fromAccount: Account, toAccount: Account, transferAmount: AssetAmount, fee: AssetAmount) {
         
         self.type = .transferOperation
         
@@ -37,9 +35,6 @@ public struct TransferOperation: BaseOperation {
         self.toAccount = toAccount
         self.transferAmount = transferAmount
         self.fee = fee
-        if let memo = memo {
-            self.memo = memo
-        }
     }
     
     public init(from decoder: Decoder) throws {
@@ -55,10 +50,6 @@ public struct TransferOperation: BaseOperation {
         
         transferAmount = try values.decode(AssetAmount.self, forKey: .amount)
         fee = try values.decode(AssetAmount.self, forKey: .fee)
-
-        if values.contains(.memo) {
-            memo = try values.decode(Memo.self, forKey: .memo)
-        }
     }
     
     mutating func changeAccounts(from: Account?, toAccount: Account?) {
@@ -80,15 +71,11 @@ public struct TransferOperation: BaseOperation {
         var array = [Any]()
         array.append(getId())
         
-        var dictionary: [AnyHashable: Any?] = [TransferOperationCodingKeys.fee.rawValue: fee.toJSON(),
+        let dictionary: [AnyHashable: Any?] = [TransferOperationCodingKeys.fee.rawValue: fee.toJSON(),
                                                TransferOperationCodingKeys.fromAccount.rawValue: fromAccount.toJSON(),
                                                TransferOperationCodingKeys.toAccount.rawValue: toAccount.toJSON(),
                                                TransferOperationCodingKeys.amount.rawValue: transferAmount.toJSON(),
                                                TransferOperationCodingKeys.extensions.rawValue: extensions.toJSON()]
-        
-        if memo.byteMessage != nil {
-            dictionary[TransferOperationCodingKeys.memo.rawValue] = memo.toJSON()
-        }
         
         array.append(dictionary)
         
@@ -112,7 +99,6 @@ public struct TransferOperation: BaseOperation {
         data.append(optional: fromAccount.toData())
         data.append(optional: toAccount.toData())
         data.append(optional: transferAmount.toData())
-        data.append(optional: memo.toData())
         data.append(optional: extensions.toData())
         return data
     }

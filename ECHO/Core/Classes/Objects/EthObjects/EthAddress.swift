@@ -8,8 +8,8 @@
 
 public struct EthAddress: ECHOObject, Decodable {
     
-    enum EthAddressgKeys: String, CodingKey {
-        case accountId = "acc_id"
+    enum EthAddressKeys: String, CodingKey {
+        case accountId = "account"
         case address = "eth_addr"
         case isApproved = "is_approved"
         case approves
@@ -24,7 +24,7 @@ public struct EthAddress: ECHOObject, Decodable {
     
     public init(from decoder: Decoder) throws {
         
-        let values = try decoder.container(keyedBy: EthAddressgKeys.self)
+        let values = try decoder.container(keyedBy: EthAddressKeys.self)
         id = try values.decode(String.self, forKey: .id)
         accountId = try values.decode(String.self, forKey: .accountId)
         address = try values.decode(String.self, forKey: .address)

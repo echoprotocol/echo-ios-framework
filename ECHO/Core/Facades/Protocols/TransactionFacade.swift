@@ -20,7 +20,6 @@ public protocol TransactionFacade {
      - Parameter amount: Amount
      - Parameter asset: Id of asset which is sent
      - Parameter assetForFee: Id of asset which is pay fee
-     - Parameter message: The message that is sent with the transaction
      - Parameter completion: Callback in which the information will return whether the transaction was successful.
      
      - Remark:
@@ -32,7 +31,6 @@ public protocol TransactionFacade {
                                amount: UInt,
                                asset: String,
                                assetForFee: String?,
-                               message: String?,
                                completion: @escaping Completion<Bool>,
                                noticeHandler: NoticeHandler?)
 }

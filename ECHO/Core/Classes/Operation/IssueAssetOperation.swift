@@ -15,7 +15,6 @@ public struct IssueAssetOperation: BaseOperation {
         case issuer
         case assetToIssue = "asset_to_issue"
         case issueToAccount = "issue_to_account"
-        case memo
         case extensions
         case fee
     }
@@ -27,9 +26,8 @@ public struct IssueAssetOperation: BaseOperation {
     public var issuer: Account
     public var assetToIssue: AssetAmount
     public var issueToAccount: Account
-    public var memo: Memo = Memo()
     
-    init(issuer: Account, assetToIssue: AssetAmount, issueToAccount: Account, fee: AssetAmount, memo: Memo?) {
+    init(issuer: Account, assetToIssue: AssetAmount, issueToAccount: Account, fee: AssetAmount) {
         
         type = .assetIssueOperation
         
@@ -37,9 +35,6 @@ public struct IssueAssetOperation: BaseOperation {
         self.assetToIssue = assetToIssue
         self.issueToAccount = issueToAccount
         self.fee = fee
-        if let memo = memo {
-            self.memo = memo
-        }
     }
     
     public init(from decoder: Decoder) throws {
@@ -54,10 +49,6 @@ public struct IssueAssetOperation: BaseOperation {
         let issueToAccountId = try values.decode(String.self, forKey: .issueToAccount)
         issueToAccount = Account(issueToAccountId)
         fee = try values.decode(AssetAmount.self, forKey: .fee)
-        
-        if values.contains(.memo) {
-            memo = try values.decode(Memo.self, forKey: .memo)
-        }
     }
     
     mutating func changeAccounts(issuer: Account?, issueToAccount: Account?) {
@@ -75,7 +66,6 @@ public struct IssueAssetOperation: BaseOperation {
         data.append(optional: issuer.toData())
         data.append(optional: assetToIssue.toData())
         data.append(optional: issueToAccount.toData())
-        data.append(optional: memo.toData())
         data.append(optional: extensions.toData())
         return data
     }
@@ -85,15 +75,11 @@ public struct IssueAssetOperation: BaseOperation {
         var array = [Any]()
         array.append(getId())
         
-        var dictionary: [AnyHashable: Any?] = [IssueAssetOperationCodingKeys.fee.rawValue: fee.toJSON(),
+        let dictionary: [AnyHashable: Any?] = [IssueAssetOperationCodingKeys.fee.rawValue: fee.toJSON(),
                                                IssueAssetOperationCodingKeys.issuer.rawValue: issuer.toJSON(),
                                                IssueAssetOperationCodingKeys.assetToIssue.rawValue: assetToIssue.toJSON(),
                                                IssueAssetOperationCodingKeys.issueToAccount.rawValue: issueToAccount.toJSON(),
                                                IssueAssetOperationCodingKeys.extensions.rawValue: extensions.toJSON()]
-        
-        if memo.byteMessage != nil {
-            dictionary[IssueAssetOperationCodingKeys.memo.rawValue] = memo.toJSON()
-        }
         
         array.append(dictionary)
         

@@ -18,7 +18,7 @@ struct RequiredFeeSocketOperation: SocketOperation {
     var apiId: Int
     var operations: [BaseOperation]
     var asset: Asset
-    var completion: Completion<[AssetAmount]>
+    var completion: Completion<[FeeType]>
     
     func createParameters() -> [Any] {
         
@@ -41,29 +41,45 @@ struct RequiredFeeSocketOperation: SocketOperation {
             
             switch response.response {
             case .error(let error):
-                let result = Result<[AssetAmount], ECHOError>(error: ECHOError.internalError(error.message))
+                let result = Result<[FeeType], ECHOError>(error: ECHOError.internalError(error.message))
                 completion(result)
             case .result(let result):
                 
                 switch result {
                 case .array(let array):
                     
-                    let data = try JSONSerialization.data(withJSONObject: array, options: [])
-                    let amounts = try JSONDecoder().decode([AssetAmount].self, from: data)
-                    let result = Result<[AssetAmount], ECHOError>(value: amounts)
+                    var resultArray = [FeeType]()
+                    for fee in array {
+                        let data = try JSONSerialization.data(withJSONObject: fee, options: [])
+                        if let asset = try? JSONDecoder().decode(AssetAmount.self, from: data) {
+                            resultArray.append(.defaultFee(asset))
+                            continue
+                        }
+                        
+                        if let callContractFee = try? JSONDecoder().decode(CallContractFee.self, from: data) {
+                            resultArray.append(.callContractFee(callContractFee))
+                            continue
+                        }
+                        
+                        let result = Result<[FeeType], ECHOError>(error: ECHOError.encodableMapping)
+                        completion(result)
+                        return
+                    }
+                    
+                    let result = Result<[FeeType], ECHOError>(value: resultArray)
                     completion(result)
                 default:
                     throw ECHOError.encodableMapping
                 }
             }
         } catch {
-            let result = Result<[AssetAmount], ECHOError>(error: ECHOError.encodableMapping)
+            let result = Result<[FeeType], ECHOError>(error: ECHOError.encodableMapping)
             completion(result)
         }
     }
     
     func forceEnd() {
-        let result = Result<[AssetAmount], ECHOError>(error: ECHOError.connectionLost)
+        let result = Result<[FeeType], ECHOError>(error: ECHOError.connectionLost)
         completion(result)
     }
 }

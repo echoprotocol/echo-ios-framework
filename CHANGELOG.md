@@ -1,5 +1,49 @@
 # CHANGELOG
 
+## 3.2.1 - 2017-06-24
+
+### Changes
+
+Added Extensions to CallContractOperation, CreateContractOperation, SidechainBurnOperation, SidechainIssueOperation
+
+### Tests
+Updated tests according to changed methods
+
+## 3.2 - 2017-06-11
+
+### Changes
+
+* Account - removed owner Authority
+* AccountOptions - removed memo
+* Public keys prefix - ECHO
+* Added new virtual operations to account history
+
+### Methods
+#### Added
+* getAccountDeposits - returns all approved deposits, for the given account id
+* getAccountWithdrawals - returns all approved withdrawals, for the given account id
+
+### Operations
+Fixed OperationType enum to actual
+Removed memo from all operations
+#### Added
+* SidechainBurnSocketOperation (virtual)
+* SidechainIssueSocketOperation (virtual)
+
+
+### Objects
+Fixed GlobalProperties
+#### Added
+* DepositEth
+* WithdrawalEth
+* FeeType - represent fee for operation (AssetAmount or CallContractFee)  
+* CallContractFee 
+#### Removed
+* Memo
+
+### Tests
+Updated tests according to changed methods
+
 ## 3.1 - 2017-05-27
 
 ### Authority

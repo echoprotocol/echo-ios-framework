@@ -40,7 +40,6 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
         case chainId
         case transaction
         case operationId
-        case memo
     }
     
     public init(services: AssetsServices, cryptoCore: CryptoCoreComponent, network: ECHONetwork) {
@@ -127,7 +126,7 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
     public func issueAsset(issuerNameOrId: String,
                            passwordOrWif: PassOrWif,
                            asset: String, amount: UInt,
-                           destinationIdOrName: String, message: String?,
+                           destinationIdOrName: String,
                            completion: @escaping Completion<Bool>) {
         
         // Validate asset id
@@ -153,20 +152,8 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
         let getAccountsOperation = GetAccountsQueueOperation<Bool>(initParams: getAccountsOperationInitParams,
                                                                   completion: completion)
         
-        // Memo
-        let getMemoOperationInitParams = (queue: issueAssetQueue,
-                                          cryptoCore: cryptoCore,
-                                          message: message,
-                                          saveKey: IssueAssetKeys.memo.rawValue,
-                                          passwordOrWif: passwordOrWif,
-                                          networkPrefix: network.prefix.rawValue,
-                                          fromAccountKey: IssueAssetKeys.issuerAccount.rawValue,
-                                          toAccountKey: IssueAssetKeys.destinationAccount.rawValue)
-        let getMemoOperation = GetMemoQueueOperation<Bool>(initParams: getMemoOperationInitParams,
-                                                           completion: completion)
-        
         // Operation
-        let createIssueAssetOperation = self.createIssueAssetOperation(issueAssetQueue, amount, asset, message, completion)
+        let createIssueAssetOperation = self.createIssueAssetOperation(issueAssetQueue, amount, asset, completion)
         
         // RequiredFee
         let getRequiredFeeOperationInitParams = (issueAssetQueue,
@@ -215,7 +202,6 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
         let completionOperation = createCompletionOperation(queue: issueAssetQueue)
         
         issueAssetQueue.addOperation(getAccountsOperation)
-        issueAssetQueue.addOperation(getMemoOperation)
         issueAssetQueue.addOperation(createIssueAssetOperation)
         issueAssetQueue.addOperation(getRequiredFeeOperation)
         issueAssetQueue.addOperation(getChainIdOperation)
@@ -252,7 +238,6 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
     fileprivate func createIssueAssetOperation(_ queue: ECHOQueue,
                                                _ amount: UInt,
                                                _ asset: String,
-                                               _ message: String?,
                                                _ completion: @escaping Completion<Bool>) -> Operation {
         
         let createIssueAssetOperation = BlockOperation()
@@ -263,7 +248,6 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
             guard self != nil else { return }
             guard let issuerAccount: Account = queue?.getValue(IssueAssetKeys.issuerAccount.rawValue) else { return }
             guard let destinationAccount: Account = queue?.getValue(IssueAssetKeys.destinationAccount.rawValue) else { return }
-            guard let memo: Memo = queue?.getValue(IssueAssetKeys.memo.rawValue) else { return }
             
             let fee = AssetAmount(amount: 0, asset: Asset(Settings.defaultAsset))
             let assetToIssue = AssetAmount(amount: amount, asset: Asset(asset))
@@ -271,8 +255,7 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
             let operation = IssueAssetOperation(issuer: issuerAccount,
                                                 assetToIssue: assetToIssue,
                                                 issueToAccount: destinationAccount,
-                                                fee: fee,
-                                                memo: memo)
+                                                fee: fee)
             
             queue?.saveValue(operation, forKey: IssueAssetKeys.operation.rawValue)
         }

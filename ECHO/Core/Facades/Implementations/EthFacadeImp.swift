@@ -36,21 +36,63 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble {
         noticeDelegateHandler.delegate = self
     }
     
-    public func getEthAddress(nameOrId: String, completion: @escaping Completion<[EthAddress]>) {
+    public func getEthAddress(nameOrId: String, completion: @escaping Completion<EthAddress?>) {
         
         services.databaseService.getFullAccount(nameOrIds: [nameOrId], shoudSubscribe: false) { [weak self] (result) in
             
             switch result {
             case .success(let accounts):
                 guard let account = accounts[nameOrId] else {
-                    let result = Result<[EthAddress], ECHOError>(error: .resultNotFound)
+                    let result = Result<EthAddress?, ECHOError>(error: .resultNotFound)
                     completion(result)
                     return
                 }
                 
                 self?.services.databaseService.getEthAddress(accountId: account.account.id, completion: completion)
             case .failure(let error):
-                let result = Result<[EthAddress], ECHOError>(error: error)
+                let result = Result<EthAddress?, ECHOError>(error: error)
+                completion(result)
+            }
+        }
+    }
+    
+    public func getAccountDeposits(nameOrId: String, completion: @escaping Completion<[DepositEth]>) {
+        
+        services.databaseService.getFullAccount(nameOrIds: [nameOrId], shoudSubscribe: false) { [weak self] (result) in
+            
+            switch result {
+            case .success(let accounts):
+                guard let account = accounts[nameOrId] else {
+                    let result = Result<[DepositEth], ECHOError>(error: .resultNotFound)
+                    completion(result)
+                    return
+                }
+                
+                self?.services.databaseService.getAccountDeposits(accountId: account.account.id,
+                                                                  completion: completion)
+            case .failure(let error):
+                let result = Result<[DepositEth], ECHOError>(error: error)
+                completion(result)
+            }
+        }
+    }
+    
+    public func getAccountWithdrawals(nameOrId: String, completion: @escaping Completion<[WithdrawalEth]>) {
+        
+        services.databaseService.getFullAccount(nameOrIds: [nameOrId], shoudSubscribe: false) { [weak self] (result) in
+            
+            switch result {
+            case .success(let accounts):
+                guard let account = accounts[nameOrId] else {
+                    let result = Result<[WithdrawalEth], ECHOError>(error: .resultNotFound)
+                    completion(result)
+                    return
+                }
+                
+                self?.services.databaseService.getAccountWithdrawals(accountId: account.account.id,
+                                                                     completion: completion)
+            case .failure(let error):
+                let result = Result<[WithdrawalEth], ECHOError>(error: error)
                 completion(result)
             }
         }
