@@ -55,23 +55,23 @@ func login() {
 
 ```swift
 func getInfo() {
-        
+
     let name = "some name"
-    
+
     echo.getAccount(nameOrID: name) { (result) in
         print("Account \(result)")
     }
-    
+
     echo.getBalance(nameOrID: name, asset: "1.3.1") { (result) in
-        print("Balances \(result)")
+        print("Balance \(result)")
     }
-    
+
+    echo.getBalance(nameOrID: name, asset: nil) { (result) in
+        print("Assets with balances \(result)")
+    }
+
     echo.isAccountReserved(nameOrID: name) { (result) in
         print("Is reserved \(result)")
-    }
-    
-    echo.getBalance(nameOrID: "vsharaev1", asset: nil) { (result) in
-        print("Assets with balances \(result)")
     }
 }
 ```
@@ -80,8 +80,12 @@ func getInfo() {
 
 ```swift
 func getHistory() {
-        
-    echo.getAccountHistroy(nameOrID: "some id", startId: "1.11.0", stopId: "1.11.0", limit: 100) { (result) in
+
+    echo.getAccountHistroy(nameOrID: "some ID", 
+                           startId: "1.11.0", 
+                           stopId: "1.11.0", 
+                           limit: 100) { (result) in
+    
         switch result {
         case .success(let history):
             print(history)
@@ -99,14 +103,14 @@ func getHistory() {
 
 ```swift
 func setSubscriber() {
-        
+
     let name = "some name"
-    
+
     echo.subscribeToAccount(nameOrId: name, delegate: self)
 }
 
 extension YourClass: SubscribeAccountDelegate {
-    
+
     func didUpdateAccount(userAccount: UserAccount) {
         print("Account updated \(userAccount)")
     }
@@ -117,9 +121,9 @@ extension YourClass: SubscribeAccountDelegate {
 
 ```swift
 func changePassword() {
-        
+
     echo.changePassword(old: "your old pass", new: "your new pass", name: "some name") { (result) in
-        
+
         switch result {
         case .success(let success):
             print(success)
@@ -134,13 +138,13 @@ func changePassword() {
 
 ```swift
 func feeForTransfer() {
-        
+
     echo.getFeeForTransferOperation(fromNameOrId: "some name", 
                                     toNameOrId: "some name", 
                                     amount: 300, 
                                     asset: "1.3.0", 
-                                    assetForFee: nil, // By default use "1.3.0" asset
-                                    message: "some message") { (result) in
+                                    assetForFee: nil) { (result) in
+                                    
         switch result {
         case .success(let fee):
             print(fee)
@@ -154,21 +158,27 @@ func feeForTransfer() {
 #### Transfer
 
 ```swift
+
+funс transfer() {
+
     echo.sendTransferOperation(fromNameOrId: "some name",
-                                password: "some pass",
+                               passwordOrWif: PassOrWif.password("some pass"),
                                toNameOrId: "some name",
                                amount: 300,
                                asset: "1.3.0",
-                               assetForFee: nil, // By default use "1.3.0" asset
-                               message: "some message") { (result) in
-                                    
+                               assetForFee: nil,
+                               completion: { (result) in
+
         switch result {
         case .success(let success):
             print(success)
         case .failure(let error):
             print(error)
         }
-    }
+    }, noticeHandler: { notice in
+        print(notice)
+    })
+}
 ```
 
 ### Assets
@@ -177,15 +187,16 @@ func feeForTransfer() {
 
 ```swift
 func createAsset() {
-    
+
     var asset = Asset("")
     asset.symbol = "some symbol"
     asset.precision = 4
     asset.issuer = Account("some account id")
     asset.predictionMarket = false
-    
-    let price = Price(base: AssetAmount(amount: 1, asset: Asset("1.3.0")), quote: AssetAmount(amount: 1, asset: Asset("1.3.1")))
-    
+
+    let price = Price(base: AssetAmount(amount: 1, asset: Asset("1.3.0")), 
+                      quote: AssetAmount(amount: 1, asset: Asset("1.3.1")))
+
     asset.options = AssetOptions(maxSupply: 100000,
                                  marketFeePercent: 0,
                                  maxMarketFee: 0,
@@ -193,9 +204,11 @@ func createAsset() {
                                  flags: AssetOptionIssuerPermissions.committeeFedAsset.rawValue,
                                  coreExchangeRate: price,
                                  description: "some description")
-    
-    echo.createAsset(nameOrId: "some name", password: "some password", asset: asset) { (result) in
-        
+
+    echo.createAsset(nameOrId: "some name", 
+                     passwordOrWif: PassOrWif.password("some pass"), 
+                     asset: asset) { (result) in
+
         switch result {
         case .success(let success):
             print(success)
@@ -210,20 +223,20 @@ func createAsset() {
 
 ```swift
 func issueAsset() {
-    
+
     echo.issueAsset(issuerNameOrId: "some name",
-                    password: "some password",
+                    passwordOrWif: PassOrWif.password("some pass"),
                     asset: "1.3.87",
                     amount: 1,
-                    destinationIdOrName: "some name",
-                    message: "Some message") { (result) in
-                            
+                    destinationIdOrName: "some name") { (result) in
+
         switch result {
         case .success(let success):
             print(success)
         case .failure(let error):
             print(error)
         }
+    }
 }
 ```
 
@@ -233,21 +246,29 @@ func issueAsset() {
 
 ```swift
 func createContract() {
-        
+
     let byteCode = "some bytecode"
-    
+
     echo.createContract(registrarNameOrId: "some name",
-                        password: "soma pass",
+                        passwordOrWif: PassOrWif.password("some pass"),
                         assetId: "1.3.0",
-                        byteCode: byteCode) { (result) in
-    
+                        amount: nil,
+                        assetForFee: nil,
+                        byteCode: byteCode,
+                        supportedAssetId: nil,
+                        ethAccuracy: nil,
+                        parameters: nil,
+                        completion: { (result) in
+
         switch result {
         case .success(let success):
             print(success)
         case .failure(let error):
             print(error)
         }
-    }
+    }, noticeHandler: { notice in
+        print(notice)
+    })
 }
 ```
 
@@ -255,21 +276,25 @@ func createContract() {
 
 ```swift
 func callContract() {
-        
+
     echo.callContract(registrarNameOrId: "some name",
-                      password: "some password",
+                      passwordOrWif: PassOrWif.password("some pass"),
                       assetId: "1.3.0",
+                      assetForFee: nil,
                       contratId: "1.16.1",
-                      methodName: "incrementCounter",
-                      methodParams: []) { (result) in
-        
+                      methodName: "some name",
+                      methodParams: [],
+                      completion: { (result) in
+
         switch result {
         case .success(let success):
             print(success)
         case .failure(let error):
             print(error)
         }
-    }
+    }, noticeHandler: { (notice) in
+        print(notice)
+    })
 }
 ```
 
@@ -277,13 +302,13 @@ func callContract() {
 
 ```swift
 func queryContract() {
-        
+
     echo.queryContract(registrarNameOrId: "some name", 
                        assetId: "1.3.0", 
                        contratId: "1.16.1", 
-                       methodName: "getCount", 
+                       methodName: "some name", 
                        methodParams: []) { (result) in
-        
+
         switch result {
         case .success(let success):
             print(success)
@@ -293,4 +318,3 @@ func queryContract() {
     }
 }
 ```
-
