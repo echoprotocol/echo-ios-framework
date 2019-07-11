@@ -49,7 +49,7 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
         self.network = network
         self.queues = [ECHOQueue]()
     }
-    public func createAsset(nameOrId: String, passwordOrWif: PassOrWif, asset: Asset, completion: @escaping Completion<Bool>) {
+    public func createAsset(nameOrId: String, wif: String, asset: Asset, completion: @escaping Completion<Bool>) {
 
         let createAssetQueue = ECHOQueue()
         queues.append(createAssetQueue)
@@ -88,9 +88,8 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
         // Transaciton
         let transactionOperationInitParams = (queue: createAssetQueue,
                                               cryptoCore: cryptoCore,
-                                              keychainType: KeychainType.active,
                                               saveKey: CreateAssetKeys.transaction.rawValue,
-                                              passwordOrWif: passwordOrWif,
+                                              wif: wif,
                                               networkPrefix: network.echorandPrefix.rawValue,
                                               fromAccountKey: CreateAssetKeys.account.rawValue,
                                               operationKey: CreateAssetKeys.operation.rawValue,
@@ -124,7 +123,7 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
     
     // swiftlint:disable function_body_length
     public func issueAsset(issuerNameOrId: String,
-                           passwordOrWif: PassOrWif,
+                           wif: String,
                            asset: String, amount: UInt,
                            destinationIdOrName: String,
                            completion: @escaping Completion<Bool>) {
@@ -178,9 +177,8 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
         // Transaciton
         let transactionOperationInitParams = (queue: issueAssetQueue,
                                               cryptoCore: cryptoCore,
-                                              keychainType: KeychainType.active,
                                               saveKey: IssueAssetKeys.transaction.rawValue,
-                                              passwordOrWif: passwordOrWif,
+                                              wif: wif,
                                               networkPrefix: network.echorandPrefix.rawValue,
                                               fromAccountKey: IssueAssetKeys.issuerAccount.rawValue,
                                               operationKey: IssueAssetKeys.operation.rawValue,

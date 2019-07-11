@@ -149,7 +149,7 @@ class SocketCoreComponentTests: XCTestCase {
         }))
         let exp = expectation(description: "Transfer")
         let fromUser = "vsharaev"
-        let password = "vsharaev"
+        let wif = "5KjC8BiryoxUNz3dEY2ZWQK5ssmD84JgRGemVWwxfNgiPoxcaVa"
         let toUser = "vsharaev"
         var isSuccess = false
         
@@ -157,7 +157,7 @@ class SocketCoreComponentTests: XCTestCase {
         //act
         echo.start { [unowned self] (result) in
             self.echo.sendTransferOperation(fromNameOrId: fromUser,
-                                            passwordOrWif: PassOrWif.password(password),
+                                            wif: wif,
                                             toNameOrId: toUser,
                                             amount: 1,
                                             asset: "1.3.0",
@@ -189,13 +189,13 @@ class SocketCoreComponentTests: XCTestCase {
         }))
         let exp = expectation(description: "Change password")
         let userName = "vsharaev"
-        let password = "vsharaev"
-        let newPassword = "newPassword"
+        let oldWIF = "5KjC8BiryoxUNz3dEY2ZWQK5ssmD84JgRGemVWwxfNgiPoxcaVa"
+        let newWIF = "5KjC8BiryoxUNz3dEY2ZWQK5ssmD84JgRGemVWwxfNgiPoxcaVa"
         var success: Bool!
 
         //act
         echo.start { [unowned self] (result) in
-            self.echo.changePassword(old: password, new: newPassword, name: userName, completion: { (result) in
+            self.echo.changeKeys(oldWIF: oldWIF, newWIF: newWIF, name: userName, completion: { (result) in
                 switch result {
                 case .success(let isSuccess):
                     success = isSuccess
@@ -222,7 +222,7 @@ class SocketCoreComponentTests: XCTestCase {
         }))
         let exp = expectation(description: "Issue asset")
         let issuerNameOrId = "vsharaev"
-        let password = "vsharaev"
+        let wif = "5KjC8BiryoxUNz3dEY2ZWQK5ssmD84JgRGemVWwxfNgiPoxcaVa"
         let asset = "1.3.1"
         let amount: UInt = 1
         let destinationIdOrName = "vsharaev"
@@ -231,7 +231,7 @@ class SocketCoreComponentTests: XCTestCase {
         //act
         echo.start { [unowned self] (result) in
             self.echo.issueAsset(issuerNameOrId: issuerNameOrId,
-                                 passwordOrWif: PassOrWif.password(password),
+                                 wif: wif,
                                  asset: asset,
                                  amount: amount,
                                  destinationIdOrName: destinationIdOrName) { (result) in
@@ -281,14 +281,14 @@ class SocketCoreComponentTests: XCTestCase {
                                      coreExchangeRate: Price(base: AssetAmount(amount: 1, asset: Asset("1.3.0")), quote: AssetAmount(amount: 1, asset: Asset("1.3.1"))),
                                      description: "description")
         let nameOrId = "vsharaev"
-        let password = "vsharaev"
+        let wif = "5KjC8BiryoxUNz3dEY2ZWQK5ssmD84JgRGemVWwxfNgiPoxcaVa"
         var success: Bool!
         
         //act
         echo.start { [unowned self] (result) in
             
             self.echo.createAsset(nameOrId: nameOrId,
-                                  passwordOrWif: PassOrWif.password(password),
+                                  wif: wif,
                                   asset: asset) { (result) in
                 
                 switch result {
@@ -393,7 +393,7 @@ class SocketCoreComponentTests: XCTestCase {
         //act
         echo.start { (result) in
             self.echo.createContract(registrarNameOrId: "vsharaev",
-                                     passwordOrWif: PassOrWif.password("vsharaev"),
+                                     wif: "5KjC8BiryoxUNz3dEY2ZWQK5ssmD84JgRGemVWwxfNgiPoxcaVa",
                                      assetId: "1.3.0",
                                      amount: nil,
                                      assetForFee: nil,
@@ -446,7 +446,7 @@ class SocketCoreComponentTests: XCTestCase {
         echo.start { (result) in
             
             self.echo.createContract(registrarNameOrId: "vsharaev",
-                                     passwordOrWif: PassOrWif.password("vsharaev"),
+                                     wif: "5KjC8BiryoxUNz3dEY2ZWQK5ssmD84JgRGemVWwxfNgiPoxcaVa",
                                      assetId: "1.3.0",
                                      amount: nil,
                                      assetForFee: nil,
@@ -517,7 +517,7 @@ class SocketCoreComponentTests: XCTestCase {
         }))
         let exp = expectation(description: "Call contract")
         let registrarNameOrId = "vsharaev"
-        let password = "vsharaev"
+        let wif = "5KjC8BiryoxUNz3dEY2ZWQK5ssmD84JgRGemVWwxfNgiPoxcaVa"
         let assetId = "1.3.0"
         let contratId = "1.14.56"
         let methodName = "incrementCounter"
@@ -527,7 +527,7 @@ class SocketCoreComponentTests: XCTestCase {
         //act
         echo.start { [unowned self] (result) in
             self.echo.callContract(registrarNameOrId: registrarNameOrId,
-                                   passwordOrWif: PassOrWif.password(password),
+                                   wif: "5KjC8BiryoxUNz3dEY2ZWQK5ssmD84JgRGemVWwxfNgiPoxcaVa",
                                    assetId: assetId,
                                    amount: nil,
                                    assetForFee: nil,
@@ -598,7 +598,7 @@ class SocketCoreComponentTests: XCTestCase {
         //act
         echo.start { [unowned self] (result) in
             self.echo.generateEthAddress(nameOrId: "vsharaev",
-                                         passwordOrWif: .password("vsharaev"),
+                                         wif: "5KjC8BiryoxUNz3dEY2ZWQK5ssmD84JgRGemVWwxfNgiPoxcaVa",
                                          assetForFee: nil,
                                          completion: { (result) in
                                             
@@ -660,7 +660,7 @@ class SocketCoreComponentTests: XCTestCase {
         //act
         echo.start { [unowned self] (result) in
             self.echo.withdrawalEth(nameOrId: "vsharaev",
-                                    passwordOrWif: .password("vsharaev"),
+                                    wif: "5KjC8BiryoxUNz3dEY2ZWQK5ssmD84JgRGemVWwxfNgiPoxcaVa",
                                     toEthAddress: "0x46Ba2677a1c982B329A81f60Cf90fBA2E8CA9fA8",
                                     amount: 1,
                                     assetForFee: nil,

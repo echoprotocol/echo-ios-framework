@@ -15,7 +15,7 @@ public protocol EthFacade {
      Create eth account address in ETH network
      
      - Parameter nameOrId: Name or id
-     - Parameter passwordOrWif: Sender password or wif from account
+     - Parameter wif: Sender wif from account
      - Parameter assetForFee: Id of asset which is pay fee
      - Parameter completion: Callback in which the information will return whether the transaction was successful.
      
@@ -23,7 +23,7 @@ public protocol EthFacade {
      Default asset is **"1.3.0"**
  */
     func generateEthAddress(nameOrId: String,
-                            passwordOrWif: PassOrWif,
+                            wif: String,
                             assetForFee: String?,
                             completion: @escaping Completion<Bool>,
                             noticeHandler: NoticeHandler?)
@@ -41,13 +41,13 @@ public protocol EthFacade {
      Send ETH to Ethereum network to ethAddress
      
      - Parameter nameOrId: Name or id
-     - Parameter passwordOrWif: Sender password or wif from account
+     - Parameter wif: Sender wif from account
      - Parameter toEthAddress: Receiver eth address
      - Parameter amount: Amount
      - Parameter completion: Callback in which the information will return whether the transaction was successful.
  */
     func withdrawalEth(nameOrId: String,
-                       passwordOrWif: PassOrWif,
+                       wif: String,
                        toEthAddress: String,
                        amount: UInt,
                        assetForFee: String?,

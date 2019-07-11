@@ -14,10 +14,10 @@ public protocol AuthentificationFacade {
      A function that checks if the password for this account
      
      - Parameter name: Account name or id
-     - Parameter password: Password
+     - Parameter wif: WIF
      - Parameter completion: Callback which returns an account or error
  */
-    func isOwnedBy(name: String, password: String, completion: @escaping Completion<UserAccount>)
+    func isOwnedBy(name: String, wif: String, completion: @escaping Completion<UserAccount>)
     
 /**
      A function that checks if accounts registered in chain with public keys from WIF and return them
@@ -28,12 +28,12 @@ public protocol AuthentificationFacade {
     func isOwnedBy(wif: String, completion: @escaping Completion<[UserAccount]>)
     
 /**
-     Function for changing the password
+     Function for changing the account keys
      
-     - Parameter old: Old account password
-     - Parameter new: New account password
+     - Parameter oldWIF: Old account WIF
+     - Parameter newWIF: New account WIF
      - Parameter name: Account name or id
      - Parameter completion: Callback in which the information will return whether the change password was successful
  */
-    func changePassword(old: String, new: String, name: String, completion: @escaping Completion<Bool>)
+    func changeKeys(oldWIF: String, newWIF: String, name: String, completion: @escaping Completion<Bool>)
 }

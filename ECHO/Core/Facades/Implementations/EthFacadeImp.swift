@@ -112,7 +112,7 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble {
     
     // swiftlint:disable function_body_length
     public func generateEthAddress(nameOrId: String,
-                                   passwordOrWif: PassOrWif,
+                                   wif: String,
                                    assetForFee: String?,
                                    completion: @escaping Completion<Bool>,
                                    noticeHandler: NoticeHandler?) {
@@ -167,9 +167,8 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble {
         // Transaciton
         let transactionOperationInitParams = (queue: generateQueue,
                                               cryptoCore: cryptoCore,
-                                              keychainType: KeychainType.active,
                                               saveKey: EthFacadeResultKeys.transaction.rawValue,
-                                              passwordOrWif: passwordOrWif,
+                                              wif: wif,
                                               networkPrefix: network.echorandPrefix.rawValue,
                                               fromAccountKey: EthFacadeResultKeys.loadedAccount.rawValue,
                                               operationKey: EthFacadeResultKeys.operation.rawValue,
@@ -213,7 +212,7 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble {
     }
     
     public func withdrawalEth(nameOrId: String,
-                              passwordOrWif: PassOrWif,
+                              wif: String,
                               toEthAddress: String,
                               amount: UInt,
                               assetForFee: String?,
@@ -277,9 +276,8 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble {
         // Transaciton
         let transactionOperationInitParams = (queue: withdrawalQueue,
                                               cryptoCore: cryptoCore,
-                                              keychainType: KeychainType.active,
                                               saveKey: EthFacadeResultKeys.transaction.rawValue,
-                                              passwordOrWif: passwordOrWif,
+                                              wif: wif,
                                               networkPrefix: network.echorandPrefix.rawValue,
                                               fromAccountKey: EthFacadeResultKeys.loadedAccount.rawValue,
                                               operationKey: EthFacadeResultKeys.operation.rawValue,

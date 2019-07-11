@@ -15,7 +15,7 @@ public protocol AssetsFacade {
      Creates asset [asset] with required parameters
  */
     func createAsset(nameOrId: String,
-                     passwordOrWif: PassOrWif,
+                     wif: String,
                      asset: Asset,
                      completion: @escaping Completion<Bool>)
     
@@ -23,7 +23,7 @@ public protocol AssetsFacade {
      Issues [asset] from [issuerNameOrId] account to [destinationIdOrName] account
  */
     func issueAsset(issuerNameOrId: String,
-                    passwordOrWif: PassOrWif,
+                    wif: String,
                     asset: String,
                     amount: UInt,
                     destinationIdOrName: String,

@@ -19,20 +19,6 @@ final public class ECHOKeychainEd25519: ECHOKeychain {
         self.core = core
     }
     
-    public convenience init?(name: String, password: String, type: KeychainType, core: CryptoCoreComponent) {
-        
-        let seed = "\(name)" + "\(type.rawValue)" + "\(password)"
-        
-        let seedData = seed.data(using: .utf8)
-            .flatMap { core.sha256($0) }
-        
-        if let seedData = seedData {
-            self.init(seed: seedData, core: core)
-        } else {
-            return nil
-        }
-    }
-    
     public convenience init?(wif: String, core: CryptoCoreComponent) {
         
         let privateKey = core.getPrivateKeyFromWIF(wif)

@@ -48,7 +48,7 @@ class ContractsSubscribeTests: XCTestCase, SubscribeContractsDelegate {
                 self.echo.subscribeContracts(contractsIds: [Constants.logsContract], delegate: self)
                 
                 self.echo.callContract(registrarNameOrId: Constants.defaultName,
-                                       passwordOrWif: .password(Constants.defaultPass),
+                                       wif: Constants.defaultWIF,
                                        assetId: Constants.defaultAsset,
                                        amount: 0,
                                        assetForFee: nil,

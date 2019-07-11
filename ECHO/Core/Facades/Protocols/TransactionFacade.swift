@@ -15,7 +15,7 @@ public protocol TransactionFacade {
      This is a function for sending funds.
      
      - Parameter fromNameOrId: Sender name or id
-     - Parameter passwordOrWif: Sender password or wif from account
+     - Parameter wif: Sender wif from account
      - Parameter toNameOrId: Receiver name or id
      - Parameter amount: Amount
      - Parameter asset: Id of asset which is sent
@@ -26,7 +26,7 @@ public protocol TransactionFacade {
      Default asset is **"1.3.0"**
  */
     func sendTransferOperation(fromNameOrId: String,
-                               passwordOrWif: PassOrWif,
+                               wif: String,
                                toNameOrId: String,
                                amount: UInt,
                                asset: String,

@@ -126,7 +126,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
     }
     
     public func createContract(registrarNameOrId: String,
-                               passwordOrWif: PassOrWif,
+                               wif: String,
                                assetId: String,
                                amount: UInt?,
                                assetForFee: String?,
@@ -145,7 +145,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
         }
         
         createContract(registrarNameOrId: registrarNameOrId,
-                       passwordOrWif: passwordOrWif,
+                       wif: wif,
                        assetId: assetId,
                        amount: amount,
                        assetForFee: assetForFee,
@@ -157,7 +157,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
     }
     
     public func createContract(registrarNameOrId: String,
-                               passwordOrWif: PassOrWif,
+                               wif: String,
                                assetId: String,
                                amount: UInt?,
                                assetForFee: String?,
@@ -226,9 +226,8 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
         // Transaciton
         let transactionOperationInitParams = (queue: createQueue,
                                               cryptoCore: cryptoCore,
-                                              keychainType: KeychainType.active,
                                               saveKey: ContractKeys.transaction.rawValue,
-                                              passwordOrWif: passwordOrWif,
+                                              wif: wif,
                                               networkPrefix: network.echorandPrefix.rawValue,
                                               fromAccountKey: ContractKeys.registrarAccount.rawValue,
                                               operationKey: ContractKeys.operation.rawValue,
@@ -270,7 +269,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
     }
     
     public func callContract(registrarNameOrId: String,
-                             passwordOrWif: PassOrWif,
+                             wif: String,
                              assetId: String,
                              amount: UInt?,
                              assetForFee: String?,
@@ -281,7 +280,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
                              noticeHandler: NoticeHandler?) {
         
         callContract(registrarNameOrId: registrarNameOrId,
-                     passwordOrWif: passwordOrWif,
+                     wif: wif,
                      assetId: assetId,
                      amount: amount,
                      assetForFee: assetForFee,
@@ -292,7 +291,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
     }
     
     public func callContract(registrarNameOrId: String,
-                             passwordOrWif: PassOrWif,
+                             wif: String,
                              assetId: String,
                              amount: UInt?,
                              assetForFee: String?,
@@ -302,7 +301,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
                              noticeHandler: NoticeHandler?) {
         
         callContract(registrarNameOrId: registrarNameOrId,
-                     passwordOrWif: passwordOrWif,
+                     wif: wif,
                      assetId: assetId,
                      amount: amount,
                      assetForFee: assetForFee,
@@ -313,7 +312,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
     }
     
     fileprivate func callContract(registrarNameOrId: String,
-                                  passwordOrWif: PassOrWif,
+                                  wif: String,
                                   assetId: String,
                                   amount: UInt?,
                                   assetForFee: String?,
@@ -389,9 +388,8 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
         // Transaciton
         let transactionOperationInitParams = (queue: callQueue,
                                               cryptoCore: cryptoCore,
-                                              keychainType: KeychainType.active,
                                               saveKey: ContractKeys.transaction.rawValue,
-                                              passwordOrWif: passwordOrWif,
+                                              wif: wif,
                                               networkPrefix: network.echorandPrefix.rawValue,
                                               fromAccountKey: ContractKeys.registrarAccount.rawValue,
                                               operationKey: ContractKeys.operation.rawValue,

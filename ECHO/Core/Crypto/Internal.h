@@ -9,17 +9,11 @@
 #import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
+
 @interface CryptoHash : NSObject
 + (NSData *)sha256:(NSData *)data;
 + (NSData *)sha512:(NSData *)data;
 + (NSData *)ripemd160:(NSData *)data;
-@end
-
-@interface Secp256k1 : NSObject
-+ (NSData *)generatePublicKeyWithPrivateKey:(NSData *)privateKeyData compression:(BOOL)isCompression;
-+ (NSData *)sign:(NSData *)hash privateKey:(NSData *)privateKeyData isPubKeyCompressed:(BOOL)isPubKeyCompressed;
-+ (NSData *)encryptMessageWithPrivateKey:(NSData *)privateKey publicKey:(NSData *)publicKey nonce:(NSString *)nonce message:(NSString *)message;
-+ (NSString *)decryptMessageWithPrivateKey:(NSData *)privateKey publicKey:(NSData *)publicKey nonce:(NSString *)nonce message:(NSData *)message;
 @end
 
 @interface Ed25519 : NSObject

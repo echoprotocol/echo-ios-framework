@@ -15,7 +15,6 @@ public protocol ECHOKeychain: class {
     var core: CryptoCoreComponent { get }
     
     init(seed: Data, core: CryptoCoreComponent)
-    init?(name: String, password: String, type: KeychainType, core: CryptoCoreComponent)
     init?(wif: String, core: CryptoCoreComponent)
     
     func publicKey() -> Data

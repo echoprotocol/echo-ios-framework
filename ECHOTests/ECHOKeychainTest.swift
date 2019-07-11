@@ -11,18 +11,17 @@ import XCTest
 
 class ECHOKeychainTest: XCTestCase {
     
-    func testActiveKeychain() {
+    func testEDCAKeychain() {
+        
         //arrange
-        let name = "dima1"
-        let password = "P5J8pDyzznMmEdiBCdgB7VKtMBuxw5e4MAJEo3sfUbxcM"
+        let wif = "5KjC8BiryoxUNz3dEY2ZWQK5ssmD84JgRGemVWwxfNgiPoxcaVa"
         let cryptoCore = CryptoCoreImp()
-        let keychain = ECHOKeychainSecp256k1(name: name, password: password, type: .active, core: cryptoCore)
+        let keychain = ECHOKeychainEd25519(wif: wif, core: cryptoCore)
         
         //act
         let publicKey = keychain?.publicAddress()
         
         //assert
-        XCTAssertEqual(publicKey, "5xiJsHy6r2m4XBJiRHmpMUqJHrNjzw3aJe6KE5gzwFn1mwKUR9")
+        XCTAssertEqual(publicKey, "CuS6J2FDbXQNVLa2a2D7XM1nESghyrSgvmKNLcyKiUN3")
     }
-    
 }

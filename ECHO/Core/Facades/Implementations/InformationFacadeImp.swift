@@ -58,7 +58,7 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         case noticeHandler
     }
     
-    public func registerAccount(name: String, password: String, completion: @escaping Completion<Bool>, noticeHandler: NoticeHandler?) {
+    public func registerAccount(name: String, wif: String, completion: @escaping Completion<Bool>, noticeHandler: NoticeHandler?) {
         
         let createAccountQueue = ECHOQueue()
         queues.append(createAccountQueue)
@@ -74,7 +74,7 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         // Create Account
         let createAccountoperation = createAccountCreationOperation(createAccountQueue,
                                                                     name: name,
-                                                                    password: password,
+                                                                    wif: wif,
                                                                     completion: completion)
         
         // Completion
@@ -95,7 +95,7 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
     
     fileprivate func createAccountCreationOperation(_ queue: ECHOQueue,
                                                     name: String,
-                                                    password: String,
+                                                    wif: String,
                                                     completion: @escaping Completion<Bool>) -> Operation {
         
         let operation = BlockOperation()
@@ -112,19 +112,18 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                 return
             }
             
-            guard let contrainer = AddressKeysContainer(login: name, password: password, core: strongSelf.cryptoCore) else {
+            guard let keychain = ECHOKeychainEd25519(wif: wif, core: strongSelf.cryptoCore) else {
                 queue?.cancelAllOperations()
-                let result = Result<Bool, ECHOError>(error: ECHOError.invalidCredentials)
+                let result = Result<Bool, ECHOError>(error: ECHOError.invalidWIF)
                 completion(result)
                 return
             }
             
-            let activeKey = strongSelf.network.echorandPrefix.rawValue + contrainer.activeKeychain.publicAddress()
-            let echorandKey = strongSelf.network.echorandPrefix.rawValue + contrainer.echorandKeychain.publicAddress()
+            let key = strongSelf.network.echorandPrefix.rawValue + keychain.publicAddress()
             
             let operationID = strongSelf.services.registrationService.registerAccount(name: name,
-                                                                                      activeKey: activeKey,
-                                                                                      echorandKey: echorandKey,
+                                                                                      activeKey: key,
+                                                                                      echorandKey: key,
                                                                                       completion: completion)
             queue?.saveValue(operationID, forKey: CreationAccountResultsKeys.operationID.rawValue)
             queue?.waitStartNextOperation()

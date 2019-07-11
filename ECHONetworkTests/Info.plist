@@ -18,8 +18,8 @@
 	<string>$(DEFAULT_NAME)</string>
 	<key>DEFAULT_TO_NAME</key>
 	<string>$(DEFAULT_TO_NAME)</string>
-	<key>DEFAULT_PASS</key>
-	<string>$(DEFAULT_PASS)</string>
+	<key>DEFAULT_WIF</key>
+	<string>$(DEFAULT_WIF)</string>
 	<key>DEFAULT_ASSET</key>
 	<string>$(DEFAULT_ASSET)</string>
 	<key>DEFAULT_ASSET_LOWER_BOUND</key>

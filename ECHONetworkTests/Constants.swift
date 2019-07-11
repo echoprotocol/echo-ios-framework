@@ -21,7 +21,7 @@ struct ConstantsKeys {
     
     static let defaultName = "DEFAULT_NAME"
     static let defaultToName = "DEFAULT_TO_NAME"
-    static let defaultPass = "DEFAULT_PASS"
+    static let defaultWIF = "DEFAULT_WIF"
     
     static let defaultAsset = "DEFAULT_ASSET"
     static let defaultAssetLowerBound = "DEFAULT_ASSET_LOWER_BOUND"
@@ -114,11 +114,11 @@ struct Constants {
         }
     }
     
-    static var defaultPass: String {
-        if let value = Constants.infoForKey(ConstantsKeys.defaultPass) {
+    static var defaultWIF: String {
+        if let value = Constants.infoForKey(ConstantsKeys.defaultWIF) {
             return value
         } else {
-            return "vsharaev"
+            return "5KjC8BiryoxUNz3dEY2ZWQK5ssmD84JgRGemVWwxfNgiPoxcaVa"
         }
     }
     

@@ -28,11 +28,15 @@ final public class AuthentificationFacadeImp: AuthentificationFacade, ECHOQueueb
         self.queues = [ECHOQueue]()
     }
     
-    public func isOwnedBy(name: String, password: String, completion: @escaping Completion<UserAccount>) {
+    public func isOwnedBy(name: String, wif: String, completion: @escaping Completion<UserAccount>) {
         
         services.databaseService.getFullAccount(nameOrIds: [name], shoudSubscribe: false) { [weak self] (result) in
             switch result {
             case .success(let userAccounts):
+                
+                guard let strongSelf = self else {
+                    return
+                }
                 
                 guard let account = userAccounts[name] else {
                     let result = Result<UserAccount, ECHOError>(error: ECHOError.resultNotFound)
@@ -40,7 +44,13 @@ final public class AuthentificationFacadeImp: AuthentificationFacade, ECHOQueueb
                     return
                 }
                 
-                if self?.checkAccount(account: account, name: name, password: password) == true {
+                guard let keychain = ECHOKeychainEd25519(wif: wif, core: strongSelf.cryptoCore) else {
+                    let result = Result<UserAccount, ECHOError>(error: ECHOError.invalidWIF)
+                    completion(result)
+                    return
+                }
+                
+                if self?.checkAccount(account: account, keychain: keychain) == true {
                     let result = Result<UserAccount, ECHOError>(value: account)
                     completion(result)
                 } else {
@@ -57,13 +67,13 @@ final public class AuthentificationFacadeImp: AuthentificationFacade, ECHOQueueb
     
     public func isOwnedBy(wif: String, completion: @escaping Completion<[UserAccount]>) {
         
-        guard let keysContainer = AddressKeysContainer(wif: wif, core: cryptoCore) else {
-            let result = Result<[UserAccount], ECHOError>(error: ECHOError.invalidCredentials)
+        guard let keychain = ECHOKeychainEd25519(wif: wif, core: cryptoCore) else {
+            let result = Result<[UserAccount], ECHOError>(error: ECHOError.invalidWIF)
             completion(result)
             return
         }
         
-        let publicAdderess = network.echorandPrefix.rawValue + keysContainer.activeKeychain.publicAddress()
+        let publicAdderess = network.echorandPrefix.rawValue + keychain.publicAddress()
         
         services.databaseService.getKeyReferences(keys: [publicAdderess]) { [weak self] (result) in
             
@@ -101,15 +111,9 @@ final public class AuthentificationFacadeImp: AuthentificationFacade, ECHOQueueb
         }
     }
     
-    fileprivate func checkAccount(account: UserAccount, name: String, password: String) -> Bool {
+    fileprivate func checkAccount(account: UserAccount, keychain: ECHOKeychainEd25519) -> Bool {
         
-        guard let keysContainer = AddressKeysContainer(login: name,
-                                                        password: password,
-                                                        core: cryptoCore) else {
-            return false
-        }
-        
-        let key = network.echorandPrefix.rawValue + keysContainer.activeKeychain.publicAddress()
+        let key = network.echorandPrefix.rawValue + keychain.publicAddress()
         let matches = account.account.active?.keyAuths.compactMap { $0.address.addressString == key }.filter { $0 == true }
         
         if let matches = matches {
@@ -129,16 +133,16 @@ final public class AuthentificationFacadeImp: AuthentificationFacade, ECHOQueueb
         case operationId
     }
     
-    public func changePassword(old: String, new: String, name: String, completion: @escaping Completion<Bool>) {
+    public func changeKeys(oldWIF: String, newWIF: String, name: String, completion: @escaping Completion<Bool>) {
         
         let changePasswordQueue = ECHOQueue()
         queues.append(changePasswordQueue)
         
         // Account
-        let checkAccountOperation = createCheckAccountOperation(changePasswordQueue, name, old, completion)
+        let checkAccountOperation = createCheckAccountOperation(changePasswordQueue, name, oldWIF, completion)
         
         // Operation
-        let accountUpdateOperation = createAccountUpdateOperation(changePasswordQueue, name, new, completion)
+        let accountUpdateOperation = createAccountUpdateOperation(changePasswordQueue, name, newWIF, completion)
         
         // RequiredFee
         let getRequiredFeeOperationInitParams = (changePasswordQueue,
@@ -163,9 +167,8 @@ final public class AuthentificationFacadeImp: AuthentificationFacade, ECHOQueueb
         // Transaciton
         let transactionOperationInitParams = (queue: changePasswordQueue,
                                               cryptoCore: cryptoCore,
-                                              keychainType: KeychainType.active,
                                               saveKey: ChangePasswordKeys.transaction.rawValue,
-                                              passwordOrWif: PassOrWif.password(old),
+                                              wif: oldWIF,
                                               networkPrefix: network.echorandPrefix.rawValue,
                                               fromAccountKey: ChangePasswordKeys.account.rawValue,
                                               operationKey: ChangePasswordKeys.operation.rawValue,
@@ -199,7 +202,7 @@ final public class AuthentificationFacadeImp: AuthentificationFacade, ECHOQueueb
     
     fileprivate func createCheckAccountOperation(_ queue: ECHOQueue,
                                                  _ name: String,
-                                                 _ password: String,
+                                                 _ wif: String,
                                                  _ completion: @escaping Completion<Bool>) -> Operation {
         
         let checkAccountOperation = BlockOperation()
@@ -209,7 +212,7 @@ final public class AuthentificationFacadeImp: AuthentificationFacade, ECHOQueueb
             guard checkAccountOperation?.isCancelled == false else { return }
             guard self != nil else { return }
             
-            self?.isOwnedBy(name: name, password: password, completion: { (result) in
+            self?.isOwnedBy(name: name, wif: wif, completion: { (result) in
                 switch result {
                 case .success(let account):
                     queue?.saveValue(account.account, forKey: ChangePasswordKeys.account.rawValue)
@@ -230,7 +233,7 @@ final public class AuthentificationFacadeImp: AuthentificationFacade, ECHOQueueb
     
     fileprivate func createAccountUpdateOperation(_ queue: ECHOQueue,
                                                   _ name: String,
-                                                  _ newPassword: String,
+                                                  _ wif: String,
                                                   _ completion: @escaping Completion<Bool>) -> Operation {
         
         let accountUpdateOperation = BlockOperation()
@@ -243,20 +246,17 @@ final public class AuthentificationFacadeImp: AuthentificationFacade, ECHOQueueb
             guard let network = self?.network else { return }
             guard let account: Account = queue?.getValue(ChangePasswordKeys.account.rawValue) else { return }
             
-            guard let addressContainer = AddressKeysContainer(login: name, password: newPassword, core: cryptoCore) else {
+            guard let keychain = ECHOKeychainEd25519(wif: wif, core: cryptoCore) else {
                 queue?.cancelAllOperations()
-                let result = Result<Bool, ECHOError>(error: ECHOError.invalidCredentials)
+                let result = Result<Bool, ECHOError>(error: ECHOError.invalidWIF)
                 completion(result)
                 return
             }
             
-            let activeAddressString = network.echorandPrefix.rawValue + addressContainer.activeKeychain.publicAddress()
-            let edAddressString = network.echorandPrefix.rawValue + addressContainer.echorandKeychain.publicAddress()
+            let addressString = network.echorandPrefix.rawValue + keychain.publicAddress()
+            let address = Address(addressString, data: keychain.publicKey())
             
-            let activeAddress = Address(activeAddressString, data: addressContainer.activeKeychain.publicKey())
-            let edAddress = Address(edAddressString, data: addressContainer.echorandKeychain.publicKey())
-            
-            let activeKeyAddressAuth = AddressAuthority(address: activeAddress, value: 1)
+            let activeKeyAddressAuth = AddressAuthority(address: address, value: 1)
             let activeAuthority = Authority(weight: 1, keyAuth: [activeKeyAddressAuth], accountAuth: [])
             
             var delegatingAccount: Account?
@@ -275,7 +275,7 @@ final public class AuthentificationFacadeImp: AuthentificationFacade, ECHOQueueb
             
             let operation = AccountUpdateOperation(account: account,
                                                    active: activeAuthority,
-                                                   edKey: edAddress,
+                                                   edKey: address,
                                                    options: options,
                                                    fee: fee)
             

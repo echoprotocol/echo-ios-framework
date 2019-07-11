@@ -191,16 +191,16 @@ final public class ECHO: InterfaceFacades, Startable {
     
     // MARK: AuthentificationFacade
     
-    public func isOwnedBy(name: String, password: String, completion: @escaping Completion<UserAccount>) {
-        authentificationFacade.isOwnedBy(name: name, password: password, completion: completion)
+    public func isOwnedBy(name: String, wif: String, completion: @escaping Completion<UserAccount>) {
+        authentificationFacade.isOwnedBy(name: name, wif: wif, completion: completion)
     }
     
     public func isOwnedBy(wif: String, completion: @escaping Completion<[UserAccount]>) {
         authentificationFacade.isOwnedBy(wif: wif, completion: completion)
     }
     
-    public func changePassword(old: String, new: String, name: String, completion: @escaping Completion<Bool>) {
-        authentificationFacade.changePassword(old: old, new: new, name: name, completion: completion)
+    public func changeKeys(oldWIF: String, newWIF: String, name: String, completion: @escaping Completion<Bool>) {
+        authentificationFacade.changeKeys(oldWIF: oldWIF, newWIF: newWIF, name: name, completion: completion)
     }
     
     // MARK: InformationFacade
@@ -213,8 +213,8 @@ final public class ECHO: InterfaceFacades, Startable {
         informationFacade.getBlock(blockNumber: blockNumber, completion: completion)
     }
     
-    public func registerAccount(name: String, password: String, completion: @escaping Completion<Bool>, noticeHandler: NoticeHandler?) {
-        informationFacade.registerAccount(name: name, password: password, completion: completion, noticeHandler: noticeHandler)
+    public func registerAccount(name: String, wif: String, completion: @escaping Completion<Bool>, noticeHandler: NoticeHandler?) {
+        informationFacade.registerAccount(name: name, wif: wif, completion: completion, noticeHandler: noticeHandler)
     }
     
     public func getAccount(nameOrID: String, completion: @escaping Completion<Account>) {
@@ -293,7 +293,7 @@ final public class ECHO: InterfaceFacades, Startable {
     // MARK: TransactionFacade
     
     public func sendTransferOperation(fromNameOrId: String,
-                                      passwordOrWif: PassOrWif,
+                                      wif: String,
                                       toNameOrId: String,
                                       amount: UInt,
                                       asset: String,
@@ -302,7 +302,7 @@ final public class ECHO: InterfaceFacades, Startable {
                                       noticeHandler: NoticeHandler?) {
         
         transactionFacade.sendTransferOperation(fromNameOrId: fromNameOrId,
-                                                passwordOrWif: passwordOrWif,
+                                                wif: wif,
                                                 toNameOrId: toNameOrId,
                                                 amount: amount,
                                                 asset: asset,
@@ -313,22 +313,22 @@ final public class ECHO: InterfaceFacades, Startable {
     // MARK: AssetsFacade
 
     public func createAsset(nameOrId: String,
-                            passwordOrWif: PassOrWif,
+                            wif: String,
                             asset: Asset,
                             completion: @escaping Completion<Bool>) {
         
-        assetsFacade.createAsset(nameOrId: nameOrId, passwordOrWif: passwordOrWif, asset: asset, completion: completion)
+        assetsFacade.createAsset(nameOrId: nameOrId, wif: wif, asset: asset, completion: completion)
     }
     
     public func issueAsset(issuerNameOrId: String,
-                           passwordOrWif: PassOrWif,
+                           wif: String,
                            asset: String,
                            amount: UInt,
                            destinationIdOrName: String,
                            completion: @escaping Completion<Bool>) {
         
         assetsFacade.issueAsset(issuerNameOrId: issuerNameOrId,
-                                passwordOrWif: passwordOrWif,
+                                wif: wif,
                                 asset: asset,
                                 amount: amount,
                                 destinationIdOrName: destinationIdOrName,
@@ -371,7 +371,7 @@ final public class ECHO: InterfaceFacades, Startable {
     }
     
     public func createContract(registrarNameOrId: String,
-                               passwordOrWif: PassOrWif,
+                               wif: String,
                                assetId: String,
                                amount: UInt?,
                                assetForFee: String?,
@@ -383,7 +383,7 @@ final public class ECHO: InterfaceFacades, Startable {
                                noticeHandler: NoticeHandler?) {
         
         contractsFacade.createContract(registrarNameOrId: registrarNameOrId,
-                                       passwordOrWif: passwordOrWif,
+                                       wif: wif,
                                        assetId: assetId,
                                        amount: amount,
                                        assetForFee: assetForFee,
@@ -396,7 +396,7 @@ final public class ECHO: InterfaceFacades, Startable {
     }
     
     public func createContract(registrarNameOrId: String,
-                               passwordOrWif: PassOrWif,
+                               wif: String,
                                assetId: String,
                                amount: UInt?,
                                assetForFee: String?,
@@ -407,7 +407,7 @@ final public class ECHO: InterfaceFacades, Startable {
                                noticeHandler: NoticeHandler?) {
         
         contractsFacade.createContract(registrarNameOrId: registrarNameOrId,
-                                       passwordOrWif: passwordOrWif,
+                                       wif: wif,
                                        assetId: assetId,
                                        amount: amount,
                                        assetForFee: assetForFee,
@@ -419,7 +419,7 @@ final public class ECHO: InterfaceFacades, Startable {
     }
     
     public func callContract(registrarNameOrId: String,
-                             passwordOrWif: PassOrWif,
+                             wif: String,
                              assetId: String,
                              amount: UInt?,
                              assetForFee: String?,
@@ -430,7 +430,7 @@ final public class ECHO: InterfaceFacades, Startable {
                              noticeHandler: NoticeHandler?) {
         
         contractsFacade.callContract(registrarNameOrId: registrarNameOrId,
-                                     passwordOrWif: passwordOrWif,
+                                     wif: wif,
                                      assetId: assetId,
                                      amount: amount,
                                      assetForFee: assetForFee,
@@ -442,7 +442,7 @@ final public class ECHO: InterfaceFacades, Startable {
     }
     
     public func callContract(registrarNameOrId: String,
-                             passwordOrWif: PassOrWif,
+                             wif: String,
                              assetId: String,
                              amount: UInt?,
                              assetForFee: String?,
@@ -452,7 +452,7 @@ final public class ECHO: InterfaceFacades, Startable {
                              noticeHandler: NoticeHandler?) {
         
         contractsFacade.callContract(registrarNameOrId: registrarNameOrId,
-                                     passwordOrWif: passwordOrWif,
+                                     wif: wif,
                                      assetId: assetId,
                                      amount: amount,
                                      assetForFee: assetForFee,
@@ -493,13 +493,13 @@ final public class ECHO: InterfaceFacades, Startable {
     // MARK: EthFacade
     
     public func generateEthAddress(nameOrId: String,
-                                   passwordOrWif: PassOrWif,
+                                   wif: String,
                                    assetForFee: String?,
                                    completion: @escaping Completion<Bool>,
                                    noticeHandler: NoticeHandler?) {
         
         ethFacade.generateEthAddress(nameOrId: nameOrId,
-                                     passwordOrWif: passwordOrWif,
+                                     wif: wif,
                                      assetForFee: assetForFee,
                                      completion: completion,
                                      noticeHandler: noticeHandler)
@@ -511,7 +511,7 @@ final public class ECHO: InterfaceFacades, Startable {
     }
     
     public func withdrawalEth(nameOrId: String,
-                              passwordOrWif: PassOrWif,
+                              wif: String,
                               toEthAddress: String,
                               amount: UInt,
                               assetForFee: String?,
@@ -519,7 +519,7 @@ final public class ECHO: InterfaceFacades, Startable {
                               noticeHandler: NoticeHandler?) {
         
         ethFacade.withdrawalEth(nameOrId: nameOrId,
-                                passwordOrWif: passwordOrWif,
+                                wif: wif,
                                 toEthAddress: toEthAddress,
                                 amount: amount,
                                 assetForFee: assetForFee,

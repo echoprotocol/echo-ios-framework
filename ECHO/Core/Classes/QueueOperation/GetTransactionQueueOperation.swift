@@ -8,9 +8,8 @@
 
 typealias GetTransactionQueueOperationInitParams = (queue: ECHOQueue,
                                                     cryptoCore: CryptoCoreComponent,
-                                                    keychainType: KeychainType,
                                                     saveKey: String,
-                                                    passwordOrWif: PassOrWif,
+                                                    wif: String,
                                                     networkPrefix: String,
                                                     fromAccountKey: String,
                                                     operationKey: String,
@@ -27,9 +26,8 @@ final class GetTransactionQueueOperation<T>: Operation where T: Any {
     
     fileprivate weak var queue: ECHOQueue?
     fileprivate weak var cryptoCore: CryptoCoreComponent?
-    fileprivate let keychainType: KeychainType
     fileprivate let saveKey: String
-    fileprivate let passwordOrWif: PassOrWif
+    fileprivate let wif: String
     fileprivate let networkPrefix: String
     fileprivate let fromAccountKey: String
     fileprivate let operationKey: String
@@ -42,9 +40,8 @@ final class GetTransactionQueueOperation<T>: Operation where T: Any {
         
         self.queue = initParams.queue
         self.cryptoCore = initParams.cryptoCore
-        self.keychainType = initParams.keychainType
         self.saveKey = initParams.saveKey
-        self.passwordOrWif = initParams.passwordOrWif
+        self.wif = initParams.wif
         self.networkPrefix = initParams.networkPrefix
         self.fromAccountKey = initParams.fromAccountKey
         self.operationKey = initParams.operationKey
@@ -64,8 +61,16 @@ final class GetTransactionQueueOperation<T>: Operation where T: Any {
         guard let chainId: String = queue?.getValue(chainIdKey) else { return }
         guard let blockData: BlockData = queue?.getValue(blockDataKey) else { return }
         guard let fee: FeeType = queue?.getValue(feeKey) else { return }
+        guard let cryptoCore = cryptoCore else { return }
         
-        if !checkAccount(account: account, name: account.name) {
+        guard let keyChain = ECHOKeychainEd25519(wif: wif, core: cryptoCore) else {
+            queue?.cancelAllOperations()
+            let result = Result<T, ECHOError>(error: ECHOError.invalidWIF)
+            completion(result)
+            return
+        }
+        
+        if !checkAccount(account: account) {
             
             queue?.cancelAllOperations()
             let result = Result<T, ECHOError>(error: ECHOError.invalidCredentials)
@@ -82,32 +87,6 @@ final class GetTransactionQueueOperation<T>: Operation where T: Any {
         
         let transaction = Transaction(operations: [operation], blockData: blockData, chainId: chainId)
         
-        guard let name = account.name else { return }
-        guard let cryptoCore = cryptoCore else { return }
-        
-        var keysContrainer: AddressKeysContainer?
-        switch passwordOrWif {
-        case .password(let pass):
-            keysContrainer = AddressKeysContainer(login: name,
-                                                  password: pass,
-                                                  core: cryptoCore)
-        case .wif(let wif):
-            keysContrainer = AddressKeysContainer(wif: wif,
-                                                  core: cryptoCore)
-        }
-        
-        guard let contrainer = keysContrainer else {
-            return
-        }
-        
-        var keyChain = contrainer.activeKeychain
-        switch keychainType {
-        case .active:
-            keyChain = contrainer.activeKeychain
-        case .echorand:
-            keyChain = contrainer.echorandKeychain
-        }
-        
         do {
             let generator = SignaturesGenerator()
             let signatures = try generator.signTransaction(transaction, privateKeys: [keyChain.raw], cryptoCore: cryptoCore)
@@ -120,35 +99,17 @@ final class GetTransactionQueueOperation<T>: Operation where T: Any {
         }
     }
     
-    fileprivate func checkAccount(account: Account, name: String?) -> Bool {
+    fileprivate func checkAccount(account: Account) -> Bool {
         
-        guard let name = name else { return false }
         guard let cryptoCore = cryptoCore else { return false }
         
-        var keysContrainer: AddressKeysContainer?
-        switch passwordOrWif {
-        case .password(let pass):
-            keysContrainer = AddressKeysContainer(login: name,
-                                                  password: pass,
-                                                  core: cryptoCore)
-        case .wif(let wif):
-            keysContrainer = AddressKeysContainer(wif: wif,
-                                                  core: cryptoCore)
-        }
-        
-        guard let contrainer = keysContrainer else {
+        guard let keychain = ECHOKeychainEd25519(wif: wif, core: cryptoCore) else {
             return false
         }
         
-        let key = networkPrefix + contrainer.activeKeychain.publicAddress()
+        let key = networkPrefix + keychain.publicAddress()
         
-        let authority: Authority?
-        switch keychainType {
-        case .active:
-            authority = account.active
-        default:
-            authority = nil
-        }
+        let authority = account.active
         
         let matches = authority?.keyAuths.compactMap { $0.address.addressString == key }.filter { $0 == true }
         

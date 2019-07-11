@@ -14,8 +14,11 @@ public enum ECHOError: Swift.Error, Equatable {
     /// Indicates that Encodable couldn't be encoded into Object
     case encodableMapping
     
-    /// Indicates that password or user name is not valid
+    /// Indicates that wif or user name is not valid
     case invalidCredentials
+    
+    /// Indicates that wif is not valid
+    case invalidWIF
     
     /// Indicates that required data is missed
     case internalError(String)

@@ -51,7 +51,7 @@ final public class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
     
     // swiftlint:disable function_body_length
     public func sendTransferOperation(fromNameOrId: String,
-                                      passwordOrWif: PassOrWif,
+                                      wif: String,
                                       toNameOrId: String,
                                       amount: UInt,
                                       asset: String,
@@ -111,9 +111,8 @@ final public class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
         // Transaciton
         let transactionOperationInitParams = (queue: transferQueue,
                                               cryptoCore: cryptoCore,
-                                              keychainType: KeychainType.active,
                                               saveKey: TransferResultsKeys.transaction.rawValue,
-                                              passwordOrWif: passwordOrWif,
+                                              wif: wif,
                                               networkPrefix: network.echorandPrefix.rawValue,
                                               fromAccountKey: TransferResultsKeys.loadedFromAccount.rawValue,
                                               operationKey: TransferResultsKeys.operation.rawValue,
