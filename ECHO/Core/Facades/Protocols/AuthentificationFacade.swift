@@ -10,6 +10,14 @@
     The interface of the class that is responsible for verifying user authorization and changing its parameters.
  */
 public protocol AuthentificationFacade {
+
+/**
+     Generate random EDDSA private key and return it represented in WIF format
+ 
+     - Returns: private key in WIF format
+ */
+    func generateRandomWIF() -> String
+    
 /**
      A function that checks if the password for this account
      

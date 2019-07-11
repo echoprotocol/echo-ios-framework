@@ -14,6 +14,11 @@ final public class ECHOKeychainEd25519: ECHOKeychain {
     public let raw: Data
     public let core: CryptoCoreComponent
     
+    public init(core: CryptoCoreComponent) {
+        raw = core.generateRandomEd25519PrivateKey()
+        self.core = core
+    }
+    
     public init(seed: Data, core: CryptoCoreComponent) {
         raw = seed
         self.core = core

@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @interface Ed25519 : NSObject
++ (NSData *)generateRandomPrivateKey;
 + (NSData *)generatePublicKeyWithPrivateKey:(NSData *)privateKeyData;
 + (NSData *)sign:(NSData *)hash privateKey:(NSData *)privateKeyData;
 @end

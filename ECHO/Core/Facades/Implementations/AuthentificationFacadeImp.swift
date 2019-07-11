@@ -28,6 +28,12 @@ final public class AuthentificationFacadeImp: AuthentificationFacade, ECHOQueueb
         self.queues = [ECHOQueue]()
     }
     
+    public func generateRandomWIF() -> String {
+        
+        let keychain = ECHOKeychainEd25519(core: cryptoCore)
+        return keychain.wif()
+    }
+    
     public func isOwnedBy(name: String, wif: String, completion: @escaping Completion<UserAccount>) {
         
         services.databaseService.getFullAccount(nameOrIds: [name], shoudSubscribe: false) { [weak self] (result) in

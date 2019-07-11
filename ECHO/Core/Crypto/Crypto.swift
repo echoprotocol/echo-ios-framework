@@ -97,6 +97,14 @@ final class Crypto {
         return data
     }
     
+    /// Generates rendom private key using ed25519 elliptic curve math
+    ///
+    /// - Returns: 32-byte private key
+    public static func generateRandomEd25519PrivateKey() -> Data {
+        
+        return Ed25519.generateRandomPrivateKey()
+    }
+    
     /// Generates public key from private key using ed25519 elliptic curve math
     ///
     /// - Parameters:
@@ -107,7 +115,7 @@ final class Crypto {
         return Ed25519.generatePublicKey(withPrivateKey: data)
     }
     
-    /// Signs hash with private key by ed25519 curve
+    /// Signs hash with private key using ed25519 elliptic curve math
     ///
     /// - Parameters:
     ///   - hash: Hash of a message

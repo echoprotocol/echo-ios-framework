@@ -16,28 +16,28 @@ class ETHAddressValidatorTests: XCTestCase {
     func testCheckAddress() {
         
         //arrange
-        let validLowerCaseAddress = "0x3de8c14c8e7a956f5cc4d82beff749ee65fdc358";
+        let validLowerCaseAddress = "0x3de8c14c8e7a956f5cc4d82beff749ee65fdc358"
         //assert
-        XCTAssertTrue(validator.isValidETHAddress(validLowerCaseAddress));
+        XCTAssertTrue(validator.isValidETHAddress(validLowerCaseAddress))
         
         //arrange
-        let validUpperCaseAddress = "0x3DE8C14C8E7A956F5CC4D82BEFF749EE65FDC358";
+        let validUpperCaseAddress = "0x3DE8C14C8E7A956F5CC4D82BEFF749EE65FDC358"
         //assert
-        XCTAssertTrue(validator.isValidETHAddress(validUpperCaseAddress));
+        XCTAssertTrue(validator.isValidETHAddress(validUpperCaseAddress))
         
         //arrange
-        let validChecksumAddress = "0xfB6916095ca1df60bB79Ce92cE3Ea74c37c5d359";
+        let validChecksumAddress = "0xfB6916095ca1df60bB79Ce92cE3Ea74c37c5d359"
         //assert
-        XCTAssertTrue(validator.isValidETHAddress(validChecksumAddress));
+        XCTAssertTrue(validator.isValidETHAddress(validChecksumAddress))
         
         //arrange
-        let invalidLengthAddress = "0x3de8c14c8e7a956f5cc4d82beff749ee65bac35";
+        let invalidLengthAddress = "0x3de8c14c8e7a956f5cc4d82beff749ee65bac35"
         //assert
-        XCTAssertFalse(validator.isValidETHAddress(invalidLengthAddress));
+        XCTAssertFalse(validator.isValidETHAddress(invalidLengthAddress))
         
         //arrange
-        let invalidChecksumAddress = "0x3de8c14c8E7a956f5cc4d82beff749ee65fdc358";
+        let invalidChecksumAddress = "0x3de8c14c8E7a956f5cc4d82beff749ee65fdc358"
         //assert
-        XCTAssertFalse(validator.isValidETHAddress(invalidChecksumAddress));
+        XCTAssertFalse(validator.isValidETHAddress(invalidChecksumAddress))
     }
 }

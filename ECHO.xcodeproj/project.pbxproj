@@ -223,6 +223,8 @@
 		D0B0587621468A0400A80CDE /* ContractInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B0587521468A0300A80CDE /* ContractInfo.swift */; };
 		D0B0587E214698F900A80CDE /* ContractStructEVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B0587D214698F900A80CDE /* ContractStructEVM.swift */; };
 		D0B0588221469A0900A80CDE /* GetContractSocketOperaton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B0588121469A0900A80CDE /* GetContractSocketOperaton.swift */; };
+		D0B26FA922D722AF00E88205 /* WIFValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B26FA822D722AF00E88205 /* WIFValidator.swift */; };
+		D0B26FAB22D72E0D00E88205 /* WIFValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B26FAA22D72E0D00E88205 /* WIFValidatorTests.swift */; };
 		D0B42A3B2252527600A14784 /* SubscribtionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B42A3A2252527600A14784 /* SubscribtionTests.swift */; };
 		D0B6A0C62126B26D00A78E4B /* BaseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B6A0C52126B26D00A78E4B /* BaseOperation.swift */; };
 		D0B6A0C82126B39100A78E4B /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B6A0C72126B39100A78E4B /* Extensions.swift */; };
@@ -503,6 +505,8 @@
 		D0B0587521468A0300A80CDE /* ContractInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContractInfo.swift; sourceTree = "<group>"; };
 		D0B0587D214698F900A80CDE /* ContractStructEVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContractStructEVM.swift; sourceTree = "<group>"; };
 		D0B0588121469A0900A80CDE /* GetContractSocketOperaton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetContractSocketOperaton.swift; sourceTree = "<group>"; };
+		D0B26FA822D722AF00E88205 /* WIFValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WIFValidator.swift; sourceTree = "<group>"; };
+		D0B26FAA22D72E0D00E88205 /* WIFValidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WIFValidatorTests.swift; path = Stubs/WIFValidatorTests.swift; sourceTree = "<group>"; };
 		D0B42A3A2252527600A14784 /* SubscribtionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribtionTests.swift; sourceTree = "<group>"; };
 		D0B6A0C52126B26D00A78E4B /* BaseOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseOperation.swift; sourceTree = "<group>"; };
 		D0B6A0C72126B39100A78E4B /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -890,6 +894,7 @@
 				B30CC38C214A92EB003953E3 /* AbiArgumentEncoderTests.swift */,
 				B30CC38A214A8A4C003953E3 /* AbiParameterValidationTests.swift */,
 				D08230472236BA19003A4BDC /* ETHAddressValidatorTests.swift */,
+				D0B26FAA22D72E0D00E88205 /* WIFValidatorTests.swift */,
 				B3D1C58D212DA92500D1A7E6 /* JsonEncodingTests.swift */,
 				B3D1C579212C9D4900D1A7E6 /* JsonDecodingTests.swift */,
 				B3D1C57B212D4D8100D1A7E6 /* DataEncodingTests.swift */,
@@ -1001,6 +1006,7 @@
 			isa = PBXGroup;
 			children = (
 				D082304522368EB6003A4BDC /* ETHAddressValidator.swift */,
+				D0B26FA822D722AF00E88205 /* WIFValidator.swift */,
 			);
 			path = Validators;
 			sourceTree = "<group>";
@@ -1338,6 +1344,7 @@
 				B30CAD0320FF74C80048E33E /* NetworkNodesApiService.swift in Sources */,
 				B370BB5920F7623F004C4A26 /* API.swift in Sources */,
 				B3CA704220F502BE00511F6A /* SocketOperation.swift in Sources */,
+				D0B26FA922D722AF00E88205 /* WIFValidator.swift in Sources */,
 				B30CC381214A745E003953E3 /* SHA3.swift in Sources */,
 				D09DA11C21EDE6870004673F /* RegistrationApiServiceImp.swift in Sources */,
 				B39554B5213EBAED00CE2647 /* ListAssetsSocketOperation.swift in Sources */,
@@ -1551,6 +1558,7 @@
 				B3B0C7A9219054970088D018 /* AbiArgumentDecoderTest.swift in Sources */,
 				D0A0C4F1225E2475000BA64D /* GetDynamicGlobalPropertiesSocketRequestStub.swift in Sources */,
 				D097081F229421BD009DF152 /* GetEthAddressStubHolder.swift in Sources */,
+				D0B26FAB22D72E0D00E88205 /* WIFValidatorTests.swift in Sources */,
 				B3405CB82135BB3F00C18FE6 /* SubscribtionTests.swift in Sources */,
 				D0A4933722AF9552006DF77B /* GetAccountWithdrawalsRequestStub.swift in Sources */,
 				D097082122942304009DF152 /* WithdrawalEthStubHolder.swift in Sources */,

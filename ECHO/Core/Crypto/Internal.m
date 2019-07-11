@@ -47,6 +47,16 @@
 
 @implementation Ed25519
 
++ (NSData *)generateRandomPrivateKey {
+    
+    NSMutableData *privKey = [NSMutableData dataWithLength:ed25519_privkey_SIZE];
+    NSMutableData *pubKey = [NSMutableData dataWithLength:ed25519_pubkey_SIZE];
+    
+    ed25519_create_keypair(privKey.mutableBytes, pubKey.mutableBytes);
+    
+    return privKey;
+}
+
 + (NSData *)generatePublicKeyWithPrivateKey:(NSData *)privateKeyData {
     
     NSMutableData *result = [NSMutableData dataWithLength:ed25519_pubkey_SIZE];

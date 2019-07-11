@@ -24,4 +24,20 @@ class ECHOKeychainTest: XCTestCase {
         //assert
         XCTAssertEqual(publicKey, "CuS6J2FDbXQNVLa2a2D7XM1nESghyrSgvmKNLcyKiUN3")
     }
+    
+    func testGenerateRandomWIF() {
+        
+        //arrange
+        let cryptoCore = CryptoCoreImp()
+        
+        //act
+        let first = ECHOKeychainEd25519(core: cryptoCore).wif()
+        let second = ECHOKeychainEd25519(core: cryptoCore).wif()
+        let third = ECHOKeychainEd25519(core: cryptoCore).wif()
+        
+        //assert
+        XCTAssertNotEqual(first, second)
+        XCTAssertNotEqual(first, third)
+        XCTAssertNotEqual(second, third)
+    }
 }

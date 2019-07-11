@@ -10,7 +10,7 @@ import Foundation
 
 public struct ETHAddressValidator {
     
-    let cryptoCore: CryptoCoreComponent
+    private let cryptoCore: CryptoCoreComponent
     
     fileprivate let addressPattern = "^(0x)?[0-9a-f]{40}$"
     fileprivate let lowerCaseAddressPattern = "^(0x)?[0-9a-f]{40}$"

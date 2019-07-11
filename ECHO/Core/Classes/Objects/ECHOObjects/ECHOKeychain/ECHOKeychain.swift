@@ -14,6 +14,7 @@ public protocol ECHOKeychain: class {
     var raw: Data { get }
     var core: CryptoCoreComponent { get }
     
+    init(core: CryptoCoreComponent)
     init(seed: Data, core: CryptoCoreComponent)
     init?(wif: String, core: CryptoCoreComponent)
     

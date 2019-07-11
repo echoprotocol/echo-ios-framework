@@ -16,6 +16,7 @@ public protocol CryptoCoreComponent: class {
     func getPrivateKeyFromWIF(_ wif: String) -> Data?
     func getWIFFromPrivateKey(_ privateKey: Data) -> String
     
+    func generateRandomEd25519PrivateKey() -> Data
     func generatePublicEd25519Key(withPrivateKey privateKeyData: Data) -> Data
     func signByEd25519(_ hash: Data, privateKey: Data) -> Data
     

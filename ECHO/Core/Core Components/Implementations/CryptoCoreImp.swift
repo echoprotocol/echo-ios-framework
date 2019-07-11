@@ -37,6 +37,10 @@ final public class CryptoCoreImp: CryptoCoreComponent {
         return Crypto.getPublicKeyFromAddress(address, networkPrefix: networkPrefix)
     }
     
+    public func generateRandomEd25519PrivateKey() -> Data {
+        return Crypto.generateRandomEd25519PrivateKey()
+    }
+    
     public func generatePublicEd25519Key(withPrivateKey privateKeyData: Data) -> Data {
         return Crypto.generatePublicEd25519Key(data: privateKeyData)
     }

@@ -191,6 +191,10 @@ final public class ECHO: InterfaceFacades, Startable {
     
     // MARK: AuthentificationFacade
     
+    public func generateRandomWIF() -> String {
+        return authentificationFacade.generateRandomWIF()
+    }
+    
     public func isOwnedBy(name: String, wif: String, completion: @escaping Completion<UserAccount>) {
         authentificationFacade.isOwnedBy(name: name, wif: wif, completion: completion)
     }
