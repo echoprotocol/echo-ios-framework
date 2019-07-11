@@ -1,5 +1,31 @@
 # CHANGELOG
 
+## 3.3.0 - 2017-07-11
+
+### Changes
+Replaced passwordOrWif with wif in the following methods:
+
+* isOwnedBy
+* registerAccount
+* createAsset
+* issueAsset
+* createContract
+* callContract
+* generateEthAddress
+* withdrawalEth
+* sendTransferOperation
+
+### Added
+Added account registration by wif
+Added method for account wif (active and echorand key) changing
+Added random account's private key generation
+
+### Removed
+Removed ECKey and all connected features
+
+### Tests
+Removed tests with password and added required tests with wif
+
 ## 3.2.1 - 2017-06-24
 
 ### Changes

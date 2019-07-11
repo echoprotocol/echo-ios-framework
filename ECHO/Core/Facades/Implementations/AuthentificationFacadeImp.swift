@@ -129,7 +129,7 @@ final public class AuthentificationFacadeImp: AuthentificationFacade, ECHOQueueb
         return false
     }
 
-    fileprivate enum ChangePasswordKeys: String {
+    fileprivate enum ChangeKeysKeys: String {
         case account
         case operation
         case fee
@@ -141,69 +141,69 @@ final public class AuthentificationFacadeImp: AuthentificationFacade, ECHOQueueb
     
     public func changeKeys(oldWIF: String, newWIF: String, name: String, completion: @escaping Completion<Bool>) {
         
-        let changePasswordQueue = ECHOQueue()
-        queues.append(changePasswordQueue)
+        let changeKeysQueue = ECHOQueue()
+        queues.append(changeKeysQueue)
         
         // Account
-        let checkAccountOperation = createCheckAccountOperation(changePasswordQueue, name, oldWIF, completion)
+        let checkAccountOperation = createCheckAccountOperation(changeKeysQueue, name, oldWIF, completion)
         
         // Operation
-        let accountUpdateOperation = createAccountUpdateOperation(changePasswordQueue, name, newWIF, completion)
+        let accountUpdateOperation = createAccountUpdateOperation(changeKeysQueue, name, newWIF, completion)
         
         // RequiredFee
-        let getRequiredFeeOperationInitParams = (changePasswordQueue,
+        let getRequiredFeeOperationInitParams = (changeKeysQueue,
                                                  services.databaseService,
                                                  Asset(Settings.defaultAsset),
-                                                 ChangePasswordKeys.operation.rawValue,
-                                                 ChangePasswordKeys.fee.rawValue,
+                                                 ChangeKeysKeys.operation.rawValue,
+                                                 ChangeKeysKeys.fee.rawValue,
                                                  UInt(1))
         let getRequiredFeeOperation = GetRequiredFeeQueueOperation<Bool>(initParams: getRequiredFeeOperationInitParams,
                                                                          completion: completion)
         
         // ChainId
-        let getChainIdInitParams = (changePasswordQueue, services.databaseService, ChangePasswordKeys.chainId.rawValue)
+        let getChainIdInitParams = (changeKeysQueue, services.databaseService, ChangeKeysKeys.chainId.rawValue)
         let getChainIdOperation = GetChainIdQueueOperation<Bool>(initParams: getChainIdInitParams,
                                                                  completion: completion)
         
         // BlockData
-        let getBlockDataInitParams = (changePasswordQueue, services.databaseService, ChangePasswordKeys.blockData.rawValue)
+        let getBlockDataInitParams = (changeKeysQueue, services.databaseService, ChangeKeysKeys.blockData.rawValue)
         let getBlockDataOperation = GetBlockDataQueueOperation<Bool>(initParams: getBlockDataInitParams,
                                                                      completion: completion)
         
         // Transaciton
-        let transactionOperationInitParams = (queue: changePasswordQueue,
+        let transactionOperationInitParams = (queue: changeKeysQueue,
                                               cryptoCore: cryptoCore,
-                                              saveKey: ChangePasswordKeys.transaction.rawValue,
+                                              saveKey: ChangeKeysKeys.transaction.rawValue,
                                               wif: oldWIF,
                                               networkPrefix: network.echorandPrefix.rawValue,
-                                              fromAccountKey: ChangePasswordKeys.account.rawValue,
-                                              operationKey: ChangePasswordKeys.operation.rawValue,
-                                              chainIdKey: ChangePasswordKeys.chainId.rawValue,
-                                              blockDataKey: ChangePasswordKeys.blockData.rawValue,
-                                              feeKey: ChangePasswordKeys.fee.rawValue)
+                                              fromAccountKey: ChangeKeysKeys.account.rawValue,
+                                              operationKey: ChangeKeysKeys.operation.rawValue,
+                                              chainIdKey: ChangeKeysKeys.chainId.rawValue,
+                                              blockDataKey: ChangeKeysKeys.blockData.rawValue,
+                                              feeKey: ChangeKeysKeys.fee.rawValue)
         let bildTransactionOperation = GetTransactionQueueOperation<Bool>(initParams: transactionOperationInitParams,
                                                                           completion: completion)
         
         // Send transaction
-        let sendTransacionOperationInitParams = (changePasswordQueue,
+        let sendTransacionOperationInitParams = (changeKeysQueue,
                                                  services.networkBroadcastService,
-                                                 ChangePasswordKeys.operationId.rawValue,
-                                                 ChangePasswordKeys.transaction.rawValue)
+                                                 ChangeKeysKeys.operationId.rawValue,
+                                                 ChangeKeysKeys.transaction.rawValue)
         let sendTransactionOperation = SendTransactionQueueOperation(initParams: sendTransacionOperationInitParams,
                                                                      completion: completion)
         
         // Completion
-        let completionOperation = createCompletionOperation(queue: changePasswordQueue)
+        let completionOperation = createCompletionOperation(queue: changeKeysQueue)
         
-        changePasswordQueue.addOperation(checkAccountOperation)
-        changePasswordQueue.addOperation(accountUpdateOperation)
-        changePasswordQueue.addOperation(getRequiredFeeOperation)
-        changePasswordQueue.addOperation(getChainIdOperation)
-        changePasswordQueue.addOperation(getBlockDataOperation)
-        changePasswordQueue.addOperation(bildTransactionOperation)
-        changePasswordQueue.addOperation(sendTransactionOperation)
+        changeKeysQueue.addOperation(checkAccountOperation)
+        changeKeysQueue.addOperation(accountUpdateOperation)
+        changeKeysQueue.addOperation(getRequiredFeeOperation)
+        changeKeysQueue.addOperation(getChainIdOperation)
+        changeKeysQueue.addOperation(getBlockDataOperation)
+        changeKeysQueue.addOperation(bildTransactionOperation)
+        changeKeysQueue.addOperation(sendTransactionOperation)
         
-        changePasswordQueue.setCompletionOperation(completionOperation)
+        changeKeysQueue.setCompletionOperation(completionOperation)
     }
     
     fileprivate func createCheckAccountOperation(_ queue: ECHOQueue,
@@ -221,7 +221,7 @@ final public class AuthentificationFacadeImp: AuthentificationFacade, ECHOQueueb
             self?.isOwnedBy(name: name, wif: wif, completion: { (result) in
                 switch result {
                 case .success(let account):
-                    queue?.saveValue(account.account, forKey: ChangePasswordKeys.account.rawValue)
+                    queue?.saveValue(account.account, forKey: ChangeKeysKeys.account.rawValue)
                 case .failure(let error):
                     queue?.cancelAllOperations()
                     let result = Result<Bool, ECHOError>(error: error)
@@ -250,7 +250,7 @@ final public class AuthentificationFacadeImp: AuthentificationFacade, ECHOQueueb
             guard self != nil else { return }
             guard let cryptoCore = self?.cryptoCore else { return }
             guard let network = self?.network else { return }
-            guard let account: Account = queue?.getValue(ChangePasswordKeys.account.rawValue) else { return }
+            guard let account: Account = queue?.getValue(ChangeKeysKeys.account.rawValue) else { return }
             
             guard let keychain = ECHOKeychainEd25519(wif: wif, core: cryptoCore) else {
                 queue?.cancelAllOperations()
@@ -285,7 +285,7 @@ final public class AuthentificationFacadeImp: AuthentificationFacade, ECHOQueueb
                                                    options: options,
                                                    fee: fee)
             
-            queue?.saveValue(operation, forKey: ChangePasswordKeys.operation.rawValue)
+            queue?.saveValue(operation, forKey: ChangeKeysKeys.operation.rawValue)
         }
         
         return accountUpdateOperation

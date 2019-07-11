@@ -19,7 +19,7 @@ public protocol AuthentificationFacade {
     func generateRandomWIF() -> String
     
 /**
-     A function that checks if the password for this account
+     A function that checks if the wif for this account
      
      - Parameter name: Account name or id
      - Parameter wif: WIF
@@ -41,7 +41,7 @@ public protocol AuthentificationFacade {
      - Parameter oldWIF: Old account WIF
      - Parameter newWIF: New account WIF
      - Parameter name: Account name or id
-     - Parameter completion: Callback in which the information will return whether the change password was successful
+     - Parameter completion: Callback in which the information will return whether the change keys was successful
  */
     func changeKeys(oldWIF: String, newWIF: String, name: String, completion: @escaping Completion<Bool>)
 }

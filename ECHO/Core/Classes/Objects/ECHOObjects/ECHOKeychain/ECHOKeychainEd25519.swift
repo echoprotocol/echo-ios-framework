@@ -7,7 +7,7 @@
 //
 
 /**
- Container which create private key by Ed25519 curve from name, password, type
+ Container which create private key by Ed25519 curve from wif, seed, random
  */
 final public class ECHOKeychainEd25519: ECHOKeychain {
     

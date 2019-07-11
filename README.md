@@ -45,7 +45,7 @@ There are simple examples of usage framework
 
 ```swift
 func login() {
-    echo.isOwnedBy(name: "some name", password: "some password") { (result) in
+    echo.isOwnedBy(name: "some name", wif: "some wif") { (result) in
         print(result)
     }
 }
@@ -117,12 +117,12 @@ extension YourClass: SubscribeAccountDelegate {
 }
 ```
 
-#### Change password
+#### Change keys
 
 ```swift
-func changePassword() {
+func changeKeys() {
 
-    echo.changePassword(old: "your old pass", new: "your new pass", name: "some name") { (result) in
+    echo.changeKeys(oldWIF: "your old wif", newWIF: "your new wif", name: "some name") { (result) in
 
         switch result {
         case .success(let success):
@@ -162,7 +162,7 @@ func feeForTransfer() {
 funс transfer() {
 
     echo.sendTransferOperation(fromNameOrId: "some name",
-                               passwordOrWif: PassOrWif.password("some pass"),
+                               wif: "some wif",
                                toNameOrId: "some name",
                                amount: 300,
                                asset: "1.3.0",
@@ -206,7 +206,7 @@ func createAsset() {
                                  description: "some description")
 
     echo.createAsset(nameOrId: "some name", 
-                     passwordOrWif: PassOrWif.password("some pass"), 
+                     wif: "some wif", 
                      asset: asset) { (result) in
 
         switch result {
@@ -225,7 +225,7 @@ func createAsset() {
 func issueAsset() {
 
     echo.issueAsset(issuerNameOrId: "some name",
-                    passwordOrWif: PassOrWif.password("some pass"),
+                    wif: "some wif",
                     asset: "1.3.87",
                     amount: 1,
                     destinationIdOrName: "some name") { (result) in
@@ -250,7 +250,7 @@ func createContract() {
     let byteCode = "some bytecode"
 
     echo.createContract(registrarNameOrId: "some name",
-                        passwordOrWif: PassOrWif.password("some pass"),
+                        wif: "some wif",
                         assetId: "1.3.0",
                         amount: nil,
                         assetForFee: nil,
@@ -278,7 +278,7 @@ func createContract() {
 func callContract() {
 
     echo.callContract(registrarNameOrId: "some name",
-                      passwordOrWif: PassOrWif.password("some pass"),
+                      wif: "some wif",
                       assetId: "1.3.0",
                       assetForFee: nil,
                       contratId: "1.16.1",

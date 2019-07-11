@@ -7,7 +7,7 @@
 //
 
 /**
-    Container which create private key from name, password, type
+    Container which create private key from wif, seed, random
  */
 public protocol ECHOKeychain: class {
     
