@@ -109,13 +109,13 @@ class ECHOInterfaceTests: XCTestCase {
 //            $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
 //        }))
 //        let exp = expectation(description: "testRegisterUser")
-//        let userName = Constants.defaultName + "1"
-//        let password = Constants.defaultPass
+//        let userName = Constants.defaultName + "1234"
+//        let wif = Constants.defaultWIF
 //        var finalResult = false
 //
 //        //act
 //        echo.start { [unowned self] (result) in
-//            self.echo.registerAccount(name: userName, password: password, completion: { (result) in
+//            self.echo.registerAccount(name: userName, wif: wif, completion: { (result) in
 //                switch result {
 //                case .success(let boolResult):
 //                    finalResult = boolResult
@@ -1058,7 +1058,7 @@ class ECHOInterfaceTests: XCTestCase {
             XCTAssertTrue(assets.count > 0 && assets.count <= limit)
         }
     }
-//
+
 //    func testCreateAsset() {
 //
 //        //arrange
@@ -1087,13 +1087,13 @@ class ECHOInterfaceTests: XCTestCase {
 //                                     coreExchangeRate: Price(base: AssetAmount(amount: 1, asset: Asset(Constants.defaultAsset)), quote: AssetAmount(amount: 1, asset: Asset("1.3.1"))),
 //                                     description: "description")
 //        let nameOrId = Constants.defaultName
-//        let password = Constants.defaultPass
+//        let wif = Constants.defaultWIF
 //        var success: Bool!
 //
 //        //act
 //        echo.start { [unowned self] (result) in
 //
-//            self.echo.createAsset(nameOrId: nameOrId, passwordOrWif: PassOrWif.password(password), asset: asset) { (result) in
+//            self.echo.createAsset(nameOrId: nameOrId, wif: wif, asset: asset) { (result) in
 //
 //                switch result {
 //                case .success(let isSuccess):
@@ -1121,14 +1121,14 @@ class ECHOInterfaceTests: XCTestCase {
 //        let exp = expectation(description: "testIssueAsset")
 //
 //        let nameOrId = Constants.defaultName
-//        let password = Constants.defaultPass
+//        let wif = Constants.defaultWIF
 //        var success: Bool!
 //
 //        //act
 //        echo.start { [unowned self] (result) in
 //
 //            self.echo.issueAsset(issuerNameOrId: nameOrId,
-//                                 passwordOrWif: PassOrWif.password(password),
+//                                 wif: wif,
 //                                 asset: Constants.defaultAnotherAsset,
 //                                 amount: 10000000,
 //                                 destinationIdOrName: Constants.defaultName,
