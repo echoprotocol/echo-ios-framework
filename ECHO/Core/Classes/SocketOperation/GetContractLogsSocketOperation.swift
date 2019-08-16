@@ -18,13 +18,13 @@ struct GetContractLogsSocketOperation: SocketOperation {
     var apiId: Int
     var contractId: String
     var fromBlock: Int
-    var toBlock: Int
+    var limit: Int
     var completion: Completion<[ContractLog]>
     
     func createParameters() -> [Any] {
         let array: [Any] = [apiId,
                             SocketOperationKeys.getContractLogs.rawValue,
-                            [contractId, fromBlock, toBlock]]
+                            [contractId, fromBlock, limit]]
         return array
     }
     

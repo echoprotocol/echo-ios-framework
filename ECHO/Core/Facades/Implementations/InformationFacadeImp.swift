@@ -580,8 +580,7 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                 
                 if var operation = operation as? AccountCreateOperation {
                     let registrar = self?.findAccountIn(accounts, accountId: operation.registrar.id)
-                    let refereer = self?.findAccountIn(accounts, accountId: operation.referrer.id)
-                    operation.changeAccounts(registrar: registrar, referrer: refereer)
+                    operation.changeAccounts(registrar: registrar)
                     historyItem.operation = operation
                 }
                 
@@ -603,25 +602,25 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                     historyItem.operation = operation
                 }
                 
-                if var operation = operation as? GenerateEthAddressOperation {
+                if var operation = operation as? SidechainETHCreateAddressOperation {
                     let account = self?.findAccountIn(accounts, accountId: operation.account.id)
                     operation.changeAccount(account: account)
                     historyItem.operation = operation
                 }
                 
-                if var operation = operation as? WithdrawalEthOperation {
+                if var operation = operation as? SidechainETHWithdrawOperation {
                     let account = self?.findAccountIn(accounts, accountId: operation.account.id)
                     operation.changeAccount(account: account)
                     historyItem.operation = operation
                 }
                 
-                if var operation = operation as? SidechainIssueOperation {
+                if var operation = operation as? SidechainETHIssueOperation {
                     let account = self?.findAccountIn(accounts, accountId: operation.account.id)
                     operation.changeAccount(account: account)
                     historyItem.operation = operation
                 }
                 
-                if var operation = operation as? SidechainBurnOperation {
+                if var operation = operation as? SidechainETHBurnOperation {
                     let account = self?.findAccountIn(accounts, accountId: operation.account.id)
                     operation.changeAccount(account: account)
                     historyItem.operation = operation
@@ -652,7 +651,7 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                 
                 guard let operation = historyItem.operation else { continue }
                 
-                if var operation = operation as? SidechainIssueOperation {
+                if var operation = operation as? SidechainETHIssueOperation {
                     let deposit = self?.findDepositEthIn(deposits, depositId: operation.depositId)
                     operation.deposit = deposit
                     historyItem.operation = operation
@@ -683,7 +682,7 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                 
                 guard let operation = historyItem.operation else { continue }
                 
-                if var operation = operation as? SidechainBurnOperation {
+                if var operation = operation as? SidechainETHBurnOperation {
                     let withdraw = self?.findWithdrawsEthIn(withdraws, withdrawId: operation.withdrawId)
                     operation.withdraw = withdraw
                     historyItem.operation = operation
@@ -784,26 +783,26 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                     historyItem.operation = operation
                 }
                 
-                if var operation = operation as? GenerateEthAddressOperation {
+                if var operation = operation as? SidechainETHCreateAddressOperation {
                     let feeAsset = self?.findAssetsIn(assets, assetId: operation.fee.asset.id)
                     operation.changeAssets(feeAsset: feeAsset)
                     historyItem.operation = operation
                 }
                 
-                if var operation = operation as? WithdrawalEthOperation {
+                if var operation = operation as? SidechainETHWithdrawOperation {
                     let feeAsset = self?.findAssetsIn(assets, assetId: operation.fee.asset.id)
                     operation.changeAssets(feeAsset: feeAsset)
                     historyItem.operation = operation
                 }
                 
-                if var operation = operation as? SidechainIssueOperation {
+                if var operation = operation as? SidechainETHIssueOperation {
                     let feeAsset = self?.findAssetsIn(assets, assetId: operation.fee.asset.id)
                     let valueAsset = self?.findAssetsIn(assets, assetId: operation.value.asset.id)
                     operation.changeAssets(valueAsset: valueAsset, feeAsset: feeAsset)
                     historyItem.operation = operation
                 }
                 
-                if var operation = operation as? SidechainBurnOperation {
+                if var operation = operation as? SidechainETHBurnOperation {
                     let feeAsset = self?.findAssetsIn(assets, assetId: operation.fee.asset.id)
                     let valueAsset = self?.findAssetsIn(assets, assetId: operation.value.asset.id)
                     operation.changeAssets(valueAsset: valueAsset, feeAsset: feeAsset)
@@ -916,7 +915,6 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
             
             if let operation = operation as? AccountCreateOperation {
                 accountsIds.insert(operation.registrar.id)
-                accountsIds.insert(operation.referrer.id)
                 return
             }
             
@@ -935,22 +933,22 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                 return
             }
             
-            if let operation = operation as? GenerateEthAddressOperation {
+            if let operation = operation as? SidechainETHCreateAddressOperation {
                 accountsIds.insert(operation.account.id)
                 return
             }
             
-            if let operation = operation as? WithdrawalEthOperation {
+            if let operation = operation as? SidechainETHWithdrawOperation {
                 accountsIds.insert(operation.account.id)
                 return
             }
             
-            if let operation = operation as? SidechainIssueOperation {
+            if let operation = operation as? SidechainETHIssueOperation {
                 accountsIds.insert(operation.account.id)
                 return
             }
             
-            if let operation = operation as? SidechainBurnOperation {
+            if let operation = operation as? SidechainETHBurnOperation {
                 accountsIds.insert(operation.account.id)
                 return
             }
@@ -1006,12 +1004,12 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                 return
             }
             
-            if let operation = operation as? SidechainIssueOperation {
+            if let operation = operation as? SidechainETHIssueOperation {
                 assetsIds.insert(operation.value.asset.id)
                 return
             }
             
-            if let operation = operation as? SidechainBurnOperation {
+            if let operation = operation as? SidechainETHBurnOperation {
                 assetsIds.insert(operation.value.asset.id)
                 return
             }
@@ -1030,7 +1028,7 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                 return
             }
             
-            if let operation = operation as? SidechainIssueOperation {
+            if let operation = operation as? SidechainETHIssueOperation {
                 depositsId.insert(operation.depositId)
                 return
             }
@@ -1049,7 +1047,7 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                 return
             }
             
-            if let operation = operation as? SidechainBurnOperation {
+            if let operation = operation as? SidechainETHBurnOperation {
                 withdrawalsId.insert(operation.withdrawId)
                 return
             }

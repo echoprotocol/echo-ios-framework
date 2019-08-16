@@ -38,7 +38,7 @@ public struct CreateContractOperation: BaseOperation {
                 supportedAsset: Asset?,
                 ethAccuracy: Bool) {
         
-        self.type = .createContractOperation
+        self.type = .contractCreateOperation
         self.registrar = registrar
         self.value = value
         self.code = code
@@ -49,7 +49,7 @@ public struct CreateContractOperation: BaseOperation {
     
     public init(from decoder: Decoder) throws {
         
-        type = .createContractOperation
+        type = .contractCreateOperation
         
         let values = try decoder.container(keyedBy: CreateContractOperationCodingKeys.self)
         let registrarId = try values.decode(String.self, forKey: .registrar)

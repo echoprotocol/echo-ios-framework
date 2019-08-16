@@ -240,14 +240,14 @@ extension ContractsService {
         socketCore.send(operation: operation)
     }
     
-    func getContractLogs(contractId: String, fromBlock: Int, toBlock: Int, completion: @escaping Completion<[ContractLog]>) {
+    func getContractLogs(contractId: String, fromBlock: Int, limit: Int, completion: @escaping Completion<[ContractLog]>) {
         
         let operation = GetContractLogsSocketOperation(method: .call,
                                                        operationId: socketCore.nextOperationId(),
                                                        apiId: apiIdentifire,
                                                        contractId: contractId,
                                                        fromBlock: fromBlock,
-                                                       toBlock: toBlock,
+                                                       limit: limit,
                                                        completion: completion)
         
         socketCore.send(operation: operation)

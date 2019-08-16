@@ -119,10 +119,10 @@ protocol DatabaseApiService: BaseApiService {
      
      - Parameter contractId: Contract id for fetching logs
      - Parameter fromBlockId: Number of the earliest block to retrieve
-     - Parameter toBlockId: Number of the most recent block to retrieve
+     - Parameter limit: Number of the count recent block to retrieve
      - Parameter completion: Callback which returns an array of [ContractLog](ContractLog) result of call or error
  */
-    func getContractLogs(contractId: String, fromBlock: Int, toBlock: Int, completion: @escaping Completion<[ContractLog]>)
+    func getContractLogs(contractId: String, fromBlock: Int, limit: Int, completion: @escaping Completion<[ContractLog]>)
     
 /**
      Subscribes to listening contract logs

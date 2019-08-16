@@ -16,8 +16,6 @@ public struct AccountCreateOperation: BaseOperation {
     enum AccountCreateOperationCodingKeys: String, CodingKey {
         case name
         case registrar
-        case referrer
-        case referrerPercent = "referrer_percent"
         case active
         case options
         case extensions
@@ -31,8 +29,6 @@ public struct AccountCreateOperation: BaseOperation {
     
     public let name: String
     public var registrar: Account
-    public var referrer: Account
-    public let referrerPercent: Int = 0
     public let active: OptionalValue<Authority>
     public let options: OptionalValue<AccountOptions>
     public let edKey: Address
@@ -46,10 +42,8 @@ public struct AccountCreateOperation: BaseOperation {
         name = try values.decode(String.self, forKey: .name)
         
         let registrarId = try values.decode(String.self, forKey: .registrar)
-        let referrerId = try values.decode(String.self, forKey: .referrer)
 
         registrar = Account(registrarId)
-        referrer = Account(referrerId)
         
         let activeValue = try values.decode(Authority.self, forKey: .active)
         let optionsValue = try values.decode(AccountOptions.self, forKey: .options)
@@ -72,8 +66,6 @@ public struct AccountCreateOperation: BaseOperation {
         var dictionary: [AnyHashable: Any?] = [AccountCreateOperationCodingKeys.fee.rawValue: fee.toJSON(),
                                                AccountCreateOperationCodingKeys.name.rawValue: name,
                                                AccountCreateOperationCodingKeys.registrar.rawValue: registrar,
-                                               AccountCreateOperationCodingKeys.referrer.rawValue: referrer,
-                                               AccountCreateOperationCodingKeys.referrerPercent.rawValue: referrerPercent,
                                                AccountCreateOperationCodingKeys.edKey.rawValue: edKey.toJSON(),
                                                AccountCreateOperationCodingKeys.extensions.rawValue: extensions.toJSON()]
         
@@ -88,10 +80,9 @@ public struct AccountCreateOperation: BaseOperation {
         return array
     }
     
-    mutating func changeAccounts(registrar: Account?, referrer: Account?) {
+    mutating func changeAccounts(registrar: Account?) {
         
         if let registrar = registrar { self.registrar = registrar }
-        if let referrer = referrer { self.referrer = referrer }
     }
     
     public func toData() -> Data? {
@@ -100,8 +91,6 @@ public struct AccountCreateOperation: BaseOperation {
         data.append(optional: fee.toData())
         data.append(optional: Data.fromString(name))
         data.append(optional: Data.fromString(registrar.id))
-        data.append(optional: Data.fromString(referrer.id))
-        data.append(optional: Data.fromInt8(referrerPercent))
         data.append(optional: active.toData())
         data.append(optional: edKey.toData())
         data.append(optional: options.toData())

@@ -11,63 +11,51 @@
  */
 public enum OperationType: Int {
     case transferOperation                          //0
-    case limitOrderCreateOperation
-    case limitOrderCancelOperation
-    case callOrderUpdateOperation
-    case fillOrderOperation                         //Virtual
     case accountCreateOperation
     case accountUpdateOperation
     case accountWhitelistOperation
-    case accountUpgradeOperation
     case accountTransferOperation
-    case assetCreateOperation                       //10
+    case assetCreateOperation
     case assetUpdateOperation
     case assetUpdateBitassetOperation
     case assetUpdateFeedProducersOperation
     case assetIssueOperation
-    case assetReserveOperation
+    case assetReserveOperation                      //10
     case assetFundFeePoolOperation
-    case assetSettleOperation
-    case assetGlobalSettleOperation
     case assetPublishFeedOperation
-    case proposalCreateOperation                    //20
+    case proposalCreateOperation
     case proposalUpdateOperation
     case proposalDeleteOperation
-    case withdrawPermissionCreateOperation
-    case withdrawPermissionUpdateOperation
-    case withdrawPermissionClaimOperation
-    case withdrawPermissionDeleteOperation
     case committeeMemberCreateOperation
     case committeeMemberUpdateOperation
     // swiftlint:disable variable_name
     case committeeMemberUpdateGlobalParametersOperation
     // swiftlint:enable variable_name
-    case vestingBalanceCreateOperation              //30
+    case vestingBalanceCreateOperation
     case vestingBalanceWithdrawOperation
-    case customOperation
-    case assertOperation
-    case balanceClaimOperation
+    case balanceClaimOperation                      //20
     case overrideTransferOperation
-    case assetSettleCancelOperation                 //Virtual
     case assetClaimFeesOperation
-    case bidCollateralOperation
-    case executeBidOperation                        //Virtual
-    case createContractOperation                    //40
-    case callContractOperation
+    case contractCreateOperation
+    case contractCallOperation
     case contractTransferOperation                  //Virtual
-    case changeSidechainConfigOperation             //43 // temporary operation for tests
+    case sidechainChangeConfigOperation             // temporary operation for tests
     case accountAddressCreateOperation
     case transferToAddressOperation
-    case generateEthAddressOperation
-    case createEthAddressOperation
-    case depositEthOperation
-    case withdrawEthOperation
-    case approveWithdrawEthOperation
+    case sidechainETHCreateAddressOperation
+    case sidechainETHApproveAddressOperation        //30
+    case sidechainETHDepositOperation
+    case sidechainETHWithdrawOperation
+    case sidechainETHApproveWithdrawOperation
     case contractFundPoolOperation
     case contractWhitelistOperation
-    case sidechainIssueOperation                    // VIRTUAL
-    case sidechainBurnOperation                     // VIRTUAL
-
+    case sidechainETHIssueOperation                 // VIRTUAL
+    case sidechainETHBurnOperation                  // VIRTUAL
+    case sidechainERC20RegisterTokenOperation
+    case sidechainERC20DepositTokenOperation
+    case sidechainERC20WithdrawTokenOperation       //40
+    case sidechainERC20ApproveTokenWithdrawOperation
+    case contractUpdateOperation
 }
 
 struct OperationDecoder {
@@ -84,13 +72,13 @@ struct OperationDecoder {
         case .transferOperation: return decode(TransferOperation.self, container: container)
         case .assetCreateOperation: return decode(CreateAssetOperation.self, container: container)
         case .assetIssueOperation: return decode(IssueAssetOperation.self, container: container)
-        case .createContractOperation: return decode(CreateContractOperation.self, container: container)
-        case .callContractOperation: return decode(CallContractOperation.self, container: container)
+        case .contractCreateOperation: return decode(CreateContractOperation.self, container: container)
+        case .contractCallOperation: return decode(CallContractOperation.self, container: container)
         case .contractTransferOperation: return decode(ContractTransferOperation.self, container: container)
-        case .generateEthAddressOperation: return decode(GenerateEthAddressOperation.self, container: container)
-        case .withdrawEthOperation: return decode(WithdrawalEthOperation.self, container: container)
-        case .sidechainIssueOperation: return decode(SidechainIssueOperation.self, container: container)
-        case .sidechainBurnOperation: return decode(SidechainBurnOperation.self, container: container)
+        case .sidechainETHCreateAddressOperation: return decode(SidechainETHCreateAddressOperation.self, container: container)
+        case .sidechainETHWithdrawOperation: return decode(SidechainETHWithdrawOperation.self, container: container)
+        case .sidechainETHIssueOperation: return decode(SidechainETHIssueOperation.self, container: container)
+        case .sidechainETHBurnOperation: return decode(SidechainETHBurnOperation.self, container: container)
         default: return nil
         }
     }
@@ -120,20 +108,20 @@ struct OperationDecoder {
                 baseOperation = try? JSONDecoder().decode(CreateAssetOperation.self, from: data)
             case .assetIssueOperation:
                 baseOperation = try? JSONDecoder().decode(IssueAssetOperation.self, from: data)
-            case .createContractOperation:
+            case .contractCreateOperation:
                 baseOperation = try? JSONDecoder().decode(CreateContractOperation.self, from: data)
-            case .callContractOperation:
+            case .contractCallOperation:
                 baseOperation = try? JSONDecoder().decode(CallContractOperation.self, from: data)
             case .contractTransferOperation:
                 baseOperation = try? JSONDecoder().decode(ContractTransferOperation.self, from: data)
-            case .generateEthAddressOperation:
-                baseOperation = try? JSONDecoder().decode(GenerateEthAddressOperation.self, from: data)
-            case .withdrawEthOperation:
-                baseOperation = try? JSONDecoder().decode(WithdrawalEthOperation.self, from: data)
-            case .sidechainIssueOperation:
-                baseOperation = try? JSONDecoder().decode(SidechainIssueOperation.self, from: data)
-            case .sidechainBurnOperation:
-                baseOperation = try? JSONDecoder().decode(SidechainBurnOperation.self, from: data)
+            case .sidechainETHCreateAddressOperation:
+                baseOperation = try? JSONDecoder().decode(SidechainETHCreateAddressOperation.self, from: data)
+            case .sidechainETHWithdrawOperation:
+                baseOperation = try? JSONDecoder().decode(SidechainETHWithdrawOperation.self, from: data)
+            case .sidechainETHIssueOperation:
+                baseOperation = try? JSONDecoder().decode(SidechainETHIssueOperation.self, from: data)
+            case .sidechainETHBurnOperation:
+                baseOperation = try? JSONDecoder().decode(SidechainETHBurnOperation.self, from: data)
             default:
                 break
             }

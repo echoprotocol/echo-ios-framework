@@ -335,7 +335,7 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble {
             
             let fee = AssetAmount(amount: 0, asset: asset)
             
-            let extractedExpr: GenerateEthAddressOperation = GenerateEthAddressOperation.init(account: account, fee: fee)
+            let extractedExpr: SidechainETHCreateAddressOperation = SidechainETHCreateAddressOperation.init(account: account, fee: fee)
             let transferOperation = extractedExpr
             
             queue?.saveValue(transferOperation, forKey: EthFacadeResultKeys.operation.rawValue)
@@ -361,7 +361,7 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble {
             let fee = AssetAmount(amount: 0, asset: asset)
             let address = toEthAddress.replacingOccurrences(of: "0x", with: "")
             
-            let extractedExpr: WithdrawalEthOperation = WithdrawalEthOperation(account: account,
+            let extractedExpr: SidechainETHWithdrawOperation = SidechainETHWithdrawOperation(account: account,
                                                                                value: amount,
                                                                                ethAddress: address,
                                                                                fee: fee)

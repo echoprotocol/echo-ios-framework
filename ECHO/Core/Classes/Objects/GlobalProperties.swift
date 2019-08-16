@@ -60,13 +60,7 @@ public struct GlobalPropertiesParameters: Decodable {
         case maximumAuthorityMembership = "maximum_authority_membership"
         case reservePercentOfFee = "reserve_percent_of_fee"
         case networkPercentOfFee = "network_percent_of_fee"
-        case lifetimeReferrerPercentOfFee = "lifetime_referrer_percent_of_fee"
-        case cashbackVestingPeriodSeconds = "cashback_vesting_period_seconds"
-        case cashbackVestingThreshold = "cashback_vesting_threshold"
-        case countNonMemberVotes = "count_non_member_votes"
-        case allowNonMemberWhitelists = "allow_non_member_whitelists"
         case maxPredicateOpcode = "max_predicate_opcode"
-        case feeLiquidationThreshold = "fee_liquidation_threshold"
         case accountsPerFeeScale = "accounts_per_fee_scale"
         case accountFeeScaleBitshifts = "account_fee_scale_bitshifts"
         case maxAuthorityDepth = "max_authority_depth"
@@ -89,13 +83,7 @@ public struct GlobalPropertiesParameters: Decodable {
     public let maximumAuthorityMembership: IntOrString
     public let reservePercentOfFee: IntOrString
     public let networkPercentOfFee: IntOrString
-    public let lifetimeReferrerPercentOfFee: IntOrString
-    public let cashbackVestingPeriodSeconds: IntOrString
-    public let cashbackVestingThreshold: IntOrString
-    public let countNonMemberVotes: Bool
-    public let allowNonMemberWhitelists: Bool
     public let maxPredicateOpcode: IntOrString
-    public let feeLiquidationThreshold: IntOrString
     public let accountsPerFeeScale: IntOrString
     public let accountFeeScaleBitshifts: IntOrString
     public let maxAuthorityDepth: IntOrString
@@ -118,13 +106,7 @@ public struct GlobalPropertiesParameters: Decodable {
                 maximumAuthorityMembership: IntOrString,
                 reservePercentOfFee: IntOrString,
                 networkPercentOfFee: IntOrString,
-                lifetimeReferrerPercentOfFee: IntOrString,
-                cashbackVestingPeriodSeconds: IntOrString,
-                cashbackVestingThreshold: IntOrString,
-                countNonMemberVotes: Bool,
-                allowNonMemberWhitelists: Bool,
                 maxPredicateOpcode: IntOrString,
-                feeLiquidationThreshold: IntOrString,
                 accountsPerFeeScale: IntOrString,
                 accountFeeScaleBitshifts: IntOrString,
                 maxAuthorityDepth: IntOrString,
@@ -146,13 +128,7 @@ public struct GlobalPropertiesParameters: Decodable {
         self.maximumAuthorityMembership = maximumAuthorityMembership
         self.reservePercentOfFee = reservePercentOfFee
         self.networkPercentOfFee = networkPercentOfFee
-        self.lifetimeReferrerPercentOfFee = lifetimeReferrerPercentOfFee
-        self.cashbackVestingPeriodSeconds = cashbackVestingPeriodSeconds
-        self.cashbackVestingThreshold = cashbackVestingThreshold
-        self.countNonMemberVotes = countNonMemberVotes
-        self.allowNonMemberWhitelists = allowNonMemberWhitelists
         self.maxPredicateOpcode = maxPredicateOpcode
-        self.feeLiquidationThreshold = feeLiquidationThreshold
         self.accountsPerFeeScale = accountsPerFeeScale
         self.accountFeeScaleBitshifts = accountFeeScaleBitshifts
         self.maxAuthorityDepth = maxAuthorityDepth
@@ -179,13 +155,7 @@ public struct GlobalPropertiesParameters: Decodable {
         maximumAuthorityMembership = try values.decode(IntOrString.self, forKey: .maximumAuthorityMembership)
         reservePercentOfFee = try values.decode(IntOrString.self, forKey: .reservePercentOfFee)
         networkPercentOfFee = try values.decode(IntOrString.self, forKey: .networkPercentOfFee)
-        lifetimeReferrerPercentOfFee = try values.decode(IntOrString.self, forKey: .lifetimeReferrerPercentOfFee)
-        cashbackVestingPeriodSeconds = try values.decode(IntOrString.self, forKey: .cashbackVestingPeriodSeconds)
-        cashbackVestingThreshold = try values.decode(IntOrString.self, forKey: .cashbackVestingThreshold)
-        countNonMemberVotes = try values.decode(Bool.self, forKey: .countNonMemberVotes)
-        allowNonMemberWhitelists = try values.decode(Bool.self, forKey: .allowNonMemberWhitelists)
         maxPredicateOpcode = try values.decode(IntOrString.self, forKey: .maxPredicateOpcode)
-        feeLiquidationThreshold = try values.decode(IntOrString.self, forKey: .feeLiquidationThreshold)
         accountsPerFeeScale = try values.decode(IntOrString.self, forKey: .accountsPerFeeScale)
         accountFeeScaleBitshifts = try values.decode(IntOrString.self, forKey: .accountFeeScaleBitshifts)
         maxAuthorityDepth = try values.decode(IntOrString.self, forKey: .maxAuthorityDepth)
@@ -284,8 +254,13 @@ public struct SidechainConfig: Decodable {
         case ethGenAddressTopic = "eth_gen_address_topic"
         case ethDepositTopic = "eth_deposit_topic"
         case ethWithdrawTopic = "eth_withdraw_topic"
+        case erc20DepositTopic = "erc20_deposit_topic"
+        case erc20WithdrawTopic = "erc20_withdraw_topic"
         case ethUpdateAddressMethod = "eth_update_addr_method"
         case ETHAssetId = "ETH_asset_id"
+        case fines
+        case waitingBlocks = "waiting_blocks"
+        case gasPrice = "gas_price"
     }
     
     public let ethContractAddress: String
@@ -297,7 +272,12 @@ public struct SidechainConfig: Decodable {
     public let ethGenAddressTopic: String
     public let ethDepositTopic: String
     public let ethWithdrawTopic: String
+    public let erc20DepositTopic: String
+    public let erc20WithdrawTopic: String
     public let ETHAssetId: String
+    public let fines: SidechainFines
+    public let waitingBlocks: IntOrString
+    public let gasPrice: IntOrString
     
     public init(ethContractAddress: String,
                 ethCommitteeUpdateMethod: EthMethod,
@@ -308,7 +288,12 @@ public struct SidechainConfig: Decodable {
                 ethGenAddressTopic: String,
                 ethDepositTopic: String,
                 ethWithdrawTopic: String,
-                ETHAssetId: String) {
+                erc20DepositTopic: String,
+                erc20WithdrawTopic: String,
+                ETHAssetId: String,
+                fines: SidechainFines,
+                waitingBlocks: IntOrString,
+                gasPrice: IntOrString) {
         
         self.ethContractAddress = ethContractAddress
         self.ethCommitteeUpdateMethod = ethCommitteeUpdateMethod
@@ -319,7 +304,12 @@ public struct SidechainConfig: Decodable {
         self.ethGenAddressTopic = ethGenAddressTopic
         self.ethDepositTopic = ethDepositTopic
         self.ethWithdrawTopic = ethWithdrawTopic
+        self.erc20DepositTopic = erc20DepositTopic
+        self.erc20WithdrawTopic = erc20WithdrawTopic
         self.ETHAssetId = ETHAssetId
+        self.fines = fines
+        self.waitingBlocks = waitingBlocks
+        self.gasPrice = gasPrice
     }
     
     public init(from decoder: Decoder) throws {
@@ -335,7 +325,33 @@ public struct SidechainConfig: Decodable {
         ethGenAddressTopic = try values.decode(String.self, forKey: .ethGenAddressTopic)
         ethDepositTopic = try values.decode(String.self, forKey: .ethDepositTopic)
         ethWithdrawTopic = try values.decode(String.self, forKey: .ethWithdrawTopic)
+        erc20DepositTopic = try values.decode(String.self, forKey: .erc20DepositTopic)
+        erc20WithdrawTopic = try values.decode(String.self, forKey: .erc20WithdrawTopic)
         ETHAssetId = try values.decode(String.self, forKey: .ETHAssetId)
+        fines = try values.decode(SidechainFines.self, forKey: .fines)
+        waitingBlocks = try values.decode(IntOrString.self, forKey: .waitingBlocks)
+        gasPrice = try values.decode(IntOrString.self, forKey: .gasPrice)
+    }
+}
+
+public struct SidechainFines: Decodable {
+    
+    private enum SidechainFinesCodingKeys: String, CodingKey {
+        case generateETHAddress = "generate_eth_address"
+    }
+    
+    public let generateETHAddress: Int
+    
+    public init(generateETHAddress: Int) {
+        
+        self.generateETHAddress = generateETHAddress
+    }
+    
+    public init(from decoder: Decoder) throws {
+        
+        let values = try decoder.container(keyedBy: SidechainFinesCodingKeys.self)
+        
+        generateETHAddress = try values.decode(Int.self, forKey: .generateETHAddress)
     }
 }
 

@@ -265,17 +265,8 @@ class SocketCoreComponentTests: XCTestCase {
         asset.symbol = "VSASSETFORISSUE2"
         asset.precision = 4
         asset.issuer = Account("1.2.95")
-        asset.setBitsassetOptions(BitassetOptions(feedLifetimeSec: 86400,
-                                                  minimumFeeds: 7,
-                                                  forceSettlementDelaySec: 86400,
-                                                  forceSettlementOffsetPercent: 100,
-                                                  maximumForceSettlementVolume: 2000,
-                                                  shortBackingAsset: "1.3.0"))
-        asset.predictionMarket = false
         
         asset.options = AssetOptions(maxSupply: 100000,
-                                     marketFeePercent: 0,
-                                     maxMarketFee: 0,
                                      issuerPermissions: AssetOptionIssuerPermissions.committeeFedAsset.rawValue,
                                      flags: AssetOptionIssuerPermissions.committeeFedAsset.rawValue,
                                      coreExchangeRate: Price(base: AssetAmount(amount: 1, asset: Asset("1.3.0")), quote: AssetAmount(amount: 1, asset: Asset("1.3.1"))),
@@ -316,7 +307,7 @@ class SocketCoreComponentTests: XCTestCase {
             $0.socketMessenger = messenger
         }))
         let exp = expectation(description: "Getting contracts")
-        let legalContractId = "1.14.56"
+        let legalContractId = "1.9.56"
         var contract: ContractStructEnum!
         
         //act
@@ -346,7 +337,7 @@ class SocketCoreComponentTests: XCTestCase {
             $0.socketMessenger = messenger
         }))
         let exp = expectation(description: "Getting contracts")
-        let legalContractId = "1.14.56"
+        let legalContractId = "1.9.56"
         let contractsIDs = [legalContractId]
         var contracts: [ContractInfo] = []
         
@@ -483,7 +474,7 @@ class SocketCoreComponentTests: XCTestCase {
         let exp = expectation(description: "Query contract")
         let registrarNameOrId = "vsharaev"
         let assetId = "1.3.0"
-        let contratId = "1.14.1"
+        let contratId = "1.9.1"
         let methodName = "getCount"
         let params: [AbiTypeValueInputModel] = []
         var query: String!
@@ -519,7 +510,7 @@ class SocketCoreComponentTests: XCTestCase {
         let registrarNameOrId = "vsharaev"
         let wif = "5KjC8BiryoxUNz3dEY2ZWQK5ssmD84JgRGemVWwxfNgiPoxcaVa"
         let assetId = "1.3.0"
-        let contratId = "1.14.56"
+        let contratId = "1.9.56"
         let methodName = "incrementCounter"
         let params: [AbiTypeValueInputModel] = []
         var success = false

@@ -24,14 +24,9 @@ public enum ObjectType: Int {
     case base
     case account
     case asset
-    case forceSettlement
     case committeeMember
-    case limitOrder
-    case callOrder
-    case custom
     case proposal
     case operationHistory
-    case withdrawPermission
     case vestingBalance
     case balance
     case contract
@@ -40,9 +35,11 @@ public enum ObjectType: Int {
     case ethAddress
     case depositEth
     case withdrawEth
+    case erc20Token
+    case depositERC20Token
+    case withdrawERC20Token
     case globalProperty
     case dynamicGlobalProperty
-    case reserved0
     case assetDynamicData
     case assetBitassetData
     case accountBalance
@@ -53,13 +50,12 @@ public enum ObjectType: Int {
     case chainProperty
     case budgetRecord
     case specialAuthority
-    case buyback
-    case collateralBid
     case contractBalance
     case contractHistory
     case contractStatistics
     case accountAddress
     case contractPool
+    case maliciousCommitteemen
     case undefined
     
     func getGenericObjectId() -> String? {
@@ -81,14 +77,9 @@ public enum ObjectType: Int {
              .base,
              .account,
              .asset,
-             .forceSettlement,
              .committeeMember,
-             .limitOrder,
-             .callOrder,
-             .custom,
              .proposal,
              .operationHistory,
-             .withdrawPermission,
              .vestingBalance,
              .balance,
              .contract,
@@ -96,11 +87,13 @@ public enum ObjectType: Int {
              .blockResult,
              .ethAddress,
              .depositEth,
-             .withdrawEth:
+             .withdrawEth,
+             .erc20Token,
+             .depositERC20Token,
+             .withdrawERC20Token:
             space = .protocolSpace
         case .globalProperty,
              .dynamicGlobalProperty,
-             .reserved0,
              .assetDynamicData,
              .assetBitassetData,
              .accountBalance,
@@ -111,13 +104,12 @@ public enum ObjectType: Int {
              .chainProperty,
              .budgetRecord,
              .specialAuthority,
-             .buyback,
-             .collateralBid,
              .contractBalance,
              .contractHistory,
              .contractStatistics,
              .accountAddress,
-             .contractPool:
+             .contractPool,
+             .maliciousCommitteemen:
             space = .implementationSpace
         case .undefined:
             space = .undefined

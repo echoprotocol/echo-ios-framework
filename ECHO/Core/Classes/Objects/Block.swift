@@ -20,6 +20,11 @@ public struct Block: Decodable {
         case transactions
         case round
         case account
+        case vmRoot = "vm_root"
+        case prevSignatures = "prev_signatures"
+        case edSignature = "ed_signature"
+        case delegate = "delegate"
+        case rand
     }
     
     public let previous: String
@@ -28,6 +33,11 @@ public struct Block: Decodable {
     public let transactions: [Transaction]
     public let round: Int
     public let account: Account
+    public let vmRoot: [String]
+    public let prevSignatures: [Signatures]
+    public let edSignature: String
+    public let accountDelegate: Account
+    public let rand: String
     
     public init(from decoder: Decoder) throws {
         
@@ -39,5 +49,11 @@ public struct Block: Decodable {
         round = try values.decode(Int.self, forKey: .round)
         let accountId = try values.decode(String.self, forKey: .account)
         account = Account(accountId)
+        vmRoot = try values.decode([String].self, forKey: .vmRoot)
+        prevSignatures = try values.decode([Signatures].self, forKey: .prevSignatures)
+        edSignature = try values.decode(String.self, forKey: .edSignature)
+        let delegateId = try values.decode(String.self, forKey: .delegate)
+        accountDelegate = Account(delegateId)
+        rand = try values.decode(String.self, forKey: .rand)
     }
 }

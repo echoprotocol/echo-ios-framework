@@ -7,9 +7,9 @@
 //
 
 /**
-    Struct used to encapsulate operations related to the [OperationType.generateEthAddressOperation](OperationType.generateEthAddressOperation)
+    Struct used to encapsulate operations related to the [OperationType.SidechainETHCreateAddressOperation](OperationType.SidechainETHCreateAddressOperation)
  */
-public struct GenerateEthAddressOperation: BaseOperation {
+public struct SidechainETHCreateAddressOperation: BaseOperation {
     
     enum AccountAddressCreateOperationCodingKeys: String, CodingKey {
         case account = "account"
@@ -25,7 +25,7 @@ public struct GenerateEthAddressOperation: BaseOperation {
     
     init(account: Account, fee: AssetAmount) {
         
-        type = .generateEthAddressOperation
+        type = .sidechainETHCreateAddressOperation
         
         self.account = account
         self.fee = fee
@@ -33,7 +33,7 @@ public struct GenerateEthAddressOperation: BaseOperation {
     
     public init(from decoder: Decoder) throws {
         
-        type = .generateEthAddressOperation
+        type = .sidechainETHCreateAddressOperation
         
         let values = try decoder.container(keyedBy: AccountAddressCreateOperationCodingKeys.self)
         

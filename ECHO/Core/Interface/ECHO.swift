@@ -359,9 +359,9 @@ final public class ECHO: InterfaceFacades, Startable {
         contractsFacade.getContractResult(contractResultId: contractResultId, completion: completion)
     }
     
-    public func getContractLogs(contractId: String, fromBlock: Int, toBlock: Int, completion: @escaping Completion<[ContractLog]>) {
+    public func getContractLogs(contractId: String, fromBlock: Int, limit: Int, completion: @escaping Completion<[ContractLog]>) {
         
-        contractsFacade.getContractLogs(contractId: contractId, fromBlock: fromBlock, toBlock: toBlock, completion: completion)
+        contractsFacade.getContractLogs(contractId: contractId, fromBlock: fromBlock, limit: limit, completion: completion)
     }
     
     public func getContracts(contractIds: [String], completion: @escaping Completion<[ContractInfo]>) {
