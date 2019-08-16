@@ -109,7 +109,7 @@ class ECHOInterfaceTests: XCTestCase {
 //            $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
 //        }))
 //        let exp = expectation(description: "testRegisterUser")
-//        let userName = Constants.defaultName + "1234"
+//        let userName = Constants.defaultToName
 //        let wif = Constants.defaultWIF
 //        var finalResult = false
 //
@@ -233,8 +233,8 @@ class ECHOInterfaceTests: XCTestCase {
         }))
         let exp = expectation(description: "testGettingAccountHistory")
         let userId = Constants.defaultName
-        let startId = "1.10.0"
-        let stopId = "1.10.0"
+        let startId = "1.6.0"
+        let stopId = "1.6.0"
         let limit = 100
         var history: [HistoryItem]!
         
@@ -266,8 +266,8 @@ class ECHOInterfaceTests: XCTestCase {
         }))
         let exp = expectation(description: "testGettingAccountHistoryFailed")
         let userId = "1.2.1234567"
-        let startId = "1.11.0"
-        let stopId = "1.11.0"
+        let startId = "1.6.0"
+        let stopId = "1.6.0"
         let limit = 100
         var errorMessage: String?
 
@@ -1070,19 +1070,16 @@ class ECHOInterfaceTests: XCTestCase {
 //        var asset = Asset("")
 //        asset.symbol = "SHAR"
 //        asset.precision = 4
-//        asset.issuer = Account("1.2.26")
+//        asset.issuer = Account("1.2.16")
 ////        asset.setBitsassetOptions(BitassetOptions(feedLifetimeSec: 86400,
 ////                                                  minimumFeeds: 7,
 ////                                                  forceSettlementDelaySec: 86400,
 ////                                                  forceSettlementOffsetPercent: 100,
 ////                                                  maximumForceSettlementVolume: 2000,
 ////                                                  shortBackingAsset: Constants.defaultAsset))
-//        asset.predictionMarket = false
 //
 //        asset.options = AssetOptions(maxSupply: 10000000,
-//                                     marketFeePercent: 0,
-//                                     maxMarketFee: 0,
-//                                     issuerPermissions: AssetOptionIssuerPermissions.committeeFedAsset.rawValue,
+//                                     issuerPermissions: AssetOptionIssuerPermissions.chargeMarketFee.rawValue,
 //                                     flags: AssetOptionIssuerPermissions.committeeFedAsset.rawValue,
 //                                     coreExchangeRate: Price(base: AssetAmount(amount: 1, asset: Asset(Constants.defaultAsset)), quote: AssetAmount(amount: 1, asset: Asset("1.3.1"))),
 //                                     description: "description")
@@ -1103,7 +1100,6 @@ class ECHOInterfaceTests: XCTestCase {
 //                    XCTFail("Create asset cant fail \(error)")
 //                }
 //            }
-//
 //        }
 //
 //        //assert
@@ -1293,12 +1289,12 @@ class ECHOInterfaceTests: XCTestCase {
         let exp = expectation(description: "testGetContractLogs")
         let contractId = Constants.logsContract
         let fromBlock = Constants.contractLogsFromBlock
-        let toBlock = Constants.contractLogsToBlock
+        let limit = 10
         var contractLogs: [ContractLog]!
         
         //act
         echo.start { [unowned self] (result) in
-            self.echo.getContractLogs(contractId: contractId, fromBlock: fromBlock, toBlock: toBlock, completion: { (result) in
+            self.echo.getContractLogs(contractId: contractId, fromBlock: fromBlock, limit: limit, completion: { (result) in
                 
                 switch result {
                 case .success(let logs):
@@ -1325,14 +1321,14 @@ class ECHOInterfaceTests: XCTestCase {
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
         }))
         let exp = expectation(description: "testFailGetContractLogs")
-        let contractId = "1.13.1880"
+        let contractId = "1.10.1880"
         let fromBlock = Constants.contractLogsFromBlock - 100
-        let toBlock = Constants.contractLogsToBlock - 100
+        let limit = 10
         var error: ECHOError = ECHOError.undefined
         
         //act
         echo.start { [unowned self] (result) in
-            self.echo.getContractLogs(contractId: contractId, fromBlock: fromBlock, toBlock: toBlock, completion: { (result) in
+            self.echo.getContractLogs(contractId: contractId, fromBlock: fromBlock, limit: limit, completion: { (result) in
                 
                 switch result {
                 case .success(_):

@@ -1,5 +1,5 @@
 //
-//  WithdrawalEthOperation.swift
+//  SidechainETHWithdrawOperation.swift
 //  ECHO
 //
 //  Created by Vladimir Sharaev on 20/05/2019.
@@ -9,9 +9,9 @@
 /**
     Struct used to encapsulate operations related to the [OperationType.withdrawEthOperation](OperationType.withdrawEthOperation)
  */
-public struct WithdrawalEthOperation: BaseOperation {
+public struct SidechainETHWithdrawOperation: BaseOperation {
     
-    enum WithdrawalEthOperationCodingKeys: String, CodingKey {
+    enum SidechainETHWithdrawOperationCodingKeys: String, CodingKey {
         case account = "account"
         case ethAddress = "eth_addr"
         case value
@@ -29,7 +29,7 @@ public struct WithdrawalEthOperation: BaseOperation {
     
     init(account: Account, value: UInt, ethAddress: String, fee: AssetAmount) {
         
-        type = .withdrawEthOperation
+        type = .sidechainETHWithdrawOperation
         
         self.account = account
         self.fee = fee
@@ -39,9 +39,9 @@ public struct WithdrawalEthOperation: BaseOperation {
     
     public init(from decoder: Decoder) throws {
         
-        type = .withdrawEthOperation
+        type = .sidechainETHWithdrawOperation
         
-        let values = try decoder.container(keyedBy: WithdrawalEthOperationCodingKeys.self)
+        let values = try decoder.container(keyedBy: SidechainETHWithdrawOperationCodingKeys.self)
         
         let accountId = try values.decode(String.self, forKey: .account)
         account = Account(accountId)
@@ -82,11 +82,11 @@ public struct WithdrawalEthOperation: BaseOperation {
         var array = [Any]()
         array.append(getId())
         
-        let dictionary: [AnyHashable: Any?] = [WithdrawalEthOperationCodingKeys.fee.rawValue: fee.toJSON(),
-                                               WithdrawalEthOperationCodingKeys.account.rawValue: account.toJSON(),
-                                               WithdrawalEthOperationCodingKeys.extensions.rawValue: extensions.toJSON(),
-                                               WithdrawalEthOperationCodingKeys.value.rawValue: value,
-                                               WithdrawalEthOperationCodingKeys.ethAddress.rawValue: ethAddress]
+        let dictionary: [AnyHashable: Any?] = [SidechainETHWithdrawOperationCodingKeys.fee.rawValue: fee.toJSON(),
+                                               SidechainETHWithdrawOperationCodingKeys.account.rawValue: account.toJSON(),
+                                               SidechainETHWithdrawOperationCodingKeys.extensions.rawValue: extensions.toJSON(),
+                                               SidechainETHWithdrawOperationCodingKeys.value.rawValue: value,
+                                               SidechainETHWithdrawOperationCodingKeys.ethAddress.rawValue: ethAddress]
         
         array.append(dictionary)
         

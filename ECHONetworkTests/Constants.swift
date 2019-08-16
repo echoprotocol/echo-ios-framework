@@ -142,7 +142,7 @@ struct Constants {
         if let value = Constants.infoForKey(ConstantsKeys.defaultAnotherAsset) {
             return value
         } else {
-            return "1.3.4"
+            return "1.3.3"
         }
     }
     

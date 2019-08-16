@@ -37,7 +37,7 @@ public struct CallContractOperation: BaseOperation {
                 callee: Contract,
                 fee: AssetAmount) {
         
-        self.type = .callContractOperation
+        self.type = .contractCallOperation
         self.registrar = registrar
         self.value = value
         self.code = code
@@ -47,7 +47,7 @@ public struct CallContractOperation: BaseOperation {
     
     public init(from decoder: Decoder) throws {
         
-        type = .callContractOperation
+        type = .contractCallOperation
         
         let values = try decoder.container(keyedBy: CallContractOperationCodingKeys.self)
         let registrarId = try values.decode(String.self, forKey: .registrar)

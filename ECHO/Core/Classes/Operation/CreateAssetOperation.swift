@@ -74,7 +74,6 @@ public struct CreateAssetOperation: BaseOperation {
         if asset.bitassetOptions.isSet() {
             dictionary[Asset.AssetCodingKeys.bitassetOpts.rawValue] = asset.bitassetOptions.toJSON()
         }
-        dictionary[Asset.AssetCodingKeys.isPredictionMarket.rawValue] = asset.predictionMarket
         
         array.append(dictionary)
         

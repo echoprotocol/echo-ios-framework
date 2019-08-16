@@ -59,7 +59,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
         noticeDelegateHandler.delegate = self
     }
     
-    public func getContractLogs(contractId: String, fromBlock: Int, toBlock: Int, completion: @escaping Completion<[ContractLog]>) {
+    public func getContractLogs(contractId: String, fromBlock: Int, limit: Int, completion: @escaping Completion<[ContractLog]>) {
         
         // Validate historyId
         do {
@@ -72,7 +72,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
             return
         }
         
-        services.databaseService.getContractLogs(contractId: contractId, fromBlock: fromBlock, toBlock: toBlock, completion: completion)
+        services.databaseService.getContractLogs(contractId: contractId, fromBlock: fromBlock, limit: limit, completion: completion)
     }
     
     public func getContractResult(contractResultId: String, completion: @escaping Completion<ContractResultEnum>) {

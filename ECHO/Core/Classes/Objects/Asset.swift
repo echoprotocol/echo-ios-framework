@@ -22,7 +22,6 @@ public struct Asset: ECHOObject, BytesCodable, Decodable {
         case options
         case bitassetDataId = "bitasset_data_id"
         case bitassetOpts = "bitasset_opts"
-        case isPredictionMarket = "is_prediction_market"
         case id
     }
     
@@ -32,7 +31,6 @@ public struct Asset: ECHOObject, BytesCodable, Decodable {
     public var issuer: Account?
     public var dynamicAssetDataId: String?
     public var options: AssetOptions?
-    public var predictionMarket: Bool = false
     public var bitAssetId: String?
     var bitassetOptions: OptionalValue<BitassetOptions>
     
@@ -62,7 +60,6 @@ public struct Asset: ECHOObject, BytesCodable, Decodable {
         }
         let parsedBitassetOpt = try? values.decode(BitassetOptions.self, forKey: .bitassetOpts)
         bitassetOptions = OptionalValue(parsedBitassetOpt, addByteToStart: true)
-        predictionMarket = (try? values.decode(Bool.self, forKey: .isPredictionMarket)) ?? false
         bitAssetId = try? values.decode(String.self, forKey: .bitassetDataId)
     }
     
@@ -81,7 +78,6 @@ public struct Asset: ECHOObject, BytesCodable, Decodable {
         data.append(optional: Data.fromInt8(precision))
         data.append(optional: options?.toData())
         data.append(optional: bitassetOptions.toData())
-        data.append(optional: Data.fromBool(predictionMarket))
         return data
     }
 }
