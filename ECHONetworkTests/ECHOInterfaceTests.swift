@@ -173,7 +173,7 @@ class ECHOInterfaceTests: XCTestCase {
         }))
         let exp = expectation(description: "testGettingUser")
         var account: Account?
-        let userName = Constants.defaultName
+        let userName = Constants.defaultToName
         
         //act
         echo.start { [unowned self] (result) in
@@ -1070,7 +1070,7 @@ class ECHOInterfaceTests: XCTestCase {
 //        var asset = Asset("")
 //        asset.symbol = "SHAR"
 //        asset.precision = 4
-//        asset.issuer = Account("1.2.16")
+//        asset.issuer = Account("1.2.54")
 ////        asset.setBitsassetOptions(BitassetOptions(feedLifetimeSec: 86400,
 ////                                                  minimumFeeds: 7,
 ////                                                  forceSettlementDelaySec: 86400,
@@ -1518,7 +1518,7 @@ class ECHOInterfaceTests: XCTestCase {
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
         }))
         let exp = expectation(description: "testCreateContract")
-        let byteCode = Constants.logContractByteCode
+        let byteCode = Constants.counterContractByteCode
         var success = false
 
         //act

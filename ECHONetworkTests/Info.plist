@@ -44,8 +44,6 @@
 	<string>$(X86_CONTRACT_RESULT)</string>
 	<key>CONTRACT_LOGS_FROM_BLOCK</key>
 	<string>$(CONTRACT_LOGS_FROM_BLOCK)</string>
-	<key>CONTRACT_LOGS_TO_BLOCK</key>
-	<string>$(CONTRACT_LOGS_TO_BLOCK)</string>
 	<key>LOGS_CONTRACT_BYTECODE</key>
 	<string>$(LOGS_CONTRACT_BYTECODE)</string>
 	<key>COUNTER_CONTRACT_BYTECODE</key>

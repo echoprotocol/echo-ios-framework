@@ -131,7 +131,7 @@ final public class SubscriptionFacadeImp: SubscriptionFacade {
     
     fileprivate func getSubscribeToContractLogsAndSetSubscriber(contractId: String, delegate: SubscribeContractLogsDelegate) {
         
-        services.databaseService.subscribeContractLogs(contractId: contractId, fromBlock: 0, toBlock: 0) { [weak self] (_) in
+        services.databaseService.subscribeContractLogs(contractId: contractId) { [weak self] (_) in
             
             self?.addContractLogsDelegate(id: contractId, delegate: delegate)
         }
