@@ -28,7 +28,8 @@ public struct AssetAmount: ECHOCodable, Decodable {
     public init(from decoder: Decoder) throws {
         
         let values = try decoder.container(keyedBy: AssetAmountCodingKeys.self)
-        amount = try values.decode(UInt.self, forKey: .amount)
+        let amountUIntOrString = try values.decode(UIntOrString.self, forKey: .amount)
+        amount = amountUIntOrString.uintValue
         let assetId = try values.decode(String.self, forKey: .assetId)
         asset = Asset(assetId)
     }
