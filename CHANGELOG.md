@@ -4,6 +4,7 @@
 
 ### Fixed
 * subscribeToContractLogs - fixed operation parameters
+* Fixed AssetAmount mapping for big values
 
 ## 3.4.0 - 2019-08-16
 
