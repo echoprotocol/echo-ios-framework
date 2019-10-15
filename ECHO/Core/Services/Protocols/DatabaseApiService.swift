@@ -131,6 +131,7 @@ protocol DatabaseApiService: BaseApiService {
      - Parameter completion: Callback which returns result of call or error
  */
     func subscribeContractLogs(contractId: String, completion: @escaping Completion<Bool>)
+    
 /**
      Returns contracts called by ids
      

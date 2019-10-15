@@ -253,7 +253,7 @@ class ContractsSubscribeTests: XCTestCase, SubscribeContractsDelegate {
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
         }))
         
-        let exp = expectation(description: "testStartingLib")
+        let exp = expectation(description: "testSubscribeContracts")
         
         //act
         echo.start { (result) in

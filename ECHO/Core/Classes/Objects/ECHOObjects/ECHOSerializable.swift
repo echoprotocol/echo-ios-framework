@@ -134,6 +134,58 @@ public enum IntOrString: Codable, Equatable {
 }
 
 /**
+    Enum which contains UInt or string value from decoded object
+ */
+public enum UIntOrString: Codable, Equatable {
+    
+    case uInteger(UInt)
+    case string(String)
+    
+    public var stringValue: String {
+        switch self {
+        case .uInteger(let int):
+            return String(int)
+        case .string(let string):
+            return string
+        }
+    }
+    
+    public var uintValue: UInt {
+        switch self {
+        case .uInteger(let uint):
+            return uint
+        case .string(let string):
+            return UInt(string) ?? 0
+        }
+    }
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if let value = try? container.decode(UInt.self) {
+            self = .uInteger(value)
+            return
+        }
+        if let value = try? container.decode(String.self) {
+            self = .string(value)
+            return
+        }
+        throw DecodingError.typeMismatch(IntOrString.self,
+                                         DecodingError.Context(codingPath: decoder.codingPath,
+                                                               debugDescription: "Wrong type for UIntOrString"))
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        switch self {
+        case .uInteger(let value):
+            try container.encode(value)
+        case .string(let value):
+            try container.encode(value)
+        }
+    }
+}
+
+/**
     Array of [IntOrDict](IntOrDict)
  */
 public typealias IntOrDicts = [IntOrDict]
