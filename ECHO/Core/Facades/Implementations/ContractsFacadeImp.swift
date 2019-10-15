@@ -59,7 +59,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
         noticeDelegateHandler.delegate = self
     }
     
-    public func getContractLogs(contractId: String, fromBlock: Int, limit: Int, completion: @escaping Completion<[ContractLog]>) {
+    public func getContractLogs(contractId: String, fromBlock: Int, limit: Int, completion: @escaping Completion<[ContractLogEnum]>) {
         
         // Validate historyId
         do {
@@ -67,7 +67,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
             try validator.validateId(contractId, for: .contract)
         } catch let error {
             let echoError = (error as? ECHOError) ?? ECHOError.undefined
-            let result = Result<[ContractLog], ECHOError>(error: echoError)
+            let result = Result<[ContractLogEnum], ECHOError>(error: echoError)
             completion(result)
             return
         }

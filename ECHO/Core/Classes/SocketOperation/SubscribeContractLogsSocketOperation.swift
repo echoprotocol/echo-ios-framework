@@ -11,7 +11,7 @@
     Every notification initiated by the full node will carry a particular id as defined by the
     user with the identifier parameter.
  
-    - Return: [ContractLog](ContractLog)
+    - Return: [ContractLogEnum](ContractLogEnum)
  */
 struct SubscribeContractLogsSocketOperation: SocketOperation {
     
@@ -19,45 +19,36 @@ struct SubscribeContractLogsSocketOperation: SocketOperation {
     var operationId: Int
     var apiId: Int
     var contractId: String
-    var fromBlock: Int
-    var toBlock: Int
-    var completion: Completion<[ContractLog]>
+    var completion: Completion<Bool>
     
     func createParameters() -> [Any] {
         let array: [Any] = [apiId,
                             SocketOperationKeys.subscribeContractLogs.rawValue,
-                            [operationId, contractId, fromBlock, toBlock]]
+                            [operationId, contractId]]
         return array
     }
     
     func handleResponse(_ response: ECHODirectResponse) {
         
-        do {
-            
-            switch response.response {
-            case .error(let error):
-                let result = Result<[ContractLog], ECHOError>(error: ECHOError.internalError(error.message))
-                completion(result)
-            case .result(let result):
-                
-                switch result {
-                case .array(let array):
-                    let data = try JSONSerialization.data(withJSONObject: array, options: [])
-                    let logs = try JSONDecoder().decode([ContractLog].self, from: data)
-                    let result = Result<[ContractLog], ECHOError>(value: logs)
-                    completion(result)
-                default:
-                    throw ECHOError.encodableMapping
-                }
-            }
-        } catch {
-            let result = Result<[ContractLog], ECHOError>(error: ECHOError.encodableMapping)
+        switch response.response {
+        case .error(let error):
+            let result = Result<Bool, ECHOError>(error: ECHOError.internalError(error.message))
             completion(result)
+        case .result(let result):
+            
+            switch result {
+            case .undefined:
+                let result = Result<Bool, ECHOError>(value: true)
+                completion(result)
+            default:
+                let result = Result<Bool, ECHOError>(error: ECHOError.encodableMapping)
+                completion(result)
+            }
         }
     }
     
     func forceEnd() {
-        let result = Result<[ContractLog], ECHOError>(error: ECHOError.connectionLost)
+        let result = Result<Bool, ECHOError>(error: ECHOError.connectionLost)
         completion(result)
     }
 }

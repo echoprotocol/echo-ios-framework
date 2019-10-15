@@ -29,6 +29,7 @@ public enum ObjectType: Int {
     case operationHistory
     case vestingBalance
     case balance
+    case frozenBalance
     case contract
     case contractResult
     case blockResult
@@ -38,6 +39,11 @@ public enum ObjectType: Int {
     case erc20Token
     case depositERC20Token
     case withdrawERC20Token
+    case btcAddress
+    case btcIntermediateDeposit
+    case btcDeposit
+    case btcWithdraw
+    case btcAggregating
     case globalProperty
     case dynamicGlobalProperty
     case assetDynamicData
@@ -48,7 +54,6 @@ public enum ObjectType: Int {
     case blockSummary
     case accountTransactionHistory
     case chainProperty
-    case budgetRecord
     case specialAuthority
     case contractBalance
     case contractHistory
@@ -82,6 +87,7 @@ public enum ObjectType: Int {
              .operationHistory,
              .vestingBalance,
              .balance,
+             .frozenBalance,
              .contract,
              .contractResult,
              .blockResult,
@@ -90,7 +96,12 @@ public enum ObjectType: Int {
              .withdrawEth,
              .erc20Token,
              .depositERC20Token,
-             .withdrawERC20Token:
+             .withdrawERC20Token,
+             .btcAddress,
+             .btcIntermediateDeposit,
+             .btcDeposit,
+             .btcWithdraw,
+             .btcAggregating:
             space = .protocolSpace
         case .globalProperty,
              .dynamicGlobalProperty,
@@ -102,7 +113,6 @@ public enum ObjectType: Int {
              .blockSummary,
              .accountTransactionHistory,
              .chainProperty,
-             .budgetRecord,
              .specialAuthority,
              .contractBalance,
              .contractHistory,

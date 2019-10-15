@@ -178,14 +178,12 @@ extension SubscriptionService {
         socketCore.send(operation: operation)
     }
     
-    func subscribeContractLogs(contractId: String, fromBlock: Int, toBlock: Int, completion: @escaping Completion<[ContractLog]>) {
+    func subscribeContractLogs(contractId: String, completion: @escaping Completion<Bool>) {
         
         let operation = SubscribeContractLogsSocketOperation(method: .call,
                                                              operationId: socketCore.nextOperationId(),
                                                              apiId: apiIdentifire,
                                                              contractId: contractId,
-                                                             fromBlock: fromBlock,
-                                                             toBlock: toBlock,
                                                              completion: completion)
         
         socketCore.send(operation: operation)
@@ -240,7 +238,7 @@ extension ContractsService {
         socketCore.send(operation: operation)
     }
     
-    func getContractLogs(contractId: String, fromBlock: Int, limit: Int, completion: @escaping Completion<[ContractLog]>) {
+    func getContractLogs(contractId: String, fromBlock: Int, limit: Int, completion: @escaping Completion<[ContractLogEnum]>) {
         
         let operation = GetContractLogsSocketOperation(method: .call,
                                                        operationId: socketCore.nextOperationId(),

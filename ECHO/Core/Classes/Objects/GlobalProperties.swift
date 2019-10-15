@@ -47,7 +47,6 @@ public struct GlobalPropertiesParameters: Decodable {
     
     private enum GlobalPropertiesParametersCodingKeys: String, CodingKey {
         case currentFees = "current_fees"
-        case blockInterval = "block_interval"
         case maintenanceInterval = "maintenance_interval"
         case committeeProposalReviewPeriod = "committee_proposal_review_period"
         case maximumTransactionSize = "maximum_transaction_size"
@@ -70,7 +69,6 @@ public struct GlobalPropertiesParameters: Decodable {
     }
     
     public let currentFees: CurrentFeesGlobalPropertiesParameters
-    public let blockInterval: IntOrString
     public let maintenanceInterval: IntOrString
     public let committeeProposalReviewPeriod: IntOrString
     public let maximumTransactionSize: IntOrString
@@ -92,7 +90,6 @@ public struct GlobalPropertiesParameters: Decodable {
     public let gasPrice: GasPriceGlobalProperties
     
     public init(currentFees: CurrentFeesGlobalPropertiesParameters,
-                blockInterval: IntOrString,
                 maintenanceInterval: IntOrString,
                 maintenanceSkipSlots: IntOrString,
                 committeeProposalReviewPeriod: IntOrString,
@@ -115,7 +112,6 @@ public struct GlobalPropertiesParameters: Decodable {
                 gasPrice: GasPriceGlobalProperties) {
         
         self.currentFees = currentFees
-        self.blockInterval = blockInterval
         self.maintenanceInterval = maintenanceInterval
         self.committeeProposalReviewPeriod = committeeProposalReviewPeriod
         self.maximumTransactionSize = maximumTransactionSize
@@ -142,7 +138,6 @@ public struct GlobalPropertiesParameters: Decodable {
         let values = try decoder.container(keyedBy: GlobalPropertiesParametersCodingKeys.self)
         
         currentFees = try values.decode(CurrentFeesGlobalPropertiesParameters.self, forKey: .currentFees)
-        blockInterval = try values.decode(IntOrString.self, forKey: .blockInterval)
         maintenanceInterval = try values.decode(IntOrString.self, forKey: .maintenanceInterval)
         committeeProposalReviewPeriod = try values.decode(IntOrString.self, forKey: .committeeProposalReviewPeriod)
         maximumTransactionSize = try values.decode(IntOrString.self, forKey: .maximumTransactionSize)
@@ -261,6 +256,7 @@ public struct SidechainConfig: Decodable {
         case fines
         case waitingBlocks = "waiting_blocks"
         case gasPrice = "gas_price"
+        case waitingETHBlocks = "waiting_eth_blocks"
     }
     
     public let ethContractAddress: String
@@ -278,6 +274,7 @@ public struct SidechainConfig: Decodable {
     public let fines: SidechainFines
     public let waitingBlocks: IntOrString
     public let gasPrice: IntOrString
+    public let waitingETHBlocks: IntOrString
     
     public init(ethContractAddress: String,
                 ethCommitteeUpdateMethod: EthMethod,
@@ -293,7 +290,8 @@ public struct SidechainConfig: Decodable {
                 ETHAssetId: String,
                 fines: SidechainFines,
                 waitingBlocks: IntOrString,
-                gasPrice: IntOrString) {
+                gasPrice: IntOrString,
+                waitingETHBlocks: IntOrString) {
         
         self.ethContractAddress = ethContractAddress
         self.ethCommitteeUpdateMethod = ethCommitteeUpdateMethod
@@ -310,6 +308,7 @@ public struct SidechainConfig: Decodable {
         self.fines = fines
         self.waitingBlocks = waitingBlocks
         self.gasPrice = gasPrice
+        self.waitingETHBlocks = waitingETHBlocks
     }
     
     public init(from decoder: Decoder) throws {
@@ -331,6 +330,7 @@ public struct SidechainConfig: Decodable {
         fines = try values.decode(SidechainFines.self, forKey: .fines)
         waitingBlocks = try values.decode(IntOrString.self, forKey: .waitingBlocks)
         gasPrice = try values.decode(IntOrString.self, forKey: .gasPrice)
+        waitingETHBlocks = try values.decode(IntOrString.self, forKey: .waitingETHBlocks)
     }
 }
 

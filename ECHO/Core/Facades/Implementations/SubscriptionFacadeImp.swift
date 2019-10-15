@@ -131,7 +131,7 @@ final public class SubscriptionFacadeImp: SubscriptionFacade {
     
     fileprivate func getSubscribeToContractLogsAndSetSubscriber(contractId: String, delegate: SubscribeContractLogsDelegate) {
         
-        services.databaseService.subscribeContractLogs(contractId: contractId, fromBlock: 0, toBlock: 0) { [weak self] (_) in
+        services.databaseService.subscribeContractLogs(contractId: contractId) { [weak self] (_) in
             
             self?.addContractLogsDelegate(id: contractId, delegate: delegate)
         }
@@ -147,7 +147,7 @@ final public class SubscriptionFacadeImp: SubscriptionFacade {
                 
                 var userIds = Set<String>()
                 var dynamicGlobalProperties: DynamicGlobalProperties?
-                var contractsLogs = [String: [ContractLog]]()
+                var contractsLogs = [String: [ContractLogEnum]]()
                 var contracts = [String: Contract]()
                 var contractsHistory = [ContractHistory]()
                 
@@ -242,28 +242,37 @@ final public class SubscriptionFacadeImp: SubscriptionFacade {
         return nil
     }
     
-    fileprivate func findContractLogs(object: Any) -> (contractId: String, log: ContractLog)? {
+    fileprivate func findContractLogs(object: Any) -> (contractId: String, log: ContractLogEnum)? {
         
-        if let log = (object as? [String: Any])
-            .flatMap({ try? JSONSerialization.data(withJSONObject: $0, options: [])})
-            .flatMap({ try? JSONDecoder().decode(ContractLog.self, from: $0) }) {
-            
-            let interpretator = AbiArgumentCoderImp()
-            let type = AbiParameterType.contractAddress
-            let outputs = [AbiFunctionEntries(name: "", typeString: type.description, type: type)]
-            
-            let values = try? interpretator.getValueTypes(string: log.address, outputs: outputs)
-            
-            guard let contractIdLastPart = values?[safe: 0]?.value as? String else {
-                return nil
-            }
-            
-            let idString = ObjectType.contract.getFullObjectIdByLastPart(contractIdLastPart)
-            
-            return (idString, log)
+        guard let data = try? JSONSerialization.data(withJSONObject: object, options: []) else {
+            return nil
         }
         
-        return nil
+        guard let log = try? JSONDecoder().decode(ContractLogEnum.self, from: data) else {
+            return nil
+        }
+        
+        let interpretator = AbiArgumentCoderImp()
+        let type = AbiParameterType.contractAddress
+        let outputs = [AbiFunctionEntries(name: "", typeString: type.description, type: type)]
+        
+        let address: String
+        switch log {
+        case .evm(let evmLog):
+            address = evmLog.address
+        case .x86:
+            return nil
+        }
+        
+        let values = try? interpretator.getValueTypes(string: address, outputs: outputs)
+        
+        guard let contractIdLastPart = values?[safe: 0]?.value as? String else {
+            return nil
+        }
+        
+        let idString = ObjectType.contract.getFullObjectIdByLastPart(contractIdLastPart)
+
+        return (idString, log)
     }
     
     fileprivate func getAccountAndNotify(ids: Set<String>) {
@@ -408,7 +417,7 @@ final public class SubscriptionFacadeImp: SubscriptionFacade {
         }
     }
     
-    fileprivate func notifyContractLogsCreated(contractsMap: [String: [ContractLog]]) {
+    fileprivate func notifyContractLogsCreated(contractsMap: [String: [ContractLogEnum]]) {
         
         for contractId in contractsMap.keys {
             guard let logs = contractsMap[contractId] else {
@@ -418,7 +427,7 @@ final public class SubscriptionFacadeImp: SubscriptionFacade {
         }
     }
     
-    fileprivate func notifyDelegatesForContract(id: String, logs: [ContractLog]) {
+    fileprivate func notifyDelegatesForContract(id: String, logs: [ContractLogEnum]) {
         
         guard let delegates = contractLogsSubscribers[id] else {
             return

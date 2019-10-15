@@ -11,7 +11,6 @@ struct StatisticStub {
                     {
                     "id": "2.6.23240",
                     "is_voting": false,
-                    "pending_fees": 0,
                     "owner": "1.2.23240",
                     "removed_ops": 0,
                     "most_recent_op": "2.9.75402266",

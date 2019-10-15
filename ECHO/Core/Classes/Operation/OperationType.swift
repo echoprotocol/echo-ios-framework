@@ -14,14 +14,13 @@ public enum OperationType: Int {
     case accountCreateOperation
     case accountUpdateOperation
     case accountWhitelistOperation
-    case accountTransferOperation
     case assetCreateOperation
     case assetUpdateOperation
     case assetUpdateBitassetOperation
     case assetUpdateFeedProducersOperation
     case assetIssueOperation
-    case assetReserveOperation                      //10
-    case assetFundFeePoolOperation
+    case assetReserveOperation
+    case assetFundFeePoolOperation                  //10
     case assetPublishFeedOperation
     case proposalCreateOperation
     case proposalUpdateOperation
@@ -33,19 +32,21 @@ public enum OperationType: Int {
     // swiftlint:enable variable_name
     case vestingBalanceCreateOperation
     case vestingBalanceWithdrawOperation
-    case balanceClaimOperation                      //20
+    case balanceClaimOperation
+    case balanceFreezeOperation                     //20
+    case balanceUnfreezeOperation                   //Virtual
     case overrideTransferOperation
     case assetClaimFeesOperation
     case contractCreateOperation
     case contractCallOperation
     case contractTransferOperation                  //Virtual
-    case sidechainChangeConfigOperation             // temporary operation for tests
+    case contractUpdateOperation
     case accountAddressCreateOperation
     case transferToAddressOperation
     case sidechainETHCreateAddressOperation
-    case sidechainETHApproveAddressOperation        //30
+    case sidechainETHApproveAddressOperation
     case sidechainETHDepositOperation
-    case sidechainETHWithdrawOperation
+    case sidechainETHWithdrawOperation              //30
     case sidechainETHApproveWithdrawOperation
     case contractFundPoolOperation
     case contractWhitelistOperation
@@ -53,9 +54,19 @@ public enum OperationType: Int {
     case sidechainETHBurnOperation                  // VIRTUAL
     case sidechainERC20RegisterTokenOperation
     case sidechainERC20DepositTokenOperation
-    case sidechainERC20WithdrawTokenOperation       //40
+    case sidechainERC20WithdrawTokenOperation
+    // swiftlint:disable variable_name
     case sidechainERC20ApproveTokenWithdrawOperation
-    case contractUpdateOperation
+    // swiftlint:enable variable_name
+    case sidechainERC20IssueOperation               //40 // VIRTUAL
+    case sidechainERC20BurnOperation                // VIRTUAL
+    case sidechainBTCCreateAddressOperation
+    case sidechainBTCIntermediateDepositOperation
+    case sidechainBTCDepositOperation
+    case sidechainBTCWithdrawOperation
+    case sidechainBTCApproveWithdrawOperation
+    case sidechainBTCAggregateOperation
+    case blockRewardOperation                       // VIRTUAL
 }
 
 struct OperationDecoder {

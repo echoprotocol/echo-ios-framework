@@ -20,7 +20,7 @@ class SubscribeContractLogsDelegateStub: SubscribeContractLogsDelegate {
         self.exp = exp
     }
     
-    func didCreateLogs(logs: [ContractLog]) {
+    func didCreateLogs(logs: [ContractLogEnum]) {
         
         delegateEvents += 1
         
@@ -30,7 +30,15 @@ class SubscribeContractLogsDelegateStub: SubscribeContractLogsDelegate {
             let type = AbiParameterType.contractAddress
             let outputs = [AbiFunctionEntries(name: "", typeString: type.description, type: type)]
             
-            let values = try? interpretator.getValueTypes(string: log.address, outputs: outputs)
+            let address: String
+            switch log {
+            case .evm(let evmLog):
+                address = evmLog.address
+            case .x86:
+                return
+            }
+            
+            let values = try? interpretator.getValueTypes(string: address, outputs: outputs)
             
             guard let contractIdLastPart = values?[safe: 0]?.value as? String else {
                 return                

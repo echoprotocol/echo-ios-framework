@@ -17,7 +17,6 @@ struct ConstantsKeys {
     static let counterContract = "COUNTER_CONTRACT"
     static let logsContract = "LOGS_CONTRACT"
     static let x86Contract = "X86_CONTRACT"
-    static let sidechainTransferObject = "SIDECHAIN_TRANSFER_OBJECT"
     
     static let defaultName = "DEFAULT_NAME"
     static let defaultToName = "DEFAULT_TO_NAME"
@@ -39,7 +38,6 @@ struct ConstantsKeys {
     static let x86ContractResult = "X86_CONTRACT_RESULT"
     
     static let contractLogsFromBlock = "CONTRACT_LOGS_FROM_BLOCK"
-    static let contractLogsToBlock = "CONTRACT_LOGS_TO_BLOCK"
     
     static let logContractByteCode = "LOGS_CONTRACT_BYTECODE"
     static let counterContractByteCode = "COUNTER_CONTRACT_BYTECODE"
@@ -70,7 +68,7 @@ struct Constants {
         if let value = Constants.infoForKey(ConstantsKeys.counterContract) {
             return value
         } else {
-            return "1.14.4"
+            return "1.10.3"
         }
     }
     
@@ -78,7 +76,7 @@ struct Constants {
         if let value = Constants.infoForKey(ConstantsKeys.logsContract) {
             return value
         } else {
-            return "1.14.3"
+            return "1.10.2"
         }
     }
     
@@ -86,15 +84,7 @@ struct Constants {
         if let value = Constants.infoForKey(ConstantsKeys.x86Contract) {
             return value
         } else {
-            return "1.14.0"
-        }
-    }
-    
-    static var sidechainTransferObject: String {
-        if let value = Constants.infoForKey(ConstantsKeys.sidechainTransferObject) {
-            return value
-        } else {
-            return "1.17.0"
+            return "1.10.0"
         }
     }
     
@@ -198,7 +188,7 @@ struct Constants {
         if let value = Constants.infoForKey(ConstantsKeys.evmContractResult) {
             return value
         } else {
-            return "1.15.3"
+            return "1.11.2"
         }
     }
     
@@ -206,7 +196,7 @@ struct Constants {
         if let value = Constants.infoForKey(ConstantsKeys.x86ContractResult) {
             return value
         } else {
-            return "1.15.0"
+            return "1.11.0"
         }
     }
     
@@ -215,16 +205,7 @@ struct Constants {
             let value = Int(valueString) {
             return value
         } else {
-            return 950
-        }
-    }
-    
-    static var contractLogsToBlock: Int {
-        if let valueString = Constants.infoForKey(ConstantsKeys.contractLogsToBlock),
-            let value = Int(valueString) {
-            return value
-        } else {
-            return 960
+            return 510
         }
     }
     
