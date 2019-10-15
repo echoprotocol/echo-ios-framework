@@ -307,7 +307,7 @@ class SocketCoreComponentTests: XCTestCase {
             $0.socketMessenger = messenger
         }))
         let exp = expectation(description: "Getting contracts")
-        let legalContractId = "1.9.56"
+        let legalContractId = "1.10.56"
         var contract: ContractStructEnum!
         
         //act
@@ -337,7 +337,7 @@ class SocketCoreComponentTests: XCTestCase {
             $0.socketMessenger = messenger
         }))
         let exp = expectation(description: "Getting contracts")
-        let legalContractId = "1.9.56"
+        let legalContractId = "1.10.56"
         let contractsIDs = [legalContractId]
         var contracts: [ContractInfo] = []
         
@@ -474,7 +474,7 @@ class SocketCoreComponentTests: XCTestCase {
         let exp = expectation(description: "Query contract")
         let registrarNameOrId = "vsharaev"
         let assetId = "1.3.0"
-        let contratId = "1.9.1"
+        let contratId = "1.10.1"
         let methodName = "getCount"
         let params: [AbiTypeValueInputModel] = []
         var query: String!
@@ -510,7 +510,7 @@ class SocketCoreComponentTests: XCTestCase {
         let registrarNameOrId = "vsharaev"
         let wif = "5KjC8BiryoxUNz3dEY2ZWQK5ssmD84JgRGemVWwxfNgiPoxcaVa"
         let assetId = "1.3.0"
-        let contratId = "1.9.56"
+        let contratId = "1.10.56"
         let methodName = "incrementCounter"
         let params: [AbiTypeValueInputModel] = []
         var success = false
@@ -518,7 +518,7 @@ class SocketCoreComponentTests: XCTestCase {
         //act
         echo.start { [unowned self] (result) in
             self.echo.callContract(registrarNameOrId: registrarNameOrId,
-                                   wif: "5KjC8BiryoxUNz3dEY2ZWQK5ssmD84JgRGemVWwxfNgiPoxcaVa",
+                                   wif: wif,
                                    assetId: assetId,
                                    amount: nil,
                                    assetForFee: nil,

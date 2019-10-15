@@ -9,7 +9,7 @@
 /**
     Retrieves contract logs from block to block of called contract
  
-    - Return: [ContractLog](ContractLog)
+    - Return: [ContractLogEnum](ContractLogEnum)
  */
 struct GetContractLogsSocketOperation: SocketOperation {
     
@@ -19,7 +19,7 @@ struct GetContractLogsSocketOperation: SocketOperation {
     var contractId: String
     var fromBlock: Int
     var limit: Int
-    var completion: Completion<[ContractLog]>
+    var completion: Completion<[ContractLogEnum]>
     
     func createParameters() -> [Any] {
         let array: [Any] = [apiId,
@@ -34,28 +34,28 @@ struct GetContractLogsSocketOperation: SocketOperation {
             
             switch response.response {
             case .error(let error):
-                let result = Result<[ContractLog], ECHOError>(error: ECHOError.internalError(error.message))
+                let result = Result<[ContractLogEnum], ECHOError>(error: ECHOError.internalError(error.message))
                 completion(result)
             case .result(let result):
                 
                 switch result {
                 case .array(let array):
                     let data = try JSONSerialization.data(withJSONObject: array, options: [])
-                    let logs = try JSONDecoder().decode([ContractLog].self, from: data)
-                    let result = Result<[ContractLog], ECHOError>(value: logs)
+                    let logs = try JSONDecoder().decode([ContractLogEnum].self, from: data)
+                    let result = Result<[ContractLogEnum], ECHOError>(value: logs)
                     completion(result)
                 default:
                     throw ECHOError.encodableMapping
                 }
             }
         } catch {
-            let result = Result<[ContractLog], ECHOError>(error: ECHOError.encodableMapping)
+            let result = Result<[ContractLogEnum], ECHOError>(error: ECHOError.encodableMapping)
             completion(result)
         }
     }
     
     func forceEnd() {
-        let result = Result<[ContractLog], ECHOError>(error: ECHOError.connectionLost)
+        let result = Result<[ContractLogEnum], ECHOError>(error: ECHOError.connectionLost)
         completion(result)
     }
 }

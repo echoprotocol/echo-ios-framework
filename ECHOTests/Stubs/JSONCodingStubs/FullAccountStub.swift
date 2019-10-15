@@ -65,7 +65,6 @@ struct FullAccountStub {
                                 "removed_ops": 0,
                                 "total_core_in_orders": 0,
                                 "lifetime_fees_paid": 8067204,
-                                "pending_fees": 0,
                                 "pending_vested_fees": 90
                             },
                             "registrar_name": "nathan",

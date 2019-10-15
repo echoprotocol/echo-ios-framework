@@ -1,6 +1,87 @@
 # CHANGELOG
 
-## 3.4.0 - 2017-08-16
+## 3.5.0 - 2019-10-15
+
+### Removed
+
+#### DynamicGlobalProperties
+* currentAslot
+* recentlyMissedCount
+
+#### GlobalProperties
+* blockInterval
+
+#### ObjectType
+* budgetRecord
+
+#### Statistics
+* pendingFees
+
+#### ContractResultEVM
+* gasRefunded
+
+#### OperationType
+* accountTransferOperation
+* sidechainChangeConfigOperation
+
+### Added
+
+#### AccountOptions
+* delegateShare
+
+#### DynamicGlobalProperties
+* lastRandQuantity
+
+#### ObjectType
+* frozenBalance
+* btcAddress
+* btcIntermediateDeposit
+* btcDeposit
+* btcWithdraw
+* btcAggregating
+
+#### SidechainConfig
+* waitingETHBlocks
+
+### ContractLogEnum
+* Added enum which represent evm or x86 contract log
+* ContractLogx86
+
+#### OperationType
+* balanceFreezeOperation
+* balanceUnfreezeOperation
+* sidechainERC20IssueOperation
+* sidechainERC20BurnOperation
+* sidechainBTCCreateAddressOperatio
+* sidechainBTCIntermediateDepositOperatio
+* sidechainBTCDepositOperatio
+* sidechainBTCWithdrawOperatio
+* sidechainBTCApproveWithdrawOperatio
+* sidechainBTCAggregateOperatio
+* blockRewardOperation
+
+#### Tests
+* Added tests to subscribeToAccount, subscribeToBlock, subscribeToDynamicGlobalProperties
+
+### Updated
+
+#### Signatures
+* signer changed to producer
+
+#### ContractLogsSocketOperation
+* Fixed returns parameter to ContractLogEnum
+
+#### SubscribeContractLogsSocketOperation
+* Fixed returns parameter to Bool
+* Removed fromBlock and toBlock fields
+
+#### AssetAmount
+* Fixed AssetAmount mapping for big values
+
+#### Tests
+* Updated all tests and constants
+
+## 3.4.0 - 2019-08-16
 
 ### Removed
 
@@ -75,7 +156,7 @@ Changed operations ordinals
 * ContractResult - 1.10.
 * Account statistic - 2.5.
 
-## 3.3.0 - 2017-07-11
+## 3.3.0 - 2019-07-11
 
 ### Changes
 Replaced passwordOrWif with wif in the following methods:
@@ -101,7 +182,7 @@ Removed ECKey and all connected features
 ### Tests
 Removed tests with password and added required tests with wif
 
-## 3.2.1 - 2017-06-24
+## 3.2.1 - 2019-06-24
 
 ### Changes
 
@@ -110,7 +191,7 @@ Added Extensions to CallContractOperation, CreateContractOperation, SidechainBur
 ### Tests
 Updated tests according to changed methods
 
-## 3.2 - 2017-06-11
+## 3.2 - 2019-06-11
 
 ### Changes
 
@@ -145,7 +226,7 @@ Fixed GlobalProperties
 ### Tests
 Updated tests according to changed methods
 
-## 3.1 - 2017-05-27
+## 3.1 - 2019-05-27
 
 ### Authority
 Owner Authority was removed from the network

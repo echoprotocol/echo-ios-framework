@@ -120,7 +120,7 @@ class SubscribtionTests: XCTestCase {
         let delegate = SubscribeContractLogsDelegateStub(exp: exp)
         strongContractLogDelegate = delegate
         
-        let contratId = "1.9.804"
+        let contratId = "1.10.804"
         
         //act
         echo.start { [unowned self] (result) in

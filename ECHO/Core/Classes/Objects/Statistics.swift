@@ -15,7 +15,6 @@ public struct Statistics: ECHOObject, Decodable {
         case id
         case mostRecentOp = "most_recent_op"
         case owner
-        case pendingFees = "pending_fees"
         case removedOps = "removed_ops"
         case totalCoreInOrders = "total_core_in_orders"
         case totalOps = "total_ops"
@@ -24,7 +23,6 @@ public struct Statistics: ECHOObject, Decodable {
     public let id: String
     public let mostRecentOp: String
     public let owner: String
-    public let pendingFees: Int
     public let removedOps: Int
     public let totalCoreInOrders: Int
     public let totalOps: Int
@@ -32,7 +30,6 @@ public struct Statistics: ECHOObject, Decodable {
     public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: StatisticsCodingKeys.self)
         id = try values.decode(String.self, forKey: .id)
-        pendingFees = try values.decode(Int.self, forKey: .pendingFees)
         removedOps = try values.decode(Int.self, forKey: .removedOps)
         totalCoreInOrders = try values.decode(Int.self, forKey: .totalCoreInOrders)
         totalOps = try values.decode(Int.self, forKey: .totalOps)

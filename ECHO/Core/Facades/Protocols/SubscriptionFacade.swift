@@ -40,7 +40,7 @@ public protocol SubscribeContractsDelegate: class {
     The interface of the class that allows you to receive notification about the create new logs from specific contract
  */
 public protocol SubscribeContractLogsDelegate: class {
-    func didCreateLogs(logs: [ContractLog])
+    func didCreateLogs(logs: [ContractLogEnum])
 }
 
 /**

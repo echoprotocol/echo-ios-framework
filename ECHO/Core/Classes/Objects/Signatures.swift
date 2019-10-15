@@ -15,7 +15,7 @@ public struct Signatures: Decodable {
         case step = "_step"
         case value = "_value"
         case leader = "_leader"
-        case signer = "_signer"
+        case producer = "_producer"
         case delegates = "_delegate"
         case fallback = "_fallback"
         case bbaSign = "_bba_sign"
@@ -24,7 +24,7 @@ public struct Signatures: Decodable {
     public let step: IntOrString
     public let value: IntOrString
     public let leader: IntOrString
-    public let signer: IntOrString
+    public let producer: IntOrString
     public let delegates: IntOrString
     public let fallback: IntOrString
     public let bbaSign: String
@@ -35,7 +35,7 @@ public struct Signatures: Decodable {
         step = try values.decode(IntOrString.self, forKey: .step)
         value = try values.decode(IntOrString.self, forKey: .value)
         leader = try values.decode(IntOrString.self, forKey: .leader)
-        signer = try values.decode(IntOrString.self, forKey: .signer)
+        producer = try values.decode(IntOrString.self, forKey: .producer)
         delegates = try values.decode(IntOrString.self, forKey: .delegates)
         fallback = try values.decode(IntOrString.self, forKey: .fallback)
         bbaSign = try values.decode(String.self, forKey: .bbaSign)

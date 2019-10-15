@@ -1,5 +1,5 @@
 //
-//  ContractLog.swift
+//  ContractLogEVM.swift
 //  ECHO
 //
 //  Created by Vladimir Sharaev on 19/11/2018.
@@ -7,11 +7,11 @@
 //
 
 /**
-    Represents Contract Log object from blockchain
+    Represents EVM Contract Log object from blockchain
  */
-public struct ContractLog: Decodable {
+public struct ContractLogEVM: Decodable {
     
-    private enum ContractLogCodingKeys: String, CodingKey {
+    private enum ContractLogEVMCodingKeys: String, CodingKey {
         case address
         case calledMethodsHashes = "log"
         case data
@@ -30,7 +30,7 @@ public struct ContractLog: Decodable {
     
     public init(from decoder: Decoder) throws {
         
-        let values = try decoder.container(keyedBy: ContractLogCodingKeys.self)
+        let values = try decoder.container(keyedBy: ContractLogEVMCodingKeys.self)
         address = try values.decode(String.self, forKey: .address)
         calledMethodsHashes = try values.decode([String].self, forKey: .calledMethodsHashes)
         data = try values.decode(String.self, forKey: .data)

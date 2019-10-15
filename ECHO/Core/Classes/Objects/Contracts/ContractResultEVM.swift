@@ -43,7 +43,6 @@ public struct ExecRes: Decodable {
         case newAddress = "new_address"
         case output
         case codeDeposit = "code_deposit"
-        case gasRefunded = "gas_refunded"
         case depositSize = "deposit_size"
         case gasForDeposit = "gas_for_deposit"
     }
@@ -52,7 +51,6 @@ public struct ExecRes: Decodable {
     public let newAddress: String?
     public let output: String?
     public let codeDeposit: String?
-    public let gasRefunded: UInt?
     public let depositSize: UInt?
     public let gasForDeposit: UInt?
     
@@ -60,7 +58,6 @@ public struct ExecRes: Decodable {
                 newAddress: String?,
                 output: String?,
                 codeDeposit: String?,
-                gasRefunded: UInt?,
                 depositSize: UInt?,
                 gasForDeposit: UInt?) {
         
@@ -68,7 +65,6 @@ public struct ExecRes: Decodable {
         self.newAddress = newAddress
         self.output = output
         self.codeDeposit = codeDeposit
-        self.gasRefunded = gasRefunded
         self.depositSize = depositSize
         self.gasForDeposit = gasForDeposit
     }
@@ -80,7 +76,6 @@ public struct ExecRes: Decodable {
         newAddress = try? values.decode(String.self, forKey: .newAddress)
         output = try? values.decode(String.self, forKey: .output)
         codeDeposit = try? values.decode(String.self, forKey: .codeDeposit)
-        gasRefunded = try? values.decode(UInt.self, forKey: .gasRefunded)
         depositSize = try? values.decode(UInt.self, forKey: .depositSize)
         gasForDeposit = try? values.decode(UInt.self, forKey: .gasForDeposit)
     }

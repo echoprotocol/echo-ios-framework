@@ -162,7 +162,7 @@
 		D061330A21A2BD41009EC456 /* BaseApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D061330921A2BD41009EC456 /* BaseApiService.swift */; };
 		D061330C21A2C836009EC456 /* CustomOperationsFacade.swift in Sources */ = {isa = PBXBuildFile; fileRef = D061330B21A2C836009EC456 /* CustomOperationsFacade.swift */; };
 		D061330E21A2C99F009EC456 /* CustomOperationsFacadeImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D061330D21A2C99F009EC456 /* CustomOperationsFacadeImp.swift */; };
-		D061331321A2E93F009EC456 /* ContractLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = D061331221A2E93F009EC456 /* ContractLog.swift */; };
+		D061331321A2E93F009EC456 /* ContractLogEVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = D061331221A2E93F009EC456 /* ContractLogEVM.swift */; };
 		D061331521A2EC53009EC456 /* GetContractLogsSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D061331421A2EC53009EC456 /* GetContractLogsSocketOperation.swift */; };
 		D061331721A30052009EC456 /* SubscribeContractLogsSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D061331621A30052009EC456 /* SubscribeContractLogsSocketOperation.swift */; };
 		D071EE042268B4F600928D86 /* TestConstantsConfig.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = D0A0C50A225E2D5A000BA64D /* TestConstantsConfig.xcconfig */; };
@@ -207,6 +207,8 @@
 		D0A19B002269F2330030F442 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A19AFF2269F2320030F442 /* Constants.swift */; };
 		D0A1B441212E9C5300294683 /* ECHOQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A1B440212E9C5300294683 /* ECHOQueue.swift */; };
 		D0A1B447212FF04600294683 /* Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A1B446212FF04600294683 /* Block.swift */; };
+		D0A1F78F2354AD8600F38038 /* ContractLogx86.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A1F78E2354AD8600F38038 /* ContractLogx86.swift */; };
+		D0A1F7912354ADE100F38038 /* ContractLogEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A1F7902354ADE100F38038 /* ContractLogEnum.swift */; };
 		D0A4932D22AF88F6006DF77B /* DepositEth.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A4932C22AF88F6006DF77B /* DepositEth.swift */; };
 		D0A4932F22AF8A41006DF77B /* WithdrawalEth.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A4932E22AF8A41006DF77B /* WithdrawalEth.swift */; };
 		D0A4933122AF8DA0006DF77B /* GetAccountDepositsSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A4933022AF8DA0006DF77B /* GetAccountDepositsSocketOperation.swift */; };
@@ -446,7 +448,7 @@
 		D061330B21A2C836009EC456 /* CustomOperationsFacade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomOperationsFacade.swift; sourceTree = "<group>"; };
 		D061330D21A2C99F009EC456 /* CustomOperationsFacadeImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomOperationsFacadeImp.swift; sourceTree = "<group>"; };
 		D061330F21A2D073009EC456 /* CustomGetFullAccountSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomGetFullAccountSocketOperation.swift; sourceTree = "<group>"; };
-		D061331221A2E93F009EC456 /* ContractLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractLog.swift; sourceTree = "<group>"; };
+		D061331221A2E93F009EC456 /* ContractLogEVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractLogEVM.swift; sourceTree = "<group>"; };
 		D061331421A2EC53009EC456 /* GetContractLogsSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetContractLogsSocketOperation.swift; sourceTree = "<group>"; };
 		D061331621A30052009EC456 /* SubscribeContractLogsSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribeContractLogsSocketOperation.swift; sourceTree = "<group>"; };
 		D073F515224CD7F50025AE6A /* SubscribeAccountDelegateStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribeAccountDelegateStub.swift; sourceTree = "<group>"; };
@@ -490,6 +492,8 @@
 		D0A19AFF2269F2320030F442 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		D0A1B440212E9C5300294683 /* ECHOQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ECHOQueue.swift; sourceTree = "<group>"; };
 		D0A1B446212FF04600294683 /* Block.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Block.swift; sourceTree = "<group>"; };
+		D0A1F78E2354AD8600F38038 /* ContractLogx86.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractLogx86.swift; sourceTree = "<group>"; };
+		D0A1F7902354ADE100F38038 /* ContractLogEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractLogEnum.swift; sourceTree = "<group>"; };
 		D0A4932C22AF88F6006DF77B /* DepositEth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepositEth.swift; sourceTree = "<group>"; };
 		D0A4932E22AF8A41006DF77B /* WithdrawalEth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawalEth.swift; sourceTree = "<group>"; };
 		D0A4933022AF8DA0006DF77B /* GetAccountDepositsSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAccountDepositsSocketOperation.swift; sourceTree = "<group>"; };
@@ -1083,8 +1087,10 @@
 				D01AD065221C15800062A74D /* ContractResultEnum.swift */,
 				D0B0586D2146728800A80CDE /* ContractResultEVM.swift */,
 				D01AD063221C156E0062A74D /* ContractResultx86.swift */,
+				D0A1F7902354ADE100F38038 /* ContractLogEnum.swift */,
+				D061331221A2E93F009EC456 /* ContractLogEVM.swift */,
+				D0A1F78E2354AD8600F38038 /* ContractLogx86.swift */,
 				D0B0587521468A0300A80CDE /* ContractInfo.swift */,
-				D061331221A2E93F009EC456 /* ContractLog.swift */,
 				D0DCC84C223908B600D20358 /* ContractExecuteType.swift */,
 				D0880DE0228FF8F6003B9E28 /* ContractHistory.swift */,
 			);
@@ -1368,7 +1374,7 @@
 				D061330A21A2BD41009EC456 /* BaseApiService.swift in Sources */,
 				B3CA704020F4FB0200511F6A /* ECHOSerializable.swift in Sources */,
 				B3CA702820F4A43000511F6A /* AuthentificationFacade.swift in Sources */,
-				D061331321A2E93F009EC456 /* ContractLog.swift in Sources */,
+				D061331321A2E93F009EC456 /* ContractLogEVM.swift in Sources */,
 				B3CA704520F532BE00511F6A /* BaseSocketOperation.swift in Sources */,
 				D0E158E2221FDF9B004B44FF /* GetKeyReferencesSocketOperation.swift in Sources */,
 				B39554B1213E70DB00CE2647 /* AssetsFacade.swift in Sources */,
@@ -1405,6 +1411,7 @@
 				D0B0587E214698F900A80CDE /* ContractStructEVM.swift in Sources */,
 				D0A4932D22AF88F6006DF77B /* DepositEth.swift in Sources */,
 				D05B7A3F2306BD6200329534 /* Signatures.swift in Sources */,
+				D0A1F7912354ADE100F38038 /* ContractLogEnum.swift in Sources */,
 				B38596FE20F6009A00B55E59 /* Asset.swift in Sources */,
 				B358CD08213978800046327F /* Settings.swift in Sources */,
 				B39A7C0B2105F5F7003CC14D /* SubscriptionFacadeImp.swift in Sources */,
@@ -1455,6 +1462,7 @@
 				B30CC387214A761D003953E3 /* Integer+Extension.swift in Sources */,
 				D01AD060221C0DCE0062A74D /* ContractStructx86.swift in Sources */,
 				B38596F620F5EEAC00B55E59 /* RequiredFeeSocketOperation.swift in Sources */,
+				D0A1F78F2354AD8600F38038 /* ContractLogx86.swift in Sources */,
 				B3D1C90421386430009018AE /* CryptoCoreImp.swift in Sources */,
 				B3CA702E20F4A46200511F6A /* SubscriptionFacade.swift in Sources */,
 				B3E9A35B21A2A51E001A95B4 /* NoticeEventProxyImp.swift in Sources */,
@@ -1768,6 +1776,7 @@
 					"$(SRCROOT)/Libraries/openssl/lib",
 					"$(SRCROOT)/Libraries/ed25519/lib/SimulatorRelease/",
 				);
+				MARKETING_VERSION = 3.5.0;
 				MODULEMAP_FILE = "./ECHO/Supports Files/ECHO.modulemap";
 				PRODUCT_BUNDLE_IDENTIFIER = org.echo.mobile.framework;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -1815,6 +1824,7 @@
 					"$(SRCROOT)/Libraries/openssl/lib",
 					"$(SRCROOT)/Libraries/ed25519/lib/SimulatorRelease/",
 				);
+				MARKETING_VERSION = 3.5.0;
 				MODULEMAP_FILE = "./ECHO/Supports Files/ECHO.modulemap";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = org.echo.mobile.framework;
