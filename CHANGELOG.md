@@ -1,10 +1,85 @@
 # CHANGELOG
 
-## Not released
+## 3.5.0 - 2019-10-15
 
-### Fixed
-* subscribeToContractLogs - fixed operation parameters
+### Removed
+
+#### DynamicGlobalProperties
+* currentAslot
+* recentlyMissedCount
+
+#### GlobalProperties
+* blockInterval
+
+#### ObjectType
+* budgetRecord
+
+#### Statistics
+* pendingFees
+
+#### ContractResultEVM
+* gasRefunded
+
+#### OperationType
+* accountTransferOperation
+* sidechainChangeConfigOperation
+
+### Added
+
+#### AccountOptions
+* delegateShare
+
+#### DynamicGlobalProperties
+* lastRandQuantity
+
+#### ObjectType
+* frozenBalance
+* btcAddress
+* btcIntermediateDeposit
+* btcDeposit
+* btcWithdraw
+* btcAggregating
+
+#### SidechainConfig
+* waitingETHBlocks
+
+### ContractLogEnum
+* Added enum which represent evm or x86 contract log
+* ContractLogx86
+
+#### OperationType
+* balanceFreezeOperation
+* balanceUnfreezeOperation
+* sidechainERC20IssueOperation
+* sidechainERC20BurnOperation
+* sidechainBTCCreateAddressOperatio
+* sidechainBTCIntermediateDepositOperatio
+* sidechainBTCDepositOperatio
+* sidechainBTCWithdrawOperatio
+* sidechainBTCApproveWithdrawOperatio
+* sidechainBTCAggregateOperatio
+* blockRewardOperation
+
+#### Tests
+* Added tests to subscribeToAccount, subscribeToBlock, subscribeToDynamicGlobalProperties
+
+### Updated
+
+#### Signatures
+* signer changed to producer
+
+#### ContractLogsSocketOperation
+* Fixed returns parameter to ContractLogEnum
+
+#### SubscribeContractLogsSocketOperation
+* Fixed returns parameter to Bool
+* Removed fromBlock and toBlock fields
+
+#### AssetAmount
 * Fixed AssetAmount mapping for big values
+
+#### Tests
+* Updated all tests and constants
 
 ## 3.4.0 - 2019-08-16
 
