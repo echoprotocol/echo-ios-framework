@@ -27,6 +27,7 @@ public struct Account: ECHOObject, ECHOCodable, Decodable, Hashable {
         case options
         case statistics
         case edKey = "echorand_key"
+        case accumulatedReward = "accumulated_reward"
     }
     
     public var id: String
@@ -41,6 +42,7 @@ public struct Account: ECHOObject, ECHOCodable, Decodable, Hashable {
     public var active: Authority?
     public var options: Options?
     public var edKey: String?
+    public var accumulatedReward: UInt?
     
     public init(_ id: String) {
         
@@ -62,6 +64,7 @@ public struct Account: ECHOObject, ECHOCodable, Decodable, Hashable {
         active = try? values.decode(Authority.self, forKey: .active)
         options = try? values.decode(Options.self, forKey: .options)
         edKey = try? values.decode(String.self, forKey: .edKey)
+        accumulatedReward = try? values.decode(UInt.self, forKey: .accumulatedReward)
     }
     
     // MARK: Hashable

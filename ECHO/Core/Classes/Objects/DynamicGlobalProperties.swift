@@ -26,7 +26,6 @@ public struct DynamicGlobalProperties: ECHOObject, Decodable {
         case nextMaintenanceTime = "next_maintenance_time"
         case time
         case committeeBudget = "committee_budget"
-        case lastRandQuantity = "last_rand_quantity"
     }
     
     public let id: String
@@ -39,7 +38,6 @@ public struct DynamicGlobalProperties: ECHOObject, Decodable {
     public let nextMaintenanceTime: String
     public let time: String
     public let committeeBudget: Int
-    public let lastRandQuantity: String
     
     public init(from decoder: Decoder) throws {
         
@@ -54,6 +52,5 @@ public struct DynamicGlobalProperties: ECHOObject, Decodable {
         lastBudgetTime = try values.decode(String.self, forKey: .lastBudgetTime)
         nextMaintenanceTime = try values.decode(String.self, forKey: .nextMaintenanceTime)
         time = try values.decode(String.self, forKey: .time)
-        lastRandQuantity = try values.decode(String.self, forKey: .lastRandQuantity)
     }
 }

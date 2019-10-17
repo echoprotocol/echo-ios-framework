@@ -12,13 +12,11 @@ public struct GlobalProperties: Decodable {
         case identifier = "id"
         case parameters
         case nextAvailableVoteId = "next_available_vote_id"
-        case activeCommitteeMembers = "active_committee_members"
     }
     
     public let identifier: String
     public let parameters: GlobalPropertiesParameters
     public let nextAvailableVoteId: IntOrString
-    public let activeCommitteeMembers: [String]
     
     public init(identifier: String,
                 parameters: GlobalPropertiesParameters,
@@ -29,7 +27,6 @@ public struct GlobalProperties: Decodable {
         self.identifier = identifier
         self.parameters = parameters
         self.nextAvailableVoteId = nextAvailableVoteId
-        self.activeCommitteeMembers = activeCommitteeMembers
     }
     
     public init(from decoder: Decoder) throws {
@@ -39,7 +36,6 @@ public struct GlobalProperties: Decodable {
         identifier = try values.decode(String.self, forKey: .identifier)
         parameters = try values.decode(GlobalPropertiesParameters.self, forKey: .parameters)
         nextAvailableVoteId = try values.decode(IntOrString.self, forKey: .nextAvailableVoteId)
-        activeCommitteeMembers = try values.decode([String].self, forKey: .activeCommitteeMembers)
     }
 }
 
@@ -254,7 +250,6 @@ public struct SidechainConfig: Decodable {
         case ethUpdateAddressMethod = "eth_update_addr_method"
         case ETHAssetId = "ETH_asset_id"
         case fines
-        case waitingBlocks = "waiting_blocks"
         case gasPrice = "gas_price"
         case waitingETHBlocks = "waiting_eth_blocks"
     }
@@ -272,9 +267,7 @@ public struct SidechainConfig: Decodable {
     public let erc20WithdrawTopic: String
     public let ETHAssetId: String
     public let fines: SidechainFines
-    public let waitingBlocks: IntOrString
     public let gasPrice: IntOrString
-    public let waitingETHBlocks: IntOrString
     
     public init(ethContractAddress: String,
                 ethCommitteeUpdateMethod: EthMethod,
@@ -289,9 +282,7 @@ public struct SidechainConfig: Decodable {
                 erc20WithdrawTopic: String,
                 ETHAssetId: String,
                 fines: SidechainFines,
-                waitingBlocks: IntOrString,
-                gasPrice: IntOrString,
-                waitingETHBlocks: IntOrString) {
+                gasPrice: IntOrString) {
         
         self.ethContractAddress = ethContractAddress
         self.ethCommitteeUpdateMethod = ethCommitteeUpdateMethod
@@ -306,9 +297,7 @@ public struct SidechainConfig: Decodable {
         self.erc20WithdrawTopic = erc20WithdrawTopic
         self.ETHAssetId = ETHAssetId
         self.fines = fines
-        self.waitingBlocks = waitingBlocks
         self.gasPrice = gasPrice
-        self.waitingETHBlocks = waitingETHBlocks
     }
     
     public init(from decoder: Decoder) throws {
@@ -328,9 +317,7 @@ public struct SidechainConfig: Decodable {
         erc20WithdrawTopic = try values.decode(String.self, forKey: .erc20WithdrawTopic)
         ETHAssetId = try values.decode(String.self, forKey: .ETHAssetId)
         fines = try values.decode(SidechainFines.self, forKey: .fines)
-        waitingBlocks = try values.decode(IntOrString.self, forKey: .waitingBlocks)
         gasPrice = try values.decode(IntOrString.self, forKey: .gasPrice)
-        waitingETHBlocks = try values.decode(IntOrString.self, forKey: .waitingETHBlocks)
     }
 }
 

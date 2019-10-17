@@ -24,7 +24,7 @@ struct GetContractLogsSocketOperation: SocketOperation {
     func createParameters() -> [Any] {
         let array: [Any] = [apiId,
                             SocketOperationKeys.getContractLogs.rawValue,
-                            [contractId, fromBlock, limit]]
+                            [contractId, [], fromBlock, limit]]
         return array
     }
     

@@ -109,7 +109,7 @@ class ECHOInterfaceTests: XCTestCase {
 //            $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
 //        }))
 //        let exp = expectation(description: "testRegisterUser")
-//        let userName = Constants.defaultToName
+//        let userName = Constants.defaultName
 //        let wif = Constants.defaultWIF
 //        var finalResult = false
 //
@@ -128,7 +128,7 @@ class ECHOInterfaceTests: XCTestCase {
 //        }
 //
 //        //assert
-//        waitForExpectations(timeout: Constants.timeout) { error in
+//        waitForExpectations(timeout: Constants.timeout * 3) { error in
 //            XCTAssertEqual(finalResult, true)
 //        }
 //    }
@@ -1068,9 +1068,9 @@ class ECHOInterfaceTests: XCTestCase {
 //        }))
 //        let exp = expectation(description: "testCreateAsset")
 //        var asset = Asset("")
-//        asset.symbol = "SHAR"
+//        asset.symbol = "SHARAEV"
 //        asset.precision = 4
-//        asset.issuer = Account("1.2.19")
+//        asset.issuer = Account("1.2.35")
 ////        asset.setBitsassetOptions(BitassetOptions(feedLifetimeSec: 86400,
 ////                                                  minimumFeeds: 7,
 ////                                                  forceSettlementDelaySec: 86400,
@@ -1288,8 +1288,8 @@ class ECHOInterfaceTests: XCTestCase {
         }))
         let exp = expectation(description: "testGetContractLogs")
         let contractId = Constants.logsContract
-        let fromBlock = Constants.contractLogsFromBlock
-        let limit = 10
+        let fromBlock = 153020//Constants.contractLogsFromBlock
+        let limit = 20
         var contractLogs: [ContractLogEnum]!
         
         //act
@@ -1321,7 +1321,7 @@ class ECHOInterfaceTests: XCTestCase {
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
         }))
         let exp = expectation(description: "testFailGetContractLogs")
-        let contractId = "1.11.1880"
+        let contractId = "1.3.1880"
         let fromBlock = Constants.contractLogsFromBlock
         let limit = 10
         var error: ECHOError = ECHOError.undefined

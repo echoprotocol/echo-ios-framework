@@ -33,11 +33,8 @@ struct AccountStub {
                                 },
                                 "echorand_key": "fd9370d6384ee109765616b2ec5337b221a53a1fa3f3a076b68fcf774994a914",
                                 "options": {
-                                    "voting_account": "1.2.5",
                                     "delegating_account": "1.2.12",
                                     "num_witness": 0,
-                                    "num_committee": 0,
-                                    "votes": [],
                                     "extensions": []
                                 },
                                 "statistics": "2.6.22",
