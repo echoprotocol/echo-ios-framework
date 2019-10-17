@@ -149,7 +149,6 @@
 		D01AD062221C12340062A74D /* ContractVMType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01AD061221C12340062A74D /* ContractVMType.swift */; };
 		D01AD064221C156E0062A74D /* ContractResultx86.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01AD063221C156E0062A74D /* ContractResultx86.swift */; };
 		D01AD066221C15800062A74D /* ContractResultEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01AD065221C15800062A74D /* ContractResultEnum.swift */; };
-		D01BF7D0212AB00700917DB8 /* Vote.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01BF7CF212AB00700917DB8 /* Vote.swift */; };
 		D01BF7D2212ABE4E00917DB8 /* OptionalValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01BF7D1212ABE4E00917DB8 /* OptionalValue.swift */; };
 		D01BF7D4212AC7FE00917DB8 /* AccountAuthority.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01BF7D3212AC7FE00917DB8 /* AccountAuthority.swift */; };
 		D01BF7D6212AC81000917DB8 /* AddressAuthority.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01BF7D5212AC81000917DB8 /* AddressAuthority.swift */; };
@@ -1467,7 +1466,6 @@
 				D094704A212D932500B55A37 /* CreateAssetOperation.swift in Sources */,
 				B30CAD1720FFD5790048E33E /* AccountBalance.swift in Sources */,
 				D0FAC41722AE3E5300C8BF49 /* CallContractFee.swift in Sources */,
-				D01BF7D0212AB00700917DB8 /* Vote.swift in Sources */,
 				B30CAD0120FF74C80048E33E /* CryptoApiService.swift in Sources */,
 				B30CC385214A755D003953E3 /* BatchedCollection.swift in Sources */,
 				B3D20DA3226E01DF00F50CF9 /* GetIsReservedAccountQueueOperation.swift in Sources */,
