@@ -42,8 +42,10 @@ extension ECHOQueueble {
         
         let completionOperation = BlockOperation()
         
-        completionOperation.addExecutionBlock { [weak self] in
-            self?.removeQueue(queue)
+        completionOperation.addExecutionBlock { [weak self, weak queue] in
+            if let queue = queue {
+                self?.removeQueue(queue)
+            }
         }
         
         return completionOperation
