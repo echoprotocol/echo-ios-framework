@@ -52,8 +52,8 @@ struct GetBlockSocketOperation: SocketOperation {
         }
     }
     
-    func forceEnd() {
-        let result = Result<Block, ECHOError>(error: ECHOError.encodableMapping)
+    func forceEnd(error: ECHOError) {
+        let result = Result<Block, ECHOError>(error: error)
         completion(result)
     }
 }

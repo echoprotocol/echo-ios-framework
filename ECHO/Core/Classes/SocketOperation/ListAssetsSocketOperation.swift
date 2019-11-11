@@ -53,8 +53,8 @@ struct ListAssetsSocketOperation: SocketOperation {
         }
     }
     
-    func forceEnd() {
-        let result = Result<[Asset], ECHOError>(error: ECHOError.connectionLost)
+    func forceEnd(error: ECHOError) {
+        let result = Result<[Asset], ECHOError>(error: error)
         completion(result)
     }
 }

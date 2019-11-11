@@ -84,8 +84,8 @@ class CustomGetFullAccountSocketOperation: CustomSocketOperation {
         }
     }
     
-    func forceEnd() {
-        let result = Result<[String: UserAccount], ECHOError>(error: ECHOError.connectionLost)
+    func forceEnd(error: ECHOError) {
+        let result = Result<[String: UserAccount], ECHOError>(error: error)
         completion(result)
     }
 }

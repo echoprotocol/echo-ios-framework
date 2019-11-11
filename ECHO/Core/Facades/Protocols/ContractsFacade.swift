@@ -7,7 +7,7 @@
 //
 
 /// Typealias for function with notice
-public typealias NoticeHandler = (_ notice: ECHONotification) -> Void
+public typealias NoticeHandler = (_ notice: Result<ECHONotification, ECHOError>) -> Void
 
 /**
     Encapsulates logic, associated with various blockchain smart contract processes

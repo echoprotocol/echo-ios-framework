@@ -14,7 +14,8 @@ public protocol SocketCoreComponent: class {
     init(messanger: SocketMessenger,
          url: String,
          noticeUpdateHandler: NoticeActionHandler?,
-         socketQueue: DispatchQueue)
+         socketQueue: DispatchQueue,
+         timeout: TimeInterval)
     
     func connect(options: APIOption, completion: @escaping Completion<Bool>)
     func disconnect()

@@ -469,4 +469,6 @@ extension SubscriptionFacadeImp: NoticeEventDelegate {
     public func didReceiveNotification(notification: ECHONotification) {
         handleNotification(notification)
     }
+    
+    public func didAllNoticesLost() { }
 }

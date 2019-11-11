@@ -55,8 +55,8 @@ struct GetEthAddressSocketOperation: SocketOperation {
         }
     }
     
-    func forceEnd() {
-        let result = Result<EthAddress?, ECHOError>(error: ECHOError.connectionLost)
+    func forceEnd(error: ECHOError) {
+        let result = Result<EthAddress?, ECHOError>(error: error)
         completion(result)
     }
 }

@@ -74,8 +74,8 @@ struct AccessSocketOperation: SocketOperation {
         }
     }
     
-    func forceEnd() {
-        let result = Result<Int, ECHOError>(error: ECHOError.connectionLost)
+    func forceEnd(error: ECHOError) {
+        let result = Result<Int, ECHOError>(error: error)
         completion(result)
     }
 }

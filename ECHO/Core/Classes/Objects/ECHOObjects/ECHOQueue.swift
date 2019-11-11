@@ -87,10 +87,6 @@ public final class ECHOQueue: NSObject {
         valuesContainer = [String: Any]()
     }
     
-    deinit {
-        workingQueue.removeObserver(self, forKeyPath: "operationCount")
-    }
-    
     // MARK: Save and get operations results
     
     public func saveValue<T>(_ value: T, forKey key: String) {
@@ -129,7 +125,7 @@ public final class ECHOQueue: NSObject {
         
         self.completionOperation = completionOperation
         
-        obs = workingQueue.observe(\.operationCount) { [weak self](queue, _) in
+        obs = workingQueue.observe(\.operationCount) { [weak self] (queue, _) in
             
             if queue.operationCount == 0,
                 let completionOperation = self?.completionOperation,

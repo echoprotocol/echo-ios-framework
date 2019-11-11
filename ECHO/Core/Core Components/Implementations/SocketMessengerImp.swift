@@ -12,7 +12,7 @@ import Starscream
 /**
  Implementation of [SocketMessenger](SocketMessenger)
  */
-public final class SocketMessengerImp: SocketMessenger {
+public class SocketMessengerImp: SocketMessenger {
     
     public var callbackQueue: DispatchQueue = DispatchQueue.main
     public var state: SocketConnectionState = .notConnected

@@ -21,6 +21,7 @@ final public class Settings {
     public let network: ECHONetwork
     public let workingQueue: DispatchQueue
     public let callContractFeeMultiplier: UInt
+    public let socketRequestsTimeout: TimeInterval
 
     public typealias BuildConfiguratorClosure = (Configurator) -> Void
     
@@ -35,6 +36,7 @@ final public class Settings {
         abiCoderComponent = configurator.abiCoderComponent
         workingQueue = configurator.workingQueue
         callContractFeeMultiplier = configurator.callContractFeeMultiplier
+        socketRequestsTimeout = configurator.socketRequestsTimeout
     }
     
     public static let defaultDateFormat = "yyyy-MM-dd'T'H:mm:ss"

@@ -50,7 +50,8 @@ final public class ECHO: InterfaceFacades, Startable {
         let socketCore = SocketCoreComponentImp(messanger: settings.socketMessenger,
                                                 url: settings.network.url,
                                                 noticeUpdateHandler: noticeEventProxy,
-                                                socketQueue: settings.workingQueue)
+                                                socketQueue: settings.workingQueue,
+                                                timeout: settings.socketRequestsTimeout)
         
         let databaseService = DatabaseApiServiceImp(socketCore: socketCore)
         let cryptoService = CryptoApiServiceImp(socketCore: socketCore)

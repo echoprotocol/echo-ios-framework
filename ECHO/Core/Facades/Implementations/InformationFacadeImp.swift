@@ -55,6 +55,7 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         case account
         case operationID
         case notice
+        case noticeError
         case noticeHandler
     }
     
@@ -141,9 +142,18 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
             guard noticeOperation?.isCancelled == false else { return }
             guard self != nil else { return }
             guard let noticeHandler: NoticeHandler = queue?.getValue(CreationAccountResultsKeys.noticeHandler.rawValue) else { return }
-            guard let notice: ECHONotification = queue?.getValue(CreationAccountResultsKeys.notice.rawValue) else { return }
             
-            noticeHandler(notice)
+            if let notice: ECHONotification = queue?.getValue(CreationAccountResultsKeys.notice.rawValue) {
+                let result = Result<ECHONotification, ECHOError>(value: notice)
+                noticeHandler(result)
+                return
+            }
+            
+            if let noticeError: ECHOError = queue?.getValue(CreationAccountResultsKeys.noticeError.rawValue) {
+                let result = Result<ECHONotification, ECHOError>(error: noticeError)
+                noticeHandler(result)
+                return
+            }
         }
         
         return noticeOperation
@@ -1080,6 +1090,13 @@ extension InformationFacadeImp: NoticeEventDelegate {
             }
         default:
             break
+        }
+    }
+    
+    public func didAllNoticesLost() {
+        for queue in queues {
+            queue.saveValue(ECHOError.connectionLost, forKey: CreationAccountResultsKeys.noticeError.rawValue)
+            queue.startNextOperation()
         }
     }
 }

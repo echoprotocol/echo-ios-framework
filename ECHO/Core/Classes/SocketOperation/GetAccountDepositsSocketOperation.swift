@@ -54,8 +54,8 @@ struct GetAccountDepositsSocketOperation: SocketOperation {
         }
     }
     
-    func forceEnd() {
-        let result = Result<[DepositEth], ECHOError>(error: ECHOError.connectionLost)
+    func forceEnd(error: ECHOError) {
+        let result = Result<[DepositEth], ECHOError>(error: error)
         completion(result)
     }
 }

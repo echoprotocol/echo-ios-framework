@@ -47,4 +47,9 @@ struct TransactionSocketOperation: SocketOperation {
             }
         }
     }
+    
+    func forceEnd(error: ECHOError) {
+        let result = Result<Bool, ECHOError>(error: error)
+        completion(result)
+    }
 }
