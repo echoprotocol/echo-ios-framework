@@ -61,7 +61,7 @@ class TimeoutTests: XCTestCase {
         }
         
         //assert
-        waitForExpectations(timeout: Constants.timeout * 2) { error in
+        waitForExpectations(timeout: Constants.timeout) { error in
             XCTAssertTrue(wasTimeout)
         }
     }
