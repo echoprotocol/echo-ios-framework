@@ -1,5 +1,19 @@
 # CHANGELOG
 
+## 3.5.1 - 2019-11-12
+
+### Fixed
+* EchoQueue memory leaks
+
+### Added
+* Added timeount error to all socket operations. Timeount can be changed when setup the framework
+
+### Changed
+* Chenged notice callback. Now it returns notice or connectionLost error
+
+### Tests
+* Added timeount and connection lost tests
+
 ## 3.5.0 - 2019-10-15
 
 ### Removed
