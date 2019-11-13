@@ -92,7 +92,7 @@ struct Constants {
         if let value = Constants.infoForKey(ConstantsKeys.defaultName) {
             return value
         } else {
-            return "vsharaev"
+            return "vsharaev1"
         }
     }
     
@@ -100,7 +100,7 @@ struct Constants {
         if let value = Constants.infoForKey(ConstantsKeys.defaultToName) {
             return value
         } else {
-            return "vsharaev1"
+            return "vsharaev2"
         }
     }
     

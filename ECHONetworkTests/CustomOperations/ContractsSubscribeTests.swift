@@ -40,7 +40,18 @@ class GlobalPropertiesSubscribeTests: XCTestCase, SubscribeDynamicGlobalProperti
                 
                 self.echo.subscribeToDynamicGlobalProperties(delegate: self)
 
-                DispatchQueue.main.asyncAfter(deadline: .now() + 5, execute: {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+                    self.echo.sendTransferOperation(fromNameOrId: Constants.defaultName,
+                                                    wif: Constants.defaultWIF,
+                                                    toNameOrId: Constants.defaultToName,
+                                                    amount: 1,
+                                                    asset: Constants.defaultAsset,
+                                                    assetForFee: nil,
+                                                    completion: { _ in },
+                                                    noticeHandler: nil)
+                })
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 10, execute: {
                     exp.fulfill()
                 })
             case .failure(let error):
@@ -86,7 +97,18 @@ class BlocksSubscribeTests: XCTestCase, SubscribeBlockDelegate {
                 
                 self.echo.subscribeToBlock(delegate: self)
                 
-                DispatchQueue.main.asyncAfter(deadline: .now() + 5, execute: {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+                    self.echo.sendTransferOperation(fromNameOrId: Constants.defaultName,
+                                                    wif: Constants.defaultWIF,
+                                                    toNameOrId: Constants.defaultToName,
+                                                    amount: 1,
+                                                    asset: Constants.defaultAsset,
+                                                    assetForFee: nil,
+                                                    completion: { _ in },
+                                                    noticeHandler: nil)
+                })
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 8, execute: {
                     exp.fulfill()
                 })
             case .failure(let error):

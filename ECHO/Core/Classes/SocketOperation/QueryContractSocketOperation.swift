@@ -17,6 +17,7 @@ struct QueryContractSocketOperation: SocketOperation {
     var apiId: Int
     var contractId: String
     var registrarId: String
+    var amount: UInt
     var assetId: String
     var code: String
     var completion: Completion<String>
@@ -25,7 +26,15 @@ struct QueryContractSocketOperation: SocketOperation {
         
         let array: [Any] = [apiId,
                             SocketOperationKeys.callContractNoChangingState.rawValue,
-                            [contractId, registrarId, assetId, code]]
+                            [
+                                contractId,
+                                registrarId,
+                                [
+                                    "amount": amount,
+                                    "asset_id": assetId
+                                ],
+                                code
+                            ]]
         return array
     }
     

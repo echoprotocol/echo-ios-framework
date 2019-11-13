@@ -59,7 +59,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
         noticeDelegateHandler.delegate = self
     }
     
-    public func getContractLogs(contractId: String, fromBlock: Int, limit: Int, completion: @escaping Completion<[ContractLogEnum]>) {
+    public func getContractLogs(contractId: String, fromBlock: Int, toBlock: Int, completion: @escaping Completion<[ContractLogEnum]>) {
         
         // Validate historyId
         do {
@@ -72,7 +72,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
             return
         }
         
-        services.databaseService.getContractLogs(contractId: contractId, fromBlock: fromBlock, limit: limit, completion: completion)
+        services.databaseService.getContractLogs(contractId: contractId, fromBlock: fromBlock, toBlock: toBlock, completion: completion)
     }
     
     public func getContractResult(contractResultId: String, completion: @escaping Completion<ContractResultEnum>) {
@@ -437,6 +437,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
     }
     
     public func queryContract(registrarNameOrId: String,
+                              amount: UInt,
                               assetId: String,
                               contratId: String,
                               methodName: String,
@@ -444,6 +445,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
                               completion: @escaping Completion<String>) {
         
         queryContract(registrarNameOrId: registrarNameOrId,
+                      amount: amount,
                       assetId: assetId,
                       contratId: contratId,
                       executeType: ContractExecuteType.nameAndParams(methodName, methodParams),
@@ -451,12 +453,14 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
     }
     
     public func queryContract(registrarNameOrId: String,
+                              amount: UInt,
                               assetId: String,
                               contratId: String,
                               byteCode: String,
                               completion: @escaping Completion<String>) {
         
         queryContract(registrarNameOrId: registrarNameOrId,
+                      amount: amount,
                       assetId: assetId,
                       contratId: contratId,
                       executeType: ContractExecuteType.code(byteCode),
@@ -464,6 +468,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
     }
     
     fileprivate func queryContract(registrarNameOrId: String,
+                                   amount: UInt,
                                    assetId: String,
                                    contratId: String,
                                    executeType: ContractExecuteType,
@@ -503,7 +508,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
         
         // Operation
         queryQueue.saveValue(Contract(id: contratId), forKey: ContractKeys.receiverContract.rawValue)
-        let callContractNoChangigState = createBildCallContractNoChangingState(queryQueue, assetId, completion)
+        let callContractNoChangigState = createBildCallContractNoChangingState(queryQueue, amount, assetId, completion)
         
         // Completion
         let completionOperation = createCompletionOperation(queue: queryQueue)
@@ -613,6 +618,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
     }
     
     fileprivate func createBildCallContractNoChangingState(_ queue: ECHOQueue,
+                                                           _ amount: UInt,
                                                            _ assetId: String,
                                                            _ completion: @escaping Completion<String>) -> Operation {
         let contractOperation = BlockOperation()
@@ -626,6 +632,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
             guard let receive: Contract = queue?.getValue(ContractKeys.receiverContract.rawValue) else { return }
             
             self?.services.databaseService.callContractNoChangingState(contract: receive,
+                                                                       amount: amount,
                                                                        asset: Asset(assetId),
                                                                        account: account,
                                                                        contractCode: byteCode,

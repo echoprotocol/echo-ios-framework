@@ -681,7 +681,7 @@ class SocketCoreComponentTests: XCTestCase {
             $0.socketMessenger = messenger
         }))
         let exp = expectation(description: "testFakeGetAccountDeposits")
-        var deposits: [DepositEth]?
+        var deposits: [EthDeposit]?
         
         //act
         echo.start { [unowned self] (result) in
@@ -713,7 +713,7 @@ class SocketCoreComponentTests: XCTestCase {
             $0.socketMessenger = messenger
         }))
         let exp = expectation(description: "testFakeGetAccountWithdrawals")
-        var withdrawals: [WithdrawalEth]?
+        var withdrawals: [EthWithdrawal]?
         
         //act
         echo.start { [unowned self] (result) in

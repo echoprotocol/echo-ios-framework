@@ -61,7 +61,7 @@ public protocol EthFacade {
      - Parameter completion: Callback in which return Deposits objects or error.
  */
     func getAccountDeposits(nameOrId: String,
-                            completion: @escaping Completion<[DepositEth]>)
+                            completion: @escaping Completion<[EthDeposit]>)
     
 /**
      Returns all approved withdrawals, for the given account id or name.
@@ -70,5 +70,5 @@ public protocol EthFacade {
      - Parameter completion: Callback in which return Withdrawals objects or error.
  */
     func getAccountWithdrawals(nameOrId: String,
-                               completion: @escaping Completion<[WithdrawalEth]>)
+                               completion: @escaping Completion<[EthWithdrawal]>)
 }

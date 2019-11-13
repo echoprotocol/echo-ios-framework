@@ -154,6 +154,11 @@
 		D01BF7D6212AC81000917DB8 /* AddressAuthority.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01BF7D5212AC81000917DB8 /* AddressAuthority.swift */; };
 		D01BF7D8212AE77B00917DB8 /* BitassetOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01BF7D7212AE77B00917DB8 /* BitassetOptions.swift */; };
 		D0414AF6216758BD00CD0322 /* SetBlockAppliedCollbackSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0414AF5216758BC00CD0322 /* SetBlockAppliedCollbackSocketOperation.swift */; };
+		D043C913237AD22E006ADD26 /* BtcDeposit.swift in Sources */ = {isa = PBXBuildFile; fileRef = D043C912237AD22E006ADD26 /* BtcDeposit.swift */; };
+		D043C915237AD243006ADD26 /* BtcWithdrawal.swift in Sources */ = {isa = PBXBuildFile; fileRef = D043C914237AD243006ADD26 /* BtcWithdrawal.swift */; };
+		D043C917237AD561006ADD26 /* SidechainType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D043C916237AD561006ADD26 /* SidechainType.swift */; };
+		D043C919237AD673006ADD26 /* SidechainWithdrawalEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = D043C918237AD673006ADD26 /* SidechainWithdrawalEnum.swift */; };
+		D043C91B237AD77E006ADD26 /* SidechainDepositEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = D043C91A237AD77E006ADD26 /* SidechainDepositEnum.swift */; };
 		D04835E923573E640071B6C6 /* RequestRegistrationTaskSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04835E823573E640071B6C6 /* RequestRegistrationTaskSocketOperation.swift */; };
 		D04835EB23573F160071B6C6 /* RegistrationTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04835EA23573F160071B6C6 /* RegistrationTask.swift */; };
 		D04835ED235743290071B6C6 /* SubmitRegistrationSolutionSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04835EC235743290071B6C6 /* SubmitRegistrationSolutionSocketOperation.swift */; };
@@ -212,8 +217,8 @@
 		D0A1B447212FF04600294683 /* Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A1B446212FF04600294683 /* Block.swift */; };
 		D0A1F78F2354AD8600F38038 /* ContractLogx86.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A1F78E2354AD8600F38038 /* ContractLogx86.swift */; };
 		D0A1F7912354ADE100F38038 /* ContractLogEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A1F7902354ADE100F38038 /* ContractLogEnum.swift */; };
-		D0A4932D22AF88F6006DF77B /* DepositEth.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A4932C22AF88F6006DF77B /* DepositEth.swift */; };
-		D0A4932F22AF8A41006DF77B /* WithdrawalEth.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A4932E22AF8A41006DF77B /* WithdrawalEth.swift */; };
+		D0A4932D22AF88F6006DF77B /* EthDeposit.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A4932C22AF88F6006DF77B /* EthDeposit.swift */; };
+		D0A4932F22AF8A41006DF77B /* EthWithdrawal.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A4932E22AF8A41006DF77B /* EthWithdrawal.swift */; };
 		D0A4933122AF8DA0006DF77B /* GetAccountDepositsSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A4933022AF8DA0006DF77B /* GetAccountDepositsSocketOperation.swift */; };
 		D0A4933322AF8DB4006DF77B /* GetAccountWithdrawalsSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A4933222AF8DB4006DF77B /* GetAccountWithdrawalsSocketOperation.swift */; };
 		D0A4933522AF9543006DF77B /* GetAccountDepositsRequestStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A4933422AF9543006DF77B /* GetAccountDepositsRequestStub.swift */; };
@@ -443,6 +448,11 @@
 		D01BF7D5212AC81000917DB8 /* AddressAuthority.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressAuthority.swift; sourceTree = "<group>"; };
 		D01BF7D7212AE77B00917DB8 /* BitassetOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitassetOptions.swift; sourceTree = "<group>"; };
 		D0414AF5216758BC00CD0322 /* SetBlockAppliedCollbackSocketOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetBlockAppliedCollbackSocketOperation.swift; sourceTree = "<group>"; };
+		D043C912237AD22E006ADD26 /* BtcDeposit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BtcDeposit.swift; sourceTree = "<group>"; };
+		D043C914237AD243006ADD26 /* BtcWithdrawal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BtcWithdrawal.swift; sourceTree = "<group>"; };
+		D043C916237AD561006ADD26 /* SidechainType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidechainType.swift; sourceTree = "<group>"; };
+		D043C918237AD673006ADD26 /* SidechainWithdrawalEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidechainWithdrawalEnum.swift; sourceTree = "<group>"; };
+		D043C91A237AD77E006ADD26 /* SidechainDepositEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidechainDepositEnum.swift; sourceTree = "<group>"; };
 		D04835E823573E640071B6C6 /* RequestRegistrationTaskSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestRegistrationTaskSocketOperation.swift; sourceTree = "<group>"; };
 		D04835EA23573F160071B6C6 /* RegistrationTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationTask.swift; sourceTree = "<group>"; };
 		D04835EC235743290071B6C6 /* SubmitRegistrationSolutionSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitRegistrationSolutionSocketOperation.swift; sourceTree = "<group>"; };
@@ -501,8 +511,8 @@
 		D0A1B446212FF04600294683 /* Block.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Block.swift; sourceTree = "<group>"; };
 		D0A1F78E2354AD8600F38038 /* ContractLogx86.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractLogx86.swift; sourceTree = "<group>"; };
 		D0A1F7902354ADE100F38038 /* ContractLogEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractLogEnum.swift; sourceTree = "<group>"; };
-		D0A4932C22AF88F6006DF77B /* DepositEth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepositEth.swift; sourceTree = "<group>"; };
-		D0A4932E22AF8A41006DF77B /* WithdrawalEth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawalEth.swift; sourceTree = "<group>"; };
+		D0A4932C22AF88F6006DF77B /* EthDeposit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EthDeposit.swift; sourceTree = "<group>"; };
+		D0A4932E22AF8A41006DF77B /* EthWithdrawal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EthWithdrawal.swift; sourceTree = "<group>"; };
 		D0A4933022AF8DA0006DF77B /* GetAccountDepositsSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAccountDepositsSocketOperation.swift; sourceTree = "<group>"; };
 		D0A4933222AF8DB4006DF77B /* GetAccountWithdrawalsSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAccountWithdrawalsSocketOperation.swift; sourceTree = "<group>"; };
 		D0A4933422AF9543006DF77B /* GetAccountDepositsRequestStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAccountDepositsRequestStub.swift; sourceTree = "<group>"; };
@@ -693,7 +703,7 @@
 			isa = PBXGroup;
 			children = (
 				D0FAC41322AE3D7900C8BF49 /* Fee */,
-				D0ED8C242292D84B002EC3EA /* EthObjects */,
+				D0ED8C242292D84B002EC3EA /* SidechainObjects */,
 				D082304422368EA6003A4BDC /* Validators */,
 				D0B0586C214671DB00A80CDE /* Contracts */,
 				D0BC565321429563008104E6 /* ECHOObjects */,
@@ -975,6 +985,25 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		D043C910237AD197006ADD26 /* ETH */ = {
+			isa = PBXGroup;
+			children = (
+				D0ED8C252292D8DE002EC3EA /* EthAddress.swift */,
+				D0A4932C22AF88F6006DF77B /* EthDeposit.swift */,
+				D0A4932E22AF8A41006DF77B /* EthWithdrawal.swift */,
+			);
+			path = ETH;
+			sourceTree = "<group>";
+		};
+		D043C911237AD19E006ADD26 /* BTC */ = {
+			isa = PBXGroup;
+			children = (
+				D043C912237AD22E006ADD26 /* BtcDeposit.swift */,
+				D043C914237AD243006ADD26 /* BtcWithdrawal.swift */,
+			);
+			path = BTC;
+			sourceTree = "<group>";
+		};
 		D061331121A2D72E009EC456 /* CustomOperations */ = {
 			isa = PBXGroup;
 			children = (
@@ -1155,14 +1184,16 @@
 			path = QueueOperation;
 			sourceTree = "<group>";
 		};
-		D0ED8C242292D84B002EC3EA /* EthObjects */ = {
+		D0ED8C242292D84B002EC3EA /* SidechainObjects */ = {
 			isa = PBXGroup;
 			children = (
-				D0ED8C252292D8DE002EC3EA /* EthAddress.swift */,
-				D0A4932C22AF88F6006DF77B /* DepositEth.swift */,
-				D0A4932E22AF8A41006DF77B /* WithdrawalEth.swift */,
+				D043C911237AD19E006ADD26 /* BTC */,
+				D043C910237AD197006ADD26 /* ETH */,
+				D043C916237AD561006ADD26 /* SidechainType.swift */,
+				D043C918237AD673006ADD26 /* SidechainWithdrawalEnum.swift */,
+				D043C91A237AD77E006ADD26 /* SidechainDepositEnum.swift */,
 			);
-			path = EthObjects;
+			path = SidechainObjects;
 			sourceTree = "<group>";
 		};
 		D0FAC41322AE3D7900C8BF49 /* Fee */ = {
@@ -1367,9 +1398,10 @@
 				D0B26FA922D722AF00E88205 /* WIFValidator.swift in Sources */,
 				B30CC381214A745E003953E3 /* SHA3.swift in Sources */,
 				D09DA11C21EDE6870004673F /* RegistrationApiServiceImp.swift in Sources */,
+				D043C917237AD561006ADD26 /* SidechainType.swift in Sources */,
 				B39554B5213EBAED00CE2647 /* ListAssetsSocketOperation.swift in Sources */,
 				B385970420F6270000B55E59 /* ECHOObject.swift in Sources */,
-				D0A4932F22AF8A41006DF77B /* WithdrawalEth.swift in Sources */,
+				D0A4932F22AF8A41006DF77B /* EthWithdrawal.swift in Sources */,
 				D0947048212D931800B55A37 /* AccountUpdateOperation.swift in Sources */,
 				B358CD0A213978990046327F /* ECHONetwork.swift in Sources */,
 				B3CA702A20F4A44900511F6A /* InformationFacade.swift in Sources */,
@@ -1411,6 +1443,7 @@
 				D0A1B447212FF04600294683 /* Block.swift in Sources */,
 				B358CD062139786B0046327F /* Configurator.swift in Sources */,
 				B370BB5B20F76853004C4A26 /* SocketCoreComponentImp.swift in Sources */,
+				D043C915237AD243006ADD26 /* BtcWithdrawal.swift in Sources */,
 				D0814E8C2154DD6600E248AA /* ObjectType.swift in Sources */,
 				D0D8CA472141847900F0646D /* GetRequiredFeeQueueOperation.swift in Sources */,
 				B313B8D32130411D0052B266 /* Internal.m in Sources */,
@@ -1421,7 +1454,7 @@
 				B38596EC20F5ED6000B55E59 /* GetBlockSocketOperation.swift in Sources */,
 				D05C20BD228EEB51004A2EB0 /* SubscribeContractsSocketOperation.swift in Sources */,
 				D0B0587E214698F900A80CDE /* ContractStructEVM.swift in Sources */,
-				D0A4932D22AF88F6006DF77B /* DepositEth.swift in Sources */,
+				D0A4932D22AF88F6006DF77B /* EthDeposit.swift in Sources */,
 				D05B7A3F2306BD6200329534 /* Signatures.swift in Sources */,
 				D0A1F7912354ADE100F38038 /* ContractLogEnum.swift in Sources */,
 				B38596FE20F6009A00B55E59 /* Asset.swift in Sources */,
@@ -1463,6 +1496,7 @@
 				B30CAD1A20FFD58E0048E33E /* Options.swift in Sources */,
 				D061331721A30052009EC456 /* SubscribeContractLogsSocketOperation.swift in Sources */,
 				D0A4933122AF8DA0006DF77B /* GetAccountDepositsSocketOperation.swift in Sources */,
+				D043C919237AD673006ADD26 /* SidechainWithdrawalEnum.swift in Sources */,
 				D094704A212D932500B55A37 /* CreateAssetOperation.swift in Sources */,
 				B30CAD1720FFD5790048E33E /* AccountBalance.swift in Sources */,
 				D0FAC41722AE3E5300C8BF49 /* CallContractFee.swift in Sources */,
@@ -1488,7 +1522,9 @@
 				B3CA702C20F4A45400511F6A /* TransactionFacade.swift in Sources */,
 				D0ED8C202292B0D1002EC3EA /* EthFacade.swift in Sources */,
 				B3CA704B20F5363F00511F6A /* FullAccountSocketOperation.swift in Sources */,
+				D043C91B237AD77E006ADD26 /* SidechainDepositEnum.swift in Sources */,
 				B30CC383214A74B1003953E3 /* Utils.swift in Sources */,
+				D043C913237AD22E006ADD26 /* BtcDeposit.swift in Sources */,
 				D04835E923573E640071B6C6 /* RequestRegistrationTaskSocketOperation.swift in Sources */,
 				B385970220F620B700B55E59 /* AssetOptions.swift in Sources */,
 				B30CAD0220FF74C80048E33E /* DatabaseApiService.swift in Sources */,

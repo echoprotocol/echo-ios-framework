@@ -19,7 +19,6 @@ public struct Account: ECHOObject, ECHOCodable, Decodable, Hashable {
         case registrar
         case referrer
         case lifetimeReferrer = "lifetime_referrer"
-        case networkFeePercentage = "network_fee_percentage"
         case lifetimeReferrerFeePercentage = "lifetime_referrer_fee_percentage"
         case referrerRewardsPercentage = "referrer_rewards_percentage"
         case name
@@ -35,7 +34,6 @@ public struct Account: ECHOObject, ECHOCodable, Decodable, Hashable {
     public var registrarId: String?
     public var referrerId: String?
     public var lifetimeReferrer: String?
-    public var networkFeePercentage: Int?
     public var lifetimeReferrerFeePercentage: Int?
     public var referrerRewardsPercentage: Int?
     public var name: String?
@@ -57,7 +55,6 @@ public struct Account: ECHOObject, ECHOCodable, Decodable, Hashable {
         registrarId = try? values.decode(String.self, forKey: .registrar)
         referrerId = try? values.decode(String.self, forKey: .referrer)
         lifetimeReferrer = try? values.decode(String.self, forKey: .lifetimeReferrer)
-        networkFeePercentage = try? values.decode(Int.self, forKey: .networkFeePercentage)
         lifetimeReferrerFeePercentage = try? values.decode(Int.self, forKey: .lifetimeReferrerFeePercentage)
         referrerRewardsPercentage = try? values.decode(Int.self, forKey: .referrerRewardsPercentage)
         name = try? values.decode(String.self, forKey: .name)
