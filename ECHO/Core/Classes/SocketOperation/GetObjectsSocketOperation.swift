@@ -53,8 +53,8 @@ struct GetObjectsSocketOperation<T>: SocketOperation where T: Decodable {
         }
     }
     
-    func forceEnd() {
-        let result = Result<[T], ECHOError>(error: ECHOError.connectionLost)
+    func forceEnd(error: ECHOError) {
+        let result = Result<[T], ECHOError>(error: error)
         completion(result)
     }
 }

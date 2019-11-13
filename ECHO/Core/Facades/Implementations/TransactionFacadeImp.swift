@@ -46,6 +46,7 @@ final public class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
         case transaction
         case operationId
         case notice
+        case noticeError
         case noticeHandler
     }
     
@@ -170,7 +171,7 @@ final public class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
             
             let fee = AssetAmount(amount: 0, asset: Asset(asset))
             let amount = AssetAmount(amount: amount, asset: Asset(asset))
-            let extractedExpr: TransferOperation = TransferOperation(fromAccount:           fromAccount,
+            let extractedExpr: TransferOperation = TransferOperation(fromAccount: fromAccount,
                                                                      toAccount: toAccount,
                                                                      transferAmount: amount,
                                                                      fee: fee)
@@ -191,9 +192,18 @@ final public class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
             guard noticeOperation?.isCancelled == false else { return }
             guard self != nil else { return }
             guard let noticeHandler: NoticeHandler = queue?.getValue(TransferResultsKeys.noticeHandler.rawValue) else { return }
-            guard let notice: ECHONotification = queue?.getValue(TransferResultsKeys.notice.rawValue) else { return }
             
-            noticeHandler(notice)
+            if let notice: ECHONotification = queue?.getValue(TransferResultsKeys.notice.rawValue) {
+                let result = Result<ECHONotification, ECHOError>(value: notice)
+                noticeHandler(result)
+                return
+            }
+            
+            if let noticeError: ECHOError = queue?.getValue(TransferResultsKeys.noticeError.rawValue) {
+                let result = Result<ECHONotification, ECHOError>(error: noticeError)
+                noticeHandler(result)
+                return
+            }
         }
         
         return noticeOperation
@@ -233,6 +243,13 @@ extension TransactionFacadeImp: NoticeEventDelegate {
             }
         default:
             break
+        }
+    }
+    
+    public func didAllNoticesLost() {
+        for queue in queues {
+            queue.saveValue(ECHOError.connectionLost, forKey: TransferResultsKeys.noticeError.rawValue)
+            queue.startNextOperation()
         }
     }
 }
