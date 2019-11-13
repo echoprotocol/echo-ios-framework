@@ -481,7 +481,12 @@ class SocketCoreComponentTests: XCTestCase {
         
         //act
         echo.start { [unowned self] (result) in
-            self.echo.queryContract(registrarNameOrId: registrarNameOrId, assetId: assetId, contratId: contratId, methodName: methodName, methodParams: params) { (result) in
+            self.echo.queryContract(registrarNameOrId: registrarNameOrId,
+                                    amount: 0,
+                                    assetId: assetId,
+                                    contratId: contratId,
+                                    methodName: methodName,
+                                    methodParams: params) { (result) in
                 
                 switch result {
                 case .success(let res):

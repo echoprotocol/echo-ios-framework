@@ -108,7 +108,7 @@ class BlocksSubscribeTests: XCTestCase, SubscribeBlockDelegate {
                                                     noticeHandler: nil)
                 })
                 
-                DispatchQueue.main.asyncAfter(deadline: .now() + 8, execute: {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 10, execute: {
                     exp.fulfill()
                 })
             case .failure(let error):
