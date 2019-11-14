@@ -54,7 +54,7 @@ struct SubmitRegistrationSolutionSocketOperation: SocketOperation {
         }
     }
     
-    func forceEnd() {
+    func forceEnd(error: ECHOError) {
         let result = Result<Bool, ECHOError>(error: ECHOError.connectionLost)
         completion(result)
     }

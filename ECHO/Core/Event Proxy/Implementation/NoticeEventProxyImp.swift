@@ -24,9 +24,18 @@ public final class NoticeEventProxyImp: NoticeEventProxy {
         delegates.compact()
         
         for index in 0..<delegates.count {
-            
             if let delegate = delegates.object(at: index) as? NoticeEventDelegate {
                 delegate.didReceiveNotification(notification: notification)
+            }
+        }
+    }
+    
+    public func actionAllNoticesLost() {
+        delegates.compact()
+        
+        for index in 0..<delegates.count {
+            if let delegate = delegates.object(at: index) as? NoticeEventDelegate {
+                delegate.didAllNoticesLost()
             }
         }
     }

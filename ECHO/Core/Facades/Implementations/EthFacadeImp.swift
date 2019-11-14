@@ -107,6 +107,7 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble {
         case transaction
         case operationId
         case notice
+        case noticeError
         case noticeHandler
     }
     
@@ -203,7 +204,8 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble {
             let waitOperation = createWaitingOperation(generateQueue)
             let noticeHandleOperation = createNoticeHandleOperation(generateQueue,
                                                                     EthFacadeResultKeys.noticeHandler.rawValue,
-                                                                    EthFacadeResultKeys.notice.rawValue)
+                                                                    EthFacadeResultKeys.notice.rawValue,
+                                                                    EthFacadeResultKeys.noticeError.rawValue)
             generateQueue.addOperation(waitOperation)
             generateQueue.addOperation(noticeHandleOperation)
         }
@@ -312,7 +314,8 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble {
             let waitOperation = createWaitingOperation(withdrawalQueue)
             let noticeHandleOperation = createNoticeHandleOperation(withdrawalQueue,
                                                                     EthFacadeResultKeys.noticeHandler.rawValue,
-                                                                    EthFacadeResultKeys.notice.rawValue)
+                                                                    EthFacadeResultKeys.notice.rawValue,
+                                                                    EthFacadeResultKeys.noticeError.rawValue)
             withdrawalQueue.addOperation(waitOperation)
             withdrawalQueue.addOperation(noticeHandleOperation)
         }
@@ -375,7 +378,8 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble {
     
     fileprivate func createNoticeHandleOperation(_ queue: ECHOQueue,
                                                  _ noticeHandlerKey: String,
-                                                 _ noticeKey: String) -> Operation {
+                                                 _ noticeKey: String,
+                                                 _ noticeErrorKey: String) -> Operation {
         
         let noticeOperation = BlockOperation()
         
@@ -384,9 +388,18 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble {
             guard noticeOperation?.isCancelled == false else { return }
             guard self != nil else { return }
             guard let noticeHandler: NoticeHandler = queue?.getValue(noticeHandlerKey) else { return }
-            guard let notice: ECHONotification = queue?.getValue(noticeKey) else { return }
             
-            noticeHandler(notice)
+            if let notice: ECHONotification = queue?.getValue(noticeKey) {
+                let result = Result<ECHONotification, ECHOError>(value: notice)
+                noticeHandler(result)
+                return
+            }
+            
+            if let noticeError: ECHOError = queue?.getValue(noticeErrorKey) {
+                let result = Result<ECHONotification, ECHOError>(error: noticeError)
+                noticeHandler(result)
+                return
+            }
         }
         
         return noticeOperation
@@ -426,6 +439,13 @@ extension EthFacadeImp: NoticeEventDelegate {
             }
         default:
             break
+        }
+    }
+    
+    public func didAllNoticesLost() {
+        for queue in queues {
+            queue.saveValue(ECHOError.connectionLost, forKey: EthFacadeResultKeys.noticeError.rawValue)
+            queue.startNextOperation()
         }
     }
 }

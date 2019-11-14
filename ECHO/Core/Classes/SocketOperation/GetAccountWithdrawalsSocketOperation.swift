@@ -54,8 +54,8 @@ struct GetAccountWithdrawalsSocketOperation: SocketOperation {
         }
     }
     
-    func forceEnd() {
-        let result = Result<[WithdrawalEth], ECHOError>(error: ECHOError.connectionLost)
+    func forceEnd(error: ECHOError) {
+        let result = Result<[WithdrawalEth], ECHOError>(error: error)
         completion(result)
     }
 }

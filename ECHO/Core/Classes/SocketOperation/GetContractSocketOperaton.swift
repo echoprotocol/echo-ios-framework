@@ -51,8 +51,8 @@ struct GetContractSocketOperaton: SocketOperation {
         }
     }
     
-    func forceEnd() {
-        let result = Result<ContractStructEnum, ECHOError>(error: ECHOError.connectionLost)
+    func forceEnd(error: ECHOError) {
+        let result = Result<ContractStructEnum, ECHOError>(error: error)
         completion(result)
     }
 }
