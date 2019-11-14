@@ -56,4 +56,9 @@ struct QueryContractSocketOperation: SocketOperation {
             }
         }
     }
+    
+    func forceEnd(error: ECHOError) {
+        let result = Result<String, ECHOError>(error: error)
+        completion(result)
+    }
 }

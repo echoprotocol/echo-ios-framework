@@ -8,6 +8,7 @@
 
 public protocol NoticeEventDelegate: class {
     func didReceiveNotification(notification: ECHONotification)
+    func didAllNoticesLost()
 }
 
 public protocol NoticeEventDelegateHandler: class {
@@ -17,6 +18,7 @@ public protocol NoticeEventDelegateHandler: class {
 public protocol NoticeActionHandler {
     
     func actionReceiveNotice(notification: ECHONotification)
+    func actionAllNoticesLost()
 }
 
 public protocol NoticeEventProxy: NoticeActionHandler, NoticeEventDelegateHandler { }

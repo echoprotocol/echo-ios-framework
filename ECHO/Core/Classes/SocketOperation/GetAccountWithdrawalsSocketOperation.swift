@@ -54,7 +54,7 @@ struct GetAccountWithdrawalsSocketOperation: SocketOperation {
         }
     }
     
-    func forceEnd() {
+    func forceEnd(error: ECHOError) {
         let result = Result<[SidechainWithdrawalEnum], ECHOError>(error: ECHOError.connectionLost)
         completion(result)
     }

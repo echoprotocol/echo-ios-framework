@@ -113,7 +113,6 @@
 		B3CA703C20F4AA3700511F6A /* HistoryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3CA703B20F4AA3700511F6A /* HistoryItem.swift */; };
 		B3CA704020F4FB0200511F6A /* ECHOSerializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3CA703F20F4FB0200511F6A /* ECHOSerializable.swift */; };
 		B3CA704220F502BE00511F6A /* SocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3CA704120F502BE00511F6A /* SocketOperation.swift */; };
-		B3CA704520F532BE00511F6A /* BaseSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3CA704420F532BE00511F6A /* BaseSocketOperation.swift */; };
 		B3CA704720F532E600511F6A /* AccessSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3CA704620F532E600511F6A /* AccessSocketOperation.swift */; };
 		B3CA704920F5358400511F6A /* BlockDataSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3CA704820F5358400511F6A /* BlockDataSocketOperation.swift */; };
 		B3CA704B20F5363F00511F6A /* FullAccountSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3CA704A20F5363F00511F6A /* FullAccountSocketOperation.swift */; };
@@ -140,6 +139,12 @@
 		D00A58E7222520FC0089FC18 /* GlobalProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00A58E6222520FC0089FC18 /* GlobalProperties.swift */; };
 		D00A58E9222522C40089FC18 /* GetGlobalPropertiesSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00A58E8222522C40089FC18 /* GetGlobalPropertiesSocketOperation.swift */; };
 		D00C3D282147B4F90053A636 /* Contract.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00C3D272147B4F90053A636 /* Contract.swift */; };
+		D00CD39723794BD100BD576D /* GlobalPropertiesSubscribeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00CD39623794BD100BD576D /* GlobalPropertiesSubscribeTests.swift */; };
+		D00CD39923794BF100BD576D /* BlocksSubscribeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00CD39823794BF100BD576D /* BlocksSubscribeTests.swift */; };
+		D00CD39B23794C1800BD576D /* AccountSubscribeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00CD39A23794C1800BD576D /* AccountSubscribeTests.swift */; };
+		D00CD39D23794C3A00BD576D /* ContractLogsSubscribeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00CD39C23794C3A00BD576D /* ContractLogsSubscribeTests.swift */; };
+		D00CD39F237969E500BD576D /* TimeoutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00CD39E237969E500BD576D /* TimeoutTests.swift */; };
+		D00CD3A123796A4C00BD576D /* SocketMessengerTimeoutMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00CD3A023796A4C00BD576D /* SocketMessengerTimeoutMock.swift */; };
 		D0116C5821353C460004A491 /* TransactionFacadeImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0116C5721353C460004A491 /* TransactionFacadeImp.swift */; };
 		D0116C5A213561490004A491 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0116C59213561490004A491 /* Transaction.swift */; };
 		D0116C5C21358F120004A491 /* BlockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0116C5B21358F120004A491 /* BlockData.swift */; };
@@ -236,7 +241,6 @@
 		D0B0588221469A0900A80CDE /* GetContractSocketOperaton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B0588121469A0900A80CDE /* GetContractSocketOperaton.swift */; };
 		D0B26FA922D722AF00E88205 /* WIFValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B26FA822D722AF00E88205 /* WIFValidator.swift */; };
 		D0B26FAB22D72E0D00E88205 /* WIFValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B26FAA22D72E0D00E88205 /* WIFValidatorTests.swift */; };
-		D0B42A3B2252527600A14784 /* SubscribtionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B42A3A2252527600A14784 /* SubscribtionTests.swift */; };
 		D0B6A0C62126B26D00A78E4B /* BaseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B6A0C52126B26D00A78E4B /* BaseOperation.swift */; };
 		D0B6A0C82126B39100A78E4B /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B6A0C72126B39100A78E4B /* Extensions.swift */; };
 		D0B6A0CA2126BA9300A78E4B /* OperationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B6A0C92126BA9300A78E4B /* OperationType.swift */; };
@@ -405,7 +409,6 @@
 		B3CA703B20F4AA3700511F6A /* HistoryItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryItem.swift; sourceTree = "<group>"; };
 		B3CA703F20F4FB0200511F6A /* ECHOSerializable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ECHOSerializable.swift; sourceTree = "<group>"; };
 		B3CA704120F502BE00511F6A /* SocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketOperation.swift; sourceTree = "<group>"; };
-		B3CA704420F532BE00511F6A /* BaseSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSocketOperation.swift; sourceTree = "<group>"; };
 		B3CA704620F532E600511F6A /* AccessSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessSocketOperation.swift; sourceTree = "<group>"; };
 		B3CA704820F5358400511F6A /* BlockDataSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockDataSocketOperation.swift; sourceTree = "<group>"; };
 		B3CA704A20F5363F00511F6A /* FullAccountSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullAccountSocketOperation.swift; sourceTree = "<group>"; };
@@ -433,6 +436,12 @@
 		D00A58E6222520FC0089FC18 /* GlobalProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalProperties.swift; sourceTree = "<group>"; };
 		D00A58E8222522C40089FC18 /* GetGlobalPropertiesSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetGlobalPropertiesSocketOperation.swift; sourceTree = "<group>"; };
 		D00C3D272147B4F90053A636 /* Contract.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contract.swift; sourceTree = "<group>"; };
+		D00CD39623794BD100BD576D /* GlobalPropertiesSubscribeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalPropertiesSubscribeTests.swift; sourceTree = "<group>"; };
+		D00CD39823794BF100BD576D /* BlocksSubscribeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlocksSubscribeTests.swift; sourceTree = "<group>"; };
+		D00CD39A23794C1800BD576D /* AccountSubscribeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSubscribeTests.swift; sourceTree = "<group>"; };
+		D00CD39C23794C3A00BD576D /* ContractLogsSubscribeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractLogsSubscribeTests.swift; sourceTree = "<group>"; };
+		D00CD39E237969E500BD576D /* TimeoutTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeoutTests.swift; sourceTree = "<group>"; };
+		D00CD3A023796A4C00BD576D /* SocketMessengerTimeoutMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketMessengerTimeoutMock.swift; sourceTree = "<group>"; };
 		D0116C5721353C460004A491 /* TransactionFacadeImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionFacadeImp.swift; sourceTree = "<group>"; };
 		D0116C59213561490004A491 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
 		D0116C5B21358F120004A491 /* BlockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockData.swift; sourceTree = "<group>"; };
@@ -477,7 +486,7 @@
 		D082304522368EB6003A4BDC /* ETHAddressValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETHAddressValidator.swift; sourceTree = "<group>"; };
 		D08230472236BA19003A4BDC /* ETHAddressValidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETHAddressValidatorTests.swift; sourceTree = "<group>"; };
 		D0880DE0228FF8F6003B9E28 /* ContractHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractHistory.swift; sourceTree = "<group>"; };
-		D0880DE222902913003B9E28 /* ContractsSubscribeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ContractsSubscribeTests.swift; path = CustomOperations/ContractsSubscribeTests.swift; sourceTree = "<group>"; };
+		D0880DE222902913003B9E28 /* ContractsSubscribeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractsSubscribeTests.swift; sourceTree = "<group>"; };
 		D08B2BCC21342444000F7A9B /* FeeFacadeImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeeFacadeImp.swift; sourceTree = "<group>"; };
 		D094703D212D3ECC00B55A37 /* TransferOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferOperation.swift; sourceTree = "<group>"; };
 		D0947047212D931800B55A37 /* AccountUpdateOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountUpdateOperation.swift; sourceTree = "<group>"; };
@@ -530,7 +539,6 @@
 		D0B0588121469A0900A80CDE /* GetContractSocketOperaton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetContractSocketOperaton.swift; sourceTree = "<group>"; };
 		D0B26FA822D722AF00E88205 /* WIFValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WIFValidator.swift; sourceTree = "<group>"; };
 		D0B26FAA22D72E0D00E88205 /* WIFValidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WIFValidatorTests.swift; path = Stubs/WIFValidatorTests.swift; sourceTree = "<group>"; };
-		D0B42A3A2252527600A14784 /* SubscribtionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribtionTests.swift; sourceTree = "<group>"; };
 		D0B6A0C52126B26D00A78E4B /* BaseOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseOperation.swift; sourceTree = "<group>"; };
 		D0B6A0C72126B39100A78E4B /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		D0B6A0C92126BA9300A78E4B /* OperationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationType.swift; sourceTree = "<group>"; };
@@ -882,6 +890,7 @@
 				D0414AF5216758BC00CD0322 /* SetBlockAppliedCollbackSocketOperation.swift */,
 				D048BA972149403B0098AEBF /* QueryContractSocketOperation.swift */,
 				D0B0588121469A0900A80CDE /* GetContractSocketOperaton.swift */,
+				B3CA704120F502BE00511F6A /* SocketOperation.swift */,
 				B3CA704620F532E600511F6A /* AccessSocketOperation.swift */,
 				B3CA704820F5358400511F6A /* BlockDataSocketOperation.swift */,
 				B3CA704A20F5363F00511F6A /* FullAccountSocketOperation.swift */,
@@ -970,6 +979,27 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
+		D00CD39423794B8E00BD576D /* Timeout */ = {
+			isa = PBXGroup;
+			children = (
+				D00CD3A023796A4C00BD576D /* SocketMessengerTimeoutMock.swift */,
+				D00CD39E237969E500BD576D /* TimeoutTests.swift */,
+			);
+			path = Timeout;
+			sourceTree = "<group>";
+		};
+		D00CD39523794BB300BD576D /* Subscribe */ = {
+			isa = PBXGroup;
+			children = (
+				D00CD39623794BD100BD576D /* GlobalPropertiesSubscribeTests.swift */,
+				D00CD39823794BF100BD576D /* BlocksSubscribeTests.swift */,
+				D00CD39A23794C1800BD576D /* AccountSubscribeTests.swift */,
+				D00CD39C23794C3A00BD576D /* ContractLogsSubscribeTests.swift */,
+				D0880DE222902913003B9E28 /* ContractsSubscribeTests.swift */,
+			);
+			path = Subscribe;
+			sourceTree = "<group>";
+		};
 		D01BF7CE212AAFA800917DB8 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -1024,10 +1054,10 @@
 		D077FE05224CC080009F2F27 /* ECHONetworkTests */ = {
 			isa = PBXGroup;
 			children = (
+				D00CD39523794BB300BD576D /* Subscribe */,
+				D00CD39423794B8E00BD576D /* Timeout */,
 				D061331121A2D72E009EC456 /* CustomOperations */,
 				B313B8C0212FF9850052B266 /* ECHOInterfaceTests.swift */,
-				D0B42A3A2252527600A14784 /* SubscribtionTests.swift */,
-				D0880DE222902913003B9E28 /* ContractsSubscribeTests.swift */,
 				D0A19AFF2269F2320030F442 /* Constants.swift */,
 				D077FE08224CC080009F2F27 /* Info.plist */,
 				D0A0C50A225E2D5A000BA64D /* TestConstantsConfig.xcconfig */,
@@ -1419,7 +1449,6 @@
 				B3CA704020F4FB0200511F6A /* ECHOSerializable.swift in Sources */,
 				B3CA702820F4A43000511F6A /* AuthentificationFacade.swift in Sources */,
 				D061331321A2E93F009EC456 /* ContractLogEVM.swift in Sources */,
-				B3CA704520F532BE00511F6A /* BaseSocketOperation.swift in Sources */,
 				D0E158E2221FDF9B004B44FF /* GetKeyReferencesSocketOperation.swift in Sources */,
 				B39554B1213E70DB00CE2647 /* AssetsFacade.swift in Sources */,
 				B3CA702020F4A3A900511F6A /* ECHO.swift in Sources */,
@@ -1642,11 +1671,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D00CD39F237969E500BD576D /* TimeoutTests.swift in Sources */,
+				D00CD39923794BF100BD576D /* BlocksSubscribeTests.swift in Sources */,
 				D0A19B002269F2330030F442 /* Constants.swift in Sources */,
+				D00CD3A123796A4C00BD576D /* SocketMessengerTimeoutMock.swift in Sources */,
+				D00CD39B23794C1800BD576D /* AccountSubscribeTests.swift in Sources */,
 				D0880DE322902913003B9E28 /* ContractsSubscribeTests.swift in Sources */,
 				D07EBA08224CC30F0005C00C /* ECHOInterfaceTests.swift in Sources */,
-				D0B42A3B2252527600A14784 /* SubscribtionTests.swift in Sources */,
+				D00CD39D23794C3A00BD576D /* ContractLogsSubscribeTests.swift in Sources */,
 				D07EBA09224CC4240005C00C /* CustomGetFullAccountSocketOperation.swift in Sources */,
+				D00CD39723794BD100BD576D /* GlobalPropertiesSubscribeTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

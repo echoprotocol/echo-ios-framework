@@ -51,8 +51,8 @@ struct GetGlobalPropertiesSocketOperation: SocketOperation {
         }
     }
     
-    func forceEnd() {
-        let result = Result<GlobalProperties, ECHOError>(error: ECHOError.connectionLost)
+    func forceEnd(error: ECHOError) {
+        let result = Result<GlobalProperties, ECHOError>(error: error)
         completion(result)
     }
 }

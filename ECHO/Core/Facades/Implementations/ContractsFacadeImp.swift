@@ -34,6 +34,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
         case operationId
         case noticeHandler
         case notice
+        case noticeError
     }
     
     var queues: [ECHOQueue]
@@ -595,9 +596,18 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
             guard noticeOperation?.isCancelled == false else { return }
             guard self != nil else { return }
             guard let noticeHandler: NoticeHandler = queue?.getValue(ContractKeys.noticeHandler.rawValue) else { return }
-            guard let notice: ECHONotification = queue?.getValue(ContractKeys.notice.rawValue) else { return }
             
-            noticeHandler(notice)
+            if let notice: ECHONotification = queue?.getValue(ContractKeys.notice.rawValue) {
+                let result = Result<ECHONotification, ECHOError>(value: notice)
+                noticeHandler(result)
+                return
+            }
+            
+            if let noticeError: ECHOError = queue?.getValue(ContractKeys.noticeError.rawValue) {
+                let result = Result<ECHONotification, ECHOError>(error: noticeError)
+                noticeHandler(result)
+                return
+            }
         }
         
         return noticeOperation
@@ -691,6 +701,13 @@ extension ContractsFacadeImp: NoticeEventDelegate {
             }
         default:
             break
+        }
+    }
+    
+    public func didAllNoticesLost() {
+        for queue in queues {
+            queue.saveValue(ECHOError.connectionLost, forKey: ContractKeys.noticeError.rawValue)
+            queue.startNextOperation()
         }
     }
 }

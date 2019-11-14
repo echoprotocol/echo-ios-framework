@@ -55,6 +55,7 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         case account
         case operationID
         case notice
+        case noticeError
         case noticeHandler
         case task
         case nonce
@@ -263,9 +264,18 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
             guard noticeOperation?.isCancelled == false else { return }
             guard self != nil else { return }
             guard let noticeHandler: NoticeHandler = queue?.getValue(CreationAccountResultsKeys.noticeHandler.rawValue) else { return }
-            guard let notice: ECHONotification = queue?.getValue(CreationAccountResultsKeys.notice.rawValue) else { return }
             
-            noticeHandler(notice)
+            if let notice: ECHONotification = queue?.getValue(CreationAccountResultsKeys.notice.rawValue) {
+                let result = Result<ECHONotification, ECHOError>(value: notice)
+                noticeHandler(result)
+                return
+            }
+            
+            if let noticeError: ECHOError = queue?.getValue(CreationAccountResultsKeys.noticeError.rawValue) {
+                let result = Result<ECHONotification, ECHOError>(error: noticeError)
+                noticeHandler(result)
+                return
+            }
         }
         
         return noticeOperation
@@ -530,7 +540,8 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         return getAssetsOperation
     }
     
-    fileprivate func createGetAccountsOperation(_ queue: ECHOQueue, _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
+    fileprivate func createGetAccountsOperation(_ queue: ECHOQueue,
+                                                _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
         
         let getAccountsOperation = BlockOperation()
         
@@ -560,7 +571,8 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         return getAccountsOperation
     }
     
-    fileprivate func createGetDepositsEthOperation(_ queue: ECHOQueue, _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
+    fileprivate func createGetDepositsEthOperation(_ queue: ECHOQueue,
+                                                   _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
         
         let getDepositsEthOperation = BlockOperation()
         
@@ -626,7 +638,8 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         return getWithdrawsEthOperation
     }
     
-    fileprivate func createMergeBlocksInHistoryOperation(_ queue: ECHOQueue, _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
+    fileprivate func createMergeBlocksInHistoryOperation(_ queue: ECHOQueue,
+                                                         _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
         
         let mergeBlocksInHistoryOperation = BlockOperation()
         
@@ -657,7 +670,8 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         return mergeBlocksInHistoryOperation
     }
     
-    fileprivate func createMergeAccountsInHistoryOperation(_ queue: ECHOQueue, _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
+    fileprivate func createMergeAccountsInHistoryOperation(_ queue: ECHOQueue,
+                                                           _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
         
         let mergeAccountsInHistoryOperation = BlockOperation()
         
@@ -1187,6 +1201,13 @@ extension InformationFacadeImp: NoticeEventDelegate {
             }
         default:
             break
+        }
+    }
+    
+    public func didAllNoticesLost() {
+        for queue in queues {
+            queue.saveValue(ECHOError.connectionLost, forKey: CreationAccountResultsKeys.noticeError.rawValue)
+            queue.startNextOperation()
         }
     }
 }

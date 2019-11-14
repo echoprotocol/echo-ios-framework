@@ -53,7 +53,9 @@ final public class RevealFacadeImp: RevealApiFacade {
     
     func loginAndRegister() {
         
-        let operation = AccessSocketOperation(type: .login, method: .call, operationId: socketCore.nextOperationId()) { [weak self] (result) in
+        let operation = AccessSocketOperation(type: .login,
+                                              method: .call,
+                                              operationId: socketCore.nextOperationId()) { [weak self] (result) in
             
             switch result {
             case .success(_):

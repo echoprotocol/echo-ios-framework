@@ -61,7 +61,7 @@ public protocol SocketOperation: JSONCodable {
     var apiId: Int { get }
     func createParameters() -> [Any]
     func handleResponse(_ response: ECHODirectResponse)
-    func forceEnd()
+    func forceEnd(error: ECHOError)
 }
 
 /**
@@ -92,6 +92,4 @@ public extension SocketOperation {
 
         return dictionary
     }
-    
-    func forceEnd() { }
 }

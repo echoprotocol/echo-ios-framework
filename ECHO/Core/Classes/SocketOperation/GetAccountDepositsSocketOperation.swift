@@ -53,7 +53,7 @@ struct GetAccountDepositsSocketOperation: SocketOperation {
         }
     }
     
-    func forceEnd() {
+    func forceEnd(error: ECHOError) {
         let result = Result<[SidechainDepositEnum], ECHOError>(error: ECHOError.connectionLost)
         completion(result)
     }

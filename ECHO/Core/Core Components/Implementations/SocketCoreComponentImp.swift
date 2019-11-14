@@ -13,9 +13,11 @@ final class SocketCoreComponentImp: SocketCoreComponent {
     
     let messenger: SocketMessenger
     let url: String
-    var operationsMap = [Int: SocketOperation]()
-    var currentOperationId: Int = 0
     let noticeUpdateHandler: NoticeActionHandler?
+    let timeout: TimeInterval
+    var operationsMap = [Int: SocketOperation]()
+    var operationsTimes = [(TimeInterval, SocketOperation)]()
+    var currentOperationId: Int = 0
     
     var workingQueue: OperationQueue = {
         var queue = OperationQueue()
@@ -24,11 +26,16 @@ final class SocketCoreComponentImp: SocketCoreComponent {
     }()
     
     required init(messanger: SocketMessenger, url: String,
-                  noticeUpdateHandler: NoticeActionHandler?, socketQueue: DispatchQueue) {
+                  noticeUpdateHandler: NoticeActionHandler?,
+                  socketQueue: DispatchQueue,
+                  timeout: TimeInterval) {
         self.messenger = messanger
         self.messenger.callbackQueue = socketQueue
         self.url = url
         self.noticeUpdateHandler = noticeUpdateHandler
+        self.timeout = timeout
+        
+        monitorTimeouts()
     }
     
     func nextOperationId() -> Int {
@@ -43,9 +50,12 @@ final class SocketCoreComponentImp: SocketCoreComponent {
             completion(result)
         }
         
-        messenger.onDisconnect = {
+        messenger.onDisconnect = { [weak self] in
             let result = Result<Bool, ECHOError>(error: ECHOError.connectionLost)
             completion(result)
+            
+            self?.forceEndAllOperations()
+            self?.noticeUpdateHandler?.actionAllNoticesLost()
         }
         
         messenger.onText = { [weak self] (result) in
@@ -54,9 +64,12 @@ final class SocketCoreComponentImp: SocketCoreComponent {
             }
         }
         
-        messenger.onFailedConnect = {
+        messenger.onFailedConnect = { [weak self] in
             let result = Result<Bool, ECHOError>(error: ECHOError.invalidUrl)
             completion(result)
+            
+            self?.forceEndAllOperations()
+            self?.noticeUpdateHandler?.actionAllNoticesLost()
         }
         
         messenger.connect(toUrl: url)
@@ -74,11 +87,12 @@ final class SocketCoreComponentImp: SocketCoreComponent {
             }
             
             guard self?.messenger.state == .connected else {
-                operation.forceEnd()
+                operation.forceEnd(error: .connectionLost)
                 return
             }
             
             self?.operationsMap[operation.operationId] = operation
+            self?.addOperationToTimeoutMap(operation)
             self?.messenger.write(jsonString)
         }
     }
@@ -97,10 +111,8 @@ final class SocketCoreComponentImp: SocketCoreComponent {
         }
         
         if let response = decodeDirectResopnse(data: data) {
-            
             handleResponse(response)
         } else if let notifcation = decodeNotice(data: data) {
-            
             handleNotification(notifcation)
         }
     }
@@ -114,6 +126,7 @@ final class SocketCoreComponentImp: SocketCoreComponent {
         
         operation.handleResponse(response)
         operationsMap[id] = nil
+        operationsTimes.removeAll(where: { $0.1.operationId == id })
     }
     
     fileprivate func handleNotification(_ notification: ECHONotification) {
@@ -152,8 +165,44 @@ final class SocketCoreComponentImp: SocketCoreComponent {
     fileprivate func forceEndAllOperations() {
         
         operationsMap.forEach { (_, operation) in
-            operation.forceEnd()
+            operation.forceEnd(error: .connectionLost)
         }
         operationsMap = [Int: SocketOperation]()
+        operationsTimes = [(TimeInterval, SocketOperation)]()
+    }
+    
+    fileprivate func monitorTimeouts() {
+        workingQueue.addOperation { [weak self] in
+            guard let self = self else {
+                return
+            }
+            
+            let time = Date().timeIntervalSince1970 - self.timeout
+            
+            var removedCount = 0
+            for index in 0..<self.operationsTimes.count {
+                let timeWithOperation = self.operationsTimes[index]
+                let opTime = timeWithOperation.0
+                let operation = timeWithOperation.1
+                if opTime > time {
+                    break
+                }
+                
+                operation.forceEnd(error: .timeout)
+                self.operationsMap[operation.operationId] = nil
+                removedCount += 1
+            }
+            
+            self.operationsTimes.removeFirst(removedCount)
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(Int(timeout))) { [weak self] in
+            self?.monitorTimeouts()
+        }
+    }
+    
+    private func addOperationToTimeoutMap(_ operation: SocketOperation) {
+        let currentTime = Date().timeIntervalSince1970
+        operationsTimes.append((currentTime, operation))
     }
 }

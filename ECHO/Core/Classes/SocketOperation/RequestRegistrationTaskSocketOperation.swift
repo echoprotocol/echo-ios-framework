@@ -50,7 +50,7 @@ struct RequestRegistrationTaskSocketOperation: SocketOperation {
         }
     }
     
-    func forceEnd() {
+    func forceEnd(error: ECHOError) {
         let result = Result<RegistrationTask, ECHOError>(error: ECHOError.connectionLost)
         completion(result)
     }
