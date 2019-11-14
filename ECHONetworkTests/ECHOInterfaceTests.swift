@@ -682,6 +682,75 @@ class ECHOInterfaceTests: XCTestCase {
         }
     }
     
+    func testGetFeeForCreateContract() {
+        //arrange
+        echo = ECHO(settings: Settings(build: {
+            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+            $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+        }))
+        let exp = expectation(description: "testGetFeeForCreateContract")
+        var fee: AssetAmount!
+        
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.getFeeForCreateContract(registrarNameOrId: Constants.defaultName,
+                                              wif: Constants.defaultWIF,
+                                              assetId: Constants.defaultAsset,
+                                              amount: 0, assetForFee: nil,
+                                              byteCode: Constants.counterContractByteCode,
+                                              supportedAssetId: nil,
+                                              ethAccuracy: false,
+                                              parameters: nil) { (result) in
+                switch result {
+                case .success(let aFee):
+                    fee = aFee
+                    exp.fulfill()
+                case .failure(let error):
+                    XCTFail("Fee for call contract getting failed \(error)")
+                }
+            }
+        }
+        
+        //assert
+        waitForExpectations(timeout: Constants.timeout) { error in
+            XCTAssertNotNil(fee)
+        }
+    }
+    
+    func testGetFeeForCreateContractByCode() {
+        //arrange
+        echo = ECHO(settings: Settings(build: {
+            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+            $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+        }))
+        let exp = expectation(description: "testGetFeeForCreateContractByCode")
+        var fee: AssetAmount!
+        
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.getFeeForCreateContract(registrarNameOrId: Constants.defaultName,
+                                              wif: Constants.defaultWIF,
+                                              assetId: Constants.defaultAsset,
+                                              amount: 0, assetForFee: nil,
+                                              byteCode: Constants.counterContractByteCode,
+                                              supportedAssetId: nil,
+                                              ethAccuracy: false) { (result) in
+                switch result {
+                case .success(let aFee):
+                    fee = aFee
+                    exp.fulfill()
+                case .failure(let error):
+                    XCTFail("Fee for call contract getting failed \(error)")
+                }
+            }
+        }
+        
+        //assert
+        waitForExpectations(timeout: Constants.timeout) { error in
+            XCTAssertNotNil(fee)
+        }
+    }
+    
     func testGetFeeForCallContract() {
         
         //arrange
@@ -1070,7 +1139,7 @@ class ECHOInterfaceTests: XCTestCase {
 //        var asset = Asset("")
 //        asset.symbol = "SHARAEV"
 //        asset.precision = 4
-//        asset.issuer = Account("1.2.16")
+//        asset.issuer = Account("1.2.23")
 ////        asset.setBitsassetOptions(BitassetOptions(feedLifetimeSec: 86400,
 ////                                                  minimumFeeds: 7,
 ////                                                  forceSettlementDelaySec: 86400,

@@ -29,6 +29,50 @@ public protocol FeeFacade {
                                     completion: @escaping Completion<AssetAmount>)
     
 /**
+     Function for evaluating the fee creates contract operation
+     
+     - Parameter registrarNameOrId: Name or id of account that creates the contract
+     - Parameter wif: WIF from account for transaction signature
+     - Parameter assetId: Asset of contract
+     - Parameter byteCode: Bytecode of the contract
+     - Parameter supportedAssetId: If you dont want to link the contract with the specified asset
+     - Parameter ethAccuracy: If true all balances passing to contract with ethereum accuracy
+     - Parameter parameters: Parameters of constructor
+     - Parameter completion: Callback which returns fee for create contract operation or error
+ */
+    func getFeeForCreateContract(registrarNameOrId: String,
+                                 wif: String,
+                                 assetId: String,
+                                 amount: UInt?,
+                                 assetForFee: String?,
+                                 byteCode: String,
+                                 supportedAssetId: String?,
+                                 ethAccuracy: Bool,
+                                 parameters: [AbiTypeValueInputModel]?,
+                                 completion: @escaping Completion<AssetAmount>)
+        
+/**
+     Function for evaluating the fee creates contract operation
+     
+     - Parameter registrarNameOrId: Name or id of account that creates the contract
+     - Parameter wif: WIF from account for transaction signature
+     - Parameter assetId: Asset of contract
+     - Parameter byteCode: Full bytecode for contract creation
+     - Parameter supportedAssetId: If you dont want to link the contract with the specified asset
+     - Parameter ethAccuracy: If true all balances passing to contract with ethereum accuracy
+     - Parameter completion: Callback which returns fee for create contract operation or error
+ */
+    func getFeeForCreateContract(registrarNameOrId: String,
+                                 wif: String,
+                                 assetId: String,
+                                 amount: UInt?,
+                                 assetForFee: String?,
+                                 byteCode: String,
+                                 supportedAssetId: String?,
+                                 ethAccuracy: Bool,
+                                 completion: @escaping Completion<AssetAmount>)
+    
+/**
      Function for evaluating the fee of call contract operation
      
      - Parameter registrarNameOrId: Name or id of account that call the contract

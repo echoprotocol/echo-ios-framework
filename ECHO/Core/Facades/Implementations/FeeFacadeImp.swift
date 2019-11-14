@@ -112,6 +112,105 @@ final public class FeeFacadeImp: FeeFacade, ECHOQueueble {
         feeQueue.setCompletionOperation(completionOperation)
     }
     
+    public func getFeeForCreateContract(registrarNameOrId: String,
+                                        wif: String,
+                                        assetId: String,
+                                        amount: UInt?,
+                                        assetForFee: String?,
+                                        byteCode: String,
+                                        supportedAssetId: String?,
+                                        ethAccuracy: Bool,
+                                        parameters: [AbiTypeValueInputModel]?,
+                                        completion: @escaping Completion<AssetAmount>) {
+        
+        var completedBytecode = byteCode
+        
+        if let parameters = parameters,
+            let argumentsString = (try? abiCoderCore.getArguments(valueTypes: parameters))?.hex {
+            completedBytecode += argumentsString
+        }
+        
+        getFeeForCreateContract(registrarNameOrId: registrarNameOrId,
+                                wif: wif,
+                                assetId: assetId,
+                                amount: amount,
+                                assetForFee: assetForFee,
+                                byteCode: completedBytecode,
+                                supportedAssetId: supportedAssetId,
+                                ethAccuracy: ethAccuracy,
+                                completion: completion)
+    }
+    
+    public func getFeeForCreateContract(registrarNameOrId: String,
+                                        wif: String,
+                                        assetId: String,
+                                        amount: UInt?,
+                                        assetForFee: String?,
+                                        byteCode: String,
+                                        supportedAssetId: String?,
+                                        ethAccuracy: Bool,
+                                        completion: @escaping Completion<AssetAmount>) {
+        
+        let assetForFee = assetForFee ?? Settings.defaultAsset
+        
+        // Validate asset id, assetIdForFee
+        do {
+            let validator = IdentifierValidator()
+            try validator.validateId(assetId, for: .asset)
+            try validator.validateId(assetForFee, for: .asset)
+            
+        } catch let error {
+            let echoError = (error as? ECHOError) ?? ECHOError.undefined
+            let result = Result<AssetAmount, ECHOError>(error: echoError)
+            completion(result)
+            return
+        }
+        
+        let createQueue = ECHOQueue()
+        addQueue(createQueue)
+        
+        // Accounts
+        let getAccountsNamesOrIdsWithKeys = GetAccountsNamesOrIdWithKeys([(registrarNameOrId, FeeResultsKeys.registrarAccount.rawValue)])
+        let getAccountsOperationInitParams = (createQueue,
+                                              services.databaseService,
+                                              getAccountsNamesOrIdsWithKeys)
+        let getAccountsOperation = GetAccountsQueueOperation<AssetAmount>(initParams: getAccountsOperationInitParams,
+                                                                          completion: completion)
+        
+        // Operation
+        createQueue.saveValue(byteCode, forKey: FeeResultsKeys.byteCode.rawValue)
+        let bildCreateContractOperation = createBildCreateContractOperation(createQueue,
+                                                                            amount ?? 0,
+                                                                            assetId,
+                                                                            assetForFee,
+                                                                            supportedAssetId,
+                                                                            ethAccuracy,
+                                                                            completion)
+        
+        // RequiredFee
+        let getRequiredFeeOperationInitParams = (createQueue,
+                                                 services.databaseService,
+                                                 Asset(assetForFee),
+                                                 FeeResultsKeys.operation.rawValue,
+                                                 FeeResultsKeys.fee.rawValue,
+                                                 UInt(1))
+        let getRequiredFeeOperation = GetRequiredFeeQueueOperation<AssetAmount>(initParams: getRequiredFeeOperationInitParams,
+                                                                                completion: completion)
+        
+        // FeeCompletion
+        let feeCompletionOperation = createFeeComletionOperation(createQueue, completion)
+        
+        // Completion
+        let completionOperation = createCompletionOperation(queue: createQueue)
+        
+        createQueue.addOperation(getAccountsOperation)
+        createQueue.addOperation(bildCreateContractOperation)
+        createQueue.addOperation(getRequiredFeeOperation)
+        createQueue.addOperation(feeCompletionOperation)
+        
+        createQueue.setCompletionOperation(completionOperation)
+    }
+    
     public func getFeeForCallContractOperation(registrarNameOrId: String,
                                                assetId: String,
                                                amount: UInt?,
@@ -305,6 +404,41 @@ final public class FeeFacadeImp: FeeFacade, ECHOQueueble {
         }
         
         return byteCodeOperation
+    }
+    
+    fileprivate func createBildCreateContractOperation(_ queue: ECHOQueue,
+                                                       _ amount: UInt,
+                                                       _ assetId: String,
+                                                       _ assetForFee: String,
+                                                       _ supportedAssetId: String?,
+                                                       _ ethAccuracy: Bool,
+                                                       _ completion: @escaping Completion<AssetAmount>) -> Operation {
+        
+        let contractOperation = BlockOperation()
+        
+        contractOperation.addExecutionBlock { [weak contractOperation, weak queue, weak self] in
+            
+            guard contractOperation?.isCancelled == false else { return }
+            guard self != nil else { return }
+            guard let account: Account = queue?.getValue(FeeResultsKeys.registrarAccount.rawValue) else { return }
+            guard let byteCode: String = queue?.getValue(FeeResultsKeys.byteCode.rawValue) else { return }
+            
+            var supportedAsset: Asset?
+            if let supportedAssetId = supportedAssetId {
+                supportedAsset = Asset(supportedAssetId)
+            }
+            
+            let operation = CreateContractOperation(registrar: account,
+                                                    value: AssetAmount(amount: amount, asset: Asset(assetId)),
+                                                    code: byteCode,
+                                                    fee: AssetAmount(amount: 0, asset: Asset(assetForFee)),
+                                                    supportedAsset: supportedAsset,
+                                                    ethAccuracy: ethAccuracy)
+            
+            queue?.saveValue(operation, forKey: FeeResultsKeys.operation.rawValue)
+        }
+        
+        return contractOperation
     }
     
     fileprivate func bildCreateCallContractOperation(_ queue: ECHOQueue,

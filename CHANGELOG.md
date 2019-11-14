@@ -23,6 +23,7 @@
 * BtcWithdrawal object
 * SidechainDepositEnum. It contains EthDeposit or BtcDeposit
 * SidechainWithdrawalEnum. It contains EthWithdrawal or BtcWithdrawal
+* Added estimate fee methods for create contract operation(getFeeForCreateContract) 
 
 ## Changelog 3.6.0 - 2019-10-18
 

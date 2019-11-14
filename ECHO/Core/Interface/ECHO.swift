@@ -259,6 +259,50 @@ final public class ECHO: InterfaceFacades, Startable {
                                              completion: completion)
     }
     
+    public func getFeeForCreateContract(registrarNameOrId: String,
+                                        wif: String,
+                                        assetId: String,
+                                        amount: UInt?,
+                                        assetForFee: String?,
+                                        byteCode: String,
+                                        supportedAssetId: String?,
+                                        ethAccuracy: Bool,
+                                        completion: @escaping Completion<AssetAmount>) {
+        
+        feeFacade.getFeeForCreateContract(registrarNameOrId: registrarNameOrId,
+                                          wif: wif,
+                                          assetId: assetId,
+                                          amount: amount,
+                                          assetForFee: assetForFee,
+                                          byteCode: byteCode,
+                                          supportedAssetId: supportedAssetId,
+                                          ethAccuracy: ethAccuracy,
+                                          completion: completion)
+    }
+    
+    public func getFeeForCreateContract(registrarNameOrId: String,
+                                        wif: String,
+                                        assetId: String,
+                                        amount: UInt?,
+                                        assetForFee: String?,
+                                        byteCode: String,
+                                        supportedAssetId: String?,
+                                        ethAccuracy: Bool,
+                                        parameters: [AbiTypeValueInputModel]?,
+                                        completion: @escaping Completion<AssetAmount>) {
+        
+        feeFacade.getFeeForCreateContract(registrarNameOrId: registrarNameOrId,
+                                          wif: wif,
+                                          assetId: assetId,
+                                          amount: amount,
+                                          assetForFee: assetForFee,
+                                          byteCode: byteCode,
+                                          supportedAssetId: supportedAssetId,
+                                          ethAccuracy: ethAccuracy,
+                                          parameters: parameters,
+                                          completion: completion)
+    }
+    
     public func getFeeForCallContractOperation(registrarNameOrId: String,
                                                assetId: String,
                                                amount: UInt?,
