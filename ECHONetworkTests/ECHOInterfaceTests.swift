@@ -102,7 +102,6 @@ class ECHOInterfaceTests: XCTestCase {
     }
 
 //    func testRegisterUser() {
-//
 //        //arrange
 //        echo = ECHO(settings: Settings(build: {
 //            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory, .registration]
@@ -1139,7 +1138,7 @@ class ECHOInterfaceTests: XCTestCase {
 //        var asset = Asset("")
 //        asset.symbol = "SHARAEV"
 //        asset.precision = 4
-//        asset.issuer = Account("1.2.23")
+//        asset.issuer = Account("1.2.27")
 ////        asset.setBitsassetOptions(BitassetOptions(feedLifetimeSec: 86400,
 ////                                                  minimumFeeds: 7,
 ////                                                  forceSettlementDelaySec: 86400,
@@ -1358,7 +1357,7 @@ class ECHOInterfaceTests: XCTestCase {
         let exp = expectation(description: "testGetContractLogs")
         let contractId = Constants.logsContract
         let fromBlock = Constants.contractLogsFromBlock
-        let toBlock = Constants.contractLogsFromBlock + 4
+        let toBlock = Constants.contractLogsFromBlock + 2
         var contractLogs: [ContractLogEnum]!
         
         //act
@@ -1378,7 +1377,7 @@ class ECHOInterfaceTests: XCTestCase {
         //assert
         waitForExpectations(timeout: Constants.timeout) { error in
             XCTAssertNotNil(contractLogs)
-            XCTAssertEqual(contractLogs.count, 2)
+            XCTAssertEqual(contractLogs.count, 4)
         }
     }
     
