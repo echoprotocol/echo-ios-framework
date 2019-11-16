@@ -1,5 +1,5 @@
 //
-//  ContractTransferOperation.swift
+//  ContractInternalCallOperation.swift
 //  ECHO
 //
 //  Created by Vladimir Sharaev on 27/03/2019.
@@ -7,61 +7,55 @@
 //
 
 /**
-    Struct used to encapsulate operations related to the [OperationType.contractTransferOperation](OperationType.contractTransferOperation)
-    Operation will be visible only when contract transfer assets to account
+    Struct used to encapsulate operations related to the [OperationType.contractInternalCallOperation](OperationType.contractInternalCallOperation)
+    Operation will be visible only when contract call anouher contract or transfer amount to account
  */
-public struct ContractTransferOperation: BaseOperation {
+public struct ContractInternalCallOperation: BaseOperation {
     
-    enum ContractTransferOperationCodingKeys: String, CodingKey {
-        case amount
-        case fromContract = "from"
-        case toAccount = "to"
+    enum ContractInternalCallOperationCodingKeys: String, CodingKey {
+        case value
+        case caller
+        case callee
+        case method
         case extensions
-        case fee
     }
     
     public var type: OperationType
     public var extensions: Extensions = Extensions()
-    public var fee: AssetAmount
+    public var fee: AssetAmount = AssetAmount(amount: 0, asset: Asset(Settings.defaultAsset))
     
-    public var fromContract: Contract
-    public var toAccount: Account
-    public var transferAmount: AssetAmount
+    public var caller: Contract
+    public var callee: String
+    public var value: AssetAmount
+    public var method: String
     
-    init(fromContract: Contract, toAccount: Account, transferAmount: AssetAmount, fee: AssetAmount) {
+    init(caller: Contract, callee: String, value: AssetAmount, method: String) {
         
-        self.type = .contractTransferOperation
+        self.type = .contractInternalCallOperation
         
-        self.fromContract = fromContract
-        self.toAccount = toAccount
-        self.transferAmount = transferAmount
-        self.fee = fee
+        self.caller = caller
+        self.callee = callee
+        self.value = value
+        self.method = method
     }
     
     public init(from decoder: Decoder) throws {
         
-        type = .contractTransferOperation
+        type = .contractInternalCallOperation
         
-        let values = try decoder.container(keyedBy: ContractTransferOperationCodingKeys.self)
+        let values = try decoder.container(keyedBy: ContractInternalCallOperationCodingKeys.self)
         
-        let fromId = try values.decode(String.self, forKey: .fromContract)
-        let toId = try values.decode(String.self, forKey: .toAccount)
-        fromContract = Contract(id: fromId)
-        toAccount = Account(toId)
+        let callerId = try values.decode(String.self, forKey: .caller)
+        callee = try values.decode(String.self, forKey: .callee)
+        caller = Contract(id: callerId)
         
-        transferAmount = try values.decode(AssetAmount.self, forKey: .amount)
-        fee = try values.decode(AssetAmount.self, forKey: .fee)
+        value = try values.decode(AssetAmount.self, forKey: .value)
+        method = try values.decode(String.self, forKey: .method)
     }
     
-    mutating func changeAccounts(toAccount: Account?) {
-        
-        if let toAccount = toAccount { self.toAccount = toAccount }
-    }
-    
-    mutating func changeAssets(feeAsset: Asset?, transferAmount: Asset?) {
-        
-        if let feeAsset = feeAsset { self.fee = AssetAmount(amount: fee.amount, asset: feeAsset) }
-        if let transferAmount = transferAmount { self.transferAmount = AssetAmount(amount: self.transferAmount.amount, asset: transferAmount) }
+    mutating func changeAssets(valueAsset: Asset?, feeAsset: Asset?) {
+        if let feeAsset = feeAsset { self.fee = AssetAmount(amount: self.fee.amount, asset: feeAsset) }
+        if let valueAsset = valueAsset { self.value = AssetAmount(amount: self.value.amount, asset: valueAsset) }
     }
     
     // MARK: ECHOCodable
@@ -71,11 +65,11 @@ public struct ContractTransferOperation: BaseOperation {
         var array = [Any]()
         array.append(getId())
         
-        let dictionary: [AnyHashable: Any?] = [ContractTransferOperationCodingKeys.fee.rawValue: fee.toJSON(),
-                                               ContractTransferOperationCodingKeys.fromContract.rawValue: fromContract.toJSON(),
-                                               ContractTransferOperationCodingKeys.toAccount.rawValue: toAccount.toJSON(),
-                                               ContractTransferOperationCodingKeys.amount.rawValue: transferAmount.toJSON(),
-                                               ContractTransferOperationCodingKeys.extensions.rawValue: extensions.toJSON()]
+        let dictionary: [AnyHashable: Any?] = [ContractInternalCallOperationCodingKeys.callee.rawValue: callee,
+                                               ContractInternalCallOperationCodingKeys.caller.rawValue: caller.toJSON(),
+                                               ContractInternalCallOperationCodingKeys.value.rawValue: value.toJSON(),
+                                               ContractInternalCallOperationCodingKeys.method.rawValue: method,
+                                               ContractInternalCallOperationCodingKeys.extensions.rawValue: extensions.toJSON()]
         
         array.append(dictionary)
         
@@ -94,12 +88,7 @@ public struct ContractTransferOperation: BaseOperation {
     
     public func toData() -> Data? {
         
-        var data = Data()
-        data.append(optional: fee.toData())
-        data.append(optional: fromContract.toData())
-        data.append(optional: toAccount.toData())
-        data.append(optional: transferAmount.toData())
-        data.append(optional: extensions.toData())
-        return data
+        // It's virtual operation. No need to serialize to Data
+        return nil
     }
 }

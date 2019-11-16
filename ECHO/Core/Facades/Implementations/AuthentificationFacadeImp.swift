@@ -269,13 +269,8 @@ final public class AuthentificationFacadeImp: AuthentificationFacade, ECHOQueueb
             if let delegatingAccountId = account.options?.delegatingAccount {
                 delegatingAccount = Account(delegatingAccountId)
             }
-            var votingAccount: Account?
-            if let votingAccountId = account.options?.votingAccount {
-                votingAccount = Account(votingAccountId)
-            }
             
-            let options = AccountOptions(votingAccount: votingAccount,
-                                         delegatingAccount: delegatingAccount)
+            let options = AccountOptions(delegatingAccount: delegatingAccount)
             
             let fee = AssetAmount(amount: 0, asset: Asset(Settings.defaultAsset))
             

@@ -1,5 +1,65 @@
 # CHANGELOG
 
+## Changelog 3.6.0 - 2019-10-18
+
+### Removed
+
+#### DynamicGlobalProperties
+* lastRandQuantity
+
+#### OperationType
+* contractTransferOperation
+
+#### AccountOptions, Options
+* votingAccount
+* numCommittee
+* votes
+
+#### GlobalProperties
+* activeCommitteeMembers
+
+#### SidechainConfig
+* waitingBlocks
+* waitingETHBlocks
+
+#### Vote
+
+### Added
+
+#### SubmitRegistrationSolutionSocketOperation
+
+#### OperationType
+* committeeMemberActivateOperation
+* committeeMemberDeactivateOperation
+* committeeFrozenBalanceDepositOperation
+* committeeFrozenBalanceWithdrawOperation
+* contractInternalCreateOperation
+* contractInternalCallOperation
+* contractSelfdestructOperation
+* sidechainBTCCreateIntermediateDepositOperation
+
+#### ContractLogEVM
+* blockNum
+* trxNum
+* opNum
+
+#### Account
+* accumulatedReward
+
+#### ObjectType
+* committeeFrozenBalance
+
+### Updated
+
+#### SubscribeContractLogsSocketOperation
+* Updated input parameters
+
+#### GetContractLogsSocketOperation
+* Updated input parameters
+
+#### Registration
+* Now registration goes through PoW task solving
+
 ## 3.5.1 - 2019-11-12
 
 ### Fixed

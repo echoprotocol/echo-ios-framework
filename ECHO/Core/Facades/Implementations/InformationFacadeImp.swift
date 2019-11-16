@@ -57,6 +57,8 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         case notice
         case noticeError
         case noticeHandler
+        case task
+        case nonce
     }
     
     public func registerAccount(name: String, wif: String, completion: @escaping Completion<Bool>, noticeHandler: NoticeHandler?) {
@@ -73,16 +75,21 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         getAccountsOperation.defaultError = ECHOError.invalidCredentials
         
         // Create Account
-        let createAccountoperation = createAccountCreationOperation(createAccountQueue,
-                                                                    name: name,
-                                                                    wif: wif,
-                                                                    completion: completion)
+        let requestTaskOperation = createRequestRegistrationTask(createAccountQueue,
+                                                                       completion: completion)
+        let powTaskOperation = createPoWTaskCalculatingOperation(createAccountQueue, completion: completion)
+        let submitOperation = createSubmitRegistrationSolutionOperation(createAccountQueue,
+                                                                        name: name,
+                                                                        wif: wif,
+                                                                        completion: completion)
         
         // Completion
         let completionOperation = createCompletionOperation(queue: createAccountQueue)
         
         createAccountQueue.addOperation(getAccountsOperation)
-        createAccountQueue.addOperation(createAccountoperation)
+        createAccountQueue.addOperation(requestTaskOperation)
+        createAccountQueue.addOperation(powTaskOperation)
+        createAccountQueue.addOperation(submitOperation)
 
         //Notice handler
         if let noticeHandler = noticeHandler {
@@ -94,10 +101,8 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         createAccountQueue.setCompletionOperation(completionOperation)
     }
     
-    fileprivate func createAccountCreationOperation(_ queue: ECHOQueue,
-                                                    name: String,
-                                                    wif: String,
-                                                    completion: @escaping Completion<Bool>) -> Operation {
+    fileprivate func createRequestRegistrationTask(_ queue: ECHOQueue,
+                                                   completion: @escaping Completion<Bool>) -> Operation {
         
         let operation = BlockOperation()
 
@@ -113,6 +118,104 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                 return
             }
             
+            strongSelf.services.registrationService.requestRegistrationTask { (result) in
+                switch result {
+                case .success(let task):
+                    queue?.saveValue(task, forKey: CreationAccountResultsKeys.task.rawValue)
+                case .failure(let error):
+                    queue?.cancelAllOperations()
+                    let result = Result<Bool, ECHOError>(error: error)
+                    completion(result)
+                }
+
+                queue?.startNextOperation()
+            }
+            
+            queue?.waitStartNextOperation()
+        }
+        
+        return operation
+    }
+    
+    fileprivate func createPoWTaskCalculatingOperation(_ queue: ECHOQueue,
+                                                       completion: @escaping Completion<Bool>) -> Operation {
+        
+        let operation = BlockOperation()
+
+        operation.addExecutionBlock { [weak operation, weak queue, weak self] in
+            
+            guard operation?.isCancelled == false else { return }
+            guard let strongSelf = self else { return }
+            guard let task: RegistrationTask = queue?.getValue(CreationAccountResultsKeys.task.rawValue) else { return }
+            
+            guard let blockIdData = Data(hex: task.blockId) else {
+                queue?.cancelAllOperations()
+                let result = Result<Bool, ECHOError>(error: ECHOError.encodableMapping)
+                completion(result)
+                return
+            }
+            let randNumData = Data.fromUint64(task.randNum.uintValue)
+            let constantData = blockIdData + randNumData
+            var nonce: UInt = 0
+            
+            var lastCheckByteIndex = Int(task.difficulty / 8)
+            let remainderOfTheDivision = task.difficulty % 8
+            if remainderOfTheDivision > 0 {
+                lastCheckByteIndex += 1
+            }
+            var offset = remainderOfTheDivision
+            if offset > 0 {
+                offset -= 1
+            }
+            let maxValueLastByte = UInt8(1) << offset
+            
+            while nonce < UInt.max {
+                let nonceData = Data.fromUint64(nonce)
+                let sha256Data = constantData + nonceData
+                let result = strongSelf.cryptoCore.sha256(sha256Data)
+                
+                var isValid = true
+                for index in 0..<lastCheckByteIndex {
+                    let byte = result.bytes[index]
+                    if index == lastCheckByteIndex - 1 {
+                        if byte >= maxValueLastByte {
+                            isValid = false
+                            break
+                        }
+                    } else {
+                        if byte != 0 {
+                            isValid = false
+                            break
+                        }
+                    }
+                }
+                
+                if isValid {
+                    break
+                }
+                
+                nonce += 1
+            }
+            queue?.saveValue(nonce, forKey: CreationAccountResultsKeys.nonce.rawValue)
+        }
+        
+        return operation
+    }
+    
+    fileprivate func createSubmitRegistrationSolutionOperation(_ queue: ECHOQueue,
+                                                               name: String,
+                                                               wif: String,
+                                                               completion: @escaping Completion<Bool>) -> Operation {
+        
+        let operation = BlockOperation()
+
+        operation.addExecutionBlock { [weak operation, weak queue, weak self] in
+            
+            guard operation?.isCancelled == false else { return }
+            guard let strongSelf = self else { return }
+            guard let task: RegistrationTask = queue?.getValue(CreationAccountResultsKeys.task.rawValue) else { return }
+            guard let nonce: UInt = queue?.getValue(CreationAccountResultsKeys.nonce.rawValue) else { return }
+            
             guard let keychain = ECHOKeychainEd25519(wif: wif, core: strongSelf.cryptoCore) else {
                 queue?.cancelAllOperations()
                 let result = Result<Bool, ECHOError>(error: ECHOError.invalidWIF)
@@ -122,10 +225,29 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
             
             let key = strongSelf.network.echorandPrefix.rawValue + keychain.publicAddress()
             
-            let operationID = strongSelf.services.registrationService.registerAccount(name: name,
-                                                                                      activeKey: key,
-                                                                                      echorandKey: key,
-                                                                                      completion: completion)
+            let regService = strongSelf.services.registrationService
+            let operationID = regService.submitRegistrationSolution(name: name,
+                                                                    activeKey: key,
+                                                                    echorandKey: key,
+                                                                    nonce: nonce,
+                                                                    randNum: task.randNum.uintValue) { (result) in
+                switch result {
+                case .success(let value):
+                    if value == false {
+                        queue?.cancelAllOperations()
+                        let result = Result<Bool, ECHOError>(error: ECHOError.invalidCredentials)
+                        completion(result)
+                    } else {
+                        let result = Result<Bool, ECHOError>(value: true)
+                        completion(result)
+                    }
+                case .failure(let error):
+                    queue?.cancelAllOperations()
+                    let result = Result<Bool, ECHOError>(error: error)
+                    completion(result)
+                }
+            }
+            
             queue?.saveValue(operationID, forKey: CreationAccountResultsKeys.operationID.rawValue)
             queue?.waitStartNextOperation()
         }
@@ -610,12 +732,6 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                     historyItem.operation = operation
                 }
                 
-                if var operation = operation as? ContractTransferOperation {
-                    let toAccount = self?.findAccountIn(accounts, accountId: operation.toAccount.id)
-                    operation.changeAccounts(toAccount: toAccount)
-                    historyItem.operation = operation
-                }
-                
                 if var operation = operation as? SidechainETHCreateAddressOperation {
                     let account = self?.findAccountIn(accounts, accountId: operation.account.id)
                     operation.changeAccount(account: account)
@@ -790,10 +906,10 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                     historyItem.operation = operation
                 }
                 
-                if var operation = operation as? ContractTransferOperation {
+                if var operation = operation as? ContractInternalCallOperation {
                     let feeAsset = self?.findAssetsIn(assets, assetId: operation.fee.asset.id)
-                    let transferAsset = self?.findAssetsIn(assets, assetId: operation.transferAmount.asset.id)
-                    operation.changeAssets(feeAsset: feeAsset, transferAmount: transferAsset)
+                    let valueAsset = self?.findAssetsIn(assets, assetId: operation.value.asset.id)
+                    operation.changeAssets(valueAsset: valueAsset, feeAsset: feeAsset)
                     historyItem.operation = operation
                 }
                 
@@ -942,11 +1058,6 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                 return
             }
             
-            if let operation = operation as? ContractTransferOperation {
-                accountsIds.insert(operation.toAccount.id)
-                return
-            }
-            
             if let operation = operation as? SidechainETHCreateAddressOperation {
                 accountsIds.insert(operation.account.id)
                 return
@@ -1013,8 +1124,8 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                 return
             }
             
-            if let operation = operation as? ContractTransferOperation {
-                assetsIds.insert(operation.transferAmount.asset.id)
+            if let operation = operation as? ContractInternalCallOperation {
+                assetsIds.insert(operation.value.asset.id)
                 return
             }
             

@@ -30,6 +30,7 @@ public enum ObjectType: Int {
     case vestingBalance
     case balance
     case frozenBalance
+    case committeeFrozenBalance
     case contract
     case contractResult
     case blockResult
@@ -88,6 +89,7 @@ public enum ObjectType: Int {
              .vestingBalance,
              .balance,
              .frozenBalance,
+             .committeeFrozenBalance,
              .contract,
              .contractResult,
              .blockResult,

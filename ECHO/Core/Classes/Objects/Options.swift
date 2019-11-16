@@ -12,24 +12,16 @@
 public struct Options: Decodable {
     
     enum OptionsCodingKeys: String, CodingKey {
-        case votingAccount = "voting_account"
-        case numCommittee = "num_committee"
-        case votes
         case extensions
         case delegatingAccount = "delegating_account"
     }
     
-    public let votingAccount: String
     public let delegatingAccount: String
-    public let numCommittee: Int
-    public let votes = [Any]()
     public let extensions = [Any]()
     
     public init(from decoder: Decoder) throws {
         
         let values = try decoder.container(keyedBy: OptionsCodingKeys.self)
-        votingAccount = try values.decode(String.self, forKey: .votingAccount)
-        numCommittee = try values.decode(Int.self, forKey: .numCommittee)
         delegatingAccount = try values.decode(String.self, forKey: .delegatingAccount)
     }
 }
