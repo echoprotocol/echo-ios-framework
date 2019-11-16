@@ -56,43 +56,87 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble {
         }
     }
     
-    public func getAccountDeposits(nameOrId: String, completion: @escaping Completion<[DepositEth]>) {
+    public func getAccountDeposits(nameOrId: String, completion: @escaping Completion<[EthDeposit]>) {
         
         services.databaseService.getFullAccount(nameOrIds: [nameOrId], shoudSubscribe: false) { [weak self] (result) in
             
             switch result {
             case .success(let accounts):
                 guard let account = accounts[nameOrId] else {
-                    let result = Result<[DepositEth], ECHOError>(error: .resultNotFound)
+                    let result = Result<[EthDeposit], ECHOError>(error: .resultNotFound)
                     completion(result)
                     return
                 }
                 
                 self?.services.databaseService.getAccountDeposits(accountId: account.account.id,
-                                                                  completion: completion)
+                                                                  type: .eth,
+                                                                  completion: { result in
+                    switch result {
+                    case .success(let sidechainEnums):
+                        var deposits = [EthDeposit]()
+                        sidechainEnums.forEach {
+                            switch $0 {
+                            case .eth(let deposit):
+                                deposits.append(deposit)
+                            case .btc:
+                                return
+                            }
+                        }
+                        
+                        let result = Result<[EthDeposit], ECHOError>(value: deposits)
+                        completion(result)
+                        
+                    case .failure(let error):
+                        let result = Result<[EthDeposit], ECHOError>(error: error)
+                        completion(result)
+                    }
+                })
+                
             case .failure(let error):
-                let result = Result<[DepositEth], ECHOError>(error: error)
+                let result = Result<[EthDeposit], ECHOError>(error: error)
                 completion(result)
             }
         }
     }
     
-    public func getAccountWithdrawals(nameOrId: String, completion: @escaping Completion<[WithdrawalEth]>) {
+    public func getAccountWithdrawals(nameOrId: String, completion: @escaping Completion<[EthWithdrawal]>) {
         
         services.databaseService.getFullAccount(nameOrIds: [nameOrId], shoudSubscribe: false) { [weak self] (result) in
             
             switch result {
             case .success(let accounts):
                 guard let account = accounts[nameOrId] else {
-                    let result = Result<[WithdrawalEth], ECHOError>(error: .resultNotFound)
+                    let result = Result<[EthWithdrawal], ECHOError>(error: .resultNotFound)
                     completion(result)
                     return
                 }
                 
                 self?.services.databaseService.getAccountWithdrawals(accountId: account.account.id,
-                                                                     completion: completion)
+                                                                     type: .eth,
+                                                                     completion: { result in
+                    switch result {
+                    case .success(let sidechainEnums):
+                        var withdrawals = [EthWithdrawal]()
+                        sidechainEnums.forEach {
+                            switch $0 {
+                            case .eth(let withdrawal):
+                                withdrawals.append(withdrawal)
+                            case .btc:
+                                return
+                            }
+                        }
+                        
+                        let result = Result<[EthWithdrawal], ECHOError>(value: withdrawals)
+                        completion(result)
+                        
+                    case .failure(let error):
+                        let result = Result<[EthWithdrawal], ECHOError>(error: error)
+                        completion(result)
+                    }
+                })
+                
             case .failure(let error):
-                let result = Result<[WithdrawalEth], ECHOError>(error: error)
+                let result = Result<[EthWithdrawal], ECHOError>(error: error)
                 completion(result)
             }
         }

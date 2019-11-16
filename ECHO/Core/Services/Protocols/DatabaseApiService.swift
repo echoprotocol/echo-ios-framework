@@ -119,10 +119,10 @@ protocol DatabaseApiService: BaseApiService {
      
      - Parameter contractId: Contract id for fetching logs
      - Parameter fromBlockId: Number of the earliest block to retrieve
-     - Parameter limit: Number of the count recent block to retrieve
+     - Parameter toBlock: Number of the latest block to retrieve
      - Parameter completion: Callback which returns an array of [ContractLogEnum](ContractLogEnum) result of call or error
  */
-    func getContractLogs(contractId: String, fromBlock: Int, limit: Int, completion: @escaping Completion<[ContractLogEnum]>)
+    func getContractLogs(contractId: String, fromBlock: Int, toBlock: Int, completion: @escaping Completion<[ContractLogEnum]>)
     
 /**
      Subscribes to listening contract logs
@@ -152,12 +152,14 @@ protocol DatabaseApiService: BaseApiService {
      Calls contract method without changing state of blockchain
      
      - Parameter contract: Called contract
-     - Parameter asset: Asset of contract
+     - Parameter amount: Amount for call contract
+     - Parameter asset: Asset for call contract
      - Parameter account: Account that call the contract
      - Parameter contractCode: Contract code for execute
      - Parameter completion: Callback which returns an [Bool](Bool) result of call or error
  */
     func callContractNoChangingState(contract: Contract,
+                                     amount: UInt,
                                      asset: Asset,
                                      account: Account,
                                      contractCode: String,
@@ -187,7 +189,8 @@ protocol DatabaseApiService: BaseApiService {
      - Parameter completion: Callback in which return Deposits objects or error.
  */
     func getAccountDeposits(accountId: String,
-                            completion: @escaping Completion<[DepositEth]>)
+                            type: SidechainType?,
+                            completion: @escaping Completion<[SidechainDepositEnum]>)
     
 /**
      Returns all approved withdrawals, for the given account id.
@@ -196,5 +199,6 @@ protocol DatabaseApiService: BaseApiService {
      - Parameter completion: Callback in which return Withdrawals objects or error.
  */
     func getAccountWithdrawals(accountId: String,
-                               completion: @escaping Completion<[WithdrawalEth]>)
+                               type: SidechainType?,
+                               completion: @escaping Completion<[SidechainWithdrawalEnum]>)
 }

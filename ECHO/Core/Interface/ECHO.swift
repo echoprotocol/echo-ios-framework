@@ -259,6 +259,50 @@ final public class ECHO: InterfaceFacades, Startable {
                                              completion: completion)
     }
     
+    public func getFeeForCreateContract(registrarNameOrId: String,
+                                        wif: String,
+                                        assetId: String,
+                                        amount: UInt?,
+                                        assetForFee: String?,
+                                        byteCode: String,
+                                        supportedAssetId: String?,
+                                        ethAccuracy: Bool,
+                                        completion: @escaping Completion<AssetAmount>) {
+        
+        feeFacade.getFeeForCreateContract(registrarNameOrId: registrarNameOrId,
+                                          wif: wif,
+                                          assetId: assetId,
+                                          amount: amount,
+                                          assetForFee: assetForFee,
+                                          byteCode: byteCode,
+                                          supportedAssetId: supportedAssetId,
+                                          ethAccuracy: ethAccuracy,
+                                          completion: completion)
+    }
+    
+    public func getFeeForCreateContract(registrarNameOrId: String,
+                                        wif: String,
+                                        assetId: String,
+                                        amount: UInt?,
+                                        assetForFee: String?,
+                                        byteCode: String,
+                                        supportedAssetId: String?,
+                                        ethAccuracy: Bool,
+                                        parameters: [AbiTypeValueInputModel]?,
+                                        completion: @escaping Completion<AssetAmount>) {
+        
+        feeFacade.getFeeForCreateContract(registrarNameOrId: registrarNameOrId,
+                                          wif: wif,
+                                          assetId: assetId,
+                                          amount: amount,
+                                          assetForFee: assetForFee,
+                                          byteCode: byteCode,
+                                          supportedAssetId: supportedAssetId,
+                                          ethAccuracy: ethAccuracy,
+                                          parameters: parameters,
+                                          completion: completion)
+    }
+    
     public func getFeeForCallContractOperation(registrarNameOrId: String,
                                                assetId: String,
                                                amount: UInt?,
@@ -360,9 +404,9 @@ final public class ECHO: InterfaceFacades, Startable {
         contractsFacade.getContractResult(contractResultId: contractResultId, completion: completion)
     }
     
-    public func getContractLogs(contractId: String, fromBlock: Int, limit: Int, completion: @escaping Completion<[ContractLogEnum]>) {
+    public func getContractLogs(contractId: String, fromBlock: Int, toBlock: Int, completion: @escaping Completion<[ContractLogEnum]>) {
         
-        contractsFacade.getContractLogs(contractId: contractId, fromBlock: fromBlock, limit: limit, completion: completion)
+        contractsFacade.getContractLogs(contractId: contractId, fromBlock: fromBlock, toBlock: toBlock, completion: completion)
     }
     
     public func getContracts(contractIds: [String], completion: @escaping Completion<[ContractInfo]>) {
@@ -468,6 +512,7 @@ final public class ECHO: InterfaceFacades, Startable {
     }
     
     public func queryContract(registrarNameOrId: String,
+                              amount: UInt,
                               assetId: String,
                               contratId: String,
                               methodName: String,
@@ -475,6 +520,7 @@ final public class ECHO: InterfaceFacades, Startable {
                               completion: @escaping Completion<String>) {
         
         contractsFacade.queryContract(registrarNameOrId: registrarNameOrId,
+                                      amount: amount,
                                       assetId: assetId,
                                       contratId: contratId,
                                       methodName: methodName,
@@ -483,12 +529,14 @@ final public class ECHO: InterfaceFacades, Startable {
     }
     
     public func queryContract(registrarNameOrId: String,
+                              amount: UInt,
                               assetId: String,
                               contratId: String,
                               byteCode: String,
                               completion: @escaping Completion<String>) {
         
         contractsFacade.queryContract(registrarNameOrId: registrarNameOrId,
+                                      amount: amount,
                                       assetId: assetId,
                                       contratId: contratId,
                                       byteCode: byteCode,
@@ -532,12 +580,12 @@ final public class ECHO: InterfaceFacades, Startable {
                                 noticeHandler: noticeHandler)
     }
     
-    public func getAccountDeposits(nameOrId: String, completion: @escaping Completion<[DepositEth]>) {
+    public func getAccountDeposits(nameOrId: String, completion: @escaping Completion<[EthDeposit]>) {
         
         ethFacade.getAccountDeposits(nameOrId: nameOrId, completion: completion)
     }
     
-    public func getAccountWithdrawals(nameOrId: String, completion: @escaping Completion<[WithdrawalEth]>) {
+    public func getAccountWithdrawals(nameOrId: String, completion: @escaping Completion<[EthWithdrawal]>) {
         
         ethFacade.getAccountWithdrawals(nameOrId: nameOrId, completion: completion)
     }

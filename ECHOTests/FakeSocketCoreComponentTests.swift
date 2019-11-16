@@ -481,7 +481,12 @@ class SocketCoreComponentTests: XCTestCase {
         
         //act
         echo.start { [unowned self] (result) in
-            self.echo.queryContract(registrarNameOrId: registrarNameOrId, assetId: assetId, contratId: contratId, methodName: methodName, methodParams: params) { (result) in
+            self.echo.queryContract(registrarNameOrId: registrarNameOrId,
+                                    amount: 0,
+                                    assetId: assetId,
+                                    contratId: contratId,
+                                    methodName: methodName,
+                                    methodParams: params) { (result) in
                 
                 switch result {
                 case .success(let res):
@@ -681,7 +686,7 @@ class SocketCoreComponentTests: XCTestCase {
             $0.socketMessenger = messenger
         }))
         let exp = expectation(description: "testFakeGetAccountDeposits")
-        var deposits: [DepositEth]?
+        var deposits: [EthDeposit]?
         
         //act
         echo.start { [unowned self] (result) in
@@ -713,7 +718,7 @@ class SocketCoreComponentTests: XCTestCase {
             $0.socketMessenger = messenger
         }))
         let exp = expectation(description: "testFakeGetAccountWithdrawals")
-        var withdrawals: [WithdrawalEth]?
+        var withdrawals: [EthWithdrawal]?
         
         //act
         echo.start { [unowned self] (result) in

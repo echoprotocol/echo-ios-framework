@@ -6,6 +6,9 @@
 //  Copyright © 2019 PixelPlex. All rights reserved.
 //
 
+/**
+   Represents eth_address_object from blockchain
+*/
 public struct EthAddress: ECHOObject, Decodable {
     
     enum EthAddressKeys: String, CodingKey {

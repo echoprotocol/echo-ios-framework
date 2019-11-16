@@ -18,7 +18,6 @@ struct FullAccountStub {
                                 "registrar": "1.2.12",
                                 "referrer": "1.2.12",
                                 "lifetime_referrer": "1.2.12",
-                                "network_fee_percentage": 2000,
                                 "lifetime_referrer_fee_percentage": 3000,
                                 "referrer_rewards_percentage": 7500,
                                 "name": "vsharaev",

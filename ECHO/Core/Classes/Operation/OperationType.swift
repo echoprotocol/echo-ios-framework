@@ -42,7 +42,7 @@ public enum OperationType: Int {
     case vestingBalanceWithdrawOperation
     case balanceClaimOperation
     case balanceFreezeOperation
-    case balanceUnfreezeOperation                   //30
+    case balanceUnfreezeOperation                   //30 // VIRTUAL
     case contractCreateOperation
     case contractCallOperation
     case contractInternalCreateOperation            // VIRTUAL
@@ -56,8 +56,8 @@ public enum OperationType: Int {
     case sidechainETHDepositOperation
     case sidechainETHWithdrawOperation
     case sidechainETHApproveWithdrawOperation
-    case sidechainETHIssueOperation                 // VIRTUAL
-    case sidechainETHBurnOperation                  // VIRTUAL
+    case sidechainIssueOperation                 // VIRTUAL
+    case sidechainBurnOperation                  // VIRTUAL
     case sidechainERC20RegisterTokenOperation
     case sidechainERC20DepositTokenOperation
     case sidechainERC20WithdrawTokenOperation
@@ -75,7 +75,7 @@ public enum OperationType: Int {
     case sidechainBTCWithdrawOperation
     case sidechainBTCApproveWithdrawOperation
     case sidechainBTCAggregateOperation
-    case blockRewardOperation                       // VIRTUAL
+    case blockRewardOperation                       //59 // VIRTUAL
 }
 
 struct OperationDecoder {
@@ -97,8 +97,8 @@ struct OperationDecoder {
         case .contractInternalCallOperation: return decode(ContractInternalCallOperation.self, container: container)
         case .sidechainETHCreateAddressOperation: return decode(SidechainETHCreateAddressOperation.self, container: container)
         case .sidechainETHWithdrawOperation: return decode(SidechainETHWithdrawOperation.self, container: container)
-        case .sidechainETHIssueOperation: return decode(SidechainETHIssueOperation.self, container: container)
-        case .sidechainETHBurnOperation: return decode(SidechainETHBurnOperation.self, container: container)
+        case .sidechainIssueOperation: return decode(SidechainIssueOperation.self, container: container)
+        case .sidechainBurnOperation: return decode(SidechainBurnOperation.self, container: container)
         default: return nil
         }
     }
@@ -138,10 +138,10 @@ struct OperationDecoder {
                 baseOperation = try? JSONDecoder().decode(SidechainETHCreateAddressOperation.self, from: data)
             case .sidechainETHWithdrawOperation:
                 baseOperation = try? JSONDecoder().decode(SidechainETHWithdrawOperation.self, from: data)
-            case .sidechainETHIssueOperation:
-                baseOperation = try? JSONDecoder().decode(SidechainETHIssueOperation.self, from: data)
-            case .sidechainETHBurnOperation:
-                baseOperation = try? JSONDecoder().decode(SidechainETHBurnOperation.self, from: data)
+            case .sidechainIssueOperation:
+                baseOperation = try? JSONDecoder().decode(SidechainIssueOperation.self, from: data)
+            case .sidechainBurnOperation:
+                baseOperation = try? JSONDecoder().decode(SidechainBurnOperation.self, from: data)
             default:
                 break
             }

@@ -11,22 +11,16 @@ public struct GlobalProperties: Decodable {
     private enum GlobalPropertiesCodingKeys: String, CodingKey {
         case identifier = "id"
         case parameters
-        case nextAvailableVoteId = "next_available_vote_id"
     }
     
     public let identifier: String
     public let parameters: GlobalPropertiesParameters
-    public let nextAvailableVoteId: IntOrString
     
     public init(identifier: String,
-                parameters: GlobalPropertiesParameters,
-                nextAvailableVoteId: IntOrString,
-                activeCommitteeMembers: [String]
-                ) {
+                parameters: GlobalPropertiesParameters) {
         
         self.identifier = identifier
         self.parameters = parameters
-        self.nextAvailableVoteId = nextAvailableVoteId
     }
     
     public init(from decoder: Decoder) throws {
@@ -35,7 +29,6 @@ public struct GlobalProperties: Decodable {
         
         identifier = try values.decode(String.self, forKey: .identifier)
         parameters = try values.decode(GlobalPropertiesParameters.self, forKey: .parameters)
-        nextAvailableVoteId = try values.decode(IntOrString.self, forKey: .nextAvailableVoteId)
     }
 }
 
@@ -51,13 +44,7 @@ public struct GlobalPropertiesParameters: Decodable {
         case maximumProposalLifetime = "maximum_proposal_lifetime"
         case maximumAssetWhitelistAuthorities = "maximum_asset_whitelist_authorities"
         case maximumAssetFeedPublishers = "maximum_asset_feed_publishers"
-        case maximumCommitteeCount = "maximum_committee_count"
         case maximumAuthorityMembership = "maximum_authority_membership"
-        case reservePercentOfFee = "reserve_percent_of_fee"
-        case networkPercentOfFee = "network_percent_of_fee"
-        case maxPredicateOpcode = "max_predicate_opcode"
-        case accountsPerFeeScale = "accounts_per_fee_scale"
-        case accountFeeScaleBitshifts = "account_fee_scale_bitshifts"
         case maxAuthorityDepth = "max_authority_depth"
         case echorandConfig = "echorand_config"
         case sidechainConfig = "sidechain_config"
@@ -73,13 +60,7 @@ public struct GlobalPropertiesParameters: Decodable {
     public let maximumProposalLifetime: IntOrString
     public let maximumAssetWhitelistAuthorities: IntOrString
     public let maximumAssetFeedPublishers: IntOrString
-    public let maximumCommitteeCount: IntOrString
     public let maximumAuthorityMembership: IntOrString
-    public let reservePercentOfFee: IntOrString
-    public let networkPercentOfFee: IntOrString
-    public let maxPredicateOpcode: IntOrString
-    public let accountsPerFeeScale: IntOrString
-    public let accountFeeScaleBitshifts: IntOrString
     public let maxAuthorityDepth: IntOrString
     public let echorandConfig: EchorandConfig
     public let sidechainConfig: SidechainConfig
@@ -95,13 +76,7 @@ public struct GlobalPropertiesParameters: Decodable {
                 maximumProposalLifetime: IntOrString,
                 maximumAssetWhitelistAuthorities: IntOrString,
                 maximumAssetFeedPublishers: IntOrString,
-                maximumCommitteeCount: IntOrString,
                 maximumAuthorityMembership: IntOrString,
-                reservePercentOfFee: IntOrString,
-                networkPercentOfFee: IntOrString,
-                maxPredicateOpcode: IntOrString,
-                accountsPerFeeScale: IntOrString,
-                accountFeeScaleBitshifts: IntOrString,
                 maxAuthorityDepth: IntOrString,
                 echorandConfig: EchorandConfig,
                 sidechainConfig: SidechainConfig,
@@ -116,13 +91,7 @@ public struct GlobalPropertiesParameters: Decodable {
         self.maximumProposalLifetime = maximumProposalLifetime
         self.maximumAssetWhitelistAuthorities = maximumAssetWhitelistAuthorities
         self.maximumAssetFeedPublishers = maximumAssetFeedPublishers
-        self.maximumCommitteeCount = maximumCommitteeCount
         self.maximumAuthorityMembership = maximumAuthorityMembership
-        self.reservePercentOfFee = reservePercentOfFee
-        self.networkPercentOfFee = networkPercentOfFee
-        self.maxPredicateOpcode = maxPredicateOpcode
-        self.accountsPerFeeScale = accountsPerFeeScale
-        self.accountFeeScaleBitshifts = accountFeeScaleBitshifts
         self.maxAuthorityDepth = maxAuthorityDepth
         self.echorandConfig = echorandConfig
         self.sidechainConfig = sidechainConfig
@@ -142,13 +111,7 @@ public struct GlobalPropertiesParameters: Decodable {
         maximumProposalLifetime = try values.decode(IntOrString.self, forKey: .maximumProposalLifetime)
         maximumAssetWhitelistAuthorities = try values.decode(IntOrString.self, forKey: .maximumAssetWhitelistAuthorities)
         maximumAssetFeedPublishers = try values.decode(IntOrString.self, forKey: .maximumAssetFeedPublishers)
-        maximumCommitteeCount = try values.decode(IntOrString.self, forKey: .maximumCommitteeCount)
         maximumAuthorityMembership = try values.decode(IntOrString.self, forKey: .maximumAuthorityMembership)
-        reservePercentOfFee = try values.decode(IntOrString.self, forKey: .reservePercentOfFee)
-        networkPercentOfFee = try values.decode(IntOrString.self, forKey: .networkPercentOfFee)
-        maxPredicateOpcode = try values.decode(IntOrString.self, forKey: .maxPredicateOpcode)
-        accountsPerFeeScale = try values.decode(IntOrString.self, forKey: .accountsPerFeeScale)
-        accountFeeScaleBitshifts = try values.decode(IntOrString.self, forKey: .accountFeeScaleBitshifts)
         maxAuthorityDepth = try values.decode(IntOrString.self, forKey: .maxAuthorityDepth)
         echorandConfig = try values.decode(EchorandConfig.self, forKey: .echorandConfig)
         sidechainConfig = try values.decode(SidechainConfig.self, forKey: .sidechainConfig)

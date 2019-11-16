@@ -102,14 +102,13 @@ class ECHOInterfaceTests: XCTestCase {
     }
 
 //    func testRegisterUser() {
-//
 //        //arrange
 //        echo = ECHO(settings: Settings(build: {
 //            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory, .registration]
 //            $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
 //        }))
 //        let exp = expectation(description: "testRegisterUser")
-//        let userName = Constants.defaultName
+//        let userName = Constants.defaultToName
 //        let wif = Constants.defaultWIF
 //        var finalResult = false
 //
@@ -682,6 +681,75 @@ class ECHOInterfaceTests: XCTestCase {
         }
     }
     
+    func testGetFeeForCreateContract() {
+        //arrange
+        echo = ECHO(settings: Settings(build: {
+            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+            $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+        }))
+        let exp = expectation(description: "testGetFeeForCreateContract")
+        var fee: AssetAmount!
+        
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.getFeeForCreateContract(registrarNameOrId: Constants.defaultName,
+                                              wif: Constants.defaultWIF,
+                                              assetId: Constants.defaultAsset,
+                                              amount: 0, assetForFee: nil,
+                                              byteCode: Constants.counterContractByteCode,
+                                              supportedAssetId: nil,
+                                              ethAccuracy: false,
+                                              parameters: nil) { (result) in
+                switch result {
+                case .success(let aFee):
+                    fee = aFee
+                    exp.fulfill()
+                case .failure(let error):
+                    XCTFail("Fee for call contract getting failed \(error)")
+                }
+            }
+        }
+        
+        //assert
+        waitForExpectations(timeout: Constants.timeout) { error in
+            XCTAssertNotNil(fee)
+        }
+    }
+    
+    func testGetFeeForCreateContractByCode() {
+        //arrange
+        echo = ECHO(settings: Settings(build: {
+            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+            $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+        }))
+        let exp = expectation(description: "testGetFeeForCreateContractByCode")
+        var fee: AssetAmount!
+        
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.getFeeForCreateContract(registrarNameOrId: Constants.defaultName,
+                                              wif: Constants.defaultWIF,
+                                              assetId: Constants.defaultAsset,
+                                              amount: 0, assetForFee: nil,
+                                              byteCode: Constants.counterContractByteCode,
+                                              supportedAssetId: nil,
+                                              ethAccuracy: false) { (result) in
+                switch result {
+                case .success(let aFee):
+                    fee = aFee
+                    exp.fulfill()
+                case .failure(let error):
+                    XCTFail("Fee for call contract getting failed \(error)")
+                }
+            }
+        }
+        
+        //assert
+        waitForExpectations(timeout: Constants.timeout) { error in
+            XCTAssertNotNil(fee)
+        }
+    }
+    
     func testGetFeeForCallContract() {
         
         //arrange
@@ -1070,7 +1138,7 @@ class ECHOInterfaceTests: XCTestCase {
 //        var asset = Asset("")
 //        asset.symbol = "SHARAEV"
 //        asset.precision = 4
-//        asset.issuer = Account("1.2.35")
+//        asset.issuer = Account("1.2.27")
 ////        asset.setBitsassetOptions(BitassetOptions(feedLifetimeSec: 86400,
 ////                                                  minimumFeeds: 7,
 ////                                                  forceSettlementDelaySec: 86400,
@@ -1288,13 +1356,13 @@ class ECHOInterfaceTests: XCTestCase {
         }))
         let exp = expectation(description: "testGetContractLogs")
         let contractId = Constants.logsContract
-        let fromBlock = 153020//Constants.contractLogsFromBlock
-        let limit = 20
+        let fromBlock = Constants.contractLogsFromBlock
+        let toBlock = Constants.contractLogsFromBlock + 2
         var contractLogs: [ContractLogEnum]!
         
         //act
         echo.start { [unowned self] (result) in
-            self.echo.getContractLogs(contractId: contractId, fromBlock: fromBlock, limit: limit, completion: { (result) in
+            self.echo.getContractLogs(contractId: contractId, fromBlock: fromBlock, toBlock: toBlock, completion: { (result) in
                 
                 switch result {
                 case .success(let logs):
@@ -1309,7 +1377,7 @@ class ECHOInterfaceTests: XCTestCase {
         //assert
         waitForExpectations(timeout: Constants.timeout) { error in
             XCTAssertNotNil(contractLogs)
-            XCTAssertEqual(contractLogs.count, 2)
+            XCTAssertEqual(contractLogs.count, 4)
         }
     }
     
@@ -1323,12 +1391,12 @@ class ECHOInterfaceTests: XCTestCase {
         let exp = expectation(description: "testFailGetContractLogs")
         let contractId = "1.3.1880"
         let fromBlock = Constants.contractLogsFromBlock
-        let limit = 10
+        let toBlock = Constants.contractLogsFromBlock + 20
         var error: ECHOError = ECHOError.undefined
         
         //act
         echo.start { [unowned self] (result) in
-            self.echo.getContractLogs(contractId: contractId, fromBlock: fromBlock, limit: limit, completion: { (result) in
+            self.echo.getContractLogs(contractId: contractId, fromBlock: fromBlock, toBlock: toBlock, completion: { (result) in
                 
                 switch result {
                 case .success(_):
@@ -1652,7 +1720,12 @@ class ECHOInterfaceTests: XCTestCase {
 
         //act
         echo.start { [unowned self] (result) in
-            self.echo.queryContract(registrarNameOrId: registrarNameOrId, assetId: assetId, contratId: contratId, methodName: methodName, methodParams: params) { (result) in
+            self.echo.queryContract(registrarNameOrId: registrarNameOrId,
+                                    amount: 0,
+                                    assetId: assetId,
+                                    contratId: contratId,
+                                    methodName: methodName,
+                                    methodParams: params) { (result) in
                 
                 switch result {
                 case .success(let res):
@@ -1687,6 +1760,7 @@ class ECHOInterfaceTests: XCTestCase {
         //act
         echo.start { [unowned self] (result) in
             self.echo.queryContract(registrarNameOrId: registrarNameOrId,
+                                    amount: 0,
                                     assetId: assetId,
                                     contratId: contratId,
                                     byteCode: byteCode) { (result) in
@@ -2043,7 +2117,7 @@ class ECHOInterfaceTests: XCTestCase {
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
         }))
         let exp = expectation(description: "testGetAccountDeposits")
-        var deposits: [DepositEth]?
+        var deposits: [EthDeposit]?
         
         //act
         echo.start { [unowned self] (result) in
@@ -2075,7 +2149,7 @@ class ECHOInterfaceTests: XCTestCase {
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
         }))
         let exp = expectation(description: "testGetAccountWithdrawals")
-        var withdrawals: [WithdrawalEth]?
+        var withdrawals: [EthWithdrawal]?
         
         //act
         echo.start { [unowned self] (result) in
