@@ -170,22 +170,24 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
             let maxValueLastByte = UInt8(1) << offset
             
             while nonce < UInt.max {
-                let nonceData = Data.fromUint64(nonce)
-                let sha256Data = constantData + nonceData
-                let result = strongSelf.cryptoCore.sha256(sha256Data)
-                
                 var isValid = true
-                for index in 0..<lastCheckByteIndex {
-                    let byte = result.bytes[index]
-                    if index == lastCheckByteIndex - 1 {
-                        if byte >= maxValueLastByte {
-                            isValid = false
-                            break
-                        }
-                    } else {
-                        if byte != 0 {
-                            isValid = false
-                            break
+                autoreleasepool {
+                    let nonceData = Data.fromUint64(nonce)
+                    let sha256Data = constantData + nonceData
+                    let result = strongSelf.cryptoCore.sha256(sha256Data)
+            
+                    for index in 0..<lastCheckByteIndex {
+                        let byte = result.bytes[index]
+                        if index == lastCheckByteIndex - 1 {
+                            if byte >= maxValueLastByte {
+                                isValid = false
+                                break
+                            }
+                        } else {
+                            if byte != 0 {
+                                isValid = false
+                                break
+                            }
                         }
                     }
                 }
