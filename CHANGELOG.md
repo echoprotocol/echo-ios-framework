@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## Changelog 3.7.1 - 2019-11-18
+
+### Fixed
+* Fixed memory leaks in register account method
+
 ## Changelog 3.7.0 - 2019-11-13
 
 ### Removed
