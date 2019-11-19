@@ -20,7 +20,7 @@ struct InformationFacadeServices {
 // swiftlint:disable type_body_length
 final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
     
-    var queues: [ECHOQueue]
+    var queues: [String: ECHOQueue]
     let services: InformationFacadeServices
     let network: ECHONetwork
     let cryptoCore: CryptoCoreComponent
@@ -33,7 +33,7 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         self.services = services
         self.network = network
         self.cryptoCore = cryptoCore
-        self.queues = [ECHOQueue]()
+        self.queues = [String: ECHOQueue]()
         
         noticeDelegateHandler.delegate = self
     }
@@ -64,7 +64,7 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
     public func registerAccount(name: String, wif: String, completion: @escaping Completion<Bool>, noticeHandler: NoticeHandler?) {
         
         let createAccountQueue = ECHOQueue()
-        queues.append(createAccountQueue)
+        addQueue(createAccountQueue)
         
         // Get Account
         let getAccountsOperationInitParams = (createAccountQueue,
@@ -98,7 +98,7 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
             createAccountQueue.addOperation(noticeHandleOperation)
         }
         
-        createAccountQueue.setCompletionOperation(completionOperation)
+        createAccountQueue.addOperation(completionOperation)
     }
     
     fileprivate func createRequestRegistrationTask(_ queue: ECHOQueue,
@@ -428,7 +428,7 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         accountHistoryQueue.addOperation(mergeWithdrawEthInHistoryOperation)
         accountHistoryQueue.addOperation(historyCompletionOperation)
     
-        accountHistoryQueue.setCompletionOperation(completionOperation)
+        accountHistoryQueue.addOperation(completionOperation)
     }
     
     fileprivate func createGetHistoryOperation(_ queue: ECHOQueue,
@@ -1192,7 +1192,7 @@ extension InformationFacadeImp: NoticeEventDelegate {
         case .array(let array):
             if let noticeOperationId = array.first as? Int {
 
-                for queue in queues {
+                for queue in queues.values {
 
                     if let queueTransferOperationId: Int = queue.getValue(CreationAccountResultsKeys.operationID.rawValue),
                         queueTransferOperationId == noticeOperationId {
@@ -1207,7 +1207,7 @@ extension InformationFacadeImp: NoticeEventDelegate {
     }
     
     public func didAllNoticesLost() {
-        for queue in queues {
+        for queue in queues.values {
             queue.saveValue(ECHOError.connectionLost, forKey: CreationAccountResultsKeys.noticeError.rawValue)
             queue.startNextOperation()
         }

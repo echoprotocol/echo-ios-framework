@@ -16,7 +16,7 @@ public struct AssetsServices {
 */
 final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
     
-    var queues: [ECHOQueue]
+    var queues: [String: ECHOQueue]
     let services: AssetsServices
     let cryptoCore: CryptoCoreComponent
     let network: ECHONetwork
@@ -47,12 +47,12 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
         self.services = services
         self.cryptoCore = cryptoCore
         self.network = network
-        self.queues = [ECHOQueue]()
+        self.queues = [String: ECHOQueue]()
     }
     public func createAsset(nameOrId: String, wif: String, asset: Asset, completion: @escaping Completion<Bool>) {
 
         let createAssetQueue = ECHOQueue()
-        queues.append(createAssetQueue)
+        addQueue(createAssetQueue)
         
         // Accounts
         let getAccountsNamesOrIdsWithKeys = GetAccountsNamesOrIdWithKeys([(nameOrId, CreateAssetKeys.account.rawValue)])
@@ -118,7 +118,7 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
         createAssetQueue.addOperation(bildTransactionOperation)
         createAssetQueue.addOperation(sendTransactionOperation)
         
-        createAssetQueue.setCompletionOperation(completionOperation)
+        createAssetQueue.addOperation(completionOperation)
     }
     
     // swiftlint:disable function_body_length
@@ -140,7 +140,7 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
         }
         
         let issueAssetQueue = ECHOQueue()
-        queues.append(issueAssetQueue)
+        addQueue(issueAssetQueue)
         
         // Accounts
         let getAccountsNamesOrIdsWithKeys = GetAccountsNamesOrIdWithKeys([(issuerNameOrId, IssueAssetKeys.issuerAccount.rawValue),
@@ -207,7 +207,7 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
         issueAssetQueue.addOperation(bildTransactionOperation)
         issueAssetQueue.addOperation(sendTransactionOperation)
         
-        issueAssetQueue.setCompletionOperation(completionOperation)
+        issueAssetQueue.addOperation(completionOperation)
     }
     // swiftlint:enable function_body_length
     

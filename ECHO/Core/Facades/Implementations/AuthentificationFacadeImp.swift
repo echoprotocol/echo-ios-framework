@@ -16,7 +16,7 @@ struct AuthentificationFacadeServices {
  */
 final public class AuthentificationFacadeImp: AuthentificationFacade, ECHOQueueble {
     
-    var queues: [ECHOQueue]
+    var queues: [String: ECHOQueue]
     let services: AuthentificationFacadeServices
     let cryptoCore: CryptoCoreComponent
     let network: ECHONetwork
@@ -25,7 +25,7 @@ final public class AuthentificationFacadeImp: AuthentificationFacade, ECHOQueueb
         self.services = services
         self.cryptoCore = cryptoCore
         self.network = network
-        self.queues = [ECHOQueue]()
+        self.queues = [String: ECHOQueue]()
     }
     
     public func generateRandomWIF() -> String {
@@ -142,7 +142,7 @@ final public class AuthentificationFacadeImp: AuthentificationFacade, ECHOQueueb
     public func changeKeys(oldWIF: String, newWIF: String, name: String, completion: @escaping Completion<Bool>) {
         
         let changeKeysQueue = ECHOQueue()
-        queues.append(changeKeysQueue)
+        addQueue(changeKeysQueue)
         
         // Account
         let checkAccountOperation = createCheckAccountOperation(changeKeysQueue, name, oldWIF, completion)
@@ -203,7 +203,7 @@ final public class AuthentificationFacadeImp: AuthentificationFacade, ECHOQueueb
         changeKeysQueue.addOperation(bildTransactionOperation)
         changeKeysQueue.addOperation(sendTransactionOperation)
         
-        changeKeysQueue.setCompletionOperation(completionOperation)
+        changeKeysQueue.addOperation(completionOperation)
     }
     
     fileprivate func createCheckAccountOperation(_ queue: ECHOQueue,

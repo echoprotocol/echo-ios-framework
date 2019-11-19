@@ -15,7 +15,7 @@
  */
 protocol ECHOQueueble: class {
     
-    var queues: [ECHOQueue] { get set }
+    var queues: [String: ECHOQueue] { get set }
     
     func addQueue(_ queue: ECHOQueue)
     func removeQueue(_ queue: ECHOQueue)
@@ -28,14 +28,12 @@ extension ECHOQueueble {
     
     func addQueue(_ queue: ECHOQueue) {
         
-        queues.append(queue)
+        queues[queue.uuid] = queue
     }
     
     func removeQueue(_ queue: ECHOQueue) {
         
-        if let index = queues.index(where: { return queue.uuid == $0.uuid }) {
-            queues.remove(at: index)
-        }
+        queues.removeValue(forKey: queue.uuid)
     }
     
     func createCompletionOperation(queue: ECHOQueue) -> Operation {
@@ -53,7 +51,7 @@ extension ECHOQueueble {
     
     func cancelAllOperationInQueues() {
         
-        for queue in queues {
+        for queue in queues.values {
             queue.cancelAllOperations()
         }
     }
@@ -121,26 +119,11 @@ public final class ECHOQueue: NSObject {
     
     // MARK: Operations
     
-    public func setCompletionOperation(_ completionOperation: Operation) {
-        
-        self.completionOperation = completionOperation
-        
-        obs = workingQueue.observe(\.operationCount) { [weak self] (queue, _) in
-            
-            if queue.operationCount == 0,
-                let completionOperation = self?.completionOperation,
-                completionOperation.isFinished == false {
-                queue.addOperation(completionOperation)
-            }
-        }
-    }
-    
     public func addOperation(_ operation: Operation) {
         workingQueue.addOperation(operation)
     }
     
     public func cancelAllOperations() {
-        
         workingQueue.cancelAllOperations()
     }
 }

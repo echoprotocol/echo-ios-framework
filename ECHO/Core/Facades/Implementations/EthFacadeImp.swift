@@ -19,7 +19,7 @@ public struct EthFacadeServices {
  */
 final public class EthFacadeImp: EthFacade, ECHOQueueble {
 
-    var queues: [ECHOQueue]
+    var queues: [String: ECHOQueue]
     let services: EthFacadeServices
     let network: ECHONetwork
     let cryptoCore: CryptoCoreComponent
@@ -32,7 +32,7 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble {
         self.services = services
         self.network = network
         self.cryptoCore = cryptoCore
-        self.queues = [ECHOQueue]()
+        self.queues = [String: ECHOQueue]()
         noticeDelegateHandler.delegate = self
     }
     
@@ -177,7 +177,7 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble {
         }
         
         let generateQueue = ECHOQueue()
-        queues.append(generateQueue)
+        addQueue(generateQueue)
         
         // Accounts
         let getAccountsNamesOrIdsWithKeys = GetAccountsNamesOrIdWithKeys([(nameOrId, EthFacadeResultKeys.loadedAccount.rawValue)])
@@ -254,7 +254,7 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble {
             generateQueue.addOperation(noticeHandleOperation)
         }
         
-        generateQueue.setCompletionOperation(completionOperation)
+        generateQueue.addOperation(completionOperation)
     }
     
     public func withdrawalEth(nameOrId: String,
@@ -287,7 +287,7 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble {
         }
         
         let withdrawalQueue = ECHOQueue()
-        queues.append(withdrawalQueue)
+        addQueue(withdrawalQueue)
         
         // Accounts
         let getAccountsNamesOrIdsWithKeys = GetAccountsNamesOrIdWithKeys([(nameOrId, EthFacadeResultKeys.loadedAccount.rawValue)])
@@ -364,7 +364,7 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble {
             withdrawalQueue.addOperation(noticeHandleOperation)
         }
         
-        withdrawalQueue.setCompletionOperation(completionOperation)
+        withdrawalQueue.addOperation(completionOperation)
     }
     // swiftlint:enable function_body_length
     
@@ -472,7 +472,7 @@ extension EthFacadeImp: NoticeEventDelegate {
         case .array(let array):
             if let noticeOperationId = array.first as? Int {
                 
-                for queue in queues {
+                for queue in queues.values {
                     
                     if let queueTransferOperationId: Int = queue.getValue(EthFacadeResultKeys.operationId.rawValue),
                         queueTransferOperationId == noticeOperationId {
@@ -487,7 +487,7 @@ extension EthFacadeImp: NoticeEventDelegate {
     }
     
     public func didAllNoticesLost() {
-        for queue in queues {
+        for queue in queues.values {
             queue.saveValue(ECHOError.connectionLost, forKey: EthFacadeResultKeys.noticeError.rawValue)
             queue.startNextOperation()
         }
