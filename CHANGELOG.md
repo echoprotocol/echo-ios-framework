@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## Changelog 3.7.2 - 2019-11-19
+
+### Fixed
+* Fixed ECHOQueue completion operation
+
 ## Changelog 3.7.1 - 2019-11-18
 
 ### Fixed
