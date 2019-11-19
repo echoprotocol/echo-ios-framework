@@ -37,7 +37,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
         case noticeError
     }
     
-    var queues: [ECHOQueue]
+    var queues: [String: ECHOQueue]
     let services: ContractsFacadeServices
     let network: ECHONetwork
     let cryptoCore: CryptoCoreComponent
@@ -56,7 +56,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
         self.cryptoCore = cryptoCore
         self.abiCoderCore = abiCoder
         self.settings = settings
-        self.queues = [ECHOQueue]()
+        self.queues = [String: ECHOQueue]()
         noticeDelegateHandler.delegate = self
     }
     
@@ -266,7 +266,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
             createQueue.addOperation(noticeHandleOperation)
         }
         
-        createQueue.setCompletionOperation(completionOperation)
+        createQueue.addOperation(completionOperation)
     }
     
     public func callContract(registrarNameOrId: String,
@@ -434,7 +434,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
             callQueue.addOperation(noticeHandleOperation)
         }
         
-        callQueue.setCompletionOperation(completionOperation)
+        callQueue.addOperation(completionOperation)
     }
     
     public func queryContract(registrarNameOrId: String,
@@ -519,7 +519,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
             queryQueue.addOperation(byteCodeOperation)
         }
         queryQueue.addOperation(callContractNoChangigState)
-        queryQueue.setCompletionOperation(completionOperation)
+        queryQueue.addOperation(completionOperation)
     }
     
     fileprivate func createBildCallContractOperation(_ queue: ECHOQueue,
@@ -690,7 +690,7 @@ extension ContractsFacadeImp: NoticeEventDelegate {
         case .array(let array):
             if let noticeOperationId = array.first as? Int {
                 
-                for queue in queues {
+                for queue in queues.values {
                     
                     if let queueTransferOperationId: Int = queue.getValue(ContractKeys.operationId.rawValue),
                         queueTransferOperationId == noticeOperationId {
@@ -705,7 +705,7 @@ extension ContractsFacadeImp: NoticeEventDelegate {
     }
     
     public func didAllNoticesLost() {
-        for queue in queues {
+        for queue in queues.values {
             queue.saveValue(ECHOError.connectionLost, forKey: ContractKeys.noticeError.rawValue)
             queue.startNextOperation()
         }

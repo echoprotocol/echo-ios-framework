@@ -19,7 +19,7 @@ public struct TransactionFacadeServices {
  */
 final public class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
     
-    var queues: [ECHOQueue]
+    var queues: [String: ECHOQueue]
     let services: TransactionFacadeServices
     let network: ECHONetwork
     let cryptoCore: CryptoCoreComponent
@@ -32,7 +32,7 @@ final public class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
         self.services = services
         self.network = network
         self.cryptoCore = cryptoCore
-        self.queues = [ECHOQueue]()
+        self.queues = [String: ECHOQueue]()
         noticeDelegateHandler.delegate = self
     }
     
@@ -76,7 +76,7 @@ final public class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
         }
         
         let transferQueue = ECHOQueue()
-        queues.append(transferQueue)
+        addQueue(transferQueue)
         
         // Accounts
         let getAccountsNamesOrIdsWithKeys = GetAccountsNamesOrIdWithKeys([(fromNameOrId, TransferResultsKeys.loadedFromAccount.rawValue),
@@ -151,7 +151,7 @@ final public class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
             transferQueue.addOperation(noticeHandleOperation)
         }
         
-        transferQueue.setCompletionOperation(completionOperation)
+        transferQueue.addOperation(completionOperation)
     }
     // swiftlint:enable function_body_length
     
@@ -232,7 +232,7 @@ extension TransactionFacadeImp: NoticeEventDelegate {
         case .array(let array):
             if let noticeOperationId = array.first as? Int {
                 
-                for queue in queues {
+                for queue in queues.values {
                     
                     if let queueTransferOperationId: Int = queue.getValue(TransferResultsKeys.operationId.rawValue),
                         queueTransferOperationId == noticeOperationId {
@@ -247,7 +247,7 @@ extension TransactionFacadeImp: NoticeEventDelegate {
     }
     
     public func didAllNoticesLost() {
-        for queue in queues {
+        for queue in queues.values {
             queue.saveValue(ECHOError.connectionLost, forKey: TransferResultsKeys.noticeError.rawValue)
             queue.startNextOperation()
         }

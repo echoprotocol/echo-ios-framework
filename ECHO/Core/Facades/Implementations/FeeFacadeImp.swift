@@ -20,7 +20,7 @@ public struct FeeFacadeServices {
 // swiftlint:disable type_body_length
 final public class FeeFacadeImp: FeeFacade, ECHOQueueble {
     
-    var queues: [ECHOQueue]
+    var queues: [String: ECHOQueue]
     let services: FeeFacadeServices
     let network: ECHONetwork
     let cryptoCore: CryptoCoreComponent
@@ -38,7 +38,7 @@ final public class FeeFacadeImp: FeeFacade, ECHOQueueble {
         self.cryptoCore = cryptoCore
         self.abiCoderCore = abiCoderCore
         self.settings = settings
-        self.queues = [ECHOQueue]()
+        self.queues = [String: ECHOQueue]()
     }
     
     private enum FeeResultsKeys: String {
@@ -74,7 +74,7 @@ final public class FeeFacadeImp: FeeFacade, ECHOQueueble {
         }
         
         let feeQueue = ECHOQueue()
-        queues.append(feeQueue)
+        addQueue(feeQueue)
         
         // Account
         let getAccountsNamesOrIdsWithKeys = GetAccountsNamesOrIdWithKeys([(fromNameOrId, FeeResultsKeys.loadedFromAccount.rawValue),
@@ -109,7 +109,7 @@ final public class FeeFacadeImp: FeeFacade, ECHOQueueble {
         feeQueue.addOperation(getRequiredFeeOperation)
         feeQueue.addOperation(feeCompletionOperation)
         
-        feeQueue.setCompletionOperation(completionOperation)
+        feeQueue.addOperation(completionOperation)
     }
     
     public func getFeeForCreateContract(registrarNameOrId: String,
@@ -208,7 +208,7 @@ final public class FeeFacadeImp: FeeFacade, ECHOQueueble {
         createQueue.addOperation(getRequiredFeeOperation)
         createQueue.addOperation(feeCompletionOperation)
         
-        createQueue.setCompletionOperation(completionOperation)
+        createQueue.addOperation(completionOperation)
     }
     
     public func getFeeForCallContractOperation(registrarNameOrId: String,
@@ -319,7 +319,7 @@ final public class FeeFacadeImp: FeeFacade, ECHOQueueble {
         callQueue.addOperation(getRequiredFeeOperation)
         callQueue.addOperation(feeCompletionOperation)
         
-        callQueue.setCompletionOperation(completionOperation)
+        callQueue.addOperation(completionOperation)
     }
     
     fileprivate func createBildTransferOperation(_ queue: ECHOQueue,
