@@ -7,7 +7,7 @@
 //
 
 /**
-   Represents eth_address_object from blockchain
+   Represents eth address object from blockchain
 */
 public struct EthAddress: ECHOObject, Decodable {
     

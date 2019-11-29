@@ -691,7 +691,7 @@ class SocketCoreComponentTests: XCTestCase {
         //act
         echo.start { [unowned self] (result) in
             
-            self.echo.getAccountDeposits(nameOrId: "vsharaev", completion: { (result) in
+            self.echo.getEthAccountDeposits(nameOrId: "vsharaev", completion: { (result) in
                 
                 switch result {
                 case .success(let result):
@@ -723,7 +723,7 @@ class SocketCoreComponentTests: XCTestCase {
         //act
         echo.start { [unowned self] (result) in
             
-            self.echo.getAccountWithdrawals(nameOrId: "vsharaev", completion: { (result) in
+            self.echo.getEthAccountWithdrawals(nameOrId: "vsharaev", completion: { (result) in
                 
                 switch result {
                 case .success(let result):

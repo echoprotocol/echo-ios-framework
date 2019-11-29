@@ -16,6 +16,7 @@ public typealias InterfaceFacades = AuthentificationFacade
     & ContractsFacade
     & CustomOperationsFacade
     & EthFacade
+    & BtcFacade
 
 public protocol Startable {
     func start(completion: @escaping Completion<Bool>)
@@ -43,6 +44,7 @@ final public class ECHO: InterfaceFacades, Startable {
     let contractsFacade: ContractsFacade
     let customOperationsFacade: CustomOperationsFacade
     let ethFacade: EthFacade
+    let btcFacade: BtcFacade
 
     public init(settings: Settings) {
 
@@ -112,6 +114,13 @@ final public class ECHO: InterfaceFacades, Startable {
         let ethFacadeServices = EthFacadeServices(databaseService: databaseService, networkBroadcastService: networkBroadcastService)
         
         ethFacade = EthFacadeImp(services: ethFacadeServices,
+                                 cryptoCore: settings.cryproComponent,
+                                 network: settings.network,
+                                 noticeDelegateHandler: noticeEventProxy)
+        
+        let btcFacadeServices = BtcFacadeServices(databaseService: databaseService, networkBroadcastService: networkBroadcastService)
+        
+        btcFacade = BtcFacadeImp(services: btcFacadeServices,
                                  cryptoCore: settings.cryproComponent,
                                  network: settings.network,
                                  noticeDelegateHandler: noticeEventProxy)
@@ -580,14 +589,63 @@ final public class ECHO: InterfaceFacades, Startable {
                                 noticeHandler: noticeHandler)
     }
     
-    public func getAccountDeposits(nameOrId: String, completion: @escaping Completion<[EthDeposit]>) {
+    public func getEthAccountDeposits(nameOrId: String, completion: @escaping Completion<[EthDeposit]>) {
         
-        ethFacade.getAccountDeposits(nameOrId: nameOrId, completion: completion)
+        ethFacade.getEthAccountDeposits(nameOrId: nameOrId, completion: completion)
     }
     
-    public func getAccountWithdrawals(nameOrId: String, completion: @escaping Completion<[EthWithdrawal]>) {
+    public func getEthAccountWithdrawals(nameOrId: String, completion: @escaping Completion<[EthWithdrawal]>) {
         
-        ethFacade.getAccountWithdrawals(nameOrId: nameOrId, completion: completion)
+        ethFacade.getEthAccountWithdrawals(nameOrId: nameOrId, completion: completion)
+    }
+    
+    // MARK: BtcFacade
+    
+    public func generateBtcAddress(nameOrId: String,
+                                   wif: String,
+                                   backupAddress: String,
+                                   assetForFee: String?,
+                                   completion: @escaping Completion<Bool>,
+                                   noticeHandler: NoticeHandler?) {
+        
+        btcFacade.generateBtcAddress(nameOrId: nameOrId,
+                                     wif: wif,
+                                     backupAddress: backupAddress,
+                                     assetForFee: assetForFee,
+                                     completion: completion,
+                                     noticeHandler: noticeHandler)
+    }
+    
+    public func getBtcAddress(nameOrId: String, completion: @escaping Completion<BtcAddress?>) {
+        
+        btcFacade.getBtcAddress(nameOrId: nameOrId, completion: completion)
+    }
+    
+    public func withdrawalBtc(nameOrId: String,
+                              wif: String,
+                              toBtcAddress: String,
+                              amount: UInt,
+                              assetForFee: String?,
+                              completion: @escaping Completion<Bool>,
+                              noticeHandler: NoticeHandler?) {
+        
+        btcFacade.withdrawalBtc(nameOrId: nameOrId,
+                                wif: wif,
+                                toBtcAddress: toBtcAddress,
+                                amount: amount,
+                                assetForFee: assetForFee,
+                                completion: completion,
+                                noticeHandler: noticeHandler)
+    }
+    
+    public func getBtcAccountDeposits(nameOrId: String, completion: @escaping Completion<[BtcDeposit]>) {
+        
+        btcFacade.getBtcAccountDeposits(nameOrId: nameOrId, completion: completion)
+    }
+    
+    public func getBtcAccountWithdrawals(nameOrId: String, completion: @escaping Completion<[BtcWithdrawal]>) {
+        
+        btcFacade.getBtcAccountWithdrawals(nameOrId: nameOrId, completion: completion)
     }
     
     // MARK: CustomOperationsFacade

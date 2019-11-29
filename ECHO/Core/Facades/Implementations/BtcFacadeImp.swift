@@ -1,30 +1,29 @@
 //
-//  EthFacadeImp.swift
+//  BtcFacadeImp.swift
 //  ECHO
 //
-//  Created by Vladimir Sharaev on 20/05/2019.
+//  Created by Vladimir Sharaev on 28.11.2019.
 //  Copyright © 2019 PixelPlex. All rights reserved.
 //
 
 /**
- Services for EthFacade
+ Services for BtcFacade
  */
-public struct EthFacadeServices {
+public struct BtcFacadeServices {
     var databaseService: DatabaseApiService
     var networkBroadcastService: NetworkBroadcastApiService
 }
 
 /**
- Implementation of [EthFacade](EthFacade), [ECHOQueueble](ECHOQueueble)
+ Implementation of [BtcFacade](BtcFacade), [ECHOQueueble](ECHOQueueble)
  */
-final public class EthFacadeImp: EthFacade, ECHOQueueble {
-
+final public class BtcFacadeImp: BtcFacade, ECHOQueueble {
     var queues: [String: ECHOQueue]
-    let services: EthFacadeServices
+    let services: BtcFacadeServices
     let network: ECHONetwork
     let cryptoCore: CryptoCoreComponent
     
-    public init(services: EthFacadeServices,
+    public init(services: BtcFacadeServices,
                 cryptoCore: CryptoCoreComponent,
                 network: ECHONetwork,
                 noticeDelegateHandler: NoticeEventDelegateHandler) {
@@ -36,113 +35,113 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble {
         noticeDelegateHandler.delegate = self
     }
     
-    public func getEthAddress(nameOrId: String, completion: @escaping Completion<EthAddress?>) {
+    public func getBtcAddress(nameOrId: String, completion: @escaping Completion<BtcAddress?>) {
         
         services.databaseService.getFullAccount(nameOrIds: [nameOrId], shoudSubscribe: false) { [weak self] (result) in
             
             switch result {
             case .success(let accounts):
                 guard let account = accounts[nameOrId] else {
-                    let result = Result<EthAddress?, ECHOError>(error: .resultNotFound)
+                    let result = Result<BtcAddress?, ECHOError>(error: .resultNotFound)
                     completion(result)
                     return
                 }
                 
-                self?.services.databaseService.getEthAddress(accountId: account.account.id, completion: completion)
+                self?.services.databaseService.getBtcAddress(accountId: account.account.id, completion: completion)
             case .failure(let error):
-                let result = Result<EthAddress?, ECHOError>(error: error)
+                let result = Result<BtcAddress?, ECHOError>(error: error)
                 completion(result)
             }
         }
     }
     
-    public func getEthAccountDeposits(nameOrId: String, completion: @escaping Completion<[EthDeposit]>) {
+    public func getBtcAccountDeposits(nameOrId: String, completion: @escaping Completion<[BtcDeposit]>) {
         
         services.databaseService.getFullAccount(nameOrIds: [nameOrId], shoudSubscribe: false) { [weak self] (result) in
             
             switch result {
             case .success(let accounts):
                 guard let account = accounts[nameOrId] else {
-                    let result = Result<[EthDeposit], ECHOError>(error: .resultNotFound)
+                    let result = Result<[BtcDeposit], ECHOError>(error: .resultNotFound)
                     completion(result)
                     return
                 }
                 
                 self?.services.databaseService.getAccountDeposits(accountId: account.account.id,
-                                                                  type: .eth,
+                                                                  type: .btc,
                                                                   completion: { result in
                     switch result {
                     case .success(let sidechainEnums):
-                        var deposits = [EthDeposit]()
+                        var deposits = [BtcDeposit]()
                         sidechainEnums.forEach {
                             switch $0 {
-                            case .eth(let deposit):
-                                deposits.append(deposit)
-                            case .btc:
+                            case .eth:
                                 return
+                            case .btc(let deposit):
+                                deposits.append(deposit)
                             }
                         }
                         
-                        let result = Result<[EthDeposit], ECHOError>(value: deposits)
+                        let result = Result<[BtcDeposit], ECHOError>(value: deposits)
                         completion(result)
                         
                     case .failure(let error):
-                        let result = Result<[EthDeposit], ECHOError>(error: error)
+                        let result = Result<[BtcDeposit], ECHOError>(error: error)
                         completion(result)
                     }
                 })
                 
             case .failure(let error):
-                let result = Result<[EthDeposit], ECHOError>(error: error)
+                let result = Result<[BtcDeposit], ECHOError>(error: error)
                 completion(result)
             }
         }
     }
     
-    public func getEthAccountWithdrawals(nameOrId: String, completion: @escaping Completion<[EthWithdrawal]>) {
+    public func getBtcAccountWithdrawals(nameOrId: String, completion: @escaping Completion<[BtcWithdrawal]>) {
         
         services.databaseService.getFullAccount(nameOrIds: [nameOrId], shoudSubscribe: false) { [weak self] (result) in
             
             switch result {
             case .success(let accounts):
                 guard let account = accounts[nameOrId] else {
-                    let result = Result<[EthWithdrawal], ECHOError>(error: .resultNotFound)
+                    let result = Result<[BtcWithdrawal], ECHOError>(error: .resultNotFound)
                     completion(result)
                     return
                 }
                 
                 self?.services.databaseService.getAccountWithdrawals(accountId: account.account.id,
-                                                                     type: .eth,
+                                                                     type: .btc,
                                                                      completion: { result in
                     switch result {
                     case .success(let sidechainEnums):
-                        var withdrawals = [EthWithdrawal]()
+                        var withdrawals = [BtcWithdrawal]()
                         sidechainEnums.forEach {
                             switch $0 {
-                            case .eth(let withdrawal):
-                                withdrawals.append(withdrawal)
-                            case .btc:
+                            case .eth:
                                 return
+                            case .btc(let withdrawal):
+                                withdrawals.append(withdrawal)
                             }
                         }
                         
-                        let result = Result<[EthWithdrawal], ECHOError>(value: withdrawals)
+                        let result = Result<[BtcWithdrawal], ECHOError>(value: withdrawals)
                         completion(result)
                         
                     case .failure(let error):
-                        let result = Result<[EthWithdrawal], ECHOError>(error: error)
+                        let result = Result<[BtcWithdrawal], ECHOError>(error: error)
                         completion(result)
                     }
                 })
                 
             case .failure(let error):
-                let result = Result<[EthWithdrawal], ECHOError>(error: error)
+                let result = Result<[BtcWithdrawal], ECHOError>(error: error)
                 completion(result)
             }
         }
     }
     
-    private enum EthFacadeResultKeys: String {
+    private enum BtcFacadeResultKeys: String {
         case loadedAccount
         case blockData
         case chainId
@@ -156,8 +155,9 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble {
     }
     
     // swiftlint:disable function_body_length
-    public func generateEthAddress(nameOrId: String,
+    public func generateBtcAddress(nameOrId: String,
                                    wif: String,
+                                   backupAddress: String,
                                    assetForFee: String?,
                                    completion: @escaping Completion<Bool>,
                                    noticeHandler: NoticeHandler?) {
@@ -176,58 +176,65 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble {
             return
         }
         
+        let btcValidator = BTCAddressValidator(cryptoCore: cryptoCore)
+        guard btcValidator.isValidBTCAddress(backupAddress) else {
+            let result = Result<Bool, ECHOError>(error: .invalidBTCAddress)
+            completion(result)
+            return
+        }
+        
         let generateQueue = ECHOQueue()
         addQueue(generateQueue)
         
         // Accounts
-        let getAccountsNamesOrIdsWithKeys = GetAccountsNamesOrIdWithKeys([(nameOrId, EthFacadeResultKeys.loadedAccount.rawValue)])
+        let getAccountsNamesOrIdsWithKeys = GetAccountsNamesOrIdWithKeys([(nameOrId, BtcFacadeResultKeys.loadedAccount.rawValue)])
         let getAccountsOperationInitParams = (generateQueue,
                                               services.databaseService,
                                               getAccountsNamesOrIdsWithKeys)
         let getAccountsOperation = GetAccountsQueueOperation<Bool>(initParams: getAccountsOperationInitParams,
                                                                    completion: completion)
         
-        let bildTransferOperation = createBildGenerationOperation(generateQueue, Asset(assetForFee), completion)
+        let bildTransferOperation = createBildGenerationOperation(generateQueue, backupAddress, Asset(assetForFee), completion)
         
         // RequiredFee
         let getRequiredFeeOperationInitParams = (generateQueue,
                                                  services.databaseService,
                                                  Asset(assetForFee),
-                                                 EthFacadeResultKeys.operation.rawValue,
-                                                 EthFacadeResultKeys.fee.rawValue,
+                                                 BtcFacadeResultKeys.operation.rawValue,
+                                                 BtcFacadeResultKeys.fee.rawValue,
                                                  UInt(1))
         let getRequiredFeeOperation = GetRequiredFeeQueueOperation<Bool>(initParams: getRequiredFeeOperationInitParams,
                                                                          completion: completion)
         
         // ChainId
-        let getChainIdInitParams = (generateQueue, services.databaseService, EthFacadeResultKeys.chainId.rawValue)
+        let getChainIdInitParams = (generateQueue, services.databaseService, BtcFacadeResultKeys.chainId.rawValue)
         let getChainIdOperation = GetChainIdQueueOperation<Bool>(initParams: getChainIdInitParams,
                                                                  completion: completion)
         
         // BlockData
-        let getBlockDataInitParams = (generateQueue, services.databaseService, EthFacadeResultKeys.blockData.rawValue)
+        let getBlockDataInitParams = (generateQueue, services.databaseService, BtcFacadeResultKeys.blockData.rawValue)
         let getBlockDataOperation = GetBlockDataQueueOperation<Bool>(initParams: getBlockDataInitParams,
                                                                      completion: completion)
         
         // Transaciton
         let transactionOperationInitParams = (queue: generateQueue,
                                               cryptoCore: cryptoCore,
-                                              saveKey: EthFacadeResultKeys.transaction.rawValue,
+                                              saveKey: BtcFacadeResultKeys.transaction.rawValue,
                                               wif: wif,
                                               networkPrefix: network.echorandPrefix.rawValue,
-                                              fromAccountKey: EthFacadeResultKeys.loadedAccount.rawValue,
-                                              operationKey: EthFacadeResultKeys.operation.rawValue,
-                                              chainIdKey: EthFacadeResultKeys.chainId.rawValue,
-                                              blockDataKey: EthFacadeResultKeys.blockData.rawValue,
-                                              feeKey: EthFacadeResultKeys.fee.rawValue)
+                                              fromAccountKey: BtcFacadeResultKeys.loadedAccount.rawValue,
+                                              operationKey: BtcFacadeResultKeys.operation.rawValue,
+                                              chainIdKey: BtcFacadeResultKeys.chainId.rawValue,
+                                              blockDataKey: BtcFacadeResultKeys.blockData.rawValue,
+                                              feeKey: BtcFacadeResultKeys.fee.rawValue)
         let bildTransactionOperation = GetTransactionQueueOperation<Bool>(initParams: transactionOperationInitParams,
                                                                           completion: completion)
         
         // Send transaction
         let sendTransacionOperationInitParams = (generateQueue,
                                                  services.networkBroadcastService,
-                                                 EthFacadeResultKeys.operationId.rawValue,
-                                                 EthFacadeResultKeys.transaction.rawValue)
+                                                 BtcFacadeResultKeys.operationId.rawValue,
+                                                 BtcFacadeResultKeys.transaction.rawValue)
         let sendTransactionOperation = SendTransactionQueueOperation(initParams: sendTransacionOperationInitParams,
                                                                      completion: completion)
         
@@ -244,27 +251,28 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble {
         
         //Notice handler
         if let noticeHandler = noticeHandler {
-            generateQueue.saveValue(noticeHandler, forKey: EthFacadeResultKeys.noticeHandler.rawValue)
+            generateQueue.saveValue(noticeHandler, forKey: BtcFacadeResultKeys.noticeHandler.rawValue)
             let waitOperation = createWaitingOperation(generateQueue)
             let noticeHandleOperation = createNoticeHandleOperation(generateQueue,
-                                                                    EthFacadeResultKeys.noticeHandler.rawValue,
-                                                                    EthFacadeResultKeys.notice.rawValue,
-                                                                    EthFacadeResultKeys.noticeError.rawValue)
+                                                                    BtcFacadeResultKeys.noticeHandler.rawValue,
+                                                                    BtcFacadeResultKeys.notice.rawValue,
+                                                                    BtcFacadeResultKeys.noticeError.rawValue)
             generateQueue.addOperation(waitOperation)
             generateQueue.addOperation(noticeHandleOperation)
         }
         
         generateQueue.addOperation(completionOperation)
     }
+    // swiftlint:enable function_body_length
     
-    public func withdrawalEth(nameOrId: String,
+    // swiftlint:disable function_body_length
+    public func withdrawalBtc(nameOrId: String,
                               wif: String,
-                              toEthAddress: String,
+                              toBtcAddress: String,
                               amount: UInt,
                               assetForFee: String?,
                               completion: @escaping Completion<Bool>,
                               noticeHandler: NoticeHandler?) {
-        
         // if we don't hace assetForFee, we use asset.
         let assetForFee = assetForFee ?? Settings.defaultAsset
         
@@ -279,9 +287,9 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble {
             return
         }
         
-        let ethValidator = ETHAddressValidator(cryptoCore: cryptoCore)
-        guard ethValidator.isValidETHAddress(toEthAddress) else {
-            let result = Result<Bool, ECHOError>(error: .invalidETHAddress)
+        let btcValidator = BTCAddressValidator(cryptoCore: cryptoCore)
+        guard btcValidator.isValidBTCAddress(toBtcAddress) else {
+            let result = Result<Bool, ECHOError>(error: .invalidBTCAddress)
             completion(result)
             return
         }
@@ -290,54 +298,54 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble {
         addQueue(withdrawalQueue)
         
         // Accounts
-        let getAccountsNamesOrIdsWithKeys = GetAccountsNamesOrIdWithKeys([(nameOrId, EthFacadeResultKeys.loadedAccount.rawValue)])
+        let getAccountsNamesOrIdsWithKeys = GetAccountsNamesOrIdWithKeys([(nameOrId, BtcFacadeResultKeys.loadedAccount.rawValue)])
         let getAccountsOperationInitParams = (withdrawalQueue,
                                               services.databaseService,
                                               getAccountsNamesOrIdsWithKeys)
         let getAccountsOperation = GetAccountsQueueOperation<Bool>(initParams: getAccountsOperationInitParams,
                                                                    completion: completion)
         
-        let bildTransferOperation = createBildWithdrawalOperation(withdrawalQueue, Asset(assetForFee), amount, toEthAddress, completion)
+        let bildTransferOperation = createBildWithdrawalOperation(withdrawalQueue, Asset(assetForFee), amount, toBtcAddress, completion)
         
         // RequiredFee
         let getRequiredFeeOperationInitParams = (withdrawalQueue,
                                                  services.databaseService,
                                                  Asset(assetForFee),
-                                                 EthFacadeResultKeys.operation.rawValue,
-                                                 EthFacadeResultKeys.fee.rawValue,
+                                                 BtcFacadeResultKeys.operation.rawValue,
+                                                 BtcFacadeResultKeys.fee.rawValue,
                                                  UInt(1))
         let getRequiredFeeOperation = GetRequiredFeeQueueOperation<Bool>(initParams: getRequiredFeeOperationInitParams,
                                                                          completion: completion)
         
         // ChainId
-        let getChainIdInitParams = (withdrawalQueue, services.databaseService, EthFacadeResultKeys.chainId.rawValue)
+        let getChainIdInitParams = (withdrawalQueue, services.databaseService, BtcFacadeResultKeys.chainId.rawValue)
         let getChainIdOperation = GetChainIdQueueOperation<Bool>(initParams: getChainIdInitParams,
                                                                  completion: completion)
         
         // BlockData
-        let getBlockDataInitParams = (withdrawalQueue, services.databaseService, EthFacadeResultKeys.blockData.rawValue)
+        let getBlockDataInitParams = (withdrawalQueue, services.databaseService, BtcFacadeResultKeys.blockData.rawValue)
         let getBlockDataOperation = GetBlockDataQueueOperation<Bool>(initParams: getBlockDataInitParams,
                                                                      completion: completion)
         
         // Transaciton
         let transactionOperationInitParams = (queue: withdrawalQueue,
                                               cryptoCore: cryptoCore,
-                                              saveKey: EthFacadeResultKeys.transaction.rawValue,
+                                              saveKey: BtcFacadeResultKeys.transaction.rawValue,
                                               wif: wif,
                                               networkPrefix: network.echorandPrefix.rawValue,
-                                              fromAccountKey: EthFacadeResultKeys.loadedAccount.rawValue,
-                                              operationKey: EthFacadeResultKeys.operation.rawValue,
-                                              chainIdKey: EthFacadeResultKeys.chainId.rawValue,
-                                              blockDataKey: EthFacadeResultKeys.blockData.rawValue,
-                                              feeKey: EthFacadeResultKeys.fee.rawValue)
+                                              fromAccountKey: BtcFacadeResultKeys.loadedAccount.rawValue,
+                                              operationKey: BtcFacadeResultKeys.operation.rawValue,
+                                              chainIdKey: BtcFacadeResultKeys.chainId.rawValue,
+                                              blockDataKey: BtcFacadeResultKeys.blockData.rawValue,
+                                              feeKey: BtcFacadeResultKeys.fee.rawValue)
         let bildTransactionOperation = GetTransactionQueueOperation<Bool>(initParams: transactionOperationInitParams,
                                                                           completion: completion)
         
         // Send transaction
         let sendTransacionOperationInitParams = (withdrawalQueue,
                                                  services.networkBroadcastService,
-                                                 EthFacadeResultKeys.operationId.rawValue,
-                                                 EthFacadeResultKeys.transaction.rawValue)
+                                                 BtcFacadeResultKeys.operationId.rawValue,
+                                                 BtcFacadeResultKeys.transaction.rawValue)
         let sendTransactionOperation = SendTransactionQueueOperation(initParams: sendTransacionOperationInitParams,
                                                                      completion: completion)
         
@@ -354,12 +362,12 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble {
         
         //Notice handler
         if let noticeHandler = noticeHandler {
-            withdrawalQueue.saveValue(noticeHandler, forKey: EthFacadeResultKeys.noticeHandler.rawValue)
+            withdrawalQueue.saveValue(noticeHandler, forKey: BtcFacadeResultKeys.noticeHandler.rawValue)
             let waitOperation = createWaitingOperation(withdrawalQueue)
             let noticeHandleOperation = createNoticeHandleOperation(withdrawalQueue,
-                                                                    EthFacadeResultKeys.noticeHandler.rawValue,
-                                                                    EthFacadeResultKeys.notice.rawValue,
-                                                                    EthFacadeResultKeys.noticeError.rawValue)
+                                                                    BtcFacadeResultKeys.noticeHandler.rawValue,
+                                                                    BtcFacadeResultKeys.notice.rawValue,
+                                                                    BtcFacadeResultKeys.noticeError.rawValue)
             withdrawalQueue.addOperation(waitOperation)
             withdrawalQueue.addOperation(noticeHandleOperation)
         }
@@ -369,6 +377,7 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble {
     // swiftlint:enable function_body_length
     
     fileprivate func createBildGenerationOperation(_ queue: ECHOQueue,
+                                                   _ backupAddress: String,
                                                    _ asset: Asset,
                                                    _ completion: @escaping Completion<Bool>) -> Operation {
         
@@ -378,14 +387,16 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble {
             
             guard bildTransferOperation?.isCancelled == false else { return }
             
-            guard let account: Account = queue?.getValue(EthFacadeResultKeys.loadedAccount.rawValue) else { return }
+            guard let account: Account = queue?.getValue(BtcFacadeResultKeys.loadedAccount.rawValue) else { return }
             
             let fee = AssetAmount(amount: 0, asset: asset)
             
-            let extractedExpr: SidechainETHCreateAddressOperation = SidechainETHCreateAddressOperation.init(account: account, fee: fee)
+            let extractedExpr = SidechainBTCCreateAddressOperation(account: account,
+                                                                   backupAddress: backupAddress,
+                                                                   fee: fee)
             let transferOperation = extractedExpr
             
-            queue?.saveValue(transferOperation, forKey: EthFacadeResultKeys.operation.rawValue)
+            queue?.saveValue(transferOperation, forKey: BtcFacadeResultKeys.operation.rawValue)
         }
         
         return bildTransferOperation
@@ -394,7 +405,7 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble {
     fileprivate func createBildWithdrawalOperation(_ queue: ECHOQueue,
                                                    _ asset: Asset,
                                                    _ amount: UInt,
-                                                   _ toEthAddress: String,
+                                                   _ toBtcAddress: String,
                                                    _ completion: @escaping Completion<Bool>) -> Operation {
         
         let bildWithdrawalOperation = BlockOperation()
@@ -403,18 +414,16 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble {
             
             guard bildWithdrawalOperation?.isCancelled == false else { return }
             
-            guard let account: Account = queue?.getValue(EthFacadeResultKeys.loadedAccount.rawValue) else { return }
+            guard let account: Account = queue?.getValue(BtcFacadeResultKeys.loadedAccount.rawValue) else { return }
             
             let fee = AssetAmount(amount: 0, asset: asset)
-            let address = toEthAddress.replacingOccurrences(of: "0x", with: "")
             
-            let extractedExpr: SidechainETHWithdrawOperation = SidechainETHWithdrawOperation(account: account,
-                                                                               value: amount,
-                                                                               ethAddress: address,
-                                                                               fee: fee)
-            let withdrawalOperation = extractedExpr
+            let withdrawalOperation = SidechainBTCWithdrawOperation(account: account,
+                                                                    value: amount,
+                                                                    btcAddress: toBtcAddress,
+                                                                    fee: fee)
             
-            queue?.saveValue(withdrawalOperation, forKey: EthFacadeResultKeys.operation.rawValue)
+            queue?.saveValue(withdrawalOperation, forKey: BtcFacadeResultKeys.operation.rawValue)
         }
         
         return bildWithdrawalOperation
@@ -464,7 +473,7 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble {
     }
 }
 
-extension EthFacadeImp: NoticeEventDelegate {
+extension BtcFacadeImp: NoticeEventDelegate {
     
     public func didReceiveNotification(notification: ECHONotification) {
         
@@ -474,9 +483,9 @@ extension EthFacadeImp: NoticeEventDelegate {
                 
                 for queue in queues.values {
                     
-                    if let queueTransferOperationId: Int = queue.getValue(EthFacadeResultKeys.operationId.rawValue),
+                    if let queueTransferOperationId: Int = queue.getValue(BtcFacadeResultKeys.operationId.rawValue),
                         queueTransferOperationId == noticeOperationId {
-                        queue.saveValue(notification, forKey: EthFacadeResultKeys.notice.rawValue)
+                        queue.saveValue(notification, forKey: BtcFacadeResultKeys.notice.rawValue)
                         queue.startNextOperation()
                     }
                 }
@@ -488,7 +497,7 @@ extension EthFacadeImp: NoticeEventDelegate {
     
     public func didAllNoticesLost() {
         for queue in queues.values {
-            queue.saveValue(ECHOError.connectionLost, forKey: EthFacadeResultKeys.noticeError.rawValue)
+            queue.saveValue(ECHOError.connectionLost, forKey: BtcFacadeResultKeys.noticeError.rawValue)
             queue.startNextOperation()
         }
     }

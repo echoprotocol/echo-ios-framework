@@ -174,13 +174,22 @@ protocol DatabaseApiService: BaseApiService {
     func subscribeContracts(contractsIds: [String], completion: @escaping Completion<Bool>)
     
 /**
-     Get created ETH addresses
+     Get created Ethereum addresses
      
      - Parameter accountId: Accoint id
      - Parameter completion: Callback in which the information will return [EthAddress](EthAddress) object if it created or error
  */
     func getEthAddress(accountId: String,
                        completion: @escaping Completion<EthAddress?>)
+    
+/**
+    Get created Bitcoin addresses
+    
+    - Parameter accountId: Accoint id
+    - Parameter completion: Callback in which the information will return [BtcAddress](BtcAddress) object if it created or error
+*/
+       func getBtcAddress(accountId: String,
+                          completion: @escaping Completion<BtcAddress?>)
     
 /**
      Returns all approved deposits, for the given account id.

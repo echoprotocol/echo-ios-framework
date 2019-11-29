@@ -29,5 +29,3 @@ public struct RegistrationTask: Decodable {
         difficulty = try values.decode(UInt8.self, forKey: .difficulty)
     }
 }
-
-

@@ -1,19 +1,20 @@
 //
-//  SidechainETHWithdrawOperation.swift
+//  SidechainBTCWithdrawOperation.swift
 //  ECHO
 //
-//  Created by Vladimir Sharaev on 20/05/2019.
+//  Created by Vladimir Sharaev on 28.11.2019.
 //  Copyright © 2019 PixelPlex. All rights reserved.
 //
 
 /**
-    Struct used to encapsulate operations related to the [OperationType.withdrawEthOperation](OperationType.withdrawEthOperation)
+    Struct used to encapsulate operations related to the
+    [OperationType.sidechainBTCWithdrawOperation](OperationType.sidechainBTCWithdrawOperation)
  */
-public struct SidechainETHWithdrawOperation: BaseOperation {
+public struct SidechainBTCWithdrawOperation: BaseOperation {
     
-    enum SidechainETHWithdrawOperationCodingKeys: String, CodingKey {
+    enum SidechainBTCWithdrawOperationCodingKeys: String, CodingKey {
         case account = "account"
-        case ethAddress = "eth_addr"
+        case btcAddress = "btc_addr"
         case value
         case extensions
         case fee
@@ -24,28 +25,28 @@ public struct SidechainETHWithdrawOperation: BaseOperation {
     public var fee: AssetAmount
     
     public var account: Account
-    public let ethAddress: String
+    public let btcAddress: String
     public let value: UInt
     
-    init(account: Account, value: UInt, ethAddress: String, fee: AssetAmount) {
+    init(account: Account, value: UInt, btcAddress: String, fee: AssetAmount) {
         
-        type = .sidechainETHWithdrawOperation
+        type = .sidechainBTCWithdrawOperation
         
         self.account = account
         self.fee = fee
         self.value = value
-        self.ethAddress = ethAddress
+        self.btcAddress = btcAddress
     }
     
     public init(from decoder: Decoder) throws {
         
-        type = .sidechainETHWithdrawOperation
+        type = .sidechainBTCWithdrawOperation
         
-        let values = try decoder.container(keyedBy: SidechainETHWithdrawOperationCodingKeys.self)
+        let values = try decoder.container(keyedBy: SidechainBTCWithdrawOperationCodingKeys.self)
         
         let accountId = try values.decode(String.self, forKey: .account)
         account = Account(accountId)
-        ethAddress = try values.decode(String.self, forKey: .ethAddress)
+        btcAddress = try values.decode(String.self, forKey: .btcAddress)
         value = try values.decode(UInt.self, forKey: .value)
         fee = try values.decode(AssetAmount.self, forKey: .fee)
     }
@@ -67,11 +68,7 @@ public struct SidechainETHWithdrawOperation: BaseOperation {
         var data = Data()
         data.append(optional: fee.toData())
         data.append(optional: account.toData())
-        
-        let addressData = Data(hex: ethAddress)
-        data.append(optional: Data.fromUIntLikeUnsignedByteArray(UInt(addressData?.count ?? 0)))
-        data.append(optional: addressData)
-        
+        data.append(optional: Data.fromString(btcAddress))
         data.append(optional: Data.fromUint64(value))
         data.append(optional: extensions.toData())
         return data
@@ -82,14 +79,15 @@ public struct SidechainETHWithdrawOperation: BaseOperation {
         var array = [Any]()
         array.append(getId())
         
-        let dictionary: [AnyHashable: Any?] = [SidechainETHWithdrawOperationCodingKeys.fee.rawValue: fee.toJSON(),
-                                               SidechainETHWithdrawOperationCodingKeys.account.rawValue: account.toJSON(),
-                                               SidechainETHWithdrawOperationCodingKeys.extensions.rawValue: extensions.toJSON(),
-                                               SidechainETHWithdrawOperationCodingKeys.value.rawValue: value,
-                                               SidechainETHWithdrawOperationCodingKeys.ethAddress.rawValue: ethAddress]
+        let dictionary: [AnyHashable: Any?] = [SidechainBTCWithdrawOperationCodingKeys.fee.rawValue: fee.toJSON(),
+                                               SidechainBTCWithdrawOperationCodingKeys.account.rawValue: account.toJSON(),
+                                               SidechainBTCWithdrawOperationCodingKeys.extensions.rawValue: extensions.toJSON(),
+                                               SidechainBTCWithdrawOperationCodingKeys.value.rawValue: value,
+                                               SidechainBTCWithdrawOperationCodingKeys.btcAddress.rawValue: btcAddress]
         
         array.append(dictionary)
         
         return array
     }
 }
+

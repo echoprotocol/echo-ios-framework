@@ -7,12 +7,12 @@
 //
 
 /**
-    The interface of the class that allows you to work with sidechain part of blockchain.
+    The interface of the class that allows you to work with Ethereum sidechain part of blockchain.
  */
 public protocol EthFacade {
     
 /**
-     Create eth account address in ETH network
+     Create address in Ethereum network
      
      - Parameter nameOrId: Name or id
      - Parameter wif: Sender wif from account
@@ -29,20 +29,20 @@ public protocol EthFacade {
                             noticeHandler: NoticeHandler?)
     
 /**
-     Get created ETH addresses
+     Get created Ethereum addresses
  
      - Parameter nameOrId: Name or id
-     - Parameter completion: Callback in which the information will return [EthAddress](EthAddress) object (if it created) or error
+     - Parameter completion: Callback in which the information will return [EthAddress](EthAddress) object (if it was created) or error
  */
     func getEthAddress(nameOrId: String,
                        completion: @escaping Completion<EthAddress?>)
     
 /**
-     Send ETH to Ethereum network to ethAddress
+     Send ETH to Ethereum network to Ethereum address
      
      - Parameter nameOrId: Name or id
      - Parameter wif: Sender wif from account
-     - Parameter toEthAddress: Receiver eth address
+     - Parameter toEthAddress: Receiver ethereum address
      - Parameter amount: Amount
      - Parameter completion: Callback in which the information will return whether the transaction was successful.
  */
@@ -60,8 +60,8 @@ public protocol EthFacade {
      - Parameter nameOrId: Name or id
      - Parameter completion: Callback in which return Deposits objects or error.
  */
-    func getAccountDeposits(nameOrId: String,
-                            completion: @escaping Completion<[EthDeposit]>)
+    func getEthAccountDeposits(nameOrId: String,
+                               completion: @escaping Completion<[EthDeposit]>)
     
 /**
      Returns all approved withdrawals, for the given account id or name.
@@ -69,6 +69,6 @@ public protocol EthFacade {
      - Parameter nameOrId: Name or id
      - Parameter completion: Callback in which return Withdrawals objects or error.
  */
-    func getAccountWithdrawals(nameOrId: String,
-                               completion: @escaping Completion<[EthWithdrawal]>)
+    func getEthAccountWithdrawals(nameOrId: String,
+                                  completion: @escaping Completion<[EthWithdrawal]>)
 }

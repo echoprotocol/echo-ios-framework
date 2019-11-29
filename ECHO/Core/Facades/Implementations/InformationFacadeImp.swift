@@ -758,6 +758,18 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                     historyItem.operation = operation
                 }
                 
+                if var operation = operation as? SidechainBTCCreateAddressOperation {
+                    let account = self?.findAccountIn(accounts, accountId: operation.account.id)
+                    operation.changeAccount(account: account)
+                    historyItem.operation = operation
+                }
+                
+                if var operation = operation as? SidechainBTCWithdrawOperation {
+                    let account = self?.findAccountIn(accounts, accountId: operation.account.id)
+                    operation.changeAccount(account: account)
+                    historyItem.operation = operation
+                }
+                
                 history[index] = historyItem
             }
             
@@ -941,6 +953,18 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                     historyItem.operation = operation
                 }
 
+                if var operation = operation as? SidechainBTCCreateAddressOperation {
+                    let feeAsset = self?.findAssetsIn(assets, assetId: operation.fee.asset.id)
+                    operation.changeAssets(feeAsset: feeAsset)
+                    historyItem.operation = operation
+                }
+                
+                if var operation = operation as? SidechainBTCWithdrawOperation {
+                    let feeAsset = self?.findAssetsIn(assets, assetId: operation.fee.asset.id)
+                    operation.changeAssets(feeAsset: feeAsset)
+                    historyItem.operation = operation
+                }
+                
                 history[index] = historyItem
             }
             
@@ -1076,6 +1100,16 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
             }
             
             if let operation = operation as? SidechainBurnOperation {
+                accountsIds.insert(operation.account.id)
+                return
+            }
+            
+            if let operation = operation as? SidechainBTCCreateAddressOperation {
+                accountsIds.insert(operation.account.id)
+                return
+            }
+            
+            if let operation = operation as? SidechainBTCWithdrawOperation {
                 accountsIds.insert(operation.account.id)
                 return
             }

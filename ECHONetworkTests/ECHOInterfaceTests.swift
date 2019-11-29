@@ -298,7 +298,7 @@ class ECHOInterfaceTests: XCTestCase {
         }))
         let exp = expectation(description: "testGettingAccountBalance")
         var accountBalaces: [AccountBalance]!
-        let userName = Constants.defaultToName
+        let userName = Constants.defaultName
         
         //act
         echo.start { [unowned self] (result) in
@@ -2109,20 +2109,20 @@ class ECHOInterfaceTests: XCTestCase {
         }
     }
     
-    func testGetAccountDeposits() {
+    func testGetEthAccountDeposits() {
         
         //arrange
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
         }))
-        let exp = expectation(description: "testGetAccountDeposits")
+        let exp = expectation(description: "testGetEthAccountDeposits")
         var deposits: [EthDeposit]?
         
         //act
         echo.start { [unowned self] (result) in
             
-            self.echo.getAccountDeposits(nameOrId: Constants.defaultName, completion: { (result) in
+            self.echo.getEthAccountDeposits(nameOrId: Constants.defaultName, completion: { (result) in
                 
                 switch result {
                 case .success(let result):
@@ -2141,20 +2141,20 @@ class ECHOInterfaceTests: XCTestCase {
         }
     }
     
-    func testGetAccountWithdrawals() {
+    func testGetEthAccountWithdrawals() {
         
         //arrange
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
         }))
-        let exp = expectation(description: "testGetAccountWithdrawals")
+        let exp = expectation(description: "testGetEthAccountWithdrawals")
         var withdrawals: [EthWithdrawal]?
         
         //act
         echo.start { [unowned self] (result) in
             
-            self.echo.getAccountWithdrawals(nameOrId: Constants.defaultName, completion: { (result) in
+            self.echo.getEthAccountWithdrawals(nameOrId: Constants.defaultName, completion: { (result) in
                 
                 switch result {
                 case .success(let result):
@@ -2170,6 +2170,171 @@ class ECHOInterfaceTests: XCTestCase {
         waitForExpectations(timeout: Constants.timeout) { error in
             XCTAssertNotNil(withdrawals)
             XCTAssertTrue(withdrawals?.count != 0)
+        }
+    }
+    
+//    func testGenerateBtcAddress() {
+//
+//        //arrange
+//        echo = ECHO(settings: Settings(build: {
+//            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+//            $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+//        }))
+//        let exp = expectation(description: "testGenerateBtcAddress")
+//        var isSuccess = false
+//
+//        //act
+//        echo.start { [unowned self] (result) in
+//            self.echo.generateBtcAddress(nameOrId: Constants.defaultToName,
+//                                         wif: Constants.defaultWIF,
+//                                         backupAddress: Constants.defaultBTCAddress,
+//                                         assetForFee: nil,
+//                                         completion: { (result) in
+//
+//                switch result {
+//                case .success(let result):
+//                    isSuccess = result
+//                case .failure(let error):
+//                    XCTFail("Generate btc address must be valid \(error)")
+//                }
+//            }, noticeHandler: { (_) in
+//                exp.fulfill()
+//            })
+//        }
+//
+//        //assert
+//        waitForExpectations(timeout: Constants.timeout) { error in
+//            XCTAssertTrue(isSuccess)
+//        }
+//    }
+    
+    func testGetBtcAddress() {
+        
+        //arrange
+        echo = ECHO(settings: Settings(build: {
+            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+            $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+        }))
+        let exp = expectation(description: "testGetBtcAddress")
+        var addresses: BtcAddress? = nil
+        
+        //act
+        echo.start { [unowned self] (result) in
+            
+            self.echo.getBtcAddress(nameOrId: Constants.defaultName, completion: { (result) in
+                switch result {
+                case .success(let result):
+                    addresses = result
+                    exp.fulfill()
+                case .failure(let error):
+                    XCTFail("Get eth address must be valid \(error)")
+                }
+            })
+        }
+        
+        //assert
+        waitForExpectations(timeout: Constants.timeout) { error in
+            XCTAssertNotNil(addresses)
+        }
+    }
+    
+    func testGetBtcAccountDeposits() {
+        
+        //arrange
+        echo = ECHO(settings: Settings(build: {
+            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+            $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+        }))
+        let exp = expectation(description: "testGetBtcAccountDeposits")
+        var deposits: [BtcDeposit]?
+        
+        //act
+        echo.start { [unowned self] (result) in
+            
+            self.echo.getBtcAccountDeposits(nameOrId: Constants.defaultName, completion: { (result) in
+                
+                switch result {
+                case .success(let result):
+                    deposits = result
+                    exp.fulfill()
+                case .failure(let error):
+                    XCTFail("testGetAccountDeposits must be valid \(error)")
+                }
+            })
+        }
+        
+        //assert
+        waitForExpectations(timeout: Constants.timeout) { error in
+            XCTAssertNotNil(deposits)
+            XCTAssertTrue(deposits?.count != 0)
+        }
+    }
+    
+    func testGetBtcAccountWithdrawals() {
+        
+        //arrange
+        echo = ECHO(settings: Settings(build: {
+            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+            $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+        }))
+        let exp = expectation(description: "testGetBtcAccountWithdrawals")
+        var withdrawals: [BtcWithdrawal]?
+        
+        //act
+        echo.start { [unowned self] (result) in
+            
+            self.echo.getBtcAccountWithdrawals(nameOrId: Constants.defaultName, completion: { (result) in
+                
+                switch result {
+                case .success(let result):
+                    withdrawals = result
+                    exp.fulfill()
+                case .failure(let error):
+                    XCTFail("testGetAccountWithdrawals must be valid \(error)")
+                }
+            })
+        }
+        
+        //assert
+        waitForExpectations(timeout: Constants.timeout) { error in
+            XCTAssertNotNil(withdrawals)
+            XCTAssertTrue(withdrawals?.count != 0)
+        }
+    }
+    
+    func testWithdrawalBtc() {
+        
+        //arrange
+        echo = ECHO(settings: Settings(build: {
+            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+            $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+        }))
+        let exp = expectation(description: "testWithdrawalBtc")
+        var isSuccess = false
+        
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.withdrawalBtc(nameOrId: Constants.defaultName,
+                                    wif: Constants.defaultWIF,
+                                    toBtcAddress: Constants.defaultBTCAddress,
+                                    amount: 1,
+                                    assetForFee: nil,
+                                    completion: { (result) in
+                
+                switch result {
+                case .success(let result):
+                    isSuccess = result
+                case .failure(let error):
+                    XCTFail("testWithdrawalEth must be valid \(error)")
+                }
+            }, noticeHandler: { (_) in
+                exp.fulfill()
+            })
+        }
+        
+        //assert
+        waitForExpectations(timeout: Constants.timeout) { error in
+            XCTAssertTrue(isSuccess)
         }
     }
 }

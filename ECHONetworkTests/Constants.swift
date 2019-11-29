@@ -27,6 +27,7 @@ struct ConstantsKeys {
     static let defaultAnotherAsset = "DEFAULT_ANOTHER_ASSET"
     
     static let defaultETHAddress = "DEFAULT_ETH_ADDRESS"
+    static let defaultBTCAddress = "DEFAULT_BTC_ADDRESS"
     
     static let defaultLogsContractMethod = "DEFAULT_LOGS_CONTRACT_METHOD"
     static let defaultCallContractMethod = "DEFAULT_CALL_CONTRACT_METHOD"
@@ -141,6 +142,14 @@ struct Constants {
             return value
         } else {
             return "0x46Ba2677a1c982B329A81f60Cf90fBA2E8CA9fA8"
+        }
+    }
+    
+    static var defaultBTCAddress: String {
+        if let value = Constants.infoForKey(ConstantsKeys.defaultBTCAddress) {
+            return value
+        } else {
+            return "n4cLNDfyVPGoNFUpUEyBP8TzDPRNaVBm6E"
         }
     }
     

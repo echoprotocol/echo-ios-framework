@@ -13,7 +13,9 @@ private typealias SubscriptionService = DatabaseApiServiceImp
 private typealias AuthorityAndValidationService = DatabaseApiServiceImp
 private typealias BlocksAndTransactionsService = DatabaseApiServiceImp
 private typealias ContractsService = DatabaseApiServiceImp
+private typealias SidechainService = DatabaseApiServiceImp
 private typealias EthService = DatabaseApiServiceImp
+private typealias BtcService = DatabaseApiServiceImp
 
 /**
      Implementation of [DatabaseApiService](DatabaseApiService)
@@ -295,19 +297,7 @@ extension ContractsService {
     }
 }
 
-extension EthService {
-    
-    func getEthAddress(accountId: String, completion: @escaping Completion<EthAddress?>) {
-        
-        let operation = GetEthAddressSocketOperation(method: .call,
-                                                     operationId: socketCore.nextOperationId(),
-                                                     apiId: apiIdentifire,
-                                                     accountId: accountId,
-                                                     completion: completion)
-        
-        socketCore.send(operation: operation)
-    }
-    
+extension SidechainService {
     func getAccountDeposits(accountId: String, type: SidechainType?, completion: @escaping Completion<[SidechainDepositEnum]>) {
         
         let operation = GetAccountDepositsSocketOperation(method: .call,
@@ -328,6 +318,32 @@ extension EthService {
                                                              accountId: accountId,
                                                              type: type,
                                                              completion: completion)
+        
+        socketCore.send(operation: operation)
+    }
+}
+
+extension EthService {
+    func getEthAddress(accountId: String, completion: @escaping Completion<EthAddress?>) {
+        
+        let operation = GetEthAddressSocketOperation(method: .call,
+                                                     operationId: socketCore.nextOperationId(),
+                                                     apiId: apiIdentifire,
+                                                     accountId: accountId,
+                                                     completion: completion)
+        
+        socketCore.send(operation: operation)
+    }
+}
+
+extension BtcService {
+    func getBtcAddress(accountId: String, completion: @escaping Completion<BtcAddress?>) {
+        
+        let operation = GetBtcAddressSocketOperation(method: .call,
+                                                     operationId: socketCore.nextOperationId(),
+                                                     apiId: apiIdentifire,
+                                                     accountId: accountId,
+                                                     completion: completion)
         
         socketCore.send(operation: operation)
     }
