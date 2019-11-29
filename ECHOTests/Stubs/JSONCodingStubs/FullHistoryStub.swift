@@ -32,10 +32,7 @@ struct FullHistoryStub {
                     "address_auths": []
                     },
                     "new_options": {
-                    "voting_account": "1.2.5",
                     "num_witness": 0,
-                    "num_committee": 0,
-                    "votes": [],
                     "extensions": []
                     },
                     "extensions": {}
@@ -99,10 +96,7 @@ struct FullHistoryStub {
                     "address_auths": []
                     },
                     "new_options": {
-                    "voting_account": "1.2.5",
                     "num_witness": 0,
-                    "num_committee": 0,
-                    "votes": [],
                     "extensions": []
                     },
                     "extensions": {}
@@ -166,10 +160,7 @@ struct FullHistoryStub {
                     "address_auths": []
                     },
                     "new_options": {
-                    "voting_account": "1.2.5",
                     "num_witness": 0,
-                    "num_committee": 0,
-                    "votes": [],
                     "extensions": []
                     },
                     "extensions": {}
@@ -233,10 +224,7 @@ struct FullHistoryStub {
                     "address_auths": []
                     },
                     "new_options": {
-                    "voting_account": "1.2.5",
                     "num_witness": 0,
-                    "num_committee": 0,
-                    "votes": [],
                     "extensions": []
                     },
                     "extensions": {}
@@ -273,10 +261,7 @@ struct FullHistoryStub {
                     "address_auths": []
                     },
                     "new_options": {
-                    "voting_account": "1.2.5",
                     "num_witness": 0,
-                    "num_committee": 0,
-                    "votes": [],
                     "extensions": []
                     },
                     "extensions": {}
@@ -313,10 +298,7 @@ struct FullHistoryStub {
                     "address_auths": []
                     },
                     "new_options": {
-                    "voting_account": "1.2.5",
                     "num_witness": 0,
-                    "num_committee": 0,
-                    "votes": [],
                     "extensions": []
                     },
                     "extensions": {}

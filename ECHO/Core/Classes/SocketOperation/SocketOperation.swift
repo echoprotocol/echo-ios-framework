@@ -48,6 +48,8 @@ enum SocketOperationKeys: String {
     case getERC20Token = "get_erc20_token"
     case getERC20AccountDeposits = "get_erc20_account_deposits"
     case getERC20AccountWithdrawals = "get_erc20_account_withdrawals"
+    case requestRegistrationTask = "request_registration_task"
+    case submitRegistrationSolution = "submit_registration_solution"
 }
 
 
@@ -63,7 +65,7 @@ public protocol SocketOperation: JSONCodable {
     var apiId: Int { get }
     func createParameters() -> [Any]
     func handleResponse(_ response: ECHODirectResponse)
-    func forceEnd()
+    func forceEnd(error: ECHOError)
 }
 
 /**
@@ -94,6 +96,4 @@ public extension SocketOperation {
 
         return dictionary
     }
-    
-    func forceEnd() { }
 }

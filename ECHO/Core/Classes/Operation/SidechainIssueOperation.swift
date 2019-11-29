@@ -1,5 +1,5 @@
 //
-//  SidechainETHIssueOperation.swift
+//  SidechainIssueOperation.swift
 //  ECHO
 //
 //  Created by Vladimir Sharaev on 11/06/2019.
@@ -8,9 +8,9 @@
 
 import Foundation
 
-public struct SidechainETHIssueOperation: BaseOperation {
+public struct SidechainIssueOperation: BaseOperation {
     
-    enum SidechainETHIssueOperationCodingKeys: String, CodingKey {
+    enum SidechainIssueOperationCodingKeys: String, CodingKey {
         case account = "account"
         case depositId = "deposit_id"
         case value
@@ -23,13 +23,13 @@ public struct SidechainETHIssueOperation: BaseOperation {
     public var value: AssetAmount
     public var account: Account
     public var depositId: String
-    public var deposit: DepositEth?
+    public var deposit: EthDeposit?
     
     public var extensions: Extensions = Extensions()
     
     init(account: Account, value: AssetAmount, depositId: String, fee: AssetAmount) {
         
-        type = .sidechainETHIssueOperation
+        type = .sidechainIssueOperation
         
         self.account = account
         self.fee = fee
@@ -39,9 +39,9 @@ public struct SidechainETHIssueOperation: BaseOperation {
     
     public init(from decoder: Decoder) throws {
         
-        type = .sidechainETHIssueOperation
+        type = .sidechainIssueOperation
         
-        let values = try decoder.container(keyedBy: SidechainETHIssueOperationCodingKeys.self)
+        let values = try decoder.container(keyedBy: SidechainIssueOperationCodingKeys.self)
         
         let accountId = try values.decode(String.self, forKey: .account)
         account = Account(accountId)

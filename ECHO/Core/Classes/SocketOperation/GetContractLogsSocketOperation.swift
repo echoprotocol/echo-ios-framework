@@ -18,13 +18,19 @@ struct GetContractLogsSocketOperation: SocketOperation {
     var apiId: Int
     var contractId: String
     var fromBlock: Int
-    var limit: Int
+    var toBlock: Int
     var completion: Completion<[ContractLogEnum]>
     
     func createParameters() -> [Any] {
         let array: [Any] = [apiId,
                             SocketOperationKeys.getContractLogs.rawValue,
-                            [contractId, fromBlock, limit]]
+                            [
+                                [
+                                    "contracts": [contractId],
+                                    "from_block": fromBlock,
+                                    "to_block": toBlock
+                                ]
+                            ]]
         return array
     }
     
@@ -54,8 +60,8 @@ struct GetContractLogsSocketOperation: SocketOperation {
         }
     }
     
-    func forceEnd() {
-        let result = Result<[ContractLogEnum], ECHOError>(error: ECHOError.connectionLost)
+    func forceEnd(error: ECHOError) {
+        let result = Result<[ContractLogEnum], ECHOError>(error: error)
         completion(result)
     }
 }

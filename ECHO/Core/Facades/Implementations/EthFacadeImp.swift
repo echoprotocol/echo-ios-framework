@@ -19,7 +19,7 @@ public struct EthFacadeServices {
  */
 final public class EthFacadeImp: EthFacade, ECHOQueueble {
 
-    var queues: [ECHOQueue]
+    var queues: [String: ECHOQueue]
     let services: EthFacadeServices
     let network: ECHONetwork
     let cryptoCore: CryptoCoreComponent
@@ -32,7 +32,7 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble {
         self.services = services
         self.network = network
         self.cryptoCore = cryptoCore
-        self.queues = [ECHOQueue]()
+        self.queues = [String: ECHOQueue]()
         noticeDelegateHandler.delegate = self
     }
     
@@ -56,43 +56,87 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble {
         }
     }
     
-    public func getAccountDeposits(nameOrId: String, completion: @escaping Completion<[DepositEth]>) {
+    public func getAccountDeposits(nameOrId: String, completion: @escaping Completion<[EthDeposit]>) {
         
         services.databaseService.getFullAccount(nameOrIds: [nameOrId], shoudSubscribe: false) { [weak self] (result) in
             
             switch result {
             case .success(let accounts):
                 guard let account = accounts[nameOrId] else {
-                    let result = Result<[DepositEth], ECHOError>(error: .resultNotFound)
+                    let result = Result<[EthDeposit], ECHOError>(error: .resultNotFound)
                     completion(result)
                     return
                 }
                 
                 self?.services.databaseService.getAccountDeposits(accountId: account.account.id,
-                                                                  completion: completion)
+                                                                  type: .eth,
+                                                                  completion: { result in
+                    switch result {
+                    case .success(let sidechainEnums):
+                        var deposits = [EthDeposit]()
+                        sidechainEnums.forEach {
+                            switch $0 {
+                            case .eth(let deposit):
+                                deposits.append(deposit)
+                            case .btc:
+                                return
+                            }
+                        }
+                        
+                        let result = Result<[EthDeposit], ECHOError>(value: deposits)
+                        completion(result)
+                        
+                    case .failure(let error):
+                        let result = Result<[EthDeposit], ECHOError>(error: error)
+                        completion(result)
+                    }
+                })
+                
             case .failure(let error):
-                let result = Result<[DepositEth], ECHOError>(error: error)
+                let result = Result<[EthDeposit], ECHOError>(error: error)
                 completion(result)
             }
         }
     }
     
-    public func getAccountWithdrawals(nameOrId: String, completion: @escaping Completion<[WithdrawalEth]>) {
+    public func getAccountWithdrawals(nameOrId: String, completion: @escaping Completion<[EthWithdrawal]>) {
         
         services.databaseService.getFullAccount(nameOrIds: [nameOrId], shoudSubscribe: false) { [weak self] (result) in
             
             switch result {
             case .success(let accounts):
                 guard let account = accounts[nameOrId] else {
-                    let result = Result<[WithdrawalEth], ECHOError>(error: .resultNotFound)
+                    let result = Result<[EthWithdrawal], ECHOError>(error: .resultNotFound)
                     completion(result)
                     return
                 }
                 
                 self?.services.databaseService.getAccountWithdrawals(accountId: account.account.id,
-                                                                     completion: completion)
+                                                                     type: .eth,
+                                                                     completion: { result in
+                    switch result {
+                    case .success(let sidechainEnums):
+                        var withdrawals = [EthWithdrawal]()
+                        sidechainEnums.forEach {
+                            switch $0 {
+                            case .eth(let withdrawal):
+                                withdrawals.append(withdrawal)
+                            case .btc:
+                                return
+                            }
+                        }
+                        
+                        let result = Result<[EthWithdrawal], ECHOError>(value: withdrawals)
+                        completion(result)
+                        
+                    case .failure(let error):
+                        let result = Result<[EthWithdrawal], ECHOError>(error: error)
+                        completion(result)
+                    }
+                })
+                
             case .failure(let error):
-                let result = Result<[WithdrawalEth], ECHOError>(error: error)
+                let result = Result<[EthWithdrawal], ECHOError>(error: error)
                 completion(result)
             }
         }
@@ -107,6 +151,7 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble {
         case transaction
         case operationId
         case notice
+        case noticeError
         case noticeHandler
     }
     
@@ -132,7 +177,7 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble {
         }
         
         let generateQueue = ECHOQueue()
-        queues.append(generateQueue)
+        addQueue(generateQueue)
         
         // Accounts
         let getAccountsNamesOrIdsWithKeys = GetAccountsNamesOrIdWithKeys([(nameOrId, EthFacadeResultKeys.loadedAccount.rawValue)])
@@ -203,12 +248,13 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble {
             let waitOperation = createWaitingOperation(generateQueue)
             let noticeHandleOperation = createNoticeHandleOperation(generateQueue,
                                                                     EthFacadeResultKeys.noticeHandler.rawValue,
-                                                                    EthFacadeResultKeys.notice.rawValue)
+                                                                    EthFacadeResultKeys.notice.rawValue,
+                                                                    EthFacadeResultKeys.noticeError.rawValue)
             generateQueue.addOperation(waitOperation)
             generateQueue.addOperation(noticeHandleOperation)
         }
         
-        generateQueue.setCompletionOperation(completionOperation)
+        generateQueue.addOperation(completionOperation)
     }
     
     public func withdrawalEth(nameOrId: String,
@@ -241,7 +287,7 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble {
         }
         
         let withdrawalQueue = ECHOQueue()
-        queues.append(withdrawalQueue)
+        addQueue(withdrawalQueue)
         
         // Accounts
         let getAccountsNamesOrIdsWithKeys = GetAccountsNamesOrIdWithKeys([(nameOrId, EthFacadeResultKeys.loadedAccount.rawValue)])
@@ -312,12 +358,13 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble {
             let waitOperation = createWaitingOperation(withdrawalQueue)
             let noticeHandleOperation = createNoticeHandleOperation(withdrawalQueue,
                                                                     EthFacadeResultKeys.noticeHandler.rawValue,
-                                                                    EthFacadeResultKeys.notice.rawValue)
+                                                                    EthFacadeResultKeys.notice.rawValue,
+                                                                    EthFacadeResultKeys.noticeError.rawValue)
             withdrawalQueue.addOperation(waitOperation)
             withdrawalQueue.addOperation(noticeHandleOperation)
         }
         
-        withdrawalQueue.setCompletionOperation(completionOperation)
+        withdrawalQueue.addOperation(completionOperation)
     }
     // swiftlint:enable function_body_length
     
@@ -375,7 +422,8 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble {
     
     fileprivate func createNoticeHandleOperation(_ queue: ECHOQueue,
                                                  _ noticeHandlerKey: String,
-                                                 _ noticeKey: String) -> Operation {
+                                                 _ noticeKey: String,
+                                                 _ noticeErrorKey: String) -> Operation {
         
         let noticeOperation = BlockOperation()
         
@@ -384,9 +432,18 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble {
             guard noticeOperation?.isCancelled == false else { return }
             guard self != nil else { return }
             guard let noticeHandler: NoticeHandler = queue?.getValue(noticeHandlerKey) else { return }
-            guard let notice: ECHONotification = queue?.getValue(noticeKey) else { return }
             
-            noticeHandler(notice)
+            if let notice: ECHONotification = queue?.getValue(noticeKey) {
+                let result = Result<ECHONotification, ECHOError>(value: notice)
+                noticeHandler(result)
+                return
+            }
+            
+            if let noticeError: ECHOError = queue?.getValue(noticeErrorKey) {
+                let result = Result<ECHONotification, ECHOError>(error: noticeError)
+                noticeHandler(result)
+                return
+            }
         }
         
         return noticeOperation
@@ -415,7 +472,7 @@ extension EthFacadeImp: NoticeEventDelegate {
         case .array(let array):
             if let noticeOperationId = array.first as? Int {
                 
-                for queue in queues {
+                for queue in queues.values {
                     
                     if let queueTransferOperationId: Int = queue.getValue(EthFacadeResultKeys.operationId.rawValue),
                         queueTransferOperationId == noticeOperationId {
@@ -426,6 +483,13 @@ extension EthFacadeImp: NoticeEventDelegate {
             }
         default:
             break
+        }
+    }
+    
+    public func didAllNoticesLost() {
+        for queue in queues.values {
+            queue.saveValue(ECHOError.connectionLost, forKey: EthFacadeResultKeys.noticeError.rawValue)
+            queue.startNextOperation()
         }
     }
 }

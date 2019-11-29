@@ -7,7 +7,7 @@
 //
 
 /// Typealias for function with notice
-public typealias NoticeHandler = (_ notice: ECHONotification) -> Void
+public typealias NoticeHandler = (_ notice: Result<ECHONotification, ECHOError>) -> Void
 
 /**
     Encapsulates logic, associated with various blockchain smart contract processes
@@ -108,13 +108,15 @@ public protocol ContractsFacade {
      Calls contract method without changing state of blockchain
      
      - Parameter registrarNameOrId: Name or id of account that call the contract
-     - Parameter assetId: Asset of contract
+     - Parameter amount: Amount for call
+     - Parameter assetId: Asset for call
      - Parameter contratId: Id of called contract
      - Parameter methodName: Name of called method
      - Parameter methodParams: Parameters of called method
      - Parameter completion: Callback which returns an [Bool](Bool) result of call or error
  */
     func queryContract(registrarNameOrId: String,
+                       amount: UInt,
                        assetId: String,
                        contratId: String,
                        methodName: String,
@@ -125,12 +127,14 @@ public protocol ContractsFacade {
      Calls contract method without changing state of blockchain
      
      - Parameter registrarNameOrId: Name or id of account that call the contract
-     - Parameter assetId: Asset of contract
+     - Parameter amount: Amount for call
+     - Parameter assetId: Asset for call
      - Parameter contratId: Id of called contract
      - Parameter byteCode: Code which will be execute
      - Parameter completion: Callback which returns an [Bool](Bool) result of call or error
  */
     func queryContract(registrarNameOrId: String,
+                       amount: UInt,
                        assetId: String,
                        contratId: String,
                        byteCode: String,
@@ -149,10 +153,10 @@ public protocol ContractsFacade {
      
      - Parameter contractId: Contract id for fetching logs
      - Parameter fromBlockId: Number of the earliest block to retrieve
-     - Parameter limit: Count of blocks to retrieve
+     - Parameter toBlock: Number of the latest block to retrieve
      - Parameter completion: Callback which returns an array of [ContractLogEnum](ContractLogEnum) result of call or error
  */
-    func getContractLogs(contractId: String, fromBlock: Int, limit: Int, completion: @escaping Completion<[ContractLogEnum]>)
+    func getContractLogs(contractId: String, fromBlock: Int, toBlock: Int, completion: @escaping Completion<[ContractLogEnum]>)
     
 /**
      Returns contracts called by identifiers

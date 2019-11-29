@@ -1,5 +1,114 @@
 # CHANGELOG
 
+## Changelog 3.7.2 - 2019-11-19
+
+### Fixed
+* Fixed ECHOQueue completion operation
+
+## Changelog 3.7.1 - 2019-11-18
+
+### Fixed
+* Fixed memory leaks in register account method
+
+## Changelog 3.7.0 - 2019-11-13
+
+### Removed
+* networkFeePercentage from Account object
+* accountsRegisteredThisInterval from DynamicGlobalProperties object
+* nextAvailableVoteId from GlobalProperties object
+* maximumCommitteeCount, reservePercentOfFee, networkPercentOfFee, maxPredicateOpcode, accountsPerFeeScale, accountFeeScaleBitshifts from GlobalPropertiesParameters
+* blockResult from ObjectTypes
+
+### Changed
+* renamed WithdrawalEth to EthWithdrawal
+* renamed DepositEth to EthDeposit
+* GetContractLogsSocketOperation limit changed to toBlock. Fixed operation JSON
+* Added type(SidechainType) field to GetAccountDepositsSocketOperation. Operation returns array of SidechainDepositEnum
+* Added type(SidechainType) field to GetAccountWithdrawalsSocketOperation. Operation returns array of SidechainWithdrawalEnum
+
+### Added
+* QueryContractSocketOperation added amount field. Fixed operation JSON
+* SidechainType enum. It contains .eth and .btc value
+* BtcDeposit object
+* BtcWithdrawal object
+* SidechainDepositEnum. It contains EthDeposit or BtcDeposit
+* SidechainWithdrawalEnum. It contains EthWithdrawal or BtcWithdrawal
+* Added estimate fee methods for create contract operation(getFeeForCreateContract) 
+
+## Changelog 3.6.0 - 2019-10-18
+
+### Removed
+
+#### DynamicGlobalProperties
+* lastRandQuantity
+
+#### OperationType
+* contractTransferOperation
+
+#### AccountOptions, Options
+* votingAccount
+* numCommittee
+* votes
+
+#### GlobalProperties
+* activeCommitteeMembers
+
+#### SidechainConfig
+* waitingBlocks
+* waitingETHBlocks
+
+#### Vote
+
+### Added
+
+#### SubmitRegistrationSolutionSocketOperation
+
+#### OperationType
+* committeeMemberActivateOperation
+* committeeMemberDeactivateOperation
+* committeeFrozenBalanceDepositOperation
+* committeeFrozenBalanceWithdrawOperation
+* contractInternalCreateOperation
+* contractInternalCallOperation
+* contractSelfdestructOperation
+* sidechainBTCCreateIntermediateDepositOperation
+
+#### ContractLogEVM
+* blockNum
+* trxNum
+* opNum
+
+#### Account
+* accumulatedReward
+
+#### ObjectType
+* committeeFrozenBalance
+
+### Updated
+
+#### SubscribeContractLogsSocketOperation
+* Updated input parameters
+
+#### GetContractLogsSocketOperation
+* Updated input parameters
+
+#### Registration
+* Now registration goes through PoW task solving
+
+## 3.5.1 - 2019-11-12
+
+### Fixed
+* EchoQueue memory leaks
+
+### Added
+* Added timeount error to all socket operations. Timeount can be changed when setup the framework
+
+### Changed
+* Chenged notice callback. Now it returns notice or connectionLost error
+
+### Tests
+* Added timeount and connection lost tests
+
 ## 3.5.0 - 2019-10-15
 
 ### Removed

@@ -32,6 +32,9 @@ public enum ECHOError: Swift.Error, Equatable {
     /// Indicates that connection is lost
     case connectionLost
     
+    /// Identifies that the request takes too long
+    case timeout
+    
     /// Indicates that encode or decode abi failed
     case abiCoding
     

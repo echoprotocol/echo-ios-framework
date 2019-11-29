@@ -24,7 +24,7 @@ struct SubscribeContractLogsSocketOperation: SocketOperation {
     func createParameters() -> [Any] {
         let array: [Any] = [apiId,
                             SocketOperationKeys.subscribeContractLogs.rawValue,
-                            [operationId, contractId]]
+                            [operationId, [[contractId, []]]]]
         return array
     }
     
@@ -47,8 +47,8 @@ struct SubscribeContractLogsSocketOperation: SocketOperation {
         }
     }
     
-    func forceEnd() {
-        let result = Result<Bool, ECHOError>(error: ECHOError.connectionLost)
+    func forceEnd(error: ECHOError) {
+        let result = Result<Bool, ECHOError>(error: error)
         completion(result)
     }
 }

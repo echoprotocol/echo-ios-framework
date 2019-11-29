@@ -113,7 +113,6 @@
 		B3CA703C20F4AA3700511F6A /* HistoryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3CA703B20F4AA3700511F6A /* HistoryItem.swift */; };
 		B3CA704020F4FB0200511F6A /* ECHOSerializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3CA703F20F4FB0200511F6A /* ECHOSerializable.swift */; };
 		B3CA704220F502BE00511F6A /* SocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3CA704120F502BE00511F6A /* SocketOperation.swift */; };
-		B3CA704520F532BE00511F6A /* BaseSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3CA704420F532BE00511F6A /* BaseSocketOperation.swift */; };
 		B3CA704720F532E600511F6A /* AccessSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3CA704620F532E600511F6A /* AccessSocketOperation.swift */; };
 		B3CA704920F5358400511F6A /* BlockDataSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3CA704820F5358400511F6A /* BlockDataSocketOperation.swift */; };
 		B3CA704B20F5363F00511F6A /* FullAccountSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3CA704A20F5363F00511F6A /* FullAccountSocketOperation.swift */; };
@@ -140,6 +139,12 @@
 		D00A58E7222520FC0089FC18 /* GlobalProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00A58E6222520FC0089FC18 /* GlobalProperties.swift */; };
 		D00A58E9222522C40089FC18 /* GetGlobalPropertiesSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00A58E8222522C40089FC18 /* GetGlobalPropertiesSocketOperation.swift */; };
 		D00C3D282147B4F90053A636 /* Contract.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00C3D272147B4F90053A636 /* Contract.swift */; };
+		D00CD39723794BD100BD576D /* GlobalPropertiesSubscribeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00CD39623794BD100BD576D /* GlobalPropertiesSubscribeTests.swift */; };
+		D00CD39923794BF100BD576D /* BlocksSubscribeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00CD39823794BF100BD576D /* BlocksSubscribeTests.swift */; };
+		D00CD39B23794C1800BD576D /* AccountSubscribeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00CD39A23794C1800BD576D /* AccountSubscribeTests.swift */; };
+		D00CD39D23794C3A00BD576D /* ContractLogsSubscribeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00CD39C23794C3A00BD576D /* ContractLogsSubscribeTests.swift */; };
+		D00CD39F237969E500BD576D /* TimeoutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00CD39E237969E500BD576D /* TimeoutTests.swift */; };
+		D00CD3A123796A4C00BD576D /* SocketMessengerTimeoutMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00CD3A023796A4C00BD576D /* SocketMessengerTimeoutMock.swift */; };
 		D0116C5821353C460004A491 /* TransactionFacadeImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0116C5721353C460004A491 /* TransactionFacadeImp.swift */; };
 		D0116C5A213561490004A491 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0116C59213561490004A491 /* Transaction.swift */; };
 		D0116C5C21358F120004A491 /* BlockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0116C5B21358F120004A491 /* BlockData.swift */; };
@@ -149,12 +154,20 @@
 		D01AD062221C12340062A74D /* ContractVMType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01AD061221C12340062A74D /* ContractVMType.swift */; };
 		D01AD064221C156E0062A74D /* ContractResultx86.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01AD063221C156E0062A74D /* ContractResultx86.swift */; };
 		D01AD066221C15800062A74D /* ContractResultEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01AD065221C15800062A74D /* ContractResultEnum.swift */; };
-		D01BF7D0212AB00700917DB8 /* Vote.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01BF7CF212AB00700917DB8 /* Vote.swift */; };
 		D01BF7D2212ABE4E00917DB8 /* OptionalValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01BF7D1212ABE4E00917DB8 /* OptionalValue.swift */; };
 		D01BF7D4212AC7FE00917DB8 /* AccountAuthority.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01BF7D3212AC7FE00917DB8 /* AccountAuthority.swift */; };
 		D01BF7D6212AC81000917DB8 /* AddressAuthority.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01BF7D5212AC81000917DB8 /* AddressAuthority.swift */; };
 		D01BF7D8212AE77B00917DB8 /* BitassetOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01BF7D7212AE77B00917DB8 /* BitassetOptions.swift */; };
 		D0414AF6216758BD00CD0322 /* SetBlockAppliedCollbackSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0414AF5216758BC00CD0322 /* SetBlockAppliedCollbackSocketOperation.swift */; };
+		D043C913237AD22E006ADD26 /* BtcDeposit.swift in Sources */ = {isa = PBXBuildFile; fileRef = D043C912237AD22E006ADD26 /* BtcDeposit.swift */; };
+		D043C915237AD243006ADD26 /* BtcWithdrawal.swift in Sources */ = {isa = PBXBuildFile; fileRef = D043C914237AD243006ADD26 /* BtcWithdrawal.swift */; };
+		D043C917237AD561006ADD26 /* SidechainType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D043C916237AD561006ADD26 /* SidechainType.swift */; };
+		D043C919237AD673006ADD26 /* SidechainWithdrawalEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = D043C918237AD673006ADD26 /* SidechainWithdrawalEnum.swift */; };
+		D043C91B237AD77E006ADD26 /* SidechainDepositEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = D043C91A237AD77E006ADD26 /* SidechainDepositEnum.swift */; };
+		D04835E923573E640071B6C6 /* RequestRegistrationTaskSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04835E823573E640071B6C6 /* RequestRegistrationTaskSocketOperation.swift */; };
+		D04835EB23573F160071B6C6 /* RegistrationTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04835EA23573F160071B6C6 /* RegistrationTask.swift */; };
+		D04835ED235743290071B6C6 /* SubmitRegistrationSolutionSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04835EC235743290071B6C6 /* SubmitRegistrationSolutionSocketOperation.swift */; };
+		D04835EF23575B7D0071B6C6 /* UInt8+Bits.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04835EE23575B7D0071B6C6 /* UInt8+Bits.swift */; };
 		D048AE772136ABBE00441FEB /* TransactionSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D048AE762136ABBE00441FEB /* TransactionSocketOperation.swift */; };
 		D048BA982149403B0098AEBF /* QueryContractSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D048BA972149403B0098AEBF /* QueryContractSocketOperation.swift */; };
 		D05B7A3F2306BD6200329534 /* Signatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05B7A3E2306BD6200329534 /* Signatures.swift */; };
@@ -209,8 +222,8 @@
 		D0A1B447212FF04600294683 /* Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A1B446212FF04600294683 /* Block.swift */; };
 		D0A1F78F2354AD8600F38038 /* ContractLogx86.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A1F78E2354AD8600F38038 /* ContractLogx86.swift */; };
 		D0A1F7912354ADE100F38038 /* ContractLogEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A1F7902354ADE100F38038 /* ContractLogEnum.swift */; };
-		D0A4932D22AF88F6006DF77B /* DepositEth.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A4932C22AF88F6006DF77B /* DepositEth.swift */; };
-		D0A4932F22AF8A41006DF77B /* WithdrawalEth.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A4932E22AF8A41006DF77B /* WithdrawalEth.swift */; };
+		D0A4932D22AF88F6006DF77B /* EthDeposit.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A4932C22AF88F6006DF77B /* EthDeposit.swift */; };
+		D0A4932F22AF8A41006DF77B /* EthWithdrawal.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A4932E22AF8A41006DF77B /* EthWithdrawal.swift */; };
 		D0A4933122AF8DA0006DF77B /* GetAccountDepositsSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A4933022AF8DA0006DF77B /* GetAccountDepositsSocketOperation.swift */; };
 		D0A4933322AF8DB4006DF77B /* GetAccountWithdrawalsSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A4933222AF8DB4006DF77B /* GetAccountWithdrawalsSocketOperation.swift */; };
 		D0A4933522AF9543006DF77B /* GetAccountDepositsRequestStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A4933422AF9543006DF77B /* GetAccountDepositsRequestStub.swift */; };
@@ -228,7 +241,6 @@
 		D0B0588221469A0900A80CDE /* GetContractSocketOperaton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B0588121469A0900A80CDE /* GetContractSocketOperaton.swift */; };
 		D0B26FA922D722AF00E88205 /* WIFValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B26FA822D722AF00E88205 /* WIFValidator.swift */; };
 		D0B26FAB22D72E0D00E88205 /* WIFValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B26FAA22D72E0D00E88205 /* WIFValidatorTests.swift */; };
-		D0B42A3B2252527600A14784 /* SubscribtionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B42A3A2252527600A14784 /* SubscribtionTests.swift */; };
 		D0B6A0C62126B26D00A78E4B /* BaseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B6A0C52126B26D00A78E4B /* BaseOperation.swift */; };
 		D0B6A0C82126B39100A78E4B /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B6A0C72126B39100A78E4B /* Extensions.swift */; };
 		D0B6A0CA2126BA9300A78E4B /* OperationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B6A0C92126BA9300A78E4B /* OperationType.swift */; };
@@ -399,7 +411,6 @@
 		B3CA703B20F4AA3700511F6A /* HistoryItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryItem.swift; sourceTree = "<group>"; };
 		B3CA703F20F4FB0200511F6A /* ECHOSerializable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ECHOSerializable.swift; sourceTree = "<group>"; };
 		B3CA704120F502BE00511F6A /* SocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketOperation.swift; sourceTree = "<group>"; };
-		B3CA704420F532BE00511F6A /* BaseSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSocketOperation.swift; sourceTree = "<group>"; };
 		B3CA704620F532E600511F6A /* AccessSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessSocketOperation.swift; sourceTree = "<group>"; };
 		B3CA704820F5358400511F6A /* BlockDataSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockDataSocketOperation.swift; sourceTree = "<group>"; };
 		B3CA704A20F5363F00511F6A /* FullAccountSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullAccountSocketOperation.swift; sourceTree = "<group>"; };
@@ -427,6 +438,12 @@
 		D00A58E6222520FC0089FC18 /* GlobalProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalProperties.swift; sourceTree = "<group>"; };
 		D00A58E8222522C40089FC18 /* GetGlobalPropertiesSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetGlobalPropertiesSocketOperation.swift; sourceTree = "<group>"; };
 		D00C3D272147B4F90053A636 /* Contract.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contract.swift; sourceTree = "<group>"; };
+		D00CD39623794BD100BD576D /* GlobalPropertiesSubscribeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalPropertiesSubscribeTests.swift; sourceTree = "<group>"; };
+		D00CD39823794BF100BD576D /* BlocksSubscribeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlocksSubscribeTests.swift; sourceTree = "<group>"; };
+		D00CD39A23794C1800BD576D /* AccountSubscribeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSubscribeTests.swift; sourceTree = "<group>"; };
+		D00CD39C23794C3A00BD576D /* ContractLogsSubscribeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractLogsSubscribeTests.swift; sourceTree = "<group>"; };
+		D00CD39E237969E500BD576D /* TimeoutTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeoutTests.swift; sourceTree = "<group>"; };
+		D00CD3A023796A4C00BD576D /* SocketMessengerTimeoutMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketMessengerTimeoutMock.swift; sourceTree = "<group>"; };
 		D0116C5721353C460004A491 /* TransactionFacadeImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionFacadeImp.swift; sourceTree = "<group>"; };
 		D0116C59213561490004A491 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
 		D0116C5B21358F120004A491 /* BlockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockData.swift; sourceTree = "<group>"; };
@@ -442,6 +459,15 @@
 		D01BF7D5212AC81000917DB8 /* AddressAuthority.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressAuthority.swift; sourceTree = "<group>"; };
 		D01BF7D7212AE77B00917DB8 /* BitassetOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitassetOptions.swift; sourceTree = "<group>"; };
 		D0414AF5216758BC00CD0322 /* SetBlockAppliedCollbackSocketOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetBlockAppliedCollbackSocketOperation.swift; sourceTree = "<group>"; };
+		D043C912237AD22E006ADD26 /* BtcDeposit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BtcDeposit.swift; sourceTree = "<group>"; };
+		D043C914237AD243006ADD26 /* BtcWithdrawal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BtcWithdrawal.swift; sourceTree = "<group>"; };
+		D043C916237AD561006ADD26 /* SidechainType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidechainType.swift; sourceTree = "<group>"; };
+		D043C918237AD673006ADD26 /* SidechainWithdrawalEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidechainWithdrawalEnum.swift; sourceTree = "<group>"; };
+		D043C91A237AD77E006ADD26 /* SidechainDepositEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidechainDepositEnum.swift; sourceTree = "<group>"; };
+		D04835E823573E640071B6C6 /* RequestRegistrationTaskSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestRegistrationTaskSocketOperation.swift; sourceTree = "<group>"; };
+		D04835EA23573F160071B6C6 /* RegistrationTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationTask.swift; sourceTree = "<group>"; };
+		D04835EC235743290071B6C6 /* SubmitRegistrationSolutionSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitRegistrationSolutionSocketOperation.swift; sourceTree = "<group>"; };
+		D04835EE23575B7D0071B6C6 /* UInt8+Bits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UInt8+Bits.swift"; sourceTree = "<group>"; };
 		D048AE762136ABBE00441FEB /* TransactionSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionSocketOperation.swift; sourceTree = "<group>"; };
 		D048BA972149403B0098AEBF /* QueryContractSocketOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueryContractSocketOperation.swift; sourceTree = "<group>"; };
 		D05B7A3E2306BD6200329534 /* Signatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Signatures.swift; sourceTree = "<group>"; };
@@ -462,7 +488,7 @@
 		D082304522368EB6003A4BDC /* ETHAddressValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETHAddressValidator.swift; sourceTree = "<group>"; };
 		D08230472236BA19003A4BDC /* ETHAddressValidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETHAddressValidatorTests.swift; sourceTree = "<group>"; };
 		D0880DE0228FF8F6003B9E28 /* ContractHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractHistory.swift; sourceTree = "<group>"; };
-		D0880DE222902913003B9E28 /* ContractsSubscribeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ContractsSubscribeTests.swift; path = CustomOperations/ContractsSubscribeTests.swift; sourceTree = "<group>"; };
+		D0880DE222902913003B9E28 /* ContractsSubscribeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractsSubscribeTests.swift; sourceTree = "<group>"; };
 		D08B2BCC21342444000F7A9B /* FeeFacadeImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeeFacadeImp.swift; sourceTree = "<group>"; };
 		D094703D212D3ECC00B55A37 /* TransferOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferOperation.swift; sourceTree = "<group>"; };
 		D0947047212D931800B55A37 /* AccountUpdateOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountUpdateOperation.swift; sourceTree = "<group>"; };
@@ -496,8 +522,8 @@
 		D0A1B446212FF04600294683 /* Block.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Block.swift; sourceTree = "<group>"; };
 		D0A1F78E2354AD8600F38038 /* ContractLogx86.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractLogx86.swift; sourceTree = "<group>"; };
 		D0A1F7902354ADE100F38038 /* ContractLogEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractLogEnum.swift; sourceTree = "<group>"; };
-		D0A4932C22AF88F6006DF77B /* DepositEth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepositEth.swift; sourceTree = "<group>"; };
-		D0A4932E22AF8A41006DF77B /* WithdrawalEth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawalEth.swift; sourceTree = "<group>"; };
+		D0A4932C22AF88F6006DF77B /* EthDeposit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EthDeposit.swift; sourceTree = "<group>"; };
+		D0A4932E22AF8A41006DF77B /* EthWithdrawal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EthWithdrawal.swift; sourceTree = "<group>"; };
 		D0A4933022AF8DA0006DF77B /* GetAccountDepositsSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAccountDepositsSocketOperation.swift; sourceTree = "<group>"; };
 		D0A4933222AF8DB4006DF77B /* GetAccountWithdrawalsSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAccountWithdrawalsSocketOperation.swift; sourceTree = "<group>"; };
 		D0A4933422AF9543006DF77B /* GetAccountDepositsRequestStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAccountDepositsRequestStub.swift; sourceTree = "<group>"; };
@@ -515,7 +541,6 @@
 		D0B0588121469A0900A80CDE /* GetContractSocketOperaton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetContractSocketOperaton.swift; sourceTree = "<group>"; };
 		D0B26FA822D722AF00E88205 /* WIFValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WIFValidator.swift; sourceTree = "<group>"; };
 		D0B26FAA22D72E0D00E88205 /* WIFValidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WIFValidatorTests.swift; path = Stubs/WIFValidatorTests.swift; sourceTree = "<group>"; };
-		D0B42A3A2252527600A14784 /* SubscribtionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribtionTests.swift; sourceTree = "<group>"; };
 		D0B6A0C52126B26D00A78E4B /* BaseOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseOperation.swift; sourceTree = "<group>"; };
 		D0B6A0C72126B39100A78E4B /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		D0B6A0C92126BA9300A78E4B /* OperationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationType.swift; sourceTree = "<group>"; };
@@ -691,7 +716,7 @@
 			children = (
 				D0CB0F1C236AFAE100A7184F /* ERC20 */,
 				D0FAC41322AE3D7900C8BF49 /* Fee */,
-				D0ED8C242292D84B002EC3EA /* EthObjects */,
+				D0ED8C242292D84B002EC3EA /* SidechainObjects */,
 				D082304422368EA6003A4BDC /* Validators */,
 				D0B0586C214671DB00A80CDE /* Contracts */,
 				D0BC565321429563008104E6 /* ECHOObjects */,
@@ -726,6 +751,7 @@
 				B3CA703920F4A7C300511F6A /* UserAccount.swift */,
 				D00A58E6222520FC0089FC18 /* GlobalProperties.swift */,
 				D05B7A3E2306BD6200329534 /* Signatures.swift */,
+				D04835EA23573F160071B6C6 /* RegistrationTask.swift */,
 			);
 			path = Objects;
 			sourceTree = "<group>";
@@ -868,7 +894,6 @@
 				D048BA972149403B0098AEBF /* QueryContractSocketOperation.swift */,
 				D0B0588121469A0900A80CDE /* GetContractSocketOperaton.swift */,
 				B3CA704120F502BE00511F6A /* SocketOperation.swift */,
-				B3CA704420F532BE00511F6A /* BaseSocketOperation.swift */,
 				B3CA704620F532E600511F6A /* AccessSocketOperation.swift */,
 				B3CA704820F5358400511F6A /* BlockDataSocketOperation.swift */,
 				B3CA704A20F5363F00511F6A /* FullAccountSocketOperation.swift */,
@@ -887,6 +912,8 @@
 				D061331421A2EC53009EC456 /* GetContractLogsSocketOperation.swift */,
 				D061331621A30052009EC456 /* SubscribeContractLogsSocketOperation.swift */,
 				D09DA11521EDE5210004673F /* RegisterAccountSocketOperation.swift */,
+				D04835E823573E640071B6C6 /* RequestRegistrationTaskSocketOperation.swift */,
+				D04835EC235743290071B6C6 /* SubmitRegistrationSolutionSocketOperation.swift */,
 				D0E158E1221FDF9B004B44FF /* GetKeyReferencesSocketOperation.swift */,
 				D00A58E8222522C40089FC18 /* GetGlobalPropertiesSocketOperation.swift */,
 				D05C20BC228EEB51004A2EB0 /* SubscribeContractsSocketOperation.swift */,
@@ -956,6 +983,27 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
+		D00CD39423794B8E00BD576D /* Timeout */ = {
+			isa = PBXGroup;
+			children = (
+				D00CD3A023796A4C00BD576D /* SocketMessengerTimeoutMock.swift */,
+				D00CD39E237969E500BD576D /* TimeoutTests.swift */,
+			);
+			path = Timeout;
+			sourceTree = "<group>";
+		};
+		D00CD39523794BB300BD576D /* Subscribe */ = {
+			isa = PBXGroup;
+			children = (
+				D00CD39623794BD100BD576D /* GlobalPropertiesSubscribeTests.swift */,
+				D00CD39823794BF100BD576D /* BlocksSubscribeTests.swift */,
+				D00CD39A23794C1800BD576D /* AccountSubscribeTests.swift */,
+				D00CD39C23794C3A00BD576D /* ContractLogsSubscribeTests.swift */,
+				D0880DE222902913003B9E28 /* ContractsSubscribeTests.swift */,
+			);
+			path = Subscribe;
+			sourceTree = "<group>";
+		};
 		D01BF7CE212AAFA800917DB8 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -966,8 +1014,28 @@
 				B3D1C57D212D94B500D1A7E6 /* BinaryConvertible.swift */,
 				B30CC386214A761D003953E3 /* Integer+Extension.swift */,
 				B30CC388214A7782003953E3 /* String+Extension.swift */,
+				D04835EE23575B7D0071B6C6 /* UInt8+Bits.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		D043C910237AD197006ADD26 /* ETH */ = {
+			isa = PBXGroup;
+			children = (
+				D0ED8C252292D8DE002EC3EA /* EthAddress.swift */,
+				D0A4932C22AF88F6006DF77B /* EthDeposit.swift */,
+				D0A4932E22AF8A41006DF77B /* EthWithdrawal.swift */,
+			);
+			path = ETH;
+			sourceTree = "<group>";
+		};
+		D043C911237AD19E006ADD26 /* BTC */ = {
+			isa = PBXGroup;
+			children = (
+				D043C912237AD22E006ADD26 /* BtcDeposit.swift */,
+				D043C914237AD243006ADD26 /* BtcWithdrawal.swift */,
+			);
+			path = BTC;
 			sourceTree = "<group>";
 		};
 		D061331121A2D72E009EC456 /* CustomOperations */ = {
@@ -990,10 +1058,10 @@
 		D077FE05224CC080009F2F27 /* ECHONetworkTests */ = {
 			isa = PBXGroup;
 			children = (
+				D00CD39523794BB300BD576D /* Subscribe */,
+				D00CD39423794B8E00BD576D /* Timeout */,
 				D061331121A2D72E009EC456 /* CustomOperations */,
 				B313B8C0212FF9850052B266 /* ECHOInterfaceTests.swift */,
-				D0B42A3A2252527600A14784 /* SubscribtionTests.swift */,
-				D0880DE222902913003B9E28 /* ContractsSubscribeTests.swift */,
 				D0A19AFF2269F2320030F442 /* Constants.swift */,
 				D077FE08224CC080009F2F27 /* Info.plist */,
 				D0A0C50A225E2D5A000BA64D /* TestConstantsConfig.xcconfig */,
@@ -1158,14 +1226,16 @@
 			path = QueueOperation;
 			sourceTree = "<group>";
 		};
-		D0ED8C242292D84B002EC3EA /* EthObjects */ = {
+		D0ED8C242292D84B002EC3EA /* SidechainObjects */ = {
 			isa = PBXGroup;
 			children = (
-				D0ED8C252292D8DE002EC3EA /* EthAddress.swift */,
-				D0A4932C22AF88F6006DF77B /* DepositEth.swift */,
-				D0A4932E22AF8A41006DF77B /* WithdrawalEth.swift */,
+				D043C911237AD19E006ADD26 /* BTC */,
+				D043C910237AD197006ADD26 /* ETH */,
+				D043C916237AD561006ADD26 /* SidechainType.swift */,
+				D043C918237AD673006ADD26 /* SidechainWithdrawalEnum.swift */,
+				D043C91A237AD77E006ADD26 /* SidechainDepositEnum.swift */,
 			);
-			path = EthObjects;
+			path = SidechainObjects;
 			sourceTree = "<group>";
 		};
 		D0FAC41322AE3D7900C8BF49 /* Fee */ = {
@@ -1370,13 +1440,15 @@
 				D0B26FA922D722AF00E88205 /* WIFValidator.swift in Sources */,
 				B30CC381214A745E003953E3 /* SHA3.swift in Sources */,
 				D09DA11C21EDE6870004673F /* RegistrationApiServiceImp.swift in Sources */,
+				D043C917237AD561006ADD26 /* SidechainType.swift in Sources */,
 				B39554B5213EBAED00CE2647 /* ListAssetsSocketOperation.swift in Sources */,
 				B385970420F6270000B55E59 /* ECHOObject.swift in Sources */,
-				D0A4932F22AF8A41006DF77B /* WithdrawalEth.swift in Sources */,
+				D0A4932F22AF8A41006DF77B /* EthWithdrawal.swift in Sources */,
 				D0947048212D931800B55A37 /* AccountUpdateOperation.swift in Sources */,
 				B358CD0A213978990046327F /* ECHONetwork.swift in Sources */,
 				B3CA702A20F4A44900511F6A /* InformationFacade.swift in Sources */,
 				D0B6A0C62126B26D00A78E4B /* BaseOperation.swift in Sources */,
+				D04835EB23573F160071B6C6 /* RegistrationTask.swift in Sources */,
 				D094703E212D3ECC00B55A37 /* TransferOperation.swift in Sources */,
 				B30CC37D214A6C59003953E3 /* BTCData.m in Sources */,
 				D01AD066221C15800062A74D /* ContractResultEnum.swift in Sources */,
@@ -1389,7 +1461,6 @@
 				B3CA704020F4FB0200511F6A /* ECHOSerializable.swift in Sources */,
 				B3CA702820F4A43000511F6A /* AuthentificationFacade.swift in Sources */,
 				D061331321A2E93F009EC456 /* ContractLogEVM.swift in Sources */,
-				B3CA704520F532BE00511F6A /* BaseSocketOperation.swift in Sources */,
 				D0E158E2221FDF9B004B44FF /* GetKeyReferencesSocketOperation.swift in Sources */,
 				B39554B1213E70DB00CE2647 /* AssetsFacade.swift in Sources */,
 				B3CA702020F4A3A900511F6A /* ECHO.swift in Sources */,
@@ -1413,6 +1484,7 @@
 				D0A1B447212FF04600294683 /* Block.swift in Sources */,
 				B358CD062139786B0046327F /* Configurator.swift in Sources */,
 				B370BB5B20F76853004C4A26 /* SocketCoreComponentImp.swift in Sources */,
+				D043C915237AD243006ADD26 /* BtcWithdrawal.swift in Sources */,
 				D0814E8C2154DD6600E248AA /* ObjectType.swift in Sources */,
 				D0D8CA472141847900F0646D /* GetRequiredFeeQueueOperation.swift in Sources */,
 				B313B8D32130411D0052B266 /* Internal.m in Sources */,
@@ -1423,7 +1495,7 @@
 				B38596EC20F5ED6000B55E59 /* GetBlockSocketOperation.swift in Sources */,
 				D05C20BD228EEB51004A2EB0 /* SubscribeContractsSocketOperation.swift in Sources */,
 				D0B0587E214698F900A80CDE /* ContractStructEVM.swift in Sources */,
-				D0A4932D22AF88F6006DF77B /* DepositEth.swift in Sources */,
+				D0A4932D22AF88F6006DF77B /* EthDeposit.swift in Sources */,
 				D05B7A3F2306BD6200329534 /* Signatures.swift in Sources */,
 				D0A1F7912354ADE100F38038 /* ContractLogEnum.swift in Sources */,
 				B38596FE20F6009A00B55E59 /* Asset.swift in Sources */,
@@ -1462,13 +1534,14 @@
 				D0A4933322AF8DB4006DF77B /* GetAccountWithdrawalsSocketOperation.swift in Sources */,
 				D00C3D282147B4F90053A636 /* Contract.swift in Sources */,
 				D0D8CA462141847900F0646D /* GetTransactionQueueOperation.swift in Sources */,
+				D04835ED235743290071B6C6 /* SubmitRegistrationSolutionSocketOperation.swift in Sources */,
 				B30CAD1A20FFD58E0048E33E /* Options.swift in Sources */,
 				D061331721A30052009EC456 /* SubscribeContractLogsSocketOperation.swift in Sources */,
 				D0A4933122AF8DA0006DF77B /* GetAccountDepositsSocketOperation.swift in Sources */,
+				D043C919237AD673006ADD26 /* SidechainWithdrawalEnum.swift in Sources */,
 				D094704A212D932500B55A37 /* CreateAssetOperation.swift in Sources */,
 				B30CAD1720FFD5790048E33E /* AccountBalance.swift in Sources */,
 				D0FAC41722AE3E5300C8BF49 /* CallContractFee.swift in Sources */,
-				D01BF7D0212AB00700917DB8 /* Vote.swift in Sources */,
 				B30CAD0120FF74C80048E33E /* CryptoApiService.swift in Sources */,
 				B30CC385214A755D003953E3 /* BatchedCollection.swift in Sources */,
 				B3D20DA3226E01DF00F50CF9 /* GetIsReservedAccountQueueOperation.swift in Sources */,
@@ -1492,9 +1565,13 @@
 				B3CA702C20F4A45400511F6A /* TransactionFacade.swift in Sources */,
 				D0ED8C202292B0D1002EC3EA /* EthFacade.swift in Sources */,
 				B3CA704B20F5363F00511F6A /* FullAccountSocketOperation.swift in Sources */,
+				D043C91B237AD77E006ADD26 /* SidechainDepositEnum.swift in Sources */,
 				B30CC383214A74B1003953E3 /* Utils.swift in Sources */,
+				D043C913237AD22E006ADD26 /* BtcDeposit.swift in Sources */,
+				D04835E923573E640071B6C6 /* RequestRegistrationTaskSocketOperation.swift in Sources */,
 				B385970220F620B700B55E59 /* AssetOptions.swift in Sources */,
 				B30CAD0220FF74C80048E33E /* DatabaseApiService.swift in Sources */,
+				D04835EF23575B7D0071B6C6 /* UInt8+Bits.swift in Sources */,
 				D01BF7D2212ABE4E00917DB8 /* OptionalValue.swift in Sources */,
 				D00A58E9222522C40089FC18 /* GetGlobalPropertiesSocketOperation.swift in Sources */,
 				D0B0587621468A0400A80CDE /* ContractInfo.swift in Sources */,
@@ -1608,11 +1685,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D00CD39F237969E500BD576D /* TimeoutTests.swift in Sources */,
+				D00CD39923794BF100BD576D /* BlocksSubscribeTests.swift in Sources */,
 				D0A19B002269F2330030F442 /* Constants.swift in Sources */,
+				D00CD3A123796A4C00BD576D /* SocketMessengerTimeoutMock.swift in Sources */,
+				D00CD39B23794C1800BD576D /* AccountSubscribeTests.swift in Sources */,
 				D0880DE322902913003B9E28 /* ContractsSubscribeTests.swift in Sources */,
 				D07EBA08224CC30F0005C00C /* ECHOInterfaceTests.swift in Sources */,
-				D0B42A3B2252527600A14784 /* SubscribtionTests.swift in Sources */,
+				D00CD39D23794C3A00BD576D /* ContractLogsSubscribeTests.swift in Sources */,
 				D07EBA09224CC4240005C00C /* CustomGetFullAccountSocketOperation.swift in Sources */,
+				D00CD39723794BD100BD576D /* GlobalPropertiesSubscribeTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1792,7 +1874,7 @@
 					"$(SRCROOT)/Libraries/openssl/lib",
 					"$(SRCROOT)/Libraries/ed25519/lib/SimulatorRelease/",
 				);
-				MARKETING_VERSION = 3.5.0;
+				MARKETING_VERSION = 3.7.2;
 				MODULEMAP_FILE = "./ECHO/Supports Files/ECHO.modulemap";
 				PRODUCT_BUNDLE_IDENTIFIER = org.echo.mobile.framework;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -1840,7 +1922,7 @@
 					"$(SRCROOT)/Libraries/openssl/lib",
 					"$(SRCROOT)/Libraries/ed25519/lib/SimulatorRelease/",
 				);
-				MARKETING_VERSION = 3.5.0;
+				MARKETING_VERSION = 3.7.2;
 				MODULEMAP_FILE = "./ECHO/Supports Files/ECHO.modulemap";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = org.echo.mobile.framework;

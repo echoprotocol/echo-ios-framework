@@ -53,8 +53,8 @@ struct BlockDataSocketOperation: SocketOperation {
         }
     }
     
-    func forceEnd() {
-        let result = Result<DynamicGlobalProperties, ECHOError>(error: ECHOError.connectionLost)
+    func forceEnd(error: ECHOError) {
+        let result = Result<DynamicGlobalProperties, ECHOError>(error: error)
         completion(result)
     }
 }

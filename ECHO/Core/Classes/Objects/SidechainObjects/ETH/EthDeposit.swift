@@ -1,16 +1,17 @@
 //
-//  DepositEth.swift
+//  EthDeposit.swift
 //  ECHO
 //
 //  Created by Vladimir Sharaev on 11/06/2019.
 //  Copyright © 2019 PixelPlex. All rights reserved.
 //
 
-import Foundation
-
-public struct DepositEth: ECHOObject, Decodable {
+/**
+   Represents eth_deposit_object from blockchain
+*/
+public struct EthDeposit: ECHOObject, Decodable {
     
-    enum DepositEthKeys: String, CodingKey {
+    enum EthDepositCodingKeys: String, CodingKey {
         case id
         case depositId = "deposit_id"
         case account
@@ -28,7 +29,7 @@ public struct DepositEth: ECHOObject, Decodable {
     
     public init(from decoder: Decoder) throws {
         
-        let values = try decoder.container(keyedBy: DepositEthKeys.self)
+        let values = try decoder.container(keyedBy: EthDepositCodingKeys.self)
         id = try values.decode(String.self, forKey: .id)
         depositId = try values.decode(UInt.self, forKey: .depositId)
         let accountId = try values.decode(String.self, forKey: .account)

@@ -46,4 +46,37 @@ final class RegistrationApiServiceImp: RegistrationApiService {
         socketCore.send(operation: operation)
         return operationID
     }
+    
+    func requestRegistrationTask(completion: @escaping Completion<RegistrationTask>) {
+        
+        let operationID = socketCore.nextOperationId()
+        let operation = RequestRegistrationTaskSocketOperation(method: .call,
+                                                               operationId: operationID,
+                                                               apiId: apiIdentifire,
+                                                               completion: completion)
+        
+        socketCore.send(operation: operation)
+    }
+    
+    func submitRegistrationSolution(name: String,
+                                    activeKey: String,
+                                    echorandKey: String,
+                                    nonce: UInt,
+                                    randNum: UInt,
+                                    completion: @escaping Completion<Bool>) -> Int {
+        
+        let operationID = socketCore.nextOperationId()
+        let operation = SubmitRegistrationSolutionSocketOperation(method: .call,
+                                                                  operationId: operationID,
+                                                                  apiId: apiIdentifire,
+                                                                  name: name,
+                                                                  activeKey: activeKey,
+                                                                  echorandKey: echorandKey,
+                                                                  nonce: nonce,
+                                                                  randNum: randNum,
+                                                                  completion: completion)
+        
+        socketCore.send(operation: operation)
+        return operationID
+    }
 }

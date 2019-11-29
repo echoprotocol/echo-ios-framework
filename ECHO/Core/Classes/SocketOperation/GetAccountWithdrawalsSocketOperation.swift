@@ -11,51 +11,51 @@ import Foundation
 /**
     Returns all approved withdrawals, for the given account id
  
-    - Return: [[WithdrawalEth]](WithdrawalEth)
+    - Return: [[EthWithdrawal]](EthWithdrawal)
  */
 struct GetAccountWithdrawalsSocketOperation: SocketOperation {
-    
     var method: SocketOperationType
     var operationId: Int
     var apiId: Int
     var accountId: String
-    var completion: Completion<[WithdrawalEth]>
+    var type: SidechainType?
+    var completion: Completion<[SidechainWithdrawalEnum]>
     
     func createParameters() -> [Any] {
         let array: [Any] = [apiId,
                             SocketOperationKeys.getAccountWithdrawals.rawValue,
-                            [accountId]]
+                            [accountId, type?.rawValue ?? String()]]
         return array
     }
     
     func handleResponse(_ response: ECHODirectResponse) {
         
         do {
-            
             switch response.response {
             case .error(let error):
-                let result = Result<[WithdrawalEth], ECHOError>(error: ECHOError.internalError(error.message))
+                let result = Result<[SidechainWithdrawalEnum], ECHOError>(error: ECHOError.internalError(error.message))
                 completion(result)
-            case .result(let result):
                 
+            case .result(let result):
                 switch result {
                 case .array(let array):
                     let data = try JSONSerialization.data(withJSONObject: array, options: [])
-                    let accountIds = try JSONDecoder().decode([WithdrawalEth].self, from: data)
-                    let result = Result<[WithdrawalEth], ECHOError>(value: accountIds)
+                    let withdrawals = try JSONDecoder().decode([SidechainWithdrawalEnum].self, from: data)
+                    let result = Result<[SidechainWithdrawalEnum], ECHOError>(value: withdrawals)
                     completion(result)
+                    
                 default:
                     throw ECHOError.encodableMapping
                 }
             }
         } catch {
-            let result = Result<[WithdrawalEth], ECHOError>(error: ECHOError.encodableMapping)
+            let result = Result<[SidechainWithdrawalEnum], ECHOError>(error: ECHOError.encodableMapping)
             completion(result)
         }
     }
     
-    func forceEnd() {
-        let result = Result<[WithdrawalEth], ECHOError>(error: ECHOError.connectionLost)
+    func forceEnd(error: ECHOError) {
+        let result = Result<[SidechainWithdrawalEnum], ECHOError>(error: ECHOError.connectionLost)
         completion(result)
     }
 }

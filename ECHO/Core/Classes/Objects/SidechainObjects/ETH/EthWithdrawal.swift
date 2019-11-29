@@ -1,16 +1,17 @@
 //
-//  WithdrawalEth.swift
+//  EthWithdrawal.swift
 //  ECHO
 //
 //  Created by Vladimir Sharaev on 11/06/2019.
 //  Copyright © 2019 PixelPlex. All rights reserved.
 //
 
-import Foundation
-
-public struct WithdrawalEth: ECHOObject, Decodable {
+/**
+   Represents eth_withdrawal_object from blockchain
+*/
+public struct EthWithdrawal: ECHOObject, Decodable {
     
-    enum WithdrawalEthKeys: String, CodingKey {
+    enum EthWithdrawalCodingKeys: String, CodingKey {
         case id
         case withdrawId = "withdraw_id"
         case account
@@ -30,7 +31,7 @@ public struct WithdrawalEth: ECHOObject, Decodable {
     
     public init(from decoder: Decoder) throws {
         
-        let values = try decoder.container(keyedBy: WithdrawalEthKeys.self)
+        let values = try decoder.container(keyedBy: EthWithdrawalCodingKeys.self)
         id = try values.decode(String.self, forKey: .id)
         withdrawId = try values.decode(UInt.self, forKey: .withdrawId)
         let accountId = try values.decode(String.self, forKey: .account)

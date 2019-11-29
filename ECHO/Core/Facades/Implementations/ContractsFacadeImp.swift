@@ -34,9 +34,10 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
         case operationId
         case noticeHandler
         case notice
+        case noticeError
     }
     
-    var queues: [ECHOQueue]
+    var queues: [String: ECHOQueue]
     let services: ContractsFacadeServices
     let network: ECHONetwork
     let cryptoCore: CryptoCoreComponent
@@ -55,11 +56,11 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
         self.cryptoCore = cryptoCore
         self.abiCoderCore = abiCoder
         self.settings = settings
-        self.queues = [ECHOQueue]()
+        self.queues = [String: ECHOQueue]()
         noticeDelegateHandler.delegate = self
     }
     
-    public func getContractLogs(contractId: String, fromBlock: Int, limit: Int, completion: @escaping Completion<[ContractLogEnum]>) {
+    public func getContractLogs(contractId: String, fromBlock: Int, toBlock: Int, completion: @escaping Completion<[ContractLogEnum]>) {
         
         // Validate historyId
         do {
@@ -72,7 +73,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
             return
         }
         
-        services.databaseService.getContractLogs(contractId: contractId, fromBlock: fromBlock, limit: limit, completion: completion)
+        services.databaseService.getContractLogs(contractId: contractId, fromBlock: fromBlock, toBlock: toBlock, completion: completion)
     }
     
     public func getContractResult(contractResultId: String, completion: @escaping Completion<ContractResultEnum>) {
@@ -265,7 +266,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
             createQueue.addOperation(noticeHandleOperation)
         }
         
-        createQueue.setCompletionOperation(completionOperation)
+        createQueue.addOperation(completionOperation)
     }
     
     public func callContract(registrarNameOrId: String,
@@ -433,10 +434,11 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
             callQueue.addOperation(noticeHandleOperation)
         }
         
-        callQueue.setCompletionOperation(completionOperation)
+        callQueue.addOperation(completionOperation)
     }
     
     public func queryContract(registrarNameOrId: String,
+                              amount: UInt,
                               assetId: String,
                               contratId: String,
                               methodName: String,
@@ -444,6 +446,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
                               completion: @escaping Completion<String>) {
         
         queryContract(registrarNameOrId: registrarNameOrId,
+                      amount: amount,
                       assetId: assetId,
                       contratId: contratId,
                       executeType: ContractExecuteType.nameAndParams(methodName, methodParams),
@@ -451,12 +454,14 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
     }
     
     public func queryContract(registrarNameOrId: String,
+                              amount: UInt,
                               assetId: String,
                               contratId: String,
                               byteCode: String,
                               completion: @escaping Completion<String>) {
         
         queryContract(registrarNameOrId: registrarNameOrId,
+                      amount: amount,
                       assetId: assetId,
                       contratId: contratId,
                       executeType: ContractExecuteType.code(byteCode),
@@ -464,6 +469,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
     }
     
     fileprivate func queryContract(registrarNameOrId: String,
+                                   amount: UInt,
                                    assetId: String,
                                    contratId: String,
                                    executeType: ContractExecuteType,
@@ -503,7 +509,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
         
         // Operation
         queryQueue.saveValue(Contract(id: contratId), forKey: ContractKeys.receiverContract.rawValue)
-        let callContractNoChangigState = createBildCallContractNoChangingState(queryQueue, assetId, completion)
+        let callContractNoChangigState = createBildCallContractNoChangingState(queryQueue, amount, assetId, completion)
         
         // Completion
         let completionOperation = createCompletionOperation(queue: queryQueue)
@@ -513,7 +519,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
             queryQueue.addOperation(byteCodeOperation)
         }
         queryQueue.addOperation(callContractNoChangigState)
-        queryQueue.setCompletionOperation(completionOperation)
+        queryQueue.addOperation(completionOperation)
     }
     
     fileprivate func createBildCallContractOperation(_ queue: ECHOQueue,
@@ -590,9 +596,18 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
             guard noticeOperation?.isCancelled == false else { return }
             guard self != nil else { return }
             guard let noticeHandler: NoticeHandler = queue?.getValue(ContractKeys.noticeHandler.rawValue) else { return }
-            guard let notice: ECHONotification = queue?.getValue(ContractKeys.notice.rawValue) else { return }
             
-            noticeHandler(notice)
+            if let notice: ECHONotification = queue?.getValue(ContractKeys.notice.rawValue) {
+                let result = Result<ECHONotification, ECHOError>(value: notice)
+                noticeHandler(result)
+                return
+            }
+            
+            if let noticeError: ECHOError = queue?.getValue(ContractKeys.noticeError.rawValue) {
+                let result = Result<ECHONotification, ECHOError>(error: noticeError)
+                noticeHandler(result)
+                return
+            }
         }
         
         return noticeOperation
@@ -613,6 +628,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
     }
     
     fileprivate func createBildCallContractNoChangingState(_ queue: ECHOQueue,
+                                                           _ amount: UInt,
                                                            _ assetId: String,
                                                            _ completion: @escaping Completion<String>) -> Operation {
         let contractOperation = BlockOperation()
@@ -626,6 +642,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
             guard let receive: Contract = queue?.getValue(ContractKeys.receiverContract.rawValue) else { return }
             
             self?.services.databaseService.callContractNoChangingState(contract: receive,
+                                                                       amount: amount,
                                                                        asset: Asset(assetId),
                                                                        account: account,
                                                                        contractCode: byteCode,
@@ -673,7 +690,7 @@ extension ContractsFacadeImp: NoticeEventDelegate {
         case .array(let array):
             if let noticeOperationId = array.first as? Int {
                 
-                for queue in queues {
+                for queue in queues.values {
                     
                     if let queueTransferOperationId: Int = queue.getValue(ContractKeys.operationId.rawValue),
                         queueTransferOperationId == noticeOperationId {
@@ -684,6 +701,13 @@ extension ContractsFacadeImp: NoticeEventDelegate {
             }
         default:
             break
+        }
+    }
+    
+    public func didAllNoticesLost() {
+        for queue in queues.values {
+            queue.saveValue(ECHOError.connectionLost, forKey: ContractKeys.noticeError.rawValue)
+            queue.startNextOperation()
         }
     }
 }

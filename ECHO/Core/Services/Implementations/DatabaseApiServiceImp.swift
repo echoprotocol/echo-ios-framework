@@ -238,14 +238,14 @@ extension ContractsService {
         socketCore.send(operation: operation)
     }
     
-    func getContractLogs(contractId: String, fromBlock: Int, limit: Int, completion: @escaping Completion<[ContractLogEnum]>) {
+    func getContractLogs(contractId: String, fromBlock: Int, toBlock: Int, completion: @escaping Completion<[ContractLogEnum]>) {
         
         let operation = GetContractLogsSocketOperation(method: .call,
                                                        operationId: socketCore.nextOperationId(),
                                                        apiId: apiIdentifire,
                                                        contractId: contractId,
                                                        fromBlock: fromBlock,
-                                                       limit: limit,
+                                                       toBlock: toBlock,
                                                        completion: completion)
         
         socketCore.send(operation: operation)
@@ -275,6 +275,7 @@ extension ContractsService {
     }
     
     func callContractNoChangingState(contract: Contract,
+                                     amount: UInt,
                                      asset: Asset,
                                      account: Account,
                                      contractCode: String,
@@ -285,6 +286,7 @@ extension ContractsService {
                                                     apiId: apiIdentifire,
                                                     contractId: contract.id,
                                                     registrarId: account.id,
+                                                    amount: amount,
                                                     assetId: asset.id,
                                                     code: contractCode,
                                                     completion: completion)
@@ -306,24 +308,26 @@ extension EthService {
         socketCore.send(operation: operation)
     }
     
-    func getAccountDeposits(accountId: String, completion: @escaping Completion<[DepositEth]>) {
+    func getAccountDeposits(accountId: String, type: SidechainType?, completion: @escaping Completion<[SidechainDepositEnum]>) {
         
         let operation = GetAccountDepositsSocketOperation(method: .call,
                                                           operationId: socketCore.nextOperationId(),
                                                           apiId: apiIdentifire,
                                                           accountId: accountId,
+                                                          type: type,
                                                           completion: completion)
         
         socketCore.send(operation: operation)
     }
     
-    func getAccountWithdrawals(accountId: String, completion: @escaping Completion<[WithdrawalEth]>) {
+    func getAccountWithdrawals(accountId: String, type: SidechainType?, completion: @escaping Completion<[SidechainWithdrawalEnum]>) {
         
         let operation = GetAccountWithdrawalsSocketOperation(method: .call,
-                                                            operationId: socketCore.nextOperationId(),
-                                                            apiId: apiIdentifire,
-                                                            accountId: accountId,
-                                                            completion: completion)
+                                                             operationId: socketCore.nextOperationId(),
+                                                             apiId: apiIdentifire,
+                                                             accountId: accountId,
+                                                             type: type,
+                                                             completion: completion)
         
         socketCore.send(operation: operation)
     }

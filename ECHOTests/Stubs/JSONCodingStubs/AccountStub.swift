@@ -16,7 +16,6 @@ struct AccountStub {
                                 "registrar": "1.2.12",
                                 "referrer": "1.2.12",
                                 "lifetime_referrer": "1.2.12",
-                                "network_fee_percentage": 2000,
                                 "lifetime_referrer_fee_percentage": 3000,
                                 "referrer_rewards_percentage": 7500,
                                 "name": "vsharaev",
@@ -33,11 +32,8 @@ struct AccountStub {
                                 },
                                 "echorand_key": "fd9370d6384ee109765616b2ec5337b221a53a1fa3f3a076b68fcf774994a914",
                                 "options": {
-                                    "voting_account": "1.2.5",
                                     "delegating_account": "1.2.12",
                                     "num_witness": 0,
-                                    "num_committee": 0,
-                                    "votes": [],
                                     "extensions": []
                                 },
                                 "statistics": "2.6.22",

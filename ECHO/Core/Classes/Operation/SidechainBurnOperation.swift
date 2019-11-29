@@ -1,5 +1,5 @@
 //
-//  SidechainETHBurnOperation.swift
+//  SidechainBurnOperation.swift
 //  ECHO
 //
 //  Created by Vladimir Sharaev on 11/06/2019.
@@ -8,9 +8,9 @@
 
 import Foundation
 
-public struct SidechainETHBurnOperation: BaseOperation {
+public struct SidechainBurnOperation: BaseOperation {
     
-    enum SidechainETHBurnOperationCodingKeys: String, CodingKey {
+    enum SidechainBurnOperationCodingKeys: String, CodingKey {
         case account = "account"
         case withdrawId = "withdraw_id"
         case value
@@ -23,13 +23,13 @@ public struct SidechainETHBurnOperation: BaseOperation {
     public var value: AssetAmount
     public var account: Account
     public var withdrawId: String
-    public var withdraw: WithdrawalEth?
+    public var withdraw: EthWithdrawal?
     
     public var extensions: Extensions = Extensions()
     
     init(account: Account, value: AssetAmount, withdrawId: String, fee: AssetAmount) {
         
-        type = .sidechainETHBurnOperation
+        type = .sidechainBurnOperation
         
         self.account = account
         self.fee = fee
@@ -39,9 +39,9 @@ public struct SidechainETHBurnOperation: BaseOperation {
     
     public init(from decoder: Decoder) throws {
         
-        type = .sidechainETHBurnOperation
+        type = .sidechainBurnOperation
         
-        let values = try decoder.container(keyedBy: SidechainETHBurnOperationCodingKeys.self)
+        let values = try decoder.container(keyedBy: SidechainBurnOperationCodingKeys.self)
         
         let accountId = try values.decode(String.self, forKey: .account)
         account = Account(accountId)

@@ -20,7 +20,7 @@ struct InformationFacadeServices {
 // swiftlint:disable type_body_length
 final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
     
-    var queues: [ECHOQueue]
+    var queues: [String: ECHOQueue]
     let services: InformationFacadeServices
     let network: ECHONetwork
     let cryptoCore: CryptoCoreComponent
@@ -33,7 +33,7 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         self.services = services
         self.network = network
         self.cryptoCore = cryptoCore
-        self.queues = [ECHOQueue]()
+        self.queues = [String: ECHOQueue]()
         
         noticeDelegateHandler.delegate = self
     }
@@ -55,13 +55,16 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         case account
         case operationID
         case notice
+        case noticeError
         case noticeHandler
+        case task
+        case nonce
     }
     
     public func registerAccount(name: String, wif: String, completion: @escaping Completion<Bool>, noticeHandler: NoticeHandler?) {
         
         let createAccountQueue = ECHOQueue()
-        queues.append(createAccountQueue)
+        addQueue(createAccountQueue)
         
         // Get Account
         let getAccountsOperationInitParams = (createAccountQueue,
@@ -72,16 +75,21 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         getAccountsOperation.defaultError = ECHOError.invalidCredentials
         
         // Create Account
-        let createAccountoperation = createAccountCreationOperation(createAccountQueue,
-                                                                    name: name,
-                                                                    wif: wif,
-                                                                    completion: completion)
+        let requestTaskOperation = createRequestRegistrationTask(createAccountQueue,
+                                                                       completion: completion)
+        let powTaskOperation = createPoWTaskCalculatingOperation(createAccountQueue, completion: completion)
+        let submitOperation = createSubmitRegistrationSolutionOperation(createAccountQueue,
+                                                                        name: name,
+                                                                        wif: wif,
+                                                                        completion: completion)
         
         // Completion
         let completionOperation = createCompletionOperation(queue: createAccountQueue)
         
         createAccountQueue.addOperation(getAccountsOperation)
-        createAccountQueue.addOperation(createAccountoperation)
+        createAccountQueue.addOperation(requestTaskOperation)
+        createAccountQueue.addOperation(powTaskOperation)
+        createAccountQueue.addOperation(submitOperation)
 
         //Notice handler
         if let noticeHandler = noticeHandler {
@@ -90,13 +98,11 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
             createAccountQueue.addOperation(noticeHandleOperation)
         }
         
-        createAccountQueue.setCompletionOperation(completionOperation)
+        createAccountQueue.addOperation(completionOperation)
     }
     
-    fileprivate func createAccountCreationOperation(_ queue: ECHOQueue,
-                                                    name: String,
-                                                    wif: String,
-                                                    completion: @escaping Completion<Bool>) -> Operation {
+    fileprivate func createRequestRegistrationTask(_ queue: ECHOQueue,
+                                                   completion: @escaping Completion<Bool>) -> Operation {
         
         let operation = BlockOperation()
 
@@ -112,6 +118,106 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                 return
             }
             
+            strongSelf.services.registrationService.requestRegistrationTask { (result) in
+                switch result {
+                case .success(let task):
+                    queue?.saveValue(task, forKey: CreationAccountResultsKeys.task.rawValue)
+                case .failure(let error):
+                    queue?.cancelAllOperations()
+                    let result = Result<Bool, ECHOError>(error: error)
+                    completion(result)
+                }
+
+                queue?.startNextOperation()
+            }
+            
+            queue?.waitStartNextOperation()
+        }
+        
+        return operation
+    }
+    
+    fileprivate func createPoWTaskCalculatingOperation(_ queue: ECHOQueue,
+                                                       completion: @escaping Completion<Bool>) -> Operation {
+        
+        let operation = BlockOperation()
+
+        operation.addExecutionBlock { [weak operation, weak queue, weak self] in
+            
+            guard operation?.isCancelled == false else { return }
+            guard let strongSelf = self else { return }
+            guard let task: RegistrationTask = queue?.getValue(CreationAccountResultsKeys.task.rawValue) else { return }
+            
+            guard let blockIdData = Data(hex: task.blockId) else {
+                queue?.cancelAllOperations()
+                let result = Result<Bool, ECHOError>(error: ECHOError.encodableMapping)
+                completion(result)
+                return
+            }
+            let randNumData = Data.fromUint64(task.randNum.uintValue)
+            let constantData = blockIdData + randNumData
+            var nonce: UInt = 0
+            
+            var lastCheckByteIndex = Int(task.difficulty / 8)
+            let remainderOfTheDivision = task.difficulty % 8
+            if remainderOfTheDivision > 0 {
+                lastCheckByteIndex += 1
+            }
+            var offset = remainderOfTheDivision
+            if offset > 0 {
+                offset -= 1
+            }
+            let maxValueLastByte = UInt8(1) << offset
+            
+            while nonce < UInt.max {
+                var isValid = true
+                autoreleasepool {
+                    let nonceData = Data.fromUint64(nonce)
+                    let sha256Data = constantData + nonceData
+                    let result = strongSelf.cryptoCore.sha256(sha256Data)
+            
+                    for index in 0..<lastCheckByteIndex {
+                        let byte = result.bytes[index]
+                        if index == lastCheckByteIndex - 1 {
+                            if byte >= maxValueLastByte {
+                                isValid = false
+                                break
+                            }
+                        } else {
+                            if byte != 0 {
+                                isValid = false
+                                break
+                            }
+                        }
+                    }
+                }
+                
+                if isValid {
+                    break
+                }
+                
+                nonce += 1
+            }
+            queue?.saveValue(nonce, forKey: CreationAccountResultsKeys.nonce.rawValue)
+        }
+        
+        return operation
+    }
+    
+    fileprivate func createSubmitRegistrationSolutionOperation(_ queue: ECHOQueue,
+                                                               name: String,
+                                                               wif: String,
+                                                               completion: @escaping Completion<Bool>) -> Operation {
+        
+        let operation = BlockOperation()
+
+        operation.addExecutionBlock { [weak operation, weak queue, weak self] in
+            
+            guard operation?.isCancelled == false else { return }
+            guard let strongSelf = self else { return }
+            guard let task: RegistrationTask = queue?.getValue(CreationAccountResultsKeys.task.rawValue) else { return }
+            guard let nonce: UInt = queue?.getValue(CreationAccountResultsKeys.nonce.rawValue) else { return }
+            
             guard let keychain = ECHOKeychainEd25519(wif: wif, core: strongSelf.cryptoCore) else {
                 queue?.cancelAllOperations()
                 let result = Result<Bool, ECHOError>(error: ECHOError.invalidWIF)
@@ -121,10 +227,29 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
             
             let key = strongSelf.network.echorandPrefix.rawValue + keychain.publicAddress()
             
-            let operationID = strongSelf.services.registrationService.registerAccount(name: name,
-                                                                                      activeKey: key,
-                                                                                      echorandKey: key,
-                                                                                      completion: completion)
+            let regService = strongSelf.services.registrationService
+            let operationID = regService.submitRegistrationSolution(name: name,
+                                                                    activeKey: key,
+                                                                    echorandKey: key,
+                                                                    nonce: nonce,
+                                                                    randNum: task.randNum.uintValue) { (result) in
+                switch result {
+                case .success(let value):
+                    if value == false {
+                        queue?.cancelAllOperations()
+                        let result = Result<Bool, ECHOError>(error: ECHOError.invalidCredentials)
+                        completion(result)
+                    } else {
+                        let result = Result<Bool, ECHOError>(value: true)
+                        completion(result)
+                    }
+                case .failure(let error):
+                    queue?.cancelAllOperations()
+                    let result = Result<Bool, ECHOError>(error: error)
+                    completion(result)
+                }
+            }
+            
             queue?.saveValue(operationID, forKey: CreationAccountResultsKeys.operationID.rawValue)
             queue?.waitStartNextOperation()
         }
@@ -141,9 +266,18 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
             guard noticeOperation?.isCancelled == false else { return }
             guard self != nil else { return }
             guard let noticeHandler: NoticeHandler = queue?.getValue(CreationAccountResultsKeys.noticeHandler.rawValue) else { return }
-            guard let notice: ECHONotification = queue?.getValue(CreationAccountResultsKeys.notice.rawValue) else { return }
             
-            noticeHandler(notice)
+            if let notice: ECHONotification = queue?.getValue(CreationAccountResultsKeys.notice.rawValue) {
+                let result = Result<ECHONotification, ECHOError>(value: notice)
+                noticeHandler(result)
+                return
+            }
+            
+            if let noticeError: ECHOError = queue?.getValue(CreationAccountResultsKeys.noticeError.rawValue) {
+                let result = Result<ECHONotification, ECHOError>(error: noticeError)
+                noticeHandler(result)
+                return
+            }
         }
         
         return noticeOperation
@@ -294,7 +428,7 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         accountHistoryQueue.addOperation(mergeWithdrawEthInHistoryOperation)
         accountHistoryQueue.addOperation(historyCompletionOperation)
     
-        accountHistoryQueue.setCompletionOperation(completionOperation)
+        accountHistoryQueue.addOperation(completionOperation)
     }
     
     fileprivate func createGetHistoryOperation(_ queue: ECHOQueue,
@@ -408,7 +542,8 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         return getAssetsOperation
     }
     
-    fileprivate func createGetAccountsOperation(_ queue: ECHOQueue, _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
+    fileprivate func createGetAccountsOperation(_ queue: ECHOQueue,
+                                                _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
         
         let getAccountsOperation = BlockOperation()
         
@@ -438,7 +573,8 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         return getAccountsOperation
     }
     
-    fileprivate func createGetDepositsEthOperation(_ queue: ECHOQueue, _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
+    fileprivate func createGetDepositsEthOperation(_ queue: ECHOQueue,
+                                                   _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
         
         let getDepositsEthOperation = BlockOperation()
         
@@ -449,7 +585,7 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
             
             let depositsIdsArray = depositsIds.map { $0 }
             
-            self?.services.databaseService.getObjects(type: DepositEth.self,
+            self?.services.databaseService.getObjects(type: EthDeposit.self,
                                                       objectsIds: depositsIdsArray,
                                                       completion: { (result) in
                 
@@ -482,7 +618,7 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
             
             let withdrawsIdsArray = withdrawsIds.map { $0 }
             
-            self?.services.databaseService.getObjects(type: WithdrawalEth.self,
+            self?.services.databaseService.getObjects(type: EthWithdrawal.self,
                                                       objectsIds: withdrawsIdsArray,
                                                       completion: { (result) in
                                                         
@@ -504,7 +640,8 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         return getWithdrawsEthOperation
     }
     
-    fileprivate func createMergeBlocksInHistoryOperation(_ queue: ECHOQueue, _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
+    fileprivate func createMergeBlocksInHistoryOperation(_ queue: ECHOQueue,
+                                                         _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
         
         let mergeBlocksInHistoryOperation = BlockOperation()
         
@@ -535,7 +672,8 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         return mergeBlocksInHistoryOperation
     }
     
-    fileprivate func createMergeAccountsInHistoryOperation(_ queue: ECHOQueue, _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
+    fileprivate func createMergeAccountsInHistoryOperation(_ queue: ECHOQueue,
+                                                           _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
         
         let mergeAccountsInHistoryOperation = BlockOperation()
         
@@ -596,12 +734,6 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                     historyItem.operation = operation
                 }
                 
-                if var operation = operation as? ContractTransferOperation {
-                    let toAccount = self?.findAccountIn(accounts, accountId: operation.toAccount.id)
-                    operation.changeAccounts(toAccount: toAccount)
-                    historyItem.operation = operation
-                }
-                
                 if var operation = operation as? SidechainETHCreateAddressOperation {
                     let account = self?.findAccountIn(accounts, accountId: operation.account.id)
                     operation.changeAccount(account: account)
@@ -614,13 +746,13 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                     historyItem.operation = operation
                 }
                 
-                if var operation = operation as? SidechainETHIssueOperation {
+                if var operation = operation as? SidechainIssueOperation {
                     let account = self?.findAccountIn(accounts, accountId: operation.account.id)
                     operation.changeAccount(account: account)
                     historyItem.operation = operation
                 }
                 
-                if var operation = operation as? SidechainETHBurnOperation {
+                if var operation = operation as? SidechainBurnOperation {
                     let account = self?.findAccountIn(accounts, accountId: operation.account.id)
                     operation.changeAccount(account: account)
                     historyItem.operation = operation
@@ -643,7 +775,7 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
             
             guard mergeDepositsEthInHistoryOperation?.isCancelled == false else { return }
             guard var history: [HistoryItem] = queue?.getValue(AccountHistoryResultsKeys.historyItems.rawValue) else { return }
-            guard let deposits: [DepositEth] = queue?.getValue(AccountHistoryResultsKeys.loadedDepositsIds.rawValue) else { return }
+            guard let deposits: [EthDeposit] = queue?.getValue(AccountHistoryResultsKeys.loadedDepositsIds.rawValue) else { return }
             
             for index in 0..<history.count {
                 
@@ -651,7 +783,7 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                 
                 guard let operation = historyItem.operation else { continue }
                 
-                if var operation = operation as? SidechainETHIssueOperation {
+                if var operation = operation as? SidechainIssueOperation {
                     let deposit = self?.findDepositEthIn(deposits, depositId: operation.depositId)
                     operation.deposit = deposit
                     historyItem.operation = operation
@@ -674,7 +806,7 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
             
             guard mergeDepositsEthInHistoryOperation?.isCancelled == false else { return }
             guard var history: [HistoryItem] = queue?.getValue(AccountHistoryResultsKeys.historyItems.rawValue) else { return }
-            guard let withdraws: [WithdrawalEth] = queue?.getValue(AccountHistoryResultsKeys.loadedWithdrawalsIds.rawValue) else { return }
+            guard let withdraws: [EthWithdrawal] = queue?.getValue(AccountHistoryResultsKeys.loadedWithdrawalsIds.rawValue) else { return }
             
             for index in 0..<history.count {
                 
@@ -682,7 +814,7 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                 
                 guard let operation = historyItem.operation else { continue }
                 
-                if var operation = operation as? SidechainETHBurnOperation {
+                if var operation = operation as? SidechainBurnOperation {
                     let withdraw = self?.findWithdrawsEthIn(withdraws, withdrawId: operation.withdrawId)
                     operation.withdraw = withdraw
                     historyItem.operation = operation
@@ -776,10 +908,10 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                     historyItem.operation = operation
                 }
                 
-                if var operation = operation as? ContractTransferOperation {
+                if var operation = operation as? ContractInternalCallOperation {
                     let feeAsset = self?.findAssetsIn(assets, assetId: operation.fee.asset.id)
-                    let transferAsset = self?.findAssetsIn(assets, assetId: operation.transferAmount.asset.id)
-                    operation.changeAssets(feeAsset: feeAsset, transferAmount: transferAsset)
+                    let valueAsset = self?.findAssetsIn(assets, assetId: operation.value.asset.id)
+                    operation.changeAssets(valueAsset: valueAsset, feeAsset: feeAsset)
                     historyItem.operation = operation
                 }
                 
@@ -795,14 +927,14 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                     historyItem.operation = operation
                 }
                 
-                if var operation = operation as? SidechainETHIssueOperation {
+                if var operation = operation as? SidechainIssueOperation {
                     let feeAsset = self?.findAssetsIn(assets, assetId: operation.fee.asset.id)
                     let valueAsset = self?.findAssetsIn(assets, assetId: operation.value.asset.id)
                     operation.changeAssets(valueAsset: valueAsset, feeAsset: feeAsset)
                     historyItem.operation = operation
                 }
                 
-                if var operation = operation as? SidechainETHBurnOperation {
+                if var operation = operation as? SidechainBurnOperation {
                     let feeAsset = self?.findAssetsIn(assets, assetId: operation.fee.asset.id)
                     let valueAsset = self?.findAssetsIn(assets, assetId: operation.value.asset.id)
                     operation.changeAssets(valueAsset: valueAsset, feeAsset: feeAsset)
@@ -845,12 +977,12 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         return array.first(where: {$0.id == assetId})
     }
     
-    fileprivate func findDepositEthIn(_ array: [DepositEth], depositId: String) -> DepositEth? {
+    fileprivate func findDepositEthIn(_ array: [EthDeposit], depositId: String) -> EthDeposit? {
         
         return array.first(where: {$0.id == depositId})
     }
     
-    fileprivate func findWithdrawsEthIn(_ array: [WithdrawalEth], withdrawId: String) -> WithdrawalEth? {
+    fileprivate func findWithdrawsEthIn(_ array: [EthWithdrawal], withdrawId: String) -> EthWithdrawal? {
         
         return array.first(where: {$0.id == withdrawId})
     }
@@ -928,11 +1060,6 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                 return
             }
             
-            if let operation = operation as? ContractTransferOperation {
-                accountsIds.insert(operation.toAccount.id)
-                return
-            }
-            
             if let operation = operation as? SidechainETHCreateAddressOperation {
                 accountsIds.insert(operation.account.id)
                 return
@@ -943,12 +1070,12 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                 return
             }
             
-            if let operation = operation as? SidechainETHIssueOperation {
+            if let operation = operation as? SidechainIssueOperation {
                 accountsIds.insert(operation.account.id)
                 return
             }
             
-            if let operation = operation as? SidechainETHBurnOperation {
+            if let operation = operation as? SidechainBurnOperation {
                 accountsIds.insert(operation.account.id)
                 return
             }
@@ -999,17 +1126,17 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                 return
             }
             
-            if let operation = operation as? ContractTransferOperation {
-                assetsIds.insert(operation.transferAmount.asset.id)
-                return
-            }
-            
-            if let operation = operation as? SidechainETHIssueOperation {
+            if let operation = operation as? ContractInternalCallOperation {
                 assetsIds.insert(operation.value.asset.id)
                 return
             }
             
-            if let operation = operation as? SidechainETHBurnOperation {
+            if let operation = operation as? SidechainIssueOperation {
+                assetsIds.insert(operation.value.asset.id)
+                return
+            }
+            
+            if let operation = operation as? SidechainBurnOperation {
                 assetsIds.insert(operation.value.asset.id)
                 return
             }
@@ -1028,7 +1155,7 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                 return
             }
             
-            if let operation = operation as? SidechainETHIssueOperation {
+            if let operation = operation as? SidechainIssueOperation {
                 depositsId.insert(operation.depositId)
                 return
             }
@@ -1047,7 +1174,7 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                 return
             }
             
-            if let operation = operation as? SidechainETHBurnOperation {
+            if let operation = operation as? SidechainBurnOperation {
                 withdrawalsId.insert(operation.withdrawId)
                 return
             }
@@ -1065,7 +1192,7 @@ extension InformationFacadeImp: NoticeEventDelegate {
         case .array(let array):
             if let noticeOperationId = array.first as? Int {
 
-                for queue in queues {
+                for queue in queues.values {
 
                     if let queueTransferOperationId: Int = queue.getValue(CreationAccountResultsKeys.operationID.rawValue),
                         queueTransferOperationId == noticeOperationId {
@@ -1076,6 +1203,13 @@ extension InformationFacadeImp: NoticeEventDelegate {
             }
         default:
             break
+        }
+    }
+    
+    public func didAllNoticesLost() {
+        for queue in queues.values {
+            queue.saveValue(ECHOError.connectionLost, forKey: CreationAccountResultsKeys.noticeError.rawValue)
+            queue.startNextOperation()
         }
     }
 }
