@@ -279,6 +279,7 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble {
             return
         }
         
+        // Validate Ethereum address
         let ethValidator = ETHAddressValidator(cryptoCore: cryptoCore)
         guard ethValidator.isValidETHAddress(toEthAddress) else {
             let result = Result<Bool, ECHOError>(error: .invalidETHAddress)
@@ -297,7 +298,7 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble {
         let getAccountsOperation = GetAccountsQueueOperation<Bool>(initParams: getAccountsOperationInitParams,
                                                                    completion: completion)
         
-        let bildTransferOperation = createBildWithdrawalOperation(withdrawalQueue, Asset(assetForFee), amount, toEthAddress, completion)
+        let bildWithdrawalOperation = createBildWithdrawalOperation(withdrawalQueue, Asset(assetForFee), amount, toEthAddress, completion)
         
         // RequiredFee
         let getRequiredFeeOperationInitParams = (withdrawalQueue,
@@ -345,7 +346,7 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble {
         let completionOperation = createCompletionOperation(queue: withdrawalQueue)
         
         withdrawalQueue.addOperation(getAccountsOperation)
-        withdrawalQueue.addOperation(bildTransferOperation)
+        withdrawalQueue.addOperation(bildWithdrawalOperation)
         withdrawalQueue.addOperation(getRequiredFeeOperation)
         withdrawalQueue.addOperation(getChainIdOperation)
         withdrawalQueue.addOperation(getBlockDataOperation)
@@ -372,23 +373,22 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble {
                                                    _ asset: Asset,
                                                    _ completion: @escaping Completion<Bool>) -> Operation {
         
-        let bildTransferOperation = BlockOperation()
+        let generationOperation = BlockOperation()
         
-        bildTransferOperation.addExecutionBlock { [weak bildTransferOperation, weak queue] in
+        generationOperation.addExecutionBlock { [weak generationOperation, weak queue] in
             
-            guard bildTransferOperation?.isCancelled == false else { return }
+            guard generationOperation?.isCancelled == false else { return }
             
             guard let account: Account = queue?.getValue(EthFacadeResultKeys.loadedAccount.rawValue) else { return }
             
             let fee = AssetAmount(amount: 0, asset: asset)
             
-            let extractedExpr: SidechainETHCreateAddressOperation = SidechainETHCreateAddressOperation.init(account: account, fee: fee)
-            let transferOperation = extractedExpr
+            let operation = SidechainETHCreateAddressOperation.init(account: account, fee: fee)
             
-            queue?.saveValue(transferOperation, forKey: EthFacadeResultKeys.operation.rawValue)
+            queue?.saveValue(operation, forKey: EthFacadeResultKeys.operation.rawValue)
         }
         
-        return bildTransferOperation
+        return generationOperation
     }
     
     fileprivate func createBildWithdrawalOperation(_ queue: ECHOQueue,

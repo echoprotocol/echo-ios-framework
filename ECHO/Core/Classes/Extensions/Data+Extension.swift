@@ -62,6 +62,11 @@ extension Data {
         return Data() + Int8(clamping: input).littleEndian
     }
     
+    static func fromUInt8(_ input: UInt8) -> Data {
+
+        return Data() + UInt8(clamping: input).littleEndian
+    }
+    
     static func fromInt16(_ input: Int) -> Data {
 
         return Data() + Int16(clamping: input).littleEndian

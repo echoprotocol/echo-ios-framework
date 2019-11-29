@@ -2172,4 +2172,195 @@ class ECHOInterfaceTests: XCTestCase {
             XCTAssertTrue(withdrawals?.count != 0)
         }
     }
+    
+    // MARK: ERC20
+    
+//    func testRegisterERC20Token() {
+//
+//        //arrange
+//        echo = ECHO(settings: Settings(build: {
+//            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+//            $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+//        }))
+//        let exp = expectation(description: "testRegisterERC20Token")
+//        var isSuccess = false
+//
+//        //act
+//        echo.start { [unowned self] (result) in
+//            self.echo.registerERC20Token(nameOrId: Constants.defaultName,
+//                                         wif: Constants.defaultWIF,
+//                                         tokenAddress: Constants.erc20Token,
+//                                         tokenName: Constants.erc20TokenName,
+//                                         tokenSymbol: Constants.erc20TokenSymbol,
+//                                         tokenDecimals: Constants.erc20TokenDecimals,
+//                                         assetForFee: nil,
+//                                         completion: { (result) in
+//
+//                 switch result {
+//                 case .success(let result):
+//                     isSuccess = result
+//                 case .failure(let error):
+//                     XCTFail("testRegisterERC20Token must be valid \(error)")
+//                 }
+//             }, noticeHandler: { (_) in
+//                 exp.fulfill()
+//             })
+//        }
+//
+//        //assert
+//        waitForExpectations(timeout: Constants.timeout) { error in
+//            XCTAssertTrue(isSuccess)
+//        }
+//    }
+    
+    func testGetERC20Token() {
+        
+        //arrange
+        echo = ECHO(settings: Settings(build: {
+            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+            $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+        }))
+        let exp = expectation(description: "testGetERC20Token")
+        var token: ERC20Token? = nil
+        
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.getERC20Token(tokenAddress: Constants.erc20Token) { (result) in
+                switch result {
+                case .success(let result):
+                    token = result
+                    exp.fulfill()
+                case .failure(let error):
+                    XCTFail("testGetERC20Token must be valid \(error)")
+                }
+            }
+        }
+        
+        //assert
+        waitForExpectations(timeout: Constants.timeout) { error in
+            XCTAssertNotNil(token)
+        }
+    }
+    
+    func testNotRegisteredERC20Token() {
+        
+        //arrange
+        echo = ECHO(settings: Settings(build: {
+            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+            $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+        }))
+        let exp = expectation(description: "testGetERC20Token")
+        var token: ERC20Token? = nil
+        
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.getERC20Token(tokenAddress: Constants.erc20TokenNotRegistered) { (result) in
+                switch result {
+                case .success(let result):
+                    token = result
+                    exp.fulfill()
+                case .failure(let error):
+                    XCTFail("testGetERC20Token must be valid \(error)")
+                }
+            }
+        }
+        
+        //assert
+        waitForExpectations(timeout: Constants.timeout) { error in
+            XCTAssertNil(token)
+        }
+    }
+    
+    func testCheckERC20Token() {
+        
+        //arrange
+        echo = ECHO(settings: Settings(build: {
+            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+            $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+        }))
+        let exp = expectation(description: "testCheckERC20Token")
+        var isERC20: Bool!
+        
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.checkERC20Token(contractId: Constants.erc20TokenEchoContract) { (result) in
+                switch result {
+                case .success(let result):
+                    isERC20 = result
+                    exp.fulfill()
+                case .failure(let error):
+                    XCTFail("testCheckERC20Token must be valid \(error)")
+                }
+            }
+        }
+        
+        //assert
+        waitForExpectations(timeout: Constants.timeout) { error in
+            XCTAssertTrue(isERC20)
+        }
+    }
+    
+    func testGetERC20AccountDeposits() {
+        
+        //arrange
+        echo = ECHO(settings: Settings(build: {
+            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+            $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+        }))
+        let exp = expectation(description: "testGetERC20AccountDeposits")
+        var deposits: [ERC20Deposit]?
+        
+        //act
+        echo.start { [unowned self] (result) in
+            
+            self.echo.getERC20AccountDeposits(nameOrId: Constants.defaultName, completion: { (result) in
+                
+                switch result {
+                case .success(let result):
+                    deposits = result
+                    exp.fulfill()
+                case .failure(let error):
+                    XCTFail("testGetAccountDeposits must be valid \(error)")
+                }
+            })
+        }
+        
+        //assert
+        waitForExpectations(timeout: Constants.timeout) { error in
+            XCTAssertNotNil(deposits)
+            XCTAssertTrue(deposits?.count != 0)
+        }
+    }
+    
+    func testGetERC20AccountWithdrawals() {
+        
+        //arrange
+        echo = ECHO(settings: Settings(build: {
+            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+            $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+        }))
+        let exp = expectation(description: "testGetERC20AccountWithdrawals")
+        var withdrawals: [ERC20Withdrawal]?
+        
+        //act
+        echo.start { [unowned self] (result) in
+            
+            self.echo.getERC20AccountWithdrawals(nameOrId: Constants.defaultName, completion: { (result) in
+                
+                switch result {
+                case .success(let result):
+                    withdrawals = result
+                    exp.fulfill()
+                case .failure(let error):
+                    XCTFail("testGetAccountWithdrawals must be valid \(error)")
+                }
+            })
+        }
+        
+        //assert
+        waitForExpectations(timeout: Constants.timeout) { error in
+            XCTAssertNotNil(withdrawals)
+            XCTAssertTrue(withdrawals?.count != 0)
+        }
+    }
 }

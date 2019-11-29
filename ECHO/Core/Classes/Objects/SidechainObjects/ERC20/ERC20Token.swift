@@ -27,7 +27,7 @@ public struct ERC20Token: Decodable {
     public var contract: String
     public var name: String
     public var symbol: String
-    public var decimals: Int
+    public var decimals: UInt8
     
     public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: ERC20TokenCodingKeys.self)
@@ -37,7 +37,6 @@ public struct ERC20Token: Decodable {
         contract = try values.decode(String.self, forKey: .contract)
         name = try values.decode(String.self, forKey: .name)
         symbol = try values.decode(String.self, forKey: .symbol)
-        decimals = try values.decode(Int.self, forKey: .decimals)
+        decimals = try values.decode(UInt8.self, forKey: .decimals)
     }
 }
-

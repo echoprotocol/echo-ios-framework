@@ -7,7 +7,8 @@
 //
 
 /**
-    Struct used to encapsulate operations related to the [OperationType.SidechainETHCreateAddressOperation](OperationType.SidechainETHCreateAddressOperation)
+    Struct used to encapsulate operations related to the
+    [OperationType.SidechainETHCreateAddressOperation](OperationType.SidechainETHCreateAddressOperation)
  */
 public struct SidechainETHCreateAddressOperation: BaseOperation {
     

@@ -48,6 +48,18 @@
 	<string>$(COUNTER_CONTRACT_BYTECODE)</string>
 	<key>DEFAULT_BLOCK_NUMBER</key>
 	<string>$(DEFAULT_BLOCK_NUMBER)</string>
+	<key>ERC20_TOKEN</key>
+	<string>$(ERC20_TOKEN)</string>
+	<key>ERC20_TOKEN_ECHO_CONTRACT</key>
+	<string>$(ERC20_TOKEN_ECHO_CONTRACT)</string>
+	<key>ERC20_TOKEN_NOT_REGISTERED</key>
+	<string>$(ERC20_TOKEN_NOT_REGISTERED)</string>
+	<key>ERC20_TOKEN_NAME</key>
+	<string>$(ERC20_TOKEN_NAME)</string>
+	<key>ERC20_TOKEN_SYMBOL</key>
+	<string>$(ERC20_TOKEN_SYMBOL)</string>
+	<key>ERC20_TOKEN_DECIMALS</key>
+	<string>$(ERC20_TOKEN_DECIMALS)</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
