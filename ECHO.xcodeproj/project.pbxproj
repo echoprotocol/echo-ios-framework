@@ -170,6 +170,7 @@
 		D04835EF23575B7D0071B6C6 /* UInt8+Bits.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04835EE23575B7D0071B6C6 /* UInt8+Bits.swift */; };
 		D048AE772136ABBE00441FEB /* TransactionSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D048AE762136ABBE00441FEB /* TransactionSocketOperation.swift */; };
 		D048BA982149403B0098AEBF /* QueryContractSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D048BA972149403B0098AEBF /* QueryContractSocketOperation.swift */; };
+		D0588A6623916B04000E956C /* SidechainERC20WithdrawTokenOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0588A6523916B04000E956C /* SidechainERC20WithdrawTokenOperation.swift */; };
 		D05B7A3F2306BD6200329534 /* Signatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05B7A3E2306BD6200329534 /* Signatures.swift */; };
 		D05C20BD228EEB51004A2EB0 /* SubscribeContractsSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05C20BC228EEB51004A2EB0 /* SubscribeContractsSocketOperation.swift */; };
 		D061330A21A2BD41009EC456 /* BaseApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D061330921A2BD41009EC456 /* BaseApiService.swift */; };
@@ -478,6 +479,7 @@
 		D04835EE23575B7D0071B6C6 /* UInt8+Bits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UInt8+Bits.swift"; sourceTree = "<group>"; };
 		D048AE762136ABBE00441FEB /* TransactionSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionSocketOperation.swift; sourceTree = "<group>"; };
 		D048BA972149403B0098AEBF /* QueryContractSocketOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueryContractSocketOperation.swift; sourceTree = "<group>"; };
+		D0588A6523916B04000E956C /* SidechainERC20WithdrawTokenOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidechainERC20WithdrawTokenOperation.swift; sourceTree = "<group>"; };
 		D05B7A3E2306BD6200329534 /* Signatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Signatures.swift; sourceTree = "<group>"; };
 		D05C20BC228EEB51004A2EB0 /* SubscribeContractsSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribeContractsSocketOperation.swift; sourceTree = "<group>"; };
 		D061330921A2BD41009EC456 /* BaseApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseApiService.swift; sourceTree = "<group>"; };
@@ -1209,6 +1211,7 @@
 				D0A4933C22AFA029006DF77B /* SidechainIssueOperation.swift */,
 				D0A4933E22AFBE56006DF77B /* SidechainBurnOperation.swift */,
 				D0CF3F5223911181005811F7 /* SidechainERC20RegisterTokenOperation.swift */,
+				D0588A6523916B04000E956C /* SidechainERC20WithdrawTokenOperation.swift */,
 			);
 			path = Operation;
 			sourceTree = "<group>";
@@ -1639,6 +1642,7 @@
 				B38596FC20F6005500B55E59 /* Price.swift in Sources */,
 				D0FAC41522AE3DC400C8BF49 /* FeeType.swift in Sources */,
 				D09DA11621EDE5210004673F /* RegisterAccountSocketOperation.swift in Sources */,
+				D0588A6623916B04000E956C /* SidechainERC20WithdrawTokenOperation.swift in Sources */,
 				B38596F220F5EE1400B55E59 /* GetObjectsSocketOperation.swift in Sources */,
 				B30CC37F214A7074003953E3 /* String+AbiRegexp.swift in Sources */,
 				D0D8CA482141847900F0646D /* GetChainIdQueueOperation.swift in Sources */,

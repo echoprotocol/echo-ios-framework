@@ -55,6 +55,27 @@ public protocol ERC20Facade {
                          completion: @escaping Completion<Bool>)
     
 /**
+    Send ERC20 token to Ethereum network to ethAddress
+    
+    - Parameter nameOrId: Name or id
+    - Parameter wif: Sender wif from account
+    - Parameter toEthAddress: Receiver eth address
+    - Parameter tokenId: Echo token id for withdraw
+    - Parameter value: Amount
+    - Parameter assetForFee:Id of asset which is pay fee
+    - Parameter completion: Callback in which the information will return whether the transaction was successful.
+    - Parameter noticeHandler: Callback in which the information will return whether the transaction was confirmed.
+*/
+   func withdrawERC20(nameOrId: String,
+                      wif: String,
+                      toEthAddress: String,
+                      tokenId: String,
+                      value: String,
+                      assetForFee: String?,
+                      completion: @escaping Completion<Bool>,
+                      noticeHandler: NoticeHandler?)
+    
+/**
     Returns all ERC20 deposits, for the given account id.
     
     - Parameter nameOrId: Accoint name or id

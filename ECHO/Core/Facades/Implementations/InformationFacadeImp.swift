@@ -758,6 +758,18 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                     historyItem.operation = operation
                 }
                 
+                if var operation = operation as? SidechainERC20RegisterTokenOperation {
+                    let account = self?.findAccountIn(accounts, accountId: operation.account.id)
+                    operation.changeAccount(account: account)
+                    historyItem.operation = operation
+                }
+                
+                if var operation = operation as? SidechainERC20WithdrawTokenOperation {
+                    let account = self?.findAccountIn(accounts, accountId: operation.account.id)
+                    operation.changeAccount(account: account)
+                    historyItem.operation = operation
+                }
+                
                 history[index] = historyItem
             }
             
@@ -940,6 +952,18 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                     operation.changeAssets(valueAsset: valueAsset, feeAsset: feeAsset)
                     historyItem.operation = operation
                 }
+                
+                if var operation = operation as? SidechainERC20RegisterTokenOperation {
+                    let feeAsset = self?.findAssetsIn(assets, assetId: operation.fee.asset.id)
+                    operation.changeAssets(feeAsset: feeAsset)
+                    historyItem.operation = operation
+                }
+                
+                if var operation = operation as? SidechainERC20RegisterTokenOperation {
+                    let feeAsset = self?.findAssetsIn(assets, assetId: operation.fee.asset.id)
+                    operation.changeAssets(feeAsset: feeAsset)
+                    historyItem.operation = operation
+                }
 
                 history[index] = historyItem
             }
@@ -1076,6 +1100,16 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
             }
             
             if let operation = operation as? SidechainBurnOperation {
+                accountsIds.insert(operation.account.id)
+                return
+            }
+            
+            if let operation = operation as? SidechainERC20RegisterTokenOperation {
+                accountsIds.insert(operation.account.id)
+                return
+            }
+            
+            if let operation = operation as? SidechainERC20WithdrawTokenOperation {
                 accountsIds.insert(operation.account.id)
                 return
             }

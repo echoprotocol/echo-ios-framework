@@ -2073,30 +2073,30 @@ class ECHOInterfaceTests: XCTestCase {
         }
     }
     
-    func testWithdrawalEth() {
+    func testWithdrawEth() {
         
         //arrange
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
         }))
-        let exp = expectation(description: "testWithdrawalEth")
+        let exp = expectation(description: "testWithdrawEth")
         var isSuccess = false
         
         //act
         echo.start { [unowned self] (result) in
-            self.echo.withdrawalEth(nameOrId: Constants.defaultName,
-                                    wif: Constants.defaultWIF,
-                                    toEthAddress: Constants.defaultETHAddress,
-                                    amount: 1,
-                                    assetForFee: nil,
-                                    completion: { (result) in
+            self.echo.withdrawEth(nameOrId: Constants.defaultName,
+                                  wif: Constants.defaultWIF,
+                                  toEthAddress: Constants.defaultETHAddress,
+                                  amount: 1,
+                                  assetForFee: nil,
+                                  completion: { (result) in
                 
                 switch result {
                 case .success(let result):
                     isSuccess = result
                 case .failure(let error):
-                    XCTFail("testWithdrawalEth must be valid \(error)")
+                    XCTFail("testWithdrawEth must be valid \(error)")
                 }
             }, noticeHandler: { (_) in
                 exp.fulfill()
@@ -2297,6 +2297,43 @@ class ECHOInterfaceTests: XCTestCase {
         //assert
         waitForExpectations(timeout: Constants.timeout) { error in
             XCTAssertTrue(isERC20)
+        }
+    }
+    
+    func testWithdrawERC20() {
+        
+        //arrange
+        echo = ECHO(settings: Settings(build: {
+            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+            $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+        }))
+        let exp = expectation(description: "testWithdrawERC20")
+        var isSuccess = false
+        
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.withdrawERC20(nameOrId: Constants.defaultName,
+                                    wif: Constants.defaultWIF,
+                                    toEthAddress: Constants.defaultETHAddress,
+                                    tokenId: Constants.erc20TokenEchoContract,
+                                    value: "0000000000000000000000000000000000000000000000000000000000000001",
+                                    assetForFee: nil,
+                                    completion: { (result) in
+                
+                switch result {
+                case .success(let result):
+                    isSuccess = result
+                case .failure(let error):
+                    XCTFail("testWithdrawERC20 must be valid \(error)")
+                }
+            }, noticeHandler: { (_) in
+                exp.fulfill()
+            })
+        }
+        
+        //assert
+        waitForExpectations(timeout: Constants.timeout) { error in
+            XCTAssertTrue(isSuccess)
         }
     }
     

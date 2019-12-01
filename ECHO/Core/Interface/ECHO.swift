@@ -118,7 +118,7 @@ final public class ECHO: InterfaceFacades, Startable {
                                  noticeDelegateHandler: noticeEventProxy)
         
         let erc20FacadeServices = ERC20FacadeServices(databaseService: databaseService, networkBroadcastService: networkBroadcastService)
-        erc20Facade = ERC20FacadeImp(services: ethFacadeServices,
+        erc20Facade = ERC20FacadeImp(services: erc20FacadeServices,
                                      cryptoCore: settings.cryproComponent,
                                      network: settings.network,
                                      noticeDelegateHandler: noticeEventProxy)
@@ -570,21 +570,21 @@ final public class ECHO: InterfaceFacades, Startable {
         ethFacade.getEthAddress(nameOrId: nameOrId, completion: completion)
     }
     
-    public func withdrawalEth(nameOrId: String,
-                              wif: String,
-                              toEthAddress: String,
-                              amount: UInt,
-                              assetForFee: String?,
-                              completion: @escaping Completion<Bool>,
-                              noticeHandler: NoticeHandler?) {
+    public func withdrawEth(nameOrId: String,
+                            wif: String,
+                            toEthAddress: String,
+                            amount: UInt,
+                            assetForFee: String?,
+                            completion: @escaping Completion<Bool>,
+                            noticeHandler: NoticeHandler?) {
         
-        ethFacade.withdrawalEth(nameOrId: nameOrId,
-                                wif: wif,
-                                toEthAddress: toEthAddress,
-                                amount: amount,
-                                assetForFee: assetForFee,
-                                completion: completion,
-                                noticeHandler: noticeHandler)
+        ethFacade.withdrawEth(nameOrId: nameOrId,
+                              wif: wif,
+                              toEthAddress: toEthAddress,
+                              amount: amount,
+                              assetForFee: assetForFee,
+                              completion: completion,
+                              noticeHandler: noticeHandler)
     }
     
     public func getAccountDeposits(nameOrId: String, completion: @escaping Completion<[EthDeposit]>) {
@@ -628,6 +628,25 @@ final public class ECHO: InterfaceFacades, Startable {
     public func checkERC20Token(contractId: String, completion: @escaping Completion<Bool>) {
         
         erc20Facade.checkERC20Token(contractId: contractId, completion: completion)
+    }
+    
+    public func withdrawERC20(nameOrId: String,
+                              wif: String,
+                              toEthAddress: String,
+                              tokenId: String,
+                              value: String,
+                              assetForFee: String?,
+                              completion: @escaping Completion<Bool>,
+                              noticeHandler: NoticeHandler?) {
+        
+        erc20Facade.withdrawERC20(nameOrId: nameOrId,
+                                  wif: wif,
+                                  toEthAddress: toEthAddress,
+                                  tokenId: tokenId,
+                                  value: value,
+                                  assetForFee: assetForFee,
+                                  completion: completion,
+                                  noticeHandler: noticeHandler)
     }
     
     public func getERC20AccountDeposits(nameOrId: String, completion: @escaping Completion<[ERC20Deposit]>) {

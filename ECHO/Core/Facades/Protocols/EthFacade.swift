@@ -48,13 +48,13 @@ public protocol EthFacade {
      - Parameter completion: Callback in which the information will return whether the transaction was successful.
      - Parameter noticeHandler: Callback in which the information will return whether the transaction was confirmed.     
  */
-    func withdrawalEth(nameOrId: String,
-                       wif: String,
-                       toEthAddress: String,
-                       amount: UInt,
-                       assetForFee: String?,
-                       completion: @escaping Completion<Bool>,
-                       noticeHandler: NoticeHandler?)
+    func withdrawEth(nameOrId: String,
+                     wif: String,
+                     toEthAddress: String,
+                     amount: UInt,
+                     assetForFee: String?,
+                     completion: @escaping Completion<Bool>,
+                     noticeHandler: NoticeHandler?)
     
 /**
      Returns all approved deposits, for the given account id or name.

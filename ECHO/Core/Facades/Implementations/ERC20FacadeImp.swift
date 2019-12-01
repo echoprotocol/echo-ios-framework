@@ -20,11 +20,11 @@ public struct ERC20FacadeServices {
 final public class ERC20FacadeImp: ERC20Facade, ECHOQueueble {
 
     var queues: [String: ECHOQueue]
-    let services: EthFacadeServices
+    let services: ERC20FacadeServices
     let network: ECHONetwork
     let cryptoCore: CryptoCoreComponent
     
-    public init(services: EthFacadeServices,
+    public init(services: ERC20FacadeServices,
                 cryptoCore: CryptoCoreComponent,
                 network: ECHONetwork,
                 noticeDelegateHandler: NoticeEventDelegateHandler) {
@@ -259,6 +259,121 @@ final public class ERC20FacadeImp: ERC20Facade, ECHOQueueble {
     }
     // swiftlint:enable function_body_length
     
+    // swiftlint:disable function_body_length
+    public func withdrawERC20(nameOrId: String,
+                              wif: String,
+                              toEthAddress: String,
+                              tokenId: String,
+                              value: String,
+                              assetForFee: String?,
+                              completion: @escaping Completion<Bool>,
+                              noticeHandler: NoticeHandler?) {
+        
+        // if we don't hace assetForFee, we use asset.
+        let assetForFee = assetForFee ?? Settings.defaultAsset
+        
+        // Validate asset id and token id
+        do {
+            let validator = IdentifierValidator()
+            try validator.validateId(assetForFee, for: .asset)
+            try validator.validateId(tokenId, for: .contract)
+        } catch let error {
+            let echoError = (error as? ECHOError) ?? ECHOError.undefined
+            let result = Result<Bool, ECHOError>(error: echoError)
+            completion(result)
+            return
+        }
+        
+        // Validate Ethereum address
+        let ethValidator = ETHAddressValidator(cryptoCore: cryptoCore)
+        guard ethValidator.isValidETHAddress(toEthAddress) else {
+            let result = Result<Bool, ECHOError>(error: .invalidETHAddress)
+            completion(result)
+            return
+        }
+        
+        let withdrawalQueue = ECHOQueue()
+        addQueue(withdrawalQueue)
+        
+        // Accounts
+        let getAccountsNamesOrIdsWithKeys = GetAccountsNamesOrIdWithKeys([(nameOrId, ERC20FacadeResultKeys.loadedAccount.rawValue)])
+        let getAccountsOperationInitParams = (withdrawalQueue,
+                                              services.databaseService,
+                                              getAccountsNamesOrIdsWithKeys)
+        let getAccountsOperation = GetAccountsQueueOperation<Bool>(initParams: getAccountsOperationInitParams,
+                                                                   completion: completion)
+        
+        let bildWithdrawOperation = createBildWithdrawOperation(withdrawalQueue, Asset(assetForFee), value, toEthAddress, tokenId, completion)
+        
+        // RequiredFee
+        let getRequiredFeeOperationInitParams = (withdrawalQueue,
+                                                 services.databaseService,
+                                                 Asset(assetForFee),
+                                                 ERC20FacadeResultKeys.operation.rawValue,
+                                                 ERC20FacadeResultKeys.fee.rawValue,
+                                                 UInt(1))
+        let getRequiredFeeOperation = GetRequiredFeeQueueOperation<Bool>(initParams: getRequiredFeeOperationInitParams,
+                                                                         completion: completion)
+        
+        // ChainId
+        let getChainIdInitParams = (withdrawalQueue, services.databaseService, ERC20FacadeResultKeys.chainId.rawValue)
+        let getChainIdOperation = GetChainIdQueueOperation<Bool>(initParams: getChainIdInitParams,
+                                                                 completion: completion)
+        
+        // BlockData
+        let getBlockDataInitParams = (withdrawalQueue, services.databaseService, ERC20FacadeResultKeys.blockData.rawValue)
+        let getBlockDataOperation = GetBlockDataQueueOperation<Bool>(initParams: getBlockDataInitParams,
+                                                                     completion: completion)
+        
+        // Transaciton
+        let transactionOperationInitParams = (queue: withdrawalQueue,
+                                              cryptoCore: cryptoCore,
+                                              saveKey: ERC20FacadeResultKeys.transaction.rawValue,
+                                              wif: wif,
+                                              networkPrefix: network.echorandPrefix.rawValue,
+                                              fromAccountKey: ERC20FacadeResultKeys.loadedAccount.rawValue,
+                                              operationKey: ERC20FacadeResultKeys.operation.rawValue,
+                                              chainIdKey: ERC20FacadeResultKeys.chainId.rawValue,
+                                              blockDataKey: ERC20FacadeResultKeys.blockData.rawValue,
+                                              feeKey: ERC20FacadeResultKeys.fee.rawValue)
+        let bildTransactionOperation = GetTransactionQueueOperation<Bool>(initParams: transactionOperationInitParams,
+                                                                          completion: completion)
+        
+        // Send transaction
+        let sendTransacionOperationInitParams = (withdrawalQueue,
+                                                 services.networkBroadcastService,
+                                                 ERC20FacadeResultKeys.operationId.rawValue,
+                                                 ERC20FacadeResultKeys.transaction.rawValue)
+        let sendTransactionOperation = SendTransactionQueueOperation(initParams: sendTransacionOperationInitParams,
+                                                                     completion: completion)
+        
+        // Completion
+        let completionOperation = createCompletionOperation(queue: withdrawalQueue)
+        
+        withdrawalQueue.addOperation(getAccountsOperation)
+        withdrawalQueue.addOperation(bildWithdrawOperation)
+        withdrawalQueue.addOperation(getRequiredFeeOperation)
+        withdrawalQueue.addOperation(getChainIdOperation)
+        withdrawalQueue.addOperation(getBlockDataOperation)
+        withdrawalQueue.addOperation(bildTransactionOperation)
+        withdrawalQueue.addOperation(sendTransactionOperation)
+        
+        //Notice handler
+        if let noticeHandler = noticeHandler {
+            withdrawalQueue.saveValue(noticeHandler, forKey: ERC20FacadeResultKeys.noticeHandler.rawValue)
+            let waitOperation = createWaitingOperation(withdrawalQueue)
+            let noticeHandleOperation = createNoticeHandleOperation(withdrawalQueue,
+                                                                    ERC20FacadeResultKeys.noticeHandler.rawValue,
+                                                                    ERC20FacadeResultKeys.notice.rawValue,
+                                                                    ERC20FacadeResultKeys.noticeError.rawValue)
+            withdrawalQueue.addOperation(waitOperation)
+            withdrawalQueue.addOperation(noticeHandleOperation)
+        }
+        
+        withdrawalQueue.addOperation(completionOperation)
+    }
+    // swiftlint:enable function_body_length
+    
     fileprivate func createBildRegisterOperation(_ queue: ECHOQueue,
                                                  _ asset: Asset,
                                                  _ tokenAddress: String,
@@ -289,6 +404,37 @@ final public class ERC20FacadeImp: ERC20Facade, ECHOQueueble {
         }
         
         return bildRegisterOperation
+    }
+    
+    fileprivate func createBildWithdrawOperation(_ queue: ECHOQueue,
+                                                 _ asset: Asset,
+                                                 _ value: String,
+                                                 _ toEthAddress: String,
+                                                 _ tokenId: String,
+                                                 _ completion: @escaping Completion<Bool>) -> Operation {
+        
+        let bildWithdrawOperation = BlockOperation()
+        
+        bildWithdrawOperation.addExecutionBlock { [weak bildWithdrawOperation, weak queue] in
+            
+            guard bildWithdrawOperation?.isCancelled == false else { return }
+            
+            guard let account: Account = queue?.getValue(ERC20FacadeResultKeys.loadedAccount.rawValue) else { return }
+            
+            let fee = AssetAmount(amount: 0, asset: asset)
+            let address = toEthAddress.replacingOccurrences(of: "0x", with: "")
+            let token = Contract(id: tokenId)
+            
+            let withdrawOperation = SidechainERC20WithdrawTokenOperation(account: account,
+                                                                         toEthAddress: address,
+                                                                         token: token,
+                                                                         value: value,
+                                                                         fee: fee)
+            
+            queue?.saveValue(withdrawOperation, forKey: ERC20FacadeResultKeys.operation.rawValue)
+        }
+        
+        return bildWithdrawOperation
     }
     
     fileprivate func createNoticeHandleOperation(_ queue: ECHOQueue,

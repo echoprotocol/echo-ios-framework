@@ -257,13 +257,13 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble {
         generateQueue.addOperation(completionOperation)
     }
     
-    public func withdrawalEth(nameOrId: String,
-                              wif: String,
-                              toEthAddress: String,
-                              amount: UInt,
-                              assetForFee: String?,
-                              completion: @escaping Completion<Bool>,
-                              noticeHandler: NoticeHandler?) {
+    public func withdrawEth(nameOrId: String,
+                            wif: String,
+                            toEthAddress: String,
+                            amount: UInt,
+                            assetForFee: String?,
+                            completion: @escaping Completion<Bool>,
+                            noticeHandler: NoticeHandler?) {
         
         // if we don't hace assetForFee, we use asset.
         let assetForFee = assetForFee ?? Settings.defaultAsset
@@ -298,7 +298,7 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble {
         let getAccountsOperation = GetAccountsQueueOperation<Bool>(initParams: getAccountsOperationInitParams,
                                                                    completion: completion)
         
-        let bildWithdrawalOperation = createBildWithdrawalOperation(withdrawalQueue, Asset(assetForFee), amount, toEthAddress, completion)
+        let bildWithdrawOperation = createBildWithdrawOperation(withdrawalQueue, Asset(assetForFee), amount, toEthAddress, completion)
         
         // RequiredFee
         let getRequiredFeeOperationInitParams = (withdrawalQueue,
@@ -346,7 +346,7 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble {
         let completionOperation = createCompletionOperation(queue: withdrawalQueue)
         
         withdrawalQueue.addOperation(getAccountsOperation)
-        withdrawalQueue.addOperation(bildWithdrawalOperation)
+        withdrawalQueue.addOperation(bildWithdrawOperation)
         withdrawalQueue.addOperation(getRequiredFeeOperation)
         withdrawalQueue.addOperation(getChainIdOperation)
         withdrawalQueue.addOperation(getBlockDataOperation)
@@ -391,33 +391,32 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble {
         return generationOperation
     }
     
-    fileprivate func createBildWithdrawalOperation(_ queue: ECHOQueue,
-                                                   _ asset: Asset,
-                                                   _ amount: UInt,
-                                                   _ toEthAddress: String,
-                                                   _ completion: @escaping Completion<Bool>) -> Operation {
+    fileprivate func createBildWithdrawOperation(_ queue: ECHOQueue,
+                                                 _ asset: Asset,
+                                                 _ amount: UInt,
+                                                 _ toEthAddress: String,
+                                                 _ completion: @escaping Completion<Bool>) -> Operation {
         
-        let bildWithdrawalOperation = BlockOperation()
+        let bildWithdrawOperation = BlockOperation()
         
-        bildWithdrawalOperation.addExecutionBlock { [weak bildWithdrawalOperation, weak queue] in
+        bildWithdrawOperation.addExecutionBlock { [weak bildWithdrawOperation, weak queue] in
             
-            guard bildWithdrawalOperation?.isCancelled == false else { return }
+            guard bildWithdrawOperation?.isCancelled == false else { return }
             
             guard let account: Account = queue?.getValue(EthFacadeResultKeys.loadedAccount.rawValue) else { return }
             
             let fee = AssetAmount(amount: 0, asset: asset)
             let address = toEthAddress.replacingOccurrences(of: "0x", with: "")
             
-            let extractedExpr: SidechainETHWithdrawOperation = SidechainETHWithdrawOperation(account: account,
-                                                                               value: amount,
-                                                                               ethAddress: address,
-                                                                               fee: fee)
-            let withdrawalOperation = extractedExpr
+            let withdrawOperation = SidechainETHWithdrawOperation(account: account,
+                                                                  value: amount,
+                                                                  ethAddress: address,
+                                                                  fee: fee)
             
-            queue?.saveValue(withdrawalOperation, forKey: EthFacadeResultKeys.operation.rawValue)
+            queue?.saveValue(withdrawOperation, forKey: EthFacadeResultKeys.operation.rawValue)
         }
         
-        return bildWithdrawalOperation
+        return bildWithdrawOperation
     }
     
     fileprivate func createNoticeHandleOperation(_ queue: ECHOQueue,
