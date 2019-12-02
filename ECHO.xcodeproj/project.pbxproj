@@ -170,6 +170,9 @@
 		D04835EF23575B7D0071B6C6 /* UInt8+Bits.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04835EE23575B7D0071B6C6 /* UInt8+Bits.swift */; };
 		D048AE772136ABBE00441FEB /* TransactionSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D048AE762136ABBE00441FEB /* TransactionSocketOperation.swift */; };
 		D048BA982149403B0098AEBF /* QueryContractSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D048BA972149403B0098AEBF /* QueryContractSocketOperation.swift */; };
+		D04DAC86239533D200D5AF87 /* SidechainERC20BurnOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04DAC85239533D200D5AF87 /* SidechainERC20BurnOperation.swift */; };
+		D04DAC8823954FC000D5AF87 /* BlockRewardOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04DAC8723954FC000D5AF87 /* BlockRewardOperation.swift */; };
+		D04DAC8A2395541300D5AF87 /* SidechainERC20DepositTokenOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04DAC892395541300D5AF87 /* SidechainERC20DepositTokenOperation.swift */; };
 		D0588A6623916B04000E956C /* SidechainERC20WithdrawTokenOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0588A6523916B04000E956C /* SidechainERC20WithdrawTokenOperation.swift */; };
 		D05B7A3F2306BD6200329534 /* Signatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05B7A3E2306BD6200329534 /* Signatures.swift */; };
 		D05C20BD228EEB51004A2EB0 /* SubscribeContractsSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05C20BC228EEB51004A2EB0 /* SubscribeContractsSocketOperation.swift */; };
@@ -487,6 +490,9 @@
 		D04835EE23575B7D0071B6C6 /* UInt8+Bits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UInt8+Bits.swift"; sourceTree = "<group>"; };
 		D048AE762136ABBE00441FEB /* TransactionSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionSocketOperation.swift; sourceTree = "<group>"; };
 		D048BA972149403B0098AEBF /* QueryContractSocketOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueryContractSocketOperation.swift; sourceTree = "<group>"; };
+		D04DAC85239533D200D5AF87 /* SidechainERC20BurnOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidechainERC20BurnOperation.swift; sourceTree = "<group>"; };
+		D04DAC8723954FC000D5AF87 /* BlockRewardOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockRewardOperation.swift; sourceTree = "<group>"; };
+		D04DAC892395541300D5AF87 /* SidechainERC20DepositTokenOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidechainERC20DepositTokenOperation.swift; sourceTree = "<group>"; };
 		D0588A6523916B04000E956C /* SidechainERC20WithdrawTokenOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidechainERC20WithdrawTokenOperation.swift; sourceTree = "<group>"; };
 		D05B7A3E2306BD6200329534 /* Signatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Signatures.swift; sourceTree = "<group>"; };
 		D05C20BC228EEB51004A2EB0 /* SubscribeContractsSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribeContractsSocketOperation.swift; sourceTree = "<group>"; };
@@ -1228,6 +1234,7 @@
 				D09D745D21EF58F700E0F46D /* CreateContractOperation.swift */,
 				D09D745F21EF590500E0F46D /* CallContractOperation.swift */,
 				D0D5711D224BA58B007F6CC3 /* ContractTransferOperation.swift */,
+				D04DAC8723954FC000D5AF87 /* BlockRewardOperation.swift */,
 				D0ED8C1D2292A1EF002EC3EA /* SidechainETHCreateAddressOperation.swift */,
 				D0C911F5238FF304000B2AE2 /* SidechainBTCCreateAddressOperation.swift */,
 				D0ED8C292292EE82002EC3EA /* SidechainETHWithdrawOperation.swift */,
@@ -1235,7 +1242,9 @@
 				D0A4933C22AFA029006DF77B /* SidechainIssueOperation.swift */,
 				D0A4933E22AFBE56006DF77B /* SidechainBurnOperation.swift */,
 				D0CF3F5223911181005811F7 /* SidechainERC20RegisterTokenOperation.swift */,
+				D04DAC892395541300D5AF87 /* SidechainERC20DepositTokenOperation.swift */,
 				D0588A6523916B04000E956C /* SidechainERC20WithdrawTokenOperation.swift */,
+				D04DAC85239533D200D5AF87 /* SidechainERC20BurnOperation.swift */,
 			);
 			path = Operation;
 			sourceTree = "<group>";
@@ -1495,6 +1504,7 @@
 				D09DA11C21EDE6870004673F /* RegistrationApiServiceImp.swift in Sources */,
 				D043C917237AD561006ADD26 /* SidechainType.swift in Sources */,
 				D0C911EE238FD6AF000B2AE2 /* BtcFacade.swift in Sources */,
+				D04DAC8A2395541300D5AF87 /* SidechainERC20DepositTokenOperation.swift in Sources */,
 				B39554B5213EBAED00CE2647 /* ListAssetsSocketOperation.swift in Sources */,
 				B385970420F6270000B55E59 /* ECHOObject.swift in Sources */,
 				D0A4932F22AF8A41006DF77B /* EthWithdrawal.swift in Sources */,
@@ -1555,6 +1565,7 @@
 				D0A1F7912354ADE100F38038 /* ContractLogEnum.swift in Sources */,
 				B38596FE20F6009A00B55E59 /* Asset.swift in Sources */,
 				B358CD08213978800046327F /* Settings.swift in Sources */,
+				D04DAC8823954FC000D5AF87 /* BlockRewardOperation.swift in Sources */,
 				D0C911F0238FD6CB000B2AE2 /* BtcFacadeImp.swift in Sources */,
 				B39A7C0B2105F5F7003CC14D /* SubscriptionFacadeImp.swift in Sources */,
 				D0CB0F1E236AFAFF00A7184F /* ERC20Token.swift in Sources */,
@@ -1617,6 +1628,7 @@
 				B3D1C90421386430009018AE /* CryptoCoreImp.swift in Sources */,
 				D0CF3F5F239151C8005811F7 /* ERC20Withdrawal.swift in Sources */,
 				B3CA702E20F4A46200511F6A /* SubscriptionFacade.swift in Sources */,
+				D04DAC86239533D200D5AF87 /* SidechainERC20BurnOperation.swift in Sources */,
 				B3E9A35B21A2A51E001A95B4 /* NoticeEventProxyImp.swift in Sources */,
 				B3CA703020F4A46E00511F6A /* FeeFacade.swift in Sources */,
 				B3965B162125952700029585 /* Collection+Extension.swift in Sources */,

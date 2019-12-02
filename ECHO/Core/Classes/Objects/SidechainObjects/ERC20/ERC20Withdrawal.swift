@@ -26,7 +26,7 @@ public struct ERC20Withdrawal: ECHOObject, Decodable {
     public let withdrawId: UInt
     public let account: Account
     public let toAddress: String
-    public let erc20Token: Contract
+    public let erc20Token: ERC20Token
     public let value: String
     public let isApproved: Bool
     public let approves: [String]
@@ -41,8 +41,8 @@ public struct ERC20Withdrawal: ECHOObject, Decodable {
         isApproved = try values.decode(Bool.self, forKey: .isApproved)
         approves = try values.decode([String].self, forKey: .approves)
         
-        let contractId = try values.decode(String.self, forKey: .erc20Token)
-        erc20Token = Contract(id: contractId)
+        let tokenId = try values.decode(String.self, forKey: .erc20Token)
+        erc20Token = ERC20Token(id: tokenId)
         
         let accountId = try values.decode(String.self, forKey: .account)
         account = Account(accountId)

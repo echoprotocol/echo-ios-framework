@@ -27,7 +27,7 @@ public struct SidechainERC20WithdrawTokenOperation: BaseOperation {
     
     public var account: Account
     public let toEthAddress: String
-    public let token: ERC20Token
+    public var token: ERC20Token
     public let value: String
     
     init(account: Account, toEthAddress: String, token: ERC20Token,
@@ -57,6 +57,11 @@ public struct SidechainERC20WithdrawTokenOperation: BaseOperation {
         
         toEthAddress = try values.decode(String.self, forKey: .toEthAddress)
         value = try values.decode(String.self, forKey: .value)
+    }
+    
+    mutating func changeToken(token: ERC20Token?) {
+        
+        if let token = token { self.token = token }
     }
     
     mutating func changeAccount(account: Account?) {

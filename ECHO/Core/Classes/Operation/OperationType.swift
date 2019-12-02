@@ -95,6 +95,7 @@ struct OperationDecoder {
         case .contractCreateOperation: return decode(CreateContractOperation.self, container: container)
         case .contractCallOperation: return decode(CallContractOperation.self, container: container)
         case .contractInternalCallOperation: return decode(ContractInternalCallOperation.self, container: container)
+        case .blockRewardOperation: return decode(BlockRewardOperation.self, container: container)
         case .sidechainETHCreateAddressOperation: return decode(SidechainETHCreateAddressOperation.self, container: container)
         case .sidechainETHWithdrawOperation: return decode(SidechainETHWithdrawOperation.self, container: container)
         case .sidechainIssueOperation: return decode(SidechainIssueOperation.self, container: container)
@@ -103,6 +104,8 @@ struct OperationDecoder {
         case .sidechainBTCWithdrawOperation: return decode(SidechainBTCWithdrawOperation.self, container: container)
         case .sidechainERC20RegisterTokenOperation: return decode(SidechainERC20RegisterTokenOperation.self, container: container)
         case .sidechainERC20WithdrawTokenOperation: return decode(SidechainERC20WithdrawTokenOperation.self, container: container)
+        case .sidechainERC20BurnOperation: return decode(SidechainERC20BurnOperation.self, container: container)
+        case .sidechainERC20DepositTokenOperation: return decode(SidechainERC20DepositTokenOperation.self, container: container)
         default: return nil
         }
     }
@@ -140,6 +143,8 @@ struct OperationDecoder {
                 baseOperation = try? JSONDecoder().decode(ContractInternalCallOperation.self, from: data)
             case .sidechainETHCreateAddressOperation:
                 baseOperation = try? JSONDecoder().decode(SidechainETHCreateAddressOperation.self, from: data)
+            case .blockRewardOperation:
+                baseOperation = try? JSONDecoder().decode(BlockRewardOperation.self, from: data)
             case .sidechainETHWithdrawOperation:
                 baseOperation = try? JSONDecoder().decode(SidechainETHWithdrawOperation.self, from: data)
             case .sidechainIssueOperation:
@@ -154,6 +159,10 @@ struct OperationDecoder {
                 baseOperation = try? JSONDecoder().decode(SidechainERC20RegisterTokenOperation.self, from: data)
             case .sidechainERC20WithdrawTokenOperation:
                 baseOperation = try? JSONDecoder().decode(SidechainERC20WithdrawTokenOperation.self, from: data)
+            case .sidechainERC20BurnOperation:
+                baseOperation = try? JSONDecoder().decode(SidechainERC20BurnOperation.self, from: data)
+            case .sidechainERC20DepositTokenOperation:
+                baseOperation = try? JSONDecoder().decode(SidechainERC20DepositTokenOperation.self, from: data)
             default:
                 break
             }
