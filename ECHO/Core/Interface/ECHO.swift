@@ -17,6 +17,7 @@ public typealias InterfaceFacades = AuthentificationFacade
     & CustomOperationsFacade
     & EthFacade
     & BtcFacade
+    & ERC20Facade
 
 public protocol Startable {
     func start(completion: @escaping Completion<Bool>)
@@ -45,6 +46,7 @@ final public class ECHO: InterfaceFacades, Startable {
     let customOperationsFacade: CustomOperationsFacade
     let ethFacade: EthFacade
     let btcFacade: BtcFacade
+    let erc20Facade: ERC20Facade
 
     public init(settings: Settings) {
 
@@ -112,7 +114,6 @@ final public class ECHO: InterfaceFacades, Startable {
                                              settings: settings)
         
         let ethFacadeServices = EthFacadeServices(databaseService: databaseService, networkBroadcastService: networkBroadcastService)
-        
         ethFacade = EthFacadeImp(services: ethFacadeServices,
                                  cryptoCore: settings.cryproComponent,
                                  network: settings.network,
@@ -124,6 +125,12 @@ final public class ECHO: InterfaceFacades, Startable {
                                  cryptoCore: settings.cryproComponent,
                                  network: settings.network,
                                  noticeDelegateHandler: noticeEventProxy)
+
+        let erc20FacadeServices = ERC20FacadeServices(databaseService: databaseService, networkBroadcastService: networkBroadcastService)
+        erc20Facade = ERC20FacadeImp(services: erc20FacadeServices,
+                                     cryptoCore: settings.cryproComponent,
+                                     network: settings.network,
+                                     noticeDelegateHandler: noticeEventProxy)
         
         let customOperationsServices = CustomOperationsFacadeServices(databaseService: databaseService,
                                                                       cryptoService: cryptoService,
@@ -572,21 +579,21 @@ final public class ECHO: InterfaceFacades, Startable {
         ethFacade.getEthAddress(nameOrId: nameOrId, completion: completion)
     }
     
-    public func withdrawalEth(nameOrId: String,
-                              wif: String,
-                              toEthAddress: String,
-                              amount: UInt,
-                              assetForFee: String?,
-                              completion: @escaping Completion<Bool>,
-                              noticeHandler: NoticeHandler?) {
+    public func withdrawEth(nameOrId: String,
+                            wif: String,
+                            toEthAddress: String,
+                            amount: UInt,
+                            assetForFee: String?,
+                            completion: @escaping Completion<Bool>,
+                            noticeHandler: NoticeHandler?) {
         
-        ethFacade.withdrawalEth(nameOrId: nameOrId,
-                                wif: wif,
-                                toEthAddress: toEthAddress,
-                                amount: amount,
-                                assetForFee: assetForFee,
-                                completion: completion,
-                                noticeHandler: noticeHandler)
+        ethFacade.withdrawEth(nameOrId: nameOrId,
+                              wif: wif,
+                              toEthAddress: toEthAddress,
+                              amount: amount,
+                              assetForFee: assetForFee,
+                              completion: completion,
+                              noticeHandler: noticeHandler)
     }
     
     public func getEthAccountDeposits(nameOrId: String, completion: @escaping Completion<[EthDeposit]>) {
@@ -646,6 +653,68 @@ final public class ECHO: InterfaceFacades, Startable {
     public func getBtcAccountWithdrawals(nameOrId: String, completion: @escaping Completion<[BtcWithdrawal]>) {
         
         btcFacade.getBtcAccountWithdrawals(nameOrId: nameOrId, completion: completion)
+    }
+    
+    // MARK: ERC20Facade
+    
+    public func registerERC20Token(nameOrId: String,
+                                   wif: String,
+                                   tokenAddress: String,
+                                   tokenName: String,
+                                   tokenSymbol: String,
+                                   tokenDecimals: UInt8,
+                                   assetForFee: String?,
+                                   completion: @escaping Completion<Bool>,
+                                   noticeHandler: NoticeHandler?) {
+        
+        erc20Facade.registerERC20Token(nameOrId: nameOrId,
+                                       wif: wif,
+                                       tokenAddress: tokenAddress,
+                                       tokenName: tokenName,
+                                       tokenSymbol: tokenSymbol,
+                                       tokenDecimals: tokenDecimals,
+                                       assetForFee: assetForFee,
+                                       completion: completion,
+                                       noticeHandler: noticeHandler)
+    }
+    
+    public func getERC20Token(tokenAddress: String, completion: @escaping Completion<ERC20Token?>) {
+        
+        erc20Facade.getERC20Token(tokenAddress: tokenAddress, completion: completion)
+    }
+    
+    public func checkERC20Token(contractId: String, completion: @escaping Completion<Bool>) {
+        
+        erc20Facade.checkERC20Token(contractId: contractId, completion: completion)
+    }
+    
+    public func withdrawERC20(nameOrId: String,
+                              wif: String,
+                              toEthAddress: String,
+                              tokenId: String,
+                              value: String,
+                              assetForFee: String?,
+                              completion: @escaping Completion<Bool>,
+                              noticeHandler: NoticeHandler?) {
+        
+        erc20Facade.withdrawERC20(nameOrId: nameOrId,
+                                  wif: wif,
+                                  toEthAddress: toEthAddress,
+                                  tokenId: tokenId,
+                                  value: value,
+                                  assetForFee: assetForFee,
+                                  completion: completion,
+                                  noticeHandler: noticeHandler)
+    }
+    
+    public func getERC20AccountDeposits(nameOrId: String, completion: @escaping Completion<[ERC20Deposit]>) {
+        
+        erc20Facade.getERC20AccountDeposits(nameOrId: nameOrId, completion: completion)
+    }
+    
+    public func getERC20AccountWithdrawals(nameOrId: String, completion: @escaping Completion<[ERC20Withdrawal]>) {
+        
+        erc20Facade.getERC20AccountWithdrawals(nameOrId: nameOrId, completion: completion)
     }
     
     // MARK: CustomOperationsFacade

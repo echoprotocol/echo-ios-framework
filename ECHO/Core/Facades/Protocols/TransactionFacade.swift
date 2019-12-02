@@ -21,6 +21,7 @@ public protocol TransactionFacade {
      - Parameter asset: Id of asset which is sent
      - Parameter assetForFee: Id of asset which is pay fee
      - Parameter completion: Callback in which the information will return whether the transaction was successful.
+     - Parameter noticeHandler: Callback in which the information will return whether the transaction was confirmed.     
      
      - Remark:
      Default asset is **"1.3.0"**

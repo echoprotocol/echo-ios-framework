@@ -6,8 +6,10 @@
 //  Copyright © 2019 PixelPlex. All rights reserved.
 //
 
-import Foundation
-
+/**
+   Struct used to encapsulate operations related to the
+    [OperationType.sidechainIssueOperation](OperationType.sidechainIssueOperation)
+*/
 public struct SidechainIssueOperation: BaseOperation {
     
     enum SidechainIssueOperationCodingKeys: String, CodingKey {

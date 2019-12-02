@@ -18,6 +18,7 @@ public protocol EthFacade {
      - Parameter wif: Sender wif from account
      - Parameter assetForFee: Id of asset which is pay fee
      - Parameter completion: Callback in which the information will return whether the transaction was successful.
+     - Parameter noticeHandler: Callback in which the information will return whether the transaction was confirmed.
      
      - Remark:
      Default asset is **"1.3.0"**
@@ -45,14 +46,15 @@ public protocol EthFacade {
      - Parameter toEthAddress: Receiver ethereum address
      - Parameter amount: Amount
      - Parameter completion: Callback in which the information will return whether the transaction was successful.
+     - Parameter noticeHandler: Callback in which the information will return whether the transaction was confirmed.     
  */
-    func withdrawalEth(nameOrId: String,
-                       wif: String,
-                       toEthAddress: String,
-                       amount: UInt,
-                       assetForFee: String?,
-                       completion: @escaping Completion<Bool>,
-                       noticeHandler: NoticeHandler?)
+    func withdrawEth(nameOrId: String,
+                     wif: String,
+                     toEthAddress: String,
+                     amount: UInt,
+                     assetForFee: String?,
+                     completion: @escaping Completion<Bool>,
+                     noticeHandler: NoticeHandler?)
     
 /**
      Returns all approved deposits, for the given account id or name.

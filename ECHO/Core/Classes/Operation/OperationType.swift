@@ -101,6 +101,8 @@ struct OperationDecoder {
         case .sidechainBurnOperation: return decode(SidechainBurnOperation.self, container: container)
         case .sidechainBTCCreateAddressOperation: return decode(SidechainBTCCreateAddressOperation.self, container: container)
         case .sidechainBTCWithdrawOperation: return decode(SidechainBTCWithdrawOperation.self, container: container)
+        case .sidechainERC20RegisterTokenOperation: return decode(SidechainERC20RegisterTokenOperation.self, container: container)
+        case .sidechainERC20WithdrawTokenOperation: return decode(SidechainERC20WithdrawTokenOperation.self, container: container)
         default: return nil
         }
     }
@@ -148,6 +150,10 @@ struct OperationDecoder {
                 baseOperation = try? JSONDecoder().decode(SidechainBTCCreateAddressOperation.self, from: data)
             case .sidechainBTCWithdrawOperation:
                 baseOperation = try? JSONDecoder().decode(SidechainBTCWithdrawOperation.self, from: data)
+            case .sidechainERC20RegisterTokenOperation:
+                baseOperation = try? JSONDecoder().decode(SidechainERC20RegisterTokenOperation.self, from: data)
+            case .sidechainERC20WithdrawTokenOperation:
+                baseOperation = try? JSONDecoder().decode(SidechainERC20WithdrawTokenOperation.self, from: data)
             default:
                 break
             }

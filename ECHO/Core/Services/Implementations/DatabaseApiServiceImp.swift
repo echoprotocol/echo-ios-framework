@@ -16,6 +16,7 @@ private typealias ContractsService = DatabaseApiServiceImp
 private typealias SidechainService = DatabaseApiServiceImp
 private typealias EthService = DatabaseApiServiceImp
 private typealias BtcService = DatabaseApiServiceImp
+private typealias ERC20Service = DatabaseApiServiceImp
 
 /**
      Implementation of [DatabaseApiService](DatabaseApiService)
@@ -331,7 +332,7 @@ extension EthService {
                                                      apiId: apiIdentifire,
                                                      accountId: accountId,
                                                      completion: completion)
-        
+    
         socketCore.send(operation: operation)
     }
 }
@@ -344,6 +345,53 @@ extension BtcService {
                                                      apiId: apiIdentifire,
                                                      accountId: accountId,
                                                      completion: completion)
+        
+        socketCore.send(operation: operation)
+    }
+}
+
+extension ERC20Service {
+    
+    func getERC20Token(tokenAddress: String, completion: @escaping Completion<ERC20Token?>) {
+        
+        let operation = GetERC20TokenSocketOperation(method: .call,
+                                                     operationId: socketCore.nextOperationId(),
+                                                     apiId: apiIdentifire,
+                                                     ethAddress: tokenAddress,
+                                                     completion: completion)
+        
+        socketCore.send(operation: operation)
+    }
+    
+    func checkERC20Token(contractId: String, completion: @escaping Completion<Bool>) {
+        
+        let operation = CheckERC20TokenSocketOperation(method: .call,
+                                                       operationId: socketCore.nextOperationId(),
+                                                       apiId: apiIdentifire,
+                                                       contractId: contractId,
+                                                       completion: completion)
+        
+        socketCore.send(operation: operation)
+    }
+    
+    func getERC20AccountDeposits(accountId: String, completion: @escaping Completion<[ERC20Deposit]>) {
+        
+        let operation = GetERC20AccountDepositsSocketOperation(method: .call,
+                                                               operationId: socketCore.nextOperationId(),
+                                                               apiId: apiIdentifire,
+                                                               accountId: accountId,
+                                                               completion: completion)
+        
+        socketCore.send(operation: operation)
+    }
+    
+    func getERC20AccountWithdrawals(accountId: String, completion: @escaping Completion<[ERC20Withdrawal]>) {
+        
+        let operation = GetERC20AccountWithdrawalsSocketOperation(method: .call,
+                                                                  operationId: socketCore.nextOperationId(),
+                                                                  apiId: apiIdentifire,
+                                                                  accountId: accountId,
+                                                                  completion: completion)
         
         socketCore.send(operation: operation)
     }

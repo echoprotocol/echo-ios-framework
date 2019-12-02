@@ -46,6 +46,10 @@ enum SocketOperationKeys: String {
     case getBtcAddress = "get_btc_address"
     case getAccountDeposits = "get_account_deposits"
     case getAccountWithdrawals = "get_account_withdrawals"
+    case getERC20Token = "get_erc20_token"
+    case checkERC20Token = "check_erc20_token"
+    case getERC20AccountDeposits = "get_erc20_account_deposits"
+    case getERC20AccountWithdrawals = "get_erc20_account_withdrawals"
     case requestRegistrationTask = "request_registration_task"
     case submitRegistrationSolution = "submit_registration_solution"
 }
