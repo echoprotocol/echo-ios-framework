@@ -1141,7 +1141,7 @@ class ECHOInterfaceTests: XCTestCase {
 //        var asset = Asset("")
 //        asset.symbol = "SHARAEV"
 //        asset.precision = 4
-//        asset.issuer = Account("1.2.27")
+//        asset.issuer = Account("1.2.41")
 ////        asset.setBitsassetOptions(BitassetOptions(feedLifetimeSec: 86400,
 ////                                                  minimumFeeds: 7,
 ////                                                  forceSettlementDelaySec: 86400,
@@ -1365,7 +1365,10 @@ class ECHOInterfaceTests: XCTestCase {
         
         //act
         echo.start { [unowned self] (result) in
-            self.echo.getContractLogs(contractId: contractId, fromBlock: fromBlock, toBlock: toBlock, completion: { (result) in
+            self.echo.getContractLogs(contractId: contractId,
+                                      fromBlock: fromBlock,
+                                      toBlock: toBlock,
+                                      completion: { (result) in
                 
                 switch result {
                 case .success(let logs):
@@ -1380,7 +1383,7 @@ class ECHOInterfaceTests: XCTestCase {
         //assert
         waitForExpectations(timeout: Constants.timeout) { error in
             XCTAssertNotNil(contractLogs)
-            XCTAssertEqual(contractLogs.count, 4)
+            XCTAssertEqual(contractLogs.count, 2)
         }
     }
     
