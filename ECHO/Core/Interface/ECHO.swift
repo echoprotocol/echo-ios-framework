@@ -621,7 +621,7 @@ final public class ECHO: InterfaceFacades, Startable {
         btcFacade.getBtcAddress(nameOrId: nameOrId, completion: completion)
     }
     
-    public func withdrawalBtc(nameOrId: String,
+    public func withdrawBtc(nameOrId: String,
                               wif: String,
                               toBtcAddress: String,
                               amount: UInt,
@@ -629,7 +629,7 @@ final public class ECHO: InterfaceFacades, Startable {
                               completion: @escaping Completion<Bool>,
                               noticeHandler: NoticeHandler?) {
         
-        btcFacade.withdrawalBtc(nameOrId: nameOrId,
+        btcFacade.withdrawBtc(nameOrId: nameOrId,
                                 wif: wif,
                                 toBtcAddress: toBtcAddress,
                                 amount: amount,

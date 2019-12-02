@@ -39,7 +39,7 @@ public protocol BtcFacade {
     - Parameter amount: Amount
     - Parameter completion: Callback in which the information will return whether the transaction was successful.
 */
-   func withdrawalBtc(nameOrId: String,
+   func withdrawBtc(nameOrId: String,
                       wif: String,
                       toBtcAddress: String,
                       amount: UInt,

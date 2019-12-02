@@ -402,8 +402,8 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         let getBlocksOperation = createGetBlocksOperation(accountHistoryQueue, completion)
         let getAccountsOperation = createGetAccountsOperation(accountHistoryQueue, completion)
         let getAssetsOperation = createGetAssetsOperation(accountHistoryQueue, completion)
-        let getDepositsEthOperation = createGetDepositsEthOperation(accountHistoryQueue, completion)
-        let getWithdrawsEthOperation = createGetWithdrawsEthOperation(accountHistoryQueue, completion)
+        let getDepositsEthOperation = createGetSidechainDepositsOperation(accountHistoryQueue, completion)
+        let getWithdrawsEthOperation = createGetSidechainWithdrawsOperation(accountHistoryQueue, completion)
         let mergeBlocksToHistoryOperation = createMergeBlocksInHistoryOperation(accountHistoryQueue, completion)
         let mergeAccountsToHistoryOperation = createMergeAccountsInHistoryOperation(accountHistoryQueue, completion)
         let mergeAssetsToHistoryOperation = createMergeAssetsInHistoryOperation(accountHistoryQueue, completion)
@@ -573,7 +573,7 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         return getAccountsOperation
     }
     
-    fileprivate func createGetDepositsEthOperation(_ queue: ECHOQueue,
+    fileprivate func createGetSidechainDepositsOperation(_ queue: ECHOQueue,
                                                    _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
         
         let getDepositsEthOperation = BlockOperation()
@@ -585,7 +585,7 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
             
             let depositsIdsArray = depositsIds.map { $0 }
             
-            self?.services.databaseService.getObjects(type: EthDeposit.self,
+            self?.services.databaseService.getObjects(type: SidechainDepositEnum.self,
                                                       objectsIds: depositsIdsArray,
                                                       completion: { (result) in
                 
@@ -607,7 +607,7 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         return getDepositsEthOperation
     }
     
-    fileprivate func createGetWithdrawsEthOperation(_ queue: ECHOQueue, _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
+    fileprivate func createGetSidechainWithdrawsOperation(_ queue: ECHOQueue, _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
         
         let getWithdrawsEthOperation = BlockOperation()
         
@@ -618,7 +618,7 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
             
             let withdrawsIdsArray = withdrawsIds.map { $0 }
             
-            self?.services.databaseService.getObjects(type: EthWithdrawal.self,
+            self?.services.databaseService.getObjects(type: SidechainWithdrawalEnum.self,
                                                       objectsIds: withdrawsIdsArray,
                                                       completion: { (result) in
                                                         
@@ -787,7 +787,7 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
             
             guard mergeDepositsEthInHistoryOperation?.isCancelled == false else { return }
             guard var history: [HistoryItem] = queue?.getValue(AccountHistoryResultsKeys.historyItems.rawValue) else { return }
-            guard let deposits: [EthDeposit] = queue?.getValue(AccountHistoryResultsKeys.loadedDepositsIds.rawValue) else { return }
+            guard let deposits: [SidechainDepositEnum] = queue?.getValue(AccountHistoryResultsKeys.loadedDepositsIds.rawValue) else { return }
             
             for index in 0..<history.count {
                 
@@ -796,7 +796,7 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                 guard let operation = historyItem.operation else { continue }
                 
                 if var operation = operation as? SidechainIssueOperation {
-                    let deposit = self?.findDepositEthIn(deposits, depositId: operation.depositId)
+                    let deposit = self?.findSidechainDepositIn(deposits, depositId: operation.depositId)
                     operation.deposit = deposit
                     historyItem.operation = operation
                 }
@@ -818,7 +818,7 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
             
             guard mergeDepositsEthInHistoryOperation?.isCancelled == false else { return }
             guard var history: [HistoryItem] = queue?.getValue(AccountHistoryResultsKeys.historyItems.rawValue) else { return }
-            guard let withdraws: [EthWithdrawal] = queue?.getValue(AccountHistoryResultsKeys.loadedWithdrawalsIds.rawValue) else { return }
+            guard let withdraws: [SidechainWithdrawalEnum] = queue?.getValue(AccountHistoryResultsKeys.loadedWithdrawalsIds.rawValue) else { return }
             
             for index in 0..<history.count {
                 
@@ -827,7 +827,7 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                 guard let operation = historyItem.operation else { continue }
                 
                 if var operation = operation as? SidechainBurnOperation {
-                    let withdraw = self?.findWithdrawsEthIn(withdraws, withdrawId: operation.withdrawId)
+                    let withdraw = self?.findSidechainWithdrawsIn(withdraws, withdrawId: operation.withdrawId)
                     operation.withdraw = withdraw
                     historyItem.operation = operation
                 }
@@ -1001,14 +1001,28 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         return array.first(where: {$0.id == assetId})
     }
     
-    fileprivate func findDepositEthIn(_ array: [EthDeposit], depositId: String) -> EthDeposit? {
+    fileprivate func findSidechainDepositIn(_ array: [SidechainDepositEnum], depositId: String) -> SidechainDepositEnum? {
         
-        return array.first(where: {$0.id == depositId})
+        return array.first(where: {
+            switch $0 {
+            case .btc(let deposit):
+                return deposit.id == depositId
+            case .eth(let deposit):
+                return deposit.id == depositId
+            }
+        })
     }
     
-    fileprivate func findWithdrawsEthIn(_ array: [EthWithdrawal], withdrawId: String) -> EthWithdrawal? {
+    fileprivate func findSidechainWithdrawsIn(_ array: [SidechainWithdrawalEnum], withdrawId: String) -> SidechainWithdrawalEnum? {
         
-        return array.first(where: {$0.id == withdrawId})
+        return array.first(where: {
+            switch $0 {
+            case .btc(let withdraw):
+                return withdraw.id == withdrawId
+            case .eth(let withdraw):
+                return withdraw.id == withdrawId
+            }
+        })
     }
     
     fileprivate func findDataToLoadFromHistoryItems(_ items: [HistoryItem]) -> (blockNums: Set<Int>,
@@ -1020,8 +1034,8 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         let blockNums = fingBlockNumsFromHistoryItems(items)
         let accountIds = findAccountsIds(items)
         let assetIds = findAssetsIds(items)
-        let depositsIds = findDepositsEth(items)
-        let withdrawsIds = findWithdrawalsEth(items)
+        let depositsIds = findSidechainDeposits(items)
+        let withdrawsIds = findSidechainWithdrawals(items)
         return (blockNums, accountIds, assetIds, depositsIds, withdrawsIds)
     }
     
@@ -1179,7 +1193,7 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         return assetsIds
     }
     
-    fileprivate func findDepositsEth(_ items: [HistoryItem]) -> Set<String> {
+    fileprivate func findSidechainDeposits(_ items: [HistoryItem]) -> Set<String> {
         
         var depositsId = Set<String>()
         
@@ -1198,7 +1212,7 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         return depositsId
     }
     
-    fileprivate func findWithdrawalsEth(_ items: [HistoryItem]) -> Set<String> {
+    fileprivate func findSidechainWithdrawals(_ items: [HistoryItem]) -> Set<String> {
         
         var withdrawalsId = Set<String>()
         

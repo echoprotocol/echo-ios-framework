@@ -16,18 +16,18 @@ public struct BtcWithdrawal: ECHOObject, Decodable {
         case account
         case btcAddress = "btc_addr"
         case value
-        case blockNumber = "block_number"
+        case isSent = "is_sent"
+        case echoBlockNumber = "echo_block_number"
         case isApproved = "is_approved"
-        case approves
     }
     
     public var id: String
     public let account: Account
     public let btcAddress: String
     public let value: UInt
-    public let blockNumber: UInt
+    public let isSent: Bool
+    public let echoBlockNumber: UInt
     public let isApproved: Bool
-    public let approves: [String]
     
     public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: BtcWithdrawalCodingKeys.self)
@@ -37,8 +37,8 @@ public struct BtcWithdrawal: ECHOObject, Decodable {
         account = Account(accountId)
         btcAddress = try values.decode(String.self, forKey: .btcAddress)
         value = try values.decode(UInt.self, forKey: .value)
-        blockNumber = try values.decode(UInt.self, forKey: .blockNumber)
+        isSent = try values.decode(Bool.self, forKey: .isSent)
+        echoBlockNumber = try values.decode(UInt.self, forKey: .echoBlockNumber)
         isApproved = try values.decode(Bool.self, forKey: .isApproved)
-        approves = try values.decode([String].self, forKey: .approves)
     }
 }

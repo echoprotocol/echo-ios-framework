@@ -23,7 +23,7 @@ public struct SidechainIssueOperation: BaseOperation {
     public var value: AssetAmount
     public var account: Account
     public var depositId: String
-    public var deposit: EthDeposit?
+    public var deposit: SidechainDepositEnum?
     
     public var extensions: Extensions = Extensions()
     

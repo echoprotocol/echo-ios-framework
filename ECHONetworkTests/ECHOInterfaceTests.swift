@@ -2302,19 +2302,19 @@ class ECHOInterfaceTests: XCTestCase {
         }
     }
     
-    func testWithdrawalBtc() {
+    func testWithdrawBtc() {
         
         //arrange
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
         }))
-        let exp = expectation(description: "testWithdrawalBtc")
+        let exp = expectation(description: "testWithdrawBtc")
         var isSuccess = false
         
         //act
         echo.start { [unowned self] (result) in
-            self.echo.withdrawalBtc(nameOrId: Constants.defaultName,
+            self.echo.withdrawBtc(nameOrId: Constants.defaultName,
                                     wif: Constants.defaultWIF,
                                     toBtcAddress: Constants.defaultBTCAddress,
                                     amount: 1,

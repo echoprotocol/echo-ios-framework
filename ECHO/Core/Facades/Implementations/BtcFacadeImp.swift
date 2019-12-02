@@ -266,7 +266,7 @@ final public class BtcFacadeImp: BtcFacade, ECHOQueueble {
     // swiftlint:enable function_body_length
     
     // swiftlint:disable function_body_length
-    public func withdrawalBtc(nameOrId: String,
+    public func withdrawBtc(nameOrId: String,
                               wif: String,
                               toBtcAddress: String,
                               amount: UInt,
