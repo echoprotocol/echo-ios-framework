@@ -12,7 +12,7 @@
  */
 public struct BlockRewardOperation: BaseOperation {
     
-    enum SidechainETHCreateAddressOperationCodingKeys: String, CodingKey {
+    enum BlockRewardOperationCodingKeys: String, CodingKey {
         case reciever
         case amount
         case extensions
@@ -29,7 +29,7 @@ public struct BlockRewardOperation: BaseOperation {
         
         type = .blockRewardOperation
         
-        let values = try decoder.container(keyedBy: SidechainETHCreateAddressOperationCodingKeys.self)
+        let values = try decoder.container(keyedBy: BlockRewardOperationCodingKeys.self)
         
         let recieverId = try values.decode(String.self, forKey: .reciever)
         reciever = Account(recieverId)

@@ -246,6 +246,10 @@ class ECHOInterfaceTests: XCTestCase {
                 switch result {
                 case .success(let accountHistory):
                     history = accountHistory
+                    let empty = history.filter { $0.operation == nil }
+                    var set = Set<String>()
+                    empty.forEach { set.insert($0.id) }
+                    print(set)
                     exp.fulfill()
                 case .failure(let error):
                     XCTFail("Getting account history cant fail \(error)")
