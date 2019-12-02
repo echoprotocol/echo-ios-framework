@@ -45,6 +45,7 @@ struct ConstantsKeys {
     static let defaultBlockNumber = "DEFAULT_BLOCK_NUMBER"
     
     static let erc20Token = "ERC20_TOKEN"
+    static let erc20TokenEchoId = "ERC20_TOKEN_ECHO_ID"
     static let erc20TokenEchoContract = "ERC20_TOKEN_ECHO_CONTRACT"
     static let erc20TokenNotRegistered = "ERC20_TOKEN_NOT_REGISTERED"
     static let erc20TokenName = "ERC20_TOKEN_NAME"
@@ -246,6 +247,14 @@ struct Constants {
             return value
         } else {
             return "0xf36c145eff2771ea22ece5fd87392fc8eeae719c"
+        }
+    }
+    
+    static var erc20TokenEchoId: String {
+        if let value = Constants.infoForKey(ConstantsKeys.erc20TokenEchoId) {
+            return value
+        } else {
+            return "1.16.0"
         }
     }
     

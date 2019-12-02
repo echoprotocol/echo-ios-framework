@@ -239,7 +239,10 @@ class ECHOInterfaceTests: XCTestCase {
         
         //act
         echo.start { [unowned self] (result) in
-            self.echo.getAccountHistroy(nameOrID: userId, startId: startId, stopId: stopId, limit: limit) { (result) in
+            self.echo.getAccountHistroy(nameOrID: userId,
+                                        startId: startId,
+                                        stopId: stopId,
+                                        limit: limit) { (result) in
                 switch result {
                 case .success(let accountHistory):
                     history = accountHistory
@@ -2315,8 +2318,8 @@ class ECHOInterfaceTests: XCTestCase {
             self.echo.withdrawERC20(nameOrId: Constants.defaultName,
                                     wif: Constants.defaultWIF,
                                     toEthAddress: Constants.defaultETHAddress,
-                                    tokenId: Constants.erc20TokenEchoContract,
-                                    value: "0000000000000000000000000000000000000000000000000000000000000001",
+                                    tokenId: Constants.erc20TokenEchoId,
+                                    value: "1",
                                     assetForFee: nil,
                                     completion: { (result) in
                 

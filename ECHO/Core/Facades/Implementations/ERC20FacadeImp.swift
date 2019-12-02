@@ -276,7 +276,7 @@ final public class ERC20FacadeImp: ERC20Facade, ECHOQueueble {
         do {
             let validator = IdentifierValidator()
             try validator.validateId(assetForFee, for: .asset)
-            try validator.validateId(tokenId, for: .contract)
+            try validator.validateId(tokenId, for: .erc20Token)
         } catch let error {
             let echoError = (error as? ECHOError) ?? ECHOError.undefined
             let result = Result<Bool, ECHOError>(error: echoError)
@@ -423,7 +423,7 @@ final public class ERC20FacadeImp: ERC20Facade, ECHOQueueble {
             
             let fee = AssetAmount(amount: 0, asset: asset)
             let address = toEthAddress.replacingOccurrences(of: "0x", with: "")
-            let token = Contract(id: tokenId)
+            let token = ERC20Token(id: tokenId)
             
             let withdrawOperation = SidechainERC20WithdrawTokenOperation(account: account,
                                                                          toEthAddress: address,

@@ -27,10 +27,10 @@ public struct SidechainERC20WithdrawTokenOperation: BaseOperation {
     
     public var account: Account
     public let toEthAddress: String
-    public let token: Contract
+    public let token: ERC20Token
     public let value: String
     
-    init(account: Account, toEthAddress: String, token: Contract,
+    init(account: Account, toEthAddress: String, token: ERC20Token,
          value: String, fee: AssetAmount) {
         
         type = .sidechainERC20WithdrawTokenOperation
@@ -53,7 +53,7 @@ public struct SidechainERC20WithdrawTokenOperation: BaseOperation {
         fee = try values.decode(AssetAmount.self, forKey: .fee)
 
         let tokenId = try values.decode(String.self, forKey: .token)
-        token = Contract(id: tokenId)
+        token = ERC20Token(id: tokenId)
         
         toEthAddress = try values.decode(String.self, forKey: .toEthAddress)
         value = try values.decode(String.self, forKey: .value)
@@ -84,7 +84,7 @@ public struct SidechainERC20WithdrawTokenOperation: BaseOperation {
         data.append(optional: token.toData())
         data.append(optional: Data.fromString(value))
         
-//        data.append(optional: extensions.toData())
+        data.append(optional: extensions.toData())
         return data
     }
     

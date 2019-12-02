@@ -9,7 +9,7 @@
 /**
     Information about erc20 token
  */
-public struct ERC20Token: Decodable {
+public struct ERC20Token: ECHOObject, Decodable {
 
     enum ERC20TokenCodingKeys: String, CodingKey {
         case id
@@ -22,12 +22,16 @@ public struct ERC20Token: Decodable {
     }
     
     public var id: String
-    public var owner: String
-    public var ethAddress: String
-    public var contract: String
-    public var name: String
-    public var symbol: String
-    public var decimals: UInt8
+    public var owner: String?
+    public var ethAddress: String?
+    public var contract: String?
+    public var name: String?
+    public var symbol: String?
+    public var decimals: UInt8?
+    
+    public init(id: String) {
+        self.id = id
+    }
     
     public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: ERC20TokenCodingKeys.self)

@@ -50,6 +50,8 @@
 	<string>$(DEFAULT_BLOCK_NUMBER)</string>
 	<key>ERC20_TOKEN</key>
 	<string>$(ERC20_TOKEN)</string>
+	<key>ERC20_TOKEN_ECHO_ID</key>
+	<string>$(ERC20_TOKEN_ECHO_ID)</string>
 	<key>ERC20_TOKEN_ECHO_CONTRACT</key>
 	<string>$(ERC20_TOKEN_ECHO_CONTRACT)</string>
 	<key>ERC20_TOKEN_NOT_REGISTERED</key>
