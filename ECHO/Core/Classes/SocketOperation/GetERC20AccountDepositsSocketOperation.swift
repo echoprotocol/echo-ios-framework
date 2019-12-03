@@ -55,4 +55,3 @@ struct GetERC20AccountDepositsSocketOperation: SocketOperation {
         completion(result)
     }
 }
-

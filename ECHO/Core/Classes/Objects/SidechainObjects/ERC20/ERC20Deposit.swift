@@ -43,4 +43,3 @@ public struct ERC20Deposit: ECHOObject, Decodable {
         account = Account(accountId)
     }
 }
-

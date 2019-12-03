@@ -71,4 +71,3 @@ public struct SidechainETHDepositOperation: BaseOperation {
         return nil
     }
 }
-

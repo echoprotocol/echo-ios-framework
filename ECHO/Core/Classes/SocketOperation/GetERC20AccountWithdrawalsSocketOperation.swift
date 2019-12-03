@@ -56,5 +56,3 @@ struct GetERC20AccountWithdrawalsSocketOperation: SocketOperation {
         completion(result)
     }
 }
-
-

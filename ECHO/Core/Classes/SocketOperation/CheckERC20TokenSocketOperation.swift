@@ -53,4 +53,3 @@ struct CheckERC20TokenSocketOperation: SocketOperation {
         completion(result)
     }
 }
-

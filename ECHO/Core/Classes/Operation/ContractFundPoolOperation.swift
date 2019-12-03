@@ -67,4 +67,3 @@ public struct ContractFundPoolOperation: BaseOperation {
         return nil
     }
 }
-

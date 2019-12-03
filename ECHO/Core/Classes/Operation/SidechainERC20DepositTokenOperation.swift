@@ -77,4 +77,3 @@ public struct SidechainERC20DepositTokenOperation: BaseOperation {
         return nil
     }
 }
-

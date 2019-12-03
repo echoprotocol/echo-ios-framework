@@ -40,12 +40,12 @@ public protocol BtcFacade {
     - Parameter completion: Callback in which the information will return whether the transaction was successful.
 */
    func withdrawBtc(nameOrId: String,
-                      wif: String,
-                      toBtcAddress: String,
-                      amount: UInt,
-                      assetForFee: String?,
-                      completion: @escaping Completion<Bool>,
-                      noticeHandler: NoticeHandler?)
+                    wif: String,
+                    toBtcAddress: String,
+                    amount: UInt,
+                    assetForFee: String?,
+                    completion: @escaping Completion<Bool>,
+                    noticeHandler: NoticeHandler?)
     
 /**
      Get created Bitcoin addresses

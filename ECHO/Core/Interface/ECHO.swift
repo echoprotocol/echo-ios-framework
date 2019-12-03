@@ -629,20 +629,20 @@ final public class ECHO: InterfaceFacades, Startable {
     }
     
     public func withdrawBtc(nameOrId: String,
-                              wif: String,
-                              toBtcAddress: String,
-                              amount: UInt,
-                              assetForFee: String?,
-                              completion: @escaping Completion<Bool>,
-                              noticeHandler: NoticeHandler?) {
+                            wif: String,
+                            toBtcAddress: String,
+                            amount: UInt,
+                            assetForFee: String?,
+                            completion: @escaping Completion<Bool>,
+                            noticeHandler: NoticeHandler?) {
         
         btcFacade.withdrawBtc(nameOrId: nameOrId,
-                                wif: wif,
-                                toBtcAddress: toBtcAddress,
-                                amount: amount,
-                                assetForFee: assetForFee,
-                                completion: completion,
-                                noticeHandler: noticeHandler)
+                              wif: wif,
+                              toBtcAddress: toBtcAddress,
+                              amount: amount,
+                              assetForFee: assetForFee,
+                              completion: completion,
+                              noticeHandler: noticeHandler)
     }
     
     public func getBtcAccountDeposits(nameOrId: String, completion: @escaping Completion<[BtcDeposit]>) {

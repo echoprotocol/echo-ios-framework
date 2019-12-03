@@ -267,12 +267,12 @@ final public class BtcFacadeImp: BtcFacade, ECHOQueueble {
     
     // swiftlint:disable function_body_length
     public func withdrawBtc(nameOrId: String,
-                              wif: String,
-                              toBtcAddress: String,
-                              amount: UInt,
-                              assetForFee: String?,
-                              completion: @escaping Completion<Bool>,
-                              noticeHandler: NoticeHandler?) {
+                            wif: String,
+                            toBtcAddress: String,
+                            amount: UInt,
+                            assetForFee: String?,
+                            completion: @escaping Completion<Bool>,
+                            noticeHandler: NoticeHandler?) {
         // if we don't hace assetForFee, we use asset.
         let assetForFee = assetForFee ?? Settings.defaultAsset
         

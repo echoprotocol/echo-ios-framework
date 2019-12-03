@@ -71,5 +71,3 @@ public struct SidechainETHApproveAddressOperation: BaseOperation {
         return nil
     }
 }
-
-
