@@ -874,9 +874,23 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                     historyItem.operation = operation
                 }
                 
+                if var operation = operation as? SidechainETHDepositOperation {
+                    let account = self?.findAccountIn(accounts, accountId: operation.account.id)
+                    let committeeMember = self?.findAccountIn(accounts, accountId: operation.committeeMember.id)
+                    operation.changeAccounts(committeeMember: committeeMember, account: account)
+                    historyItem.operation = operation
+                }
+                
                 if var operation = operation as? SidechainETHWithdrawOperation {
                     let account = self?.findAccountIn(accounts, accountId: operation.account.id)
                     operation.changeAccount(account: account)
+                    historyItem.operation = operation
+                }
+                
+                if var operation = operation as? SidechainETHApproveAddressOperation {
+                    let account = self?.findAccountIn(accounts, accountId: operation.account.id)
+                    let committeeMember = self?.findAccountIn(accounts, accountId: operation.committeeMember.id)
+                    operation.changeAccounts(committeeMember: committeeMember, account: account)
                     historyItem.operation = operation
                 }
                 
@@ -895,6 +909,13 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                 if var operation = operation as? SidechainBTCCreateAddressOperation {
                     let account = self?.findAccountIn(accounts, accountId: operation.account.id)
                     operation.changeAccount(account: account)
+                    historyItem.operation = operation
+                }
+                
+                if var operation = operation as? SidechainBTCCreateIntermediateDepositOperation {
+                    let account = self?.findAccountIn(accounts, accountId: operation.account.id)
+                    let committeeMember = self?.findAccountIn(accounts, accountId: operation.committeeMember.id)
+                    operation.changeAccounts(committeeMember: committeeMember, account: account)
                     historyItem.operation = operation
                 }
                 
@@ -1222,7 +1243,19 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                     historyItem.operation = operation
                 }
                 
+                if var operation = operation as? SidechainETHDepositOperation {
+                    let feeAsset = self?.findAssetsIn(assets, assetId: operation.fee.asset.id)
+                    operation.changeAssets(feeAsset: feeAsset)
+                    historyItem.operation = operation
+                }
+                
                 if var operation = operation as? SidechainETHWithdrawOperation {
+                    let feeAsset = self?.findAssetsIn(assets, assetId: operation.fee.asset.id)
+                    operation.changeAssets(feeAsset: feeAsset)
+                    historyItem.operation = operation
+                }
+                
+                if var operation = operation as? SidechainETHApproveAddressOperation {
                     let feeAsset = self?.findAssetsIn(assets, assetId: operation.fee.asset.id)
                     operation.changeAssets(feeAsset: feeAsset)
                     historyItem.operation = operation
@@ -1243,6 +1276,12 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                 }
 
                 if var operation = operation as? SidechainBTCCreateAddressOperation {
+                    let feeAsset = self?.findAssetsIn(assets, assetId: operation.fee.asset.id)
+                    operation.changeAssets(feeAsset: feeAsset)
+                    historyItem.operation = operation
+                }
+                
+                if var operation = operation as? SidechainBTCCreateIntermediateDepositOperation {
                     let feeAsset = self?.findAssetsIn(assets, assetId: operation.fee.asset.id)
                     operation.changeAssets(feeAsset: feeAsset)
                     historyItem.operation = operation
@@ -1391,6 +1430,7 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         return blocksNums
     }
     
+    // swiftlint:disable function_body_length
     fileprivate func findAccountsIds(_ items: [HistoryItem]) -> Set<String> {
         
         var accountsIds = Set<String>()
@@ -1455,8 +1495,20 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                 return
             }
             
+            if let operation = operation as? SidechainETHDepositOperation {
+                accountsIds.insert(operation.account.id)
+                accountsIds.insert(operation.committeeMember.id)
+                return
+            }
+            
             if let operation = operation as? SidechainETHWithdrawOperation {
                 accountsIds.insert(operation.account.id)
+                return
+            }
+            
+            if let operation = operation as? SidechainETHApproveAddressOperation {
+                accountsIds.insert(operation.account.id)
+                accountsIds.insert(operation.committeeMember.id)
                 return
             }
             
@@ -1472,6 +1524,12 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
             
             if let operation = operation as? SidechainBTCCreateAddressOperation {
                 accountsIds.insert(operation.account.id)
+                return
+            }
+            
+            if let operation = operation as? SidechainBTCCreateIntermediateDepositOperation {
+                accountsIds.insert(operation.account.id)
+                accountsIds.insert(operation.committeeMember.id)
                 return
             }
             
@@ -1509,6 +1567,7 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         
         return accountsIds
     }
+    // swiftlint:enable function_body_length
     
     fileprivate func findAssetsIds(_ items: [HistoryItem]) -> Set<String> {
         

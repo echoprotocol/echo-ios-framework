@@ -98,10 +98,13 @@ struct OperationDecoder {
         case .blockRewardOperation: return decode(BlockRewardOperation.self, container: container)
         case .contractFundPoolOperation: return decode(ContractFundPoolOperation.self, container: container)
         case .sidechainETHCreateAddressOperation: return decode(SidechainETHCreateAddressOperation.self, container: container)
+        case .sidechainETHDepositOperation: return decode(SidechainETHDepositOperation.self, container: container)
         case .sidechainETHWithdrawOperation: return decode(SidechainETHWithdrawOperation.self, container: container)
+        case .sidechainETHApproveAddressOperation: return decode(SidechainETHApproveAddressOperation.self, container: container)
         case .sidechainIssueOperation: return decode(SidechainIssueOperation.self, container: container)
         case .sidechainBurnOperation: return decode(SidechainBurnOperation.self, container: container)
         case .sidechainBTCCreateAddressOperation: return decode(SidechainBTCCreateAddressOperation.self, container: container)
+        case .sidechainBTCCreateIntermediateDepositOperation: return decode(SidechainBTCCreateIntermediateDepositOperation.self, container: container)
         case .sidechainBTCWithdrawOperation: return decode(SidechainBTCWithdrawOperation.self, container: container)
         case .sidechainERC20RegisterTokenOperation: return decode(SidechainERC20RegisterTokenOperation.self, container: container)
         case .sidechainERC20WithdrawTokenOperation: return decode(SidechainERC20WithdrawTokenOperation.self, container: container)
@@ -149,14 +152,20 @@ struct OperationDecoder {
                 baseOperation = try? JSONDecoder().decode(BlockRewardOperation.self, from: data)
             case .contractFundPoolOperation:
                 baseOperation = try? JSONDecoder().decode(ContractFundPoolOperation.self, from: data)
+            case .sidechainETHDepositOperation:
+                baseOperation = try? JSONDecoder().decode(SidechainETHDepositOperation.self, from: data)
             case .sidechainETHWithdrawOperation:
                 baseOperation = try? JSONDecoder().decode(SidechainETHWithdrawOperation.self, from: data)
+            case .sidechainETHApproveAddressOperation:
+                baseOperation = try? JSONDecoder().decode(SidechainETHApproveAddressOperation.self, from: data)
             case .sidechainIssueOperation:
                 baseOperation = try? JSONDecoder().decode(SidechainIssueOperation.self, from: data)
             case .sidechainBurnOperation:
                 baseOperation = try? JSONDecoder().decode(SidechainBurnOperation.self, from: data)
             case .sidechainBTCCreateAddressOperation:
                 baseOperation = try? JSONDecoder().decode(SidechainBTCCreateAddressOperation.self, from: data)
+            case .sidechainBTCCreateIntermediateDepositOperation:
+                baseOperation = try? JSONDecoder().decode(SidechainBTCCreateIntermediateDepositOperation.self, from: data)
             case .sidechainBTCWithdrawOperation:
                 baseOperation = try? JSONDecoder().decode(SidechainBTCWithdrawOperation.self, from: data)
             case .sidechainERC20RegisterTokenOperation:

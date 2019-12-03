@@ -90,4 +90,3 @@ public struct SidechainBTCWithdrawOperation: BaseOperation {
         return array
     }
 }
-
