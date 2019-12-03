@@ -45,7 +45,6 @@ public struct SidechainERC20DepositTokenOperation: BaseOperation {
         value = try values.decode(String.self, forKey: .value)
         transactionHash = try values.decode(String.self, forKey: .transactionHash)
         
-        
         let committeeMemberId = try values.decode(String.self, forKey: .committeeMember)
         committeeMember = Account(committeeMemberId)
         

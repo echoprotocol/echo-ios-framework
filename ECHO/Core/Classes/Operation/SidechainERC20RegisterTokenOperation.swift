@@ -47,7 +47,7 @@ public struct SidechainERC20RegisterTokenOperation: BaseOperation {
     
     public init(from decoder: Decoder) throws {
         
-        type = .sidechainETHCreateAddressOperation
+        type = .sidechainERC20RegisterTokenOperation
         
         let values = try decoder.container(keyedBy: SidechainERC20RegisterTokenOperationCodingKeys.self)
         

@@ -1234,12 +1234,12 @@
 		D0B6A0C42126B20900A78E4B /* Operation */ = {
 			isa = PBXGroup;
 			children = (
+				D0B6A0C52126B26D00A78E4B /* BaseOperation.swift */,
+				D0B6A0C92126BA9300A78E4B /* OperationType.swift */,
 				D0B6A0CB2126CB5800A78E4B /* AccountCreateOperation.swift */,
 				D0947047212D931800B55A37 /* AccountUpdateOperation.swift */,
-				D0B6A0C52126B26D00A78E4B /* BaseOperation.swift */,
 				D0947049212D932500B55A37 /* CreateAssetOperation.swift */,
 				D094704B212D9C7400B55A37 /* IssueAssetOperation.swift */,
-				D0B6A0C92126BA9300A78E4B /* OperationType.swift */,
 				D094703D212D3ECC00B55A37 /* TransferOperation.swift */,
 				D09D745D21EF58F700E0F46D /* CreateContractOperation.swift */,
 				D09D745F21EF590500E0F46D /* CallContractOperation.swift */,

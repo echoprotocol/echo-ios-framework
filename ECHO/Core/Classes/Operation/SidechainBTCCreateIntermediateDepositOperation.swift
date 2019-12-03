@@ -32,7 +32,7 @@ public struct SidechainBTCCreateIntermediateDepositOperation: BaseOperation {
     
     public init(from decoder: Decoder) throws {
         
-        type = .sidechainBTCWithdrawOperation
+        type = .sidechainBTCCreateIntermediateDepositOperation
         
         let values = try decoder.container(keyedBy: SidechainBTCCreateIntermediateDepositOperationCodingKeys.self)
         
