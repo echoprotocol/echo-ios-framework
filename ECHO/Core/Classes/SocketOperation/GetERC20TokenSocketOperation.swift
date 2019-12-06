@@ -1,62 +1,60 @@
 //
-//  GetEthAddressSocketOperation.swift
+//  GetERC20TokenSocketOperation.swift
 //  ECHO
 //
-//  Created by Vladimir Sharaev on 20/05/2019.
+//  Created by Vladimir Sharaev on 31.10.2019.
 //  Copyright © 2019 PixelPlex. All rights reserved.
 //
 
 /**
-    Get created Ethereum addresses for account by ID
+    Returns information about erc20 token, if then exist.
  
-    - Return: [EthAddress](EthAddress)
+    - Return: [ERC20Token](ERC20Token)
  */
-struct GetEthAddressSocketOperation: SocketOperation {
+struct GetERC20TokenSocketOperation: SocketOperation {
     
     var method: SocketOperationType
     var operationId: Int
     var apiId: Int
-    var accountId: String
-    var completion: Completion<EthAddress?>
+    var ethAddress: String
+    var completion: Completion<ERC20Token?>
     
     func createParameters() -> [Any] {
         let array: [Any] = [apiId,
-                            SocketOperationKeys.getEthAddress.rawValue,
-                            [accountId]]
+                            SocketOperationKeys.getERC20Token.rawValue,
+                            [ethAddress]]
         return array
     }
     
     func handleResponse(_ response: ECHODirectResponse) {
-        
         do {
-            
             switch response.response {
             case .error(let error):
-                let result = Result<EthAddress?, ECHOError>(error: ECHOError.internalError(error.message))
+                let result = Result<ERC20Token?, ECHOError>(error: ECHOError.internalError(error.message))
                 completion(result)
             case .result(let result):
                 
                 switch result {
                 case .dictionary(let dictionary):
                     let data = try JSONSerialization.data(withJSONObject: dictionary, options: [])
-                    let address = try JSONDecoder().decode(EthAddress.self, from: data)
-                    let result = Result<EthAddress?, ECHOError>(value: address)
+                    let token = try JSONDecoder().decode(ERC20Token.self, from: data)
+                    let result = Result<ERC20Token?, ECHOError>(value: token)
                     completion(result)
                 case .undefined:
-                    let result = Result<EthAddress?, ECHOError>(value: nil)
+                    let result = Result<ERC20Token?, ECHOError>(value: nil)
                     completion(result)
                 default:
                     throw ECHOError.encodableMapping
                 }
             }
         } catch {
-            let result = Result<EthAddress?, ECHOError>(error: ECHOError.encodableMapping)
+            let result = Result<ERC20Token?, ECHOError>(error: ECHOError.encodableMapping)
             completion(result)
         }
     }
     
     func forceEnd(error: ECHOError) {
-        let result = Result<EthAddress?, ECHOError>(error: error)
+        let result = Result<ERC20Token?, ECHOError>(error: error)
         completion(result)
     }
 }

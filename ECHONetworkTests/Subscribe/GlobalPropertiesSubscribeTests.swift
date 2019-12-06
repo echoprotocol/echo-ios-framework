@@ -50,7 +50,7 @@ class GlobalPropertiesSubscribeTests: XCTestCase, SubscribeDynamicGlobalProperti
                                                     noticeHandler: nil)
                 })
                 
-                DispatchQueue.main.asyncAfter(deadline: .now() + 8, execute: {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 12, execute: {
                     exp.fulfill()
                 })
             case .failure(let error):

@@ -373,9 +373,15 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         case findedAccountIds
         case findedDepositsIds
         case findedWithdrawalsIds
+        case findedERC20TokensIds
+        case findedERC20DepositsIds
+        case findedERC20WithdrawalsIds
         case loadedAccounts
-        case loadedDepositsIds
-        case loadedWithdrawalsIds
+        case loadedDeposits
+        case loadedWithdrawals
+        case loadedERC20Tokens
+        case loadedERC20Deposits
+        case loadedERC20Withdrawals
         case findedAssetIds
         case loadedAssets
     }
@@ -402,13 +408,19 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         let getBlocksOperation = createGetBlocksOperation(accountHistoryQueue, completion)
         let getAccountsOperation = createGetAccountsOperation(accountHistoryQueue, completion)
         let getAssetsOperation = createGetAssetsOperation(accountHistoryQueue, completion)
-        let getDepositsEthOperation = createGetDepositsEthOperation(accountHistoryQueue, completion)
-        let getWithdrawsEthOperation = createGetWithdrawsEthOperation(accountHistoryQueue, completion)
+        let getSidechainDepositsOperation = createGetSidechainDepositsOperation(accountHistoryQueue, completion)
+        let getSidechainWithdrawsOperation = createGetSidechainWithdrawsOperation(accountHistoryQueue, completion)
+        let getERC20TokensOperation = createGetSidechainERC20TokensOperation(accountHistoryQueue, completion)
+        let getERC20DepositsOperation = createGetSidechainERC20DepositsOperation(accountHistoryQueue, completion)
+        let getERC20WithdrawsOperation = createGetSidechainERC20WithdrawsOperation(accountHistoryQueue, completion)
         let mergeBlocksToHistoryOperation = createMergeBlocksInHistoryOperation(accountHistoryQueue, completion)
         let mergeAccountsToHistoryOperation = createMergeAccountsInHistoryOperation(accountHistoryQueue, completion)
         let mergeAssetsToHistoryOperation = createMergeAssetsInHistoryOperation(accountHistoryQueue, completion)
-        let mergeDepositsEthToHistoryOperation = createMergeDepositsEthInHistoryOperation(accountHistoryQueue, completion)
-        let mergeWithdrawEthInHistoryOperation = createMergeWithdrawEthInHistoryOperation(accountHistoryQueue, completion)
+        let mergeSidechainDepositsToHistoryOperation = createMergeSidechainDepositsInHistoryOperation(accountHistoryQueue, completion)
+        let mergeSidechainWithdrawInHistoryOperation = createMergeSidechainWithdrawsInHistoryOperation(accountHistoryQueue, completion)
+        let mergeERC20TokensInHistoryOperation = createMergeSidechainERC20TokensInHistoryOperation(accountHistoryQueue, completion)
+        let mergeERC20DepositsInHistoryOperation = createMergeSidechainERC20DepositsInHistoryOperation(accountHistoryQueue, completion)
+        let mergeERC20WithdrawInHistoryOperation = createMergeSidechainERC20WithdrawsInHistoryOperation(accountHistoryQueue, completion)
         
         // Completion
         let historyCompletionOperation = createHistoryComletionOperation(accountHistoryQueue, completion)
@@ -419,13 +431,19 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         accountHistoryQueue.addOperation(getBlocksOperation)
         accountHistoryQueue.addOperation(getAccountsOperation)
         accountHistoryQueue.addOperation(getAssetsOperation)
-        accountHistoryQueue.addOperation(getDepositsEthOperation)
-        accountHistoryQueue.addOperation(getWithdrawsEthOperation)
+        accountHistoryQueue.addOperation(getSidechainDepositsOperation)
+        accountHistoryQueue.addOperation(getERC20DepositsOperation)
+        accountHistoryQueue.addOperation(getSidechainWithdrawsOperation)
+        accountHistoryQueue.addOperation(getERC20TokensOperation)
+        accountHistoryQueue.addOperation(getERC20WithdrawsOperation)
         accountHistoryQueue.addOperation(mergeBlocksToHistoryOperation)
         accountHistoryQueue.addOperation(mergeAccountsToHistoryOperation)
         accountHistoryQueue.addOperation(mergeAssetsToHistoryOperation)
-        accountHistoryQueue.addOperation(mergeDepositsEthToHistoryOperation)
-        accountHistoryQueue.addOperation(mergeWithdrawEthInHistoryOperation)
+        accountHistoryQueue.addOperation(mergeSidechainDepositsToHistoryOperation)
+        accountHistoryQueue.addOperation(mergeSidechainWithdrawInHistoryOperation)
+        accountHistoryQueue.addOperation(mergeERC20TokensInHistoryOperation)
+        accountHistoryQueue.addOperation(mergeERC20DepositsInHistoryOperation)
+        accountHistoryQueue.addOperation(mergeERC20WithdrawInHistoryOperation)
         accountHistoryQueue.addOperation(historyCompletionOperation)
     
         accountHistoryQueue.addOperation(completionOperation)
@@ -452,6 +470,9 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                         queue?.saveValue(findedData.assetIds, forKey: AccountHistoryResultsKeys.findedAssetIds.rawValue)
                         queue?.saveValue(findedData.depositsIds, forKey: AccountHistoryResultsKeys.findedDepositsIds.rawValue)
                         queue?.saveValue(findedData.withdrawsIds, forKey: AccountHistoryResultsKeys.findedWithdrawalsIds.rawValue)
+                        queue?.saveValue(findedData.erc20TokensIds, forKey: AccountHistoryResultsKeys.findedERC20TokensIds.rawValue)
+                        queue?.saveValue(findedData.erc20DepositsIds, forKey: AccountHistoryResultsKeys.findedERC20DepositsIds.rawValue)
+                        queue?.saveValue(findedData.erc20WithdrawsIds, forKey: AccountHistoryResultsKeys.findedERC20WithdrawalsIds.rawValue)
                     }
                 case .failure(let error):
                     queue?.cancelAllOperations()
@@ -573,25 +594,25 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         return getAccountsOperation
     }
     
-    fileprivate func createGetDepositsEthOperation(_ queue: ECHOQueue,
-                                                   _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
+    fileprivate func createGetSidechainDepositsOperation(_ queue: ECHOQueue,
+                                                         _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
         
-        let getDepositsEthOperation = BlockOperation()
+        let getSidechainDepositsOperation = BlockOperation()
         
-        getDepositsEthOperation.addExecutionBlock { [weak getDepositsEthOperation, weak queue, weak self] in
+        getSidechainDepositsOperation.addExecutionBlock { [weak getSidechainDepositsOperation, weak queue, weak self] in
             
-            guard getDepositsEthOperation?.isCancelled == false else { return }
+            guard getSidechainDepositsOperation?.isCancelled == false else { return }
             guard let depositsIds: Set<String> = queue?.getValue(AccountHistoryResultsKeys.findedDepositsIds.rawValue) else { return }
             
             let depositsIdsArray = depositsIds.map { $0 }
             
-            self?.services.databaseService.getObjects(type: EthDeposit.self,
+            self?.services.databaseService.getObjects(type: SidechainDepositEnum.self,
                                                       objectsIds: depositsIdsArray,
                                                       completion: { (result) in
                 
                 switch result {
                 case .success(let deposits):
-                    queue?.saveValue(deposits, forKey: AccountHistoryResultsKeys.loadedDepositsIds.rawValue)
+                    queue?.saveValue(deposits, forKey: AccountHistoryResultsKeys.loadedDeposits.rawValue)
                 case .failure(let error):
                     queue?.cancelAllOperations()
                     let result = Result<[HistoryItem], ECHOError>(error: error)
@@ -604,27 +625,27 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
             queue?.waitStartNextOperation()
         }
         
-        return getDepositsEthOperation
+        return getSidechainDepositsOperation
     }
     
-    fileprivate func createGetWithdrawsEthOperation(_ queue: ECHOQueue, _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
+    fileprivate func createGetSidechainWithdrawsOperation(_ queue: ECHOQueue, _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
         
-        let getWithdrawsEthOperation = BlockOperation()
+        let getSidechainWithdrawsOperation = BlockOperation()
         
-        getWithdrawsEthOperation.addExecutionBlock { [weak getWithdrawsEthOperation, weak queue, weak self] in
+        getSidechainWithdrawsOperation.addExecutionBlock { [weak getSidechainWithdrawsOperation, weak queue, weak self] in
             
-            guard getWithdrawsEthOperation?.isCancelled == false else { return }
+            guard getSidechainWithdrawsOperation?.isCancelled == false else { return }
             guard let withdrawsIds: Set<String> = queue?.getValue(AccountHistoryResultsKeys.findedWithdrawalsIds.rawValue) else { return }
             
             let withdrawsIdsArray = withdrawsIds.map { $0 }
             
-            self?.services.databaseService.getObjects(type: EthWithdrawal.self,
+            self?.services.databaseService.getObjects(type: SidechainWithdrawalEnum.self,
                                                       objectsIds: withdrawsIdsArray,
                                                       completion: { (result) in
                                                         
                 switch result {
                 case .success(let deposits):
-                    queue?.saveValue(deposits, forKey: AccountHistoryResultsKeys.loadedWithdrawalsIds.rawValue)
+                    queue?.saveValue(deposits, forKey: AccountHistoryResultsKeys.loadedWithdrawals.rawValue)
                 case .failure(let error):
                     queue?.cancelAllOperations()
                     let result = Result<[HistoryItem], ECHOError>(error: error)
@@ -637,7 +658,107 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
             queue?.waitStartNextOperation()
         }
         
-        return getWithdrawsEthOperation
+        return getSidechainWithdrawsOperation
+    }
+    
+    fileprivate func createGetSidechainERC20TokensOperation(_ queue: ECHOQueue,
+                                                            _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
+        
+        let getSidechainERC20TokensOperation = BlockOperation()
+        
+        getSidechainERC20TokensOperation.addExecutionBlock { [weak getSidechainERC20TokensOperation, weak queue, weak self] in
+            
+            guard getSidechainERC20TokensOperation?.isCancelled == false else { return }
+            guard let erc20TokensIds: Set<String> = queue?.getValue(AccountHistoryResultsKeys.findedERC20TokensIds.rawValue) else { return }
+            
+            let tokensIdsArray = erc20TokensIds.map { $0 }
+            
+            self?.services.databaseService.getObjects(type: ERC20Token.self,
+                                                      objectsIds: tokensIdsArray,
+                                                      completion: { (result) in
+                                                        
+                switch result {
+                case .success(let tokens):
+                    queue?.saveValue(tokens, forKey: AccountHistoryResultsKeys.loadedERC20Tokens.rawValue)
+                case .failure(let error):
+                    queue?.cancelAllOperations()
+                    let result = Result<[HistoryItem], ECHOError>(error: error)
+                    completion(result)
+                }
+                
+                queue?.startNextOperation()
+            })
+            
+            queue?.waitStartNextOperation()
+        }
+        
+        return getSidechainERC20TokensOperation
+    }
+    
+    fileprivate func createGetSidechainERC20DepositsOperation(_ queue: ECHOQueue, _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
+    
+        let getERC20DepositsOperation = BlockOperation()
+        
+        getERC20DepositsOperation.addExecutionBlock { [weak getERC20DepositsOperation, weak queue, weak self] in
+            
+            guard getERC20DepositsOperation?.isCancelled == false else { return }
+            guard let erc20DepositsIds: Set<String> = queue?.getValue(AccountHistoryResultsKeys.findedERC20DepositsIds.rawValue) else { return }
+            
+            let depositsIdsArray = erc20DepositsIds.map { $0 }
+            
+            self?.services.databaseService.getObjects(type: ERC20Deposit.self,
+                                                      objectsIds: depositsIdsArray,
+                                                      completion: { (result) in
+                                                        
+                switch result {
+                case .success(let deposits):
+                    queue?.saveValue(deposits, forKey: AccountHistoryResultsKeys.loadedERC20Deposits.rawValue)
+                case .failure(let error):
+                    queue?.cancelAllOperations()
+                    let result = Result<[HistoryItem], ECHOError>(error: error)
+                    completion(result)
+                }
+                
+                queue?.startNextOperation()
+            })
+            
+            queue?.waitStartNextOperation()
+        }
+        
+        return getERC20DepositsOperation
+    }
+    
+    fileprivate func createGetSidechainERC20WithdrawsOperation(_ queue: ECHOQueue, _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
+        
+        let getERC20WithdrawsOperation = BlockOperation()
+        
+        getERC20WithdrawsOperation.addExecutionBlock { [weak getERC20WithdrawsOperation, weak queue, weak self] in
+            
+            guard getERC20WithdrawsOperation?.isCancelled == false else { return }
+            guard let erc20WithdrawsIds: Set<String> = queue?.getValue(AccountHistoryResultsKeys.findedERC20WithdrawalsIds.rawValue) else { return }
+            
+            let withdrawsIdsArray = erc20WithdrawsIds.map { $0 }
+            
+            self?.services.databaseService.getObjects(type: ERC20Withdrawal.self,
+                                                      objectsIds: withdrawsIdsArray,
+                                                      completion: { (result) in
+                                                        
+                switch result {
+                case .success(let withdrawals):
+                    queue?.saveValue(withdrawals, forKey: AccountHistoryResultsKeys.loadedERC20Withdrawals.rawValue)
+                case .failure(let error):
+                    queue?.cancelAllOperations()
+                    let result = Result<[HistoryItem], ECHOError>(error: error)
+                    completion(result)
+                }
+                
+                queue?.startNextOperation()
+            })
+            
+            queue?.waitStartNextOperation()
+        }
+        
+        return getERC20WithdrawsOperation
     }
     
     fileprivate func createMergeBlocksInHistoryOperation(_ queue: ECHOQueue,
@@ -672,6 +793,7 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         return mergeBlocksInHistoryOperation
     }
     
+    // swiftlint:disable function_body_length
     fileprivate func createMergeAccountsInHistoryOperation(_ queue: ECHOQueue,
                                                            _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
         
@@ -734,15 +856,41 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                     historyItem.operation = operation
                 }
                 
+                if var operation = operation as? BlockRewardOperation {
+                    let reciever = self?.findAccountIn(accounts, accountId: operation.reciever.id)
+                    operation.changeReciever(account: reciever)
+                    historyItem.operation = operation
+                }
+                
+                if var operation = operation as? ContractFundPoolOperation {
+                    let sender = self?.findAccountIn(accounts, accountId: operation.sender.id)
+                    operation.changeSender(account: sender)
+                    historyItem.operation = operation
+                }
+                
                 if var operation = operation as? SidechainETHCreateAddressOperation {
                     let account = self?.findAccountIn(accounts, accountId: operation.account.id)
                     operation.changeAccount(account: account)
                     historyItem.operation = operation
                 }
                 
+                if var operation = operation as? SidechainETHDepositOperation {
+                    let account = self?.findAccountIn(accounts, accountId: operation.account.id)
+                    let committeeMember = self?.findAccountIn(accounts, accountId: operation.committeeMember.id)
+                    operation.changeAccounts(committeeMember: committeeMember, account: account)
+                    historyItem.operation = operation
+                }
+                
                 if var operation = operation as? SidechainETHWithdrawOperation {
                     let account = self?.findAccountIn(accounts, accountId: operation.account.id)
                     operation.changeAccount(account: account)
+                    historyItem.operation = operation
+                }
+                
+                if var operation = operation as? SidechainETHApproveAddressOperation {
+                    let account = self?.findAccountIn(accounts, accountId: operation.account.id)
+                    let committeeMember = self?.findAccountIn(accounts, accountId: operation.committeeMember.id)
+                    operation.changeAccounts(committeeMember: committeeMember, account: account)
                     historyItem.operation = operation
                 }
                 
@@ -753,6 +901,56 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                 }
                 
                 if var operation = operation as? SidechainBurnOperation {
+                    let account = self?.findAccountIn(accounts, accountId: operation.account.id)
+                    operation.changeAccount(account: account)
+                    historyItem.operation = operation
+                }
+                
+                if var operation = operation as? SidechainBTCCreateAddressOperation {
+                    let account = self?.findAccountIn(accounts, accountId: operation.account.id)
+                    operation.changeAccount(account: account)
+                    historyItem.operation = operation
+                }
+                
+                if var operation = operation as? SidechainBTCCreateIntermediateDepositOperation {
+                    let account = self?.findAccountIn(accounts, accountId: operation.account.id)
+                    let committeeMember = self?.findAccountIn(accounts, accountId: operation.committeeMember.id)
+                    operation.changeAccounts(committeeMember: committeeMember, account: account)
+                    historyItem.operation = operation
+                }
+                
+                if var operation = operation as? SidechainBTCWithdrawOperation {
+                    let account = self?.findAccountIn(accounts, accountId: operation.account.id)
+                    operation.changeAccount(account: account)
+                    historyItem.operation = operation
+                }
+                
+                if var operation = operation as? SidechainERC20RegisterTokenOperation {
+                    let account = self?.findAccountIn(accounts, accountId: operation.account.id)
+                    operation.changeAccount(account: account)
+                    historyItem.operation = operation
+                }
+
+                if var operation = operation as? SidechainERC20DepositTokenOperation {
+                    let account = self?.findAccountIn(accounts, accountId: operation.account.id)
+                    let committeeMember = self?.findAccountIn(accounts, accountId: operation.committeeMember.id)
+                    operation.changeAccounts(account: account, committeeMember: committeeMember)
+                    historyItem.operation = operation
+                }
+                
+                if var operation = operation as? SidechainERC20WithdrawTokenOperation {
+                    let account = self?.findAccountIn(accounts, accountId: operation.account.id)
+                    operation.changeAccount(account: account)
+                    historyItem.operation = operation
+                }
+                
+                if var operation = operation as? SidechainERC20IssueOperation {
+                    let account = self?.findAccountIn(accounts, accountId: operation.account.id)
+                    operation.changeAccount(account: account)
+                    historyItem.operation = operation
+                }
+                
+                if var operation = operation as? SidechainERC20BurnOperation {
                     let account = self?.findAccountIn(accounts, accountId: operation.account.id)
                     operation.changeAccount(account: account)
                     historyItem.operation = operation
@@ -766,16 +964,18 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         
         return mergeAccountsInHistoryOperation
     }
+    // swiftlint:enable function_body_length
     
-    fileprivate func createMergeDepositsEthInHistoryOperation(_ queue: ECHOQueue, _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
+    fileprivate func createMergeSidechainDepositsInHistoryOperation(_ queue: ECHOQueue,
+                                                                    _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
         
-        let mergeDepositsEthInHistoryOperation = BlockOperation()
+        let mergeSidechainDepositsInHistoryOperation = BlockOperation()
         
-        mergeDepositsEthInHistoryOperation.addExecutionBlock { [weak mergeDepositsEthInHistoryOperation, weak self, weak queue] in
+        mergeSidechainDepositsInHistoryOperation.addExecutionBlock { [weak mergeSidechainDepositsInHistoryOperation, weak self, weak queue] in
             
-            guard mergeDepositsEthInHistoryOperation?.isCancelled == false else { return }
+            guard mergeSidechainDepositsInHistoryOperation?.isCancelled == false else { return }
             guard var history: [HistoryItem] = queue?.getValue(AccountHistoryResultsKeys.historyItems.rawValue) else { return }
-            guard let deposits: [EthDeposit] = queue?.getValue(AccountHistoryResultsKeys.loadedDepositsIds.rawValue) else { return }
+            guard let deposits: [SidechainDepositEnum] = queue?.getValue(AccountHistoryResultsKeys.loadedDeposits.rawValue) else { return }
             
             for index in 0..<history.count {
                 
@@ -784,7 +984,7 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                 guard let operation = historyItem.operation else { continue }
                 
                 if var operation = operation as? SidechainIssueOperation {
-                    let deposit = self?.findDepositEthIn(deposits, depositId: operation.depositId)
+                    let deposit = self?.findSidechainDepositIn(deposits, depositId: operation.depositId)
                     operation.deposit = deposit
                     historyItem.operation = operation
                 }
@@ -795,18 +995,19 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
             queue?.saveValue(history, forKey: AccountHistoryResultsKeys.historyItems.rawValue)
         }
         
-        return mergeDepositsEthInHistoryOperation
+        return mergeSidechainDepositsInHistoryOperation
     }
     
-    fileprivate func createMergeWithdrawEthInHistoryOperation(_ queue: ECHOQueue, _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
+    fileprivate func createMergeSidechainWithdrawsInHistoryOperation(_ queue: ECHOQueue,
+                                                                     _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
         
-        let mergeDepositsEthInHistoryOperation = BlockOperation()
+        let mergeSidechainWithdrawsOperation = BlockOperation()
         
-        mergeDepositsEthInHistoryOperation.addExecutionBlock { [weak mergeDepositsEthInHistoryOperation, weak self, weak queue] in
+        mergeSidechainWithdrawsOperation.addExecutionBlock { [weak mergeSidechainWithdrawsOperation, weak self, weak queue] in
             
-            guard mergeDepositsEthInHistoryOperation?.isCancelled == false else { return }
+            guard mergeSidechainWithdrawsOperation?.isCancelled == false else { return }
             guard var history: [HistoryItem] = queue?.getValue(AccountHistoryResultsKeys.historyItems.rawValue) else { return }
-            guard let withdraws: [EthWithdrawal] = queue?.getValue(AccountHistoryResultsKeys.loadedWithdrawalsIds.rawValue) else { return }
+            guard let withdraws: [SidechainWithdrawalEnum] = queue?.getValue(AccountHistoryResultsKeys.loadedWithdrawals.rawValue) else { return }
             
             for index in 0..<history.count {
                 
@@ -815,7 +1016,7 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                 guard let operation = historyItem.operation else { continue }
                 
                 if var operation = operation as? SidechainBurnOperation {
-                    let withdraw = self?.findWithdrawsEthIn(withdraws, withdrawId: operation.withdrawId)
+                    let withdraw = self?.findSidechainWithdrawsIn(withdraws, withdrawId: operation.withdrawId)
                     operation.withdraw = withdraw
                     historyItem.operation = operation
                 }
@@ -826,7 +1027,115 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
             queue?.saveValue(history, forKey: AccountHistoryResultsKeys.historyItems.rawValue)
         }
         
-        return mergeDepositsEthInHistoryOperation
+        return mergeSidechainWithdrawsOperation
+    }
+    
+    fileprivate func createMergeSidechainERC20TokensInHistoryOperation(_ queue: ECHOQueue,
+                                                                       _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
+        
+        let mergeSidechainERC20TokensOperation = BlockOperation()
+        
+        mergeSidechainERC20TokensOperation.addExecutionBlock { [weak mergeSidechainERC20TokensOperation, weak self, weak queue] in
+            
+            guard mergeSidechainERC20TokensOperation?.isCancelled == false else { return }
+            guard var history: [HistoryItem] = queue?.getValue(AccountHistoryResultsKeys.historyItems.rawValue) else { return }
+            guard let tokens: [ERC20Token] = queue?.getValue(AccountHistoryResultsKeys.loadedERC20Tokens.rawValue) else { return }
+            
+            for index in 0..<history.count {
+                
+                var historyItem = history[index]
+                
+                guard let operation = historyItem.operation else { continue }
+                
+                if var operation = operation as? SidechainERC20IssueOperation {
+                    let token = self?.findSidechainERC20TokenIn(tokens, tokenId: operation.token.id)
+                    operation.changeToken(token: token)
+                    historyItem.operation = operation
+                }
+                
+                if var operation = operation as? SidechainERC20BurnOperation {
+                    let token = self?.findSidechainERC20TokenIn(tokens, tokenId: operation.token.id)
+                    operation.changeToken(token: token)
+                    historyItem.operation = operation
+                }
+                
+                if var operation = operation as? SidechainERC20WithdrawTokenOperation {
+                    let token = self?.findSidechainERC20TokenIn(tokens, tokenId: operation.token.id)
+                    operation.changeToken(token: token)
+                    historyItem.operation = operation
+                }
+                
+                history[index] = historyItem
+            }
+            
+            queue?.saveValue(history, forKey: AccountHistoryResultsKeys.historyItems.rawValue)
+        }
+        
+        return mergeSidechainERC20TokensOperation
+    }
+    
+    fileprivate func createMergeSidechainERC20DepositsInHistoryOperation(_ queue: ECHOQueue,
+                                                                         _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
+        
+        let mergeSidechainERC20DepositsOperation = BlockOperation()
+        
+        mergeSidechainERC20DepositsOperation.addExecutionBlock { [weak mergeSidechainERC20DepositsOperation, weak self, weak queue] in
+            
+            guard mergeSidechainERC20DepositsOperation?.isCancelled == false else { return }
+            guard var history: [HistoryItem] = queue?.getValue(AccountHistoryResultsKeys.historyItems.rawValue) else { return }
+            guard let deposits: [ERC20Deposit] = queue?.getValue(AccountHistoryResultsKeys.loadedERC20Deposits.rawValue) else { return }
+            
+            for index in 0..<history.count {
+                
+                var historyItem = history[index]
+                
+                guard let operation = historyItem.operation else { continue }
+                
+                if var operation = operation as? SidechainERC20IssueOperation {
+                    let deposit = self?.findSidechainERC20DepositIn(deposits, depositId: operation.depositId)
+                    operation.deposit = deposit
+                    historyItem.operation = operation
+                }
+                
+                history[index] = historyItem
+            }
+            
+            queue?.saveValue(history, forKey: AccountHistoryResultsKeys.historyItems.rawValue)
+        }
+        
+        return mergeSidechainERC20DepositsOperation
+    }
+    
+    fileprivate func createMergeSidechainERC20WithdrawsInHistoryOperation(_ queue: ECHOQueue,
+                                                                          _ completion: @escaping Completion<[HistoryItem]>) -> Operation {
+        
+        let mergeSidechainERC20WithdrawsOperation = BlockOperation()
+        
+        mergeSidechainERC20WithdrawsOperation.addExecutionBlock { [weak mergeSidechainERC20WithdrawsOperation, weak self, weak queue] in
+            
+            guard mergeSidechainERC20WithdrawsOperation?.isCancelled == false else { return }
+            guard var history: [HistoryItem] = queue?.getValue(AccountHistoryResultsKeys.historyItems.rawValue) else { return }
+            guard let withdraws: [ERC20Withdrawal] = queue?.getValue(AccountHistoryResultsKeys.loadedERC20Withdrawals.rawValue) else { return }
+            
+            for index in 0..<history.count {
+                
+                var historyItem = history[index]
+                
+                guard let operation = historyItem.operation else { continue }
+                
+                if var operation = operation as? SidechainERC20BurnOperation {
+                    let withdraw = self?.findSidechainERC20WithdrawIn(withdraws, withdrawId: operation.withdrawId)
+                    operation.withdraw = withdraw
+                    historyItem.operation = operation
+                }
+                
+                history[index] = historyItem
+            }
+            
+            queue?.saveValue(history, forKey: AccountHistoryResultsKeys.historyItems.rawValue)
+        }
+        
+        return mergeSidechainERC20WithdrawsOperation
     }
     
     // swiftlint:disable function_body_length
@@ -915,13 +1224,38 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                     historyItem.operation = operation
                 }
                 
+                if var operation = operation as? BlockRewardOperation {
+                    let feeAsset = self?.findAssetsIn(assets, assetId: operation.fee.asset.id)
+                    operation.changeAssets(feeAsset: feeAsset)
+                    historyItem.operation = operation
+                }
+                
+                if var operation = operation as? ContractFundPoolOperation {
+                    let feeAsset = self?.findAssetsIn(assets, assetId: operation.fee.asset.id)
+                    let valueAsset = self?.findAssetsIn(assets, assetId: operation.value.asset.id)
+                    operation.changeAssets(valueAsset: valueAsset, feeAsset: feeAsset)
+                    historyItem.operation = operation
+                }
+                
                 if var operation = operation as? SidechainETHCreateAddressOperation {
                     let feeAsset = self?.findAssetsIn(assets, assetId: operation.fee.asset.id)
                     operation.changeAssets(feeAsset: feeAsset)
                     historyItem.operation = operation
                 }
                 
+                if var operation = operation as? SidechainETHDepositOperation {
+                    let feeAsset = self?.findAssetsIn(assets, assetId: operation.fee.asset.id)
+                    operation.changeAssets(feeAsset: feeAsset)
+                    historyItem.operation = operation
+                }
+                
                 if var operation = operation as? SidechainETHWithdrawOperation {
+                    let feeAsset = self?.findAssetsIn(assets, assetId: operation.fee.asset.id)
+                    operation.changeAssets(feeAsset: feeAsset)
+                    historyItem.operation = operation
+                }
+                
+                if var operation = operation as? SidechainETHApproveAddressOperation {
                     let feeAsset = self?.findAssetsIn(assets, assetId: operation.fee.asset.id)
                     operation.changeAssets(feeAsset: feeAsset)
                     historyItem.operation = operation
@@ -941,6 +1275,54 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                     historyItem.operation = operation
                 }
 
+                if var operation = operation as? SidechainBTCCreateAddressOperation {
+                    let feeAsset = self?.findAssetsIn(assets, assetId: operation.fee.asset.id)
+                    operation.changeAssets(feeAsset: feeAsset)
+                    historyItem.operation = operation
+                }
+                
+                if var operation = operation as? SidechainBTCCreateIntermediateDepositOperation {
+                    let feeAsset = self?.findAssetsIn(assets, assetId: operation.fee.asset.id)
+                    operation.changeAssets(feeAsset: feeAsset)
+                    historyItem.operation = operation
+                }
+                
+                if var operation = operation as? SidechainBTCWithdrawOperation {
+                    let feeAsset = self?.findAssetsIn(assets, assetId: operation.fee.asset.id)
+                    operation.changeAssets(feeAsset: feeAsset)
+                    historyItem.operation = operation
+                }
+                
+                if var operation = operation as? SidechainERC20RegisterTokenOperation {
+                    let feeAsset = self?.findAssetsIn(assets, assetId: operation.fee.asset.id)
+                    operation.changeAssets(feeAsset: feeAsset)
+                    historyItem.operation = operation
+                }
+                
+                if var operation = operation as? SidechainERC20DepositTokenOperation {
+                    let feeAsset = self?.findAssetsIn(assets, assetId: operation.fee.asset.id)
+                    operation.changeAssets(feeAsset: feeAsset)
+                    historyItem.operation = operation
+                }
+                
+                if var operation = operation as? SidechainERC20WithdrawTokenOperation {
+                    let feeAsset = self?.findAssetsIn(assets, assetId: operation.fee.asset.id)
+                    operation.changeAssets(feeAsset: feeAsset)
+                    historyItem.operation = operation
+                }
+                
+                if var operation = operation as? SidechainERC20IssueOperation {
+                    let feeAsset = self?.findAssetsIn(assets, assetId: operation.fee.asset.id)
+                    operation.changeAssets(feeAsset: feeAsset)
+                    historyItem.operation = operation
+                }
+                
+                if var operation = operation as? SidechainERC20BurnOperation {
+                    let feeAsset = self?.findAssetsIn(assets, assetId: operation.fee.asset.id)
+                    operation.changeAssets(feeAsset: feeAsset)
+                    historyItem.operation = operation
+                }
+                
                 history[index] = historyItem
             }
             
@@ -977,28 +1359,65 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         return array.first(where: {$0.id == assetId})
     }
     
-    fileprivate func findDepositEthIn(_ array: [EthDeposit], depositId: String) -> EthDeposit? {
+    fileprivate func findSidechainDepositIn(_ array: [SidechainDepositEnum], depositId: String) -> SidechainDepositEnum? {
         
-        return array.first(where: {$0.id == depositId})
+        return array.first(where: {
+            switch $0 {
+            case .btc(let deposit):
+                return deposit.id == depositId
+            case .eth(let deposit):
+                return deposit.id == depositId
+            }
+        })
     }
     
-    fileprivate func findWithdrawsEthIn(_ array: [EthWithdrawal], withdrawId: String) -> EthWithdrawal? {
+    fileprivate func findSidechainWithdrawsIn(_ array: [SidechainWithdrawalEnum], withdrawId: String) -> SidechainWithdrawalEnum? {
         
-        return array.first(where: {$0.id == withdrawId})
+        return array.first(where: {
+            switch $0 {
+            case .btc(let withdraw):
+                return withdraw.id == withdrawId
+            case .eth(let withdraw):
+                return withdraw.id == withdrawId
+            }
+        })
+    }
+    
+    fileprivate func findSidechainERC20TokenIn(_ array: [ERC20Token], tokenId: String) -> ERC20Token? {
+        
+        return array.first(where: { $0.id == tokenId })
+    }
+    
+    fileprivate func findSidechainERC20DepositIn(_ array: [ERC20Deposit], depositId: String) -> ERC20Deposit? {
+        
+        return array.first(where: { $0.id == depositId })
+    }
+    
+    fileprivate func findSidechainERC20WithdrawIn(_ array: [ERC20Withdrawal], withdrawId: String) -> ERC20Withdrawal? {
+        
+        return array.first(where: { $0.id == withdrawId })
     }
     
     fileprivate func findDataToLoadFromHistoryItems(_ items: [HistoryItem]) -> (blockNums: Set<Int>,
                                                                                 accountIds: Set<String>,
                                                                                 assetIds: Set<String>,
                                                                                 depositsIds: Set<String>,
-                                                                                withdrawsIds: Set<String>) {
+                                                                                withdrawsIds: Set<String>,
+                                                                                erc20TokensIds: Set<String>,
+                                                                                erc20DepositsIds: Set<String>,
+                                                                                erc20WithdrawsIds: Set<String>) {
         
         let blockNums = fingBlockNumsFromHistoryItems(items)
         let accountIds = findAccountsIds(items)
         let assetIds = findAssetsIds(items)
-        let depositsIds = findDepositsEth(items)
-        let withdrawsIds = findWithdrawalsEth(items)
-        return (blockNums, accountIds, assetIds, depositsIds, withdrawsIds)
+        let depositsIds = findSidechainDeposits(items)
+        let withdrawsIds = findSidechainWithdrawals(items)
+        let erc20TokensIds = findSidechainERC20Tokens(items)
+        let erc20WithdrawsIds = findSidechainERC20Withdrawals(items)
+        let erc20DepositsIds = findSidechainERC20Deposits(items)
+        return (blockNums, accountIds, assetIds,
+                depositsIds, withdrawsIds,
+                erc20TokensIds, erc20DepositsIds, erc20WithdrawsIds)
     }
     
     fileprivate func fingBlockNumsFromHistoryItems(_ items: [HistoryItem]) -> Set<Int> {
@@ -1011,6 +1430,7 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         return blocksNums
     }
     
+    // swiftlint:disable function_body_length
     fileprivate func findAccountsIds(_ items: [HistoryItem]) -> Set<String> {
         
         var accountsIds = Set<String>()
@@ -1060,13 +1480,35 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                 return
             }
             
+            if let operation = operation as? BlockRewardOperation {
+                accountsIds.insert(operation.reciever.id)
+                return
+            }
+            
+            if let operation = operation as? ContractFundPoolOperation {
+                accountsIds.insert(operation.sender.id)
+                return
+            }
+            
             if let operation = operation as? SidechainETHCreateAddressOperation {
                 accountsIds.insert(operation.account.id)
                 return
             }
             
+            if let operation = operation as? SidechainETHDepositOperation {
+                accountsIds.insert(operation.account.id)
+                accountsIds.insert(operation.committeeMember.id)
+                return
+            }
+            
             if let operation = operation as? SidechainETHWithdrawOperation {
                 accountsIds.insert(operation.account.id)
+                return
+            }
+            
+            if let operation = operation as? SidechainETHApproveAddressOperation {
+                accountsIds.insert(operation.account.id)
+                accountsIds.insert(operation.committeeMember.id)
                 return
             }
             
@@ -1079,10 +1521,53 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                 accountsIds.insert(operation.account.id)
                 return
             }
+            
+            if let operation = operation as? SidechainBTCCreateAddressOperation {
+                accountsIds.insert(operation.account.id)
+                return
+            }
+            
+            if let operation = operation as? SidechainBTCCreateIntermediateDepositOperation {
+                accountsIds.insert(operation.account.id)
+                accountsIds.insert(operation.committeeMember.id)
+                return
+            }
+            
+            if let operation = operation as? SidechainBTCWithdrawOperation {
+                accountsIds.insert(operation.account.id)
+                return
+            }
+
+            if let operation = operation as? SidechainERC20RegisterTokenOperation {
+                accountsIds.insert(operation.account.id)
+                return
+            }
+
+            if let operation = operation as? SidechainERC20DepositTokenOperation {
+                accountsIds.insert(operation.account.id)
+                accountsIds.insert(operation.committeeMember.id)
+                return
+            }
+            
+            if let operation = operation as? SidechainERC20WithdrawTokenOperation {
+                accountsIds.insert(operation.account.id)
+                return
+            }
+            
+            if let operation = operation as? SidechainERC20IssueOperation {
+                accountsIds.insert(operation.account.id)
+                return
+            }
+            
+            if let operation = operation as? SidechainERC20BurnOperation {
+                accountsIds.insert(operation.account.id)
+                return
+            }
         }
         
         return accountsIds
     }
+    // swiftlint:enable function_body_length
     
     fileprivate func findAssetsIds(_ items: [HistoryItem]) -> Set<String> {
         
@@ -1126,6 +1611,11 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                 return
             }
             
+            if let operation = operation as? ContractFundPoolOperation {
+                assetsIds.insert(operation.value.asset.id)
+                return
+            }
+            
             if let operation = operation as? ContractInternalCallOperation {
                 assetsIds.insert(operation.value.asset.id)
                 return
@@ -1145,7 +1635,7 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         return assetsIds
     }
     
-    fileprivate func findDepositsEth(_ items: [HistoryItem]) -> Set<String> {
+    fileprivate func findSidechainDeposits(_ items: [HistoryItem]) -> Set<String> {
         
         var depositsId = Set<String>()
         
@@ -1164,7 +1654,7 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         return depositsId
     }
     
-    fileprivate func findWithdrawalsEth(_ items: [HistoryItem]) -> Set<String> {
+    fileprivate func findSidechainWithdrawals(_ items: [HistoryItem]) -> Set<String> {
         
         var withdrawalsId = Set<String>()
         
@@ -1181,6 +1671,73 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         }
         
         return withdrawalsId
+    }
+    
+    fileprivate func findSidechainERC20Tokens(_ items: [HistoryItem]) -> Set<String> {
+        
+        var erc20TokensId = Set<String>()
+        
+        items.forEach {
+            
+            guard let operation = $0.operation else {
+                return
+            }
+            
+            if let operation = operation as? SidechainERC20IssueOperation {
+                erc20TokensId.insert(operation.token.id)
+                return
+            }
+            
+            if let operation = operation as? SidechainERC20BurnOperation {
+                erc20TokensId.insert(operation.token.id)
+                return
+            }
+            
+            if let operation = operation as? SidechainERC20WithdrawTokenOperation {
+                erc20TokensId.insert(operation.token.id)
+                return
+            }
+        }
+        
+        return erc20TokensId
+    }
+    
+    fileprivate func findSidechainERC20Deposits(_ items: [HistoryItem]) -> Set<String> {
+        
+        var erc20DepositsId = Set<String>()
+        
+        items.forEach {
+            
+            guard let operation = $0.operation else {
+                return
+            }
+            
+            if let operation = operation as? SidechainERC20IssueOperation {
+                erc20DepositsId.insert(operation.depositId)
+                return
+            }
+        }
+        
+        return erc20DepositsId
+    }
+    
+    fileprivate func findSidechainERC20Withdrawals(_ items: [HistoryItem]) -> Set<String> {
+        
+        var erc20WithdrawalsId = Set<String>()
+        
+        items.forEach {
+            
+            guard let operation = $0.operation else {
+                return
+            }
+            
+            if let operation = operation as? SidechainERC20BurnOperation {
+                erc20WithdrawalsId.insert(operation.withdrawId)
+                return
+            }
+        }
+        
+        return erc20WithdrawalsId
     }
 }
 

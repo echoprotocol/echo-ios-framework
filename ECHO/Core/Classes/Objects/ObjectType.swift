@@ -30,7 +30,7 @@ public enum ObjectType: Int {
     case vestingBalance
     case balance
     case frozenBalance
-    case committeeFrozenBalance
+    case committeeFrozenBalance     //10
     case contract
     case contractResult
     case ethAddress
@@ -40,7 +40,7 @@ public enum ObjectType: Int {
     case depositERC20Token
     case withdrawERC20Token
     case btcAddress
-    case btcIntermediateDeposit
+    case btcIntermediateDeposit     //20
     case btcDeposit
     case btcWithdraw
     case btcAggregating

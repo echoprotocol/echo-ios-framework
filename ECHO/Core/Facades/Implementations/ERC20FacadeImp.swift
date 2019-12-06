@@ -1,30 +1,30 @@
 //
-//  EthFacadeImp.swift
+//  ERC20FacadeImp.swift
 //  ECHO
 //
-//  Created by Vladimir Sharaev on 20/05/2019.
+//  Created by Vladimir Sharaev on 29.11.2019.
 //  Copyright © 2019 PixelPlex. All rights reserved.
 //
 
 /**
- Services for EthFacade
+ Services for ERC20Facade
  */
-public struct EthFacadeServices {
+public struct ERC20FacadeServices {
     var databaseService: DatabaseApiService
     var networkBroadcastService: NetworkBroadcastApiService
 }
 
 /**
- Implementation of [EthFacade](EthFacade), [ECHOQueueble](ECHOQueueble)
+ Implementation of [ERC20Facade](ERC20Facade), [ECHOQueueble](ECHOQueueble)
  */
-final public class EthFacadeImp: EthFacade, ECHOQueueble {
+final public class ERC20FacadeImp: ERC20Facade, ECHOQueueble {
 
     var queues: [String: ECHOQueue]
-    let services: EthFacadeServices
+    let services: ERC20FacadeServices
     let network: ECHONetwork
     let cryptoCore: CryptoCoreComponent
     
-    public init(services: EthFacadeServices,
+    public init(services: ERC20FacadeServices,
                 cryptoCore: CryptoCoreComponent,
                 network: ECHONetwork,
                 noticeDelegateHandler: NoticeEventDelegateHandler) {
@@ -36,113 +36,101 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble {
         noticeDelegateHandler.delegate = self
     }
     
-    public func getEthAddress(nameOrId: String, completion: @escaping Completion<EthAddress?>) {
+    public func getERC20Token(tokenAddress: String, completion: @escaping Completion<ERC20Token?>) {
         
-        services.databaseService.getFullAccount(nameOrIds: [nameOrId], shoudSubscribe: false) { [weak self] (result) in
-            
-            switch result {
-            case .success(let accounts):
-                guard let account = accounts[nameOrId] else {
-                    let result = Result<EthAddress?, ECHOError>(error: .resultNotFound)
-                    completion(result)
-                    return
-                }
-                
-                self?.services.databaseService.getEthAddress(accountId: account.account.id, completion: completion)
-            case .failure(let error):
-                let result = Result<EthAddress?, ECHOError>(error: error)
-                completion(result)
-            }
+        // Validate Ethereum address
+        let ethValidator = ETHAddressValidator(cryptoCore: cryptoCore)
+        guard ethValidator.isValidETHAddress(tokenAddress) else {
+            let result = Result<ERC20Token?, ECHOError>(error: .invalidETHAddress)
+            completion(result)
+            return
         }
+        
+        let address = tokenAddress.replacingOccurrences(of: "0x", with: "")
+        services.databaseService.getERC20Token(tokenAddress: address, completion: completion)
     }
     
-    public func getEthAccountDeposits(nameOrId: String, completion: @escaping Completion<[EthDeposit]>) {
+    public func checkERC20Token(contractId: String, completion: @escaping Completion<Bool>) {
+        
+        // Validate contract id
+        do {
+            let validator = IdentifierValidator()
+            try validator.validateId(contractId, for: .contract)
+        } catch let error {
+            let echoError = (error as? ECHOError) ?? ECHOError.undefined
+            let result = Result<Bool, ECHOError>(error: echoError)
+            completion(result)
+            return
+        }
+        
+        services.databaseService.checkERC20Token(contractId: contractId, completion: completion)
+    }
+    
+    public func getERC20AccountDeposits(nameOrId: String, completion: @escaping Completion<[ERC20Deposit]>) {
         
         services.databaseService.getFullAccount(nameOrIds: [nameOrId], shoudSubscribe: false) { [weak self] (result) in
             
             switch result {
             case .success(let accounts):
                 guard let account = accounts[nameOrId] else {
-                    let result = Result<[EthDeposit], ECHOError>(error: .resultNotFound)
+                    let result = Result<[ERC20Deposit], ECHOError>(error: .resultNotFound)
                     completion(result)
                     return
                 }
                 
-                self?.services.databaseService.getAccountDeposits(accountId: account.account.id,
-                                                                  type: .eth,
-                                                                  completion: { result in
+                self?.services.databaseService.getERC20AccountDeposits(accountId: account.account.id,
+                                                                       completion: { result in
                     switch result {
-                    case .success(let sidechainEnums):
-                        var deposits = [EthDeposit]()
-                        sidechainEnums.forEach {
-                            switch $0 {
-                            case .eth(let deposit):
-                                deposits.append(deposit)
-                            case .btc:
-                                return
-                            }
-                        }
-                        
-                        let result = Result<[EthDeposit], ECHOError>(value: deposits)
+                    case .success(let deposits):
+                        let result = Result<[ERC20Deposit], ECHOError>(value: deposits)
                         completion(result)
                         
                     case .failure(let error):
-                        let result = Result<[EthDeposit], ECHOError>(error: error)
+                        let result = Result<[ERC20Deposit], ECHOError>(error: error)
                         completion(result)
                     }
                 })
                 
             case .failure(let error):
-                let result = Result<[EthDeposit], ECHOError>(error: error)
+                let result = Result<[ERC20Deposit], ECHOError>(error: error)
                 completion(result)
             }
         }
     }
     
-    public func getEthAccountWithdrawals(nameOrId: String, completion: @escaping Completion<[EthWithdrawal]>) {
+    public func getERC20AccountWithdrawals(nameOrId: String, completion: @escaping Completion<[ERC20Withdrawal]>) {
         
         services.databaseService.getFullAccount(nameOrIds: [nameOrId], shoudSubscribe: false) { [weak self] (result) in
             
             switch result {
             case .success(let accounts):
                 guard let account = accounts[nameOrId] else {
-                    let result = Result<[EthWithdrawal], ECHOError>(error: .resultNotFound)
+                    let result = Result<[ERC20Withdrawal], ECHOError>(error: .resultNotFound)
                     completion(result)
                     return
                 }
                 
-                self?.services.databaseService.getAccountWithdrawals(accountId: account.account.id,
-                                                                     type: .eth,
-                                                                     completion: { result in
+                self?.services.databaseService.getERC20AccountWithdrawals(accountId: account.account.id,
+                                                                          completion: { result in
                     switch result {
-                    case .success(let sidechainEnums):
-                        var withdrawals = [EthWithdrawal]()
-                        sidechainEnums.forEach {
-                            switch $0 {
-                            case .eth(let withdrawal):
-                                withdrawals.append(withdrawal)
-                            case .btc:
-                                return
-                            }
-                        }
-                        
-                        let result = Result<[EthWithdrawal], ECHOError>(value: withdrawals)
+                    case .success(let withdrawals):
+                        let result = Result<[ERC20Withdrawal], ECHOError>(value: withdrawals)
                         completion(result)
                         
                     case .failure(let error):
-                        let result = Result<[EthWithdrawal], ECHOError>(error: error)
+                        let result = Result<[ERC20Withdrawal], ECHOError>(error: error)
                         completion(result)
                     }
                 })
                 
             case .failure(let error):
-                let result = Result<[EthWithdrawal], ECHOError>(error: error)
+                let result = Result<[ERC20Withdrawal], ECHOError>(error: error)
                 completion(result)
             }
         }
     }
     
-    private enum EthFacadeResultKeys: String {
+    private enum ERC20FacadeResultKeys: String {
         case loadedAccount
         case blockData
         case chainId
@@ -156,8 +144,12 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble {
     }
     
     // swiftlint:disable function_body_length
-    public func generateEthAddress(nameOrId: String,
+    public func registerERC20Token(nameOrId: String,
                                    wif: String,
+                                   tokenAddress: String,
+                                   tokenName: String,
+                                   tokenSymbol: String,
+                                   tokenDecimals: UInt8,
                                    assetForFee: String?,
                                    completion: @escaping Completion<Bool>,
                                    noticeHandler: NoticeHandler?) {
@@ -176,102 +168,115 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble {
             return
         }
         
-        let generateQueue = ECHOQueue()
-        addQueue(generateQueue)
+        // Validate Ethereum address
+        let ethValidator = ETHAddressValidator(cryptoCore: cryptoCore)
+        guard ethValidator.isValidETHAddress(tokenAddress) else {
+            let result = Result<Bool, ECHOError>(error: .invalidETHAddress)
+            completion(result)
+            return
+        }
+        
+        let registerQueue = ECHOQueue()
+        addQueue(registerQueue)
         
         // Accounts
-        let getAccountsNamesOrIdsWithKeys = GetAccountsNamesOrIdWithKeys([(nameOrId, EthFacadeResultKeys.loadedAccount.rawValue)])
-        let getAccountsOperationInitParams = (generateQueue,
+        let getAccountsNamesOrIdsWithKeys = GetAccountsNamesOrIdWithKeys([(nameOrId, ERC20FacadeResultKeys.loadedAccount.rawValue)])
+        let getAccountsOperationInitParams = (registerQueue,
                                               services.databaseService,
                                               getAccountsNamesOrIdsWithKeys)
         let getAccountsOperation = GetAccountsQueueOperation<Bool>(initParams: getAccountsOperationInitParams,
                                                                    completion: completion)
         
-        let bildTransferOperation = createBildGenerationOperation(generateQueue, Asset(assetForFee), completion)
+        let bildRegisterOperation = createBildRegisterOperation(registerQueue, Asset(assetForFee), tokenAddress,
+                                                                tokenName, tokenSymbol, tokenDecimals, completion)
         
         // RequiredFee
-        let getRequiredFeeOperationInitParams = (generateQueue,
+        let getRequiredFeeOperationInitParams = (registerQueue,
                                                  services.databaseService,
                                                  Asset(assetForFee),
-                                                 EthFacadeResultKeys.operation.rawValue,
-                                                 EthFacadeResultKeys.fee.rawValue,
+                                                 ERC20FacadeResultKeys.operation.rawValue,
+                                                 ERC20FacadeResultKeys.fee.rawValue,
                                                  UInt(1))
         let getRequiredFeeOperation = GetRequiredFeeQueueOperation<Bool>(initParams: getRequiredFeeOperationInitParams,
                                                                          completion: completion)
         
         // ChainId
-        let getChainIdInitParams = (generateQueue, services.databaseService, EthFacadeResultKeys.chainId.rawValue)
+        let getChainIdInitParams = (registerQueue, services.databaseService, ERC20FacadeResultKeys.chainId.rawValue)
         let getChainIdOperation = GetChainIdQueueOperation<Bool>(initParams: getChainIdInitParams,
                                                                  completion: completion)
         
         // BlockData
-        let getBlockDataInitParams = (generateQueue, services.databaseService, EthFacadeResultKeys.blockData.rawValue)
+        let getBlockDataInitParams = (registerQueue, services.databaseService, ERC20FacadeResultKeys.blockData.rawValue)
         let getBlockDataOperation = GetBlockDataQueueOperation<Bool>(initParams: getBlockDataInitParams,
                                                                      completion: completion)
         
         // Transaciton
-        let transactionOperationInitParams = (queue: generateQueue,
+        let transactionOperationInitParams = (queue: registerQueue,
                                               cryptoCore: cryptoCore,
-                                              saveKey: EthFacadeResultKeys.transaction.rawValue,
+                                              saveKey: ERC20FacadeResultKeys.transaction.rawValue,
                                               wif: wif,
                                               networkPrefix: network.echorandPrefix.rawValue,
-                                              fromAccountKey: EthFacadeResultKeys.loadedAccount.rawValue,
-                                              operationKey: EthFacadeResultKeys.operation.rawValue,
-                                              chainIdKey: EthFacadeResultKeys.chainId.rawValue,
-                                              blockDataKey: EthFacadeResultKeys.blockData.rawValue,
-                                              feeKey: EthFacadeResultKeys.fee.rawValue)
+                                              fromAccountKey: ERC20FacadeResultKeys.loadedAccount.rawValue,
+                                              operationKey: ERC20FacadeResultKeys.operation.rawValue,
+                                              chainIdKey: ERC20FacadeResultKeys.chainId.rawValue,
+                                              blockDataKey: ERC20FacadeResultKeys.blockData.rawValue,
+                                              feeKey: ERC20FacadeResultKeys.fee.rawValue)
         let bildTransactionOperation = GetTransactionQueueOperation<Bool>(initParams: transactionOperationInitParams,
                                                                           completion: completion)
         
         // Send transaction
-        let sendTransacionOperationInitParams = (generateQueue,
+        let sendTransacionOperationInitParams = (registerQueue,
                                                  services.networkBroadcastService,
-                                                 EthFacadeResultKeys.operationId.rawValue,
-                                                 EthFacadeResultKeys.transaction.rawValue)
+                                                 ERC20FacadeResultKeys.operationId.rawValue,
+                                                 ERC20FacadeResultKeys.transaction.rawValue)
         let sendTransactionOperation = SendTransactionQueueOperation(initParams: sendTransacionOperationInitParams,
                                                                      completion: completion)
         
         // Completion
-        let completionOperation = createCompletionOperation(queue: generateQueue)
+        let completionOperation = createCompletionOperation(queue: registerQueue)
         
-        generateQueue.addOperation(getAccountsOperation)
-        generateQueue.addOperation(bildTransferOperation)
-        generateQueue.addOperation(getRequiredFeeOperation)
-        generateQueue.addOperation(getChainIdOperation)
-        generateQueue.addOperation(getBlockDataOperation)
-        generateQueue.addOperation(bildTransactionOperation)
-        generateQueue.addOperation(sendTransactionOperation)
+        registerQueue.addOperation(getAccountsOperation)
+        registerQueue.addOperation(bildRegisterOperation)
+        registerQueue.addOperation(getRequiredFeeOperation)
+        registerQueue.addOperation(getChainIdOperation)
+        registerQueue.addOperation(getBlockDataOperation)
+        registerQueue.addOperation(bildTransactionOperation)
+        registerQueue.addOperation(sendTransactionOperation)
         
         //Notice handler
         if let noticeHandler = noticeHandler {
-            generateQueue.saveValue(noticeHandler, forKey: EthFacadeResultKeys.noticeHandler.rawValue)
-            let waitOperation = createWaitingOperation(generateQueue)
-            let noticeHandleOperation = createNoticeHandleOperation(generateQueue,
-                                                                    EthFacadeResultKeys.noticeHandler.rawValue,
-                                                                    EthFacadeResultKeys.notice.rawValue,
-                                                                    EthFacadeResultKeys.noticeError.rawValue)
-            generateQueue.addOperation(waitOperation)
-            generateQueue.addOperation(noticeHandleOperation)
+            registerQueue.saveValue(noticeHandler, forKey: ERC20FacadeResultKeys.noticeHandler.rawValue)
+            let waitOperation = createWaitingOperation(registerQueue)
+            let noticeHandleOperation = createNoticeHandleOperation(registerQueue,
+                                                                    ERC20FacadeResultKeys.noticeHandler.rawValue,
+                                                                    ERC20FacadeResultKeys.notice.rawValue,
+                                                                    ERC20FacadeResultKeys.noticeError.rawValue)
+            registerQueue.addOperation(waitOperation)
+            registerQueue.addOperation(noticeHandleOperation)
         }
         
-        generateQueue.addOperation(completionOperation)
+        registerQueue.addOperation(completionOperation)
     }
+    // swiftlint:enable function_body_length
     
-    public func withdrawEth(nameOrId: String,
-                            wif: String,
-                            toEthAddress: String,
-                            amount: UInt,
-                            assetForFee: String?,
-                            completion: @escaping Completion<Bool>,
-                            noticeHandler: NoticeHandler?) {
+    // swiftlint:disable function_body_length
+    public func withdrawERC20(nameOrId: String,
+                              wif: String,
+                              toEthAddress: String,
+                              tokenId: String,
+                              value: String,
+                              assetForFee: String?,
+                              completion: @escaping Completion<Bool>,
+                              noticeHandler: NoticeHandler?) {
         
         // if we don't hace assetForFee, we use asset.
         let assetForFee = assetForFee ?? Settings.defaultAsset
         
-        // Validate asset id
+        // Validate asset id and token id
         do {
             let validator = IdentifierValidator()
             try validator.validateId(assetForFee, for: .asset)
+            try validator.validateId(tokenId, for: .erc20Token)
         } catch let error {
             let echoError = (error as? ECHOError) ?? ECHOError.undefined
             let result = Result<Bool, ECHOError>(error: echoError)
@@ -291,54 +296,54 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble {
         addQueue(withdrawalQueue)
         
         // Accounts
-        let getAccountsNamesOrIdsWithKeys = GetAccountsNamesOrIdWithKeys([(nameOrId, EthFacadeResultKeys.loadedAccount.rawValue)])
+        let getAccountsNamesOrIdsWithKeys = GetAccountsNamesOrIdWithKeys([(nameOrId, ERC20FacadeResultKeys.loadedAccount.rawValue)])
         let getAccountsOperationInitParams = (withdrawalQueue,
                                               services.databaseService,
                                               getAccountsNamesOrIdsWithKeys)
         let getAccountsOperation = GetAccountsQueueOperation<Bool>(initParams: getAccountsOperationInitParams,
                                                                    completion: completion)
         
-        let bildWithdrawOperation = createBildWithdrawOperation(withdrawalQueue, Asset(assetForFee), amount, toEthAddress, completion)
+        let bildWithdrawOperation = createBildWithdrawOperation(withdrawalQueue, Asset(assetForFee), value, toEthAddress, tokenId, completion)
         
         // RequiredFee
         let getRequiredFeeOperationInitParams = (withdrawalQueue,
                                                  services.databaseService,
                                                  Asset(assetForFee),
-                                                 EthFacadeResultKeys.operation.rawValue,
-                                                 EthFacadeResultKeys.fee.rawValue,
+                                                 ERC20FacadeResultKeys.operation.rawValue,
+                                                 ERC20FacadeResultKeys.fee.rawValue,
                                                  UInt(1))
         let getRequiredFeeOperation = GetRequiredFeeQueueOperation<Bool>(initParams: getRequiredFeeOperationInitParams,
                                                                          completion: completion)
         
         // ChainId
-        let getChainIdInitParams = (withdrawalQueue, services.databaseService, EthFacadeResultKeys.chainId.rawValue)
+        let getChainIdInitParams = (withdrawalQueue, services.databaseService, ERC20FacadeResultKeys.chainId.rawValue)
         let getChainIdOperation = GetChainIdQueueOperation<Bool>(initParams: getChainIdInitParams,
                                                                  completion: completion)
         
         // BlockData
-        let getBlockDataInitParams = (withdrawalQueue, services.databaseService, EthFacadeResultKeys.blockData.rawValue)
+        let getBlockDataInitParams = (withdrawalQueue, services.databaseService, ERC20FacadeResultKeys.blockData.rawValue)
         let getBlockDataOperation = GetBlockDataQueueOperation<Bool>(initParams: getBlockDataInitParams,
                                                                      completion: completion)
         
         // Transaciton
         let transactionOperationInitParams = (queue: withdrawalQueue,
                                               cryptoCore: cryptoCore,
-                                              saveKey: EthFacadeResultKeys.transaction.rawValue,
+                                              saveKey: ERC20FacadeResultKeys.transaction.rawValue,
                                               wif: wif,
                                               networkPrefix: network.echorandPrefix.rawValue,
-                                              fromAccountKey: EthFacadeResultKeys.loadedAccount.rawValue,
-                                              operationKey: EthFacadeResultKeys.operation.rawValue,
-                                              chainIdKey: EthFacadeResultKeys.chainId.rawValue,
-                                              blockDataKey: EthFacadeResultKeys.blockData.rawValue,
-                                              feeKey: EthFacadeResultKeys.fee.rawValue)
+                                              fromAccountKey: ERC20FacadeResultKeys.loadedAccount.rawValue,
+                                              operationKey: ERC20FacadeResultKeys.operation.rawValue,
+                                              chainIdKey: ERC20FacadeResultKeys.chainId.rawValue,
+                                              blockDataKey: ERC20FacadeResultKeys.blockData.rawValue,
+                                              feeKey: ERC20FacadeResultKeys.fee.rawValue)
         let bildTransactionOperation = GetTransactionQueueOperation<Bool>(initParams: transactionOperationInitParams,
                                                                           completion: completion)
         
         // Send transaction
         let sendTransacionOperationInitParams = (withdrawalQueue,
                                                  services.networkBroadcastService,
-                                                 EthFacadeResultKeys.operationId.rawValue,
-                                                 EthFacadeResultKeys.transaction.rawValue)
+                                                 ERC20FacadeResultKeys.operationId.rawValue,
+                                                 ERC20FacadeResultKeys.transaction.rawValue)
         let sendTransactionOperation = SendTransactionQueueOperation(initParams: sendTransacionOperationInitParams,
                                                                      completion: completion)
         
@@ -355,12 +360,12 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble {
         
         //Notice handler
         if let noticeHandler = noticeHandler {
-            withdrawalQueue.saveValue(noticeHandler, forKey: EthFacadeResultKeys.noticeHandler.rawValue)
+            withdrawalQueue.saveValue(noticeHandler, forKey: ERC20FacadeResultKeys.noticeHandler.rawValue)
             let waitOperation = createWaitingOperation(withdrawalQueue)
             let noticeHandleOperation = createNoticeHandleOperation(withdrawalQueue,
-                                                                    EthFacadeResultKeys.noticeHandler.rawValue,
-                                                                    EthFacadeResultKeys.notice.rawValue,
-                                                                    EthFacadeResultKeys.noticeError.rawValue)
+                                                                    ERC20FacadeResultKeys.noticeHandler.rawValue,
+                                                                    ERC20FacadeResultKeys.notice.rawValue,
+                                                                    ERC20FacadeResultKeys.noticeError.rawValue)
             withdrawalQueue.addOperation(waitOperation)
             withdrawalQueue.addOperation(noticeHandleOperation)
         }
@@ -369,32 +374,43 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble {
     }
     // swiftlint:enable function_body_length
     
-    fileprivate func createBildGenerationOperation(_ queue: ECHOQueue,
-                                                   _ asset: Asset,
-                                                   _ completion: @escaping Completion<Bool>) -> Operation {
+    fileprivate func createBildRegisterOperation(_ queue: ECHOQueue,
+                                                 _ asset: Asset,
+                                                 _ tokenAddress: String,
+                                                 _ tokenName: String,
+                                                 _ tokenSymbol: String,
+                                                 _ tokenDecimals: UInt8,
+                                                 _ completion: @escaping Completion<Bool>) -> Operation {
         
-        let generationOperation = BlockOperation()
+        let bildRegisterOperation = BlockOperation()
         
-        generationOperation.addExecutionBlock { [weak generationOperation, weak queue] in
+        bildRegisterOperation.addExecutionBlock { [weak bildRegisterOperation, weak queue] in
             
-            guard generationOperation?.isCancelled == false else { return }
+            guard bildRegisterOperation?.isCancelled == false else { return }
             
-            guard let account: Account = queue?.getValue(EthFacadeResultKeys.loadedAccount.rawValue) else { return }
+            guard let account: Account = queue?.getValue(ERC20FacadeResultKeys.loadedAccount.rawValue) else { return }
             
             let fee = AssetAmount(amount: 0, asset: asset)
+            let address = tokenAddress.replacingOccurrences(of: "0x", with: "")
             
-            let operation = SidechainETHCreateAddressOperation.init(account: account, fee: fee)
+            let operation = SidechainERC20RegisterTokenOperation(account: account,
+                                                                 ethAddress: address,
+                                                                 name: tokenName,
+                                                                 symbol: tokenSymbol,
+                                                                 decimals: tokenDecimals,
+                                                                 fee: fee)
             
-            queue?.saveValue(operation, forKey: EthFacadeResultKeys.operation.rawValue)
+            queue?.saveValue(operation, forKey: ERC20FacadeResultKeys.operation.rawValue)
         }
         
-        return generationOperation
+        return bildRegisterOperation
     }
     
     fileprivate func createBildWithdrawOperation(_ queue: ECHOQueue,
                                                  _ asset: Asset,
-                                                 _ amount: UInt,
+                                                 _ value: String,
                                                  _ toEthAddress: String,
+                                                 _ tokenId: String,
                                                  _ completion: @escaping Completion<Bool>) -> Operation {
         
         let bildWithdrawOperation = BlockOperation()
@@ -403,17 +419,19 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble {
             
             guard bildWithdrawOperation?.isCancelled == false else { return }
             
-            guard let account: Account = queue?.getValue(EthFacadeResultKeys.loadedAccount.rawValue) else { return }
+            guard let account: Account = queue?.getValue(ERC20FacadeResultKeys.loadedAccount.rawValue) else { return }
             
             let fee = AssetAmount(amount: 0, asset: asset)
             let address = toEthAddress.replacingOccurrences(of: "0x", with: "")
+            let token = ERC20Token(id: tokenId)
             
-            let withdrawOperation = SidechainETHWithdrawOperation(account: account,
-                                                                  value: amount,
-                                                                  ethAddress: address,
-                                                                  fee: fee)
+            let withdrawOperation = SidechainERC20WithdrawTokenOperation(account: account,
+                                                                         toEthAddress: address,
+                                                                         token: token,
+                                                                         value: value,
+                                                                         fee: fee)
             
-            queue?.saveValue(withdrawOperation, forKey: EthFacadeResultKeys.operation.rawValue)
+            queue?.saveValue(withdrawOperation, forKey: ERC20FacadeResultKeys.operation.rawValue)
         }
         
         return bildWithdrawOperation
@@ -463,7 +481,7 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble {
     }
 }
 
-extension EthFacadeImp: NoticeEventDelegate {
+extension ERC20FacadeImp: NoticeEventDelegate {
     
     public func didReceiveNotification(notification: ECHONotification) {
         
@@ -473,9 +491,9 @@ extension EthFacadeImp: NoticeEventDelegate {
                 
                 for queue in queues.values {
                     
-                    if let queueTransferOperationId: Int = queue.getValue(EthFacadeResultKeys.operationId.rawValue),
+                    if let queueTransferOperationId: Int = queue.getValue(ERC20FacadeResultKeys.operationId.rawValue),
                         queueTransferOperationId == noticeOperationId {
-                        queue.saveValue(notification, forKey: EthFacadeResultKeys.notice.rawValue)
+                        queue.saveValue(notification, forKey: ERC20FacadeResultKeys.notice.rawValue)
                         queue.startNextOperation()
                     }
                 }
@@ -487,7 +505,7 @@ extension EthFacadeImp: NoticeEventDelegate {
     
     public func didAllNoticesLost() {
         for queue in queues.values {
-            queue.saveValue(ECHOError.connectionLost, forKey: EthFacadeResultKeys.noticeError.rawValue)
+            queue.saveValue(ECHOError.connectionLost, forKey: ERC20FacadeResultKeys.noticeError.rawValue)
             queue.startNextOperation()
         }
     }

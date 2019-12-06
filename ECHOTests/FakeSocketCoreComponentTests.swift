@@ -655,12 +655,12 @@ class SocketCoreComponentTests: XCTestCase {
         
         //act
         echo.start { [unowned self] (result) in
-            self.echo.withdrawalEth(nameOrId: "vsharaev",
-                                    wif: "5KjC8BiryoxUNz3dEY2ZWQK5ssmD84JgRGemVWwxfNgiPoxcaVa",
-                                    toEthAddress: "0x46Ba2677a1c982B329A81f60Cf90fBA2E8CA9fA8",
-                                    amount: 1,
-                                    assetForFee: nil,
-                                    completion: { (result) in
+            self.echo.withdrawEth(nameOrId: "vsharaev",
+                                  wif: "5KjC8BiryoxUNz3dEY2ZWQK5ssmD84JgRGemVWwxfNgiPoxcaVa",
+                                  toEthAddress: "0x46Ba2677a1c982B329A81f60Cf90fBA2E8CA9fA8",
+                                  amount: 1,
+                                  assetForFee: nil,
+                                  completion: { (result) in
                 
                 switch result {
                 case .success(let res):
@@ -691,7 +691,7 @@ class SocketCoreComponentTests: XCTestCase {
         //act
         echo.start { [unowned self] (result) in
             
-            self.echo.getAccountDeposits(nameOrId: "vsharaev", completion: { (result) in
+            self.echo.getEthAccountDeposits(nameOrId: "vsharaev", completion: { (result) in
                 
                 switch result {
                 case .success(let result):
@@ -723,7 +723,7 @@ class SocketCoreComponentTests: XCTestCase {
         //act
         echo.start { [unowned self] (result) in
             
-            self.echo.getAccountWithdrawals(nameOrId: "vsharaev", completion: { (result) in
+            self.echo.getEthAccountWithdrawals(nameOrId: "vsharaev", completion: { (result) in
                 
                 switch result {
                 case .success(let result):

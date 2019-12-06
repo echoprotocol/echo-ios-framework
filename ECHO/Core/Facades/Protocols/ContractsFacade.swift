@@ -25,6 +25,7 @@ public protocol ContractsFacade {
      - Parameter ethAccuracy: If true all balances passing to contract with ethereum accuracy
      - Parameter parameters: Parameters of constructor
      - Parameter completion: Callback which returns an [Bool](Bool) result of creation or error
+     - Parameter noticeHandler: Callback in which the information will return whether the transaction was confirmed.
  */
     func createContract(registrarNameOrId: String,
                         wif: String,
@@ -48,6 +49,7 @@ public protocol ContractsFacade {
      - Parameter supportedAssetId: If you dont want to link the contract with the specified asset
      - Parameter ethAccuracy: If true all balances passing to contract with ethereum accuracy
      - Parameter completion: Callback which returns an [Bool](Bool) result of creation or error
+     - Parameter noticeHandler: Callback in which the information will return whether the transaction was confirmed.
  */
     func createContract(registrarNameOrId: String,
                         wif: String,
@@ -71,6 +73,7 @@ public protocol ContractsFacade {
      - Parameter methodName: Name of called method
      - Parameter methodParams: Parameters of called method
      - Parameter completion: Callback which returns an [Bool](Bool) result of call or error
+     - Parameter noticeHandler: Callback in which the information will return whether the transaction was confirmed.
  */
     func callContract(registrarNameOrId: String,
                       wif: String,
@@ -93,6 +96,7 @@ public protocol ContractsFacade {
      - Parameter contratId: Id of called contract
      - Parameter byteCode: Code which will be execute
      - Parameter completion: Callback which returns an [Bool](Bool) result of call or error
+     - Parameter noticeHandler: Callback in which the information will return whether the transaction was confirmed.     
  */
     func callContract(registrarNameOrId: String,
                       wif: String,

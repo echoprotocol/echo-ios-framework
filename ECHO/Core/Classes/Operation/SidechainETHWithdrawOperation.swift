@@ -7,7 +7,8 @@
 //
 
 /**
-    Struct used to encapsulate operations related to the [OperationType.withdrawEthOperation](OperationType.withdrawEthOperation)
+    Struct used to encapsulate operations related to the
+    [OperationType.sidechainETHWithdrawOperation](OperationType.sidechainETHWithdrawOperation)
  */
 public struct SidechainETHWithdrawOperation: BaseOperation {
     

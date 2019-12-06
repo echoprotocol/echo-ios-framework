@@ -27,6 +27,7 @@ struct ConstantsKeys {
     static let defaultAnotherAsset = "DEFAULT_ANOTHER_ASSET"
     
     static let defaultETHAddress = "DEFAULT_ETH_ADDRESS"
+    static let defaultBTCAddress = "DEFAULT_BTC_ADDRESS"
     
     static let defaultLogsContractMethod = "DEFAULT_LOGS_CONTRACT_METHOD"
     static let defaultCallContractMethod = "DEFAULT_CALL_CONTRACT_METHOD"
@@ -43,6 +44,14 @@ struct ConstantsKeys {
     static let counterContractByteCode = "COUNTER_CONTRACT_BYTECODE"
     
     static let defaultBlockNumber = "DEFAULT_BLOCK_NUMBER"
+    
+    static let erc20Token = "ERC20_TOKEN"
+    static let erc20TokenEchoId = "ERC20_TOKEN_ECHO_ID"
+    static let erc20TokenEchoContract = "ERC20_TOKEN_ECHO_CONTRACT"
+    static let erc20TokenNotRegistered = "ERC20_TOKEN_NOT_REGISTERED"
+    static let erc20TokenName = "ERC20_TOKEN_NAME"
+    static let erc20TokenSymbol = "ERC20_TOKEN_SYMBOL"
+    static let erc20TokenDecimals = "ERC20_TOKEN_DECIMALS"
 }
 
 struct Constants {
@@ -68,7 +77,7 @@ struct Constants {
         if let value = Constants.infoForKey(ConstantsKeys.counterContract) {
             return value
         } else {
-            return "1.11.5"
+            return "1.11.181"
         }
     }
     
@@ -76,7 +85,7 @@ struct Constants {
         if let value = Constants.infoForKey(ConstantsKeys.logsContract) {
             return value
         } else {
-            return "1.11.4"
+            return "1.11.180"
         }
     }
     
@@ -132,7 +141,7 @@ struct Constants {
         if let value = Constants.infoForKey(ConstantsKeys.defaultAnotherAsset) {
             return value
         } else {
-            return "1.3.3"
+            return "1.3.5"
         }
     }
     
@@ -141,6 +150,14 @@ struct Constants {
             return value
         } else {
             return "0x46Ba2677a1c982B329A81f60Cf90fBA2E8CA9fA8"
+        }
+    }
+    
+    static var defaultBTCAddress: String {
+        if let value = Constants.infoForKey(ConstantsKeys.defaultBTCAddress) {
+            return value
+        } else {
+            return "n4cLNDfyVPGoNFUpUEyBP8TzDPRNaVBm6E"
         }
     }
     
@@ -188,7 +205,7 @@ struct Constants {
         if let value = Constants.infoForKey(ConstantsKeys.evmContractResult) {
             return value
         } else {
-            return "1.12.6"
+            return "1.12.342"
         }
     }
     
@@ -205,7 +222,7 @@ struct Constants {
             let value = Int(valueString) {
             return value
         } else {
-            return 153020
+            return 1524
         }
     }
     
@@ -228,6 +245,63 @@ struct Constants {
     static var defaultBlockNumber: Int {
         if let valueString = Constants.infoForKey(ConstantsKeys.defaultBlockNumber),
             let value = Int(valueString) {
+            return value
+        } else {
+            return 10
+        }
+    }
+    
+    static var erc20Token: String {
+        if let value = Constants.infoForKey(ConstantsKeys.erc20Token) {
+            return value
+        } else {
+            return "0xf36c145eff2771ea22ece5fd87392fc8eeae719c"
+        }
+    }
+    
+    static var erc20TokenEchoId: String {
+        if let value = Constants.infoForKey(ConstantsKeys.erc20TokenEchoId) {
+            return value
+        } else {
+            return "1.16.0"
+        }
+    }
+    
+    static var erc20TokenEchoContract: String {
+        if let value = Constants.infoForKey(ConstantsKeys.erc20TokenEchoContract) {
+            return value
+        } else {
+            return "1.11.141"
+        }
+    }
+    
+    static var erc20TokenNotRegistered: String {
+        if let value = Constants.infoForKey(ConstantsKeys.erc20TokenNotRegistered) {
+            return value
+        } else {
+            return "0x58FB34841947B61903628a252bcc5186009887E6"
+        }
+    }
+    
+    static var erc20TokenName: String {
+        if let value = Constants.infoForKey(ConstantsKeys.erc20TokenName) {
+            return value
+        } else {
+            return "DIMA"
+        }
+    }
+    
+    static var erc20TokenSymbol: String {
+        if let value = Constants.infoForKey(ConstantsKeys.erc20TokenSymbol) {
+            return value
+        } else {
+            return "DIM"
+        }
+    }
+    
+    static var erc20TokenDecimals: UInt8 {
+        if let valueString = Constants.infoForKey(ConstantsKeys.erc20TokenDecimals),
+            let value = UInt8(valueString) {
             return value
         } else {
             return 10

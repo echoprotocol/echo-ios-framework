@@ -174,13 +174,22 @@ protocol DatabaseApiService: BaseApiService {
     func subscribeContracts(contractsIds: [String], completion: @escaping Completion<Bool>)
     
 /**
-     Get created ETH addresses
+     Get created Ethereum addresses
      
      - Parameter accountId: Accoint id
      - Parameter completion: Callback in which the information will return [EthAddress](EthAddress) object if it created or error
  */
     func getEthAddress(accountId: String,
                        completion: @escaping Completion<EthAddress?>)
+    
+/**
+    Get created Bitcoin addresses
+    
+    - Parameter accountId: Accoint id
+    - Parameter completion: Callback in which the information will return [BtcAddress](BtcAddress) object if it created or error
+*/
+       func getBtcAddress(accountId: String,
+                          completion: @escaping Completion<BtcAddress?>)
     
 /**
      Returns all approved deposits, for the given account id.
@@ -201,4 +210,40 @@ protocol DatabaseApiService: BaseApiService {
     func getAccountWithdrawals(accountId: String,
                                type: SidechainType?,
                                completion: @escaping Completion<[SidechainWithdrawalEnum]>)
+    
+/**
+    Returns information about erc20 token, if exist.
+    
+    - Parameter tokenAddress: Token address in Ethereum network
+    - Parameter completion: Callback in which return ERC20Token if exist object or error.
+*/
+    func getERC20Token(tokenAddress: String,
+                       completion: @escaping Completion<ERC20Token?>)
+    
+/**
+    Return true if the contract exists and is ERC20 token contract registered.
+    
+    - Parameter tokenAddress: Contract identifier in Ethereum network
+    - Parameter completion: Callback in which return true if the contract exists and is ERC20 token contract registered.
+*/
+    func checkERC20Token(contractId: String,
+                         completion: @escaping Completion<Bool>)
+    
+/**
+    Returns all ERC20 deposits, for the given account id.
+    
+    - Parameter accountId: Accoint id
+    - Parameter completion: Callback in which return ERC20Deposit objects or error.
+*/
+   func getERC20AccountDeposits(accountId: String,
+                                completion: @escaping Completion<[ERC20Deposit]>)
+    
+/**
+    Returns all ERC20 withdrawals, for the given account id.
+    
+    - Parameter accountId: Accoint id
+    - Parameter completion: Callback in which return ERC20Withdrawal objects or error.
+*/
+   func getERC20AccountWithdrawals(accountId: String,
+                                   completion: @escaping Completion<[ERC20Withdrawal]>)
 }

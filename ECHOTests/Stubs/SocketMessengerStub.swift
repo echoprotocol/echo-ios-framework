@@ -25,7 +25,7 @@ enum OperationsState {
     case getBlock
     case createEthAddress
     case getEthAddress
-    case withdrawalEth
+    case withdrawEth
     case getAccountDeposits
     case getAccountWithdrawals
 }
@@ -104,8 +104,8 @@ final class SocketMessengerStub: SocketMessenger {
             response = getCreateEthAddressRespone(request: string)
         case .getEthAddress:
             response = getEthAddressRespone(request: string)
-        case .withdrawalEth:
-            response = getWithdrawalEthRespone(request: string)
+        case .withdrawEth:
+            response = getWithdrawEthRespone(request: string)
         case .getAccountDeposits:
             response = getAccountDepositsRespone(request: string)
         case .getAccountWithdrawals:
@@ -444,7 +444,7 @@ final class SocketMessengerStub: SocketMessenger {
         return nil
     }
     
-    fileprivate func getWithdrawalEthRespone(request: String) -> String? {
+    fileprivate func getWithdrawEthRespone(request: String) -> String? {
         
         guard let tuple = parceRequest(request: request) else {
             return nil

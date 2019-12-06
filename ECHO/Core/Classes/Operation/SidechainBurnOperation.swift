@@ -6,8 +6,10 @@
 //  Copyright © 2019 PixelPlex. All rights reserved.
 //
 
-import Foundation
-
+/**
+   Struct used to encapsulate operations related to the
+    [OperationType.sidechainBurnOperation](OperationType.sidechainBurnOperation)
+*/
 public struct SidechainBurnOperation: BaseOperation {
     
     enum SidechainBurnOperationCodingKeys: String, CodingKey {
@@ -23,7 +25,7 @@ public struct SidechainBurnOperation: BaseOperation {
     public var value: AssetAmount
     public var account: Account
     public var withdrawId: String
-    public var withdraw: EthWithdrawal?
+    public var withdraw: SidechainWithdrawalEnum?
     
     public var extensions: Extensions = Extensions()
     

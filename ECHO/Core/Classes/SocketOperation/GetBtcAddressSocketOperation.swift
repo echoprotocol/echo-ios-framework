@@ -1,27 +1,27 @@
 //
-//  GetEthAddressSocketOperation.swift
+//  GetBtcAddressSocketOperation.swift
 //  ECHO
 //
-//  Created by Vladimir Sharaev on 20/05/2019.
+//  Created by Vladimir Sharaev on 28.11.2019.
 //  Copyright © 2019 PixelPlex. All rights reserved.
 //
 
 /**
-    Get created Ethereum addresses for account by ID
+    Get created Bitcoin addresses for account by ID
  
-    - Return: [EthAddress](EthAddress)
+    - Return: [BtcAddress](BtcAddress)
  */
-struct GetEthAddressSocketOperation: SocketOperation {
+struct GetBtcAddressSocketOperation: SocketOperation {
     
     var method: SocketOperationType
     var operationId: Int
     var apiId: Int
     var accountId: String
-    var completion: Completion<EthAddress?>
+    var completion: Completion<BtcAddress?>
     
     func createParameters() -> [Any] {
         let array: [Any] = [apiId,
-                            SocketOperationKeys.getEthAddress.rawValue,
+                            SocketOperationKeys.getBtcAddress.rawValue,
                             [accountId]]
         return array
     }
@@ -32,31 +32,31 @@ struct GetEthAddressSocketOperation: SocketOperation {
             
             switch response.response {
             case .error(let error):
-                let result = Result<EthAddress?, ECHOError>(error: ECHOError.internalError(error.message))
+                let result = Result<BtcAddress?, ECHOError>(error: ECHOError.internalError(error.message))
                 completion(result)
             case .result(let result):
                 
                 switch result {
                 case .dictionary(let dictionary):
                     let data = try JSONSerialization.data(withJSONObject: dictionary, options: [])
-                    let address = try JSONDecoder().decode(EthAddress.self, from: data)
-                    let result = Result<EthAddress?, ECHOError>(value: address)
+                    let address = try JSONDecoder().decode(BtcAddress.self, from: data)
+                    let result = Result<BtcAddress?, ECHOError>(value: address)
                     completion(result)
                 case .undefined:
-                    let result = Result<EthAddress?, ECHOError>(value: nil)
+                    let result = Result<BtcAddress?, ECHOError>(value: nil)
                     completion(result)
                 default:
                     throw ECHOError.encodableMapping
                 }
             }
         } catch {
-            let result = Result<EthAddress?, ECHOError>(error: ECHOError.encodableMapping)
+            let result = Result<BtcAddress?, ECHOError>(error: ECHOError.encodableMapping)
             completion(result)
         }
     }
     
     func forceEnd(error: ECHOError) {
-        let result = Result<EthAddress?, ECHOError>(error: error)
+        let result = Result<BtcAddress?, ECHOError>(error: error)
         completion(result)
     }
 }

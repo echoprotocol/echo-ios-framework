@@ -1,5 +1,5 @@
 //
-//  AccountAddressCreateOperation.swift
+//  SidechainETHCreateAddressOperation.swift
 //  ECHO
 //
 //  Created by Vladimir Sharaev on 20/05/2019.
@@ -7,12 +7,13 @@
 //
 
 /**
-    Struct used to encapsulate operations related to the [OperationType.SidechainETHCreateAddressOperation](OperationType.SidechainETHCreateAddressOperation)
+    Struct used to encapsulate operations related to the
+    [OperationType.SidechainETHCreateAddressOperation](OperationType.SidechainETHCreateAddressOperation)
  */
 public struct SidechainETHCreateAddressOperation: BaseOperation {
     
-    enum AccountAddressCreateOperationCodingKeys: String, CodingKey {
-        case account = "account"
+    enum SidechainETHCreateAddressOperationCodingKeys: String, CodingKey {
+        case account
         case extensions
         case fee
     }
@@ -35,7 +36,7 @@ public struct SidechainETHCreateAddressOperation: BaseOperation {
         
         type = .sidechainETHCreateAddressOperation
         
-        let values = try decoder.container(keyedBy: AccountAddressCreateOperationCodingKeys.self)
+        let values = try decoder.container(keyedBy: SidechainETHCreateAddressOperationCodingKeys.self)
         
         let accountId = try values.decode(String.self, forKey: .account)
         account = Account(accountId)
@@ -69,9 +70,9 @@ public struct SidechainETHCreateAddressOperation: BaseOperation {
         var array = [Any]()
         array.append(getId())
         
-        let dictionary: [AnyHashable: Any?] = [AccountAddressCreateOperationCodingKeys.fee.rawValue: fee.toJSON(),
-                                               AccountAddressCreateOperationCodingKeys.account.rawValue: account.toJSON(),
-                                               AccountAddressCreateOperationCodingKeys.extensions.rawValue: extensions.toJSON()]
+        let dictionary: [AnyHashable: Any?] = [SidechainETHCreateAddressOperationCodingKeys.fee.rawValue: fee.toJSON(),
+                                               SidechainETHCreateAddressOperationCodingKeys.account.rawValue: account.toJSON(),
+                                               SidechainETHCreateAddressOperationCodingKeys.extensions.rawValue: extensions.toJSON()]
         
         array.append(dictionary)
         

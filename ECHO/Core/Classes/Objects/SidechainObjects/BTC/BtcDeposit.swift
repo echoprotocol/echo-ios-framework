@@ -15,8 +15,8 @@ public struct BtcDeposit: ECHOObject, Decodable {
         case account
         case intermediateDepositId = "intermediate_deposit_id"
         case txInfo = "tx_info"
-        case blockNumber = "block_number"
         case isApproved = "is_approved"
+        case isSent = "is_sent"
         case approves
     }
     
@@ -24,7 +24,7 @@ public struct BtcDeposit: ECHOObject, Decodable {
     public let account: Account
     public let intermediateDepositId: String
     public let txInfo: BtcDepositTransactionInfo
-    public let blockNumber: UInt
+    public let isSent: Bool
     public let isApproved: Bool
     public let approves: [String]
     
@@ -36,7 +36,7 @@ public struct BtcDeposit: ECHOObject, Decodable {
         account = Account(accountId)
         intermediateDepositId = try values.decode(String.self, forKey: .intermediateDepositId)
         txInfo = try values.decode(BtcDepositTransactionInfo.self, forKey: .txInfo)
-        blockNumber = try values.decode(UInt.self, forKey: .blockNumber)
+        isSent = try values.decode(Bool.self, forKey: .isSent)
         isApproved = try values.decode(Bool.self, forKey: .isApproved)
         approves = try values.decode([String].self, forKey: .approves)
     }

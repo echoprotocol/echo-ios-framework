@@ -1,5 +1,36 @@
 # CHANGELOG
 
+## Changelog 4.0.0 - 2019-12-03
+
+### Added
+
+#### ERC20 Sidechain
+Socket operations:
+* GetERC20TokenSocketOperation
+* CheckERC20TokenSocketOperation
+* GetERC20AccountDepositsSocketOperation
+* GetERC20AccountWithdrawalsSocketOperation
+
+Chain operations:
+* SidechainERC20RegisterTokenOperation
+* SidechainERC20DepositTokenOperation
+* SidechainERC20WithdrawTokenOperation
+* SidechainERC20IssueOperation
+* SidechainERC20BurnOperation
+
+#### BTC Sidechain
+Socket operations:
+* GetBtcAddressSocketOperation
+
+Chain operations:
+* SidechainBTCCreateAddressOperation
+* SidechainBTCWithdrawOperation
+* SidechainBTCCreateIntermediateDepositOperation
+
+#### Chain operations:
+* ContractFundPoolOperation
+* BlockRewardOperation
+
 ## Changelog 3.7.2 - 2019-11-19
 
 ### Fixed
