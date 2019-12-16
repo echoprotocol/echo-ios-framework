@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## Changelog 4.0.1 - 2019-12-16
+### Added 
+* getFeeForWithdrawEthOperation method
+* getFeeForWithdrawBtcOperation method
+* getFeeForWithdrawERC20Operation method
+
+### Removed
+* WIF field from getFeeForCreateContract methods
+
+### Tests
+* Added tests to new methods
+
 ## Changelog 4.0.0 - 2019-12-03
 
 ### Added
