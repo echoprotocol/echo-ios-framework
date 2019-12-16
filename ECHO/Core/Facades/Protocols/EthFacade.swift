@@ -45,6 +45,7 @@ public protocol EthFacade {
      - Parameter wif: Sender wif from account
      - Parameter toEthAddress: Receiver ethereum address
      - Parameter amount: Amount
+     - Parameter assetForFee: Id of asset which is pay fee     
      - Parameter completion: Callback in which the information will return whether the transaction was successful.
      - Parameter noticeHandler: Callback in which the information will return whether the transaction was confirmed.     
  */

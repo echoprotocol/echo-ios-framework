@@ -113,7 +113,6 @@ final public class FeeFacadeImp: FeeFacade, ECHOQueueble {
     }
     
     public func getFeeForCreateContract(registrarNameOrId: String,
-                                        wif: String,
                                         assetId: String,
                                         amount: UInt?,
                                         assetForFee: String?,
@@ -131,7 +130,6 @@ final public class FeeFacadeImp: FeeFacade, ECHOQueueble {
         }
         
         getFeeForCreateContract(registrarNameOrId: registrarNameOrId,
-                                wif: wif,
                                 assetId: assetId,
                                 amount: amount,
                                 assetForFee: assetForFee,
@@ -142,7 +140,6 @@ final public class FeeFacadeImp: FeeFacade, ECHOQueueble {
     }
     
     public func getFeeForCreateContract(registrarNameOrId: String,
-                                        wif: String,
                                         assetId: String,
                                         amount: UInt?,
                                         assetForFee: String?,
@@ -322,6 +319,199 @@ final public class FeeFacadeImp: FeeFacade, ECHOQueueble {
         callQueue.addOperation(completionOperation)
     }
     
+    public func getFeeForWithdrawEthOperation(nameOrId: String,
+                                              toEthAddress: String,
+                                              amount: UInt,
+                                              assetForFee: String?,
+                                              completion: @escaping Completion<AssetAmount>) {
+        // if we don't hace assetForFee, we use asset.
+        let assetForFee = assetForFee ?? Settings.defaultAsset
+        
+        // Validate asset id
+        do {
+            let validator = IdentifierValidator()
+            try validator.validateId(assetForFee, for: .asset)
+        } catch let error {
+            let echoError = (error as? ECHOError) ?? ECHOError.undefined
+            let result = Result<AssetAmount, ECHOError>(error: echoError)
+            completion(result)
+            return
+        }
+        
+        // Validate Ethereum address
+        let ethValidator = ETHAddressValidator(cryptoCore: cryptoCore)
+        guard ethValidator.isValidETHAddress(toEthAddress) else {
+            let result = Result<AssetAmount, ECHOError>(error: .invalidETHAddress)
+            completion(result)
+            return
+        }
+        
+        let withdrawalQueue = ECHOQueue()
+        addQueue(withdrawalQueue)
+        
+        // Accounts
+        let getAccountsNamesOrIdsWithKeys = GetAccountsNamesOrIdWithKeys([(nameOrId, FeeResultsKeys.loadedFromAccount.rawValue)])
+        let getAccountsOperationInitParams = (withdrawalQueue,
+                                              services.databaseService,
+                                              getAccountsNamesOrIdsWithKeys)
+        let getAccountsOperation = GetAccountsQueueOperation<AssetAmount>(initParams: getAccountsOperationInitParams,
+                                                                          completion: completion)
+        
+        let bildWithdrawOperation = createBildWithdrawETHOperation(withdrawalQueue, Asset(assetForFee), amount, toEthAddress, completion)
+        
+        // RequiredFee
+        let getRequiredFeeOperationInitParams = (withdrawalQueue,
+                                                 services.databaseService,
+                                                 Asset(assetForFee),
+                                                 FeeResultsKeys.operation.rawValue,
+                                                 FeeResultsKeys.fee.rawValue,
+                                                 UInt(1))
+        let getRequiredFeeOperation = GetRequiredFeeQueueOperation<AssetAmount>(initParams: getRequiredFeeOperationInitParams,
+                                                                                completion: completion)
+        
+        // FeeCompletion
+        let feeCompletionOperation = createFeeComletionOperation(withdrawalQueue, completion)
+        
+        // Completion
+        let completionOperation = createCompletionOperation(queue: withdrawalQueue)
+        
+        withdrawalQueue.addOperation(getAccountsOperation)
+        withdrawalQueue.addOperation(bildWithdrawOperation)
+        withdrawalQueue.addOperation(getRequiredFeeOperation)
+        withdrawalQueue.addOperation(feeCompletionOperation)
+        
+        withdrawalQueue.addOperation(completionOperation)
+    }
+    
+    public func getFeeForWithdrawBtcOperation(nameOrId: String,
+                                              toBtcAddress: String,
+                                              amount: UInt,
+                                              assetForFee: String?,
+                                              completion: @escaping Completion<AssetAmount>) {
+        // if we don't hace assetForFee, we use asset.
+        let assetForFee = assetForFee ?? Settings.defaultAsset
+        
+        // Validate asset id
+        do {
+            let validator = IdentifierValidator()
+            try validator.validateId(assetForFee, for: .asset)
+        } catch let error {
+            let echoError = (error as? ECHOError) ?? ECHOError.undefined
+            let result = Result<AssetAmount, ECHOError>(error: echoError)
+            completion(result)
+            return
+        }
+        
+        let btcValidator = BTCAddressValidator(cryptoCore: cryptoCore)
+        guard btcValidator.isValidBTCAddress(toBtcAddress) else {
+            let result = Result<AssetAmount, ECHOError>(error: .invalidBTCAddress)
+            completion(result)
+            return
+        }
+        
+        let withdrawalQueue = ECHOQueue()
+        addQueue(withdrawalQueue)
+        
+        // Accounts
+        let getAccountsNamesOrIdsWithKeys = GetAccountsNamesOrIdWithKeys([(nameOrId, FeeResultsKeys.loadedFromAccount.rawValue)])
+        let getAccountsOperationInitParams = (withdrawalQueue,
+                                              services.databaseService,
+                                              getAccountsNamesOrIdsWithKeys)
+        let getAccountsOperation = GetAccountsQueueOperation<AssetAmount>(initParams: getAccountsOperationInitParams,
+                                                                          completion: completion)
+        
+        let bildWithdrawOperation = createBildWithdrawBTCOperation(withdrawalQueue, Asset(assetForFee), amount, toBtcAddress, completion)
+        
+        // RequiredFee
+        let getRequiredFeeOperationInitParams = (withdrawalQueue,
+                                                 services.databaseService,
+                                                 Asset(assetForFee),
+                                                 FeeResultsKeys.operation.rawValue,
+                                                 FeeResultsKeys.fee.rawValue,
+                                                 UInt(1))
+        let getRequiredFeeOperation = GetRequiredFeeQueueOperation<AssetAmount>(initParams: getRequiredFeeOperationInitParams,
+                                                                                completion: completion)
+        
+        // FeeCompletion
+        let feeCompletionOperation = createFeeComletionOperation(withdrawalQueue, completion)
+        
+        // Completion
+        let completionOperation = createCompletionOperation(queue: withdrawalQueue)
+        
+        withdrawalQueue.addOperation(getAccountsOperation)
+        withdrawalQueue.addOperation(bildWithdrawOperation)
+        withdrawalQueue.addOperation(getRequiredFeeOperation)
+        withdrawalQueue.addOperation(feeCompletionOperation)
+        
+        withdrawalQueue.addOperation(completionOperation)
+    }
+    
+    public func getFeeForWithdrawERC20Operation(nameOrId: String,
+                                                toEthAddress: String,
+                                                tokenId: String,
+                                                value: String,
+                                                assetForFee: String?,
+                                                completion: @escaping Completion<AssetAmount>) {
+        // if we don't hace assetForFee, we use asset.
+        let assetForFee = assetForFee ?? Settings.defaultAsset
+        
+        // Validate asset id and token id
+        do {
+            let validator = IdentifierValidator()
+            try validator.validateId(assetForFee, for: .asset)
+            try validator.validateId(tokenId, for: .erc20Token)
+        } catch let error {
+            let echoError = (error as? ECHOError) ?? ECHOError.undefined
+            let result = Result<AssetAmount, ECHOError>(error: echoError)
+            completion(result)
+            return
+        }
+        
+        // Validate Ethereum address
+        let ethValidator = ETHAddressValidator(cryptoCore: cryptoCore)
+        guard ethValidator.isValidETHAddress(toEthAddress) else {
+            let result = Result<AssetAmount, ECHOError>(error: .invalidETHAddress)
+            completion(result)
+            return
+        }
+        
+        let withdrawalQueue = ECHOQueue()
+        addQueue(withdrawalQueue)
+        
+        // Accounts
+        let getAccountsNamesOrIdsWithKeys = GetAccountsNamesOrIdWithKeys([(nameOrId, FeeResultsKeys.loadedFromAccount.rawValue)])
+        let getAccountsOperationInitParams = (withdrawalQueue,
+                                              services.databaseService,
+                                              getAccountsNamesOrIdsWithKeys)
+        let getAccountsOperation = GetAccountsQueueOperation<AssetAmount>(initParams: getAccountsOperationInitParams,
+                                                                          completion: completion)
+        
+        let bildWithdrawOperation = createBildWithdrawERC20Operation(withdrawalQueue, Asset(assetForFee), value, toEthAddress, tokenId, completion)
+        
+        // RequiredFee
+        let getRequiredFeeOperationInitParams = (withdrawalQueue,
+                                                 services.databaseService,
+                                                 Asset(assetForFee),
+                                                 FeeResultsKeys.operation.rawValue,
+                                                 FeeResultsKeys.fee.rawValue,
+                                                 UInt(1))
+        let getRequiredFeeOperation = GetRequiredFeeQueueOperation<AssetAmount>(initParams: getRequiredFeeOperationInitParams,
+                                                                                completion: completion)
+        
+        // FeeCompletion
+        let feeCompletionOperation = createFeeComletionOperation(withdrawalQueue, completion)
+        
+        // Completion
+        let completionOperation = createCompletionOperation(queue: withdrawalQueue)
+        
+        withdrawalQueue.addOperation(getAccountsOperation)
+        withdrawalQueue.addOperation(bildWithdrawOperation)
+        withdrawalQueue.addOperation(getRequiredFeeOperation)
+        withdrawalQueue.addOperation(feeCompletionOperation)
+        
+        withdrawalQueue.addOperation(completionOperation)
+    }
+    
     fileprivate func createBildTransferOperation(_ queue: ECHOQueue,
                                                  _ amount: UInt,
                                                  _ asset: String,
@@ -469,6 +659,92 @@ final public class FeeFacadeImp: FeeFacade, ECHOQueueble {
         }
         
         return contractOperation
+    }
+    
+    fileprivate func createBildWithdrawETHOperation(_ queue: ECHOQueue,
+                                                    _ asset: Asset,
+                                                    _ amount: UInt,
+                                                    _ toEthAddress: String,
+                                                    _ completion: @escaping Completion<AssetAmount>) -> Operation {
+        
+        let bildWithdrawOperation = BlockOperation()
+        
+        bildWithdrawOperation.addExecutionBlock { [weak bildWithdrawOperation, weak queue] in
+            
+            guard bildWithdrawOperation?.isCancelled == false else { return }
+            
+            guard let account: Account = queue?.getValue(FeeResultsKeys.loadedFromAccount.rawValue) else { return }
+            
+            let fee = AssetAmount(amount: 0, asset: asset)
+            let address = toEthAddress.replacingOccurrences(of: "0x", with: "")
+            
+            let withdrawOperation = SidechainETHWithdrawOperation(account: account,
+                                                                  value: amount,
+                                                                  ethAddress: address,
+                                                                  fee: fee)
+            
+            queue?.saveValue(withdrawOperation, forKey: FeeResultsKeys.operation.rawValue)
+        }
+        
+        return bildWithdrawOperation
+    }
+    
+    fileprivate func createBildWithdrawBTCOperation(_ queue: ECHOQueue,
+                                                    _ asset: Asset,
+                                                    _ amount: UInt,
+                                                    _ toBtcAddress: String,
+                                                    _ completion: @escaping Completion<AssetAmount>) -> Operation {
+        
+        let bildWithdrawalOperation = BlockOperation()
+        
+        bildWithdrawalOperation.addExecutionBlock { [weak bildWithdrawalOperation, weak queue] in
+            
+            guard bildWithdrawalOperation?.isCancelled == false else { return }
+            
+            guard let account: Account = queue?.getValue(FeeResultsKeys.loadedFromAccount.rawValue) else { return }
+            
+            let fee = AssetAmount(amount: 0, asset: asset)
+            
+            let withdrawalOperation = SidechainBTCWithdrawOperation(account: account,
+                                                                    value: amount,
+                                                                    btcAddress: toBtcAddress,
+                                                                    fee: fee)
+            
+            queue?.saveValue(withdrawalOperation, forKey: FeeResultsKeys.operation.rawValue)
+        }
+        
+        return bildWithdrawalOperation
+    }
+    
+    fileprivate func createBildWithdrawERC20Operation(_ queue: ECHOQueue,
+                                                 _ asset: Asset,
+                                                 _ value: String,
+                                                 _ toEthAddress: String,
+                                                 _ tokenId: String,
+                                                 _ completion: @escaping Completion<AssetAmount>) -> Operation {
+        
+        let bildWithdrawOperation = BlockOperation()
+        
+        bildWithdrawOperation.addExecutionBlock { [weak bildWithdrawOperation, weak queue] in
+            
+            guard bildWithdrawOperation?.isCancelled == false else { return }
+            
+            guard let account: Account = queue?.getValue(FeeResultsKeys.loadedFromAccount.rawValue) else { return }
+            
+            let fee = AssetAmount(amount: 0, asset: asset)
+            let address = toEthAddress.replacingOccurrences(of: "0x", with: "")
+            let token = ERC20Token(id: tokenId)
+            
+            let withdrawOperation = SidechainERC20WithdrawTokenOperation(account: account,
+                                                                         toEthAddress: address,
+                                                                         token: token,
+                                                                         value: value,
+                                                                         fee: fee)
+            
+            queue?.saveValue(withdrawOperation, forKey: FeeResultsKeys.operation.rawValue)
+        }
+        
+        return bildWithdrawOperation
     }
 }
 // swiftlint:enable type_body_length
