@@ -19,6 +19,7 @@ public protocol BtcFacade {
      - Parameter backupAddress: Bitcoin address to possibility of a refund
      - Parameter assetForFee: Id of asset which is pay fee
      - Parameter completion: Callback in which the information will return whether the transaction was successful.
+     - Parameter noticeHandler: Callback in which the information will return whether the transaction was confirmed.
      
      - Remark:
      Default asset is **"1.3.0"**
@@ -37,7 +38,9 @@ public protocol BtcFacade {
     - Parameter wif: Sender wif from account
     - Parameter toBtcAddress: Receiver bitcoin address
     - Parameter amount: Amount
+    - Parameter assetForFee: Id of asset which is pay fee    
     - Parameter completion: Callback in which the information will return whether the transaction was successful.
+    - Parameter noticeHandler: Callback in which the information will return whether the transaction was confirmed.         
 */
    func withdrawBtc(nameOrId: String,
                     wif: String,

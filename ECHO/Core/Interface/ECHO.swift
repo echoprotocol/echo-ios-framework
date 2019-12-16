@@ -276,7 +276,6 @@ final public class ECHO: InterfaceFacades, Startable {
     }
     
     public func getFeeForCreateContract(registrarNameOrId: String,
-                                        wif: String,
                                         assetId: String,
                                         amount: UInt?,
                                         assetForFee: String?,
@@ -286,7 +285,6 @@ final public class ECHO: InterfaceFacades, Startable {
                                         completion: @escaping Completion<AssetAmount>) {
         
         feeFacade.getFeeForCreateContract(registrarNameOrId: registrarNameOrId,
-                                          wif: wif,
                                           assetId: assetId,
                                           amount: amount,
                                           assetForFee: assetForFee,
@@ -297,7 +295,6 @@ final public class ECHO: InterfaceFacades, Startable {
     }
     
     public func getFeeForCreateContract(registrarNameOrId: String,
-                                        wif: String,
                                         assetId: String,
                                         amount: UInt?,
                                         assetForFee: String?,
@@ -308,7 +305,6 @@ final public class ECHO: InterfaceFacades, Startable {
                                         completion: @escaping Completion<AssetAmount>) {
         
         feeFacade.getFeeForCreateContract(registrarNameOrId: registrarNameOrId,
-                                          wif: wif,
                                           assetId: assetId,
                                           amount: amount,
                                           assetForFee: assetForFee,
@@ -353,6 +349,47 @@ final public class ECHO: InterfaceFacades, Startable {
                                                  contratId: contratId,
                                                  byteCode: byteCode,
                                                  completion: completion)
+    }
+    
+    public func getFeeForWithdrawEthOperation(nameOrId: String,
+                                              toEthAddress: String,
+                                              amount: UInt,
+                                              assetForFee: String?,
+                                              completion: @escaping Completion<AssetAmount>) {
+        
+        feeFacade.getFeeForWithdrawEthOperation(nameOrId: nameOrId,
+                                                toEthAddress: toEthAddress,
+                                                amount: amount,
+                                                assetForFee: assetForFee,
+                                                completion: completion)
+    }
+    
+    public func getFeeForWithdrawBtcOperation(nameOrId: String,
+                                              toBtcAddress: String,
+                                              amount: UInt,
+                                              assetForFee: String?,
+                                              completion: @escaping Completion<AssetAmount>) {
+        
+        feeFacade.getFeeForWithdrawBtcOperation(nameOrId: nameOrId,
+                                                toBtcAddress: toBtcAddress,
+                                                amount: amount,
+                                                assetForFee: assetForFee,
+                                                completion: completion)
+    }
+    
+    public func getFeeForWithdrawERC20Operation(nameOrId: String,
+                                                toEthAddress: String,
+                                                tokenId: String,
+                                                value: String,
+                                                assetForFee: String?,
+                                                completion: @escaping Completion<AssetAmount>) {
+        
+        feeFacade.getFeeForWithdrawERC20Operation(nameOrId: nameOrId,
+                                                  toEthAddress: toEthAddress,
+                                                  tokenId: tokenId,
+                                                  value: value,
+                                                  assetForFee: assetForFee,
+                                                  completion: completion)
     }
     
     // MARK: TransactionFacade

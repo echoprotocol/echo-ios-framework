@@ -696,7 +696,6 @@ class ECHOInterfaceTests: XCTestCase {
         //act
         echo.start { [unowned self] (result) in
             self.echo.getFeeForCreateContract(registrarNameOrId: Constants.defaultName,
-                                              wif: Constants.defaultWIF,
                                               assetId: Constants.defaultAsset,
                                               amount: 0, assetForFee: nil,
                                               byteCode: Constants.counterContractByteCode,
@@ -731,7 +730,6 @@ class ECHOInterfaceTests: XCTestCase {
         //act
         echo.start { [unowned self] (result) in
             self.echo.getFeeForCreateContract(registrarNameOrId: Constants.defaultName,
-                                              wif: Constants.defaultWIF,
                                               assetId: Constants.defaultAsset,
                                               amount: 0, assetForFee: nil,
                                               byteCode: Constants.counterContractByteCode,
@@ -2081,6 +2079,37 @@ class ECHOInterfaceTests: XCTestCase {
         }
     }
     
+    func testGetFeeWithdrawEth() {
+        //arrange
+        echo = ECHO(settings: Settings(build: {
+            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+            $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+        }))
+        let exp = expectation(description: "testGetFeeWithdrawEth")
+        var fee: AssetAmount!
+        
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.getFeeForWithdrawEthOperation(nameOrId: Constants.defaultName,
+                                                    toEthAddress: Constants.defaultETHAddress,
+                                                    amount: 1,
+                                                    assetForFee: nil) { (result) in
+                switch result {
+                case .success(let aFee):
+                    fee = aFee
+                    exp.fulfill()
+                case .failure(let error):
+                    XCTFail("testGetFeeWithdrawEth failed \(error)")
+                }
+            }
+        }
+        
+        //assert
+        waitForExpectations(timeout: Constants.timeout) { error in
+            XCTAssertNotNil(fee)
+        }
+    }
+    
     func testWithdrawEth() {
         
         //arrange
@@ -2312,6 +2341,37 @@ class ECHOInterfaceTests: XCTestCase {
         }
     }
     
+    func testGetFeeWithdrawBtc() {
+        //arrange
+        echo = ECHO(settings: Settings(build: {
+            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+            $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+        }))
+        let exp = expectation(description: "testGetFeeWithdrawBtc")
+        var fee: AssetAmount!
+        
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.getFeeForWithdrawBtcOperation(nameOrId: Constants.defaultName,
+                                                    toBtcAddress: Constants.defaultBTCAddress,
+                                                    amount: 1,
+                                                    assetForFee: nil) { (result) in
+                switch result {
+                case .success(let aFee):
+                    fee = aFee
+                    exp.fulfill()
+                case .failure(let error):
+                    XCTFail("testGetFeeWithdrawBtc failed \(error)")
+                }
+            }
+        }
+        
+        //assert
+        waitForExpectations(timeout: Constants.timeout) { error in
+            XCTAssertNotNil(fee)
+        }
+    }
+    
     func testWithdrawBtc() {
 
         //arrange
@@ -2474,6 +2534,38 @@ class ECHOInterfaceTests: XCTestCase {
         }
     }
 
+    func testGetFeeWithdrawERC20() {
+        //arrange
+        echo = ECHO(settings: Settings(build: {
+            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+            $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+        }))
+        let exp = expectation(description: "testGetFeeWithdrawERC20")
+        var fee: AssetAmount!
+        
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.getFeeForWithdrawERC20Operation(nameOrId: Constants.defaultName,
+                                                      toEthAddress: Constants.defaultETHAddress,
+                                                      tokenId: Constants.erc20TokenEchoId,
+                                                      value: "1",
+                                                      assetForFee: nil) { (result) in
+                switch result {
+                case .success(let aFee):
+                    fee = aFee
+                    exp.fulfill()
+                case .failure(let error):
+                    XCTFail("testGetFeeWithdrawERC20 failed \(error)")
+                }
+            }
+        }
+        
+        //assert
+        waitForExpectations(timeout: Constants.timeout) { error in
+            XCTAssertNotNil(fee)
+        }
+    }
+    
     func testWithdrawERC20() {
         
         //arrange
