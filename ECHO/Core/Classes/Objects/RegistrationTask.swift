@@ -19,13 +19,13 @@ public struct RegistrationTask: Decodable {
     
     public let blockId: String
     public let randNum: UIntOrString
-    public let difficulty: UInt8
+    public let difficulty: UInt16
     
     public init(from decoder: Decoder) throws {
         
         let values = try decoder.container(keyedBy: RegistrationTaskKeys.self)
         blockId = try values.decode(String.self, forKey: .blockId)
         randNum = try values.decode(UIntOrString.self, forKey: .randNum)
-        difficulty = try values.decode(UInt8.self, forKey: .difficulty)
+        difficulty = try values.decode(UInt16.self, forKey: .difficulty)
     }
 }

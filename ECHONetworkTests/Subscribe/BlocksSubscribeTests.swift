@@ -50,7 +50,7 @@ class BlocksSubscribeTests: XCTestCase, SubscribeBlockDelegate {
                                                     noticeHandler: nil)
                 })
                 
-                DispatchQueue.main.asyncAfter(deadline: .now() + 8, execute: {
+                DispatchQueue.main.asyncAfter(deadline: .now() + Constants.timeout, execute: {
                     exp.fulfill()
                 })
             case .failure(let error):
@@ -59,7 +59,7 @@ class BlocksSubscribeTests: XCTestCase, SubscribeBlockDelegate {
         }
         
         //assert
-        waitForExpectations(timeout: Constants.timeout) { error in
+        waitForExpectations(timeout: Constants.timeout * 2) { error in
             XCTAssertTrue(self.blockCreateCount > 0)
         }
     }

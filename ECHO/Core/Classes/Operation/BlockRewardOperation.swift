@@ -13,7 +13,7 @@
 public struct BlockRewardOperation: BaseOperation {
     
     enum BlockRewardOperationCodingKeys: String, CodingKey {
-        case reciever
+        case receiver
         case amount
         case extensions
     }
@@ -22,7 +22,7 @@ public struct BlockRewardOperation: BaseOperation {
     public let extensions: Extensions = Extensions()
     public var fee: AssetAmount
     
-    public var reciever: Account
+    public var receiver: Account
     public let amount: UIntOrString
     
     public init(from decoder: Decoder) throws {
@@ -31,15 +31,15 @@ public struct BlockRewardOperation: BaseOperation {
         
         let values = try decoder.container(keyedBy: BlockRewardOperationCodingKeys.self)
         
-        let recieverId = try values.decode(String.self, forKey: .reciever)
-        reciever = Account(recieverId)
+        let receiverId = try values.decode(String.self, forKey: .receiver)
+        receiver = Account(receiverId)
         amount = try values.decode(UIntOrString.self, forKey: .amount)
         fee = AssetAmount(amount: 0, asset: Asset(Settings.defaultAsset))
     }
     
-    mutating func changeReciever(account: Account?) {
+    mutating func changeReceiver(account: Account?) {
         
-        if let account = account { self.reciever = account }
+        if let account = account { self.receiver = account }
     }
     
     mutating func changeAssets(feeAsset: Asset?) {

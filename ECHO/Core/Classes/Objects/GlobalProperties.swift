@@ -287,7 +287,7 @@ public struct SidechainConfig: Decodable {
 public struct SidechainFines: Decodable {
     
     private enum SidechainFinesCodingKeys: String, CodingKey {
-        case generateETHAddress = "generate_eth_address"
+        case generateETHAddress = "create_eth_address"
     }
     
     public let generateETHAddress: Int

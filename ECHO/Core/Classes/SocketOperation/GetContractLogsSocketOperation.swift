@@ -7,9 +7,9 @@
 //
 
 /**
-    Retrieves contract logs from block to block of called contract
+    Retrieves contract logs from block to block of called contract. The logs will receive from notice by operation Id
  
-    - Return: [ContractLogEnum](ContractLogEnum)
+    - Return: Bool(Bool)
  */
 struct GetContractLogsSocketOperation: SocketOperation {
     
@@ -19,12 +19,13 @@ struct GetContractLogsSocketOperation: SocketOperation {
     var contractId: String
     var fromBlock: Int
     var toBlock: Int
-    var completion: Completion<[ContractLogEnum]>
+    var completion: Completion<Bool>
     
     func createParameters() -> [Any] {
         let array: [Any] = [apiId,
                             SocketOperationKeys.getContractLogs.rawValue,
                             [
+                                operationId,
                                 [
                                     "contracts": [contractId],
                                     "from_block": fromBlock,
@@ -35,33 +36,30 @@ struct GetContractLogsSocketOperation: SocketOperation {
     }
     
     func handleResponse(_ response: ECHODirectResponse) {
-        
         do {
             
             switch response.response {
             case .error(let error):
-                let result = Result<[ContractLogEnum], ECHOError>(error: ECHOError.internalError(error.message))
+                let result = Result<Bool, ECHOError>(error: ECHOError.internalError(error.message))
                 completion(result)
             case .result(let result):
                 
                 switch result {
-                case .array(let array):
-                    let data = try JSONSerialization.data(withJSONObject: array, options: [])
-                    let logs = try JSONDecoder().decode([ContractLogEnum].self, from: data)
-                    let result = Result<[ContractLogEnum], ECHOError>(value: logs)
+                case .undefined:
+                    let result = Result<Bool, ECHOError>(value: true)
                     completion(result)
                 default:
                     throw ECHOError.encodableMapping
                 }
             }
         } catch {
-            let result = Result<[ContractLogEnum], ECHOError>(error: ECHOError.encodableMapping)
+            let result = Result<Bool, ECHOError>(error: ECHOError.encodableMapping)
             completion(result)
         }
     }
     
     func forceEnd(error: ECHOError) {
-        let result = Result<[ContractLogEnum], ECHOError>(error: error)
+        let result = Result<Bool, ECHOError>(error: error)
         completion(result)
     }
 }
