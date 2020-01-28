@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## Changelog 4.1.0 - 2020-01-28
+### Changed
+* Operations order list
+* Get contract logs operation logic
+* Internal property names and types
+
 ## Changelog 4.0.1 - 2019-12-16
 ### Added 
 * getFeeForWithdrawEthOperation method

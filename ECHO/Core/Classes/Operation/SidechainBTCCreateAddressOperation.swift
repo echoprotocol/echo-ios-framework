@@ -62,12 +62,10 @@ public struct SidechainBTCCreateAddressOperation: BaseOperation {
     public func toData() -> Data? {
         
         var data = Data()
+        
         data.append(optional: fee.toData())
         data.append(optional: account.toData())
         data.append(optional: Data.fromString(backupAddress))
-
-//        data.append(UInt8(truncatingIfNeeded: backupAddress.count))
-//        data.append(optional: backupAddress.data(using: .utf8))
 
         return data
     }
@@ -79,12 +77,10 @@ public struct SidechainBTCCreateAddressOperation: BaseOperation {
         
         let dictionary: [AnyHashable: Any?] = [SidechainBTCCreateAddressOperationCodingKeys.fee.rawValue: fee.toJSON(),
                                                SidechainBTCCreateAddressOperationCodingKeys.account.rawValue: account.toJSON(),
-                                               SidechainBTCCreateAddressOperationCodingKeys.backupAddress.rawValue: backupAddress,
-                                               SidechainBTCCreateAddressOperationCodingKeys.extensions.rawValue: extensions.toJSON()]
+                                               SidechainBTCCreateAddressOperationCodingKeys.backupAddress.rawValue: backupAddress]
         
         array.append(dictionary)
         
         return array
     }
 }
-

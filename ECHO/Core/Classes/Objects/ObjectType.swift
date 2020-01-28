@@ -43,8 +43,8 @@ public enum ObjectType: Int {
     case btcIntermediateDeposit     //20
     case btcDeposit
     case btcWithdraw
-    case btcAggregating
-    case globalProperty
+    case btcAggregating             //23
+    case globalProperty             //0
     case dynamicGlobalProperty
     case assetDynamicData
     case assetBitassetData
@@ -54,13 +54,13 @@ public enum ObjectType: Int {
     case blockSummary
     case accountTransactionHistory
     case chainProperty
-    case specialAuthority
+    case specialAuthority           //10
     case contractBalance
     case contractHistory
     case contractStatistics
     case accountAddress
     case contractPool
-    case maliciousCommitteemen
+    case maliciousCommitteemen      //16
     case undefined
     
     func getGenericObjectId() -> String? {

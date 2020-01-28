@@ -39,7 +39,7 @@ final class SendTransactionQueueOperation: Operation {
         guard let transction: Transaction = queue?.getValue(transactionKey) else { return }
         
         let operationId = networkBroadcastService?.broadcastTransactionWithCallback(transaction: transction,
-                                                                  completion: { [weak self] (result) in
+                                                                                    completion: { [weak self] (result) in
             switch result {
             case .success(let success):
                 let result = Result<Bool, ECHOError>(value: success)

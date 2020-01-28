@@ -115,14 +115,15 @@ protocol DatabaseApiService: BaseApiService {
     func getContractResult(contractResultId: String, completion: @escaping Completion<ContractResultEnum>)
     
 /**
-    Return list of contract logs
+    Async get contract logs
      
      - Parameter contractId: Contract id for fetching logs
      - Parameter fromBlockId: Number of the earliest block to retrieve
      - Parameter toBlock: Number of the latest block to retrieve
-     - Parameter completion: Callback which returns an array of [ContractLogEnum](ContractLogEnum) result of call or error
+     - Parameter completion: Callback which returns [Bool](Bool) result of call or error. The logs will receive by notice
+     - Returns: ID of operation. For notice handle
  */
-    func getContractLogs(contractId: String, fromBlock: Int, toBlock: Int, completion: @escaping Completion<[ContractLogEnum]>)
+    func getContractLogs(contractId: String, fromBlock: Int, toBlock: Int, completion: @escaping Completion<Bool>) -> Int
     
 /**
      Subscribes to listening contract logs

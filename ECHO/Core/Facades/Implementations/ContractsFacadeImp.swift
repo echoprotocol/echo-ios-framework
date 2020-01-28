@@ -35,6 +35,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
         case noticeHandler
         case notice
         case noticeError
+        case logsHandler
     }
     
     var queues: [String: ECHOQueue]
@@ -73,7 +74,25 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
             return
         }
         
-        services.databaseService.getContractLogs(contractId: contractId, fromBlock: fromBlock, toBlock: toBlock, completion: completion)
+        let getLogsQueue = ECHOQueue()
+        addQueue(getLogsQueue)
+        
+        // Get logs operation
+        let getLogsOperation = createGetContractLogsOperation(getLogsQueue, contractId, fromBlock, toBlock, completion)
+        
+        // Completion
+        let completionOperation = createCompletionOperation(queue: getLogsQueue)
+        
+        getLogsQueue.addOperation(getLogsOperation)
+        
+        //Logs notice handler
+        getLogsQueue.saveValue(completion, forKey: ContractKeys.logsHandler.rawValue)
+        let waitOperation = createWaitingOperation(getLogsQueue)
+        let noticeHandleOperation = createLogsNoticeHandleOperation(getLogsQueue)
+        getLogsQueue.addOperation(waitOperation)
+        getLogsQueue.addOperation(noticeHandleOperation)
+        
+        getLogsQueue.addOperation(completionOperation)
     }
     
     public func getContractResult(contractResultId: String, completion: @escaping Completion<ContractResultEnum>) {
@@ -613,6 +632,48 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
         return noticeOperation
     }
     
+    fileprivate func createLogsNoticeHandleOperation(_ queue: ECHOQueue) -> Operation {
+        
+        let noticeOperation = BlockOperation()
+        
+        noticeOperation.addExecutionBlock { [weak noticeOperation, weak queue, weak self] in
+            
+            guard noticeOperation?.isCancelled == false else { return }
+            guard self != nil else { return }
+            guard let logsHandler: Completion<[ContractLogEnum]> = queue?.getValue(ContractKeys.logsHandler.rawValue) else { return }
+            
+            if let notice: ECHONotification = queue?.getValue(ContractKeys.notice.rawValue) {
+                print(notice)
+
+                switch notice.params {
+                case .array(let array):
+                    if let logsAny = array.last,
+                        let paramsData = try? JSONSerialization.data(withJSONObject: logsAny, options: []),
+                        let paramsArray = try? JSONDecoder().decode([[ContractLogEnum]].self, from: paramsData),
+                        let logs = paramsArray.first {
+                        let result = Result<[ContractLogEnum], ECHOError>(value: logs)
+                        logsHandler(result)
+                    } else {
+                        let result = Result<[ContractLogEnum], ECHOError>(error: .encodableMapping)
+                        logsHandler(result)
+                    }
+                default:
+                    let result = Result<[ContractLogEnum], ECHOError>(error: .encodableMapping)
+                    logsHandler(result)
+                }
+                return
+            }
+            
+            if let noticeError: ECHOError = queue?.getValue(ContractKeys.noticeError.rawValue) {
+                let result = Result<[ContractLogEnum], ECHOError>(error: noticeError)
+                logsHandler(result)
+                return
+            }
+        }
+        
+        return noticeOperation
+    }
+    
     fileprivate func createWaitingOperation(_ queue: ECHOQueue) -> Operation {
         
         let waitingOperation = BlockOperation()
@@ -677,6 +738,42 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
         }
         
         return byteCodeOperation
+    }
+    
+    fileprivate func createGetContractLogsOperation(_ queue: ECHOQueue,
+                                                    _ contractId: String,
+                                                    _ fromBlock: Int,
+                                                    _ toBlock: Int,
+                                                    _ completion: @escaping Completion<[ContractLogEnum]>) -> Operation {
+        
+        let getLogsOperation = BlockOperation()
+        
+        getLogsOperation.addExecutionBlock { [weak getLogsOperation, weak queue, weak self] in
+            
+            guard getLogsOperation?.isCancelled == false else { return }
+            guard let strongSelf = self else { return }
+            
+            let operationId = strongSelf.services.databaseService.getContractLogs(contractId: contractId,
+                                                                                  fromBlock: fromBlock,
+                                                                                  toBlock: toBlock,
+                                                                                  completion: { [weak queue] result in
+                switch result {
+                case .success:
+                    print("Request for logs contract send successful")
+                case .failure(let error):
+                    queue?.cancelAllOperations()
+                    let result = Result<[ContractLogEnum], ECHOError>(error: error)
+                    completion(result)
+                }
+                
+                queue?.startNextOperation()
+            })
+            
+            queue?.saveValue(operationId, forKey: ContractKeys.operationId.rawValue)
+            queue?.waitStartNextOperation()
+        }
+        
+        return getLogsOperation
     }
 }
 // swiftlint:enable function_body_length

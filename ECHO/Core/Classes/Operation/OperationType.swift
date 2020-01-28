@@ -54,28 +54,35 @@ public enum OperationType: Int {
     case sidechainETHCreateAddressOperation
     case sidechainETHApproveAddressOperation        //40
     case sidechainETHDepositOperation
+    case sidechainETHSendDepositOperation
     case sidechainETHWithdrawOperation
+    case sidechainETHSendWithdrawOperation
     case sidechainETHApproveWithdrawOperation
-    case sidechainIssueOperation                 // VIRTUAL
-    case sidechainBurnOperation                  // VIRTUAL
+    // swiftlint:disable variable_name
+    case sidechainETHUpdateContractAddressOperation
+    // swiftlint:enable variable_name
+    case sidechainIssueOperation                    // VIRTUAL
+    case sidechainBurnOperation                     // VIRTUAL
     case sidechainERC20RegisterTokenOperation
-    case sidechainERC20DepositTokenOperation
+    case sidechainERC20DepositTokenOperation        //50
+    case sidechainERC20SendDepositTokenOperation
     case sidechainERC20WithdrawTokenOperation
+    case sidechainERC20SendWithdrawTokenOperation
     // swiftlint:disable variable_name
     case sidechainERC20ApproveTokenWithdrawOperation
     // swiftlint:enable variable_name
-    case sidechainERC20IssueOperation               //50 // VIRTUAL
+    case sidechainERC20IssueOperation               // VIRTUAL
     case sidechainERC20BurnOperation                // VIRTUAL
     case sidechainBTCCreateAddressOperation
     // swiftlint:disable variable_name
     case sidechainBTCCreateIntermediateDepositOperation
     // swiftlint:enable variable_name
     case sidechainBTCIntermediateDepositOperation
-    case sidechainBTCDepositOperation
+    case sidechainBTCDepositOperation               //60
     case sidechainBTCWithdrawOperation
-    case sidechainBTCApproveWithdrawOperation
     case sidechainBTCAggregateOperation
-    case blockRewardOperation                       //59 // VIRTUAL
+    case sidechainBTCApproveAggregateOperation
+    case blockRewardOperation                       //64 // VIRTUAL
 }
 
 struct OperationDecoder {

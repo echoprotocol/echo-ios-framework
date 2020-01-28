@@ -772,18 +772,20 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
             guard var history: [HistoryItem] = queue?.getValue(AccountHistoryResultsKeys.historyItems.rawValue) else { return }
             guard let blocks: [Int: Block] = queue?.getValue(AccountHistoryResultsKeys.loadedBlocks.rawValue) else { return }
             
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = Settings.defaultDateFormat
+            dateFormatter.locale = Locale(identifier: Settings.localeIdentifier)
+            
             for index in 0..<history.count {
                 
                 var historyItem = history[index]
                 
-                guard let findedBlock = blocks[historyItem.blockNum] else { continue }
+                guard let timestampString = blocks[historyItem.blockNum]?.timestamp else {
+                    continue
+                }
                 
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = Settings.defaultDateFormat
-                dateFormatter.locale = Locale(identifier: Settings.localeIdentifier)
-
-                historyItem.timestamp = dateFormatter.date(from: findedBlock.timestamp)
-                
+                let timestamp = dateFormatter.date(from: timestampString)
+                historyItem.timestamp = timestamp
                 history[index] = historyItem
             }
             
@@ -857,8 +859,8 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                 }
                 
                 if var operation = operation as? BlockRewardOperation {
-                    let reciever = self?.findAccountIn(accounts, accountId: operation.reciever.id)
-                    operation.changeReciever(account: reciever)
+                    let receiver = self?.findAccountIn(accounts, accountId: operation.receiver.id)
+                    operation.changeReceiver(account: receiver)
                     historyItem.operation = operation
                 }
                 
@@ -1481,7 +1483,7 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
             }
             
             if let operation = operation as? BlockRewardOperation {
-                accountsIds.insert(operation.reciever.id)
+                accountsIds.insert(operation.receiver.id)
                 return
             }
             

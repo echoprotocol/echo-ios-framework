@@ -50,7 +50,7 @@ class GlobalPropertiesSubscribeTests: XCTestCase, SubscribeDynamicGlobalProperti
                                                     noticeHandler: nil)
                 })
                 
-                DispatchQueue.main.asyncAfter(deadline: .now() + 12, execute: {
+                DispatchQueue.main.asyncAfter(deadline: .now() + Constants.timeout, execute: {
                     exp.fulfill()
                 })
             case .failure(let error):
@@ -59,7 +59,7 @@ class GlobalPropertiesSubscribeTests: XCTestCase, SubscribeDynamicGlobalProperti
         }
         
         //assert
-        waitForExpectations(timeout: Constants.timeout) { error in
+        waitForExpectations(timeout: Constants.timeout * 2) { error in
             XCTAssertTrue(self.propertiesUpdateCount > 0)
         }
     }

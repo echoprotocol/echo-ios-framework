@@ -246,6 +246,20 @@ class ECHOInterfaceTests: XCTestCase {
                 switch result {
                 case .success(let accountHistory):
                     history = accountHistory
+//                    for element in history {
+//                        if let operation = element.operation {
+//                            if let withdrawERC20 = operation as? SidechainERC20WithdrawTokenOperation {
+//                                print(withdrawERC20)
+//                            }
+//                        } else {
+//                            print(element)
+//                        }
+//                        if element.timestamp != nil {
+//                            print(element.timestamp!)
+//                        } else {
+//                            print("asdfasdf")
+//                        }
+//                    }
                     exp.fulfill()
                 case .failure(let error):
                     XCTFail("Getting account history cant fail \(error)")
@@ -930,7 +944,6 @@ class ECHOInterfaceTests: XCTestCase {
         let toUser = Constants.defaultToName
         var isSuccess = false
         
-        
         //act
         echo.start { [unowned self] (result) in
             self.echo.sendTransferOperation(fromNameOrId: fromUser,
@@ -1137,9 +1150,9 @@ class ECHOInterfaceTests: XCTestCase {
 //        }))
 //        let exp = expectation(description: "testCreateAsset")
 //        var asset = Asset("")
-//        asset.symbol = "SHARAEV"
+//        asset.symbol = "SHARAEVTEST"
 //        asset.precision = 4
-//        asset.issuer = Account("1.2.41")
+//        asset.issuer = Account("1.2.918")
 ////        asset.setBitsassetOptions(BitassetOptions(feedLifetimeSec: 86400,
 ////                                                  minimumFeeds: 7,
 ////                                                  forceSettlementDelaySec: 86400,
@@ -1150,7 +1163,9 @@ class ECHOInterfaceTests: XCTestCase {
 //        asset.options = AssetOptions(maxSupply: 10000000,
 //                                     issuerPermissions: AssetOptionIssuerPermissions.chargeMarketFee.rawValue,
 //                                     flags: AssetOptionIssuerPermissions.committeeFedAsset.rawValue,
-//                                     coreExchangeRate: Price(base: AssetAmount(amount: 1, asset: Asset(Constants.defaultAsset)), quote: AssetAmount(amount: 1, asset: Asset("1.3.1"))),
+//                                     coreExchangeRate: Price(base: AssetAmount(amount: 1,
+//                                                                               asset: Asset(Constants.defaultAsset)),
+//                                                             quote: AssetAmount(amount: 1, asset: Asset("1.3.1"))),
 //                                     description: "description")
 //        let nameOrId = Constants.defaultName
 //        let wif = Constants.defaultWIF
@@ -1381,7 +1396,9 @@ class ECHOInterfaceTests: XCTestCase {
         //assert
         waitForExpectations(timeout: Constants.timeout) { error in
             XCTAssertNotNil(contractLogs)
-            XCTAssertEqual(contractLogs.count, 2)
+            if contractLogs != nil {
+                XCTAssertEqual(contractLogs.count, 2)
+            }
         }
     }
     
@@ -2125,7 +2142,7 @@ class ECHOInterfaceTests: XCTestCase {
             self.echo.withdrawEth(nameOrId: Constants.defaultName,
                                   wif: Constants.defaultWIF,
                                   toEthAddress: Constants.defaultETHAddress,
-                                  amount: 1,
+                                  amount: 10000,
                                   assetForFee: nil,
                                   completion: { (result) in
                 
@@ -2224,7 +2241,7 @@ class ECHOInterfaceTests: XCTestCase {
 //
 //        //act
 //        echo.start { [unowned self] (result) in
-//            self.echo.generateBtcAddress(nameOrId: Constants.defaultToName,
+//            self.echo.generateBtcAddress(nameOrId: Constants.defaultName,
 //                                         wif: Constants.defaultWIF,
 //                                         backupAddress: Constants.defaultBTCAddress,
 //                                         assetForFee: nil,
@@ -2387,7 +2404,7 @@ class ECHOInterfaceTests: XCTestCase {
             self.echo.withdrawBtc(nameOrId: Constants.defaultName,
                                   wif: Constants.defaultWIF,
                                   toBtcAddress: Constants.defaultBTCAddress,
-                                  amount: 1,
+                                  amount: 100000,
                                   assetForFee: nil,
                                   completion: { (result) in
                                   
@@ -2396,6 +2413,7 @@ class ECHOInterfaceTests: XCTestCase {
                     isSuccess = result
                 case .failure(let error):
                     XCTFail("testWithdrawalEth must be valid \(error)")
+                    exp.fulfill()
                 }
             }, noticeHandler: { (_) in
                 exp.fulfill()
@@ -2598,7 +2616,7 @@ class ECHOInterfaceTests: XCTestCase {
         }
         
         //assert
-        waitForExpectations(timeout: Constants.timeout) { error in
+        waitForExpectations(timeout: 50) { error in
             XCTAssertTrue(isSuccess)
         }
     }

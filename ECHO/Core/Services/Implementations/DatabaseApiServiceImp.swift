@@ -241,10 +241,11 @@ extension ContractsService {
         socketCore.send(operation: operation)
     }
     
-    func getContractLogs(contractId: String, fromBlock: Int, toBlock: Int, completion: @escaping Completion<[ContractLogEnum]>) {
+    func getContractLogs(contractId: String, fromBlock: Int, toBlock: Int, completion: @escaping Completion<Bool>) -> Int {
         
+        let operationId = socketCore.nextOperationId()
         let operation = GetContractLogsSocketOperation(method: .call,
-                                                       operationId: socketCore.nextOperationId(),
+                                                       operationId: operationId,
                                                        apiId: apiIdentifire,
                                                        contractId: contractId,
                                                        fromBlock: fromBlock,
@@ -252,6 +253,7 @@ extension ContractsService {
                                                        completion: completion)
         
         socketCore.send(operation: operation)
+        return operationId
     }
     
     func getContracts(contractIds: [String], completion: @escaping Completion<[ContractInfo]>) {
