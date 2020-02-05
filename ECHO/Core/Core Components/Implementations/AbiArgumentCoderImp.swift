@@ -112,7 +112,7 @@ extension Decoder {
         let start = sliceSize * sliceIndex
         let end = start + sliceSize
         
-        guard let btcNumber = BTCBigNumber(unsignedBigEndian: data[safe: start..<end]) else {
+        guard let btcNumber = ECHOBigNumber(unsignedBigEndian: data[safe: start..<end]) else {
             let error = NSError(domain: "", code: 0, userInfo: nil)
             throw error
         }
@@ -147,7 +147,7 @@ extension Decoder {
             return
         }
         
-        guard let btcNumber = BTCBigNumber(unsignedBigEndian: addressData) else {
+        guard let btcNumber = ECHOBigNumber(unsignedBigEndian: addressData) else {
             let error = NSError(domain: "", code: 0, userInfo: nil)
             throw error
         }
@@ -179,7 +179,7 @@ extension Decoder {
         
         addressData.removeFirst()
         
-        guard let btcNumber = BTCBigNumber(unsignedBigEndian: addressData) else {
+        guard let btcNumber = ECHOBigNumber(unsignedBigEndian: addressData) else {
             let error = NSError(domain: "", code: 0, userInfo: nil)
             throw error
         }
@@ -222,14 +222,14 @@ extension Decoder {
         var start = sliceSize * sliceIndex
         var end = start + sliceSize
         
-        guard let btcNumber = BTCBigNumber(unsignedBigEndian: data[safe: start..<end]) else {
+        guard let btcNumber = ECHOBigNumber(unsignedBigEndian: data[safe: start..<end]) else {
             let error = NSError(domain: "", code: 0, userInfo: nil)
             throw error
         }
         
         let offset = Int(btcNumber.uint32value)
         
-        guard let lenght = BTCBigNumber(unsignedBigEndian: data[safe: offset..<offset + sliceSize]) else {
+        guard let lenght = ECHOBigNumber(unsignedBigEndian: data[safe: offset..<offset + sliceSize]) else {
             let error = NSError(domain: "", code: 0, userInfo: nil)
             throw error
         }
@@ -257,14 +257,14 @@ extension Decoder {
         var start = sliceSize * sliceIndex
         var end = start + sliceSize
         
-        guard let btcNumber = BTCBigNumber(unsignedBigEndian: data[safe: start..<end]) else {
+        guard let btcNumber = ECHOBigNumber(unsignedBigEndian: data[safe: start..<end]) else {
             let error = NSError(domain: "", code: 0, userInfo: nil)
             throw error
         }
         
         let offset = Int(btcNumber.uint32value)
         
-        guard let lenght = BTCBigNumber(unsignedBigEndian: data[safe: offset..<offset + sliceSize]) else {
+        guard let lenght = ECHOBigNumber(unsignedBigEndian: data[safe: offset..<offset + sliceSize]) else {
             let error = NSError(domain: "", code: 0, userInfo: nil)
             throw error
         }
@@ -292,14 +292,14 @@ extension Decoder {
         let start = sliceSize * sliceIndex
         let end = start + sliceSize
         
-        guard let offsetNumber = BTCBigNumber(unsignedBigEndian: data[safe: start..<end]) else {
+        guard let offsetNumber = ECHOBigNumber(unsignedBigEndian: data[safe: start..<end]) else {
             let error = NSError(domain: "", code: 0, userInfo: nil)
             throw error
         }
         
         let offset = Int(offsetNumber.uint32value)
         
-        guard let lenghtNumber = BTCBigNumber(unsignedBigEndian: data[safe: offset..<offset + sliceSize]) else {
+        guard let lenghtNumber = ECHOBigNumber(unsignedBigEndian: data[safe: offset..<offset + sliceSize]) else {
             let error = NSError(domain: "", code: 0, userInfo: nil)
             throw error
         }
@@ -312,7 +312,7 @@ extension Decoder {
             let start = sliceSize + offset + index * sliceSize
             let end = start + sliceSize
             
-            guard let btcNumber = BTCBigNumber(unsignedBigEndian: data[safe: start..<end]) else {
+            guard let btcNumber = ECHOBigNumber(unsignedBigEndian: data[safe: start..<end]) else {
                 let error = NSError(domain: "", code: 0, userInfo: nil)
                 throw error
             }
@@ -366,7 +366,7 @@ extension Decoder {
         for index in 0..<size {
             let startIndex = sliceSize * index
             let endIndex = sliceSize * index + sliceSize
-            if let btcNumber = BTCBigNumber(unsignedBigEndian: outputsData.subdata(in: startIndex..<endIndex)) {
+            if let btcNumber = ECHOBigNumber(unsignedBigEndian: outputsData.subdata(in: startIndex..<endIndex)) {
                 addresses.append(btcNumber.decimalString)
             }
         }
@@ -390,7 +390,7 @@ extension Decoder {
         for index in 0..<size {
             let startIndex = sliceSize * index
             let endIndex = sliceSize * index + sliceSize
-            if let btcNumber = BTCBigNumber(unsignedBigEndian: outputsData.subdata(in: startIndex..<endIndex)),
+            if let btcNumber = ECHOBigNumber(unsignedBigEndian: outputsData.subdata(in: startIndex..<endIndex)),
                 let intValue = Int(btcNumber.decimalString) {
                 bools.append(intValue == 1)
             }
@@ -415,7 +415,7 @@ extension Decoder {
         for index in 0..<size {
             let startIndex = sliceSize * index
             let endIndex = sliceSize * index + sliceSize
-            if let btcNumber = BTCBigNumber(unsignedBigEndian: outputsData.subdata(in: startIndex..<endIndex)),
+            if let btcNumber = ECHOBigNumber(unsignedBigEndian: outputsData.subdata(in: startIndex..<endIndex)),
                 let intValue = Int(btcNumber.decimalString) {
                 ints.append(intValue)
             }
@@ -506,15 +506,15 @@ extension Encoder {
             
         case .uint, .int:
     
-            staticStack.array.append(BTCBigNumber(decimalString: data).unsignedBigEndian ?? placeholderData())
+            staticStack.array.append(ECHOBigNumber(decimalString: data).unsignedBigEndian ?? placeholderData())
         case .bool:
             
             if data == "true" {
-                staticStack.array.append(BTCBigNumber(decimalString: "1").unsignedBigEndian ?? placeholderData())
+                staticStack.array.append(ECHOBigNumber(decimalString: "1").unsignedBigEndian ?? placeholderData())
             } else if data == "false" {
-                staticStack.array.append(BTCBigNumber(decimalString: "0").unsignedBigEndian ?? placeholderData())
+                staticStack.array.append(ECHOBigNumber(decimalString: "0").unsignedBigEndian ?? placeholderData())
             } else {
-                staticStack.array.append(BTCBigNumber(decimalString: data).unsignedBigEndian ?? placeholderData())
+                staticStack.array.append(ECHOBigNumber(decimalString: data).unsignedBigEndian ?? placeholderData())
             }
         case .fixedBytes(let size):
             
@@ -536,12 +536,12 @@ extension Encoder {
     
     fileprivate func encodeAddress(staticStack: ArrayOfData, type: AbiParameterType, offset: Int, data: String) throws {
         
-        staticStack.array.append(BTCBigNumber(decimalString: data).unsignedBigEndian ?? placeholderData())
+        staticStack.array.append(ECHOBigNumber(decimalString: data).unsignedBigEndian ?? placeholderData())
     }
     
     fileprivate func encodeContractAddress(staticStack: ArrayOfData, type: AbiParameterType, offset: Int, data: String) throws {
         
-        if var value = BTCBigNumber(decimalString: data).unsignedBigEndian {
+        if var value = ECHOBigNumber(decimalString: data).unsignedBigEndian {
             value[sliceSize - addressSize] = contractAddressFirstPartValue
             staticStack.array.append(value)
         } else {
@@ -573,12 +573,12 @@ extension Encoder {
                                   data: String) throws -> Int {
         
         //adding offset
-        staticStack.array.append(BTCBigNumber(int64: Int64(offset)).unsignedBigEndian ?? placeholderData())
+        staticStack.array.append(ECHOBigNumber(int64: Int64(offset)).unsignedBigEndian ?? placeholderData())
         
         //adding dynamic data in dynamic stack
         let lenght = data.data(using: .utf8)?.count ?? 0
         
-        dynamicStack.array.append(BTCBigNumber(int64: Int64(lenght)).unsignedBigEndian ?? placeholderData())
+        dynamicStack.array.append(ECHOBigNumber(int64: Int64(lenght)).unsignedBigEndian ?? placeholderData())
         
         let stringData = dataMultiply32bit(string: data)
         dynamicStack.array.append(stringData ?? placeholderData())
@@ -593,14 +593,14 @@ extension Encoder {
                                                   data: String) throws -> Int {
         
         //adding offset
-        staticStack.array.append(BTCBigNumber(int64: Int64(offset)).unsignedBigEndian ?? placeholderData())
+        staticStack.array.append(ECHOBigNumber(int64: Int64(offset)).unsignedBigEndian ?? placeholderData())
         
         //adding dynamic data in dynamic stack
         let arrayElements = data.dynamicArrayElementsFromParameter()
         let lenght = arrayElements.count
         
         //adding array elements count
-        dynamicStack.array.append(BTCBigNumber(int64: Int64(lenght)).unsignedBigEndian ?? placeholderData())
+        dynamicStack.array.append(ECHOBigNumber(int64: Int64(lenght)).unsignedBigEndian ?? placeholderData())
 
         switch type {
         case .dynamicArrayOfInt, .dynamicArrayOfUint:
@@ -608,7 +608,7 @@ extension Encoder {
             for index in 0..<arrayElements.count {
                 
                 let element = arrayElements[index]
-                dynamicStack.array.append(BTCBigNumber(decimalString: element).unsignedBigEndian ?? placeholderData())
+                dynamicStack.array.append(ECHOBigNumber(decimalString: element).unsignedBigEndian ?? placeholderData())
             }
         case .dynamicArrayOfBool:
             
@@ -617,11 +617,11 @@ extension Encoder {
                 let element = arrayElements[index]
                 
                 if element == "true" {
-                    dynamicStack.array.append(BTCBigNumber(decimalString: "1").unsignedBigEndian ?? placeholderData())
+                    dynamicStack.array.append(ECHOBigNumber(decimalString: "1").unsignedBigEndian ?? placeholderData())
                 } else if element == "false" {
-                    dynamicStack.array.append(BTCBigNumber(decimalString: "0").unsignedBigEndian ?? placeholderData())
+                    dynamicStack.array.append(ECHOBigNumber(decimalString: "0").unsignedBigEndian ?? placeholderData())
                 } else {
-                    dynamicStack.array.append(BTCBigNumber(decimalString: element).unsignedBigEndian ?? placeholderData())
+                    dynamicStack.array.append(ECHOBigNumber(decimalString: element).unsignedBigEndian ?? placeholderData())
                 }
             }
             
@@ -680,7 +680,7 @@ extension Encoder {
                                                  data: String) throws -> Int {
         
         //adding offset
-        staticStack.array.append(BTCBigNumber(int64: Int64(offset)).unsignedBigEndian ?? placeholderData())
+        staticStack.array.append(ECHOBigNumber(int64: Int64(offset)).unsignedBigEndian ?? placeholderData())
         let arrayElements = data.dynamicArrayElementsFromParameter()
         var lenght: Int = 0
         
@@ -691,42 +691,42 @@ extension Encoder {
             lenght = size
             
             //adding array elements count
-            dynamicStack.array.append(BTCBigNumber(int64: Int64(lenght)).unsignedBigEndian ?? placeholderData())
+            dynamicStack.array.append(ECHOBigNumber(int64: Int64(lenght)).unsignedBigEndian ?? placeholderData())
             
             for index in 0..<size {
                 
                 let element = arrayElements[safe: index]
-                dynamicStack.array.append(BTCBigNumber(decimalString: element).unsignedBigEndian ?? placeholderData())
+                dynamicStack.array.append(ECHOBigNumber(decimalString: element).unsignedBigEndian ?? placeholderData())
             }
         case .fixedArrayOfInt(let size):
             
             lenght = size
             
             //adding array elements count
-            dynamicStack.array.append(BTCBigNumber(int64: Int64(lenght)).unsignedBigEndian ?? placeholderData())
+            dynamicStack.array.append(ECHOBigNumber(int64: Int64(lenght)).unsignedBigEndian ?? placeholderData())
 
             for index in 0..<size {
                 
                 let element = arrayElements[safe: index]
-                dynamicStack.array.append(BTCBigNumber(decimalString: element).unsignedBigEndian ?? placeholderData())
+                dynamicStack.array.append(ECHOBigNumber(decimalString: element).unsignedBigEndian ?? placeholderData())
             }
         case .fixedArrayOfBool(let size):
             
             lenght = size
             
             //adding array elements count
-            dynamicStack.array.append(BTCBigNumber(int64: Int64(lenght)).unsignedBigEndian ?? placeholderData())
+            dynamicStack.array.append(ECHOBigNumber(int64: Int64(lenght)).unsignedBigEndian ?? placeholderData())
 
             for index in 0..<size {
                 
                 let element = arrayElements[safe: index]
                 
                 if element == "true" {
-                    dynamicStack.array.append(BTCBigNumber(decimalString: "1").unsignedBigEndian ?? placeholderData())
+                    dynamicStack.array.append(ECHOBigNumber(decimalString: "1").unsignedBigEndian ?? placeholderData())
                 } else if element == "false" {
-                    dynamicStack.array.append(BTCBigNumber(decimalString: "0").unsignedBigEndian ?? placeholderData())
+                    dynamicStack.array.append(ECHOBigNumber(decimalString: "0").unsignedBigEndian ?? placeholderData())
                 } else {
-                    dynamicStack.array.append(BTCBigNumber(decimalString: element).unsignedBigEndian ?? placeholderData())
+                    dynamicStack.array.append(ECHOBigNumber(decimalString: element).unsignedBigEndian ?? placeholderData())
                 }
             }
             
@@ -735,7 +735,7 @@ extension Encoder {
             lenght = size
             
             //adding array elements count
-            dynamicStack.array.append(BTCBigNumber(int64: Int64(lenght)).unsignedBigEndian ?? placeholderData())
+            dynamicStack.array.append(ECHOBigNumber(int64: Int64(lenght)).unsignedBigEndian ?? placeholderData())
 
             for index in 0..<size {
                                 
@@ -759,7 +759,7 @@ extension Encoder {
             lenght = arraySize
             
             //adding array elements count
-            dynamicStack.array.append(BTCBigNumber(int64: Int64(lenght)).unsignedBigEndian ?? placeholderData())
+            dynamicStack.array.append(ECHOBigNumber(int64: Int64(lenght)).unsignedBigEndian ?? placeholderData())
 
             for index in 0..<arraySize {
                 
@@ -793,14 +793,14 @@ extension Encoder {
                                               offset: Int,
                                               data: String) throws -> Int {
         //adding offset
-        staticStack.array.append(BTCBigNumber(int64: Int64(offset)).unsignedBigEndian ?? placeholderData())
+        staticStack.array.append(ECHOBigNumber(int64: Int64(offset)).unsignedBigEndian ?? placeholderData())
         
         //adding dynamic data in dynamic stack
         let arrayElements = data.dynamicArrayStringsFromParameter()
         let lenght = arrayElements.count
         
         //adding array elements count
-        dynamicStack.array.append(BTCBigNumber(int64: Int64(lenght)).unsignedBigEndian ?? placeholderData())
+        dynamicStack.array.append(ECHOBigNumber(int64: Int64(lenght)).unsignedBigEndian ?? placeholderData())
 
         for index in 0..<arrayElements.count {
             
@@ -809,7 +809,7 @@ extension Encoder {
             //adding dynamic data in dynamic stack
             let lenght = element.data(using: .utf8)?.count ?? 0
             
-            dynamicStack.array.append(BTCBigNumber(int64: Int64(lenght)).unsignedBigEndian ?? placeholderData())
+            dynamicStack.array.append(ECHOBigNumber(int64: Int64(lenght)).unsignedBigEndian ?? placeholderData())
             
             let stringData = dataMultiply32bit(string: element)
             dynamicStack.array.append(stringData ?? placeholderData())
@@ -825,11 +825,11 @@ extension Encoder {
                                  data: String) throws -> Int {
         
         //adding offset
-        staticStack.array.append(BTCBigNumber(int64: Int64(offset)).unsignedBigEndian ?? placeholderData())
+        staticStack.array.append(ECHOBigNumber(int64: Int64(offset)).unsignedBigEndian ?? placeholderData())
         
         //adding dynamic data in dynamic stack
         let lenght = data.data(using: .utf8)?.count ?? 0
-        dynamicStack.array.append(BTCBigNumber(int64: Int64(lenght)).unsignedBigEndian ?? placeholderData())
+        dynamicStack.array.append(ECHOBigNumber(int64: Int64(lenght)).unsignedBigEndian ?? placeholderData())
 
         let stringData = dataMultiply32bit(string: data)
         dynamicStack.array.append(stringData ?? placeholderData())

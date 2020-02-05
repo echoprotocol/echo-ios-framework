@@ -19,7 +19,7 @@
 #include <openssl/rand.h>
 #import <ed25519.h>
 
-#import "BTCData.h"
+#import "ECHOData.h"
 
 #import <CommonCrypto/CommonCrypto.h>
 
@@ -78,9 +78,9 @@
 
 @end
 
-#define BTCBigNumberCompare(a, b) (BN_cmp(&(a->_bignum), &(b->_bignum)))
+#define ECHOBigNumberCompare(a, b) (BN_cmp(&(a->_bignum), &(b->_bignum)))
 
-@implementation BTCBigNumber {
+@implementation ECHOBigNumber {
     @package
     BIGNUM _bignum;
     
@@ -101,7 +101,7 @@
 @dynamic unsignedData; // deprecated
 
 + (instancetype) zero {
-    static BTCBigNumber* bn = nil;
+    static ECHOBigNumber* bn = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         bn = [[self alloc] init];
@@ -111,7 +111,7 @@
 }
 
 + (instancetype) one {
-    static BTCBigNumber* bn = nil;
+    static ECHOBigNumber* bn = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         bn = [[self alloc] init];
@@ -121,7 +121,7 @@
 }
 
 + (instancetype) negativeOne {
-    static BTCBigNumber* bn = nil;
+    static ECHOBigNumber* bn = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         bn = [[self alloc] initWithInt32:-1];
@@ -146,7 +146,7 @@
 
 - (void) throwIfImmutable {
     if (_immutable) {
-        @throw [NSException exceptionWithName:@"Immutable BTCBigNumber is modified" reason:@"" userInfo:nil];
+        @throw [NSException exceptionWithName:@"Immutable ECHOBigNumber is modified" reason:@"" userInfo:nil];
     }
 }
 
@@ -239,37 +239,37 @@
 
 
 
-- (BTCBigNumber*) copy {
+- (ECHOBigNumber*) copy {
     return [self copyWithZone:nil];
 }
 
-- (BTCMutableBigNumber*) mutableCopy {
+- (ECHOMutableBigNumber*) mutableCopy {
     return [self mutableCopyWithZone:nil];
 }
 
-- (BTCBigNumber*) copyWithZone:(NSZone *)zone {
-    BTCBigNumber* to = [[BTCBigNumber alloc] init];
+- (ECHOBigNumber*) copyWithZone:(NSZone *)zone {
+    ECHOBigNumber* to = [[ECHOBigNumber alloc] init];
     if (BN_copy(&(to->_bignum), &_bignum)) {
         return to;
     }
     return nil;
 }
 
-- (BTCMutableBigNumber*) mutableCopyWithZone:(NSZone *)zone {
-    BTCMutableBigNumber* to = [[BTCMutableBigNumber alloc] init];
+- (ECHOMutableBigNumber*) mutableCopyWithZone:(NSZone *)zone {
+    ECHOMutableBigNumber* to = [[ECHOMutableBigNumber alloc] init];
     if (BN_copy(&(to->_bignum), &_bignum)) {
         return to;
     }
     return nil;
 }
 
-- (BOOL) isEqual:(BTCBigNumber*)other {
-    if (![other isKindOfClass:[BTCBigNumber class]]) return NO;
-    return BTCBigNumberCompare(self, other) == NSOrderedSame;
+- (BOOL) isEqual:(ECHOBigNumber*)other {
+    if (![other isKindOfClass:[ECHOBigNumber class]]) return NO;
+    return ECHOBigNumberCompare(self, other) == NSOrderedSame;
 }
 
-- (NSComparisonResult)compare:(BTCBigNumber *)other {
-    return BTCBigNumberCompare(self, other);
+- (NSComparisonResult)compare:(ECHOBigNumber *)other {
+    return ECHOBigNumberCompare(self, other);
 }
 
 - (NSUInteger)hash {
@@ -282,18 +282,18 @@
 
 #pragma mark - Comparison
 
-- (BTCBigNumber*) min:(BTCBigNumber*)other {
-    return (BTCBigNumberCompare(self, other) <= 0) ? self : other;
+- (ECHOBigNumber*) min:(ECHOBigNumber*)other {
+    return (ECHOBigNumberCompare(self, other) <= 0) ? self : other;
 }
 
-- (BTCBigNumber*) max:(BTCBigNumber*)other {
-    return (BTCBigNumberCompare(self, other) >= 0) ? self : other;
+- (ECHOBigNumber*) max:(ECHOBigNumber*)other {
+    return (ECHOBigNumberCompare(self, other) >= 0) ? self : other;
 }
 
-- (BOOL) less:(BTCBigNumber *)other           { return BTCBigNumberCompare(self, other) <  0; }
-- (BOOL) lessOrEqual:(BTCBigNumber *)other    { return BTCBigNumberCompare(self, other) <= 0; }
-- (BOOL) greater:(BTCBigNumber *)other        { return BTCBigNumberCompare(self, other) >  0; }
-- (BOOL) greaterOrEqual:(BTCBigNumber *)other { return BTCBigNumberCompare(self, other) >= 0; }
+- (BOOL) less:(ECHOBigNumber *)other           { return ECHOBigNumberCompare(self, other) <  0; }
+- (BOOL) lessOrEqual:(ECHOBigNumber *)other    { return ECHOBigNumberCompare(self, other) <= 0; }
+- (BOOL) greater:(ECHOBigNumber *)other        { return ECHOBigNumberCompare(self, other) >  0; }
+- (BOOL) greaterOrEqual:(ECHOBigNumber *)other { return ECHOBigNumberCompare(self, other) >= 0; }
 
 #pragma mark - Conversion
 
@@ -424,7 +424,7 @@
     } else {
         while (BN_cmp(&bn, &bn0) > 0) {
             if (!BN_div(&dv, &rem, &bn, &bnBase, pctx)) {
-                NSLog(@"BTCBigNumber: stringInBase failed to BN_div");
+                NSLog(@"ECHOBigNumber: stringInBase failed to BN_div");
                 break;
             }
             BN_copy(&bn, &dv);
@@ -616,7 +616,7 @@
     NSMutableData* data = [NSMutableData dataWithLength:size];
     BN_bn2mpi(&_bignum, data.mutableBytes);
     [data replaceBytesInRange:NSMakeRange(0, 4) withBytes:NULL length:0];
-    BTCDataReverse(data);
+    ECHODataReverse(data);
     return data;
 }
 
@@ -625,7 +625,7 @@
     NSUInteger size = data.length;
     NSMutableData* mdata = [data mutableCopy];
     // Reverse to convert to OpenSSL bignum endianess
-    BTCDataReverse(mdata);
+    ECHODataReverse(mdata);
     // BIGNUM's byte stream format expects 4 bytes of
     // big endian size data info at the front
     [mdata replaceBytesInRange:NSMakeRange(0, 0) withBytes:"\0\0\0\0" length:4];
@@ -675,12 +675,12 @@
 }
 
 // Divides receiver by another bignum.
-// Returns an array of two new BTCBigNumber instances: @[ quotient, remainder ]
-- (NSArray*) divmod:(BTCBigNumber*)other
+// Returns an array of two new ECHOBigNumber instances: @[ quotient, remainder ]
+- (NSArray*) divmod:(ECHOBigNumber*)other
 {
     BN_CTX* pctx = BN_CTX_new();
-    BTCBigNumber* r = [BTCBigNumber new];
-    BTCBigNumber* m = [BTCBigNumber new];
+    ECHOBigNumber* r = [ECHOBigNumber new];
+    ECHOBigNumber* m = [ECHOBigNumber new];
     BN_div(&(r->_bignum), &(m->_bignum), &(self->_bignum), &(other->_bignum), pctx);
     BN_CTX_free(pctx);
     return @[r, m];
@@ -698,7 +698,7 @@
 
 @end
 
-@implementation BTCMutableBigNumber
+@implementation ECHOMutableBigNumber
 
 @dynamic compact;
 @dynamic uint32value;
@@ -717,15 +717,15 @@
 }
 
 + (instancetype) zero {
-    return [[BTCBigNumber zero] mutableCopy];
+    return [[ECHOBigNumber zero] mutableCopy];
 }
 
 + (instancetype) one {
-    return [[BTCBigNumber one] mutableCopy];
+    return [[ECHOBigNumber one] mutableCopy];
 }
 
 + (instancetype) negativeOne {
-    return [[BTCBigNumber negativeOne] mutableCopy];
+    return [[ECHOBigNumber negativeOne] mutableCopy];
 }
 
 // We are mutable, disable checks.
@@ -738,52 +738,52 @@
 
 #pragma mark - Operations
 
-- (instancetype) add:(BTCBigNumber*)other { // +=
+- (instancetype) add:(ECHOBigNumber*)other { // +=
     BN_add(&(self->_bignum), &(self->_bignum), &(other->_bignum));
     return self;
 }
 
-- (instancetype) add:(BTCBigNumber*)other mod:(BTCBigNumber*)mod {
+- (instancetype) add:(ECHOBigNumber*)other mod:(ECHOBigNumber*)mod {
     BN_CTX* pctx = BN_CTX_new();
     BN_mod_add(&(self->_bignum), &(self->_bignum), &(other->_bignum), &(mod->_bignum), pctx);
     BN_CTX_free(pctx);
     return self;
 }
 
-- (instancetype) subtract:(BTCBigNumber *)other { // -=
+- (instancetype) subtract:(ECHOBigNumber *)other { // -=
     BN_sub(&(self->_bignum), &(self->_bignum), &(other->_bignum));
     return self;
 }
 
-- (instancetype) subtract:(BTCBigNumber*)other mod:(BTCBigNumber*)mod {
+- (instancetype) subtract:(ECHOBigNumber*)other mod:(ECHOBigNumber*)mod {
     BN_CTX* pctx = BN_CTX_new();
     BN_mod_sub(&(self->_bignum), &(self->_bignum), &(other->_bignum), &(mod->_bignum), pctx);
     BN_CTX_free(pctx);
     return self;
 }
 
-- (instancetype) multiply:(BTCBigNumber*)other { // *=
+- (instancetype) multiply:(ECHOBigNumber*)other { // *=
     BN_CTX* pctx = BN_CTX_new();
     BN_mul(&(self->_bignum), &(self->_bignum), &(other->_bignum), pctx);
     BN_CTX_free(pctx);
     return self;
 }
 
-- (instancetype) multiply:(BTCBigNumber*)other mod:(BTCBigNumber *)mod {
+- (instancetype) multiply:(ECHOBigNumber*)other mod:(ECHOBigNumber *)mod {
     BN_CTX* pctx = BN_CTX_new();
     BN_mod_mul(&(self->_bignum), &(self->_bignum), &(other->_bignum), &(mod->_bignum), pctx);
     BN_CTX_free(pctx);
     return self;
 }
 
-- (instancetype) divide:(BTCBigNumber*)other { // /=
+- (instancetype) divide:(ECHOBigNumber*)other { // /=
     BN_CTX* pctx = BN_CTX_new();
     BN_div(&(self->_bignum), NULL, &(self->_bignum), &(other->_bignum), pctx);
     BN_CTX_free(pctx);
     return self;
 }
 
-- (instancetype) mod:(BTCBigNumber*)other { // %=
+- (instancetype) mod:(ECHOBigNumber*)other { // %=
     BN_CTX* pctx = BN_CTX_new();
     BN_div(NULL, &(self->_bignum), &(self->_bignum), &(other->_bignum), pctx);
     BN_CTX_free(pctx);
@@ -798,7 +798,7 @@
 - (instancetype) rshift:(unsigned int)shift { // >>=
     // Note: BN_rshift segfaults on 64-bit if 2^shift is greater than the number
     //   if built on ubuntu 9.04 or 9.10, probably depends on version of OpenSSL
-    BTCMutableBigNumber* a = [BTCMutableBigNumber one];
+    ECHOMutableBigNumber* a = [ECHOMutableBigNumber one];
     [a lshift:shift];
     if (BN_cmp(&(a->_bignum), &(self->_bignum)) > 0) {
         BN_zero(&(self->_bignum));
@@ -809,21 +809,21 @@
     return self;
 }
 
-- (instancetype) inverseMod:(BTCBigNumber*)mod { // (a^-1) mod n
+- (instancetype) inverseMod:(ECHOBigNumber*)mod { // (a^-1) mod n
     BN_CTX* pctx = BN_CTX_new();
     BN_mod_inverse(&(self->_bignum), &(self->_bignum), &(mod->_bignum), pctx);
     BN_CTX_free(pctx);
     return self;
 }
 
-- (instancetype) exp:(BTCBigNumber*)power { // pow(self, p)
+- (instancetype) exp:(ECHOBigNumber*)power { // pow(self, p)
     BN_CTX* pctx = BN_CTX_new();
     BN_exp(&(self->_bignum), &(self->_bignum), &(power->_bignum), pctx);
     BN_CTX_free(pctx);
     return self;
 }
 
-- (instancetype) exp:(BTCBigNumber*)power mod:(BTCBigNumber *)mod { // pow(self,p) % m
+- (instancetype) exp:(ECHOBigNumber*)power mod:(ECHOBigNumber *)mod { // pow(self,p) % m
     BN_CTX* pctx = BN_CTX_new();
     BN_mod_exp(&(self->_bignum), &(self->_bignum), &(power->_bignum), &(mod->_bignum), pctx);
     BN_CTX_free(pctx);
