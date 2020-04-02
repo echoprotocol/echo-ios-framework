@@ -19,14 +19,25 @@ struct SubmitRegistrationSolutionSocketOperation: SocketOperation {
     var name: String
     var activeKey: String
     var echorandKey: String
+    var evmAddress: String?
     var nonce: UInt
     var randNum: UInt
     var completion: Completion<Bool>
     
     func createParameters() -> [Any] {
-        let array: [Any] = [apiId,
-                            SocketOperationKeys.submitRegistrationSolution.rawValue,
-                            [operationId, name, activeKey, echorandKey, nonce, randNum]]
+        let array: [Any] = [
+            apiId,
+            SocketOperationKeys.submitRegistrationSolution.rawValue,
+            [
+                operationId,
+                name,
+                activeKey,
+                echorandKey,
+                evmAddress ?? NSNull(),
+                nonce,
+                randNum
+            ]
+        ]
         return array
     }
     

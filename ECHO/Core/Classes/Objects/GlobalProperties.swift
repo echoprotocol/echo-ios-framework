@@ -212,6 +212,7 @@ public struct SidechainConfig: Decodable {
         case erc20WithdrawTopic = "erc20_withdraw_topic"
         case ethUpdateAddressMethod = "eth_update_addr_method"
         case ETHAssetId = "ETH_asset_id"
+        case BTCAssetId = "BTC_asset_id"
         case fines
         case gasPrice = "gas_price"
         case waitingETHBlocks = "waiting_eth_blocks"
@@ -229,6 +230,7 @@ public struct SidechainConfig: Decodable {
     public let erc20DepositTopic: String
     public let erc20WithdrawTopic: String
     public let ETHAssetId: String
+    public let BTCAssetId: String
     public let fines: SidechainFines
     public let gasPrice: IntOrString
     
@@ -244,6 +246,7 @@ public struct SidechainConfig: Decodable {
                 erc20DepositTopic: String,
                 erc20WithdrawTopic: String,
                 ETHAssetId: String,
+                BTCAssetId: String,
                 fines: SidechainFines,
                 gasPrice: IntOrString) {
         
@@ -259,6 +262,7 @@ public struct SidechainConfig: Decodable {
         self.erc20DepositTopic = erc20DepositTopic
         self.erc20WithdrawTopic = erc20WithdrawTopic
         self.ETHAssetId = ETHAssetId
+        self.BTCAssetId = BTCAssetId
         self.fines = fines
         self.gasPrice = gasPrice
     }
@@ -279,6 +283,7 @@ public struct SidechainConfig: Decodable {
         erc20DepositTopic = try values.decode(String.self, forKey: .erc20DepositTopic)
         erc20WithdrawTopic = try values.decode(String.self, forKey: .erc20WithdrawTopic)
         ETHAssetId = try values.decode(String.self, forKey: .ETHAssetId)
+        BTCAssetId = try values.decode(String.self, forKey: .BTCAssetId)
         fines = try values.decode(SidechainFines.self, forKey: .fines)
         gasPrice = try values.decode(IntOrString.self, forKey: .gasPrice)
     }

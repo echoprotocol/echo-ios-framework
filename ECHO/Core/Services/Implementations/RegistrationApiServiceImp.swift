@@ -29,24 +29,6 @@ final class RegistrationApiServiceImp: RegistrationApiService {
         socketCore.send(operation: operation)
     }
     
-    func registerAccount(name: String,
-                         activeKey: String,
-                         echorandKey: String,
-                         completion: @escaping Completion<Bool>) -> Int {
-        
-        let operationID = socketCore.nextOperationId()
-        let operation = RegisterAccountSocketOperation(method: .call,
-                                                       operationId: operationID,
-                                                       apiId: apiIdentifire,
-                                                       name: name,
-                                                       activeKey: activeKey,
-                                                       echorandKey: echorandKey,
-                                                       completion: completion)
-        
-        socketCore.send(operation: operation)
-        return operationID
-    }
-    
     func requestRegistrationTask(completion: @escaping Completion<RegistrationTask>) {
         
         let operationID = socketCore.nextOperationId()
@@ -61,20 +43,24 @@ final class RegistrationApiServiceImp: RegistrationApiService {
     func submitRegistrationSolution(name: String,
                                     activeKey: String,
                                     echorandKey: String,
+                                    evmAddress: String?,
                                     nonce: UInt,
                                     randNum: UInt,
                                     completion: @escaping Completion<Bool>) -> Int {
         
         let operationID = socketCore.nextOperationId()
-        let operation = SubmitRegistrationSolutionSocketOperation(method: .call,
-                                                                  operationId: operationID,
-                                                                  apiId: apiIdentifire,
-                                                                  name: name,
-                                                                  activeKey: activeKey,
-                                                                  echorandKey: echorandKey,
-                                                                  nonce: nonce,
-                                                                  randNum: randNum,
-                                                                  completion: completion)
+        let operation = SubmitRegistrationSolutionSocketOperation(
+            method: .call,
+            operationId: operationID,
+            apiId: apiIdentifire,
+            name: name,
+            activeKey: activeKey,
+            echorandKey: echorandKey,
+            evmAddress: evmAddress,
+            nonce: nonce,
+            randNum: randNum,
+            completion: completion
+        )
         
         socketCore.send(operation: operation)
         return operationID
