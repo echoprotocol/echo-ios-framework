@@ -22,5 +22,6 @@ final public class Configurator {
                                                   prefix: ECHONetworkPrefix.echo,
                                                   echorandPrefix: .echo)
     public var callContractFeeMultiplier: UInt = 1
-    public var socketRequestsTimeout: TimeInterval = 30
+    public var socketRequestsTimeout: TimeInterval = 30         // In seconds
+    public var transactionExpirationTime: TimeInterval = 150    // In seconds
 }

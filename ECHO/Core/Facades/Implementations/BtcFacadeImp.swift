@@ -22,15 +22,18 @@ final public class BtcFacadeImp: BtcFacade, ECHOQueueble {
     let services: BtcFacadeServices
     let network: ECHONetwork
     let cryptoCore: CryptoCoreComponent
+    let transactionExpirationOffset: TimeInterval
     
     public init(services: BtcFacadeServices,
                 cryptoCore: CryptoCoreComponent,
                 network: ECHONetwork,
-                noticeDelegateHandler: NoticeEventDelegateHandler) {
+                noticeDelegateHandler: NoticeEventDelegateHandler,
+                transactionExpirationOffset: TimeInterval) {
         
         self.services = services
         self.network = network
         self.cryptoCore = cryptoCore
+        self.transactionExpirationOffset = transactionExpirationOffset
         self.queues = [String: ECHOQueue]()
         noticeDelegateHandler.delegate = self
     }
@@ -226,7 +229,8 @@ final public class BtcFacadeImp: BtcFacade, ECHOQueueble {
                                               operationKey: BtcFacadeResultKeys.operation.rawValue,
                                               chainIdKey: BtcFacadeResultKeys.chainId.rawValue,
                                               blockDataKey: BtcFacadeResultKeys.blockData.rawValue,
-                                              feeKey: BtcFacadeResultKeys.fee.rawValue)
+                                              feeKey: BtcFacadeResultKeys.fee.rawValue,
+                                              expirationOffset: transactionExpirationOffset)
         let bildTransactionOperation = GetTransactionQueueOperation<Bool>(initParams: transactionOperationInitParams,
                                                                           completion: completion)
         
@@ -337,7 +341,8 @@ final public class BtcFacadeImp: BtcFacade, ECHOQueueble {
                                               operationKey: BtcFacadeResultKeys.operation.rawValue,
                                               chainIdKey: BtcFacadeResultKeys.chainId.rawValue,
                                               blockDataKey: BtcFacadeResultKeys.blockData.rawValue,
-                                              feeKey: BtcFacadeResultKeys.fee.rawValue)
+                                              feeKey: BtcFacadeResultKeys.fee.rawValue,
+                                              expirationOffset: transactionExpirationOffset)
         let bildTransactionOperation = GetTransactionQueueOperation<Bool>(initParams: transactionOperationInitParams,
                                                                           completion: completion)
         

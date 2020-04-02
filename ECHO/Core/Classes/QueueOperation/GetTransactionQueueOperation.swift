@@ -6,16 +6,19 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
-typealias GetTransactionQueueOperationInitParams = (queue: ECHOQueue,
-                                                    cryptoCore: CryptoCoreComponent,
-                                                    saveKey: String,
-                                                    wif: String,
-                                                    networkPrefix: String,
-                                                    fromAccountKey: String,
-                                                    operationKey: String,
-                                                    chainIdKey: String,
-                                                    blockDataKey: String,
-                                                    feeKey: String)
+typealias GetTransactionQueueOperationInitParams = (
+    queue: ECHOQueue,
+    cryptoCore: CryptoCoreComponent,
+    saveKey: String,
+    wif: String,
+    networkPrefix: String,
+    fromAccountKey: String,
+    operationKey: String,
+    chainIdKey: String,
+    blockDataKey: String,
+    feeKey: String,
+    expirationOffset: TimeInterval
+)
 
 /**
     Operation for [ECHOQueue](ECHOQueue) whitch create, sign and save transaction
@@ -24,17 +27,18 @@ typealias GetTransactionQueueOperationInitParams = (queue: ECHOQueue,
  */
 final class GetTransactionQueueOperation<T>: Operation where T: Any {
     
-    fileprivate weak var queue: ECHOQueue?
-    fileprivate weak var cryptoCore: CryptoCoreComponent?
-    fileprivate let saveKey: String
-    fileprivate let wif: String
-    fileprivate let networkPrefix: String
-    fileprivate let fromAccountKey: String
-    fileprivate let operationKey: String
-    fileprivate let chainIdKey: String
-    fileprivate let blockDataKey: String
-    fileprivate let feeKey: String
-    fileprivate let completion: Completion<T>
+    private weak var queue: ECHOQueue?
+    private weak var cryptoCore: CryptoCoreComponent?
+    private let saveKey: String
+    private let wif: String
+    private let networkPrefix: String
+    private let fromAccountKey: String
+    private let operationKey: String
+    private let chainIdKey: String
+    private let blockDataKey: String
+    private let feeKey: String
+    private let expirationOffset: TimeInterval
+    private let completion: Completion<T>
     
     required init(initParams: GetTransactionQueueOperationInitParams, completion: @escaping Completion<T>) {
         
@@ -48,6 +52,7 @@ final class GetTransactionQueueOperation<T>: Operation where T: Any {
         self.chainIdKey = initParams.chainIdKey
         self.blockDataKey = initParams.blockDataKey
         self.feeKey = initParams.feeKey
+        self.expirationOffset = initParams.expirationOffset
         self.completion = completion
     }
     
@@ -85,7 +90,12 @@ final class GetTransactionQueueOperation<T>: Operation where T: Any {
             operation.fee = callContractFee.fee
         }
         
-        let transaction = Transaction(operations: [operation], blockData: blockData, chainId: chainId)
+        let transaction = Transaction(
+            operations: [operation],
+            blockData: blockData,
+            expirationOffset: expirationOffset,
+            chainId: chainId
+        )
         
         do {
             let generator = SignaturesGenerator()
@@ -99,7 +109,7 @@ final class GetTransactionQueueOperation<T>: Operation where T: Any {
         }
     }
     
-    fileprivate func checkAccount(account: Account) -> Bool {
+    private func checkAccount(account: Account) -> Bool {
         
         guard let cryptoCore = cryptoCore else { return false }
         
