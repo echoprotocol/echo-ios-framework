@@ -21,7 +21,6 @@ public struct ContractsFacadeServices {
 // swiftlint:disable function_body_length
 // swiftlint:disable type_body_length
 final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
-    
     private enum ContractKeys: String {
         case registrarAccount
         case receiverContract
@@ -253,7 +252,8 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
                                               operationKey: ContractKeys.operation.rawValue,
                                               chainIdKey: ContractKeys.chainId.rawValue,
                                               blockDataKey: ContractKeys.blockData.rawValue,
-                                              feeKey: ContractKeys.fee.rawValue)
+                                              feeKey: ContractKeys.fee.rawValue,
+                                              expirationOffset: settings.transactionExpirationTime)
         let bildTransactionOperation = GetTransactionQueueOperation<Bool>(initParams: transactionOperationInitParams,
                                                                           completion: completion)
         
@@ -415,7 +415,8 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
                                               operationKey: ContractKeys.operation.rawValue,
                                               chainIdKey: ContractKeys.chainId.rawValue,
                                               blockDataKey: ContractKeys.blockData.rawValue,
-                                              feeKey: ContractKeys.fee.rawValue)
+                                              feeKey: ContractKeys.fee.rawValue,
+                                              expirationOffset: settings.transactionExpirationTime)
         let bildTransactionOperation = GetTransactionQueueOperation<Bool>(initParams: transactionOperationInitParams,
                                                                           completion: completion)
         

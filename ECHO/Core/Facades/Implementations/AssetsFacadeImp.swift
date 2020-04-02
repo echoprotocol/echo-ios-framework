@@ -15,11 +15,11 @@ public struct AssetsServices {
     Implementation of [AssetsFacade](AssetsFacade),[ECHOQueueble](ECHOQueueble)
 */
 final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
-    
     var queues: [String: ECHOQueue]
     let services: AssetsServices
     let cryptoCore: CryptoCoreComponent
     let network: ECHONetwork
+    let transactionExpirationOffset: TimeInterval
     
     private enum CreateAssetKeys: String {
         case account
@@ -42,11 +42,15 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
         case operationId
     }
     
-    public init(services: AssetsServices, cryptoCore: CryptoCoreComponent, network: ECHONetwork) {
+    public init(services: AssetsServices,
+                cryptoCore: CryptoCoreComponent,
+                network: ECHONetwork,
+                transactionExpirationOffset: TimeInterval) {
         
         self.services = services
         self.cryptoCore = cryptoCore
         self.network = network
+        self.transactionExpirationOffset = transactionExpirationOffset
         self.queues = [String: ECHOQueue]()
     }
     public func createAsset(nameOrId: String, wif: String, asset: Asset, completion: @escaping Completion<Bool>) {
@@ -95,7 +99,8 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
                                               operationKey: CreateAssetKeys.operation.rawValue,
                                               chainIdKey: CreateAssetKeys.chainId.rawValue,
                                               blockDataKey: CreateAssetKeys.blockData.rawValue,
-                                              feeKey: CreateAssetKeys.fee.rawValue)
+                                              feeKey: CreateAssetKeys.fee.rawValue,
+                                              expirationOffset: transactionExpirationOffset)
         let bildTransactionOperation = GetTransactionQueueOperation<Bool>(initParams: transactionOperationInitParams,
                                                                           completion: completion)
         
@@ -184,7 +189,8 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
                                               operationKey: IssueAssetKeys.operation.rawValue,
                                               chainIdKey: IssueAssetKeys.chainId.rawValue,
                                               blockDataKey: IssueAssetKeys.blockData.rawValue,
-                                              feeKey: IssueAssetKeys.fee.rawValue)
+                                              feeKey: IssueAssetKeys.fee.rawValue,
+                                              expirationOffset: transactionExpirationOffset)
         let bildTransactionOperation = GetTransactionQueueOperation<Bool>(initParams: transactionOperationInitParams,
                                                                           completion: completion)
         

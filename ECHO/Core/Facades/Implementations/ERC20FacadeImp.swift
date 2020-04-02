@@ -18,21 +18,23 @@ public struct ERC20FacadeServices {
  Implementation of [ERC20Facade](ERC20Facade), [ECHOQueueble](ECHOQueueble)
  */
 final public class ERC20FacadeImp: ERC20Facade, ECHOQueueble {
-
     var queues: [String: ECHOQueue]
     let services: ERC20FacadeServices
     let network: ECHONetwork
     let cryptoCore: CryptoCoreComponent
+    let transactionExpirationOffset: TimeInterval
     
     public init(services: ERC20FacadeServices,
                 cryptoCore: CryptoCoreComponent,
                 network: ECHONetwork,
-                noticeDelegateHandler: NoticeEventDelegateHandler) {
+                noticeDelegateHandler: NoticeEventDelegateHandler,
+                transactionExpirationOffset: TimeInterval) {
         
         self.services = services
         self.network = network
         self.cryptoCore = cryptoCore
         self.queues = [String: ECHOQueue]()
+        self.transactionExpirationOffset = transactionExpirationOffset
         noticeDelegateHandler.delegate = self
     }
     
@@ -234,7 +236,8 @@ final public class ERC20FacadeImp: ERC20Facade, ECHOQueueble {
                                               operationKey: ERC20FacadeResultKeys.operation.rawValue,
                                               chainIdKey: ERC20FacadeResultKeys.chainId.rawValue,
                                               blockDataKey: ERC20FacadeResultKeys.blockData.rawValue,
-                                              feeKey: ERC20FacadeResultKeys.fee.rawValue)
+                                              feeKey: ERC20FacadeResultKeys.fee.rawValue,
+                                              expirationOffset: transactionExpirationOffset)
         let bildTransactionOperation = GetTransactionQueueOperation<Bool>(initParams: transactionOperationInitParams,
                                                                           completion: completion)
         
@@ -349,7 +352,8 @@ final public class ERC20FacadeImp: ERC20Facade, ECHOQueueble {
                                               operationKey: ERC20FacadeResultKeys.operation.rawValue,
                                               chainIdKey: ERC20FacadeResultKeys.chainId.rawValue,
                                               blockDataKey: ERC20FacadeResultKeys.blockData.rawValue,
-                                              feeKey: ERC20FacadeResultKeys.fee.rawValue)
+                                              feeKey: ERC20FacadeResultKeys.fee.rawValue,
+                                              expirationOffset: transactionExpirationOffset)
         let bildTransactionOperation = GetTransactionQueueOperation<Bool>(initParams: transactionOperationInitParams,
                                                                           completion: completion)
         

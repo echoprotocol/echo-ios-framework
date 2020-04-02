@@ -15,16 +15,20 @@ struct AuthentificationFacadeServices {
     Implementation of [AuthentificationFacade](AuthentificationFacade), [ECHOQueueble](ECHOQueueble)
  */
 final public class AuthentificationFacadeImp: AuthentificationFacade, ECHOQueueble {
-    
     var queues: [String: ECHOQueue]
     let services: AuthentificationFacadeServices
     let cryptoCore: CryptoCoreComponent
     let network: ECHONetwork
+    let transactionExpirationOffset: TimeInterval
     
-    init(services: AuthentificationFacadeServices, cryptoCore: CryptoCoreComponent, network: ECHONetwork) {
+    init(services: AuthentificationFacadeServices,
+         cryptoCore: CryptoCoreComponent,
+         network: ECHONetwork,
+         transactionExpirationOffset: TimeInterval) {
         self.services = services
         self.cryptoCore = cryptoCore
         self.network = network
+        self.transactionExpirationOffset = transactionExpirationOffset
         self.queues = [String: ECHOQueue]()
     }
     
@@ -180,7 +184,8 @@ final public class AuthentificationFacadeImp: AuthentificationFacade, ECHOQueueb
                                               operationKey: ChangeKeysKeys.operation.rawValue,
                                               chainIdKey: ChangeKeysKeys.chainId.rawValue,
                                               blockDataKey: ChangeKeysKeys.blockData.rawValue,
-                                              feeKey: ChangeKeysKeys.fee.rawValue)
+                                              feeKey: ChangeKeysKeys.fee.rawValue,
+                                              expirationOffset: transactionExpirationOffset)
         let bildTransactionOperation = GetTransactionQueueOperation<Bool>(initParams: transactionOperationInitParams,
                                                                           completion: completion)
         

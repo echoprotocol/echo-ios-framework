@@ -18,20 +18,22 @@ public struct EthFacadeServices {
  Implementation of [EthFacade](EthFacade), [ECHOQueueble](ECHOQueueble)
  */
 final public class EthFacadeImp: EthFacade, ECHOQueueble {
-
     var queues: [String: ECHOQueue]
     let services: EthFacadeServices
     let network: ECHONetwork
     let cryptoCore: CryptoCoreComponent
+    let transactionExpirationOffset: TimeInterval
     
     public init(services: EthFacadeServices,
                 cryptoCore: CryptoCoreComponent,
                 network: ECHONetwork,
-                noticeDelegateHandler: NoticeEventDelegateHandler) {
+                noticeDelegateHandler: NoticeEventDelegateHandler,
+                transactionExpirationOffset: TimeInterval) {
         
         self.services = services
         self.network = network
         self.cryptoCore = cryptoCore
+        self.transactionExpirationOffset = transactionExpirationOffset
         self.queues = [String: ECHOQueue]()
         noticeDelegateHandler.delegate = self
     }
@@ -219,7 +221,8 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble {
                                               operationKey: EthFacadeResultKeys.operation.rawValue,
                                               chainIdKey: EthFacadeResultKeys.chainId.rawValue,
                                               blockDataKey: EthFacadeResultKeys.blockData.rawValue,
-                                              feeKey: EthFacadeResultKeys.fee.rawValue)
+                                              feeKey: EthFacadeResultKeys.fee.rawValue,
+                                              expirationOffset: transactionExpirationOffset)
         let bildTransactionOperation = GetTransactionQueueOperation<Bool>(initParams: transactionOperationInitParams,
                                                                           completion: completion)
         
@@ -330,7 +333,8 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble {
                                               operationKey: EthFacadeResultKeys.operation.rawValue,
                                               chainIdKey: EthFacadeResultKeys.chainId.rawValue,
                                               blockDataKey: EthFacadeResultKeys.blockData.rawValue,
-                                              feeKey: EthFacadeResultKeys.fee.rawValue)
+                                              feeKey: EthFacadeResultKeys.fee.rawValue,
+                                              expirationOffset: transactionExpirationOffset)
         let bildTransactionOperation = GetTransactionQueueOperation<Bool>(initParams: transactionOperationInitParams,
                                                                           completion: completion)
         
