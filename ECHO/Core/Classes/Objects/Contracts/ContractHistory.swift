@@ -19,6 +19,7 @@ public struct ContractHistory: ECHOObject, Decodable {
         case operationId = "operation_id"
         case sequence
         case nextId
+        case parentOpId = "parent_op_id"
     }
     
     public var id: String
@@ -26,14 +27,16 @@ public struct ContractHistory: ECHOObject, Decodable {
     public let operationId: String
     public let sequence: Int
     public let nextId: String?
+    public let parentOpId: String?
     
-    public init(id: String, contract: Contract, operationId: String, sequence: Int = 0, nextId: String?) {
+    public init(id: String, contract: Contract, operationId: String, sequence: Int = 0, nextId: String?, parentOpId: String? = nil) {
         
         self.id = id
         self.contract = contract
         self.operationId = operationId
         self.sequence = sequence
         self.nextId = nextId
+        self.parentOpId = parentOpId
     }
     
     public init(from decoder: Decoder) throws {
@@ -45,5 +48,6 @@ public struct ContractHistory: ECHOObject, Decodable {
         operationId = try values.decode(String.self, forKey: .operationId)
         sequence = try values.decode(Int.self, forKey: .sequence)
         nextId = try? values.decode(String.self, forKey: .nextId)
+        parentOpId = try? values.decode(String.self, forKey: .parentOpId)
     }
 }

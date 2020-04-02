@@ -16,13 +16,13 @@ struct GetERC20TokenSocketOperation: SocketOperation {
     var method: SocketOperationType
     var operationId: Int
     var apiId: Int
-    var ethAddress: String
+    var ethAddressOrId: String
     var completion: Completion<ERC20Token?>
     
     func createParameters() -> [Any] {
         let array: [Any] = [apiId,
                             SocketOperationKeys.getERC20Token.rawValue,
-                            [ethAddress]]
+                            [ethAddressOrId]]
         return array
     }
     

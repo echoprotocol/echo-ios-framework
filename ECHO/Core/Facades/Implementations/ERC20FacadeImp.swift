@@ -47,7 +47,21 @@ final public class ERC20FacadeImp: ERC20Facade, ECHOQueueble {
         }
         
         let address = tokenAddress.replacingOccurrences(of: "0x", with: "")
-        services.databaseService.getERC20Token(tokenAddress: address, completion: completion)
+        services.databaseService.getERC20Token(tokenAddressOrId: address, completion: completion)
+    }
+    
+    public func getERC20Token(tokenId: String, completion: @escaping Completion<ERC20Token?>) {
+        // Validate tokenId
+        do {
+            let validator = IdentifierValidator()
+            try validator.validateId(tokenId, for: .erc20Token)
+        } catch let error {
+            let echoError = (error as? ECHOError) ?? ECHOError.undefined
+            let result = Result<ERC20Token?, ECHOError>(error: echoError)
+            completion(result)
+            return
+        }
+        services.databaseService.getERC20Token(tokenAddressOrId: tokenId, completion: completion)
     }
     
     public func checkERC20Token(contractId: String, completion: @escaping Completion<Bool>) {

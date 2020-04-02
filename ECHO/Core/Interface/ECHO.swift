@@ -728,6 +728,11 @@ final public class ECHO: InterfaceFacades, Startable {
         erc20Facade.getERC20Token(tokenAddress: tokenAddress, completion: completion)
     }
     
+    public func getERC20Token(tokenId: String, completion: @escaping Completion<ERC20Token?>) {
+        
+        erc20Facade.getERC20Token(tokenId: tokenId, completion: completion)
+    }
+    
     public func checkERC20Token(contractId: String, completion: @escaping Completion<Bool>) {
         
         erc20Facade.checkERC20Token(contractId: contractId, completion: completion)
