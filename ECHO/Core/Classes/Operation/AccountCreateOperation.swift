@@ -21,6 +21,7 @@ public struct AccountCreateOperation: BaseOperation {
         case extensions
         case fee
         case edKey = "echorand_key"
+        case evmAddress = "evm_address"
     }
     
     public let type: OperationType
@@ -32,6 +33,7 @@ public struct AccountCreateOperation: BaseOperation {
     public let active: OptionalValue<Authority>
     public let options: OptionalValue<AccountOptions>
     public let edKey: Address
+    public let evmAddress: String?
     
     public init(from decoder: Decoder) throws {
         
@@ -54,52 +56,28 @@ public struct AccountCreateOperation: BaseOperation {
         fee = try values.decode(AssetAmount.self, forKey: .fee)
         let edKeyString = try values.decode(String.self, forKey: .edKey)
         edKey = Address(edKeyString, data: nil)
+        
+        evmAddress = try? values.decode(String.self, forKey: .evmAddress)
     }
     
     // MARK: ECHOCodable
+    // Not used for send
     
     public func toJSON() -> Any? {
-        
-        var array = [Any]()
-        array.append(getId())
-        
-        var dictionary: [AnyHashable: Any?] = [AccountCreateOperationCodingKeys.fee.rawValue: fee.toJSON(),
-                                               AccountCreateOperationCodingKeys.name.rawValue: name,
-                                               AccountCreateOperationCodingKeys.registrar.rawValue: registrar,
-                                               AccountCreateOperationCodingKeys.edKey.rawValue: edKey.toJSON(),
-                                               AccountCreateOperationCodingKeys.extensions.rawValue: extensions.toJSON()]
-        
-        if active.isSet() {
-            dictionary[AccountCreateOperationCodingKeys.active.rawValue] = active.toJSON()
-        }
-        
-        if options.isSet() {
-            dictionary[AccountCreateOperationCodingKeys.options.rawValue] = options.toJSON()
-        }
-        
-        return array
-    }
-    
-    mutating func changeAccounts(registrar: Account?) {
-        
-        if let registrar = registrar { self.registrar = registrar }
+        return nil
     }
     
     public func toData() -> Data? {
-        
-        var data = Data()
-        data.append(optional: fee.toData())
-        data.append(optional: Data.fromString(name))
-        data.append(optional: Data.fromString(registrar.id))
-        data.append(optional: active.toData())
-        data.append(optional: edKey.toData())
-        data.append(optional: options.toData())
-        data.append(optional: extensions.toData())
-        return data
+        return nil
+    }
+    
+    // MARK: Change
+    
+    mutating func changeAccounts(registrar: Account?) {
+        if let registrar = registrar { self.registrar = registrar }
     }
     
     mutating func changeAssets(feeAsset: Asset?) {
-        
         if let feeAsset = feeAsset { self.fee = AssetAmount(amount: fee.amount, asset: feeAsset) }
     }
 }

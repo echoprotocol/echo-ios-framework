@@ -9,9 +9,9 @@
 // Configuration settings file format documentation can be found at:
 // https://help.apple.com/xcode/#/dev745c5c974
 
-//NODE_URL = devnet.echo-dev.io --- devnet 0.13
-//NODE_URL = testnet.echo-dev.io --- testnet 0.13
-NODE_URL = testnet.echo-dev.io
+//NODE_URL = devnet.echo-dev.io --- devnet 0.18
+//NODE_URL = testnet.echo-dev.io --- testnet 0.14
+NODE_URL = devnet.echo-dev.io
 
 TIMEOUT = 100
 

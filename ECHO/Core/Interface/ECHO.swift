@@ -234,8 +234,16 @@ final public class ECHO: InterfaceFacades, Startable {
         informationFacade.getBlock(blockNumber: blockNumber, completion: completion)
     }
     
-    public func registerAccount(name: String, wif: String, completion: @escaping Completion<Bool>, noticeHandler: NoticeHandler?) {
-        informationFacade.registerAccount(name: name, wif: wif, completion: completion, noticeHandler: noticeHandler)
+    public func registerAccount(name: String,
+                                wif: String,
+                                evmAddress: String?,
+                                completion: @escaping Completion<Bool>,
+                                noticeHandler: NoticeHandler?) {
+        informationFacade.registerAccount(name: name,
+                                          wif: wif,
+                                          evmAddress: evmAddress,
+                                          completion: completion,
+                                          noticeHandler: noticeHandler)
     }
     
     public func getAccount(nameOrID: String, completion: @escaping Completion<Account>) {
@@ -763,3 +771,4 @@ final public class ECHO: InterfaceFacades, Startable {
 }
 // swiftlint:enable function_body_length
 // swiftlint:enable type_body_length
+
