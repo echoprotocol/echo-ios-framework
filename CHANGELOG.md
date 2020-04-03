@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## Changelog 4.2.0 - 2020-04-23
+### Added
+* Getting erc20 token by id
+* Field evmAddress in SubmitRegistrationSolutionSocketOperation and AccountCreateOperation
+* BTCAssetId in GlobalProperties
+* Added evmAddress object type
+* Field parentOpId in ContractHistory object
+* Field ethAccuracy in Contract object
+
+### Changed
+* Transaction expiration time calculation
+* All BTC classes name
+
 ## Changelog 4.1.0 - 2020-01-28
 ### Changed
 * Operations order list
