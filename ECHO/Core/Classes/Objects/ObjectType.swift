@@ -102,7 +102,8 @@ public enum ObjectType: Int {
              .btcIntermediateDeposit,
              .btcDeposit,
              .btcWithdraw,
-             .btcAggregating:
+             .btcAggregating,
+             .evmAddress:
             space = .protocolSpace
         case .globalProperty,
              .dynamicGlobalProperty,
