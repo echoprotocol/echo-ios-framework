@@ -51,11 +51,13 @@ final public class ECHO: InterfaceFacades, Startable {
     public init(settings: Settings) {
 
         let noticeEventProxy = NoticeEventProxyImp()
-        let socketCore = SocketCoreComponentImp(messanger: settings.socketMessenger,
-                                                url: settings.network.url,
-                                                noticeUpdateHandler: noticeEventProxy,
-                                                socketQueue: settings.workingQueue,
-                                                timeout: settings.socketRequestsTimeout)
+        let socketCore = SocketCoreComponentImp(
+            messanger: settings.socketMessenger,
+            url: settings.network.url,
+            noticeUpdateHandler: noticeEventProxy,
+            socketQueue: settings.workingQueue,
+            timeout: settings.socketRequestsTimeout
+        )
         
         let databaseService = DatabaseApiServiceImp(socketCore: socketCore)
         let cryptoService = CryptoApiServiceImp(socketCore: socketCore)
@@ -64,80 +66,159 @@ final public class ECHO: InterfaceFacades, Startable {
         let networkNodesService = NetworkNodesApiServiceImp(socketCore: socketCore)
         let registrationService = RegistrationApiServiceImp(socketCore: socketCore)
         
-        let revealServices = RevealFacadeServices(databaseService: databaseService,
-                                                  cryptoService: cryptoService,
-                                                  historyService: historyService,
-                                                  networkBroadcastService: networkBroadcastService,
-                                                  networkNodesService: networkNodesService,
-                                                  registrationService: registrationService)
-        revealFacade = RevealFacadeImp(socketCore: socketCore,
-                                      options: settings.apiOptions,
-                                      services: revealServices)
+        let revealServices = RevealFacadeServices(
+            databaseService: databaseService,
+            cryptoService: cryptoService,
+            historyService: historyService,
+            networkBroadcastService: networkBroadcastService,
+            networkNodesService: networkNodesService,
+            registrationService: registrationService
+        )
+        revealFacade = RevealFacadeImp(
+            socketCore: socketCore,
+            options: settings.apiOptions,
+            services: revealServices
+        )
         
-        let authServices = AuthentificationFacadeServices(databaseService: databaseService, networkBroadcastService: networkBroadcastService)
-        authentificationFacade = AuthentificationFacadeImp(services: authServices, cryptoCore: settings.cryproComponent, network: settings.network)
+        // Auth
         
-        let informationServices = InformationFacadeServices(databaseService: databaseService,
-                                                            historyService: historyService,
-                                                            registrationService: registrationService)
-        informationFacade = InformationFacadeImp(services: informationServices,
-                                                 network: settings.network,
-                                                 cryptoCore: settings.cryproComponent,
-                                                 noticeDelegateHandler: noticeEventProxy)
+        let authServices = AuthentificationFacadeServices(
+            databaseService: databaseService,
+            networkBroadcastService: networkBroadcastService
+        )
+        authentificationFacade = AuthentificationFacadeImp(
+            services: authServices,
+            cryptoCore: settings.cryproComponent,
+            network: settings.network,
+            transactionExpirationOffset: settings.transactionExpirationTime)
+        
+        // Info
+        
+        let informationServices = InformationFacadeServices(
+            databaseService: databaseService,
+            historyService: historyService,
+            registrationService: registrationService
+        )
+        informationFacade = InformationFacadeImp(
+            services: informationServices,
+            network: settings.network,
+            cryptoCore: settings.cryproComponent,
+            noticeDelegateHandler: noticeEventProxy
+        )
+        
+        // Subscription
         
         let subscriptionServices = SubscriptionServices(databaseService: databaseService)
-        subscriptionFacade = SubscriptionFacadeImp(services: subscriptionServices,
-                                                   noticeDelegateHandler: noticeEventProxy)
+        subscriptionFacade = SubscriptionFacadeImp(
+            services: subscriptionServices,
+            noticeDelegateHandler: noticeEventProxy
+        )
+        
+        // Fee
         
         let feeServices = FeeFacadeServices(databaseService: databaseService)
-        feeFacade = FeeFacadeImp(services: feeServices,
-                                 cryptoCore: settings.cryproComponent,
-                                 network: settings.network,
-                                 abiCoderCore: settings.abiCoderComponent,
-                                 settings: settings)
+        feeFacade = FeeFacadeImp(
+            services: feeServices,
+            cryptoCore: settings.cryproComponent,
+            network: settings.network,
+            abiCoderCore: settings.abiCoderComponent,
+            settings: settings
+        )
         
-        let transactoinServices = TransactionFacadeServices(databaseService: databaseService, networkBroadcastService: networkBroadcastService)
-        transactionFacade = TransactionFacadeImp(services: transactoinServices,
-                                                 cryptoCore: settings.cryproComponent,
-                                                 network: settings.network,
-                                                 noticeDelegateHandler: noticeEventProxy)
+        // Transaction
         
-        let assetsServices = AssetsServices(databaseService: databaseService, networkBroadcastService: networkBroadcastService)
-        assetsFacade = AssetsFacadeImp(services: assetsServices, cryptoCore: settings.cryproComponent, network: settings.network)
+        let transactoinServices = TransactionFacadeServices(
+            databaseService: databaseService,
+            networkBroadcastService: networkBroadcastService
+        )
+        transactionFacade = TransactionFacadeImp(
+            services: transactoinServices,
+            cryptoCore: settings.cryproComponent,
+            network: settings.network,
+            noticeDelegateHandler: noticeEventProxy,
+            transactionExpirationOffset: settings.transactionExpirationTime
+        )
         
-        let contractsServices = ContractsFacadeServices(databaseService: databaseService, networkBroadcastService: networkBroadcastService)
-        contractsFacade = ContractsFacadeImp(services: contractsServices,
-                                             cryptoCore: settings.cryproComponent,
-                                             network: settings.network,
-                                             abiCoder: settings.abiCoderComponent,
-                                             noticeDelegateHandler: noticeEventProxy,
-                                             settings: settings)
+        // Assets
         
-        let ethFacadeServices = EthFacadeServices(databaseService: databaseService, networkBroadcastService: networkBroadcastService)
-        ethFacade = EthFacadeImp(services: ethFacadeServices,
-                                 cryptoCore: settings.cryproComponent,
-                                 network: settings.network,
-                                 noticeDelegateHandler: noticeEventProxy)
+        let assetsServices = AssetsServices(
+            databaseService: databaseService,
+            networkBroadcastService: networkBroadcastService
+        )
+        assetsFacade = AssetsFacadeImp(
+            services: assetsServices,
+            cryptoCore: settings.cryproComponent,
+            network: settings.network,
+            transactionExpirationOffset: settings.transactionExpirationTime
+        )
         
-        let btcFacadeServices = BtcFacadeServices(databaseService: databaseService, networkBroadcastService: networkBroadcastService)
+        // Contracts
         
-        btcFacade = BtcFacadeImp(services: btcFacadeServices,
-                                 cryptoCore: settings.cryproComponent,
-                                 network: settings.network,
-                                 noticeDelegateHandler: noticeEventProxy)
+        let contractsServices = ContractsFacadeServices(
+            databaseService: databaseService,
+            networkBroadcastService: networkBroadcastService
+        )
+        contractsFacade = ContractsFacadeImp(
+            services: contractsServices,
+            cryptoCore: settings.cryproComponent,
+            network: settings.network,
+            abiCoder: settings.abiCoderComponent,
+            noticeDelegateHandler: noticeEventProxy,
+            settings: settings
+        )
+        
+        // ETH
+        
+        let ethFacadeServices = EthFacadeServices(
+            databaseService: databaseService,
+            networkBroadcastService: networkBroadcastService
+        )
+        ethFacade = EthFacadeImp(
+            services: ethFacadeServices,
+            cryptoCore: settings.cryproComponent,
+            network: settings.network,
+            noticeDelegateHandler: noticeEventProxy,
+            transactionExpirationOffset: settings.transactionExpirationTime
+        )
+        
+        // BTC
+        
+        let btcFacadeServices = BtcFacadeServices(
+            databaseService: databaseService,
+            networkBroadcastService: networkBroadcastService
+        )
+        btcFacade = BtcFacadeImp(
+            services: btcFacadeServices,
+            cryptoCore: settings.cryproComponent,
+            network: settings.network,
+            noticeDelegateHandler: noticeEventProxy,
+            transactionExpirationOffset: settings.transactionExpirationTime
+        )
 
-        let erc20FacadeServices = ERC20FacadeServices(databaseService: databaseService, networkBroadcastService: networkBroadcastService)
-        erc20Facade = ERC20FacadeImp(services: erc20FacadeServices,
-                                     cryptoCore: settings.cryproComponent,
-                                     network: settings.network,
-                                     noticeDelegateHandler: noticeEventProxy)
+        // ERC29
         
-        let customOperationsServices = CustomOperationsFacadeServices(databaseService: databaseService,
-                                                                      cryptoService: cryptoService,
-                                                                      networkBroadcastService: networkBroadcastService,
-                                                                      historyService: historyService,
-                                                                      networkNodesService: networkNodesService,
-                                                                      registrationService: registrationService)
+        let erc20FacadeServices = ERC20FacadeServices(
+            databaseService: databaseService,
+            networkBroadcastService: networkBroadcastService
+        )
+        erc20Facade = ERC20FacadeImp(
+            services: erc20FacadeServices,
+            cryptoCore: settings.cryproComponent,
+            network: settings.network,
+            noticeDelegateHandler: noticeEventProxy,
+            transactionExpirationOffset: settings.transactionExpirationTime
+        )
+        
+        // Custom operations
+        
+        let customOperationsServices = CustomOperationsFacadeServices(
+            databaseService: databaseService,
+            cryptoService: cryptoService,
+            networkBroadcastService: networkBroadcastService,
+            historyService: historyService,
+            networkNodesService: networkNodesService,
+            registrationService: registrationService
+        )
         customOperationsFacade = CustomOperationsFacadeImp(services: customOperationsServices)
     }
     
@@ -234,8 +315,16 @@ final public class ECHO: InterfaceFacades, Startable {
         informationFacade.getBlock(blockNumber: blockNumber, completion: completion)
     }
     
-    public func registerAccount(name: String, wif: String, completion: @escaping Completion<Bool>, noticeHandler: NoticeHandler?) {
-        informationFacade.registerAccount(name: name, wif: wif, completion: completion, noticeHandler: noticeHandler)
+    public func registerAccount(name: String,
+                                wif: String,
+                                evmAddress: String?,
+                                completion: @escaping Completion<Bool>,
+                                noticeHandler: NoticeHandler?) {
+        informationFacade.registerAccount(name: name,
+                                          wif: wif,
+                                          evmAddress: evmAddress,
+                                          completion: completion,
+                                          noticeHandler: noticeHandler)
     }
     
     public func getAccount(nameOrID: String, completion: @escaping Completion<Account>) {
@@ -720,6 +809,11 @@ final public class ECHO: InterfaceFacades, Startable {
         erc20Facade.getERC20Token(tokenAddress: tokenAddress, completion: completion)
     }
     
+    public func getERC20Token(tokenId: String, completion: @escaping Completion<ERC20Token?>) {
+        
+        erc20Facade.getERC20Token(tokenId: tokenId, completion: completion)
+    }
+    
     public func checkERC20Token(contractId: String, completion: @escaping Completion<Bool>) {
         
         erc20Facade.checkERC20Token(contractId: contractId, completion: completion)
@@ -763,3 +857,4 @@ final public class ECHO: InterfaceFacades, Startable {
 }
 // swiftlint:enable function_body_length
 // swiftlint:enable type_body_length
+

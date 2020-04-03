@@ -43,7 +43,8 @@ public enum ObjectType: Int {
     case btcIntermediateDeposit     //20
     case btcDeposit
     case btcWithdraw
-    case btcAggregating             //23
+    case btcAggregating             
+    case evmAddress                 //24
     case globalProperty             //0
     case dynamicGlobalProperty
     case assetDynamicData
@@ -101,7 +102,8 @@ public enum ObjectType: Int {
              .btcIntermediateDeposit,
              .btcDeposit,
              .btcWithdraw,
-             .btcAggregating:
+             .btcAggregating,
+             .evmAddress:
             space = .protocolSpace
         case .globalProperty,
              .dynamicGlobalProperty,

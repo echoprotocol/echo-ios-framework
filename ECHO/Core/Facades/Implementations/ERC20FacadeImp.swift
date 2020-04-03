@@ -18,21 +18,23 @@ public struct ERC20FacadeServices {
  Implementation of [ERC20Facade](ERC20Facade), [ECHOQueueble](ECHOQueueble)
  */
 final public class ERC20FacadeImp: ERC20Facade, ECHOQueueble {
-
     var queues: [String: ECHOQueue]
     let services: ERC20FacadeServices
     let network: ECHONetwork
     let cryptoCore: CryptoCoreComponent
+    let transactionExpirationOffset: TimeInterval
     
     public init(services: ERC20FacadeServices,
                 cryptoCore: CryptoCoreComponent,
                 network: ECHONetwork,
-                noticeDelegateHandler: NoticeEventDelegateHandler) {
+                noticeDelegateHandler: NoticeEventDelegateHandler,
+                transactionExpirationOffset: TimeInterval) {
         
         self.services = services
         self.network = network
         self.cryptoCore = cryptoCore
         self.queues = [String: ECHOQueue]()
+        self.transactionExpirationOffset = transactionExpirationOffset
         noticeDelegateHandler.delegate = self
     }
     
@@ -47,7 +49,21 @@ final public class ERC20FacadeImp: ERC20Facade, ECHOQueueble {
         }
         
         let address = tokenAddress.replacingOccurrences(of: "0x", with: "")
-        services.databaseService.getERC20Token(tokenAddress: address, completion: completion)
+        services.databaseService.getERC20Token(tokenAddressOrId: address, completion: completion)
+    }
+    
+    public func getERC20Token(tokenId: String, completion: @escaping Completion<ERC20Token?>) {
+        // Validate tokenId
+        do {
+            let validator = IdentifierValidator()
+            try validator.validateId(tokenId, for: .erc20Token)
+        } catch let error {
+            let echoError = (error as? ECHOError) ?? ECHOError.undefined
+            let result = Result<ERC20Token?, ECHOError>(error: echoError)
+            completion(result)
+            return
+        }
+        services.databaseService.getERC20Token(tokenAddressOrId: tokenId, completion: completion)
     }
     
     public func checkERC20Token(contractId: String, completion: @escaping Completion<Bool>) {
@@ -220,7 +236,8 @@ final public class ERC20FacadeImp: ERC20Facade, ECHOQueueble {
                                               operationKey: ERC20FacadeResultKeys.operation.rawValue,
                                               chainIdKey: ERC20FacadeResultKeys.chainId.rawValue,
                                               blockDataKey: ERC20FacadeResultKeys.blockData.rawValue,
-                                              feeKey: ERC20FacadeResultKeys.fee.rawValue)
+                                              feeKey: ERC20FacadeResultKeys.fee.rawValue,
+                                              expirationOffset: transactionExpirationOffset)
         let bildTransactionOperation = GetTransactionQueueOperation<Bool>(initParams: transactionOperationInitParams,
                                                                           completion: completion)
         
@@ -335,7 +352,8 @@ final public class ERC20FacadeImp: ERC20Facade, ECHOQueueble {
                                               operationKey: ERC20FacadeResultKeys.operation.rawValue,
                                               chainIdKey: ERC20FacadeResultKeys.chainId.rawValue,
                                               blockDataKey: ERC20FacadeResultKeys.blockData.rawValue,
-                                              feeKey: ERC20FacadeResultKeys.fee.rawValue)
+                                              feeKey: ERC20FacadeResultKeys.fee.rawValue,
+                                              expirationOffset: transactionExpirationOffset)
         let bildTransactionOperation = GetTransactionQueueOperation<Bool>(initParams: transactionOperationInitParams,
                                                                           completion: completion)
         

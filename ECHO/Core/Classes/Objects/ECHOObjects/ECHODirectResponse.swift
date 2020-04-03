@@ -15,7 +15,7 @@ public struct ECHODirectResponse: Decodable {
     
     public let id: Int
     public let response: ErrorOrResult
-    public let jsonrpc: String
+    public let jsonrpc: String?
     
     private enum CodingKeys: String, CodingKey {
         case id
@@ -28,7 +28,7 @@ public struct ECHODirectResponse: Decodable {
         
         let values = try decoder.container(keyedBy: CodingKeys.self)
         id = try values.decode(Int.self, forKey: .id)
-        jsonrpc = try values.decode(String.self, forKey: .jsonrpc)
+        jsonrpc = try? values.decode(String.self, forKey: .jsonrpc)
         
         if let response = try? values.decode(ErrorOrResult.self, forKey: .error) {
             self.response = response

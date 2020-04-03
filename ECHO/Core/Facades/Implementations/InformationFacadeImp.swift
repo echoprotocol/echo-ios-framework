@@ -61,7 +61,22 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         case nonce
     }
     
-    public func registerAccount(name: String, wif: String, completion: @escaping Completion<Bool>, noticeHandler: NoticeHandler?) {
+    public func registerAccount(
+        name: String,
+        wif: String,
+        evmAddress: String?,
+        completion: @escaping Completion<Bool>,
+        noticeHandler: NoticeHandler?
+    ) {
+        // Validate Ethereum address if exist
+        if let evmAddress = evmAddress {
+            let ethValidator = ETHAddressValidator(cryptoCore: cryptoCore)
+            guard ethValidator.isValidETHAddress(evmAddress) else {
+                let result = Result<Bool, ECHOError>(error: .invalidETHAddress)
+                completion(result)
+                return
+            }
+        }
         
         let createAccountQueue = ECHOQueue()
         addQueue(createAccountQueue)
@@ -81,6 +96,7 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         let submitOperation = createSubmitRegistrationSolutionOperation(createAccountQueue,
                                                                         name: name,
                                                                         wif: wif,
+                                                                        evmAddress: evmAddress,
                                                                         completion: completion)
         
         // Completion
@@ -207,6 +223,7 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
     fileprivate func createSubmitRegistrationSolutionOperation(_ queue: ECHOQueue,
                                                                name: String,
                                                                wif: String,
+                                                               evmAddress: String?,
                                                                completion: @escaping Completion<Bool>) -> Operation {
         
         let operation = BlockOperation()
@@ -231,6 +248,7 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
             let operationID = regService.submitRegistrationSolution(name: name,
                                                                     activeKey: key,
                                                                     echorandKey: key,
+                                                                    evmAddress: evmAddress,
                                                                     nonce: nonce,
                                                                     randNum: task.randNum.uintValue) { (result) in
                 switch result {

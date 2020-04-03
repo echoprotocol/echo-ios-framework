@@ -134,9 +134,13 @@ extension BlocksAndTransactionsService {
                 
                 let date = dateFormatter.date(from: dynamicProperties.time)
                 let interval = date?.timeIntervalSince1970 ?? 0
-                let expirationTime = Int(interval) + Transaction.defaultExpirationTime
+                let expirationTime = Int(interval)
                 
-                let blockData = BlockData(headBlockNumber: headBlockNumber, headBlockId: headBlockId, relativeExpiration: expirationTime)
+                let blockData = BlockData(
+                    headBlockNumber: headBlockNumber,
+                    headBlockId: headBlockId,
+                    relativeExpiration: expirationTime
+                )
                 let result = Result<BlockData, ECHOError>(value: blockData)
                 completion(result)
             case .failure(let error):
@@ -354,12 +358,12 @@ extension BtcService {
 
 extension ERC20Service {
     
-    func getERC20Token(tokenAddress: String, completion: @escaping Completion<ERC20Token?>) {
+    func getERC20Token(tokenAddressOrId: String, completion: @escaping Completion<ERC20Token?>) {
         
         let operation = GetERC20TokenSocketOperation(method: .call,
                                                      operationId: socketCore.nextOperationId(),
                                                      apiId: apiIdentifire,
-                                                     ethAddress: tokenAddress,
+                                                     ethAddressOrId: tokenAddressOrId,
                                                      completion: completion)
         
         socketCore.send(operation: operation)

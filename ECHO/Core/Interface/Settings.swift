@@ -22,6 +22,7 @@ final public class Settings {
     public let workingQueue: DispatchQueue
     public let callContractFeeMultiplier: UInt
     public let socketRequestsTimeout: TimeInterval
+    public let transactionExpirationTime: TimeInterval
 
     public typealias BuildConfiguratorClosure = (Configurator) -> Void
     
@@ -37,6 +38,7 @@ final public class Settings {
         workingQueue = configurator.workingQueue
         callContractFeeMultiplier = configurator.callContractFeeMultiplier
         socketRequestsTimeout = configurator.socketRequestsTimeout
+        transactionExpirationTime = configurator.transactionExpirationTime
     }
     
     public static let defaultDateFormat = "yyyy-MM-dd'T'H:mm:ss"

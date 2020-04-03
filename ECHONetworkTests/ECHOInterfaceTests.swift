@@ -114,7 +114,7 @@ class ECHOInterfaceTests: XCTestCase {
 //
 //        //act
 //        echo.start { [unowned self] (result) in
-//            self.echo.registerAccount(name: userName, wif: wif, completion: { (result) in
+//            self.echo.registerAccount(name: userName, wif: wif, evmAddress: nil, completion: { (result) in
 //                switch result {
 //                case .success(let boolResult):
 //                    finalResult = boolResult
@@ -132,6 +132,43 @@ class ECHOInterfaceTests: XCTestCase {
 //        }
 //    }
     
+    func testRegisterUserWithInvalidEVMAddress() {
+        //arrange
+        echo = ECHO(settings: Settings(build: {
+            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory, .registration]
+            $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+        }))
+        let exp = expectation(description: "testRegisterUserWithInvalidEVMAddress")
+        let userName = Constants.defaultToName + "test1"
+        let wif = Constants.defaultWIF
+        var errorMessage: String?
+
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.registerAccount(
+                name: userName,
+                wif: wif,
+                evmAddress: Constants.defaultETHAddress + "1",
+                completion: { (result) in
+                    
+                switch result {
+                case .success:
+                    XCTFail("Register new account must fail")
+                case .failure(let error):
+                    errorMessage = error.localizedDescription
+                    exp.fulfill()
+                }
+            }, noticeHandler: { notice in
+                exp.fulfill()
+            })
+        }
+
+        //assert
+        waitForExpectations(timeout: Constants.timeout) { error in
+            XCTAssertNotNil(errorMessage)
+        }
+    }
+    
     func testRegisterRegisteredUser() {
         
         //arrange
@@ -146,7 +183,7 @@ class ECHOInterfaceTests: XCTestCase {
         
         //act
         echo.start { [unowned self] (result) in
-            self.echo.registerAccount(name: userName, wif: wif, completion: { (result) in
+            self.echo.registerAccount(name: userName, wif: wif, evmAddress: nil, completion: { (result) in
                 switch result {
                 case .success(_):
                     XCTFail("Register new account must fail")
@@ -1152,7 +1189,7 @@ class ECHOInterfaceTests: XCTestCase {
 //        var asset = Asset("")
 //        asset.symbol = "SHARAEVTEST"
 //        asset.precision = 4
-//        asset.issuer = Account("1.2.918")
+//        asset.issuer = Account("1.2.21")
 ////        asset.setBitsassetOptions(BitassetOptions(feedLifetimeSec: 86400,
 ////                                                  minimumFeeds: 7,
 ////                                                  forceSettlementDelaySec: 86400,
@@ -1813,9 +1850,9 @@ class ECHOInterfaceTests: XCTestCase {
         let registrarNameOrId = Constants.defaultName
         let wif = Constants.defaultWIF
         let assetId = Constants.defaultAsset
-        let contratId = Constants.counterContract
-        let methodName = Constants.defaultCallContractMethod
-        let params: [AbiTypeValueInputModel] = []
+        let contratId = Constants.logsContract
+        let methodName = Constants.defaultLogsContractMethod
+        let params: [AbiTypeValueInputModel] = [AbiTypeValueInputModel(type: .uint(size: 256), value: "1")]
         var success = false
 
         //act
@@ -2507,6 +2544,33 @@ class ECHOInterfaceTests: XCTestCase {
         //act
         echo.start { [unowned self] (result) in
             self.echo.getERC20Token(tokenAddress: Constants.erc20Token) { (result) in
+                switch result {
+                case .success(let result):
+                    token = result
+                    exp.fulfill()
+                case .failure(let error):
+                    XCTFail("testGetERC20Token must be valid \(error)")
+                }
+            }
+        }
+        
+        //assert
+        waitForExpectations(timeout: Constants.timeout) { error in
+            XCTAssertNotNil(token)
+        }
+    }
+    
+    func testGetERC20TokenById() {
+        echo = ECHO(settings: Settings(build: {
+            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+            $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+        }))
+        let exp = expectation(description: "testGetERC20TokenById")
+        var token: ERC20Token? = nil
+        
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.getERC20Token(tokenId: Constants.erc20TokenEchoId) { (result) in
                 switch result {
                 case .success(let result):
                     token = result

@@ -23,15 +23,18 @@ final public class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
     let services: TransactionFacadeServices
     let network: ECHONetwork
     let cryptoCore: CryptoCoreComponent
+    let transactionExpirationOffset: TimeInterval
     
     public init(services: TransactionFacadeServices,
                 cryptoCore: CryptoCoreComponent,
                 network: ECHONetwork,
-                noticeDelegateHandler: NoticeEventDelegateHandler) {
+                noticeDelegateHandler: NoticeEventDelegateHandler,
+                transactionExpirationOffset: TimeInterval) {
         
         self.services = services
         self.network = network
         self.cryptoCore = cryptoCore
+        self.transactionExpirationOffset = transactionExpirationOffset
         self.queues = [String: ECHOQueue]()
         noticeDelegateHandler.delegate = self
     }
@@ -119,7 +122,8 @@ final public class TransactionFacadeImp: TransactionFacade, ECHOQueueble {
                                               operationKey: TransferResultsKeys.operation.rawValue,
                                               chainIdKey: TransferResultsKeys.chainId.rawValue,
                                               blockDataKey: TransferResultsKeys.blockData.rawValue,
-                                              feeKey: TransferResultsKeys.fee.rawValue)
+                                              feeKey: TransferResultsKeys.fee.rawValue,
+                                              expirationOffset: transactionExpirationOffset)
         let bildTransactionOperation = GetTransactionQueueOperation<Bool>(initParams: transactionOperationInitParams,
                                                                           completion: completion)
         

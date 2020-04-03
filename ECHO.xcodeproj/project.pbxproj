@@ -33,8 +33,8 @@
 		B30CC372214A5C29003953E3 /* AbiFunctionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30CC36E214A5C29003953E3 /* AbiFunctionModel.swift */; };
 		B30CC373214A5C29003953E3 /* AbiInterfaceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30CC36F214A5C29003953E3 /* AbiInterfaceModel.swift */; };
 		B30CC375214A5D15003953E3 /* AbiTypeValueModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30CC374214A5D15003953E3 /* AbiTypeValueModel.swift */; };
-		B30CC37C214A6C59003953E3 /* BTCData.h in Headers */ = {isa = PBXBuildFile; fileRef = B30CC37A214A6C59003953E3 /* BTCData.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		B30CC37D214A6C59003953E3 /* BTCData.m in Sources */ = {isa = PBXBuildFile; fileRef = B30CC37B214A6C59003953E3 /* BTCData.m */; };
+		B30CC37C214A6C59003953E3 /* ECHOData.h in Headers */ = {isa = PBXBuildFile; fileRef = B30CC37A214A6C59003953E3 /* ECHOData.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		B30CC37D214A6C59003953E3 /* ECHOData.m in Sources */ = {isa = PBXBuildFile; fileRef = B30CC37B214A6C59003953E3 /* ECHOData.m */; };
 		B30CC37F214A7074003953E3 /* String+AbiRegexp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30CC37E214A7074003953E3 /* String+AbiRegexp.swift */; };
 		B30CC381214A745E003953E3 /* SHA3.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30CC380214A745D003953E3 /* SHA3.swift */; };
 		B30CC383214A74B1003953E3 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30CC382214A74B1003953E3 /* Utils.swift */; };
@@ -211,7 +211,6 @@
 		D09D745E21EF58F700E0F46D /* CreateContractOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09D745D21EF58F700E0F46D /* CreateContractOperation.swift */; };
 		D09D746021EF590500E0F46D /* CallContractOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09D745F21EF590500E0F46D /* CallContractOperation.swift */; };
 		D09DA11421EDE1080004673F /* ECHOKeychainEd25519.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09DA11321EDE1080004673F /* ECHOKeychainEd25519.swift */; };
-		D09DA11621EDE5210004673F /* RegisterAccountSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09DA11521EDE5210004673F /* RegisterAccountSocketOperation.swift */; };
 		D09DA11A21EDE6780004673F /* RegistrationApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09DA11921EDE6780004673F /* RegistrationApiService.swift */; };
 		D09DA11C21EDE6870004673F /* RegistrationApiServiceImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09DA11B21EDE6870004673F /* RegistrationApiServiceImp.swift */; };
 		D0A0C4EF225E242B000BA64D /* BroadcastTransactionSocketRequestStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A0C4EE225E242B000BA64D /* BroadcastTransactionSocketRequestStub.swift */; };
@@ -354,8 +353,8 @@
 		B30CC36E214A5C29003953E3 /* AbiFunctionModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AbiFunctionModel.swift; sourceTree = "<group>"; };
 		B30CC36F214A5C29003953E3 /* AbiInterfaceModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AbiInterfaceModel.swift; sourceTree = "<group>"; };
 		B30CC374214A5D15003953E3 /* AbiTypeValueModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AbiTypeValueModel.swift; sourceTree = "<group>"; };
-		B30CC37A214A6C59003953E3 /* BTCData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTCData.h; sourceTree = "<group>"; };
-		B30CC37B214A6C59003953E3 /* BTCData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTCData.m; sourceTree = "<group>"; };
+		B30CC37A214A6C59003953E3 /* ECHOData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ECHOData.h; sourceTree = "<group>"; };
+		B30CC37B214A6C59003953E3 /* ECHOData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ECHOData.m; sourceTree = "<group>"; };
 		B30CC37E214A7074003953E3 /* String+AbiRegexp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+AbiRegexp.swift"; sourceTree = "<group>"; };
 		B30CC380214A745D003953E3 /* SHA3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SHA3.swift; sourceTree = "<group>"; };
 		B30CC382214A74B1003953E3 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
@@ -535,7 +534,6 @@
 		D09D745D21EF58F700E0F46D /* CreateContractOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateContractOperation.swift; sourceTree = "<group>"; };
 		D09D745F21EF590500E0F46D /* CallContractOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallContractOperation.swift; sourceTree = "<group>"; };
 		D09DA11321EDE1080004673F /* ECHOKeychainEd25519.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ECHOKeychainEd25519.swift; sourceTree = "<group>"; };
-		D09DA11521EDE5210004673F /* RegisterAccountSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterAccountSocketOperation.swift; sourceTree = "<group>"; };
 		D09DA11921EDE6780004673F /* RegistrationApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationApiService.swift; sourceTree = "<group>"; };
 		D09DA11B21EDE6870004673F /* RegistrationApiServiceImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationApiServiceImp.swift; sourceTree = "<group>"; };
 		D0A0C4EE225E242B000BA64D /* BroadcastTransactionSocketRequestStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BroadcastTransactionSocketRequestStub.swift; sourceTree = "<group>"; };
@@ -717,8 +715,8 @@
 		B313B8CD21303EF80052B266 /* Crypto */ = {
 			isa = PBXGroup;
 			children = (
-				B30CC37A214A6C59003953E3 /* BTCData.h */,
-				B30CC37B214A6C59003953E3 /* BTCData.m */,
+				B30CC37A214A6C59003953E3 /* ECHOData.h */,
+				B30CC37B214A6C59003953E3 /* ECHOData.m */,
 				B313B8DB21305A080052B266 /* Crypto.swift */,
 				B30CC380214A745D003953E3 /* SHA3.swift */,
 				B30CC384214A755D003953E3 /* BatchedCollection.swift */,
@@ -964,7 +962,6 @@
 				B3BEA1FE21A05C0300CB9021 /* TransactionWithCallbackSocketOperation.swift */,
 				D061331421A2EC53009EC456 /* GetContractLogsSocketOperation.swift */,
 				D061331621A30052009EC456 /* SubscribeContractLogsSocketOperation.swift */,
-				D09DA11521EDE5210004673F /* RegisterAccountSocketOperation.swift */,
 				D04835E823573E640071B6C6 /* RequestRegistrationTaskSocketOperation.swift */,
 				D04835EC235743290071B6C6 /* SubmitRegistrationSolutionSocketOperation.swift */,
 				D0E158E1221FDF9B004B44FF /* GetKeyReferencesSocketOperation.swift */,
@@ -1330,7 +1327,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B31CB1A520F3772C00FA5532 /* ECHO.h in Headers */,
-				B30CC37C214A6C59003953E3 /* BTCData.h in Headers */,
+				B30CC37C214A6C59003953E3 /* ECHOData.h in Headers */,
 				B313B8D5213041250052B266 /* Internal.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1529,7 +1526,7 @@
 				D0B6A0C62126B26D00A78E4B /* BaseOperation.swift in Sources */,
 				D04835EB23573F160071B6C6 /* RegistrationTask.swift in Sources */,
 				D094703E212D3ECC00B55A37 /* TransferOperation.swift in Sources */,
-				B30CC37D214A6C59003953E3 /* BTCData.m in Sources */,
+				B30CC37D214A6C59003953E3 /* ECHOData.m in Sources */,
 				D01AD066221C15800062A74D /* ContractResultEnum.swift in Sources */,
 				B3CA704720F532E600511F6A /* AccessSocketOperation.swift in Sources */,
 				D0ED8C222292B4E3002EC3EA /* EthFacadeImp.swift in Sources */,
@@ -1704,7 +1701,6 @@
 				D061330C21A2C836009EC456 /* CustomOperationsFacade.swift in Sources */,
 				B38596FC20F6005500B55E59 /* Price.swift in Sources */,
 				D0FAC41522AE3DC400C8BF49 /* FeeType.swift in Sources */,
-				D09DA11621EDE5210004673F /* RegisterAccountSocketOperation.swift in Sources */,
 				D0588A6623916B04000E956C /* SidechainERC20WithdrawTokenOperation.swift in Sources */,
 				B38596F220F5EE1400B55E59 /* GetObjectsSocketOperation.swift in Sources */,
 				B30CC37F214A7074003953E3 /* String+AbiRegexp.swift in Sources */,
@@ -1974,7 +1970,7 @@
 					"$(SRCROOT)/Libraries/openssl/lib",
 					"$(SRCROOT)/Libraries/ed25519/lib/SimulatorRelease/",
 				);
-				MARKETING_VERSION = 4.1.0;
+				MARKETING_VERSION = 4.2.0;
 				MODULEMAP_FILE = "./ECHO/Supports Files/ECHO.modulemap";
 				PRODUCT_BUNDLE_IDENTIFIER = org.echo.mobile.framework;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -2022,7 +2018,7 @@
 					"$(SRCROOT)/Libraries/openssl/lib",
 					"$(SRCROOT)/Libraries/ed25519/lib/SimulatorRelease/",
 				);
-				MARKETING_VERSION = 4.1.0;
+				MARKETING_VERSION = 4.2.0;
 				MODULEMAP_FILE = "./ECHO/Supports Files/ECHO.modulemap";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = org.echo.mobile.framework;

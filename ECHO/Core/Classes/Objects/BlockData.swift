@@ -36,6 +36,12 @@ struct BlockData: BytesEncodable {
         self.refBlockPrefix = BlockData.toRefBlockPrefix(headBlockId: headBlockId)
     }
     
+    init(refBlockNum: Int, refBlockPrefix: Int, relativeExpiration: Int) {
+        self.refBlockNum = refBlockNum
+        self.refBlockPrefix = refBlockPrefix
+        self.relativeExpiration = relativeExpiration
+    }
+    
     static func blockNumConvert(_ headBlockNumber: Int) -> Int {
         return Int(Int32(truncatingIfNeeded: headBlockNumber) & 0xFFFF)
     }

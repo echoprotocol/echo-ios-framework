@@ -32,11 +32,13 @@ public protocol InformationFacade {
      
      - Parameter name: The name of new account
      - Parameter wif: The wif wich will be used for create private keys
+     - Parameter evmAddress: EVM address that will be assosiated with account
      - Parameter completion: Callback which returns bool result or error
      - Parameter noticeHandler: Callback which returns wher account has been created
  */
     func registerAccount(name: String,
                          wif: String,
+                         evmAddress: String?,
                          completion: @escaping Completion<Bool>,
                          noticeHandler: NoticeHandler?)
     

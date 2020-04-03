@@ -37,7 +37,6 @@ enum SocketOperationKeys: String {
     case callContractNoChangingState = "call_contract_no_changing_state"
     case getContractLogs = "get_contract_logs"
     case subscribeContractLogs = "subscribe_contract_logs"
-    case registerAccount = "register_account"
     case getKeyReferences = "get_key_references"
     case getGlobalProperties = "get_global_properties"
     case getSidechainTransfers = "get_sidechain_transfers"

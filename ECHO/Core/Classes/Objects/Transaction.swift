@@ -20,25 +20,28 @@ public final class Transaction: ECHOCodable, Decodable {
         case refBlockPrefix = "ref_block_prefix"
     }
     
-    static let defaultExpirationTime = 40
-    
-    var blockData: BlockData?
+    let blockData: BlockData?
     var operations: [BaseOperation]
     var chainId: String?
     let extensions: Extensions = Extensions()
     var signatures: [Data]
     let refBlockNum: Int
     let refBlockPrefix: Int
-    var expiration: Date?
+    let expiration: Date?
     
-    init(operations: [BaseOperation], blockData: BlockData, chainId: String) {
-        
-        self.blockData = blockData
+    init(operations: [BaseOperation], blockData: BlockData, expirationOffset: TimeInterval, chainId: String) {
+        let expirationTime = Int(expirationOffset + Date().timeIntervalSince1970)
+        self.blockData = BlockData(
+            refBlockNum: blockData.refBlockNum,
+            refBlockPrefix: blockData.refBlockPrefix,
+            relativeExpiration: expirationTime
+        )
         self.operations = operations
         self.chainId = chainId
         self.signatures = [Data]()
         refBlockNum = 0
         refBlockPrefix = 0
+        expiration = nil
     }
     
     func setFees(_ fees: [AssetAmount]) {
@@ -53,14 +56,9 @@ public final class Transaction: ECHOCodable, Decodable {
         }
     }
     
-    func increaseExpiration() {
-        blockData?.relativeExpiration += 1
-    }
-    
     // MARK: ECHOCodable
     
     public func toJSON() -> Any? {
-        
         let expirationDate = Date(timeIntervalSince1970: TimeInterval(blockData?.relativeExpiration ?? 0))
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = Settings.defaultDateFormat
@@ -121,5 +119,7 @@ public final class Transaction: ECHOCodable, Decodable {
         signatures = (try values.decode([String].self, forKey: .signatures)).compactMap { Data(hex: $0) }
         operations = ((try values.decode(AnyDecodable.self, forKey: .operations).value as? [Any])
             .flatMap { OperationDecoder().decode(operations: $0)}) ?? [BaseOperation]()
+        
+        blockData = nil
     }
 }

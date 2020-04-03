@@ -12,21 +12,6 @@
  - Note: [Echo registration API](http://wiki.echo-dev.io/developers/apis/registration-api/)
  */
 protocol RegistrationApiService: BaseApiService {
-    
-    /**
-     Register new account in blockchain
-     
-     - Parameter name: The name of new account
-     - Parameter activeKey: The ECDSA key used for active role
-     - Parameter echorandKey: The ed25519 key used for echorand
-     - Parameter completion: Callback which returns bool result or error
-     - Returns: ID of operation
-     */
-    func registerAccount(name: String,
-                         activeKey: String,
-                         echorandKey: String,
-                         completion: @escaping Completion<Bool>) -> Int
-    
     /**
     Get PoW task to register account
     
@@ -40,6 +25,7 @@ protocol RegistrationApiService: BaseApiService {
     - Parameter name: The name of new account
     - Parameter activeKey: The ECDSA key used for active role
     - Parameter echorandKey: The ed25519 key used for echorand
+    - Parameter evmAddress: EVM address that will be assosiated with account
     - Parameter nonce: Used for verification of pow algorithm
     - Parameter randNum: Used as salt for sha256 and id for request_registration_task query
     - Parameter completion: Callback which returns bool result or error
@@ -48,6 +34,7 @@ protocol RegistrationApiService: BaseApiService {
     func submitRegistrationSolution(name: String,
                                     activeKey: String,
                                     echorandKey: String,
+                                    evmAddress: String?,
                                     nonce: UInt,
                                     randNum: UInt,
                                     completion: @escaping Completion<Bool>) -> Int

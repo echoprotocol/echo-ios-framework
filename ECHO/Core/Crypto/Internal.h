@@ -26,12 +26,12 @@ NS_ASSUME_NONNULL_END
 
 // Bitcoin-flavoured big number wrapping OpenSSL BIGNUM.
 // It is doing byte ordering like bitcoind does to stay compatible.
-// BTCBigNumber is immutable. BTCMutableBigNumber is its mutable counterpart.
+// ECHOBigNumber is immutable. ECHOMutableBigNumber is its mutable counterpart.
 // -copy always returns immutable instance, like in other Cocoa containers.
-@class BTCBigNumber;
-@class BTCMutableBigNumber;
+@class ECHOBigNumber;
+@class ECHOMutableBigNumber;
 
-@interface BTCBigNumber : NSObject <NSCopying, NSMutableCopying>
+@interface ECHOBigNumber : NSObject <NSCopying, NSMutableCopying>
 
 @property(nonatomic, readonly) uint32_t compact; // compact representation used for the difficulty target
 @property(nonatomic, readonly) uint32_t uint32value;
@@ -53,8 +53,8 @@ NS_ASSUME_NONNULL_END
 @property(nonatomic, readonly) BOOL isOne;
 
 
-// BTCBigNumber returns always the same object for these constants.
-// BTCMutableBigNumber returns a new object every time.
+// ECHOBigNumber returns always the same object for these constants.
+// ECHOMutableBigNumber returns a new object every time.
 + (instancetype) zero;        //  0
 + (instancetype) one;         //  1
 + (instancetype) negativeOne; // -1
@@ -83,29 +83,29 @@ NS_ASSUME_NONNULL_END
 - (NSString*) stringInBase:(NSUInteger)base;
 
 // Re-declared copy and mutableCopy to provide exact return type.
-- (BTCBigNumber*) copy;
-- (BTCMutableBigNumber*) mutableCopy;
+- (ECHOBigNumber*) copy;
+- (ECHOMutableBigNumber*) mutableCopy;
 
 // TODO: maybe add support for hash, figure out what the heck is that.
 //void set_hash(hash_digest load_hash);
 //hash_digest hash() const;
 
 // Returns MIN(self, other)
-- (BTCBigNumber*) min:(BTCBigNumber*)other;
+- (ECHOBigNumber*) min:(ECHOBigNumber*)other;
 
 // Returns MAX(self, other)
-- (BTCBigNumber*) max:(BTCBigNumber*)other;
+- (ECHOBigNumber*) max:(ECHOBigNumber*)other;
 
 
-- (BOOL) less:(BTCBigNumber*)other;
-- (BOOL) lessOrEqual:(BTCBigNumber*)other;
-- (BOOL) greater:(BTCBigNumber*)other;
-- (BOOL) greaterOrEqual:(BTCBigNumber*)other;
+- (BOOL) less:(ECHOBigNumber*)other;
+- (BOOL) lessOrEqual:(ECHOBigNumber*)other;
+- (BOOL) greater:(ECHOBigNumber*)other;
+- (BOOL) greaterOrEqual:(ECHOBigNumber*)other;
 
 
 // Divides receiver by another bignum.
-// Returns an array of two new BTCBigNumber instances: @[ quotient, remainder ]
-- (NSArray*) divmod:(BTCBigNumber*)other;
+// Returns an array of two new ECHOBigNumber instances: @[ quotient, remainder ]
+- (NSArray*) divmod:(ECHOBigNumber*)other;
 
 // Destroys sensitive data and sets the value to 0.
 // It is also called on dealloc.
@@ -115,7 +115,7 @@ NS_ASSUME_NONNULL_END
 @end
 
 
-@interface BTCMutableBigNumber : BTCBigNumber
+@interface ECHOMutableBigNumber : ECHOBigNumber
 
 @property(nonatomic, readwrite) uint32_t compact; // compact representation used for the difficulty target
 @property(nonatomic, readwrite) uint32_t uint32value;
@@ -129,8 +129,8 @@ NS_ASSUME_NONNULL_END
 @property(nonatomic, readwrite) NSData* littleEndianData DEPRECATED_ATTRIBUTE;
 @property(nonatomic, readwrite) NSData* unsignedData DEPRECATED_ATTRIBUTE;
 
-// BTCBigNumber returns always the same object for these constants.
-// BTCMutableBigNumber returns a new object every time.
+// ECHOBigNumber returns always the same object for these constants.
+// ECHOMutableBigNumber returns a new object every time.
 + (instancetype) zero;        //  0
 + (instancetype) one;         //  1
 + (instancetype) negativeOne; // -1
@@ -140,18 +140,18 @@ NS_ASSUME_NONNULL_END
 
 // Operators modify the receiver and return self.
 // To create a new instance z = x + y use copy method: z = [[x copy] add:y]
-- (instancetype) add:(BTCBigNumber*)other; // +=
-- (instancetype) add:(BTCBigNumber*)other mod:(BTCBigNumber*)mod;
-- (instancetype) subtract:(BTCBigNumber*)other; // -=
-- (instancetype) subtract:(BTCBigNumber*)other mod:(BTCBigNumber*)mod;
-- (instancetype) multiply:(BTCBigNumber*)other; // *=
-- (instancetype) multiply:(BTCBigNumber*)other mod:(BTCBigNumber*)mod;
-- (instancetype) divide:(BTCBigNumber*)other; // /=
-- (instancetype) mod:(BTCBigNumber*)other; // %=
+- (instancetype) add:(ECHOBigNumber*)other; // +=
+- (instancetype) add:(ECHOBigNumber*)other mod:(ECHOBigNumber*)mod;
+- (instancetype) subtract:(ECHOBigNumber*)other; // -=
+- (instancetype) subtract:(ECHOBigNumber*)other mod:(ECHOBigNumber*)mod;
+- (instancetype) multiply:(ECHOBigNumber*)other; // *=
+- (instancetype) multiply:(ECHOBigNumber*)other mod:(ECHOBigNumber*)mod;
+- (instancetype) divide:(ECHOBigNumber*)other; // /=
+- (instancetype) mod:(ECHOBigNumber*)other; // %=
 - (instancetype) lshift:(unsigned int)shift; // <<=
 - (instancetype) rshift:(unsigned int)shift; // >>=
-- (instancetype) inverseMod:(BTCBigNumber*)mod; // (a^-1) mod n
-- (instancetype) exp:(BTCBigNumber*)power;
-- (instancetype) exp:(BTCBigNumber*)power mod:(BTCBigNumber *)mod;
+- (instancetype) inverseMod:(ECHOBigNumber*)mod; // (a^-1) mod n
+- (instancetype) exp:(ECHOBigNumber*)power;
+- (instancetype) exp:(ECHOBigNumber*)power mod:(ECHOBigNumber *)mod;
 
 @end

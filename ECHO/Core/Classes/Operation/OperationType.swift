@@ -10,7 +10,7 @@
   Represents all blockchain operation types [Operations](https://dev-doc.myecho.app/group__operations.html#details)
  */
 public enum OperationType: Int {
-    case transferOperation                          //0
+    case transferOperation                          // 0
     case transferToAddressOperation
     case overrideTransferOperation
     case accountCreateOperation
@@ -20,7 +20,7 @@ public enum OperationType: Int {
     case assetCreateOperation
     case assetUpdateOperation
     case assetUpdateBitassetOperation
-    case assetUpdateFeedProducersOperation          //10
+    case assetUpdateFeedProducersOperation          // 10
     case assetIssueOperation
     case assetReserveOperation
     case assetFundFeePoolOperation
@@ -30,7 +30,7 @@ public enum OperationType: Int {
     case proposalUpdateOperation
     case proposalDeleteOperation
     case committeeMemberCreateOperation
-    case committeeMemberUpdateOperation             //20
+    case committeeMemberUpdateOperation             // 20
     // swiftlint:disable variable_name
     case committeeMemberUpdateGlobalParametersOperation
     // swiftlint:enable variable_name
@@ -42,7 +42,7 @@ public enum OperationType: Int {
     case vestingBalanceWithdrawOperation
     case balanceClaimOperation
     case balanceFreezeOperation
-    case balanceUnfreezeOperation                   //30 // VIRTUAL
+    case balanceUnfreezeOperation                   // 30 // VIRTUAL
     case contractCreateOperation
     case contractCallOperation
     case contractInternalCreateOperation            // VIRTUAL
@@ -52,7 +52,7 @@ public enum OperationType: Int {
     case contractFundPoolOperation
     case contractWhitelistOperation
     case sidechainETHCreateAddressOperation
-    case sidechainETHApproveAddressOperation        //40
+    case sidechainETHApproveAddressOperation        // 40
     case sidechainETHDepositOperation
     case sidechainETHSendDepositOperation
     case sidechainETHWithdrawOperation
@@ -64,7 +64,7 @@ public enum OperationType: Int {
     case sidechainIssueOperation                    // VIRTUAL
     case sidechainBurnOperation                     // VIRTUAL
     case sidechainERC20RegisterTokenOperation
-    case sidechainERC20DepositTokenOperation        //50
+    case sidechainERC20DepositTokenOperation        // 50
     case sidechainERC20SendDepositTokenOperation
     case sidechainERC20WithdrawTokenOperation
     case sidechainERC20SendWithdrawTokenOperation
@@ -78,11 +78,12 @@ public enum OperationType: Int {
     case sidechainBTCCreateIntermediateDepositOperation
     // swiftlint:enable variable_name
     case sidechainBTCIntermediateDepositOperation
-    case sidechainBTCDepositOperation               //60
+    case sidechainBTCDepositOperation               // 60
     case sidechainBTCWithdrawOperation
     case sidechainBTCAggregateOperation
     case sidechainBTCApproveAggregateOperation
-    case blockRewardOperation                       //64 // VIRTUAL
+    case blockRewardOperation                       // VIRTUAL
+    case evmAddressRegisterOperation                // 65
 }
 
 struct OperationDecoder {

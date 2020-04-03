@@ -716,12 +716,14 @@ final public class FeeFacadeImp: FeeFacade, ECHOQueueble {
         return bildWithdrawalOperation
     }
     
-    fileprivate func createBildWithdrawERC20Operation(_ queue: ECHOQueue,
-                                                 _ asset: Asset,
-                                                 _ value: String,
-                                                 _ toEthAddress: String,
-                                                 _ tokenId: String,
-                                                 _ completion: @escaping Completion<AssetAmount>) -> Operation {
+    fileprivate func createBildWithdrawERC20Operation(
+        _ queue: ECHOQueue,
+        _ asset: Asset,
+        _ value: String,
+        _ toEthAddress: String,
+        _ tokenId: String,
+        _ completion: @escaping Completion<AssetAmount>
+    ) -> Operation {
         
         let bildWithdrawOperation = BlockOperation()
         

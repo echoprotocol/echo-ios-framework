@@ -37,12 +37,21 @@ public protocol ERC20Facade {
                             completion: @escaping Completion<Bool>,
                             noticeHandler: NoticeHandler?)
 /**
-    Returns information about erc20 token, if exist.
+    Returns information about erc20 token by token address, if exist.
     
     - Parameter tokenAddress: Token address in Ethereum network
     - Parameter completion: Callback in which return ERC20Token if exist object or error.
 */
     func getERC20Token(tokenAddress: String,
+                       completion: @escaping Completion<ERC20Token?>)
+    
+/**
+    Returns information about erc20 token by token id, if exist.
+    
+    - Parameter tokenId: Token id in Echo network
+    - Parameter completion: Callback in which return ERC20Token if exist object or error.
+*/
+    func getERC20Token(tokenId: String,
                        completion: @escaping Completion<ERC20Token?>)
     
 /**
