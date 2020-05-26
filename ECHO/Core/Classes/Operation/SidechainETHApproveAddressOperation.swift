@@ -19,6 +19,7 @@ public struct SidechainETHApproveAddressOperation: BaseOperation {
         case ethAddr = "eth_addr"
         case extensions
         case fee
+        case transactionHash = "transaction_hash"
     }
     
     public let type: OperationType
@@ -29,6 +30,7 @@ public struct SidechainETHApproveAddressOperation: BaseOperation {
     public let maliciousCommitteemen: [String]
     public var account: Account
     public let ethAddr: String
+    public let transactionHash: String
     
     public init(from decoder: Decoder) throws {
         
@@ -45,6 +47,8 @@ public struct SidechainETHApproveAddressOperation: BaseOperation {
         maliciousCommitteemen = try values.decode([String].self, forKey: .maliciousCommitteemen)
         ethAddr = try values.decode(String.self, forKey: .ethAddr)
         fee = try values.decode(AssetAmount.self, forKey: .fee)
+        
+        transactionHash = try values.decode(String.self, forKey: .transactionHash)
     }
     
     mutating func changeAccounts(committeeMember: Account?, account: Account?) {

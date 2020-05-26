@@ -83,7 +83,10 @@ public enum OperationType: Int {
     case sidechainBTCAggregateOperation
     case sidechainBTCApproveAggregateOperation
     case blockRewardOperation                       // VIRTUAL
-    case evmAddressRegisterOperation                // 65
+    case evmAddressRegisterOperation
+    case didCreateOperation
+    case didUpdateOperation
+    case didDeleteOperation                         //68
 }
 
 struct OperationDecoder {

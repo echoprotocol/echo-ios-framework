@@ -20,6 +20,7 @@ public struct ERC20Withdrawal: ECHOObject, Decodable {
         case value
         case isApproved = "is_approved"
         case approves
+        case transactionHash = "transaction_hash"
     }
     
     public var id: String
@@ -30,6 +31,7 @@ public struct ERC20Withdrawal: ECHOObject, Decodable {
     public let value: String
     public let isApproved: Bool
     public let approves: [String]
+    public let transactionHash: String?
     
     public init(from decoder: Decoder) throws {
         
@@ -46,5 +48,7 @@ public struct ERC20Withdrawal: ECHOObject, Decodable {
         
         let accountId = try values.decode(String.self, forKey: .account)
         account = Account(accountId)
+        
+        transactionHash = try? values.decode(String.self, forKey: .transactionHash)
     }
 }

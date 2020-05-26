@@ -17,6 +17,7 @@ public struct EthAddress: ECHOObject, Decodable {
         case isApproved = "is_approved"
         case approves
         case id
+        case transactionHash = "transaction_hash"
     }
     
     public var id: String
@@ -24,6 +25,7 @@ public struct EthAddress: ECHOObject, Decodable {
     public let address: String
     public let isApproved: Bool
     public let approves: [String]
+    public let transactionHash: String
     
     public init(from decoder: Decoder) throws {
         
@@ -33,5 +35,6 @@ public struct EthAddress: ECHOObject, Decodable {
         address = try values.decode(String.self, forKey: .address)
         isApproved = try values.decode(Bool.self, forKey: .isApproved)
         approves = try values.decode([String].self, forKey: .approves)
+        transactionHash = try values.decode(String.self, forKey: .transactionHash)
     }
 }
