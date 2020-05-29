@@ -15,7 +15,7 @@ struct GetAccountDepositsRequestStub: SocketRequestStub {
     func createResponce(id: Int) -> String {
         
         return """
-        {"id":\(id),"jsonrpc":"2.0","result":[{"id":"1.18.1","deposit_id":2,"account":"1.2.48","value":199800,"is_approved":true,"approves":[]}]}
+        {"id":\(id),"jsonrpc":"2.0","result":[{"id":"1.18.1","deposit_id":2,"account":"1.2.48","value":199800,"is_approved":true,"approves":[], "transaction_hash": "test_hash"}]}
         """
     }
 }
