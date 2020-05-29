@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## Changelog 4.2.1 - 2020-05-29
+Integration with chain version 0.19
+
+### Added
+* TransactionHash field to BtcWithdrawal, ERC20Withdrawal, ErhAddress, EthDeposit, ETHWithdrawal, SidechainETHApproveAddressOperation, SidechainETHDepositOperation objects
+
+### Removed
+* EdSignature field from Block object
+
+### Changed
+* ObjectType enum
+
 ## Changelog 4.2.0 - 2020-04-23
 ### Added
 * Getting erc20 token by id
