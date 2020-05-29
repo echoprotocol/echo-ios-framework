@@ -2441,7 +2441,7 @@ class ECHOInterfaceTests: XCTestCase {
             self.echo.withdrawBtc(nameOrId: Constants.defaultName,
                                   wif: Constants.defaultWIF,
                                   toBtcAddress: Constants.defaultBTCAddress,
-                                  amount: 100000,
+                                  amount: 200000,
                                   assetForFee: nil,
                                   completion: { (result) in
                                   

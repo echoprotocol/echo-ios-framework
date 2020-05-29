@@ -29,7 +29,7 @@ public struct EthWithdrawal: ECHOObject, Decodable {
     public let value: UInt
     public let isApproved: Bool
     public let approves: [String]
-    public let transactionHash: String
+    public let transactionHash: String?
     
     public init(from decoder: Decoder) throws {
         
@@ -42,6 +42,6 @@ public struct EthWithdrawal: ECHOObject, Decodable {
         value = try values.decode(UInt.self, forKey: .value)
         isApproved = try values.decode(Bool.self, forKey: .isApproved)
         approves = try values.decode([String].self, forKey: .approves)
-        transactionHash = try values.decode(String.self, forKey: .transactionHash)
+        transactionHash = try? values.decode(String.self, forKey: .transactionHash)
     }
 }
