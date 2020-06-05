@@ -89,8 +89,6 @@ public struct AccountUpdateOperation: BaseOperation {
         data.append(optional: newOptions.toData())
         data.append(optional: extensions.toData())
         
-        print(data.hex)
-        
         return data
     }
     

@@ -15,6 +15,7 @@ final class SocketCoreComponentImp: SocketCoreComponent {
     let url: String
     let noticeUpdateHandler: NoticeActionHandler?
     let timeout: TimeInterval
+    var debug: Bool
     var operationsMap = [Int: SocketOperation]()
     var operationsTimes = [(TimeInterval, SocketOperation)]()
     var currentOperationId: Int = 0
@@ -28,12 +29,14 @@ final class SocketCoreComponentImp: SocketCoreComponent {
     required init(messanger: SocketMessenger, url: String,
                   noticeUpdateHandler: NoticeActionHandler?,
                   socketQueue: DispatchQueue,
-                  timeout: TimeInterval) {
+                  timeout: TimeInterval,
+                  debug: Bool) {
         self.messenger = messanger
         self.messenger.callbackQueue = socketQueue
         self.url = url
         self.noticeUpdateHandler = noticeUpdateHandler
         self.timeout = timeout
+        self.debug = debug
         
         monitorTimeouts()
     }
@@ -77,6 +80,9 @@ final class SocketCoreComponentImp: SocketCoreComponent {
     
     func disconnect() {
         messenger.disconnect()
+        forceEndAllOperations()
+        noticeUpdateHandler?.actionAllNoticesLost()
+        currentOperationId = 0
     }
     
     func send(operation: SocketOperation) {
@@ -93,17 +99,20 @@ final class SocketCoreComponentImp: SocketCoreComponent {
             
             self?.operationsMap[operation.operationId] = operation
             self?.addOperationToTimeoutMap(operation)
+            self?.debug(jsonString)
             self?.messenger.write(jsonString)
         }
     }
     
     fileprivate func handleMessage(_ string: String) {
         
-        print("""
+        debug(
+            """
             ------------
             \(string)
             ----------
-            """)
+            """
+        )
         
         guard let json = converToJSON(string),
             let data = try? JSONSerialization.data(withJSONObject: json, options: []) else {
@@ -204,5 +213,11 @@ final class SocketCoreComponentImp: SocketCoreComponent {
     private func addOperationToTimeoutMap(_ operation: SocketOperation) {
         let currentTime = Date().timeIntervalSince1970
         operationsTimes.append((currentTime, operation))
+    }
+    
+    private func debug(_ line: String) {
+        if debug {
+            print(line)
+        }
     }
 }

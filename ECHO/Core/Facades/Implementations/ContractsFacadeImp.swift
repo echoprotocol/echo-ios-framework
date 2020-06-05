@@ -644,8 +644,6 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble {
             guard let logsHandler: Completion<[ContractLogEnum]> = queue?.getValue(ContractKeys.logsHandler.rawValue) else { return }
             
             if let notice: ECHONotification = queue?.getValue(ContractKeys.notice.rawValue) {
-                print(notice)
-
                 switch notice.params {
                 case .array(let array):
                     if let logsAny = array.last,
