@@ -24,5 +24,5 @@ final public class Configurator {
     public var callContractFeeMultiplier: UInt = 1
     public var socketRequestsTimeout: TimeInterval = 30         // In seconds
     public var transactionExpirationTime: TimeInterval = 150    // In seconds
-    public var debug = true
+    public var debug = false
 }
