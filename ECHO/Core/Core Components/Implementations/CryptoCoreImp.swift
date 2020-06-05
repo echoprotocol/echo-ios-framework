@@ -22,7 +22,7 @@ final public class CryptoCoreImp: CryptoCoreComponent {
     }
     
     public func keccak256(_ data: Data) -> Data {
-        return Data(bytes: SHA3(variant: .keccak256).calculate(for: data.bytes))
+        return Data(SHA3(variant: .keccak256).calculate(for: data.bytes))
     }
     
     public func getPrivateKeyFromWIF(_ wif: String) -> Data? {

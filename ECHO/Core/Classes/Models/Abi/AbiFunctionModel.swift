@@ -40,7 +40,12 @@ public struct AbiFunctionModel: Equatable, Hashable {
         self.outputs = outputs
     }
     
-    public var hashValue: Int {
-        return name.hashValue ^ (isConstant ? 1:0) ^ (isPyable ? 1:0) ^ type.hashValue ^ inputs.hashValue ^ outputs.hashValue
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(name)
+        hasher.combine(isConstant)
+        hasher.combine(isPyable)
+        hasher.combine(type)
+        hasher.combine(inputs)
+        hasher.combine(outputs)
     }
 }
