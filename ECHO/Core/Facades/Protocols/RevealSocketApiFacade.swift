@@ -28,4 +28,9 @@ protocol RevealApiFacade {
      - Parameter completion: Callback in which the information will return whether the revealing APIs was successful.
  */
     func revealApi(completion: @escaping Completion<Bool>)
+    
+/**
+     This function is used for closing (disconnecting) APIs
+ */
+    func disconnectApi()
 }

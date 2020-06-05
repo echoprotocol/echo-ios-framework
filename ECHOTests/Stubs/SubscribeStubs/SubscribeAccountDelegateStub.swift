@@ -26,8 +26,4 @@ class SubscribeAccountDelegateStub: SubscribeAccountDelegate {
     func addSubscribe(nameOrId: String) {
         subscribeNameOrIds.append(nameOrId)
     }
-    
-    deinit {
-        print("DEINIT")
-    }
 }

@@ -23,6 +23,10 @@ public protocol Startable {
     func start(completion: @escaping Completion<Bool>)
 }
 
+public protocol Disconnectable {
+    func disconnect()
+}
+
 /**
      This is an  entry point of library.
  
@@ -33,7 +37,7 @@ public protocol Startable {
  */
 // swiftlint:disable function_body_length
 // swiftlint:disable type_body_length
-final public class ECHO: InterfaceFacades, Startable {
+final public class ECHO: InterfaceFacades, Startable, Disconnectable {
     
     let revealFacade: RevealApiFacade
     let subscriptionFacade: SubscriptionFacade
@@ -56,7 +60,8 @@ final public class ECHO: InterfaceFacades, Startable {
             url: settings.network.url,
             noticeUpdateHandler: noticeEventProxy,
             socketQueue: settings.workingQueue,
-            timeout: settings.socketRequestsTimeout
+            timeout: settings.socketRequestsTimeout,
+            debug: settings.debug
         )
         
         let databaseService = DatabaseApiServiceImp(socketCore: socketCore)
@@ -235,6 +240,11 @@ final public class ECHO: InterfaceFacades, Startable {
                 completion(result)
             }
         }
+    }
+    
+    public func disconnect() {
+        
+        revealFacade.disconnectApi()
     }
     
     // MARK: SubscriptionFacade

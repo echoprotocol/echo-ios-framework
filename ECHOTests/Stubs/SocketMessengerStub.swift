@@ -346,8 +346,6 @@ final class SocketMessengerStub: SocketMessenger {
         let revealHolder = RevealAPISocketStubsHolder()
         let requestStub = GetBlockSocketRequestStub()
         
-        print(tuple)
-        
         if let revealResponse = revealHolder.response(id: tuple.id, operationType: tuple.operationType) {
             return revealResponse
         } else if tuple.operationType == requestStub.operationType {
