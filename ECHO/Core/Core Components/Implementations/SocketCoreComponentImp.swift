@@ -47,6 +47,13 @@ final class SocketCoreComponentImp: SocketCoreComponent {
     }
     
     func connect(options: APIOption, completion: @escaping Completion<Bool>) {
+        switch messenger.state {
+        case .connected, .connecting, .reconnecting:
+            disconnect()
+            
+        default:
+            break
+        }
         
         messenger.onConnect = {
             let result = Result<Bool, ECHOError>(value: true)
