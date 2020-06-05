@@ -40,21 +40,21 @@ public enum AbiParameterType {
     func isArray() -> Bool {
         
         switch self {
-        case .array(_): fallthrough
+        case .array: fallthrough
         case .dynamicArrayOfUint: fallthrough
-        case .fixedArrayOfInt(_): fallthrough
+        case .fixedArrayOfInt: fallthrough
         case .dynamicArrayOfInt: fallthrough
-        case .fixedArrayOfBool(_): fallthrough
+        case .fixedArrayOfBool: fallthrough
         case .dynamicArrayOfBool: fallthrough
-        case .fixedArrayOfBytes(_): fallthrough
+        case .fixedArrayOfBytes: fallthrough
         case .dynamicArrayOfBytes: fallthrough
-        case .fixedArrayOfStrings(_): fallthrough
+        case .fixedArrayOfStrings: fallthrough
         case .dynamicArrayOfStrings: fallthrough
-        case .fixedArrayOfFixedBytes(_): fallthrough
+        case .fixedArrayOfFixedBytes: fallthrough
         case .dynamicArrayOfFixedBytes: fallthrough
-        case .fixedArrayOfAddresses(_): fallthrough
+        case .fixedArrayOfAddresses: fallthrough
         case .dynamicArrayOfAddresses: fallthrough
-        case .fixedArrayOfUint(_):
+        case .fixedArrayOfUint:
 
             return true
         default:
@@ -94,12 +94,12 @@ public enum AbiParameterType {
     func isFixedElementaryArray() -> Bool {
         
         switch self {
-        case .fixedArrayOfUint(_): fallthrough
-        case .fixedArrayOfInt(_): fallthrough
-        case .fixedArrayOfBool(_): fallthrough
-        case .fixedArrayOfBytes(_): fallthrough
-        case .fixedArrayOfFixedBytes(_): fallthrough
-        case .fixedArrayOfAddresses(_):
+        case .fixedArrayOfUint: fallthrough
+        case .fixedArrayOfInt: fallthrough
+        case .fixedArrayOfBool: fallthrough
+        case .fixedArrayOfBytes: fallthrough
+        case .fixedArrayOfFixedBytes: fallthrough
+        case .fixedArrayOfAddresses:
             return true
         default:
             return false
@@ -109,97 +109,78 @@ public enum AbiParameterType {
 
 extension AbiParameterType: Hashable {
     
-    public var hashValue: Int {
+    public func hash(into hasher: inout Hasher) {
         
         switch self {
             
         case .string:
-            return "string".hashValue
+            hasher.combine("string")
             
         case .address, .contractAddress, .ethContractAddress:
-            return "address".hashValue
+            hasher.combine("address")
             
         case .bool:
-            return "bool".hashValue
+            hasher.combine("bool")
             
         case .unknown:
-            return "unknown".hashValue
+            hasher.combine("unknown")
             
         case .uint(_):
-            
-            return "uint".hashValue
+            hasher.combine("uint")
             
         case .int(_):
-            
-            return "int".hashValue
+            hasher.combine("int")
             
         case .bytes:
-            
-            return "bytes".hashValue
+            hasher.combine("bytes")
             
         case .fixedBytes(_):
-            
-            return "fixedBytes".hashValue
+            hasher.combine("fixedBytes")
             
         case .array(_):
-            
-            return "array".hashValue
+            hasher.combine("array")
             
         case .fixedArrayOfUint(_):
-            
-            return "fixedArrayOfUint".hashValue
+            hasher.combine("fixedArrayOfUint")
             
         case .dynamicArrayOfUint:
-            
-            return "dynamicArrayOfUint".hashValue
+            hasher.combine("dynamicArrayOfUint")
             
         case .fixedArrayOfInt(_):
-            
-            return "fixedArrayOfInt".hashValue
+            hasher.combine("fixedArrayOfInt")
             
         case .dynamicArrayOfInt:
-            
-            return "dynamicArrayOfInt".hashValue
+            hasher.combine("dynamicArrayOfInt")
             
         case .fixedArrayOfBool(_):
-            
-            return "fixedArrayOfBool".hashValue
+            hasher.combine("fixedArrayOfBool")
             
         case .dynamicArrayOfBool:
-            
-            return "dynamicArrayOfBool".hashValue
+            hasher.combine("dynamicArrayOfBool")
             
         case .fixedArrayOfBytes(_):
-            
-            return "fixedArrayOfBytes".hashValue
+            hasher.combine("fixedArrayOfBytes")
             
         case .dynamicArrayOfBytes:
-            
-            return "dynamicArrayOfBytes".hashValue
+            hasher.combine("dynamicArrayOfBytes")
             
         case .fixedArrayOfStrings(_):
-            
-            return "fixedArrayOfStrings".hashValue
+            hasher.combine("fixedArrayOfStrings")
             
         case .dynamicArrayOfStrings:
+            hasher.combine("dynamicArrayOfStrings")
             
-            return "dynamicArrayOfStrings".hashValue
-            
-        case .fixedArrayOfFixedBytes(_):
-            
-            return "fixedArrayOfFixedBytes".hashValue
+        case .fixedArrayOfFixedBytes:
+            hasher.combine("fixedArrayOfFixedBytes")
             
         case .dynamicArrayOfFixedBytes:
-            
-            return "dynamicArrayOfFixedBytes".hashValue
+            hasher.combine("dynamicArrayOfFixedBytes")
             
         case .fixedArrayOfAddresses(_):
-            
-            return "fixedArrayOfAddresses".hashValue
+            hasher.combine("fixedArrayOfAddresses")
             
         case .dynamicArrayOfAddresses:
-            
-            return "dynamicArrayOfAddresses".hashValue
+            hasher.combine("dynamicArrayOfAddresses")
         }
     }
 }
@@ -288,9 +269,8 @@ extension AbiParameterType: Equatable {
             
             return true
             
-        case let (.fixedArrayOfFixedBytes(left), .fixedArrayOfFixedBytes(right)):
-            
-            return left == right
+        case let (.fixedArrayOfFixedBytes(leftBytesSize, leftArraySize), .fixedArrayOfFixedBytes(rightBytesSize, rightArraySize)):
+            return leftBytesSize == rightBytesSize && leftArraySize == rightArraySize
             
         case (.dynamicArrayOfFixedBytes, .dynamicArrayOfFixedBytes):
             
