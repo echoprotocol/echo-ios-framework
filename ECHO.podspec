@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name = "ECHO"
-  spec.version = "4.2.1"
+  spec.version = "4.2.2"
   spec.summary = "Echo iOS Framework"
   spec.homepage = "https://github.com/echoprotocol/echo-ios-framework"
   spec.license = { :type => 'MIT', :file => 'LICENSE' }
