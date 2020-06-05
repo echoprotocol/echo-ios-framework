@@ -47,11 +47,11 @@ ED25519_EXPORT void ed25519_derive_public_key(const private_key_t* sk,
 
 /**
  * @brief Sign msg with keypair {pk, sk}
- * @param sig[out] signature
- * @param msg[in] message
- * @param msglen[in] message size in bytes
- * @param pk[in] public key
- * @param sk[in] secret (private) key
+ * @param sig signature
+ * @param msg message
+ * @param msglen message size in bytes
+ * @param pk public key
+ * @param sk secret (private) key
  */
 ED25519_EXPORT void ed25519_sign(signature_t* sig, const unsigned char* msg,
                   unsigned long long msglen, const public_key_t* pk,
@@ -59,10 +59,10 @@ ED25519_EXPORT void ed25519_sign(signature_t* sig, const unsigned char* msg,
 
 /**
  * Verifies given sig over given msg with public key pk
- * @param sig[in] signature
- * @param msg[in] message
- * @param msglen[in] message size in bytes
- * @param pk[in] public key
+ * @param sig signature
+ * @param msg message
+ * @param msglen message size in bytes
+ * @param pk public key
  * @return 1 if signature is valid, 0 otherwise
  */
 ED25519_EXPORT int ed25519_verify(const signature_t* sig, const unsigned char* msg,

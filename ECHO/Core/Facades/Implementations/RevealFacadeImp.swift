@@ -51,6 +51,11 @@ final public class RevealFacadeImp: RevealApiFacade {
         }
     }
     
+    func disconnectApi() {
+        
+        socketCore.disconnect()
+    }
+    
     func loginAndRegister() {
         
         let operation = AccessSocketOperation(type: .login,

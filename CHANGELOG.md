@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## Changelog 4.2.2 - 2020-06-05
+### Added
+* Disconnect socket connection method
+* Debug flag in settings for showing logs in console
+* Support Swift 5
+
 ## Changelog 4.2.1 - 2020-05-29
 Integration with chain version 0.19
 

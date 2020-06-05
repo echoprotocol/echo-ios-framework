@@ -24,7 +24,7 @@ final class Crypto {
             return nil
         }
         
-        let checksum = bytes.subdata(in: Range(bytes.count-4..<bytes.count))
+        let checksum = bytes.subdata(in: bytes.count-4..<bytes.count)
         bytes.removeSubrange(bytes.count-4..<bytes.count)
         let generatedChecksum = Crypto.generateChecksumForData(bytes)
         
@@ -52,7 +52,7 @@ final class Crypto {
     /// - Returns: Private key in presentedd in WIF format
     public static func getWIFFromPrivateKey(_ privateKey: Data) -> String {
         
-        var data = Data(bytes: privateKey.bytes)
+        var data = Data(privateKey.bytes)
         
         data.insert(0x80, at: 0)
         

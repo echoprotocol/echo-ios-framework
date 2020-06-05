@@ -15,7 +15,8 @@ public protocol SocketCoreComponent: class {
          url: String,
          noticeUpdateHandler: NoticeActionHandler?,
          socketQueue: DispatchQueue,
-         timeout: TimeInterval)
+         timeout: TimeInterval,
+         debug: Bool)
     
     func connect(options: APIOption, completion: @escaping Completion<Bool>)
     func disconnect()

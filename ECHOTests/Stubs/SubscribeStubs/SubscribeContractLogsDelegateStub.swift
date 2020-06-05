@@ -60,8 +60,4 @@ class SubscribeContractLogsDelegateStub: SubscribeContractLogsDelegate {
     func addSubscribe(contractId: String) {
         self.contractId = contractId
     }
-    
-    deinit {
-        print("DEINIT")
-    }
 }
