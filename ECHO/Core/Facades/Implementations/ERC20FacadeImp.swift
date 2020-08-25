@@ -17,8 +17,8 @@ public struct ERC20FacadeServices {
 /**
  Implementation of [ERC20Facade](ERC20Facade), [ECHOQueueble](ECHOQueueble)
  */
-final public class ERC20FacadeImp: ERC20Facade, ECHOQueueble {
-    var queues: [String: ECHOQueue]
+final public class ERC20FacadeImp: ERC20Facade, ECHOQueueble, NoticeEventDelegate {
+    public var queues: [String: ECHOQueue]
     let services: ERC20FacadeServices
     let network: ECHONetwork
     let cryptoCore: CryptoCoreComponent
@@ -153,10 +153,6 @@ final public class ERC20FacadeImp: ERC20Facade, ECHOQueueble {
         case operation
         case fee
         case transaction
-        case operationId
-        case notice
-        case noticeError
-        case noticeHandler
     }
     
     // swiftlint:disable function_body_length
@@ -167,8 +163,8 @@ final public class ERC20FacadeImp: ERC20Facade, ECHOQueueble {
                                    tokenSymbol: String,
                                    tokenDecimals: UInt8,
                                    assetForFee: String?,
-                                   completion: @escaping Completion<Bool>,
-                                   noticeHandler: NoticeHandler?) {
+                                   sendCompletion: @escaping Completion<Void>,
+                                   confirmNoticeHandler: NoticeHandler?) {
         
         // if we don't hace assetForFee, we use asset.
         let assetForFee = assetForFee ?? Settings.defaultAsset
@@ -179,16 +175,16 @@ final public class ERC20FacadeImp: ERC20Facade, ECHOQueueble {
             try validator.validateId(assetForFee, for: .asset)
         } catch let error {
             let echoError = (error as? ECHOError) ?? ECHOError.undefined
-            let result = Result<Bool, ECHOError>(error: echoError)
-            completion(result)
+            let result = Result<Void, ECHOError>(error: echoError)
+            sendCompletion(result)
             return
         }
         
         // Validate Ethereum address
         let ethValidator = ETHAddressValidator(cryptoCore: cryptoCore)
         guard ethValidator.isValidETHAddress(tokenAddress) else {
-            let result = Result<Bool, ECHOError>(error: .invalidETHAddress)
-            completion(result)
+            let result = Result<Void, ECHOError>(error: .invalidETHAddress)
+            sendCompletion(result)
             return
         }
         
@@ -200,11 +196,11 @@ final public class ERC20FacadeImp: ERC20Facade, ECHOQueueble {
         let getAccountsOperationInitParams = (registerQueue,
                                               services.databaseService,
                                               getAccountsNamesOrIdsWithKeys)
-        let getAccountsOperation = GetAccountsQueueOperation<Bool>(initParams: getAccountsOperationInitParams,
-                                                                   completion: completion)
+        let getAccountsOperation = GetAccountsQueueOperation<Void>(initParams: getAccountsOperationInitParams,
+                                                                   completion: sendCompletion)
         
         let bildRegisterOperation = createBildRegisterOperation(registerQueue, Asset(assetForFee), tokenAddress,
-                                                                tokenName, tokenSymbol, tokenDecimals, completion)
+                                                                tokenName, tokenSymbol, tokenDecimals, sendCompletion)
         
         // RequiredFee
         let getRequiredFeeOperationInitParams = (registerQueue,
@@ -213,18 +209,18 @@ final public class ERC20FacadeImp: ERC20Facade, ECHOQueueble {
                                                  ERC20FacadeResultKeys.operation.rawValue,
                                                  ERC20FacadeResultKeys.fee.rawValue,
                                                  UInt(1))
-        let getRequiredFeeOperation = GetRequiredFeeQueueOperation<Bool>(initParams: getRequiredFeeOperationInitParams,
-                                                                         completion: completion)
+        let getRequiredFeeOperation = GetRequiredFeeQueueOperation<Void>(initParams: getRequiredFeeOperationInitParams,
+                                                                         completion: sendCompletion)
         
         // ChainId
         let getChainIdInitParams = (registerQueue, services.databaseService, ERC20FacadeResultKeys.chainId.rawValue)
-        let getChainIdOperation = GetChainIdQueueOperation<Bool>(initParams: getChainIdInitParams,
-                                                                 completion: completion)
+        let getChainIdOperation = GetChainIdQueueOperation<Void>(initParams: getChainIdInitParams,
+                                                                 completion: sendCompletion)
         
         // BlockData
         let getBlockDataInitParams = (registerQueue, services.databaseService, ERC20FacadeResultKeys.blockData.rawValue)
-        let getBlockDataOperation = GetBlockDataQueueOperation<Bool>(initParams: getBlockDataInitParams,
-                                                                     completion: completion)
+        let getBlockDataOperation = GetBlockDataQueueOperation<Void>(initParams: getBlockDataInitParams,
+                                                                     completion: sendCompletion)
         
         // Transaciton
         let transactionOperationInitParams = (queue: registerQueue,
@@ -238,16 +234,16 @@ final public class ERC20FacadeImp: ERC20Facade, ECHOQueueble {
                                               blockDataKey: ERC20FacadeResultKeys.blockData.rawValue,
                                               feeKey: ERC20FacadeResultKeys.fee.rawValue,
                                               expirationOffset: transactionExpirationOffset)
-        let bildTransactionOperation = GetTransactionQueueOperation<Bool>(initParams: transactionOperationInitParams,
-                                                                          completion: completion)
+        let bildTransactionOperation = GetTransactionQueueOperation<Void>(initParams: transactionOperationInitParams,
+                                                                          completion: sendCompletion)
         
         // Send transaction
         let sendTransacionOperationInitParams = (registerQueue,
                                                  services.networkBroadcastService,
-                                                 ERC20FacadeResultKeys.operationId.rawValue,
+                                                 EchoQueueMainKeys.operationId.rawValue,
                                                  ERC20FacadeResultKeys.transaction.rawValue)
         let sendTransactionOperation = SendTransactionQueueOperation(initParams: sendTransacionOperationInitParams,
-                                                                     completion: completion)
+                                                                     completion: sendCompletion)
         
         // Completion
         let completionOperation = createCompletionOperation(queue: registerQueue)
@@ -261,13 +257,24 @@ final public class ERC20FacadeImp: ERC20Facade, ECHOQueueble {
         registerQueue.addOperation(sendTransactionOperation)
         
         //Notice handler
-        if let noticeHandler = noticeHandler {
-            registerQueue.saveValue(noticeHandler, forKey: ERC20FacadeResultKeys.noticeHandler.rawValue)
-            let waitOperation = createWaitingOperation(registerQueue)
-            let noticeHandleOperation = createNoticeHandleOperation(registerQueue,
-                                                                    ERC20FacadeResultKeys.noticeHandler.rawValue,
-                                                                    ERC20FacadeResultKeys.notice.rawValue,
-                                                                    ERC20FacadeResultKeys.noticeError.rawValue)
+        if let noticeHandler = confirmNoticeHandler {
+            registerQueue.saveValue(noticeHandler, forKey: EchoQueueMainKeys.noticeHandler.rawValue)
+            
+            let waitingOperationParams = (
+                registerQueue,
+                EchoQueueMainKeys.notice.rawValue,
+                EchoQueueMainKeys.noticeError.rawValue
+            )
+            let waitOperation = WaitQueueOperation(initParams: waitingOperationParams)
+            
+            let noticeHadleOperaitonParams = (
+                registerQueue,
+                EchoQueueMainKeys.notice.rawValue,
+                EchoQueueMainKeys.noticeError.rawValue,
+                EchoQueueMainKeys.noticeHandler.rawValue
+            )
+            let noticeHandleOperation = NoticeHandleQueueOperation(initParams: noticeHadleOperaitonParams)
+            
             registerQueue.addOperation(waitOperation)
             registerQueue.addOperation(noticeHandleOperation)
         }
@@ -283,8 +290,8 @@ final public class ERC20FacadeImp: ERC20Facade, ECHOQueueble {
                               tokenId: String,
                               value: String,
                               assetForFee: String?,
-                              completion: @escaping Completion<Bool>,
-                              noticeHandler: NoticeHandler?) {
+                              sendCompletion: @escaping Completion<Void>,
+                              confirmNoticeHandler: NoticeHandler?) {
         
         // if we don't hace assetForFee, we use asset.
         let assetForFee = assetForFee ?? Settings.defaultAsset
@@ -296,16 +303,16 @@ final public class ERC20FacadeImp: ERC20Facade, ECHOQueueble {
             try validator.validateId(tokenId, for: .erc20Token)
         } catch let error {
             let echoError = (error as? ECHOError) ?? ECHOError.undefined
-            let result = Result<Bool, ECHOError>(error: echoError)
-            completion(result)
+            let result = Result<Void, ECHOError>(error: echoError)
+            sendCompletion(result)
             return
         }
         
         // Validate Ethereum address
         let ethValidator = ETHAddressValidator(cryptoCore: cryptoCore)
         guard ethValidator.isValidETHAddress(toEthAddress) else {
-            let result = Result<Bool, ECHOError>(error: .invalidETHAddress)
-            completion(result)
+            let result = Result<Void, ECHOError>(error: .invalidETHAddress)
+            sendCompletion(result)
             return
         }
         
@@ -317,10 +324,11 @@ final public class ERC20FacadeImp: ERC20Facade, ECHOQueueble {
         let getAccountsOperationInitParams = (withdrawalQueue,
                                               services.databaseService,
                                               getAccountsNamesOrIdsWithKeys)
-        let getAccountsOperation = GetAccountsQueueOperation<Bool>(initParams: getAccountsOperationInitParams,
-                                                                   completion: completion)
+        let getAccountsOperation = GetAccountsQueueOperation<Void>(initParams: getAccountsOperationInitParams,
+                                                                   completion: sendCompletion)
         
-        let bildWithdrawOperation = createBildWithdrawOperation(withdrawalQueue, Asset(assetForFee), value, toEthAddress, tokenId, completion)
+        let bildWithdrawOperation = createBildWithdrawOperation(withdrawalQueue, Asset(assetForFee), value,
+                                                                toEthAddress, tokenId, sendCompletion)
         
         // RequiredFee
         let getRequiredFeeOperationInitParams = (withdrawalQueue,
@@ -329,18 +337,18 @@ final public class ERC20FacadeImp: ERC20Facade, ECHOQueueble {
                                                  ERC20FacadeResultKeys.operation.rawValue,
                                                  ERC20FacadeResultKeys.fee.rawValue,
                                                  UInt(1))
-        let getRequiredFeeOperation = GetRequiredFeeQueueOperation<Bool>(initParams: getRequiredFeeOperationInitParams,
-                                                                         completion: completion)
+        let getRequiredFeeOperation = GetRequiredFeeQueueOperation<Void>(initParams: getRequiredFeeOperationInitParams,
+                                                                         completion: sendCompletion)
         
         // ChainId
         let getChainIdInitParams = (withdrawalQueue, services.databaseService, ERC20FacadeResultKeys.chainId.rawValue)
-        let getChainIdOperation = GetChainIdQueueOperation<Bool>(initParams: getChainIdInitParams,
-                                                                 completion: completion)
+        let getChainIdOperation = GetChainIdQueueOperation<Void>(initParams: getChainIdInitParams,
+                                                                 completion: sendCompletion)
         
         // BlockData
         let getBlockDataInitParams = (withdrawalQueue, services.databaseService, ERC20FacadeResultKeys.blockData.rawValue)
-        let getBlockDataOperation = GetBlockDataQueueOperation<Bool>(initParams: getBlockDataInitParams,
-                                                                     completion: completion)
+        let getBlockDataOperation = GetBlockDataQueueOperation<Void>(initParams: getBlockDataInitParams,
+                                                                     completion: sendCompletion)
         
         // Transaciton
         let transactionOperationInitParams = (queue: withdrawalQueue,
@@ -354,16 +362,16 @@ final public class ERC20FacadeImp: ERC20Facade, ECHOQueueble {
                                               blockDataKey: ERC20FacadeResultKeys.blockData.rawValue,
                                               feeKey: ERC20FacadeResultKeys.fee.rawValue,
                                               expirationOffset: transactionExpirationOffset)
-        let bildTransactionOperation = GetTransactionQueueOperation<Bool>(initParams: transactionOperationInitParams,
-                                                                          completion: completion)
+        let bildTransactionOperation = GetTransactionQueueOperation<Void>(initParams: transactionOperationInitParams,
+                                                                          completion: sendCompletion)
         
         // Send transaction
         let sendTransacionOperationInitParams = (withdrawalQueue,
                                                  services.networkBroadcastService,
-                                                 ERC20FacadeResultKeys.operationId.rawValue,
+                                                 EchoQueueMainKeys.operationId.rawValue,
                                                  ERC20FacadeResultKeys.transaction.rawValue)
         let sendTransactionOperation = SendTransactionQueueOperation(initParams: sendTransacionOperationInitParams,
-                                                                     completion: completion)
+                                                                     completion: sendCompletion)
         
         // Completion
         let completionOperation = createCompletionOperation(queue: withdrawalQueue)
@@ -377,13 +385,24 @@ final public class ERC20FacadeImp: ERC20Facade, ECHOQueueble {
         withdrawalQueue.addOperation(sendTransactionOperation)
         
         //Notice handler
-        if let noticeHandler = noticeHandler {
-            withdrawalQueue.saveValue(noticeHandler, forKey: ERC20FacadeResultKeys.noticeHandler.rawValue)
-            let waitOperation = createWaitingOperation(withdrawalQueue)
-            let noticeHandleOperation = createNoticeHandleOperation(withdrawalQueue,
-                                                                    ERC20FacadeResultKeys.noticeHandler.rawValue,
-                                                                    ERC20FacadeResultKeys.notice.rawValue,
-                                                                    ERC20FacadeResultKeys.noticeError.rawValue)
+        if let noticeHandler = confirmNoticeHandler {
+            withdrawalQueue.saveValue(noticeHandler, forKey: EchoQueueMainKeys.noticeHandler.rawValue)
+            
+            let waitingOperationParams = (
+                withdrawalQueue,
+                EchoQueueMainKeys.notice.rawValue,
+                EchoQueueMainKeys.noticeError.rawValue
+            )
+            let waitOperation = WaitQueueOperation(initParams: waitingOperationParams)
+            
+            let noticeHadleOperaitonParams = (
+                withdrawalQueue,
+                EchoQueueMainKeys.notice.rawValue,
+                EchoQueueMainKeys.noticeError.rawValue,
+                EchoQueueMainKeys.noticeHandler.rawValue
+            )
+            let noticeHandleOperation = NoticeHandleQueueOperation(initParams: noticeHadleOperaitonParams)
+            
             withdrawalQueue.addOperation(waitOperation)
             withdrawalQueue.addOperation(noticeHandleOperation)
         }
@@ -398,7 +417,7 @@ final public class ERC20FacadeImp: ERC20Facade, ECHOQueueble {
                                                  _ tokenName: String,
                                                  _ tokenSymbol: String,
                                                  _ tokenDecimals: UInt8,
-                                                 _ completion: @escaping Completion<Bool>) -> Operation {
+                                                 _ completion: @escaping Completion<Void>) -> Operation {
         
         let bildRegisterOperation = BlockOperation()
         
@@ -429,7 +448,7 @@ final public class ERC20FacadeImp: ERC20Facade, ECHOQueueble {
                                                  _ value: String,
                                                  _ toEthAddress: String,
                                                  _ tokenId: String,
-                                                 _ completion: @escaping Completion<Bool>) -> Operation {
+                                                 _ completion: @escaping Completion<Void>) -> Operation {
         
         let bildWithdrawOperation = BlockOperation()
         
@@ -453,78 +472,5 @@ final public class ERC20FacadeImp: ERC20Facade, ECHOQueueble {
         }
         
         return bildWithdrawOperation
-    }
-    
-    fileprivate func createNoticeHandleOperation(_ queue: ECHOQueue,
-                                                 _ noticeHandlerKey: String,
-                                                 _ noticeKey: String,
-                                                 _ noticeErrorKey: String) -> Operation {
-        
-        let noticeOperation = BlockOperation()
-        
-        noticeOperation.addExecutionBlock { [weak noticeOperation, weak queue, weak self] in
-            
-            guard noticeOperation?.isCancelled == false else { return }
-            guard self != nil else { return }
-            guard let noticeHandler: NoticeHandler = queue?.getValue(noticeHandlerKey) else { return }
-            
-            if let notice: ECHONotification = queue?.getValue(noticeKey) {
-                let result = Result<ECHONotification, ECHOError>(value: notice)
-                noticeHandler(result)
-                return
-            }
-            
-            if let noticeError: ECHOError = queue?.getValue(noticeErrorKey) {
-                let result = Result<ECHONotification, ECHOError>(error: noticeError)
-                noticeHandler(result)
-                return
-            }
-        }
-        
-        return noticeOperation
-    }
-    
-    fileprivate func createWaitingOperation(_ queue: ECHOQueue) -> Operation {
-        
-        let waitingOperation = BlockOperation()
-        
-        waitingOperation.addExecutionBlock { [weak waitingOperation, weak queue, weak self] in
-            
-            guard waitingOperation?.isCancelled == false else { return }
-            guard self != nil else { return }
-            queue?.waitStartNextOperation()
-        }
-        
-        return waitingOperation
-    }
-}
-
-extension ERC20FacadeImp: NoticeEventDelegate {
-    
-    public func didReceiveNotification(notification: ECHONotification) {
-        
-        switch notification.params {
-        case .array(let array):
-            if let noticeOperationId = array.first as? Int {
-                
-                for queue in queues.values {
-                    
-                    if let queueTransferOperationId: Int = queue.getValue(ERC20FacadeResultKeys.operationId.rawValue),
-                        queueTransferOperationId == noticeOperationId {
-                        queue.saveValue(notification, forKey: ERC20FacadeResultKeys.notice.rawValue)
-                        queue.startNextOperation()
-                    }
-                }
-            }
-        default:
-            break
-        }
-    }
-    
-    public func didAllNoticesLost() {
-        for queue in queues.values {
-            queue.saveValue(ECHOError.connectionLost, forKey: ERC20FacadeResultKeys.noticeError.rawValue)
-            queue.startNextOperation()
-        }
     }
 }

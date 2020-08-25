@@ -18,18 +18,20 @@ public protocol BtcFacade {
      - Parameter wif: Sender wif from account
      - Parameter backupAddress: Bitcoin address to possibility of a refund
      - Parameter assetForFee: Id of asset which is pay fee
-     - Parameter completion: Callback in which the information will return whether the transaction was successful.
-     - Parameter noticeHandler: Callback in which the information will return whether the transaction was confirmed.
+     - Parameter sendCompletion: Callback in which the information will return whether the transaction was successful send to chain.
+     - Parameter confirmNoticeHandler: Callback in which the information will return whether the transaction was confirmed or not.
      
      - Remark:
      Default asset is **"1.3.0"**
  */
-    func generateBtcAddress(nameOrId: String,
-                            wif: String,
-                            backupAddress: String,
-                            assetForFee: String?,
-                            completion: @escaping Completion<Bool>,
-                            noticeHandler: NoticeHandler?)
+    func generateBtcAddress(
+        nameOrId: String,
+        wif: String,
+        backupAddress: String,
+        assetForFee: String?,
+        sendCompletion: @escaping Completion<Void>,
+        confirmNoticeHandler: NoticeHandler?
+    )
     
 /**
     Send BTC to Bitcoin network to Bitcoin address
@@ -38,17 +40,19 @@ public protocol BtcFacade {
     - Parameter wif: Sender wif from account
     - Parameter toBtcAddress: Receiver bitcoin address
     - Parameter amount: Amount
-    - Parameter assetForFee: Id of asset which is pay fee    
-    - Parameter completion: Callback in which the information will return whether the transaction was successful.
-    - Parameter noticeHandler: Callback in which the information will return whether the transaction was confirmed.         
+    - Parameter assetForFee: Id of asset which is pay fee
+    - Parameter sendCompletion: Callback in which the information will return whether the transaction was successful send to chain.
+    - Parameter confirmNoticeHandler: Callback in which the information will return whether the transaction was confirmed or not.
 */
-   func withdrawBtc(nameOrId: String,
-                    wif: String,
-                    toBtcAddress: String,
-                    amount: UInt,
-                    assetForFee: String?,
-                    completion: @escaping Completion<Bool>,
-                    noticeHandler: NoticeHandler?)
+    func withdrawBtc(
+        nameOrId: String,
+        wif: String,
+        toBtcAddress: String,
+        amount: UInt,
+        assetForFee: String?,
+        sendCompletion: @escaping Completion<Void>,
+        confirmNoticeHandler: NoticeHandler?
+    )
     
 /**
      Get created Bitcoin addresses
@@ -56,8 +60,10 @@ public protocol BtcFacade {
      - Parameter nameOrId: Name or id
      - Parameter completion: Callback in which the information will return [BtcAddress](BtcAddress) object (if it was created) or error
  */
-    func getBtcAddress(nameOrId: String,
-                       completion: @escaping Completion<BtcAddress?>)
+    func getBtcAddress(
+        nameOrId: String,
+        completion: @escaping Completion<BtcAddress?>
+    )
     
 /**
      Returns all approved deposits, for the given account id or name.
@@ -65,8 +71,10 @@ public protocol BtcFacade {
      - Parameter nameOrId: Name or id
      - Parameter completion: Callback in which return Deposits objects or error.
  */
-    func getBtcAccountDeposits(nameOrId: String,
-                               completion: @escaping Completion<[BtcDeposit]>)
+    func getBtcAccountDeposits(
+        nameOrId: String,
+        completion: @escaping Completion<[BtcDeposit]>
+    )
         
 /**
      Returns all approved withdrawals, for the given account id or name.
@@ -74,6 +82,8 @@ public protocol BtcFacade {
      - Parameter nameOrId: Name or id
      - Parameter completion: Callback in which return Withdrawals objects or error.
  */
-    func getBtcAccountWithdrawals(nameOrId: String,
-                                  completion: @escaping Completion<[BtcWithdrawal]>)
+    func getBtcAccountWithdrawals(
+        nameOrId: String,
+        completion: @escaping Completion<[BtcWithdrawal]>
+    )
 }

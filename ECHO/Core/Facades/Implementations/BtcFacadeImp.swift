@@ -17,8 +17,8 @@ public struct BtcFacadeServices {
 /**
  Implementation of [BtcFacade](BtcFacade), [ECHOQueueble](ECHOQueueble)
  */
-final public class BtcFacadeImp: BtcFacade, ECHOQueueble {
-    var queues: [String: ECHOQueue]
+final public class BtcFacadeImp: BtcFacade, ECHOQueueble, NoticeEventDelegate {
+    public var queues: [String: ECHOQueue]
     let services: BtcFacadeServices
     let network: ECHONetwork
     let cryptoCore: CryptoCoreComponent
@@ -151,10 +151,6 @@ final public class BtcFacadeImp: BtcFacade, ECHOQueueble {
         case operation
         case fee
         case transaction
-        case operationId
-        case notice
-        case noticeError
-        case noticeHandler
     }
     
     // swiftlint:disable function_body_length
@@ -162,8 +158,8 @@ final public class BtcFacadeImp: BtcFacade, ECHOQueueble {
                                    wif: String,
                                    backupAddress: String,
                                    assetForFee: String?,
-                                   completion: @escaping Completion<Bool>,
-                                   noticeHandler: NoticeHandler?) {
+                                   sendCompletion: @escaping Completion<Void>,
+                                   confirmNoticeHandler: NoticeHandler?) {
         
         // if we don't hace assetForFee, we use asset.
         let assetForFee = assetForFee ?? Settings.defaultAsset
@@ -174,15 +170,15 @@ final public class BtcFacadeImp: BtcFacade, ECHOQueueble {
             try validator.validateId(assetForFee, for: .asset)
         } catch let error {
             let echoError = (error as? ECHOError) ?? ECHOError.undefined
-            let result = Result<Bool, ECHOError>(error: echoError)
-            completion(result)
+            let result = Result<Void, ECHOError>(error: echoError)
+            sendCompletion(result)
             return
         }
         
         let btcValidator = BTCAddressValidator(cryptoCore: cryptoCore)
         guard btcValidator.isValidBTCAddress(backupAddress) else {
-            let result = Result<Bool, ECHOError>(error: .invalidBTCAddress)
-            completion(result)
+            let result = Result<Void, ECHOError>(error: .invalidBTCAddress)
+            sendCompletion(result)
             return
         }
         
@@ -194,10 +190,10 @@ final public class BtcFacadeImp: BtcFacade, ECHOQueueble {
         let getAccountsOperationInitParams = (generateQueue,
                                               services.databaseService,
                                               getAccountsNamesOrIdsWithKeys)
-        let getAccountsOperation = GetAccountsQueueOperation<Bool>(initParams: getAccountsOperationInitParams,
-                                                                   completion: completion)
+        let getAccountsOperation = GetAccountsQueueOperation<Void>(initParams: getAccountsOperationInitParams,
+                                                                   completion: sendCompletion)
         
-        let bildTransferOperation = createBildGenerationOperation(generateQueue, backupAddress, Asset(assetForFee), completion)
+        let bildTransferOperation = createBildGenerationOperation(generateQueue, backupAddress, Asset(assetForFee), sendCompletion)
         
         // RequiredFee
         let getRequiredFeeOperationInitParams = (generateQueue,
@@ -206,18 +202,18 @@ final public class BtcFacadeImp: BtcFacade, ECHOQueueble {
                                                  BtcFacadeResultKeys.operation.rawValue,
                                                  BtcFacadeResultKeys.fee.rawValue,
                                                  UInt(1))
-        let getRequiredFeeOperation = GetRequiredFeeQueueOperation<Bool>(initParams: getRequiredFeeOperationInitParams,
-                                                                         completion: completion)
+        let getRequiredFeeOperation = GetRequiredFeeQueueOperation<Void>(initParams: getRequiredFeeOperationInitParams,
+                                                                         completion: sendCompletion)
         
         // ChainId
         let getChainIdInitParams = (generateQueue, services.databaseService, BtcFacadeResultKeys.chainId.rawValue)
-        let getChainIdOperation = GetChainIdQueueOperation<Bool>(initParams: getChainIdInitParams,
-                                                                 completion: completion)
+        let getChainIdOperation = GetChainIdQueueOperation<Void>(initParams: getChainIdInitParams,
+                                                                 completion: sendCompletion)
         
         // BlockData
         let getBlockDataInitParams = (generateQueue, services.databaseService, BtcFacadeResultKeys.blockData.rawValue)
-        let getBlockDataOperation = GetBlockDataQueueOperation<Bool>(initParams: getBlockDataInitParams,
-                                                                     completion: completion)
+        let getBlockDataOperation = GetBlockDataQueueOperation<Void>(initParams: getBlockDataInitParams,
+                                                                     completion: sendCompletion)
         
         // Transaciton
         let transactionOperationInitParams = (queue: generateQueue,
@@ -231,16 +227,16 @@ final public class BtcFacadeImp: BtcFacade, ECHOQueueble {
                                               blockDataKey: BtcFacadeResultKeys.blockData.rawValue,
                                               feeKey: BtcFacadeResultKeys.fee.rawValue,
                                               expirationOffset: transactionExpirationOffset)
-        let bildTransactionOperation = GetTransactionQueueOperation<Bool>(initParams: transactionOperationInitParams,
-                                                                          completion: completion)
+        let bildTransactionOperation = GetTransactionQueueOperation<Void>(initParams: transactionOperationInitParams,
+                                                                          completion: sendCompletion)
         
         // Send transaction
         let sendTransacionOperationInitParams = (generateQueue,
                                                  services.networkBroadcastService,
-                                                 BtcFacadeResultKeys.operationId.rawValue,
+                                                 EchoQueueMainKeys.operationId.rawValue,
                                                  BtcFacadeResultKeys.transaction.rawValue)
         let sendTransactionOperation = SendTransactionQueueOperation(initParams: sendTransacionOperationInitParams,
-                                                                     completion: completion)
+                                                                     completion: sendCompletion)
         
         // Completion
         let completionOperation = createCompletionOperation(queue: generateQueue)
@@ -254,13 +250,24 @@ final public class BtcFacadeImp: BtcFacade, ECHOQueueble {
         generateQueue.addOperation(sendTransactionOperation)
         
         //Notice handler
-        if let noticeHandler = noticeHandler {
-            generateQueue.saveValue(noticeHandler, forKey: BtcFacadeResultKeys.noticeHandler.rawValue)
-            let waitOperation = createWaitingOperation(generateQueue)
-            let noticeHandleOperation = createNoticeHandleOperation(generateQueue,
-                                                                    BtcFacadeResultKeys.noticeHandler.rawValue,
-                                                                    BtcFacadeResultKeys.notice.rawValue,
-                                                                    BtcFacadeResultKeys.noticeError.rawValue)
+        if let noticeHandler = confirmNoticeHandler {
+            generateQueue.saveValue(noticeHandler, forKey: EchoQueueMainKeys.noticeHandler.rawValue)
+            
+            let waitingOperationParams = (
+                generateQueue,
+                EchoQueueMainKeys.notice.rawValue,
+                EchoQueueMainKeys.noticeError.rawValue
+            )
+            let waitOperation = WaitQueueOperation(initParams: waitingOperationParams)
+            
+            let noticeHadleOperaitonParams = (
+                generateQueue,
+                EchoQueueMainKeys.notice.rawValue,
+                EchoQueueMainKeys.noticeError.rawValue,
+                EchoQueueMainKeys.noticeHandler.rawValue
+            )
+            let noticeHandleOperation = NoticeHandleQueueOperation(initParams: noticeHadleOperaitonParams)
+            
             generateQueue.addOperation(waitOperation)
             generateQueue.addOperation(noticeHandleOperation)
         }
@@ -275,8 +282,8 @@ final public class BtcFacadeImp: BtcFacade, ECHOQueueble {
                             toBtcAddress: String,
                             amount: UInt,
                             assetForFee: String?,
-                            completion: @escaping Completion<Bool>,
-                            noticeHandler: NoticeHandler?) {
+                            sendCompletion: @escaping Completion<Void>,
+                            confirmNoticeHandler: NoticeHandler?) {
         // if we don't hace assetForFee, we use asset.
         let assetForFee = assetForFee ?? Settings.defaultAsset
         
@@ -286,15 +293,15 @@ final public class BtcFacadeImp: BtcFacade, ECHOQueueble {
             try validator.validateId(assetForFee, for: .asset)
         } catch let error {
             let echoError = (error as? ECHOError) ?? ECHOError.undefined
-            let result = Result<Bool, ECHOError>(error: echoError)
-            completion(result)
+            let result = Result<Void, ECHOError>(error: echoError)
+            sendCompletion(result)
             return
         }
         
         let btcValidator = BTCAddressValidator(cryptoCore: cryptoCore)
         guard btcValidator.isValidBTCAddress(toBtcAddress) else {
-            let result = Result<Bool, ECHOError>(error: .invalidBTCAddress)
-            completion(result)
+            let result = Result<Void, ECHOError>(error: .invalidBTCAddress)
+            sendCompletion(result)
             return
         }
         
@@ -306,10 +313,16 @@ final public class BtcFacadeImp: BtcFacade, ECHOQueueble {
         let getAccountsOperationInitParams = (withdrawalQueue,
                                               services.databaseService,
                                               getAccountsNamesOrIdsWithKeys)
-        let getAccountsOperation = GetAccountsQueueOperation<Bool>(initParams: getAccountsOperationInitParams,
-                                                                   completion: completion)
+        let getAccountsOperation = GetAccountsQueueOperation<Void>(initParams: getAccountsOperationInitParams,
+                                                                   completion: sendCompletion)
         
-        let bildTransferOperation = createBildWithdrawalOperation(withdrawalQueue, Asset(assetForFee), amount, toBtcAddress, completion)
+        let bildTransferOperation = createBildWithdrawalOperation(
+            withdrawalQueue,
+            Asset(assetForFee),
+            amount,
+            toBtcAddress,
+            sendCompletion
+        )
         
         // RequiredFee
         let getRequiredFeeOperationInitParams = (withdrawalQueue,
@@ -318,18 +331,18 @@ final public class BtcFacadeImp: BtcFacade, ECHOQueueble {
                                                  BtcFacadeResultKeys.operation.rawValue,
                                                  BtcFacadeResultKeys.fee.rawValue,
                                                  UInt(1))
-        let getRequiredFeeOperation = GetRequiredFeeQueueOperation<Bool>(initParams: getRequiredFeeOperationInitParams,
-                                                                         completion: completion)
+        let getRequiredFeeOperation = GetRequiredFeeQueueOperation<Void>(initParams: getRequiredFeeOperationInitParams,
+                                                                         completion: sendCompletion)
         
         // ChainId
         let getChainIdInitParams = (withdrawalQueue, services.databaseService, BtcFacadeResultKeys.chainId.rawValue)
-        let getChainIdOperation = GetChainIdQueueOperation<Bool>(initParams: getChainIdInitParams,
-                                                                 completion: completion)
+        let getChainIdOperation = GetChainIdQueueOperation<Void>(initParams: getChainIdInitParams,
+                                                                 completion: sendCompletion)
         
         // BlockData
         let getBlockDataInitParams = (withdrawalQueue, services.databaseService, BtcFacadeResultKeys.blockData.rawValue)
-        let getBlockDataOperation = GetBlockDataQueueOperation<Bool>(initParams: getBlockDataInitParams,
-                                                                     completion: completion)
+        let getBlockDataOperation = GetBlockDataQueueOperation<Void>(initParams: getBlockDataInitParams,
+                                                                     completion: sendCompletion)
         
         // Transaciton
         let transactionOperationInitParams = (queue: withdrawalQueue,
@@ -343,16 +356,16 @@ final public class BtcFacadeImp: BtcFacade, ECHOQueueble {
                                               blockDataKey: BtcFacadeResultKeys.blockData.rawValue,
                                               feeKey: BtcFacadeResultKeys.fee.rawValue,
                                               expirationOffset: transactionExpirationOffset)
-        let bildTransactionOperation = GetTransactionQueueOperation<Bool>(initParams: transactionOperationInitParams,
-                                                                          completion: completion)
+        let bildTransactionOperation = GetTransactionQueueOperation<Void>(initParams: transactionOperationInitParams,
+                                                                          completion: sendCompletion)
         
         // Send transaction
         let sendTransacionOperationInitParams = (withdrawalQueue,
                                                  services.networkBroadcastService,
-                                                 BtcFacadeResultKeys.operationId.rawValue,
+                                                 EchoQueueMainKeys.operationId.rawValue,
                                                  BtcFacadeResultKeys.transaction.rawValue)
         let sendTransactionOperation = SendTransactionQueueOperation(initParams: sendTransacionOperationInitParams,
-                                                                     completion: completion)
+                                                                     completion: sendCompletion)
         
         // Completion
         let completionOperation = createCompletionOperation(queue: withdrawalQueue)
@@ -366,13 +379,24 @@ final public class BtcFacadeImp: BtcFacade, ECHOQueueble {
         withdrawalQueue.addOperation(sendTransactionOperation)
         
         //Notice handler
-        if let noticeHandler = noticeHandler {
-            withdrawalQueue.saveValue(noticeHandler, forKey: BtcFacadeResultKeys.noticeHandler.rawValue)
-            let waitOperation = createWaitingOperation(withdrawalQueue)
-            let noticeHandleOperation = createNoticeHandleOperation(withdrawalQueue,
-                                                                    BtcFacadeResultKeys.noticeHandler.rawValue,
-                                                                    BtcFacadeResultKeys.notice.rawValue,
-                                                                    BtcFacadeResultKeys.noticeError.rawValue)
+        if let noticeHandler = confirmNoticeHandler {
+            withdrawalQueue.saveValue(noticeHandler, forKey: EchoQueueMainKeys.noticeHandler.rawValue)
+            
+            let waitingOperationParams = (
+                withdrawalQueue,
+                EchoQueueMainKeys.notice.rawValue,
+                EchoQueueMainKeys.noticeError.rawValue
+            )
+            let waitOperation = WaitQueueOperation(initParams: waitingOperationParams)
+            
+            let noticeHadleOperaitonParams = (
+                withdrawalQueue,
+                EchoQueueMainKeys.notice.rawValue,
+                EchoQueueMainKeys.noticeError.rawValue,
+                EchoQueueMainKeys.noticeHandler.rawValue
+            )
+            let noticeHandleOperation = NoticeHandleQueueOperation(initParams: noticeHadleOperaitonParams)
+            
             withdrawalQueue.addOperation(waitOperation)
             withdrawalQueue.addOperation(noticeHandleOperation)
         }
@@ -384,7 +408,7 @@ final public class BtcFacadeImp: BtcFacade, ECHOQueueble {
     fileprivate func createBildGenerationOperation(_ queue: ECHOQueue,
                                                    _ backupAddress: String,
                                                    _ asset: Asset,
-                                                   _ completion: @escaping Completion<Bool>) -> Operation {
+                                                   _ completion: @escaping Completion<Void>) -> Operation {
         
         let bildTransferOperation = BlockOperation()
         
@@ -411,7 +435,7 @@ final public class BtcFacadeImp: BtcFacade, ECHOQueueble {
                                                    _ asset: Asset,
                                                    _ amount: UInt,
                                                    _ toBtcAddress: String,
-                                                   _ completion: @escaping Completion<Bool>) -> Operation {
+                                                   _ completion: @escaping Completion<Void>) -> Operation {
         
         let bildWithdrawalOperation = BlockOperation()
         
@@ -432,78 +456,5 @@ final public class BtcFacadeImp: BtcFacade, ECHOQueueble {
         }
         
         return bildWithdrawalOperation
-    }
-    
-    fileprivate func createNoticeHandleOperation(_ queue: ECHOQueue,
-                                                 _ noticeHandlerKey: String,
-                                                 _ noticeKey: String,
-                                                 _ noticeErrorKey: String) -> Operation {
-        
-        let noticeOperation = BlockOperation()
-        
-        noticeOperation.addExecutionBlock { [weak noticeOperation, weak queue, weak self] in
-            
-            guard noticeOperation?.isCancelled == false else { return }
-            guard self != nil else { return }
-            guard let noticeHandler: NoticeHandler = queue?.getValue(noticeHandlerKey) else { return }
-            
-            if let notice: ECHONotification = queue?.getValue(noticeKey) {
-                let result = Result<ECHONotification, ECHOError>(value: notice)
-                noticeHandler(result)
-                return
-            }
-            
-            if let noticeError: ECHOError = queue?.getValue(noticeErrorKey) {
-                let result = Result<ECHONotification, ECHOError>(error: noticeError)
-                noticeHandler(result)
-                return
-            }
-        }
-        
-        return noticeOperation
-    }
-    
-    fileprivate func createWaitingOperation(_ queue: ECHOQueue) -> Operation {
-        
-        let waitingOperation = BlockOperation()
-        
-        waitingOperation.addExecutionBlock { [weak waitingOperation, weak queue, weak self] in
-            
-            guard waitingOperation?.isCancelled == false else { return }
-            guard self != nil else { return }
-            queue?.waitStartNextOperation()
-        }
-        
-        return waitingOperation
-    }
-}
-
-extension BtcFacadeImp: NoticeEventDelegate {
-    
-    public func didReceiveNotification(notification: ECHONotification) {
-        
-        switch notification.params {
-        case .array(let array):
-            if let noticeOperationId = array.first as? Int {
-                
-                for queue in queues.values {
-                    
-                    if let queueTransferOperationId: Int = queue.getValue(BtcFacadeResultKeys.operationId.rawValue),
-                        queueTransferOperationId == noticeOperationId {
-                        queue.saveValue(notification, forKey: BtcFacadeResultKeys.notice.rawValue)
-                        queue.startNextOperation()
-                    }
-                }
-            }
-        default:
-            break
-        }
-    }
-    
-    public func didAllNoticesLost() {
-        for queue in queues.values {
-            queue.saveValue(ECHOError.connectionLost, forKey: BtcFacadeResultKeys.noticeError.rawValue)
-            queue.startNextOperation()
-        }
     }
 }

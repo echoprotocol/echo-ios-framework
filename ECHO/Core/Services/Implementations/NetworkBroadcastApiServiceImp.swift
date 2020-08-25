@@ -29,7 +29,7 @@ final class NetworkBroadcastApiServiceImp: NetworkBroadcastApiService {
         socketCore.send(operation: operation)
     }
     
-    func broadcastTransactionWithCallback(transaction: Transaction, completion: @escaping Completion<Bool>) -> Int {
+    func broadcastTransactionWithCallback(transaction: Transaction, completion: @escaping Completion<Void>) -> Int {
         
         let operationId = socketCore.nextOperationId()
         let operation = TransactionWithCallbackSocketOperation(method: .call,

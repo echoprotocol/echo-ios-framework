@@ -30,7 +30,7 @@ struct GetERC20TokenSocketOperation: SocketOperation {
         do {
             switch response.response {
             case .error(let error):
-                let result = Result<ERC20Token?, ECHOError>(error: ECHOError.internalError(error.message))
+                let result = Result<ERC20Token?, ECHOError>(error: ECHOError.internalError(error))
                 completion(result)
             case .result(let result):
                 

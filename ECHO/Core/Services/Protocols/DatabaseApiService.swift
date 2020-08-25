@@ -80,14 +80,14 @@ protocol DatabaseApiService: BaseApiService {
 
      - Parameter completion: Callback which returns status of subscription
  */
-    func setSubscribeCallback(completion: @escaping Completion<Bool>)
+    func setSubscribeCallback(completion: @escaping Completion<Void>)
     
 /**
      Subscribes to listening chain objects
      
      - Parameter completion: Callback which returns status of subscription
  */
-    func setBlockAppliedCallback(blockId: String, completion: @escaping Completion<Bool>)
+    func setBlockAppliedCallback(blockId: String, completion: @escaping Completion<Void>)
     
 /**
      Query list of assets by it's ids [assetIds]
@@ -123,7 +123,7 @@ protocol DatabaseApiService: BaseApiService {
      - Parameter completion: Callback which returns [Bool](Bool) result of call or error. The logs will receive by notice
      - Returns: ID of operation. For notice handle
  */
-    func getContractLogs(contractId: String, fromBlock: Int, toBlock: Int, completion: @escaping Completion<Bool>) -> Int
+    func getContractLogs(contractId: String, fromBlock: Int, toBlock: Int, completion: @escaping Completion<Void>) -> Int
     
 /**
      Subscribes to listening contract logs
@@ -131,7 +131,7 @@ protocol DatabaseApiService: BaseApiService {
      - Parameter contractId: Contract id for fetching logs
      - Parameter completion: Callback which returns result of call or error
  */
-    func subscribeContractLogs(contractId: String, completion: @escaping Completion<Bool>)
+    func subscribeContractLogs(contractId: String, completion: @escaping Completion<Void>)
     
 /**
      Returns contracts called by ids
@@ -172,7 +172,7 @@ protocol DatabaseApiService: BaseApiService {
      - Parameter contractsIds: Contracts ids for subscribe
      - Parameter completion: Callback which [Bool](Bool) as result of call or error
  */
-    func subscribeContracts(contractsIds: [String], completion: @escaping Completion<Bool>)
+    func subscribeContracts(contractsIds: [String], completion: @escaping Completion<Void>)
     
 /**
      Get created Ethereum addresses

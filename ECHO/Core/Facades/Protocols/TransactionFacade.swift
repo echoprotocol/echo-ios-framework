@@ -20,18 +20,20 @@ public protocol TransactionFacade {
      - Parameter amount: Amount
      - Parameter asset: Id of asset which is sent
      - Parameter assetForFee: Id of asset which is pay fee
-     - Parameter completion: Callback in which the information will return whether the transaction was successful.
-     - Parameter noticeHandler: Callback in which the information will return whether the transaction was confirmed.     
+     - Parameter sendCompletion: Callback in which the information will return whether the transaction was successful send to chain.
+     - Parameter confirmNoticeHandler: Callback in which the information will return whether the transaction was confirmed or not.
      
      - Remark:
      Default asset is **"1.3.0"**
  */
-    func sendTransferOperation(fromNameOrId: String,
-                               wif: String,
-                               toNameOrId: String,
-                               amount: UInt,
-                               asset: String,
-                               assetForFee: String?,
-                               completion: @escaping Completion<Bool>,
-                               noticeHandler: NoticeHandler?)
+    func sendTransferOperation(
+        fromNameOrId: String,
+        wif: String,
+        toNameOrId: String,
+        amount: UInt,
+        asset: String,
+        assetForFee: String?,
+        sendCompletion: @escaping Completion<Void>,
+        confirmNoticeHandler: NoticeHandler?
+    )
 }

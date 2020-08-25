@@ -46,7 +46,7 @@ final class SocketCoreComponentImp: SocketCoreComponent {
         return  currentOperationId
     }
     
-    func connect(options: APIOption, completion: @escaping Completion<Bool>) {
+    func connect(options: APIOption, completion: @escaping Completion<Void>) {
         switch messenger.state {
         case .connected, .connecting, .reconnecting:
             disconnect()
@@ -56,12 +56,12 @@ final class SocketCoreComponentImp: SocketCoreComponent {
         }
         
         messenger.onConnect = {
-            let result = Result<Bool, ECHOError>(value: true)
+            let result = Result<Void, ECHOError>(value: ())
             completion(result)
         }
         
         messenger.onDisconnect = { [weak self] in
-            let result = Result<Bool, ECHOError>(error: ECHOError.connectionLost)
+            let result = Result<Void, ECHOError>(error: ECHOError.connectionLost)
             completion(result)
             
             self?.forceEndAllOperations()
@@ -75,7 +75,7 @@ final class SocketCoreComponentImp: SocketCoreComponent {
         }
         
         messenger.onFailedConnect = { [weak self] in
-            let result = Result<Bool, ECHOError>(error: ECHOError.invalidUrl)
+            let result = Result<Void, ECHOError>(error: ECHOError.invalidUrl)
             completion(result)
             
             self?.forceEndAllOperations()

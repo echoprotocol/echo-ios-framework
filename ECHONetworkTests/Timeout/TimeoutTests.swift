@@ -27,6 +27,7 @@ class TimeoutTests: XCTestCase {
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
             $0.socketMessenger = messengerMock
             $0.socketRequestsTimeout = Constants.timeout / 4
+            $0.debug = true
         }))
         
         let exp = expectation(description: "testTransferTimeoutWithWIF")
@@ -44,7 +45,7 @@ class TimeoutTests: XCTestCase {
                                             amount: 1,
                                             asset: Constants.defaultAsset,
                                             assetForFee: nil,
-                                            completion: { (result) in
+                                            sendCompletion: { (result) in
                 switch result {
                 case .success:
                     XCTFail("Transfer must be failed with timeout")
@@ -57,7 +58,7 @@ class TimeoutTests: XCTestCase {
                         XCTFail("Transfer must be failed with timeout")
                     }
                 }
-            }, noticeHandler: nil)
+            }, confirmNoticeHandler: nil)
         }
         
         //assert
@@ -73,6 +74,7 @@ class TimeoutTests: XCTestCase {
             $0.apiOptions = [.database, .networkBroadcast, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
             $0.socketMessenger = messengerMock
+            $0.debug = true
         }))
         
         let exp = expectation(description: "testTransferConnectionLostWithWIF")
@@ -93,7 +95,7 @@ class TimeoutTests: XCTestCase {
                                             amount: 1,
                                             asset: Constants.defaultAsset,
                                             assetForFee: nil,
-                                            completion: { (result) in
+                                            sendCompletion: { (result) in
                 switch result {
                 case .success:
                     XCTFail("Transfer must be failed with notice connection lost")
@@ -106,7 +108,7 @@ class TimeoutTests: XCTestCase {
                         XCTFail("Transfer must be failed with connection lost")
                     }
                 }
-            }, noticeHandler: nil)
+            }, confirmNoticeHandler: nil)
         }
         
         //assert
@@ -122,6 +124,7 @@ class TimeoutTests: XCTestCase {
             $0.apiOptions = [.database, .networkBroadcast, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
             $0.socketMessenger = messengerMock
+            $0.debug = true
         }))
         
         let exp = expectation(description: "testTransferNoticeConnectionLostWithWIF")
@@ -138,7 +141,7 @@ class TimeoutTests: XCTestCase {
                                             amount: 1,
                                             asset: Constants.defaultAsset,
                                             assetForFee: nil,
-                                            completion: { (result) in
+                                            sendCompletion: { (result) in
                 switch result {
                 case .success:
                     messengerMock.simulateNonResponces()
@@ -148,7 +151,7 @@ class TimeoutTests: XCTestCase {
                 case .failure:
                     XCTFail("Transfer must be failed with notice connection lost")
                 }
-            }, noticeHandler: { (notice) in
+            }, confirmNoticeHandler: { (notice) in
                 switch notice {
                 case .success:
                     XCTFail("Transfer must be failed with notice connection lost")

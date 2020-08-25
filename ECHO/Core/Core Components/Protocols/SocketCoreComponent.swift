@@ -18,7 +18,7 @@ public protocol SocketCoreComponent: class {
          timeout: TimeInterval,
          debug: Bool)
     
-    func connect(options: APIOption, completion: @escaping Completion<Bool>)
+    func connect(options: APIOption, completion: @escaping Completion<Void>)
     func disconnect()
     func send(operation: SocketOperation)
     func nextOperationId() -> Int

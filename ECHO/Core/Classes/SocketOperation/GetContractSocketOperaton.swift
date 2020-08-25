@@ -31,7 +31,7 @@ struct GetContractSocketOperaton: SocketOperation {
             
             switch response.response {
             case .error(let error):
-                let result = Result<ContractStructEnum, ECHOError>(error: ECHOError.internalError(error.message))
+                let result = Result<ContractStructEnum, ECHOError>(error: ECHOError.internalError(error))
                 completion(result)
             case .result(let result):
                 

@@ -33,7 +33,7 @@ struct GetObjectsSocketOperation<T>: SocketOperation where T: Decodable {
         do {
             switch response.response {
             case .error(let error):
-                let result = Result<[T], ECHOError>(error: ECHOError.internalError(error.message))
+                let result = Result<[T], ECHOError>(error: ECHOError.internalError(error))
                 completion(result)
             case .result(let result):
                 

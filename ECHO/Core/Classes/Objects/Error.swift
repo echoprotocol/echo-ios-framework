@@ -21,7 +21,7 @@ public enum ECHOError: Swift.Error, Equatable {
     case invalidWIF
     
     /// Indicates that required data is missed
-    case internalError(String)
+    case internalError(ECHOResponseError)
     
     /// Indicates that required data is missed
     case resultNotFound

@@ -33,7 +33,7 @@ struct GetAccountWithdrawalsSocketOperation: SocketOperation {
         do {
             switch response.response {
             case .error(let error):
-                let result = Result<[SidechainWithdrawalEnum], ECHOError>(error: ECHOError.internalError(error.message))
+                let result = Result<[SidechainWithdrawalEnum], ECHOError>(error: ECHOError.internalError(error))
                 completion(result)
                 
             case .result(let result):

@@ -30,7 +30,7 @@ final public class SubscriptionFacadeImp: SubscriptionFacade {
         noticeDelegateHandler.delegate = self
     }
     
-    public func setSubscribeCallback(completion: @escaping Completion<Bool>) {
+    public func setSubscribeCallback(completion: @escaping Completion<Void>) {
         
         services.databaseService.setSubscribeCallback(completion: completion)
     }
@@ -72,8 +72,7 @@ final public class SubscriptionFacadeImp: SubscriptionFacade {
     public func subscribeContracts(contractsIds: [String], delegate: SubscribeContractsDelegate) {
         
         services.databaseService.subscribeContracts(contractsIds: contractsIds) { [weak self] (result) in
-            if let boolResult = try? result.dematerialize(),
-                boolResult {
+            if let _ = try? result.dematerialize() {
                 self?.addContractsDelegate(ids: contractsIds, delegate: delegate)
             }
         }
@@ -137,61 +136,68 @@ final public class SubscriptionFacadeImp: SubscriptionFacade {
         }
     }
     
-    fileprivate func handleNotification(_ notification: ECHONotification) {
+    fileprivate func handleNotification(_ notification: ECHONotification) {        
+        var userIds = Set<String>()
+        var dynamicGlobalProperties: DynamicGlobalProperties?
+        var contractsLogs = [String: [ContractLogEnum]]()
+        var contracts = [String: Contract]()
+        var contractsHistory = [ContractHistory]()
         
-        switch notification.params {
-        case .array(let array):
-            
-            if let objectsArray = (array[safe: 1] as? [Any])
-                .flatMap({ $0[safe: 0] as? [Any]}) {
-                
-                var userIds = Set<String>()
-                var dynamicGlobalProperties: DynamicGlobalProperties?
-                var contractsLogs = [String: [ContractLogEnum]]()
-                var contracts = [String: Contract]()
-                var contractsHistory = [ContractHistory]()
-                
-                for object in objectsArray {
-                    
-                    // Find user changes
-                    if let userId = findUserId(object: object) {
-                        userIds.insert(userId)
-                    }
-                    
-                    // Find dynamic global properties changes
-                    if let findedDynamicGlobalProperties = findDynamicGlobalPropeties(object: object) {
-                        dynamicGlobalProperties = findedDynamicGlobalProperties
-                    }
-                    
-                    // Find contract
-                    if let contract = findContracts(object: object) {
-                        contracts[contract.id] = contract
-                    }
-                    
-                    // Find contract history
-                    if let contractHistory = findContractsHistory(object: object) {
-                        contractsHistory.append(contractHistory)
-                    }
-                    
-                    // Find contracts logs
-                    if let contractIdAndLog = findContractLogs(object: object) {
-                        if var logs = contractsLogs[contractIdAndLog.contractId] {
-                            logs.append(contractIdAndLog.log)
-                            contractsLogs[contractIdAndLog.contractId] = logs
-                        } else {
-                            contractsLogs[contractIdAndLog.contractId] = [contractIdAndLog.log]
+        for object in notification.params.result {
+            switch object {
+            case .result(let result):
+                switch result {
+                case .array(let array):
+                    for dictionary in array {
+                        // Find user changes
+                        if let userId = findUserId(object: dictionary) {
+                            userIds.insert(userId)
+                        }
+                        
+                        // Find dynamic global properties changes
+                        if let findedDynamicGlobalProperties = findDynamicGlobalPropeties(object: dictionary) {
+                            dynamicGlobalProperties = findedDynamicGlobalProperties
+                        }
+                        
+                        // Find contract
+                        if let contract = findContracts(object: dictionary) {
+                            contracts[contract.id] = contract
+                        }
+                        
+                        // Find contract history
+                        if let contractHistory = findContractsHistory(object: dictionary) {
+                            contractsHistory.append(contractHistory)
+                        }
+                        
+                        // Find contract history
+                        if let contractHistory = findContractsHistory(object: dictionary) {
+                            contractsHistory.append(contractHistory)
+                        }
+                        
+                        // Find contracts logs
+                        if let contractIdAndLog = findContractLogs(object: dictionary) {
+                            if var logs = contractsLogs[contractIdAndLog.contractId] {
+                                logs.append(contractIdAndLog.log)
+                                contractsLogs[contractIdAndLog.contractId] = logs
+                            } else {
+                                contractsLogs[contractIdAndLog.contractId] = [contractIdAndLog.log]
+                            }
                         }
                     }
+                    
+                default:
+                    break
                 }
-                
-                getAccountAndNotify(ids: userIds)
-                getBlockIfNeededAndNotify(dynamicGlobalProperties: dynamicGlobalProperties)
-                notifyContracts(contracts: contracts, histories: contractsHistory)
-                notifyContractLogsCreated(contractsMap: contractsLogs)
+
+            default:
+                break
             }
-        default:
-            break
         }
+        
+        getAccountAndNotify(ids: userIds)
+        getBlockIfNeededAndNotify(dynamicGlobalProperties: dynamicGlobalProperties)
+        notifyContracts(contracts: contracts, histories: contractsHistory)
+        notifyContractLogsCreated(contractsMap: contractsLogs)
     }
     
     fileprivate func findUserId(object: Any) -> String? {
@@ -247,7 +253,7 @@ final public class SubscriptionFacadeImp: SubscriptionFacade {
         guard let data = try? JSONSerialization.data(withJSONObject: object, options: []) else {
             return nil
         }
-        
+
         guard let log = try? JSONDecoder().decode(ContractLogEnum.self, from: data) else {
             return nil
         }

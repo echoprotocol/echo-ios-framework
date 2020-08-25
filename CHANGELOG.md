@@ -1,5 +1,20 @@
 # CHANGELOG
 
+## Changelog 5.0.0 - 2020-08-25
+Support 0.21 Echo version.
+
+### Added
+* Notice handler param in createAsset method
+* Notice handler param in issueAsset method
+* Notice handler param in changeKeys method
+* Notice handler param in registerAccount method
+
+### Changed
+* All completion blocks with simple result now returns Void instead Bool
+* ECHOError.internalError contains ECHOResponseError with code and message instead String message
+* Completion and noticeHandler renamed to sendCompletion and confirmNoticeHandler.
+* Error handling mechanism. SendCompletion now reports that all preparation is complete and the transaction has been sent successfully. СonfirmNoticeHandler informs about transaction confirmation or confirmation error processing
+
 ## Changelog 4.2.2 - 2020-06-05
 ### Added
 * Disconnect socket connection method

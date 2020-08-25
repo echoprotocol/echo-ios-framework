@@ -38,13 +38,16 @@ public struct ECHODirectResponse: Decodable {
     }
 }
 
+/// Typealias for function with notice
+public typealias NoticeHandler = (_ notice: Result<ECHONotification, ECHOError>) -> Void
+
 /**
     Represent notification from chain
  */
 public struct ECHONotification: Decodable {
     
     public let method: String
-    public let params: ECHOResponseResult
+    public let params: ECHONotificationParams
     
     private enum CodingKeys: String, CodingKey {
         case method
@@ -52,17 +55,31 @@ public struct ECHONotification: Decodable {
     }
     
     public init(from decoder: Decoder) throws {
-        
         let values = try decoder.container(keyedBy: CodingKeys.self)
         method = try values.decode(String.self, forKey: .method)
-        params = try values.decode(ECHOResponseResult.self, forKey: .params)
+        params = try values.decode(ECHONotificationParams.self, forKey: .params)
+    }
+}
+
+/**
+    Represent notification params object
+ */
+public struct ECHONotificationParams: Decodable {
+    public let id: Int
+    public let result: [ErrorOrResult]
+    
+    public init(from decoder: Decoder) throws {
+        var container = try decoder.unkeyedContainer()
+        
+        id = try container.decode(Int.self)
+        result = try container.decode([ErrorOrResult].self)
     }
 }
 
 /**
     Represent response error from chain
  */
-public struct ECHOResponseError: Decodable {
+public struct ECHOResponseError: Decodable, Equatable {
     
     public let code: Int
     public let message: String

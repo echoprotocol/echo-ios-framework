@@ -12,6 +12,9 @@ typealias GetIsAccountReservedQueueOperationInitParams = (queue: ECHOQueue,
                                                           databaseService: DatabaseApiService,
                                                           namesOrId: String)
 
+/**
+   Operation for [ECHOQueue](ECHOQueue) whitch check if account not reserved
+*/
 final class GetIsReservedAccountQueueOperation<T>: Operation where T: Any {
     
     fileprivate weak var queue: ECHOQueue?

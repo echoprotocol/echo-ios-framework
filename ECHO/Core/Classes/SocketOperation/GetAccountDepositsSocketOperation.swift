@@ -31,7 +31,7 @@ struct GetAccountDepositsSocketOperation: SocketOperation {
         do {
             switch response.response {
             case .error(let error):
-                let result = Result<[SidechainDepositEnum], ECHOError>(error: ECHOError.internalError(error.message))
+                let result = Result<[SidechainDepositEnum], ECHOError>(error: ECHOError.internalError(error))
                 completion(result)
             case .result(let result):
                 switch result {

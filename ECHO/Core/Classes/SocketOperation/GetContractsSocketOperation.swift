@@ -32,7 +32,7 @@ struct GetContractsSocketOperation: SocketOperation {
             
             switch response.response {
             case .error(let error):
-                let result = Result<[ContractInfo], ECHOError>(error: ECHOError.internalError(error.message))
+                let result = Result<[ContractInfo], ECHOError>(error: ECHOError.internalError(error))
                 completion(result)
             case .result(let result):
                 

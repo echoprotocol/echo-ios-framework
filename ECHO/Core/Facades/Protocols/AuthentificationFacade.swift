@@ -25,7 +25,11 @@ public protocol AuthentificationFacade {
      - Parameter wif: WIF
      - Parameter completion: Callback which returns an account or error
  */
-    func isOwnedBy(name: String, wif: String, completion: @escaping Completion<UserAccount>)
+    func isOwnedBy(
+        name: String,
+        wif: String,
+        completion: @escaping Completion<UserAccount>
+    )
     
 /**
      A function that checks if accounts registered in chain with public keys from WIF and return them
@@ -33,7 +37,10 @@ public protocol AuthentificationFacade {
      - Parameter wif: WIF of account that needs to check
      - Parameter completion: Callback which returns an an array of accounts or error
 */
-    func isOwnedBy(wif: String, completion: @escaping Completion<[UserAccount]>)
+    func isOwnedBy(
+        wif: String,
+        completion: @escaping Completion<[UserAccount]>
+    )
     
 /**
      Function for changing the account keys
@@ -41,7 +48,14 @@ public protocol AuthentificationFacade {
      - Parameter oldWIF: Old account WIF
      - Parameter newWIF: New account WIF
      - Parameter name: Account name or id
-     - Parameter completion: Callback in which the information will return whether the change keys was successful
+     - Parameter sendCompletion: Callback in which the information will return whether the transaction was successful send to chain.
+     - Parameter confirmNoticeHandler: Callback in which the information will return whether the transaction was confirmed or not.
  */
-    func changeKeys(oldWIF: String, newWIF: String, name: String, completion: @escaping Completion<Bool>)
+    func changeKeys(
+        oldWIF: String,
+        newWIF: String,
+        name: String,
+        sendCompletion: @escaping Completion<Void>,
+        confirmNoticeHandler: NoticeHandler?
+    )
 }

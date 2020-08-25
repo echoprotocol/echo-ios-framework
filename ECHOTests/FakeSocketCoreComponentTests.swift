@@ -162,16 +162,16 @@ class SocketCoreComponentTests: XCTestCase {
                                             amount: 1,
                                             asset: "1.3.0",
                                             assetForFee: nil,
-                                            completion: { (result) in
+                                            sendCompletion: { (result) in
                                                 
                 switch result {
-                case .success(let result):
-                    isSuccess = result
+                case .success:
+                    isSuccess = true
                     exp.fulfill()
                 case .failure(let error):
                     XCTFail("Transfer must be valid \(error)")
                 }
-            }, noticeHandler: nil)
+            }, confirmNoticeHandler: nil)
         }
         
         //assert
@@ -195,15 +195,15 @@ class SocketCoreComponentTests: XCTestCase {
 
         //act
         echo.start { [unowned self] (result) in
-            self.echo.changeKeys(oldWIF: oldWIF, newWIF: newWIF, name: userName, completion: { (result) in
+            self.echo.changeKeys(oldWIF: oldWIF, newWIF: newWIF, name: userName, sendCompletion: { (result) in
                 switch result {
-                case .success(let isSuccess):
-                    success = isSuccess
+                case .success:
+                    success = true
                     exp.fulfill()
                 case .failure(let error):
                     XCTFail("Change password cant fail \(error)")
                 }
-            })
+            }, confirmNoticeHandler: nil)
         }
 
         //assert
@@ -234,16 +234,16 @@ class SocketCoreComponentTests: XCTestCase {
                                  wif: wif,
                                  asset: asset,
                                  amount: amount,
-                                 destinationIdOrName: destinationIdOrName) { (result) in
+                                 destinationIdOrName: destinationIdOrName, sendCompletion: { (result) in
                                 
                 switch result {
-                case .success(let isSuccess):
-                    success = isSuccess
+                case .success:
+                    success = true
                     exp.fulfill()
                 case .failure(let error):
                     XCTFail("Issue asset cant fail \(error)")
                 }
-            }
+            }, confirmNoticeHandler: nil)
 
         }
         
@@ -280,16 +280,16 @@ class SocketCoreComponentTests: XCTestCase {
             
             self.echo.createAsset(nameOrId: nameOrId,
                                   wif: wif,
-                                  asset: asset) { (result) in
+                                  asset: asset, sendCompletion: { (result) in
                 
                 switch result {
-                case .success(let isSuccess):
-                    success = isSuccess
+                case .success:
+                    success = true
                     exp.fulfill()
                 case .failure(_):
                     XCTFail("Create asset cant fail")
                 }
-            }
+            }, confirmNoticeHandler: nil)
             
         }
         
@@ -392,18 +392,16 @@ class SocketCoreComponentTests: XCTestCase {
                                      supportedAssetId: nil,
                                      ethAccuracy: false,
                                      parameters: nil,
-                                     completion: { (result) in
+                                     sendCompletion: { (result) in
 
                 switch result {
-                case .success(let isSuccess):
-                    success = isSuccess
+                case .success:
+                    success = true
                     exp.fulfill()
                 case .failure(_):
                     XCTFail("Creating contract cant fail")
                 }
-            }, noticeHandler: { (notice) in
-                
-            })
+            }, confirmNoticeHandler: nil)
         }
 
         //assert
@@ -445,15 +443,15 @@ class SocketCoreComponentTests: XCTestCase {
                                      supportedAssetId: nil,
                                      ethAccuracy: false,
                                      parameters: parameters,
-                                     completion: { (result) in
+                                     sendCompletion: { (result) in
                 switch result {
-                case .success(let isSuccess):
-                    success = isSuccess
+                case .success:
+                    success = true
                     exp.fulfill()
                 case .failure(_):
                     XCTFail("Creating contract cant fail")
                 }
-            }, noticeHandler: { (notice) in
+            }, confirmNoticeHandler: { (notice) in
                 
             })
         }
@@ -530,17 +528,15 @@ class SocketCoreComponentTests: XCTestCase {
                                    contratId: contratId,
                                    methodName: methodName,
                                    methodParams: params,
-                                   completion: { (result) in
+                                   sendCompletion: { (result) in
                 switch result {
-                case .success(let isSuccess):
-                    success = isSuccess
+                case .success:
+                    success = true
                     exp.fulfill()
                 case .failure(let error):
                     XCTFail("Call contract cant fail \(error)")
                 }
-            }, noticeHandler: { (notice) in
-                
-            })
+            }, confirmNoticeHandler: nil)
         }
 
         //assert
@@ -596,16 +592,16 @@ class SocketCoreComponentTests: XCTestCase {
             self.echo.generateEthAddress(nameOrId: "vsharaev",
                                          wif: "5KjC8BiryoxUNz3dEY2ZWQK5ssmD84JgRGemVWwxfNgiPoxcaVa",
                                          assetForFee: nil,
-                                         completion: { (result) in
+                                         sendCompletion: { (result) in
                                             
                 switch result {
-                case .success(let res):
-                    success = res
+                case .success:
+                    success = true
                     exp.fulfill()
                 case .failure(let error):
                     XCTFail("Create eth address can't fail \(error)")
                 }
-            }, noticeHandler: nil)
+            }, confirmNoticeHandler: nil)
         }
         
         //assert
@@ -660,16 +656,16 @@ class SocketCoreComponentTests: XCTestCase {
                                   toEthAddress: "0x46Ba2677a1c982B329A81f60Cf90fBA2E8CA9fA8",
                                   amount: 1,
                                   assetForFee: nil,
-                                  completion: { (result) in
+                                  sendCompletion: { (result) in
                 
                 switch result {
-                case .success(let res):
-                    success = res
+                case .success:
+                    success = true
                     exp.fulfill()
                 case .failure(let error):
                     XCTFail("Create eth address can't fail \(error)")
                 }
-            }, noticeHandler: nil)
+            }, confirmNoticeHandler: nil)
         }
         
         //assert
