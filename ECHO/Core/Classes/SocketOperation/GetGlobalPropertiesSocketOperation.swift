@@ -31,7 +31,7 @@ struct GetGlobalPropertiesSocketOperation: SocketOperation {
             
             switch response.response {
             case .error(let error):
-                let result = Result<GlobalProperties, ECHOError>(error: ECHOError.internalError(error.message))
+                let result = Result<GlobalProperties, ECHOError>(error: ECHOError.internalError(error))
                 completion(result)
             case .result(let result):
                 

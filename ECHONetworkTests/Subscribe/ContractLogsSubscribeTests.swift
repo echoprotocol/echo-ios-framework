@@ -29,6 +29,7 @@ class ContractLogsSubscribeTests: XCTestCase, SubscribeContractLogsDelegate {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         
         let exp = expectation(description: "testSubscribeContractLogs")
@@ -48,14 +49,14 @@ class ContractLogsSubscribeTests: XCTestCase, SubscribeContractLogsDelegate {
                                        contratId: Constants.logsContract,
                                        methodName: Constants.defaultLogsContractMethod,
                                        methodParams: [AbiTypeValueInputModel.init(type: .uint(size: 256), value: "1")],
-                                       completion: { (result) in
+                                       sendCompletion: { (result) in
                     switch result {
                     case .success(_):
                         break
                     case .failure(let error):
                         XCTFail("Call failed \(error)")
                     }
-                }, noticeHandler: { (_) in
+                }, confirmNoticeHandler: { (_) in
                     DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
                         exp.fulfill()
                     })

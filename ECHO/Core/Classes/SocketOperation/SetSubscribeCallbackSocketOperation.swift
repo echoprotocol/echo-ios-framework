@@ -19,7 +19,7 @@ struct SetSubscribeCallbackSocketOperation: SocketOperation {
     var operationId: Int
     var apiId: Int
     var needClearFilter: Bool
-    var completion: Completion<Bool>
+    var completion: Completion<Void>
     
     func createParameters() -> [Any] {
         let array: [Any] = [apiId,
@@ -32,16 +32,16 @@ struct SetSubscribeCallbackSocketOperation: SocketOperation {
         
         switch response.response {
         case .error(let error):
-            let result = Result<Bool, ECHOError>(error: ECHOError.internalError(error.message))
+            let result = Result<Void, ECHOError>(error: ECHOError.internalError(error))
             completion(result)
-        case .result(_):
-            let result = Result<Bool, ECHOError>(value: true)
+        case .result:
+            let result = Result<Void, ECHOError>(value: ())
             completion(result)
         }
     }
     
     func forceEnd(error: ECHOError) {
-        let result = Result<Bool, ECHOError>(error: error)
+        let result = Result<Void, ECHOError>(error: error)
         completion(result)
     }
 }

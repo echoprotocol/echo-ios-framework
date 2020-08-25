@@ -30,7 +30,7 @@ struct GetERC20AccountDepositsSocketOperation: SocketOperation {
         do {
             switch response.response {
             case .error(let error):
-                let result = Result<[ERC20Deposit], ECHOError>(error: ECHOError.internalError(error.message))
+                let result = Result<[ERC20Deposit], ECHOError>(error: ECHOError.internalError(error))
                 completion(result)
             case .result(let result):
                 switch result {

@@ -20,7 +20,7 @@ public typealias InterfaceFacades = AuthentificationFacade
     & ERC20Facade
 
 public protocol Startable {
-    func start(completion: @escaping Completion<Bool>)
+    func start(completion: @escaping Completion<Void>)
 }
 
 public protocol Disconnectable {
@@ -95,6 +95,7 @@ final public class ECHO: InterfaceFacades, Startable, Disconnectable {
             services: authServices,
             cryptoCore: settings.cryproComponent,
             network: settings.network,
+            noticeDelegateHandler: noticeEventProxy,
             transactionExpirationOffset: settings.transactionExpirationTime)
         
         // Info
@@ -154,6 +155,7 @@ final public class ECHO: InterfaceFacades, Startable, Disconnectable {
             services: assetsServices,
             cryptoCore: settings.cryproComponent,
             network: settings.network,
+            noticeDelegateHandler: noticeEventProxy,
             transactionExpirationOffset: settings.transactionExpirationTime
         )
         
@@ -230,7 +232,7 @@ final public class ECHO: InterfaceFacades, Startable, Disconnectable {
 /**
      Starts socket connection, connects to blockchain apis
  */
-    public func start(completion: @escaping Completion<Bool>) {
+    public func start(completion: @escaping Completion<Void>) {
         
         revealFacade.revealApi { [weak self] (result) in
             switch result {
@@ -249,7 +251,7 @@ final public class ECHO: InterfaceFacades, Startable, Disconnectable {
     
     // MARK: SubscriptionFacade
     
-    public func setSubscribeCallback(completion: @escaping Completion<Bool>) {
+    public func setSubscribeCallback(completion: @escaping Completion<Void>) {
         subscriptionFacade.setSubscribeCallback(completion: completion)
     }
     
@@ -311,8 +313,20 @@ final public class ECHO: InterfaceFacades, Startable, Disconnectable {
         authentificationFacade.isOwnedBy(wif: wif, completion: completion)
     }
     
-    public func changeKeys(oldWIF: String, newWIF: String, name: String, completion: @escaping Completion<Bool>) {
-        authentificationFacade.changeKeys(oldWIF: oldWIF, newWIF: newWIF, name: name, completion: completion)
+    public func changeKeys(
+        oldWIF: String,
+        newWIF: String,
+        name: String,
+        sendCompletion: @escaping Completion<Void>,
+        confirmNoticeHandler: NoticeHandler?
+    ) {
+        authentificationFacade.changeKeys(
+            oldWIF: oldWIF,
+            newWIF: newWIF,
+            name: name,
+            sendCompletion: sendCompletion,
+            confirmNoticeHandler: confirmNoticeHandler
+        )
     }
     
     // MARK: InformationFacade
@@ -328,13 +342,13 @@ final public class ECHO: InterfaceFacades, Startable, Disconnectable {
     public func registerAccount(name: String,
                                 wif: String,
                                 evmAddress: String?,
-                                completion: @escaping Completion<Bool>,
-                                noticeHandler: NoticeHandler?) {
+                                sendCompletion: @escaping Completion<Void>,
+                                confirmNoticeHandler: NoticeHandler?) {
         informationFacade.registerAccount(name: name,
                                           wif: wif,
                                           evmAddress: evmAddress,
-                                          completion: completion,
-                                          noticeHandler: noticeHandler)
+                                          sendCompletion: sendCompletion,
+                                          confirmNoticeHandler: confirmNoticeHandler)
     }
     
     public func getAccount(nameOrID: String, completion: @escaping Completion<Account>) {
@@ -499,8 +513,8 @@ final public class ECHO: InterfaceFacades, Startable, Disconnectable {
                                       amount: UInt,
                                       asset: String,
                                       assetForFee: String?,
-                                      completion: @escaping Completion<Bool>,
-                                      noticeHandler: NoticeHandler?) {
+                                      sendCompletion: @escaping Completion<Void>,
+                                      confirmNoticeHandler: NoticeHandler?) {
         
         transactionFacade.sendTransferOperation(fromNameOrId: fromNameOrId,
                                                 wif: wif,
@@ -508,32 +522,45 @@ final public class ECHO: InterfaceFacades, Startable, Disconnectable {
                                                 amount: amount,
                                                 asset: asset,
                                                 assetForFee: assetForFee,
-                                                completion: completion, noticeHandler: noticeHandler)
+                                                sendCompletion: sendCompletion, confirmNoticeHandler: confirmNoticeHandler)
     }
     
     // MARK: AssetsFacade
 
-    public func createAsset(nameOrId: String,
-                            wif: String,
-                            asset: Asset,
-                            completion: @escaping Completion<Bool>) {
-        
-        assetsFacade.createAsset(nameOrId: nameOrId, wif: wif, asset: asset, completion: completion)
+    public func createAsset(
+        nameOrId: String,
+        wif: String,
+        asset: Asset,
+        sendCompletion: @escaping Completion<Void>,
+        confirmNoticeHandler: NoticeHandler?
+    ) {
+        assetsFacade.createAsset(
+            nameOrId: nameOrId,
+            wif: wif,
+            asset: asset,
+            sendCompletion: sendCompletion,
+            confirmNoticeHandler: confirmNoticeHandler
+        )
     }
     
-    public func issueAsset(issuerNameOrId: String,
-                           wif: String,
-                           asset: String,
-                           amount: UInt,
-                           destinationIdOrName: String,
-                           completion: @escaping Completion<Bool>) {
-        
-        assetsFacade.issueAsset(issuerNameOrId: issuerNameOrId,
-                                wif: wif,
-                                asset: asset,
-                                amount: amount,
-                                destinationIdOrName: destinationIdOrName,
-                                completion: completion)
+    public func issueAsset(
+        issuerNameOrId: String,
+        wif: String,
+        asset: String,
+        amount: UInt,
+        destinationIdOrName: String,
+        sendCompletion: @escaping Completion<Void>,
+        confirmNoticeHandler: NoticeHandler?
+    ) {
+        assetsFacade.issueAsset(
+            issuerNameOrId: issuerNameOrId,
+            wif: wif,
+            asset: asset,
+            amount: amount,
+            destinationIdOrName: destinationIdOrName,
+            sendCompletion: sendCompletion,
+            confirmNoticeHandler: confirmNoticeHandler
+        )
     }
     
     public func listAssets(lowerBound: String,
@@ -580,8 +607,8 @@ final public class ECHO: InterfaceFacades, Startable, Disconnectable {
                                supportedAssetId: String?,
                                ethAccuracy: Bool,
                                parameters: [AbiTypeValueInputModel]?,
-                               completion: @escaping Completion<Bool>,
-                               noticeHandler: NoticeHandler?) {
+                               sendCompletion: @escaping Completion<Void>,
+                               confirmNoticeHandler: NoticeHandler?) {
         
         contractsFacade.createContract(registrarNameOrId: registrarNameOrId,
                                        wif: wif,
@@ -592,8 +619,8 @@ final public class ECHO: InterfaceFacades, Startable, Disconnectable {
                                        supportedAssetId: supportedAssetId,
                                        ethAccuracy: ethAccuracy,
                                        parameters: parameters,
-                                       completion: completion,
-                                       noticeHandler: noticeHandler)
+                                       sendCompletion: sendCompletion,
+                                       confirmNoticeHandler: confirmNoticeHandler)
     }
     
     public func createContract(registrarNameOrId: String,
@@ -604,8 +631,8 @@ final public class ECHO: InterfaceFacades, Startable, Disconnectable {
                                byteCode: String,
                                supportedAssetId: String?,
                                ethAccuracy: Bool,
-                               completion: @escaping Completion<Bool>,
-                               noticeHandler: NoticeHandler?) {
+                               sendCompletion: @escaping Completion<Void>,
+                               confirmNoticeHandler: NoticeHandler?) {
         
         contractsFacade.createContract(registrarNameOrId: registrarNameOrId,
                                        wif: wif,
@@ -615,8 +642,8 @@ final public class ECHO: InterfaceFacades, Startable, Disconnectable {
                                        byteCode: byteCode,
                                        supportedAssetId: supportedAssetId,
                                        ethAccuracy: ethAccuracy,
-                                       completion: completion,
-                                       noticeHandler: noticeHandler)
+                                       sendCompletion: sendCompletion,
+                                       confirmNoticeHandler: confirmNoticeHandler)
     }
     
     public func callContract(registrarNameOrId: String,
@@ -627,8 +654,8 @@ final public class ECHO: InterfaceFacades, Startable, Disconnectable {
                              contratId: String,
                              methodName: String,
                              methodParams: [AbiTypeValueInputModel],
-                             completion: @escaping Completion<Bool>,
-                             noticeHandler: NoticeHandler?) {
+                             sendCompletion: @escaping Completion<Void>,
+                             confirmNoticeHandler: NoticeHandler?) {
         
         contractsFacade.callContract(registrarNameOrId: registrarNameOrId,
                                      wif: wif,
@@ -638,8 +665,8 @@ final public class ECHO: InterfaceFacades, Startable, Disconnectable {
                                      contratId: contratId,
                                      methodName: methodName,
                                      methodParams: methodParams,
-                                     completion: completion,
-                                     noticeHandler: noticeHandler)
+                                     sendCompletion: sendCompletion,
+                                     confirmNoticeHandler: confirmNoticeHandler)
     }
     
     public func callContract(registrarNameOrId: String,
@@ -649,8 +676,8 @@ final public class ECHO: InterfaceFacades, Startable, Disconnectable {
                              assetForFee: String?,
                              contratId: String,
                              byteCode: String,
-                             completion: @escaping Completion<Bool>,
-                             noticeHandler: NoticeHandler?) {
+                             sendCompletion: @escaping Completion<Void>,
+                             confirmNoticeHandler: NoticeHandler?) {
         
         contractsFacade.callContract(registrarNameOrId: registrarNameOrId,
                                      wif: wif,
@@ -659,8 +686,8 @@ final public class ECHO: InterfaceFacades, Startable, Disconnectable {
                                      assetForFee: assetForFee,
                                      contratId: contratId,
                                      byteCode: byteCode,
-                                     completion: completion,
-                                     noticeHandler: noticeHandler)
+                                     sendCompletion: sendCompletion,
+                                     confirmNoticeHandler: confirmNoticeHandler)
     }
     
     public func queryContract(registrarNameOrId: String,
@@ -700,14 +727,14 @@ final public class ECHO: InterfaceFacades, Startable, Disconnectable {
     public func generateEthAddress(nameOrId: String,
                                    wif: String,
                                    assetForFee: String?,
-                                   completion: @escaping Completion<Bool>,
-                                   noticeHandler: NoticeHandler?) {
+                                   sendCompletion: @escaping Completion<Void>,
+                                   confirmNoticeHandler: NoticeHandler?) {
         
         ethFacade.generateEthAddress(nameOrId: nameOrId,
                                      wif: wif,
                                      assetForFee: assetForFee,
-                                     completion: completion,
-                                     noticeHandler: noticeHandler)
+                                     sendCompletion: sendCompletion,
+                                     confirmNoticeHandler: confirmNoticeHandler)
     }
     
     public func getEthAddress(nameOrId: String, completion: @escaping Completion<EthAddress?>) {
@@ -720,16 +747,16 @@ final public class ECHO: InterfaceFacades, Startable, Disconnectable {
                             toEthAddress: String,
                             amount: UInt,
                             assetForFee: String?,
-                            completion: @escaping Completion<Bool>,
-                            noticeHandler: NoticeHandler?) {
+                            sendCompletion: @escaping Completion<Void>,
+                            confirmNoticeHandler: NoticeHandler?) {
         
         ethFacade.withdrawEth(nameOrId: nameOrId,
                               wif: wif,
                               toEthAddress: toEthAddress,
                               amount: amount,
                               assetForFee: assetForFee,
-                              completion: completion,
-                              noticeHandler: noticeHandler)
+                              sendCompletion: sendCompletion,
+                              confirmNoticeHandler: confirmNoticeHandler)
     }
     
     public func getEthAccountDeposits(nameOrId: String, completion: @escaping Completion<[EthDeposit]>) {
@@ -748,15 +775,15 @@ final public class ECHO: InterfaceFacades, Startable, Disconnectable {
                                    wif: String,
                                    backupAddress: String,
                                    assetForFee: String?,
-                                   completion: @escaping Completion<Bool>,
-                                   noticeHandler: NoticeHandler?) {
+                                   sendCompletion: @escaping Completion<Void>,
+                                   confirmNoticeHandler: NoticeHandler?) {
         
         btcFacade.generateBtcAddress(nameOrId: nameOrId,
                                      wif: wif,
                                      backupAddress: backupAddress,
                                      assetForFee: assetForFee,
-                                     completion: completion,
-                                     noticeHandler: noticeHandler)
+                                     sendCompletion: sendCompletion,
+                                     confirmNoticeHandler: confirmNoticeHandler)
     }
     
     public func getBtcAddress(nameOrId: String, completion: @escaping Completion<BtcAddress?>) {
@@ -769,16 +796,16 @@ final public class ECHO: InterfaceFacades, Startable, Disconnectable {
                             toBtcAddress: String,
                             amount: UInt,
                             assetForFee: String?,
-                            completion: @escaping Completion<Bool>,
-                            noticeHandler: NoticeHandler?) {
+                            sendCompletion: @escaping Completion<Void>,
+                            confirmNoticeHandler: NoticeHandler?) {
         
         btcFacade.withdrawBtc(nameOrId: nameOrId,
                               wif: wif,
                               toBtcAddress: toBtcAddress,
                               amount: amount,
                               assetForFee: assetForFee,
-                              completion: completion,
-                              noticeHandler: noticeHandler)
+                              sendCompletion: sendCompletion,
+                              confirmNoticeHandler: confirmNoticeHandler)
     }
     
     public func getBtcAccountDeposits(nameOrId: String, completion: @escaping Completion<[BtcDeposit]>) {
@@ -800,8 +827,8 @@ final public class ECHO: InterfaceFacades, Startable, Disconnectable {
                                    tokenSymbol: String,
                                    tokenDecimals: UInt8,
                                    assetForFee: String?,
-                                   completion: @escaping Completion<Bool>,
-                                   noticeHandler: NoticeHandler?) {
+                                   sendCompletion: @escaping Completion<Void>,
+                                   confirmNoticeHandler: NoticeHandler?) {
         
         erc20Facade.registerERC20Token(nameOrId: nameOrId,
                                        wif: wif,
@@ -810,8 +837,8 @@ final public class ECHO: InterfaceFacades, Startable, Disconnectable {
                                        tokenSymbol: tokenSymbol,
                                        tokenDecimals: tokenDecimals,
                                        assetForFee: assetForFee,
-                                       completion: completion,
-                                       noticeHandler: noticeHandler)
+                                       sendCompletion: sendCompletion,
+                                       confirmNoticeHandler: confirmNoticeHandler)
     }
     
     public func getERC20Token(tokenAddress: String, completion: @escaping Completion<ERC20Token?>) {
@@ -835,8 +862,8 @@ final public class ECHO: InterfaceFacades, Startable, Disconnectable {
                               tokenId: String,
                               value: String,
                               assetForFee: String?,
-                              completion: @escaping Completion<Bool>,
-                              noticeHandler: NoticeHandler?) {
+                              sendCompletion: @escaping Completion<Void>,
+                              confirmNoticeHandler: NoticeHandler?) {
         
         erc20Facade.withdrawERC20(nameOrId: nameOrId,
                                   wif: wif,
@@ -844,8 +871,8 @@ final public class ECHO: InterfaceFacades, Startable, Disconnectable {
                                   tokenId: tokenId,
                                   value: value,
                                   assetForFee: assetForFee,
-                                  completion: completion,
-                                  noticeHandler: noticeHandler)
+                                  sendCompletion: sendCompletion,
+                                  confirmNoticeHandler: confirmNoticeHandler)
     }
     
     public func getERC20AccountDeposits(nameOrId: String, completion: @escaping Completion<[ERC20Deposit]>) {

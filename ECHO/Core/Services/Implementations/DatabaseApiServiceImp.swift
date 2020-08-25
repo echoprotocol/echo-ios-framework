@@ -166,7 +166,7 @@ extension BlocksAndTransactionsService {
 
 extension SubscriptionService {
     
-    func setSubscribeCallback(completion: @escaping Completion<Bool>) {
+    func setSubscribeCallback(completion: @escaping Completion<Void>) {
         let operation = SetSubscribeCallbackSocketOperation(method: .call,
                                                             operationId: socketCore.nextOperationId(),
                                                             apiId: apiIdentifire,
@@ -175,7 +175,7 @@ extension SubscriptionService {
         socketCore.send(operation: operation)
     }
     
-    func setBlockAppliedCallback(blockId: String, completion: @escaping Completion<Bool>) {
+    func setBlockAppliedCallback(blockId: String, completion: @escaping Completion<Void>) {
         
         let operation = SetBlockAppliedCollbackSocketOperation(method: .call,
                                                                operationId: socketCore.nextOperationId(),
@@ -185,7 +185,7 @@ extension SubscriptionService {
         socketCore.send(operation: operation)
     }
     
-    func subscribeContractLogs(contractId: String, completion: @escaping Completion<Bool>) {
+    func subscribeContractLogs(contractId: String, completion: @escaping Completion<Void>) {
         
         let operation = SubscribeContractLogsSocketOperation(method: .call,
                                                              operationId: socketCore.nextOperationId(),
@@ -196,7 +196,7 @@ extension SubscriptionService {
         socketCore.send(operation: operation)
     }
     
-    func subscribeContracts(contractsIds: [String], completion: @escaping Completion<Bool>) {
+    func subscribeContracts(contractsIds: [String], completion: @escaping Completion<Void>) {
         
         let operation = SubscribeContractsSocketOperation(method: .call,
                                                           operationId: socketCore.nextOperationId(),
@@ -245,7 +245,7 @@ extension ContractsService {
         socketCore.send(operation: operation)
     }
     
-    func getContractLogs(contractId: String, fromBlock: Int, toBlock: Int, completion: @escaping Completion<Bool>) -> Int {
+    func getContractLogs(contractId: String, fromBlock: Int, toBlock: Int, completion: @escaping Completion<Void>) -> Int {
         
         let operationId = socketCore.nextOperationId()
         let operation = GetContractLogsSocketOperation(method: .call,

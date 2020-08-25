@@ -20,7 +20,7 @@ public struct FeeFacadeServices {
 // swiftlint:disable type_body_length
 final public class FeeFacadeImp: FeeFacade, ECHOQueueble {
     
-    var queues: [String: ECHOQueue]
+    public var queues: [String: ECHOQueue]
     let services: FeeFacadeServices
     let network: ECHONetwork
     let cryptoCore: CryptoCoreComponent

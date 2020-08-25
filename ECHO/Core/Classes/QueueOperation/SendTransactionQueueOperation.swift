@@ -20,9 +20,9 @@ final class SendTransactionQueueOperation: Operation {
     fileprivate weak var networkBroadcastService: NetworkBroadcastApiService?
     fileprivate let transactionKey: String
     fileprivate let transactionOperationKey: String
-    fileprivate let completion: Completion<Bool>
+    fileprivate let completion: Completion<Void>
     
-    required init(initParams: SendTransactionQueueOperationInitParams, completion: @escaping Completion<Bool>) {
+    required init(initParams: SendTransactionQueueOperationInitParams, completion: @escaping Completion<Void>) {
         
         self.queue = initParams.queue
         self.networkBroadcastService = initParams.networkBroadcastService
@@ -42,11 +42,11 @@ final class SendTransactionQueueOperation: Operation {
                                                                                     completion: { [weak self] (result) in
             switch result {
             case .success(let success):
-                let result = Result<Bool, ECHOError>(value: success)
+                let result = Result<Void, ECHOError>(value: success)
                 self?.completion(result)
             case .failure(let error):
                 self?.queue?.cancelAllOperations()
-                let result = Result<Bool, ECHOError>(error: error)
+                let result = Result<Void, ECHOError>(error: error)
                 self?.completion(result)
             }
             

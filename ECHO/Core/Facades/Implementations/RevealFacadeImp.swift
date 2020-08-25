@@ -24,7 +24,7 @@ final public class RevealFacadeImp: RevealApiFacade {
     var apiOptions: APIOption
     var services: RevealFacadeServices
     fileprivate var error: ECHOError?
-    var registrationCompletion: Completion<Bool>?
+    var registrationCompletion: Completion<Void>?
     
     let dispatchGroup = DispatchGroup()
     
@@ -36,7 +36,7 @@ final public class RevealFacadeImp: RevealApiFacade {
         self.services = services
     }
     
-    func revealApi(completion: @escaping Completion<Bool>) {
+    func revealApi(completion: @escaping Completion<Void>) {
         
         registrationCompletion = completion
         
@@ -45,7 +45,7 @@ final public class RevealFacadeImp: RevealApiFacade {
             case .success(_):
                 self?.loginAndRegister()
             case .failure(let error):
-                let error = Result<Bool, ECHOError>(error: error)
+                let error = Result<Void, ECHOError>(error: error)
                 self?.registrationCompletion?(error)
             }
         }
@@ -66,7 +66,7 @@ final public class RevealFacadeImp: RevealApiFacade {
             case .success(_):
                 self?.registerAPIs()
             case .failure(let error):
-                let error = Result<Bool, ECHOError>(error: error)
+                let error = Result<Void, ECHOError>(error: error)
                 self?.registrationCompletion?(error)
             }
         }
@@ -81,10 +81,10 @@ final public class RevealFacadeImp: RevealApiFacade {
         dispatchGroup.notify(queue: .main) { [weak self] in
             
             if let error = self?.error {
-                let error = Result<Bool, ECHOError>(error: error)
+                let error = Result<Void, ECHOError>(error: error)
                 self?.registrationCompletion?(error)
             } else {
-                let error = Result<Bool, ECHOError>(value: true)
+                let error = Result<Void, ECHOError>(value: ())
                 self?.registrationCompletion?(error)
             }
         }

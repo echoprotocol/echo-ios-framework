@@ -49,7 +49,7 @@ class CustomGetFullAccountSocketOperation: CustomSocketOperation {
         do {
             switch response.response {
             case .error(let error):
-                let result = Result<[String: UserAccount], ECHOError>(error: ECHOError.internalError(error.message))
+                let result = Result<[String: UserAccount], ECHOError>(error: ECHOError.internalError(error))
                 completion(result)
             case .result(let result):
                 

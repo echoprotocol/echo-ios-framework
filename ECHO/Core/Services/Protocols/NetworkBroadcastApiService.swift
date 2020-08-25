@@ -20,5 +20,5 @@ protocol NetworkBroadcastApiService: BaseApiService {
     - Parameter completion: Callback which returns bool result of send transaction
     - Returns: ID of operation
      */
-    func broadcastTransactionWithCallback(transaction: Transaction, completion: @escaping Completion<Bool>) -> Int
+    func broadcastTransactionWithCallback(transaction: Transaction, completion: @escaping Completion<Void>) -> Int
 }

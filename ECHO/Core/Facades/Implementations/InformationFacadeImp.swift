@@ -18,9 +18,9 @@ struct InformationFacadeServices {
 
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length
-final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
+final public class InformationFacadeImp: InformationFacade, ECHOQueueble, NoticeEventDelegate {
     
-    var queues: [String: ECHOQueue]
+    public var queues: [String: ECHOQueue]
     let services: InformationFacadeServices
     let network: ECHONetwork
     let cryptoCore: CryptoCoreComponent
@@ -53,10 +53,6 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
     private enum CreationAccountResultsKeys: String {
         case isReserved
         case account
-        case operationID
-        case notice
-        case noticeError
-        case noticeHandler
         case task
         case nonce
     }
@@ -65,15 +61,15 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         name: String,
         wif: String,
         evmAddress: String?,
-        completion: @escaping Completion<Bool>,
-        noticeHandler: NoticeHandler?
+        sendCompletion: @escaping Completion<Void>,
+        confirmNoticeHandler: NoticeHandler?
     ) {
         // Validate Ethereum address if exist
         if let evmAddress = evmAddress {
             let ethValidator = ETHAddressValidator(cryptoCore: cryptoCore)
             guard ethValidator.isValidETHAddress(evmAddress) else {
-                let result = Result<Bool, ECHOError>(error: .invalidETHAddress)
-                completion(result)
+                let result = Result<Void, ECHOError>(error: .invalidETHAddress)
+                sendCompletion(result)
                 return
             }
         }
@@ -85,19 +81,19 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         let getAccountsOperationInitParams = (createAccountQueue,
                                               services.databaseService,
                                               name)
-        let getAccountsOperation = GetIsReservedAccountQueueOperation<Bool>(initParams: getAccountsOperationInitParams,
-                                                                          completion: completion)
+        let getAccountsOperation = GetIsReservedAccountQueueOperation<Void>(initParams: getAccountsOperationInitParams,
+                                                                          completion: sendCompletion)
         getAccountsOperation.defaultError = ECHOError.invalidCredentials
         
         // Create Account
         let requestTaskOperation = createRequestRegistrationTask(createAccountQueue,
-                                                                       completion: completion)
-        let powTaskOperation = createPoWTaskCalculatingOperation(createAccountQueue, completion: completion)
+                                                                 completion: sendCompletion)
+        let powTaskOperation = createPoWTaskCalculatingOperation(createAccountQueue, completion: sendCompletion)
         let submitOperation = createSubmitRegistrationSolutionOperation(createAccountQueue,
                                                                         name: name,
                                                                         wif: wif,
                                                                         evmAddress: evmAddress,
-                                                                        completion: completion)
+                                                                        completion: sendCompletion)
         
         // Completion
         let completionOperation = createCompletionOperation(queue: createAccountQueue)
@@ -108,8 +104,8 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         createAccountQueue.addOperation(submitOperation)
 
         //Notice handler
-        if let noticeHandler = noticeHandler {
-            createAccountQueue.saveValue(noticeHandler, forKey: CreationAccountResultsKeys.noticeHandler.rawValue)
+        if let noticeHandler = confirmNoticeHandler {
+            createAccountQueue.saveValue(noticeHandler, forKey: EchoQueueMainKeys.noticeHandler.rawValue)
             let noticeHandleOperation = createNoticeHandleOperation(createAccountQueue)
             createAccountQueue.addOperation(noticeHandleOperation)
         }
@@ -118,7 +114,7 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
     }
     
     fileprivate func createRequestRegistrationTask(_ queue: ECHOQueue,
-                                                   completion: @escaping Completion<Bool>) -> Operation {
+                                                   completion: @escaping Completion<Void>) -> Operation {
         
         let operation = BlockOperation()
 
@@ -129,7 +125,7 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
             
             if let _: Account = queue?.getValue(CreationAccountResultsKeys.account.rawValue) {
                 queue?.cancelAllOperations()
-                let result = Result<Bool, ECHOError>(error: ECHOError.invalidCredentials)
+                let result = Result<Void, ECHOError>(error: ECHOError.invalidCredentials)
                 completion(result)
                 return
             }
@@ -140,7 +136,7 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                     queue?.saveValue(task, forKey: CreationAccountResultsKeys.task.rawValue)
                 case .failure(let error):
                     queue?.cancelAllOperations()
-                    let result = Result<Bool, ECHOError>(error: error)
+                    let result = Result<Void, ECHOError>(error: error)
                     completion(result)
                 }
 
@@ -154,7 +150,7 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
     }
     
     fileprivate func createPoWTaskCalculatingOperation(_ queue: ECHOQueue,
-                                                       completion: @escaping Completion<Bool>) -> Operation {
+                                                       completion: @escaping Completion<Void>) -> Operation {
         
         let operation = BlockOperation()
 
@@ -166,7 +162,7 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
             
             guard let blockIdData = Data(hex: task.blockId) else {
                 queue?.cancelAllOperations()
-                let result = Result<Bool, ECHOError>(error: ECHOError.encodableMapping)
+                let result = Result<Void, ECHOError>(error: ECHOError.encodableMapping)
                 completion(result)
                 return
             }
@@ -224,7 +220,7 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                                                                name: String,
                                                                wif: String,
                                                                evmAddress: String?,
-                                                               completion: @escaping Completion<Bool>) -> Operation {
+                                                               completion: @escaping Completion<Void>) -> Operation {
         
         let operation = BlockOperation()
 
@@ -237,7 +233,7 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
             
             guard let keychain = ECHOKeychainEd25519(wif: wif, core: strongSelf.cryptoCore) else {
                 queue?.cancelAllOperations()
-                let result = Result<Bool, ECHOError>(error: ECHOError.invalidWIF)
+                let result = Result<Void, ECHOError>(error: ECHOError.invalidWIF)
                 completion(result)
                 return
             }
@@ -255,20 +251,20 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
                 case .success(let value):
                     if value == false {
                         queue?.cancelAllOperations()
-                        let result = Result<Bool, ECHOError>(error: ECHOError.invalidCredentials)
+                        let result = Result<Void, ECHOError>(error: ECHOError.invalidCredentials)
                         completion(result)
                     } else {
-                        let result = Result<Bool, ECHOError>(value: true)
+                        let result = Result<Void, ECHOError>(value: ())
                         completion(result)
                     }
                 case .failure(let error):
                     queue?.cancelAllOperations()
-                    let result = Result<Bool, ECHOError>(error: error)
+                    let result = Result<Void, ECHOError>(error: error)
                     completion(result)
                 }
             }
             
-            queue?.saveValue(operationID, forKey: CreationAccountResultsKeys.operationID.rawValue)
+            queue?.saveValue(operationID, forKey: EchoQueueMainKeys.operationId.rawValue)
             queue?.waitStartNextOperation()
         }
         
@@ -283,15 +279,15 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
             
             guard noticeOperation?.isCancelled == false else { return }
             guard self != nil else { return }
-            guard let noticeHandler: NoticeHandler = queue?.getValue(CreationAccountResultsKeys.noticeHandler.rawValue) else { return }
+            guard let noticeHandler: NoticeHandler = queue?.getValue(EchoQueueMainKeys.noticeHandler.rawValue) else { return }
             
-            if let notice: ECHONotification = queue?.getValue(CreationAccountResultsKeys.notice.rawValue) {
+            if let notice: ECHONotification = queue?.getValue(EchoQueueMainKeys.notice.rawValue) {
                 let result = Result<ECHONotification, ECHOError>(value: notice)
                 noticeHandler(result)
                 return
             }
             
-            if let noticeError: ECHOError = queue?.getValue(CreationAccountResultsKeys.noticeError.rawValue) {
+            if let noticeError: ECHOError = queue?.getValue(EchoQueueMainKeys.noticeError.rawValue) {
                 let result = Result<ECHONotification, ECHOError>(error: noticeError)
                 noticeHandler(result)
                 return
@@ -1758,36 +1754,6 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble {
         }
         
         return erc20WithdrawalsId
-    }
-}
-
-extension InformationFacadeImp: NoticeEventDelegate {
-    
-    public func didReceiveNotification(notification: ECHONotification) {
-        
-        switch notification.params {
-        case .array(let array):
-            if let noticeOperationId = array.first as? Int {
-
-                for queue in queues.values {
-
-                    if let queueTransferOperationId: Int = queue.getValue(CreationAccountResultsKeys.operationID.rawValue),
-                        queueTransferOperationId == noticeOperationId {
-                        queue.saveValue(notification, forKey: CreationAccountResultsKeys.notice.rawValue)
-                        queue.startNextOperation()
-                    }
-                }
-            }
-        default:
-            break
-        }
-    }
-    
-    public func didAllNoticesLost() {
-        for queue in queues.values {
-            queue.saveValue(ECHOError.connectionLost, forKey: CreationAccountResultsKeys.noticeError.rawValue)
-            queue.startNextOperation()
-        }
     }
 }
 

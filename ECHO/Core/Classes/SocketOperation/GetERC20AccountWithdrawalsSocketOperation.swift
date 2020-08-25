@@ -31,7 +31,7 @@ struct GetERC20AccountWithdrawalsSocketOperation: SocketOperation {
         do {
             switch response.response {
             case .error(let error):
-                let result = Result<[ERC20Withdrawal], ECHOError>(error: ECHOError.internalError(error.message))
+                let result = Result<[ERC20Withdrawal], ECHOError>(error: ECHOError.internalError(error))
                 completion(result)
             case .result(let result):
                 switch result {

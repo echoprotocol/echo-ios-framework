@@ -19,7 +19,7 @@ struct SubscribeContractLogsSocketOperation: SocketOperation {
     var operationId: Int
     var apiId: Int
     var contractId: String
-    var completion: Completion<Bool>
+    var completion: Completion<Void>
     
     func createParameters() -> [Any] {
         let array: [Any] = [apiId,
@@ -32,23 +32,23 @@ struct SubscribeContractLogsSocketOperation: SocketOperation {
         
         switch response.response {
         case .error(let error):
-            let result = Result<Bool, ECHOError>(error: ECHOError.internalError(error.message))
+            let result = Result<Void, ECHOError>(error: ECHOError.internalError(error))
             completion(result)
         case .result(let result):
             
             switch result {
             case .undefined:
-                let result = Result<Bool, ECHOError>(value: true)
+                let result = Result<Void, ECHOError>(value: ())
                 completion(result)
             default:
-                let result = Result<Bool, ECHOError>(error: ECHOError.encodableMapping)
+                let result = Result<Void, ECHOError>(error: ECHOError.encodableMapping)
                 completion(result)
             }
         }
     }
     
     func forceEnd(error: ECHOError) {
-        let result = Result<Bool, ECHOError>(error: error)
+        let result = Result<Void, ECHOError>(error: error)
         completion(result)
     }
 }

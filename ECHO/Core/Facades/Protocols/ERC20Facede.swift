@@ -21,29 +21,33 @@ public protocol ERC20Facade {
     - Parameter tokenSymbol: Token symbol in Ethereum network
     - Parameter tokenDecimals: Token decimals in Ethereum network
     - Parameter assetForFee: Id of asset which is pay fee
-    - Parameter completion: Callback in which the information will return whether the transaction was successful.
-    - Parameter noticeHandler: Callback in which the information will return whether the transaction was confirmed.
+    - Parameter sendCompletion: Callback in which the information will return whether the transaction was successful send to chain.
+    - Parameter confirmNoticeHandler: Callback in which the information will return whether the transaction was confirmed or not.
     
     - Remark:
     Default asset is **"1.3.0"**
 */
-    func registerERC20Token(nameOrId: String,
-                            wif: String,
-                            tokenAddress: String,
-                            tokenName: String,
-                            tokenSymbol: String,
-                            tokenDecimals: UInt8,
-                            assetForFee: String?,
-                            completion: @escaping Completion<Bool>,
-                            noticeHandler: NoticeHandler?)
+    func registerERC20Token(
+        nameOrId: String,
+        wif: String,
+        tokenAddress: String,
+        tokenName: String,
+        tokenSymbol: String,
+        tokenDecimals: UInt8,
+        assetForFee: String?,
+        sendCompletion: @escaping Completion<Void>,
+        confirmNoticeHandler: NoticeHandler?
+    )
 /**
     Returns information about erc20 token by token address, if exist.
     
     - Parameter tokenAddress: Token address in Ethereum network
     - Parameter completion: Callback in which return ERC20Token if exist object or error.
 */
-    func getERC20Token(tokenAddress: String,
-                       completion: @escaping Completion<ERC20Token?>)
+    func getERC20Token(
+        tokenAddress: String,
+        completion: @escaping Completion<ERC20Token?>
+    )
     
 /**
     Returns information about erc20 token by token id, if exist.
@@ -51,8 +55,10 @@ public protocol ERC20Facade {
     - Parameter tokenId: Token id in Echo network
     - Parameter completion: Callback in which return ERC20Token if exist object or error.
 */
-    func getERC20Token(tokenId: String,
-                       completion: @escaping Completion<ERC20Token?>)
+    func getERC20Token(
+        tokenId: String,
+        completion: @escaping Completion<ERC20Token?>
+    )
     
 /**
     Return true if the contract exists and is ERC20 token contract registered.
@@ -60,8 +66,10 @@ public protocol ERC20Facade {
     - Parameter tokenAddress: Contract identifier in Ethereum network
     - Parameter completion: Callback in which return true if the contract exists and is ERC20 token contract registered.
 */
-    func checkERC20Token(contractId: String,
-                         completion: @escaping Completion<Bool>)
+    func checkERC20Token(
+        contractId: String,
+        completion: @escaping Completion<Bool>
+    )
     
 /**
     Send ERC20 token to Ethereum network to ethAddress
@@ -72,17 +80,19 @@ public protocol ERC20Facade {
     - Parameter tokenId: Echo token id for withdraw
     - Parameter value: Amount
     - Parameter assetForFee:Id of asset which is pay fee
-    - Parameter completion: Callback in which the information will return whether the transaction was successful.
-    - Parameter noticeHandler: Callback in which the information will return whether the transaction was confirmed.
+    - Parameter sendCompletion: Callback in which the information will return whether the transaction was successful send to chain.
+    - Parameter confirmNoticeHandler: Callback in which the information will return whether the transaction was confirmed or not.
 */
-   func withdrawERC20(nameOrId: String,
-                      wif: String,
-                      toEthAddress: String,
-                      tokenId: String,
-                      value: String,
-                      assetForFee: String?,
-                      completion: @escaping Completion<Bool>,
-                      noticeHandler: NoticeHandler?)
+    func withdrawERC20(
+        nameOrId: String,
+        wif: String,
+        toEthAddress: String,
+        tokenId: String,
+        value: String,
+        assetForFee: String?,
+        sendCompletion: @escaping Completion<Void>,
+        confirmNoticeHandler: NoticeHandler?
+    )
     
 /**
     Returns all ERC20 deposits, for the given account id.
@@ -90,8 +100,10 @@ public protocol ERC20Facade {
     - Parameter nameOrId: Accoint name or id
     - Parameter completion: Callback in which return ERC20Deposit objects or error.
 */
-   func getERC20AccountDeposits(nameOrId: String,
-                                completion: @escaping Completion<[ERC20Deposit]>)
+    func getERC20AccountDeposits(
+        nameOrId: String,
+        completion: @escaping Completion<[ERC20Deposit]>
+    )
     
 /**
     Returns all ERC20 withdrawals, for the given account id.
@@ -99,6 +111,8 @@ public protocol ERC20Facade {
     - Parameter nameOrId: Accoint name or id
     - Parameter completion: Callback in which return ERC20Withdrawal objects or error.
 */
-   func getERC20AccountWithdrawals(nameOrId: String,
-                                   completion: @escaping Completion<[ERC20Withdrawal]>)
+    func getERC20AccountWithdrawals(
+        nameOrId: String,
+        completion: @escaping Completion<[ERC20Withdrawal]>
+    )
 }

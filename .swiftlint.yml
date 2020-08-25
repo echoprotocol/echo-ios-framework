@@ -54,5 +54,5 @@ function_body_length:
   error: 70
 
 function_parameter_count:
-  warning: 10
+  warning: 12
   error: 15

@@ -293,6 +293,8 @@
 		D0ED8C2A2292EE82002EC3EA /* SidechainETHWithdrawOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0ED8C292292EE82002EC3EA /* SidechainETHWithdrawOperation.swift */; };
 		D0FAC41522AE3DC400C8BF49 /* FeeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FAC41422AE3DC400C8BF49 /* FeeType.swift */; };
 		D0FAC41722AE3E5300C8BF49 /* CallContractFee.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FAC41622AE3E5300C8BF49 /* CallContractFee.swift */; };
+		E717CC2724ED375200C6F1BB /* WaitQueueOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E717CC2624ED375200C6F1BB /* WaitQueueOperation.swift */; };
+		E717CC2924ED3D1000C6F1BB /* NoticeHandleQueueOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E717CC2824ED3D1000C6F1BB /* NoticeHandleQueueOperation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -617,6 +619,8 @@
 		D0ED8C292292EE82002EC3EA /* SidechainETHWithdrawOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidechainETHWithdrawOperation.swift; sourceTree = "<group>"; };
 		D0FAC41422AE3DC400C8BF49 /* FeeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeeType.swift; sourceTree = "<group>"; };
 		D0FAC41622AE3E5300C8BF49 /* CallContractFee.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallContractFee.swift; sourceTree = "<group>"; };
+		E717CC2624ED375200C6F1BB /* WaitQueueOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitQueueOperation.swift; sourceTree = "<group>"; };
+		E717CC2824ED3D1000C6F1BB /* NoticeHandleQueueOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeHandleQueueOperation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1293,6 +1297,8 @@
 				D0D8CA432141847900F0646D /* GetAccountsQueueOperation.swift */,
 				D0D8CA442141847900F0646D /* GetBlockDataQueueOperation.swift */,
 				B3D20DA2226E01DF00F50CF9 /* GetIsReservedAccountQueueOperation.swift */,
+				E717CC2624ED375200C6F1BB /* WaitQueueOperation.swift */,
+				E717CC2824ED3D1000C6F1BB /* NoticeHandleQueueOperation.swift */,
 			);
 			path = QueueOperation;
 			sourceTree = "<group>";
@@ -1550,6 +1556,7 @@
 				B3CA704D20F53A4500511F6A /* GetAccountHistorySocketOperation.swift in Sources */,
 				D09DA11A21EDE6780004673F /* RegistrationApiService.swift in Sources */,
 				D0D5711E224BA58B007F6CC3 /* ContractTransferOperation.swift in Sources */,
+				E717CC2924ED3D1000C6F1BB /* NoticeHandleQueueOperation.swift in Sources */,
 				D0ED8C2A2292EE82002EC3EA /* SidechainETHWithdrawOperation.swift in Sources */,
 				D01AD064221C156E0062A74D /* ContractResultx86.swift in Sources */,
 				B38596FA20F6003500B55E59 /* AssetAmount.swift in Sources */,
@@ -1650,6 +1657,7 @@
 				B3965B162125952700029585 /* Collection+Extension.swift in Sources */,
 				B3D1C90621386461009018AE /* SignaturesGenerator.swift in Sources */,
 				D0B6A0CA2126BA9300A78E4B /* OperationType.swift in Sources */,
+				E717CC2724ED375200C6F1BB /* WaitQueueOperation.swift in Sources */,
 				B3CA701E20F49C6800511F6A /* ReslutHandler.swift in Sources */,
 				B3E9A35721A2A40E001A95B4 /* NoticeEventProxy.swift in Sources */,
 				D0CB0F1B236AF7EF00A7184F /* GetERC20TokenSocketOperation.swift in Sources */,

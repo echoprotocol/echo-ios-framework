@@ -53,7 +53,7 @@ public protocol SubscriptionFacade {
      
      - Parameter completion: Callback which returns status of subscription
  */
-    func setSubscribeCallback(completion: @escaping Completion<Bool>)
+    func setSubscribeCallback(completion: @escaping Completion<Void>)
     
 /**
      Adding a listener to the account change

@@ -29,6 +29,7 @@ class GlobalPropertiesSubscribeTests: XCTestCase, SubscribeDynamicGlobalProperti
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         
         let exp = expectation(description: "testSubscribeDynamicGlobalProperties")
@@ -46,8 +47,8 @@ class GlobalPropertiesSubscribeTests: XCTestCase, SubscribeDynamicGlobalProperti
                                                     toNameOrId: Constants.defaultToName,
                                                     amount: 1, asset: Constants.defaultAsset,
                                                     assetForFee: nil,
-                                                    completion: { _ in},
-                                                    noticeHandler: nil)
+                                                    sendCompletion: { _ in},
+                                                    confirmNoticeHandler: nil)
                 })
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + Constants.timeout, execute: {

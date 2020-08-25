@@ -14,8 +14,8 @@ public struct AssetsServices {
 /**
     Implementation of [AssetsFacade](AssetsFacade),[ECHOQueueble](ECHOQueueble)
 */
-final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
-    var queues: [String: ECHOQueue]
+final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble, NoticeEventDelegate {
+    public var queues: [String: ECHOQueue]
     let services: AssetsServices
     let cryptoCore: CryptoCoreComponent
     let network: ECHONetwork
@@ -28,7 +28,6 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
         case blockData
         case chainId
         case transaction
-        case operationId
     }
     
     private enum IssueAssetKeys: String {
@@ -39,12 +38,12 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
         case blockData
         case chainId
         case transaction
-        case operationId
     }
     
     public init(services: AssetsServices,
                 cryptoCore: CryptoCoreComponent,
                 network: ECHONetwork,
+                noticeDelegateHandler: NoticeEventDelegateHandler,
                 transactionExpirationOffset: TimeInterval) {
         
         self.services = services
@@ -52,8 +51,16 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
         self.network = network
         self.transactionExpirationOffset = transactionExpirationOffset
         self.queues = [String: ECHOQueue]()
+        noticeDelegateHandler.delegate = self
     }
-    public func createAsset(nameOrId: String, wif: String, asset: Asset, completion: @escaping Completion<Bool>) {
+    
+    public func createAsset(
+        nameOrId: String,
+        wif: String,
+        asset: Asset,
+        sendCompletion: @escaping Completion<Void>,
+        confirmNoticeHandler: NoticeHandler?
+    ) {
 
         let createAssetQueue = ECHOQueue()
         addQueue(createAssetQueue)
@@ -63,11 +70,11 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
         let getAccountsOperationInitParams = (createAssetQueue,
                                              services.databaseService,
                                              getAccountsNamesOrIdsWithKeys)
-        let getAccountsOperation = GetAccountsQueueOperation<Bool>(initParams: getAccountsOperationInitParams,
-                                                                  completion: completion)
+        let getAccountsOperation = GetAccountsQueueOperation<Void>(initParams: getAccountsOperationInitParams,
+                                                                  completion: sendCompletion)
         
         // Operation
-        let createAssetOperation = self.createAssetOperation(createAssetQueue, asset, completion)
+        let createAssetOperation = self.createAssetOperation(createAssetQueue, asset, sendCompletion)
         
         // RequiredFee
         let getRequiredFeeOperationInitParams = (createAssetQueue,
@@ -76,18 +83,18 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
                                                  CreateAssetKeys.operation.rawValue,
                                                  CreateAssetKeys.fee.rawValue,
                                                  UInt(1))
-        let getRequiredFeeOperation = GetRequiredFeeQueueOperation<Bool>(initParams: getRequiredFeeOperationInitParams,
-                                                                         completion: completion)
+        let getRequiredFeeOperation = GetRequiredFeeQueueOperation<Void>(initParams: getRequiredFeeOperationInitParams,
+                                                                         completion: sendCompletion)
         
         // ChainId
         let getChainIdInitParams = (createAssetQueue, services.databaseService, CreateAssetKeys.chainId.rawValue)
-        let getChainIdOperation = GetChainIdQueueOperation<Bool>(initParams: getChainIdInitParams,
-                                                                 completion: completion)
+        let getChainIdOperation = GetChainIdQueueOperation<Void>(initParams: getChainIdInitParams,
+                                                                 completion: sendCompletion)
         
         // BlockData
         let getBlockDataInitParams = (createAssetQueue, services.databaseService, CreateAssetKeys.blockData.rawValue)
-        let getBlockDataOperation = GetBlockDataQueueOperation<Bool>(initParams: getBlockDataInitParams,
-                                                                     completion: completion)
+        let getBlockDataOperation = GetBlockDataQueueOperation<Void>(initParams: getBlockDataInitParams,
+                                                                     completion: sendCompletion)
         
         // Transaciton
         let transactionOperationInitParams = (queue: createAssetQueue,
@@ -101,16 +108,16 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
                                               blockDataKey: CreateAssetKeys.blockData.rawValue,
                                               feeKey: CreateAssetKeys.fee.rawValue,
                                               expirationOffset: transactionExpirationOffset)
-        let bildTransactionOperation = GetTransactionQueueOperation<Bool>(initParams: transactionOperationInitParams,
-                                                                          completion: completion)
+        let bildTransactionOperation = GetTransactionQueueOperation<Void>(initParams: transactionOperationInitParams,
+                                                                          completion: sendCompletion)
         
         // Send transaction
         let sendTransacionOperationInitParams = (createAssetQueue,
                                                  services.networkBroadcastService,
-                                                 CreateAssetKeys.operationId.rawValue,
+                                                 EchoQueueMainKeys.operationId.rawValue,
                                                  CreateAssetKeys.transaction.rawValue)
         let sendTransactionOperation = SendTransactionQueueOperation(initParams: sendTransacionOperationInitParams,
-                                                                     completion: completion)
+                                                                     completion: sendCompletion)
         
         // Completion
         let completionOperation = createCompletionOperation(queue: createAssetQueue)
@@ -123,24 +130,50 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
         createAssetQueue.addOperation(bildTransactionOperation)
         createAssetQueue.addOperation(sendTransactionOperation)
         
+        //Notice handler
+        if let noticeHandler = confirmNoticeHandler {
+            createAssetQueue.saveValue(noticeHandler, forKey: EchoQueueMainKeys.noticeHandler.rawValue)
+            
+            let waitingOperationParams = (
+                createAssetQueue,
+                EchoQueueMainKeys.notice.rawValue,
+                EchoQueueMainKeys.noticeError.rawValue
+            )
+            let waitOperation = WaitQueueOperation(initParams: waitingOperationParams)
+            
+            let noticeHadleOperaitonParams = (
+                createAssetQueue,
+                EchoQueueMainKeys.notice.rawValue,
+                EchoQueueMainKeys.noticeError.rawValue,
+                EchoQueueMainKeys.noticeHandler.rawValue
+            )
+            let noticeHandleOperation = NoticeHandleQueueOperation(initParams: noticeHadleOperaitonParams)
+            
+            createAssetQueue.addOperation(waitOperation)
+            createAssetQueue.addOperation(noticeHandleOperation)
+        }
+        
         createAssetQueue.addOperation(completionOperation)
     }
     
     // swiftlint:disable function_body_length
-    public func issueAsset(issuerNameOrId: String,
-                           wif: String,
-                           asset: String, amount: UInt,
-                           destinationIdOrName: String,
-                           completion: @escaping Completion<Bool>) {
-        
+    public func issueAsset(
+        issuerNameOrId: String,
+        wif: String,
+        asset: String,
+        amount: UInt,
+        destinationIdOrName: String,
+        sendCompletion: @escaping Completion<Void>,
+        confirmNoticeHandler: NoticeHandler?
+    ) {
         // Validate asset id
         do {
             let validator = IdentifierValidator()
             try validator.validateId(asset, for: .asset)
         } catch let error {
             let echoError = (error as? ECHOError) ?? ECHOError.undefined
-            let result = Result<Bool, ECHOError>(error: echoError)
-            completion(result)
+            let result = Result<Void, ECHOError>(error: echoError)
+            sendCompletion(result)
             return
         }
         
@@ -153,11 +186,11 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
         let getAccountsOperationInitParams = (issueAssetQueue,
                                              services.databaseService,
                                              getAccountsNamesOrIdsWithKeys)
-        let getAccountsOperation = GetAccountsQueueOperation<Bool>(initParams: getAccountsOperationInitParams,
-                                                                  completion: completion)
+        let getAccountsOperation = GetAccountsQueueOperation<Void>(initParams: getAccountsOperationInitParams,
+                                                                  completion: sendCompletion)
         
         // Operation
-        let createIssueAssetOperation = self.createIssueAssetOperation(issueAssetQueue, amount, asset, completion)
+        let createIssueAssetOperation = self.createIssueAssetOperation(issueAssetQueue, amount, asset, sendCompletion)
         
         // RequiredFee
         let getRequiredFeeOperationInitParams = (issueAssetQueue,
@@ -166,18 +199,18 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
                                                  IssueAssetKeys.operation.rawValue,
                                                  IssueAssetKeys.fee.rawValue,
                                                  UInt(1))
-        let getRequiredFeeOperation = GetRequiredFeeQueueOperation<Bool>(initParams: getRequiredFeeOperationInitParams,
-                                                                         completion: completion)
+        let getRequiredFeeOperation = GetRequiredFeeQueueOperation<Void>(initParams: getRequiredFeeOperationInitParams,
+                                                                         completion: sendCompletion)
         
         // ChainId
         let getChainIdInitParams = (issueAssetQueue, services.databaseService, IssueAssetKeys.chainId.rawValue)
-        let getChainIdOperation = GetChainIdQueueOperation<Bool>(initParams: getChainIdInitParams,
-                                                                 completion: completion)
+        let getChainIdOperation = GetChainIdQueueOperation<Void>(initParams: getChainIdInitParams,
+                                                                 completion: sendCompletion)
         
         // BlockData
         let getBlockDataInitParams = (issueAssetQueue, services.databaseService, CreateAssetKeys.blockData.rawValue)
-        let getBlockDataOperation = GetBlockDataQueueOperation<Bool>(initParams: getBlockDataInitParams,
-                                                                     completion: completion)
+        let getBlockDataOperation = GetBlockDataQueueOperation<Void>(initParams: getBlockDataInitParams,
+                                                                     completion: sendCompletion)
         
         // Transaciton
         let transactionOperationInitParams = (queue: issueAssetQueue,
@@ -191,16 +224,16 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
                                               blockDataKey: IssueAssetKeys.blockData.rawValue,
                                               feeKey: IssueAssetKeys.fee.rawValue,
                                               expirationOffset: transactionExpirationOffset)
-        let bildTransactionOperation = GetTransactionQueueOperation<Bool>(initParams: transactionOperationInitParams,
-                                                                          completion: completion)
+        let bildTransactionOperation = GetTransactionQueueOperation<Void>(initParams: transactionOperationInitParams,
+                                                                          completion: sendCompletion)
         
         // Send transaction
         let sendTransacionOperationInitParams = (issueAssetQueue,
                                                  services.networkBroadcastService,
-                                                 IssueAssetKeys.operationId.rawValue,
+                                                 EchoQueueMainKeys.operationId.rawValue,
                                                  IssueAssetKeys.transaction.rawValue)
         let sendTransactionOperation = SendTransactionQueueOperation(initParams: sendTransacionOperationInitParams,
-                                                                     completion: completion)
+                                                                     completion: sendCompletion)
         
         // Completion
         let completionOperation = createCompletionOperation(queue: issueAssetQueue)
@@ -212,6 +245,29 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
         issueAssetQueue.addOperation(getBlockDataOperation)
         issueAssetQueue.addOperation(bildTransactionOperation)
         issueAssetQueue.addOperation(sendTransactionOperation)
+        
+        //Notice handler
+        if let noticeHandler = confirmNoticeHandler {
+            issueAssetQueue.saveValue(noticeHandler, forKey: EchoQueueMainKeys.noticeHandler.rawValue)
+            
+            let waitingOperationParams = (
+                issueAssetQueue,
+                EchoQueueMainKeys.notice.rawValue,
+                EchoQueueMainKeys.noticeError.rawValue
+            )
+            let waitOperation = WaitQueueOperation(initParams: waitingOperationParams)
+            
+            let noticeHadleOperaitonParams = (
+                issueAssetQueue,
+                EchoQueueMainKeys.notice.rawValue,
+                EchoQueueMainKeys.noticeError.rawValue,
+                EchoQueueMainKeys.noticeHandler.rawValue
+            )
+            let noticeHandleOperation = NoticeHandleQueueOperation(initParams: noticeHadleOperaitonParams)
+            
+            issueAssetQueue.addOperation(waitOperation)
+            issueAssetQueue.addOperation(noticeHandleOperation)
+        }
         
         issueAssetQueue.addOperation(completionOperation)
     }
@@ -242,7 +298,7 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
     fileprivate func createIssueAssetOperation(_ queue: ECHOQueue,
                                                _ amount: UInt,
                                                _ asset: String,
-                                               _ completion: @escaping Completion<Bool>) -> Operation {
+                                               _ completion: @escaping Completion<Void>) -> Operation {
         
         let createIssueAssetOperation = BlockOperation()
         
@@ -269,7 +325,7 @@ final public class AssetsFacadeImp: AssetsFacade, ECHOQueueble {
     
     fileprivate func createAssetOperation(_ queue: ECHOQueue,
                                           _ asset: Asset,
-                                          _ completion: @escaping Completion<Bool>) -> Operation {
+                                          _ completion: @escaping Completion<Void>) -> Operation {
         
         let createAssetOperation = BlockOperation()
         

@@ -24,6 +24,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testStartingLib")
         var isStarted = false
@@ -106,9 +107,10 @@ class ECHOInterfaceTests: XCTestCase {
 //        echo = ECHO(settings: Settings(build: {
 //            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory, .registration]
 //            $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+//            $0.debug = true
 //        }))
 //        let exp = expectation(description: "testRegisterUser")
-//        let userName = Constants.defaultName
+//        let userName = Constants.defaultToName
 //        let wif = Constants.defaultWIF
 //        var finalResult = false
 //
@@ -137,6 +139,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory, .registration]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testRegisterUserWithInvalidEVMAddress")
         let userName = Constants.defaultToName + "test1"
@@ -149,7 +152,7 @@ class ECHOInterfaceTests: XCTestCase {
                 name: userName,
                 wif: wif,
                 evmAddress: Constants.defaultETHAddress + "1",
-                completion: { (result) in
+                sendCompletion: { (result) in
                     
                 switch result {
                 case .success:
@@ -158,7 +161,13 @@ class ECHOInterfaceTests: XCTestCase {
                     errorMessage = error.localizedDescription
                     exp.fulfill()
                 }
-            }, noticeHandler: { notice in
+            }, confirmNoticeHandler: { notice in
+                switch notice {
+                case .success:
+                    XCTFail("Register new account must fail")
+                case .failure(let error):
+                    errorMessage = error.localizedDescription
+                }
                 exp.fulfill()
             })
         }
@@ -175,6 +184,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory, .registration]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testRegisterRegisteredUser")
         let userName = Constants.defaultName
@@ -183,7 +193,7 @@ class ECHOInterfaceTests: XCTestCase {
         
         //act
         echo.start { [unowned self] (result) in
-            self.echo.registerAccount(name: userName, wif: wif, evmAddress: nil, completion: { (result) in
+            self.echo.registerAccount(name: userName, wif: wif, evmAddress: nil, sendCompletion: { (result) in
                 switch result {
                 case .success(_):
                     XCTFail("Register new account must fail")
@@ -191,7 +201,7 @@ class ECHOInterfaceTests: XCTestCase {
                     errorMessage = error.localizedDescription
                     exp.fulfill()
                 }
-            }, noticeHandler: nil)
+            }, confirmNoticeHandler: nil)
         }
         
         //assert
@@ -206,6 +216,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testGettingUser")
         var account: Account?
@@ -236,6 +247,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testGettingUserFailed")
         let userName = "vsharaev new account unreserved"
@@ -266,6 +278,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testGettingAccountHistory")
         let userId = Constants.defaultName
@@ -316,6 +329,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testGettingAccountHistoryFailed")
         let userId = "1.2.1234567"
@@ -349,6 +363,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testGettingAccountBalance")
         var accountBalaces: [AccountBalance]!
@@ -379,6 +394,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         var errorMessage: String?
         let exp = expectation(description: "testGettingAccountBalanceFailed")
@@ -409,6 +425,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testIsAccountReserved")
         var isAccReserved = false
@@ -439,6 +456,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testIsAccountReservedWithNewUser")
         var isAccReserved = false
@@ -469,6 +487,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testIsOwnedBy")
         var owned = false
@@ -500,6 +519,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testIsOwnedByFailed")
         var owned = false
@@ -532,6 +552,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testIsOwnedByWIF")
         let name = Constants.defaultName
@@ -566,6 +587,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testIsOwnedByWIFAccountNotCreated")
         let wif = "5K5bYzgBvQqWxMTMRAWchJMCre8zyRMDcENd2wq7eaXGpJbwfRJ"
@@ -596,6 +618,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testIsOwnedByWIFFailedWIF")
         let wif = Constants.defaultWIF + "abc"
@@ -631,6 +654,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testGetFee")
         let fromUser = Constants.defaultName
@@ -667,6 +691,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testGetFeeInAnotherAsset")
         let fromUser = Constants.defaultName
@@ -705,6 +730,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testGetFeeFailed")
         let fromUser = Constants.defaultName + "someString"
@@ -740,6 +766,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testGetFeeForCreateContract")
         var fee: AssetAmount!
@@ -774,6 +801,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testGetFeeForCreateContractByCode")
         var fee: AssetAmount!
@@ -808,6 +836,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testGetFeeForCallContract")
         let registrarNameOrId = Constants.defaultName
@@ -850,6 +879,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testGetFeeForCallContractByCode")
         let registrarNameOrId = Constants.defaultName
@@ -890,6 +920,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testGetFeeForCallContractInAnotherAsset")
         let registrarNameOrId = Constants.defaultName
@@ -932,6 +963,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testGetFeeForCallContractFailed")
         let registrarNameOrId = Constants.defaultName + "someString"
@@ -974,6 +1006,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testTransferWithWIF")
         let fromUser = Constants.defaultName
@@ -986,17 +1019,23 @@ class ECHOInterfaceTests: XCTestCase {
             self.echo.sendTransferOperation(fromNameOrId: fromUser,
                                             wif: wif,
                                             toNameOrId: toUser,
-                                            amount: 1,
+                                            amount: 100000000,
                                             asset: Constants.defaultAsset,
                                             assetForFee: nil,
-                                            completion: { (result) in
+                                            sendCompletion: { (result) in
                 switch result {
-                case .success(let result):
-                    isSuccess = result
+                case .success:
+                    print("Send success")
                 case .failure(let error):
                     XCTFail("Transfer must be valid \(error)")
                 }
-            }, noticeHandler: { notice in
+            }, confirmNoticeHandler: { notice in
+                switch notice {
+                case .success:
+                    isSuccess = true
+                case .failure(let error):
+                    XCTFail("Transfer must be valid \(error)")
+                }
                 exp.fulfill()
             })
         }
@@ -1013,6 +1052,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testTransferWithAssetForFeeWithWIF")
         let fromUser = Constants.defaultName
@@ -1028,15 +1068,20 @@ class ECHOInterfaceTests: XCTestCase {
                                             amount: 1,
                                             asset: Constants.defaultAsset,
                                             assetForFee: Constants.defaultAnotherAsset,
-                                            completion: { (result) in
+                                            sendCompletion: { (result) in
                 switch result {
-                case .success(let result):
-                    isSuccess = result
+                case .success:
+                    print("Send success")
                 case .failure(let error):
-                    print(error)
-                    XCTFail("Transfer must be valid")
+                    XCTFail("Transfer must be valid \(error)")
                 }
-            }, noticeHandler: { notice in
+            }, confirmNoticeHandler: { notice in
+                switch notice {
+                case .success:
+                    isSuccess = true
+                case .failure(let error):
+                    XCTFail("Transfer must be valid \(error)")
+                }
                 exp.fulfill()
             })
         }
@@ -1053,6 +1098,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testFailedTransferWithWif")
         let wif = Constants.defaultWIF + "asdf"
@@ -1069,7 +1115,7 @@ class ECHOInterfaceTests: XCTestCase {
                                             amount: 1,
                                             asset: Constants.defaultAsset,
                                             assetForFee: nil,
-                                            completion: { (result) in
+                                            sendCompletion: { (result) in
                 switch result {
                 case .success(_):
                     XCTFail("Transfer cant be valid")
@@ -1077,7 +1123,7 @@ class ECHOInterfaceTests: XCTestCase {
                     isSuccess = false
                     exp.fulfill()
                 }
-            }, noticeHandler: nil)
+            }, confirmNoticeHandler: nil)
         }
         
         //assert
@@ -1092,6 +1138,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testGetAssets")
         let assetsIds = [Constants.defaultAsset, Constants.defaultAnotherAsset]
@@ -1122,6 +1169,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testFailedGetAssets")
         let assetsIds = ["2.3.0", "2.3.2"]
@@ -1153,6 +1201,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testGetListAssets")
         let lowerBound = Constants.defaultAssetLowerBound
@@ -1184,12 +1233,14 @@ class ECHOInterfaceTests: XCTestCase {
 //        echo = ECHO(settings: Settings(build: {
 //            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
 //            $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+//            $0.debug = true
+//            $0.debug = true
 //        }))
 //        let exp = expectation(description: "testCreateAsset")
 //        var asset = Asset("")
 //        asset.symbol = "SHARAEVTEST"
 //        asset.precision = 4
-//        asset.issuer = Account("1.2.20")
+//        asset.issuer = Account("1.2.16")
 ////        asset.setBitsassetOptions(BitassetOptions(feedLifetimeSec: 86400,
 ////                                                  minimumFeeds: 7,
 ////                                                  forceSettlementDelaySec: 86400,
@@ -1211,16 +1262,27 @@ class ECHOInterfaceTests: XCTestCase {
 //        //act
 //        echo.start { [unowned self] (result) in
 //
-//            self.echo.createAsset(nameOrId: nameOrId, wif: wif, asset: asset) { (result) in
-//
-//                switch result {
-//                case .success(let isSuccess):
-//                    success = isSuccess
+//            self.echo.createAsset(
+//                nameOrId: nameOrId,
+//                wif: wif,
+//                asset: asset,
+//                sendCompletion: { result in
+//                    switch result {
+//                    case .success:
+//                        print("Send asset creation success")
+//                    case .failure(let error):
+//                        XCTFail("Create asset cant fail \(error)")
+//                    }
+//                }, confirmNoticeHandler: { notice in
+//                    switch notice {
+//                    case .failure(let error):
+//                        XCTFail("Create asset cant fail \(error)")
+//                    case .success:
+//                        success = true
+//                    }
 //                    exp.fulfill()
-//                case .failure(let error):
-//                    XCTFail("Create asset cant fail \(error)")
 //                }
-//            }
+//            )
 //        }
 //
 //        //assert
@@ -1234,6 +1296,7 @@ class ECHOInterfaceTests: XCTestCase {
 //        echo = ECHO(settings: Settings(build: {
 //            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
 //            $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+//            $0.debug = true
 //        }))
 //        let exp = expectation(description: "testIssueAsset")
 //
@@ -1243,22 +1306,31 @@ class ECHOInterfaceTests: XCTestCase {
 //
 //        //act
 //        echo.start { [unowned self] (result) in
+//            self.echo.issueAsset(
+//                issuerNameOrId: nameOrId,
+//                wif: wif,
+//                asset: Constants.defaultAnotherAsset,
+//                amount: 10000000,
+//                destinationIdOrName: Constants.defaultName,
+//                sendCompletion: { result in
+//                    switch result {
+//                    case .success:
+//                        print("Issue asset send success")
 //
-//            self.echo.issueAsset(issuerNameOrId: nameOrId,
-//                                 wif: wif,
-//                                 asset: Constants.defaultAnotherAsset,
-//                                 amount: 10000000,
-//                                 destinationIdOrName: Constants.defaultName,
-//                                 completion: { (result) in
+//                    case .failure(let error):
+//                        XCTFail("Issue asset cant fail \(error)")
+//                    }
+//                }, confirmNoticeHandler: { notice in
+//                    switch result {
+//                    case .success:
+//                        success = true
 //
-//                switch result {
-//                case .success(let isSuccess):
-//                    success = isSuccess
+//                    case .failure(let error):
+//                        XCTFail("Issue asset cant fail \(error)")
+//                    }
 //                    exp.fulfill()
-//                case .failure(let error):
-//                    XCTFail("Issue asset cant fail \(error)")
 //                }
-//            })
+//            )
 //        }
 //
 //        //assert
@@ -1273,6 +1345,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testChangePassword")
         let userName = Constants.defaultName
@@ -1282,15 +1355,28 @@ class ECHOInterfaceTests: XCTestCase {
 
         //act
         echo.start { [unowned self] (result) in
-            self.echo.changeKeys(oldWIF: wif, newWIF: newWIF, name: userName, completion: { (result) in
-                switch result {
-                case .success(let isSuccess):
-                    success = isSuccess
+            self.echo.changeKeys(
+                oldWIF: wif,
+                newWIF: newWIF,
+                name: userName,
+                sendCompletion: { result in
+                    switch result {
+                    case .success:
+                        print("Change keys send success")
+                    case .failure(let error):
+                        XCTFail("Change password cant fail \(error)")
+                        exp.fulfill()
+                    }
+                }, confirmNoticeHandler: { notice in
+                    switch notice {
+                    case .success:
+                        success = true
+                    case .failure(let error):
+                        XCTFail("Change password cant fail \(error)")
+                    }
                     exp.fulfill()
-                case .failure(let error):
-                    XCTFail("Change password cant fail \(error)")
                 }
-            })
+            )
         }
 
         //assert
@@ -1305,9 +1391,10 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testGetContractResult")
-        let contractResultId = Constants.evmContractResult
+        let contractResultId = "1.12.3"//Constants.evmContractResult
         var contractResult: ContractResultEVM!
         
         //act
@@ -1341,6 +1428,8 @@ class ECHOInterfaceTests: XCTestCase {
 //        echo = ECHO(settings: Settings(build: {
 //            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
 //            $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+//            $0.debug = true
+//            $0.debug = true
 //        }))
 //        let exp = expectation(description: "testGetx86ContractResult")
 //        let contractResultId = Constants.x86ContractResult
@@ -1376,6 +1465,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testFailGetContractResult")
         let contractResultId = "3.17.2"
@@ -1406,11 +1496,12 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testGetContractLogs")
         let contractId = Constants.logsContract
         let fromBlock = Constants.contractLogsFromBlock
-        let toBlock = Constants.contractLogsFromBlock + 2
+        let toBlock = Constants.contractLogsFromBlock
         var contractLogs: [ContractLogEnum]!
         
         //act
@@ -1426,6 +1517,7 @@ class ECHOInterfaceTests: XCTestCase {
                     exp.fulfill()
                 case .failure(let error):
                     XCTFail("Getting result cant fail \(error)")
+                    exp.fulfill()
                 }
             })
         }
@@ -1445,6 +1537,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testFailGetContractLogs")
         let contractId = "1.3.1880"
@@ -1479,6 +1572,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testGetContracts")
         let legalContractId = Constants.counterContract
@@ -1510,6 +1604,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testFailGetContracts")
         let illegalContractId = "3.16.1"
@@ -1541,6 +1636,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testGetContract")
         let legalContractId = Constants.counterContract
@@ -1577,6 +1673,8 @@ class ECHOInterfaceTests: XCTestCase {
 //        echo = ECHO(settings: Settings(build: {
 //            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
 //            $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+//            $0.debug = true
+//            $0.debug = true
 //        }))
 //        let exp = expectation(description: "testGetx86Contract")
 //        let legalContractId = Constants.x86Contract
@@ -1612,6 +1710,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testFailGetContract")
         let illegalContractId = "3.16.1"
@@ -1642,6 +1741,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testCreateContract")
         let byteCode = Constants.logContractByteCode
@@ -1659,16 +1759,22 @@ class ECHOInterfaceTests: XCTestCase {
                                      supportedAssetId: nil,
                                      ethAccuracy: false,
                                      parameters: nil,
-                                     completion: { (result) in
-                switch result {
-                case .success(let isSuccess):
-                    success = isSuccess
-                case .failure(let error):
-                    XCTFail("Creating contract cant fail \(error)")
-                }
-            }, noticeHandler: { (notice) in
-                print(notice)
-                exp.fulfill()
+                                     sendCompletion: { (result) in
+             switch result {
+                 case .success:
+                     print("Send success")
+                 case .failure(let error):
+                     XCTFail("Create contract must be valid \(error)")
+                     exp.fulfill()
+                 }
+            }, confirmNoticeHandler: { notice in
+                 switch notice {
+                 case .success:
+                     success = true
+                 case .failure(let error):
+                     XCTFail("Create contract must be valid \(error)")
+                 }
+                 exp.fulfill()
             })
         }
 
@@ -1684,6 +1790,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testCreateContractByCode")
         let byteCode = Constants.counterContractByteCode
@@ -1700,17 +1807,23 @@ class ECHOInterfaceTests: XCTestCase {
                                      byteCode: byteCode,
                                      supportedAssetId: nil,
                                      ethAccuracy: false,
-                                     completion: { (result) in
+                                     sendCompletion: { (result) in
                 switch result {
-                case .success(let isSuccess):
-                    success = isSuccess
-                case .failure(let error):
-                    XCTFail("Creating contract cant fail \(error)")
-                }
-            }, noticeHandler: { (notice) in
-                print(notice)
-                exp.fulfill()
-            })
+                  case .success:
+                      print("Send success")
+                  case .failure(let error):
+                      XCTFail("Create contract must be valid \(error)")
+                      exp.fulfill()
+                  }
+             }, confirmNoticeHandler: { notice in
+                  switch notice {
+                  case .success:
+                      success = true
+                  case .failure(let error):
+                      XCTFail("Create contract must be valid \(error)")
+                  }
+                  exp.fulfill()
+             })
         }
         
         //assert
@@ -1725,6 +1838,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testCreateContractWithWIF")
         let byteCode = Constants.logContractByteCode
@@ -1742,17 +1856,23 @@ class ECHOInterfaceTests: XCTestCase {
                                      supportedAssetId: nil,
                                      ethAccuracy: false,
                                      parameters: nil,
-                                     completion: { (result) in
-                                        switch result {
-                                        case .success(let isSuccess):
-                                            success = isSuccess
-                                        case .failure(let error):
-                                            XCTFail("Creating contract cant fail \(error)")
-                                        }
-            }, noticeHandler: { (notice) in
-                print(notice)
-                exp.fulfill()
-            })
+                                     sendCompletion: { (result) in
+              switch result {
+                  case .success:
+                      print("Send success")
+                  case .failure(let error):
+                      XCTFail("Create contract must be valid \(error)")
+                      exp.fulfill()
+                  }
+             }, confirmNoticeHandler: { notice in
+                  switch notice {
+                  case .success:
+                      success = true
+                  case .failure(let error):
+                      XCTFail("Create contract must be valid \(error)")
+                  }
+                  exp.fulfill()
+             })
         }
         
         //assert
@@ -1767,6 +1887,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testQueryContract")
         let registrarNameOrId = Constants.defaultName
@@ -1807,6 +1928,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testQueryContractByCode")
         let registrarNameOrId = Constants.defaultName
@@ -1845,6 +1967,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testCallContract")
         let registrarNameOrId = Constants.defaultName
@@ -1866,18 +1989,23 @@ class ECHOInterfaceTests: XCTestCase {
                                    contratId: contratId,
                                    methodName: methodName,
                                    methodParams: params,
-                                   completion: { (result) in
-                                    
-                switch result {
-                case .success(let isSuccess):
-                    success = isSuccess
+                                   sendCompletion: { (result) in
+            switch result {
+                case .success:
+                    print("Send success")
                 case .failure(let error):
-                    XCTFail("Call contract cant fail \(error)")
+                    XCTFail("Call contract must be valid \(error)")
+                    exp.fulfill()
                 }
-            }, noticeHandler: { (notice) in
-                print(notice)
+           }, confirmNoticeHandler: { notice in
+                switch notice {
+                case .success:
+                    success = true
+                case .failure(let error):
+                    XCTFail("Call contract must be valid \(error)")
+                }
                 exp.fulfill()
-            })
+           })
         }
 
         //assert
@@ -1892,6 +2020,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testCallContractByCode")
         let registrarNameOrId = Constants.defaultName
@@ -1911,16 +2040,21 @@ class ECHOInterfaceTests: XCTestCase {
                                    assetForFee: nil,
                                    contratId: contratId,
                                    byteCode: byteCode,
-                                   completion: { (result) in
-                                    
+                                   sendCompletion: { (result) in
                 switch result {
-                case .success(let isSuccess):
-                    success = isSuccess
+                    case .success:
+                        print("Send success")
+                    case .failure(let error):
+                        XCTFail("Call contract must be valid \(error)")
+                        exp.fulfill()
+                    }
+            }, confirmNoticeHandler: { notice in
+                switch notice {
+                case .success:
+                    success = true
                 case .failure(let error):
-                    XCTFail("Call contract cant fail \(error)")
+                    XCTFail("Call contract must be valid \(error)")
                 }
-            }, noticeHandler: { (notice) in
-                print(notice)
                 exp.fulfill()
             })
         }
@@ -1937,6 +2071,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testCustomGetUser")
         var account: UserAccount?
@@ -1972,6 +2107,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testCustomGetUserFailed")
         var account: UserAccount?
@@ -2013,6 +2149,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testGetGlobalProperties")
         var properties: GlobalProperties?
@@ -2042,6 +2179,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testGetBlock")
         let blockNumber = Constants.defaultBlockNumber
@@ -2075,6 +2213,7 @@ class ECHOInterfaceTests: XCTestCase {
 //        echo = ECHO(settings: Settings(build: {
 //            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
 //            $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+//            $0.debug = true
 //        }))
 //        let exp = expectation(description: "testGenerateEthAddress")
 //        var isSuccess = false
@@ -2084,7 +2223,7 @@ class ECHOInterfaceTests: XCTestCase {
 //            self.echo.generateEthAddress(nameOrId: Constants.defaultName,
 //                                         wif: Constants.defaultWIF,
 //                                         assetForFee: nil,
-//                                         completion: { (result) in
+//                                         sendCompletion: { (result) in
 //
 //                switch result {
 //                case .success(let result):
@@ -2092,7 +2231,7 @@ class ECHOInterfaceTests: XCTestCase {
 //                case .failure(let error):
 //                    XCTFail("Generate eth address must be valid \(error)")
 //                }
-//            }, noticeHandler: { (_) in
+//            }, confirmNoticeHandler: { (_) in
 //                exp.fulfill()
 //            })
 //        }
@@ -2109,6 +2248,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testGetEthAddress")
         var addresses: EthAddress? = nil
@@ -2138,6 +2278,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testGetFeeWithdrawEth")
         var fee: AssetAmount!
@@ -2170,6 +2311,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testWithdrawEth")
         var isSuccess = false
@@ -2181,16 +2323,22 @@ class ECHOInterfaceTests: XCTestCase {
                                   toEthAddress: Constants.defaultETHAddress,
                                   amount: 10000,
                                   assetForFee: nil,
-                                  completion: { (result) in
-                
-                switch result {
-                case .success(let result):
-                    isSuccess = result
-                case .failure(let error):
-                    XCTFail("testWithdrawEth must be valid \(error)")
-                }
-            }, noticeHandler: { (_) in
-                exp.fulfill()
+                                  sendCompletion: { (result) in
+               switch result {
+                   case .success:
+                       print("Send success")
+                   case .failure(let error):
+                       XCTFail("Withdraw must be valid \(error)")
+                       exp.fulfill()
+                   }
+            }, confirmNoticeHandler: { notice in
+               switch notice {
+               case .success:
+                   isSuccess = true
+               case .failure(let error):
+                   XCTFail("Withdraw must be valid \(error)")
+               }
+               exp.fulfill()
             })
         }
         
@@ -2206,6 +2354,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testGetEthAccountDeposits")
         var deposits: [EthDeposit]?
@@ -2238,6 +2387,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testGetEthAccountWithdrawals")
         var withdrawals: [EthWithdrawal]?
@@ -2272,6 +2422,7 @@ class ECHOInterfaceTests: XCTestCase {
 //        echo = ECHO(settings: Settings(build: {
 //            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
 //            $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+//            $0.debug = true
 //        }))
 //        let exp = expectation(description: "testGenerateBtcAddress")
 //        var isSuccess = false
@@ -2282,7 +2433,7 @@ class ECHOInterfaceTests: XCTestCase {
 //                                         wif: Constants.defaultWIF,
 //                                         backupAddress: Constants.defaultBTCAddress,
 //                                         assetForFee: nil,
-//                                         completion: { (result) in
+//                                         sendCompletion: { (result) in
 //
 //                switch result {
 //                case .success(let result):
@@ -2290,7 +2441,7 @@ class ECHOInterfaceTests: XCTestCase {
 //                case .failure(let error):
 //                    XCTFail("Generate btc address must be valid \(error)")
 //                }
-//            }, noticeHandler: { (_) in
+//            }, confirmNoticeHandler: { (_) in
 //                exp.fulfill()
 //            })
 //        }
@@ -2307,6 +2458,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testGetBtcAddress")
         var addresses: BtcAddress? = nil
@@ -2336,6 +2488,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
             let exp = expectation(description: "testGetBtcAccountDeposits")
             var deposits: [BtcDeposit]?
@@ -2368,6 +2521,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         
         let exp = expectation(description: "testGetBtcAccountWithdrawals")
@@ -2400,6 +2554,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testGetFeeWithdrawBtc")
         var fee: AssetAmount!
@@ -2432,6 +2587,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testWithdrawBtc")
         var isSuccess = false
@@ -2443,17 +2599,23 @@ class ECHOInterfaceTests: XCTestCase {
                                   toBtcAddress: Constants.defaultBTCAddress,
                                   amount: 200000,
                                   assetForFee: nil,
-                                  completion: { (result) in
+                                  sendCompletion: { (result) in
                                   
                 switch result {
-                case .success(let result):
-                    isSuccess = result
-                case .failure(let error):
-                    XCTFail("testWithdrawalEth must be valid \(error)")
-                    exp.fulfill()
-                }
-            }, noticeHandler: { (_) in
-                exp.fulfill()
+                     case .success:
+                         print("Send success")
+                     case .failure(let error):
+                         XCTFail("Withdraw must be valid \(error)")
+                         exp.fulfill()
+                     }
+            }, confirmNoticeHandler: { notice in
+                 switch notice {
+                 case .success:
+                     isSuccess = true
+                 case .failure(let error):
+                     XCTFail("Withdraw must be valid \(error)")
+                 }
+                 exp.fulfill()
             })
         }
                                     
@@ -2471,6 +2633,7 @@ class ECHOInterfaceTests: XCTestCase {
 //        echo = ECHO(settings: Settings(build: {
 //            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
 //            $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+//            $0.debug = true
 //        }))
 //        let exp = expectation(description: "testRegisterERC20Token")
 //        var isSuccess = false
@@ -2484,7 +2647,7 @@ class ECHOInterfaceTests: XCTestCase {
 //                                         tokenSymbol: Constants.erc20TokenSymbol,
 //                                         tokenDecimals: Constants.erc20TokenDecimals,
 //                                         assetForFee: nil,
-//                                         completion: { (result) in
+//                                         sendCompletion: { (result) in
 //
 //                 switch result {
 //                 case .success(let result):
@@ -2492,7 +2655,7 @@ class ECHOInterfaceTests: XCTestCase {
 //                 case .failure(let error):
 //                     XCTFail("testRegisterERC20Token must be valid \(error)")
 //                 }
-//             }, noticeHandler: { (_) in
+//             }, confirmNoticeHandler: { (_) in
 //                 exp.fulfill()
 //             })
 //        }
@@ -2509,6 +2672,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testNotRegisteredERC20Token")
         var token: ERC20Token? = nil
@@ -2537,6 +2701,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testGetERC20Token")
         var token: ERC20Token? = nil
@@ -2564,6 +2729,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testGetERC20TokenById")
         var token: ERC20Token? = nil
@@ -2593,6 +2759,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testCheckERC20Token")
         var isERC20: Bool!
@@ -2621,6 +2788,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testGetFeeWithdrawERC20")
         var fee: AssetAmount!
@@ -2654,6 +2822,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testWithdrawERC20")
         var isSuccess = false
@@ -2666,16 +2835,23 @@ class ECHOInterfaceTests: XCTestCase {
                                     tokenId: Constants.erc20TokenEchoId,
                                     value: "1",
                                     assetForFee: nil,
-                                    completion: { (result) in
+                                    sendCompletion: { (result) in
                 
                 switch result {
-                case .success(let result):
-                    isSuccess = result
-                case .failure(let error):
-                    XCTFail("testWithdrawERC20 must be valid \(error)")
-                }
-            }, noticeHandler: { (_) in
-                exp.fulfill()
+                     case .success:
+                         print("Send success")
+                     case .failure(let error):
+                         XCTFail("Withdraw must be valid \(error)")
+                         exp.fulfill()
+                     }
+            }, confirmNoticeHandler: { notice in
+                 switch notice {
+                 case .success:
+                     isSuccess = true
+                 case .failure(let error):
+                     XCTFail("Withdraw must be valid \(error)")
+                 }
+                 exp.fulfill()
             })
         }
         
@@ -2691,6 +2867,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testGetERC20AccountDeposits")
         var deposits: [ERC20Deposit]?
@@ -2723,6 +2900,7 @@ class ECHOInterfaceTests: XCTestCase {
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
             $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
         }))
         let exp = expectation(description: "testGetERC20AccountWithdrawals")
         var withdrawals: [ERC20Withdrawal]?

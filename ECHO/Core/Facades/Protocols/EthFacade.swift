@@ -17,17 +17,19 @@ public protocol EthFacade {
      - Parameter nameOrId: Name or id
      - Parameter wif: Sender wif from account
      - Parameter assetForFee: Id of asset which is pay fee
-     - Parameter completion: Callback in which the information will return whether the transaction was successful.
-     - Parameter noticeHandler: Callback in which the information will return whether the transaction was confirmed.
+     - Parameter sendCompletion: Callback in which the information will return whether the transaction was successful send to chain.
+     - Parameter confirmNoticeHandler: Callback in which the information will return whether the transaction was confirmed or not.
      
      - Remark:
      Default asset is **"1.3.0"**
  */
-    func generateEthAddress(nameOrId: String,
-                            wif: String,
-                            assetForFee: String?,
-                            completion: @escaping Completion<Bool>,
-                            noticeHandler: NoticeHandler?)
+    func generateEthAddress(
+        nameOrId: String,
+        wif: String,
+        assetForFee: String?,
+        sendCompletion: @escaping Completion<Void>,
+        confirmNoticeHandler: NoticeHandler?
+    )
     
 /**
      Get created Ethereum addresses
@@ -35,8 +37,10 @@ public protocol EthFacade {
      - Parameter nameOrId: Name or id
      - Parameter completion: Callback in which the information will return [EthAddress](EthAddress) object (if it was created) or error
  */
-    func getEthAddress(nameOrId: String,
-                       completion: @escaping Completion<EthAddress?>)
+    func getEthAddress(
+        nameOrId: String,
+        completion: @escaping Completion<EthAddress?>
+    )
     
 /**
      Send ETH to Ethereum network to Ethereum address
@@ -45,17 +49,19 @@ public protocol EthFacade {
      - Parameter wif: Sender wif from account
      - Parameter toEthAddress: Receiver ethereum address
      - Parameter amount: Amount
-     - Parameter assetForFee: Id of asset which is pay fee     
-     - Parameter completion: Callback in which the information will return whether the transaction was successful.
-     - Parameter noticeHandler: Callback in which the information will return whether the transaction was confirmed.     
+     - Parameter assetForFee: Id of asset which is pay fee
+     - Parameter sendCompletion: Callback in which the information will return whether the transaction was successful send to chain.
+     - Parameter confirmNoticeHandler: Callback in which the information will return whether the transaction was confirmed or not.
  */
-    func withdrawEth(nameOrId: String,
-                     wif: String,
-                     toEthAddress: String,
-                     amount: UInt,
-                     assetForFee: String?,
-                     completion: @escaping Completion<Bool>,
-                     noticeHandler: NoticeHandler?)
+    func withdrawEth(
+        nameOrId: String,
+        wif: String,
+        toEthAddress: String,
+        amount: UInt,
+        assetForFee: String?,
+        sendCompletion: @escaping Completion<Void>,
+        confirmNoticeHandler: NoticeHandler?
+    )
     
 /**
      Returns all approved deposits, for the given account id or name.
@@ -63,8 +69,10 @@ public protocol EthFacade {
      - Parameter nameOrId: Name or id
      - Parameter completion: Callback in which return Deposits objects or error.
  */
-    func getEthAccountDeposits(nameOrId: String,
-                               completion: @escaping Completion<[EthDeposit]>)
+    func getEthAccountDeposits(
+        nameOrId: String,
+        completion: @escaping Completion<[EthDeposit]>
+    )
     
 /**
      Returns all approved withdrawals, for the given account id or name.
@@ -72,6 +80,8 @@ public protocol EthFacade {
      - Parameter nameOrId: Name or id
      - Parameter completion: Callback in which return Withdrawals objects or error.
  */
-    func getEthAccountWithdrawals(nameOrId: String,
-                                  completion: @escaping Completion<[EthWithdrawal]>)
+    func getEthAccountWithdrawals(
+        nameOrId: String,
+        completion: @escaping Completion<[EthWithdrawal]>
+    )
 }

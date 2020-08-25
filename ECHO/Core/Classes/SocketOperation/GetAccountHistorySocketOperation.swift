@@ -55,7 +55,7 @@ struct GetAccountHistorySocketOperation: SocketOperation {
             
             switch response.response {
             case .error(let error):
-                let result = Result<[HistoryItem], ECHOError>(error: ECHOError.internalError(error.message))
+                let result = Result<[HistoryItem], ECHOError>(error: ECHOError.internalError(error))
                 completion(result)
             case .result(let result):
                 

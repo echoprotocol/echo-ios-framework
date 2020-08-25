@@ -13,7 +13,7 @@
     - Operation for delete queue after complete
     - Cancel all operations in all queues
  */
-protocol ECHOQueueble: class {
+public protocol ECHOQueueble: class {
     
     var queues: [String: ECHOQueue] { get set }
     
@@ -21,10 +21,11 @@ protocol ECHOQueueble: class {
     func removeQueue(_ queue: ECHOQueue)
     
     func createCompletionOperation(queue: ECHOQueue) -> Operation
+    func startNextOperationIfNeedFor(_ queue: ECHOQueue)
     func cancelAllOperationInQueues()
 }
 
-extension ECHOQueueble {
+public extension ECHOQueueble {
     
     func addQueue(_ queue: ECHOQueue) {
         
@@ -53,6 +54,19 @@ extension ECHOQueueble {
         
         for queue in queues.values {
             queue.cancelAllOperations()
+        }
+    }
+    
+    func startNextOperationIfNeedFor(_ queue: ECHOQueue) {
+        
+        let waitingOperations = queue.getOperations().compactMap {
+            return $0 as? WaitQueueOperation
+        }
+        
+        waitingOperations.forEach {
+            if $0.isWaiting {
+                $0.stopWaiting()
+            }
         }
     }
 }
@@ -126,4 +140,18 @@ public final class ECHOQueue: NSObject {
     public func cancelAllOperations() {
         workingQueue.cancelAllOperations()
     }
+    
+    public func getOperations() -> [Operation] {
+        return workingQueue.operations
+    }
+}
+
+/**
+   Main keys for repeated values in EchoQueue
+*/
+public enum EchoQueueMainKeys: String {
+    case operationId
+    case notice
+    case noticeError
+    case noticeHandler
 }

@@ -14,8 +14,8 @@ struct AuthentificationFacadeServices {
 /**
     Implementation of [AuthentificationFacade](AuthentificationFacade), [ECHOQueueble](ECHOQueueble)
  */
-final public class AuthentificationFacadeImp: AuthentificationFacade, ECHOQueueble {
-    var queues: [String: ECHOQueue]
+final public class AuthentificationFacadeImp: AuthentificationFacade, ECHOQueueble, NoticeEventDelegate {
+    public var queues: [String: ECHOQueue]
     let services: AuthentificationFacadeServices
     let cryptoCore: CryptoCoreComponent
     let network: ECHONetwork
@@ -24,12 +24,14 @@ final public class AuthentificationFacadeImp: AuthentificationFacade, ECHOQueueb
     init(services: AuthentificationFacadeServices,
          cryptoCore: CryptoCoreComponent,
          network: ECHONetwork,
+         noticeDelegateHandler: NoticeEventDelegateHandler,
          transactionExpirationOffset: TimeInterval) {
         self.services = services
         self.cryptoCore = cryptoCore
         self.network = network
         self.transactionExpirationOffset = transactionExpirationOffset
         self.queues = [String: ECHOQueue]()
+        noticeDelegateHandler.delegate = self
     }
     
     public func generateRandomWIF() -> String {
@@ -140,19 +142,24 @@ final public class AuthentificationFacadeImp: AuthentificationFacade, ECHOQueueb
         case blockData
         case chainId
         case transaction
-        case operationId
     }
     
-    public func changeKeys(oldWIF: String, newWIF: String, name: String, completion: @escaping Completion<Bool>) {
+    public func changeKeys(
+        oldWIF: String,
+        newWIF: String,
+        name: String,
+        sendCompletion: @escaping Completion<Void>,
+        confirmNoticeHandler: NoticeHandler?
+    ) {
         
         let changeKeysQueue = ECHOQueue()
         addQueue(changeKeysQueue)
         
         // Account
-        let checkAccountOperation = createCheckAccountOperation(changeKeysQueue, name, oldWIF, completion)
+        let checkAccountOperation = createCheckAccountOperation(changeKeysQueue, name, oldWIF, sendCompletion)
         
         // Operation
-        let accountUpdateOperation = createAccountUpdateOperation(changeKeysQueue, name, newWIF, completion)
+        let accountUpdateOperation = createAccountUpdateOperation(changeKeysQueue, name, newWIF, sendCompletion)
         
         // RequiredFee
         let getRequiredFeeOperationInitParams = (changeKeysQueue,
@@ -161,18 +168,18 @@ final public class AuthentificationFacadeImp: AuthentificationFacade, ECHOQueueb
                                                  ChangeKeysKeys.operation.rawValue,
                                                  ChangeKeysKeys.fee.rawValue,
                                                  UInt(1))
-        let getRequiredFeeOperation = GetRequiredFeeQueueOperation<Bool>(initParams: getRequiredFeeOperationInitParams,
-                                                                         completion: completion)
+        let getRequiredFeeOperation = GetRequiredFeeQueueOperation<Void>(initParams: getRequiredFeeOperationInitParams,
+                                                                         completion: sendCompletion)
         
         // ChainId
         let getChainIdInitParams = (changeKeysQueue, services.databaseService, ChangeKeysKeys.chainId.rawValue)
-        let getChainIdOperation = GetChainIdQueueOperation<Bool>(initParams: getChainIdInitParams,
-                                                                 completion: completion)
+        let getChainIdOperation = GetChainIdQueueOperation<Void>(initParams: getChainIdInitParams,
+                                                                 completion: sendCompletion)
         
         // BlockData
         let getBlockDataInitParams = (changeKeysQueue, services.databaseService, ChangeKeysKeys.blockData.rawValue)
-        let getBlockDataOperation = GetBlockDataQueueOperation<Bool>(initParams: getBlockDataInitParams,
-                                                                     completion: completion)
+        let getBlockDataOperation = GetBlockDataQueueOperation<Void>(initParams: getBlockDataInitParams,
+                                                                     completion: sendCompletion)
         
         // Transaciton
         let transactionOperationInitParams = (queue: changeKeysQueue,
@@ -186,16 +193,16 @@ final public class AuthentificationFacadeImp: AuthentificationFacade, ECHOQueueb
                                               blockDataKey: ChangeKeysKeys.blockData.rawValue,
                                               feeKey: ChangeKeysKeys.fee.rawValue,
                                               expirationOffset: transactionExpirationOffset)
-        let bildTransactionOperation = GetTransactionQueueOperation<Bool>(initParams: transactionOperationInitParams,
-                                                                          completion: completion)
+        let bildTransactionOperation = GetTransactionQueueOperation<Void>(initParams: transactionOperationInitParams,
+                                                                          completion: sendCompletion)
         
         // Send transaction
         let sendTransacionOperationInitParams = (changeKeysQueue,
                                                  services.networkBroadcastService,
-                                                 ChangeKeysKeys.operationId.rawValue,
+                                                 EchoQueueMainKeys.operationId.rawValue,
                                                  ChangeKeysKeys.transaction.rawValue)
         let sendTransactionOperation = SendTransactionQueueOperation(initParams: sendTransacionOperationInitParams,
-                                                                     completion: completion)
+                                                                     completion: sendCompletion)
         
         // Completion
         let completionOperation = createCompletionOperation(queue: changeKeysQueue)
@@ -208,13 +215,36 @@ final public class AuthentificationFacadeImp: AuthentificationFacade, ECHOQueueb
         changeKeysQueue.addOperation(bildTransactionOperation)
         changeKeysQueue.addOperation(sendTransactionOperation)
         
+        //Notice handler
+        if let noticeHandler = confirmNoticeHandler {
+            changeKeysQueue.saveValue(noticeHandler, forKey: EchoQueueMainKeys.noticeHandler.rawValue)
+            
+            let waitingOperationParams = (
+                changeKeysQueue,
+                EchoQueueMainKeys.notice.rawValue,
+                EchoQueueMainKeys.noticeError.rawValue
+            )
+            let waitOperation = WaitQueueOperation(initParams: waitingOperationParams)
+            
+            let noticeHadleOperaitonParams = (
+                changeKeysQueue,
+                EchoQueueMainKeys.notice.rawValue,
+                EchoQueueMainKeys.noticeError.rawValue,
+                EchoQueueMainKeys.noticeHandler.rawValue
+            )
+            let noticeHandleOperation = NoticeHandleQueueOperation(initParams: noticeHadleOperaitonParams)
+            
+            changeKeysQueue.addOperation(waitOperation)
+            changeKeysQueue.addOperation(noticeHandleOperation)
+        }
+        
         changeKeysQueue.addOperation(completionOperation)
     }
     
     fileprivate func createCheckAccountOperation(_ queue: ECHOQueue,
                                                  _ name: String,
                                                  _ wif: String,
-                                                 _ completion: @escaping Completion<Bool>) -> Operation {
+                                                 _ completion: @escaping Completion<Void>) -> Operation {
         
         let checkAccountOperation = BlockOperation()
         
@@ -229,7 +259,7 @@ final public class AuthentificationFacadeImp: AuthentificationFacade, ECHOQueueb
                     queue?.saveValue(account.account, forKey: ChangeKeysKeys.account.rawValue)
                 case .failure(let error):
                     queue?.cancelAllOperations()
-                    let result = Result<Bool, ECHOError>(error: error)
+                    let result = Result<Void, ECHOError>(error: error)
                     completion(result)
                 }
                 
@@ -245,7 +275,7 @@ final public class AuthentificationFacadeImp: AuthentificationFacade, ECHOQueueb
     fileprivate func createAccountUpdateOperation(_ queue: ECHOQueue,
                                                   _ name: String,
                                                   _ wif: String,
-                                                  _ completion: @escaping Completion<Bool>) -> Operation {
+                                                  _ completion: @escaping Completion<Void>) -> Operation {
         
         let accountUpdateOperation = BlockOperation()
         
@@ -259,7 +289,7 @@ final public class AuthentificationFacadeImp: AuthentificationFacade, ECHOQueueb
             
             guard let keychain = ECHOKeychainEd25519(wif: wif, core: cryptoCore) else {
                 queue?.cancelAllOperations()
-                let result = Result<Bool, ECHOError>(error: ECHOError.invalidWIF)
+                let result = Result<Void, ECHOError>(error: ECHOError.invalidWIF)
                 completion(result)
                 return
             }
