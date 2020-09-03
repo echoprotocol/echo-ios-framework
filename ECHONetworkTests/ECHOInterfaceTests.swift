@@ -116,16 +116,22 @@ class ECHOInterfaceTests: XCTestCase {
 //
 //        //act
 //        echo.start { [unowned self] (result) in
-//            self.echo.registerAccount(name: userName, wif: wif, evmAddress: nil, completion: { (result) in
-//                switch result {
-//                case .success(let boolResult):
-//                    finalResult = boolResult
-//                case .failure(let error):
-//                    XCTFail("Getting account cant fail \(error)")
+//            self.echo.registerAccount(
+//                name: userName,
+//                wif: wif,
+//                evmAddress: nil,
+//                sendCompletion: { (result) in
+//                    switch result {
+//                    case .success:
+//                        finalResult = true
+//                    case .failure(let error):
+//                        XCTFail("Getting account cant fail \(error)")
+//                    }
+//                },
+//                confirmNoticeHandler: { notice in
+//                    exp.fulfill()
 //                }
-//            }, noticeHandler: { notice in
-//                exp.fulfill()
-//            })
+//            )
 //        }
 //
 //        //assert
@@ -2226,8 +2232,8 @@ class ECHOInterfaceTests: XCTestCase {
 //                                         sendCompletion: { (result) in
 //
 //                switch result {
-//                case .success(let result):
-//                    isSuccess = result
+//                case .success:
+//                    isSuccess = true
 //                case .failure(let error):
 //                    XCTFail("Generate eth address must be valid \(error)")
 //                }
@@ -2256,7 +2262,9 @@ class ECHOInterfaceTests: XCTestCase {
         //act
         echo.start { [unowned self] (result) in
             
-            self.echo.getEthAddress(nameOrId: Constants.defaultName, completion: { (result) in
+            self.echo.getEthAddress(
+                nameOrId: "vsharaev2121",//Constants.defaultName,
+                completion: { (result) in
                 switch result {
                 case .success(let result):
                     addresses = result
