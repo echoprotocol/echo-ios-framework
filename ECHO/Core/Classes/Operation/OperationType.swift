@@ -43,6 +43,7 @@ public enum OperationType: Int {
     case balanceClaimOperation
     case balanceFreezeOperation
     case balanceUnfreezeOperation                   // 30 // VIRTUAL
+    case requestBalanceUnfreezeOperation
     case contractCreateOperation
     case contractCallOperation
     case contractInternalCreateOperation            // VIRTUAL
@@ -51,8 +52,8 @@ public enum OperationType: Int {
     case contractUpdateOperation
     case contractFundPoolOperation
     case contractWhitelistOperation
-    case sidechainETHCreateAddressOperation
-    case sidechainETHApproveAddressOperation        // 40
+    case sidechainETHCreateAddressOperation         // 40
+    case sidechainETHApproveAddressOperation
     case sidechainETHDepositOperation
     case sidechainETHSendDepositOperation
     case sidechainETHWithdrawOperation
@@ -63,8 +64,8 @@ public enum OperationType: Int {
     // swiftlint:enable variable_name
     case sidechainIssueOperation                    // VIRTUAL
     case sidechainBurnOperation                     // VIRTUAL
-    case sidechainERC20RegisterTokenOperation
-    case sidechainERC20DepositTokenOperation        // 50
+    case sidechainERC20RegisterTokenOperation       // 50
+    case sidechainERC20DepositTokenOperation
     case sidechainERC20SendDepositTokenOperation
     case sidechainERC20WithdrawTokenOperation
     case sidechainERC20SendWithdrawTokenOperation
@@ -77,8 +78,8 @@ public enum OperationType: Int {
     // swiftlint:disable variable_name
     case sidechainBTCCreateIntermediateDepositOperation
     // swiftlint:enable variable_name
-    case sidechainBTCIntermediateDepositOperation
-    case sidechainBTCDepositOperation               // 60
+    case sidechainBTCIntermediateDepositOperation   // 60
+    case sidechainBTCDepositOperation
     case sidechainBTCWithdrawOperation
     case sidechainBTCAggregateOperation
     case sidechainBTCApproveAggregateOperation
@@ -86,7 +87,7 @@ public enum OperationType: Int {
     case evmAddressRegisterOperation
     case didCreateOperation
     case didUpdateOperation
-    case didDeleteOperation                         //68
+    case didDeleteOperation                         //69
 }
 
 struct OperationDecoder {

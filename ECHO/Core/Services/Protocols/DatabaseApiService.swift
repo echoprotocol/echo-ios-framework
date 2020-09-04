@@ -215,10 +215,10 @@ protocol DatabaseApiService: BaseApiService {
 /**
     Returns information about erc20 token, if exist.
     
-    - Parameter tokenAddressOrId: Token address in Ethereum network or tokenId in Echo network
+    - Parameter by: Token address in Ethereum network or token id in Echo network or contract id in Echo network
     - Parameter completion: Callback in which return ERC20Token if exist object or error.
 */
-    func getERC20Token(tokenAddressOrId: String,
+    func getERC20Token(by value: String,
                        completion: @escaping Completion<ERC20Token?>)
     
 /**

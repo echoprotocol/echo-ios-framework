@@ -358,12 +358,12 @@ extension BtcService {
 
 extension ERC20Service {
     
-    func getERC20Token(tokenAddressOrId: String, completion: @escaping Completion<ERC20Token?>) {
+    func getERC20Token(by value: String, completion: @escaping Completion<ERC20Token?>) {
         
         let operation = GetERC20TokenSocketOperation(method: .call,
                                                      operationId: socketCore.nextOperationId(),
                                                      apiId: apiIdentifire,
-                                                     ethAddressOrId: tokenAddressOrId,
+                                                     ethAddressOrId: value,
                                                      completion: completion)
         
         socketCore.send(operation: operation)
