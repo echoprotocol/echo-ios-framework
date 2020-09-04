@@ -1,5 +1,5 @@
 //
-//  ERC20Facede.swift
+//  ERC20Facade.swift
 //  ECHO
 //
 //  Created by Vladimir Sharaev on 29.11.2019.
@@ -38,6 +38,7 @@ public protocol ERC20Facade {
         sendCompletion: @escaping Completion<Void>,
         confirmNoticeHandler: NoticeHandler?
     )
+    
 /**
     Returns information about erc20 token by token address, if exist.
     
@@ -57,6 +58,17 @@ public protocol ERC20Facade {
 */
     func getERC20Token(
         tokenId: String,
+        completion: @escaping Completion<ERC20Token?>
+    )
+    
+/**
+    Returns information about erc20 token by token id, if exist.
+    
+    - Parameter contractId: Token contract id in Echo network
+    - Parameter completion: Callback in which return ERC20Token if exist object or error.
+*/
+    func getERC20Token(
+        contractId: String,
         completion: @escaping Completion<ERC20Token?>
     )
     

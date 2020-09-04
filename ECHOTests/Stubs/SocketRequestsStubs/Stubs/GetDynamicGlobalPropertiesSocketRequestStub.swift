@@ -14,7 +14,7 @@ struct GetDynamicGlobalPropertiesSocketRequestStub: SocketRequestStub {
     
     func createResponce(id: Int) -> String {
         return """
-            {"id":\(id),"jsonrpc":"2.0","result":{"id":"2.1.0","head_block_number":1957,"head_block_id":"000007a5ef34b1b29cb31547fce4c4bca29c7763","time":"2019-10-14T16:23:16","next_maintenance_time":"2019-10-15T00:00:00","last_budget_time":"1970-01-01T00:00:00","committee_budget":0,"accounts_registered_this_interval":11,"dynamic_flags":0,"last_irreversible_block_num":1942,"last_rand_quantity":"34ff91788921ff3c4d1f646c0e226026643005f91bd484673c7bf57d573ce99e","extensions":[]}}
+            {"id":\(id),"result":{"id":"2.1.0","head_block_number":123,"head_block_id":"0000007ba644bc63a87141e730e062e98763b6b3","time":"2020-09-04T10:57:15","next_maintenance_time":"2020-09-05T00:00:00","last_budget_time":"1970-01-01T00:00:00","committee_budget":0,"dynamic_flags":0,"last_irreversible_block_num":108,"last_block_of_previous_interval":78,"extensions":[]}}
             """
     }
 }

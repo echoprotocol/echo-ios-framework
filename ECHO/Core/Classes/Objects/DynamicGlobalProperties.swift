@@ -25,6 +25,7 @@ public struct DynamicGlobalProperties: ECHOObject, Decodable {
         case committeeBudget = "committee_budget"
         case dynamicFlags = "dynamic_flags"
         case lastIrreversibleBlockNum = "last_irreversible_block_num"
+        case lastBlockOfPreviousInterval = "last_block_of_previous_interval"
     }
     
     public let id: String
@@ -33,6 +34,7 @@ public struct DynamicGlobalProperties: ECHOObject, Decodable {
     public let headBlockNumber: Int
     public let lastBudgetTime: String
     public let lastIrreversibleBlockNum: Int
+    public let lastBlockOfPreviousInterval: Int
     public let nextMaintenanceTime: String
     public let time: String
     public let committeeBudget: Int
@@ -44,6 +46,7 @@ public struct DynamicGlobalProperties: ECHOObject, Decodable {
         dynamicFlags = try values.decode(Int.self, forKey: .dynamicFlags)
         headBlockNumber = try values.decode(Int.self, forKey: .headBlockNumber)
         lastIrreversibleBlockNum = try values.decode(Int.self, forKey: .lastIrreversibleBlockNum)
+        lastBlockOfPreviousInterval = try values.decode(Int.self, forKey: .lastBlockOfPreviousInterval)
         committeeBudget = try values.decode(Int.self, forKey: .committeeBudget)
         headBlockId = try values.decode(String.self, forKey: .headBlockId)
         lastBudgetTime = try values.decode(String.self, forKey: .lastBudgetTime)

@@ -267,7 +267,7 @@
 		D0CB0F1B236AF7EF00A7184F /* GetERC20TokenSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CB0F1A236AF7EF00A7184F /* GetERC20TokenSocketOperation.swift */; };
 		D0CB0F1E236AFAFF00A7184F /* ERC20Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CB0F1D236AFAFF00A7184F /* ERC20Token.swift */; };
 		D0CF3F5323911181005811F7 /* SidechainERC20RegisterTokenOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CF3F5223911181005811F7 /* SidechainERC20RegisterTokenOperation.swift */; };
-		D0CF3F55239113FD005811F7 /* ERC20Facede.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CF3F54239113FD005811F7 /* ERC20Facede.swift */; };
+		D0CF3F55239113FD005811F7 /* ERC20Facade.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CF3F54239113FD005811F7 /* ERC20Facade.swift */; };
 		D0CF3F57239115F7005811F7 /* ERC20FacadeImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CF3F56239115F7005811F7 /* ERC20FacadeImp.swift */; };
 		D0CF3F5923914760005811F7 /* CheckERC20TokenSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CF3F5823914760005811F7 /* CheckERC20TokenSocketOperation.swift */; };
 		D0CF3F5B23914D92005811F7 /* GetERC20AccountDepositsSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CF3F5A23914D92005811F7 /* GetERC20AccountDepositsSocketOperation.swift */; };
@@ -593,7 +593,7 @@
 		D0CB0F1A236AF7EF00A7184F /* GetERC20TokenSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetERC20TokenSocketOperation.swift; sourceTree = "<group>"; };
 		D0CB0F1D236AFAFF00A7184F /* ERC20Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ERC20Token.swift; sourceTree = "<group>"; };
 		D0CF3F5223911181005811F7 /* SidechainERC20RegisterTokenOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidechainERC20RegisterTokenOperation.swift; sourceTree = "<group>"; };
-		D0CF3F54239113FD005811F7 /* ERC20Facede.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ERC20Facede.swift; sourceTree = "<group>"; };
+		D0CF3F54239113FD005811F7 /* ERC20Facade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ERC20Facade.swift; sourceTree = "<group>"; };
 		D0CF3F56239115F7005811F7 /* ERC20FacadeImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ERC20FacadeImp.swift; sourceTree = "<group>"; };
 		D0CF3F5823914760005811F7 /* CheckERC20TokenSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckERC20TokenSocketOperation.swift; sourceTree = "<group>"; };
 		D0CF3F5A23914D92005811F7 /* GetERC20AccountDepositsSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetERC20AccountDepositsSocketOperation.swift; sourceTree = "<group>"; };
@@ -891,7 +891,7 @@
 				D061330B21A2C836009EC456 /* CustomOperationsFacade.swift */,
 				D0ED8C1F2292B0D1002EC3EA /* EthFacade.swift */,
 				D0C911ED238FD6AF000B2AE2 /* BtcFacade.swift */,
-				D0CF3F54239113FD005811F7 /* ERC20Facede.swift */,
+				D0CF3F54239113FD005811F7 /* ERC20Facade.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -1592,7 +1592,7 @@
 				D0CB0F1E236AFAFF00A7184F /* ERC20Token.swift in Sources */,
 				D0ED8C282292DFF9002EC3EA /* GetEthAddressSocketOperation.swift in Sources */,
 				D09D746021EF590500E0F46D /* CallContractOperation.swift in Sources */,
-				D0CF3F55239113FD005811F7 /* ERC20Facede.swift in Sources */,
+				D0CF3F55239113FD005811F7 /* ERC20Facade.swift in Sources */,
 				B3A7AA4B20F8C32C002D569D /* RevealFacadeImp.swift in Sources */,
 				B30CC375214A5D15003953E3 /* AbiTypeValueModel.swift in Sources */,
 				D0C911FC239030DD000B2AE2 /* SidechainBTCWithdrawOperation.swift in Sources */,

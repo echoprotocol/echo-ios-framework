@@ -46,8 +46,10 @@ public struct GlobalPropertiesParameters: Decodable {
         case maximumAssetFeedPublishers = "maximum_asset_feed_publishers"
         case maximumAuthorityMembership = "maximum_authority_membership"
         case maxAuthorityDepth = "max_authority_depth"
+        case balanceUnfreezingTime = "balance_unfreezing_time"
         case echorandConfig = "echorand_config"
         case sidechainConfig = "sidechain_config"
+        case economyConfig = "economy_config"
         case gasPrice = "gas_price"
     }
     
@@ -62,8 +64,10 @@ public struct GlobalPropertiesParameters: Decodable {
     public let maximumAssetFeedPublishers: IntOrString
     public let maximumAuthorityMembership: IntOrString
     public let maxAuthorityDepth: IntOrString
+    public let balanceUnfreezingTime: IntOrString
     public let echorandConfig: EchorandConfig
     public let sidechainConfig: SidechainConfig
+    public let economyConfig: EconomyConfig
     public let gasPrice: GasPriceGlobalProperties
     
     public init(currentFees: CurrentFeesGlobalPropertiesParameters,
@@ -78,8 +82,10 @@ public struct GlobalPropertiesParameters: Decodable {
                 maximumAssetFeedPublishers: IntOrString,
                 maximumAuthorityMembership: IntOrString,
                 maxAuthorityDepth: IntOrString,
+                balanceUnfreezingTime: IntOrString,
                 echorandConfig: EchorandConfig,
                 sidechainConfig: SidechainConfig,
+                economyConfig: EconomyConfig,
                 gasPrice: GasPriceGlobalProperties) {
         
         self.currentFees = currentFees
@@ -93,8 +99,10 @@ public struct GlobalPropertiesParameters: Decodable {
         self.maximumAssetFeedPublishers = maximumAssetFeedPublishers
         self.maximumAuthorityMembership = maximumAuthorityMembership
         self.maxAuthorityDepth = maxAuthorityDepth
+        self.balanceUnfreezingTime = balanceUnfreezingTime
         self.echorandConfig = echorandConfig
         self.sidechainConfig = sidechainConfig
+        self.economyConfig = economyConfig
         self.gasPrice = gasPrice
     }
     
@@ -113,8 +121,10 @@ public struct GlobalPropertiesParameters: Decodable {
         maximumAssetFeedPublishers = try values.decode(IntOrString.self, forKey: .maximumAssetFeedPublishers)
         maximumAuthorityMembership = try values.decode(IntOrString.self, forKey: .maximumAuthorityMembership)
         maxAuthorityDepth = try values.decode(IntOrString.self, forKey: .maxAuthorityDepth)
+        balanceUnfreezingTime = try values.decode(IntOrString.self, forKey: .balanceUnfreezingTime)
         echorandConfig = try values.decode(EchorandConfig.self, forKey: .echorandConfig)
         sidechainConfig = try values.decode(SidechainConfig.self, forKey: .sidechainConfig)
+        economyConfig = try values.decode(EconomyConfig.self, forKey: .economyConfig)
         gasPrice = try values.decode(GasPriceGlobalProperties.self, forKey: .gasPrice)
     }
 }
@@ -358,5 +368,46 @@ public struct GasPriceGlobalProperties: Decodable {
         
         price = try values.decode(IntOrString.self, forKey: .price)
         gasAmount = try values.decode(IntOrString.self, forKey: .gasAmount)
+    }
+}
+
+public struct EconomyConfig: Decodable {
+    
+    private enum EconomyConfigCodingKeys: String, CodingKey {
+        case blocksInInterval = "blocks_in_interval"
+        case maintenancesInInterval = "maintenances_in_interval"
+        case blockEmissionAmount = "block_emission_amount"
+        case blockProducerRewardRatio = "block_producer_reward_ratio"
+        case poolDivider = "pool_divider"
+    }
+    
+    public let blocksInInterval: IntOrString
+    public let maintenancesInInterval: IntOrString
+    public let blockEmissionAmount: IntOrString
+    public let blockProducerRewardRatio: IntOrString
+    public let poolDivider: IntOrString
+    
+    public init(blocksInInterval: IntOrString,
+                maintenancesInInterval: IntOrString,
+                blockEmissionAmount: IntOrString,
+                blockProducerRewardRatio: IntOrString,
+                poolDivider: IntOrString) {
+        
+        self.blocksInInterval = blocksInInterval
+        self.maintenancesInInterval = maintenancesInInterval
+        self.blockEmissionAmount = blockEmissionAmount
+        self.blockProducerRewardRatio = blockProducerRewardRatio
+        self.poolDivider = poolDivider
+    }
+    
+    public init(from decoder: Decoder) throws {
+        
+        let values = try decoder.container(keyedBy: EconomyConfigCodingKeys.self)
+        
+        blocksInInterval = try values.decode(IntOrString.self, forKey: .blocksInInterval)
+        maintenancesInInterval = try values.decode(IntOrString.self, forKey: .maintenancesInInterval)
+        blockEmissionAmount = try values.decode(IntOrString.self, forKey: .blockEmissionAmount)
+        blockProducerRewardRatio = try values.decode(IntOrString.self, forKey: .blockProducerRewardRatio)
+        poolDivider = try values.decode(IntOrString.self, forKey: .poolDivider)
     }
 }
