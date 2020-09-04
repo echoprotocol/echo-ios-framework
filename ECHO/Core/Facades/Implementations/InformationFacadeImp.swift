@@ -15,7 +15,6 @@ struct InformationFacadeServices {
 /**
     Implementation of [InformationFacade](InformationFacade), [ECHOQueueble](ECHOQueueble)
  */
-
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length
 final public class InformationFacadeImp: InformationFacade, ECHOQueueble, NoticeEventDelegate {
@@ -106,7 +105,23 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble, Notice
         //Notice handler
         if let noticeHandler = confirmNoticeHandler {
             createAccountQueue.saveValue(noticeHandler, forKey: EchoQueueMainKeys.noticeHandler.rawValue)
-            let noticeHandleOperation = createNoticeHandleOperation(createAccountQueue)
+            
+            let waitingOperationParams = (
+                createAccountQueue,
+                EchoQueueMainKeys.notice.rawValue,
+                EchoQueueMainKeys.noticeError.rawValue
+            )
+            let waitOperation = WaitQueueOperation(initParams: waitingOperationParams)
+            
+            let noticeHadleOperaitonParams = (
+                createAccountQueue,
+                EchoQueueMainKeys.notice.rawValue,
+                EchoQueueMainKeys.noticeError.rawValue,
+                EchoQueueMainKeys.noticeHandler.rawValue
+            )
+            let noticeHandleOperation = NoticeHandleQueueOperation(initParams: noticeHadleOperaitonParams)
+            
+            createAccountQueue.addOperation(waitOperation)
             createAccountQueue.addOperation(noticeHandleOperation)
         }
         
@@ -257,6 +272,8 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble, Notice
                         let result = Result<Void, ECHOError>(value: ())
                         completion(result)
                     }
+                    queue?.startNextOperation()
+                    
                 case .failure(let error):
                     queue?.cancelAllOperations()
                     let result = Result<Void, ECHOError>(error: error)
@@ -269,32 +286,6 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble, Notice
         }
         
         return operation
-    }
-    
-    fileprivate func createNoticeHandleOperation(_ queue: ECHOQueue) -> Operation {
-        
-        let noticeOperation = BlockOperation()
-        
-        noticeOperation.addExecutionBlock { [weak noticeOperation, weak queue, weak self] in
-            
-            guard noticeOperation?.isCancelled == false else { return }
-            guard self != nil else { return }
-            guard let noticeHandler: NoticeHandler = queue?.getValue(EchoQueueMainKeys.noticeHandler.rawValue) else { return }
-            
-            if let notice: ECHONotification = queue?.getValue(EchoQueueMainKeys.notice.rawValue) {
-                let result = Result<ECHONotification, ECHOError>(value: notice)
-                noticeHandler(result)
-                return
-            }
-            
-            if let noticeError: ECHOError = queue?.getValue(EchoQueueMainKeys.noticeError.rawValue) {
-                let result = Result<ECHONotification, ECHOError>(error: noticeError)
-                noticeHandler(result)
-                return
-            }
-        }
-        
-        return noticeOperation
     }
     
     public func getAccount(nameOrID: String, completion: @escaping Completion<Account>) {

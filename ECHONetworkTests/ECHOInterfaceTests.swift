@@ -116,16 +116,22 @@ class ECHOInterfaceTests: XCTestCase {
 //
 //        //act
 //        echo.start { [unowned self] (result) in
-//            self.echo.registerAccount(name: userName, wif: wif, evmAddress: nil, completion: { (result) in
-//                switch result {
-//                case .success(let boolResult):
-//                    finalResult = boolResult
-//                case .failure(let error):
-//                    XCTFail("Getting account cant fail \(error)")
+//            self.echo.registerAccount(
+//                name: userName,
+//                wif: wif,
+//                evmAddress: nil,
+//                sendCompletion: { (result) in
+//                    switch result {
+//                    case .success:
+//                        finalResult = true
+//                    case .failure(let error):
+//                        XCTFail("Getting account cant fail \(error)")
+//                    }
+//                },
+//                confirmNoticeHandler: { notice in
+//                    exp.fulfill()
 //                }
-//            }, noticeHandler: { notice in
-//                exp.fulfill()
-//            })
+//            )
 //        }
 //
 //        //assert
@@ -228,10 +234,10 @@ class ECHOInterfaceTests: XCTestCase {
                 switch result {
                 case .success(let userAccount):
                     account = userAccount
-                    exp.fulfill()
                 case .failure(let error):
                     XCTFail("Getting account cant fail \(error)")
                 }
+                exp.fulfill()
             })
         }
         
@@ -261,8 +267,8 @@ class ECHOInterfaceTests: XCTestCase {
                     XCTFail("Getting new account must fail")
                 case .failure(let error):
                     errorMessage = error.localizedDescription
-                    exp.fulfill()
                 }
+                exp.fulfill()
             })
         }
         
@@ -346,8 +352,8 @@ class ECHOInterfaceTests: XCTestCase {
                     XCTFail("Getting account history with new account must fail")
                 case .failure(let error):
                     errorMessage = error.localizedDescription
-                    exp.fulfill()
                 }
+                exp.fulfill()
             }
         }
         
@@ -375,10 +381,10 @@ class ECHOInterfaceTests: XCTestCase {
                 switch result {
                 case .success(let balances):
                     accountBalaces = balances
-                    exp.fulfill()
                 case .failure(let error):
                     XCTFail("Getting balances cant fail \(error)")
                 }
+                exp.fulfill()
             })
         }
         
@@ -408,8 +414,8 @@ class ECHOInterfaceTests: XCTestCase {
                     XCTFail("Getting balances with new account must fail")
                 case .failure(let error):
                     errorMessage = error.localizedDescription
-                    exp.fulfill()
                 }
+                exp.fulfill()
             })
         }
         
@@ -437,10 +443,10 @@ class ECHOInterfaceTests: XCTestCase {
                 switch result {
                 case .success(let isReserved):
                     isAccReserved = isReserved
-                    exp.fulfill()
                 case .failure(let error):
                     XCTFail("Reserving checking fail \(error)")
                 }
+                exp.fulfill()
             })
         }
         
@@ -468,10 +474,10 @@ class ECHOInterfaceTests: XCTestCase {
                 switch result {
                 case .success(let isReserved):
                     isAccReserved = isReserved
-                    exp.fulfill()
                 case .failure(let error):
                     XCTFail("Reserving checking fail \(error)")
                 }
+                exp.fulfill()
             })
         }
         
@@ -500,10 +506,10 @@ class ECHOInterfaceTests: XCTestCase {
                 switch result {
                 case .success(_):
                     owned = true
-                    exp.fulfill()
                 case .failure(let error):
                     XCTFail("Reserving checking fail \(error)")
                 }
+                exp.fulfill()
             })
         }
         
@@ -532,11 +538,10 @@ class ECHOInterfaceTests: XCTestCase {
                 switch result {
                 case .success(_):
                     owned = true
-                    exp.fulfill()
                 case .failure(_):
                     owned = false
-                    exp.fulfill()
                 }
+                exp.fulfill()
             })
         }
         
@@ -568,10 +573,10 @@ class ECHOInterfaceTests: XCTestCase {
                         return account.account.name == name
                     })
                     findedAccount = account
-                    exp.fulfill()
                 case .failure(let error):
                     XCTFail("Fail check is owned by WIF \(error)")
                 }
+                exp.fulfill()
             })
         }
         
@@ -599,10 +604,10 @@ class ECHOInterfaceTests: XCTestCase {
                 switch result {
                 case .success(let accounts):
                     count = accounts.count
-                    exp.fulfill()
                 case .failure(let error):
                     XCTFail("Fail check is owned by WIF \(error)")
                 }
+                exp.fulfill()
             })
         }
         
@@ -637,8 +642,8 @@ class ECHOInterfaceTests: XCTestCase {
                     default:
                         print("Must be wasInvalidCredintials error. but \(error)")
                     }
-                    exp.fulfill()
                 }
+                exp.fulfill()
             })
         }
         
@@ -672,10 +677,10 @@ class ECHOInterfaceTests: XCTestCase {
                 switch result {
                 case .success(let aFee):
                     fee = aFee
-                    exp.fulfill()
                 case .failure(let error):
                     XCTFail("Fee getting failed \(error)")
                 }
+                exp.fulfill()
             })
         }
         
@@ -710,10 +715,10 @@ class ECHOInterfaceTests: XCTestCase {
                 switch result {
                 case .success(let aFee):
                     fee = aFee
-                    exp.fulfill()
                 case .failure(let error):
                     XCTFail("Fee getting failed \(error)")
                 }
+                exp.fulfill()
             })
         }
         
@@ -750,8 +755,8 @@ class ECHOInterfaceTests: XCTestCase {
                     XCTFail("Getting fee for transfer with undefining user must fail")
                 case .failure(let error):
                     userError = error
-                    exp.fulfill()
                 }
+                exp.fulfill()
             })
         }
         
@@ -783,10 +788,10 @@ class ECHOInterfaceTests: XCTestCase {
                 switch result {
                 case .success(let aFee):
                     fee = aFee
-                    exp.fulfill()
                 case .failure(let error):
                     XCTFail("Fee for call contract getting failed \(error)")
                 }
+                exp.fulfill()
             }
         }
         
@@ -817,10 +822,10 @@ class ECHOInterfaceTests: XCTestCase {
                 switch result {
                 case .success(let aFee):
                     fee = aFee
-                    exp.fulfill()
                 case .failure(let error):
                     XCTFail("Fee for call contract getting failed \(error)")
                 }
+                exp.fulfill()
             }
         }
         
@@ -860,10 +865,10 @@ class ECHOInterfaceTests: XCTestCase {
                 switch result {
                 case .success(let aFee):
                     fee = aFee
-                    exp.fulfill()
                 case .failure(let error):
                     XCTFail("Fee for call contract getting failed \(error)")
                 }
+                exp.fulfill()
             })
         }
         
@@ -901,10 +906,10 @@ class ECHOInterfaceTests: XCTestCase {
                 switch result {
                 case .success(let aFee):
                     fee = aFee
-                    exp.fulfill()
                 case .failure(let error):
                     XCTFail("Fee for call contract getting failed \(error)")
                 }
+                exp.fulfill()
             })
         }
         
@@ -944,10 +949,10 @@ class ECHOInterfaceTests: XCTestCase {
                 switch result {
                 case .success(let aFee):
                     fee = aFee
-                    exp.fulfill()
                 case .failure(let error):
                     XCTFail("Fee for call contract getting failed \(error)")
                 }
+                exp.fulfill()
             })
         }
         
@@ -989,8 +994,8 @@ class ECHOInterfaceTests: XCTestCase {
                     XCTFail("Getting fee for transfer with undefining user must fail")
                 case .failure(let error):
                     userError = error
-                    exp.fulfill()
                 }
+                exp.fulfill()
             })
         }
         
@@ -1121,8 +1126,8 @@ class ECHOInterfaceTests: XCTestCase {
                     XCTFail("Transfer cant be valid")
                 case .failure(_):
                     isSuccess = false
-                    exp.fulfill()
                 }
+                exp.fulfill()
             }, confirmNoticeHandler: nil)
         }
         
@@ -1150,10 +1155,10 @@ class ECHOInterfaceTests: XCTestCase {
                 switch result {
                 case .success(let aAssets):
                     assets = aAssets
-                    exp.fulfill()
                 case .failure(_):
                     XCTFail("Assets getting fail")
                 }
+                exp.fulfill()
             })
         }
         
@@ -1184,8 +1189,8 @@ class ECHOInterfaceTests: XCTestCase {
                     XCTFail("Assets getting fail")
                 case .failure(let aError):
                     error = aError
-                    exp.fulfill()
                 }
+                exp.fulfill()
             })
         }
         
@@ -1214,10 +1219,10 @@ class ECHOInterfaceTests: XCTestCase {
                 switch result {
                 case .success(let aAssets):
                     assets = aAssets
-                    exp.fulfill()
                 case .failure(_):
                     XCTFail("List assets getting fail")
                 }
+                exp.fulfill()
             })
         }
         
@@ -1240,7 +1245,7 @@ class ECHOInterfaceTests: XCTestCase {
 //        var asset = Asset("")
 //        asset.symbol = "SHARAEVTEST"
 //        asset.precision = 4
-//        asset.issuer = Account("1.2.16")
+//        asset.issuer = Account("1.2.17")
 ////        asset.setBitsassetOptions(BitassetOptions(feedLifetimeSec: 86400,
 ////                                                  minimumFeeds: 7,
 ////                                                  forceSettlementDelaySec: 86400,
@@ -1394,7 +1399,7 @@ class ECHOInterfaceTests: XCTestCase {
             $0.debug = true
         }))
         let exp = expectation(description: "testGetContractResult")
-        let contractResultId = "1.12.3"//Constants.evmContractResult
+        let contractResultId = Constants.evmContractResult
         var contractResult: ContractResultEVM!
         
         //act
@@ -1408,10 +1413,10 @@ class ECHOInterfaceTests: XCTestCase {
                     case .x86(_):
                         XCTFail("Getting result cant be x86")
                     }
-                    exp.fulfill()
                 case .failure(let error):
                     XCTFail("Getting result cant fail \(error)")
                 }
+                exp.fulfill()
             })
         }
         
@@ -1479,8 +1484,8 @@ class ECHOInterfaceTests: XCTestCase {
                     XCTFail("Getting contract fail")
                 case .failure(let aError):
                     error = aError
-                    exp.fulfill()
                 }
+                exp.fulfill()
             })
         }
         
@@ -1514,11 +1519,10 @@ class ECHOInterfaceTests: XCTestCase {
                 switch result {
                 case .success(let logs):
                     contractLogs = logs
-                    exp.fulfill()
                 case .failure(let error):
                     XCTFail("Getting result cant fail \(error)")
-                    exp.fulfill()
                 }
+                exp.fulfill()
             })
         }
         
@@ -1552,11 +1556,10 @@ class ECHOInterfaceTests: XCTestCase {
                 switch result {
                 case .success(_):
                     XCTFail("Getting contract fail")
-                    exp.fulfill()
                 case .failure(let aError):
                     error = aError
-                    exp.fulfill()
                 }
+                exp.fulfill()
             })
         }
         
@@ -1585,10 +1588,10 @@ class ECHOInterfaceTests: XCTestCase {
                 switch result {
                 case .success(let res):
                     contracts = res
-                    exp.fulfill()
                 case .failure(_):
                     XCTFail("Getting contracts result cant fail")
                 }
+                exp.fulfill()
             })
         }
         
@@ -1619,8 +1622,8 @@ class ECHOInterfaceTests: XCTestCase {
                     XCTFail("Getting contract fail")
                 case .failure(let aError):
                     error = aError
-                    exp.fulfill()
                 }
+                exp.fulfill()
             })
         }
         
@@ -1653,10 +1656,10 @@ class ECHOInterfaceTests: XCTestCase {
                     case .x86(_):
                         XCTFail("Getting contracts result cant be x86 type")
                     }
-                    exp.fulfill()
                 case .failure(let error):
                     XCTFail("Getting contracts result cant fail \(error)")
                 }
+                exp.fulfill()
             })
         }
         
@@ -1724,8 +1727,8 @@ class ECHOInterfaceTests: XCTestCase {
                     XCTFail("Getting contract fail")
                 case .failure(let aError):
                     error = aError
-                    exp.fulfill()
                 }
+                exp.fulfill()
             })
         }
         
@@ -1948,10 +1951,10 @@ class ECHOInterfaceTests: XCTestCase {
                 switch result {
                 case .success(let res):
                     query = res
-                    exp.fulfill()
                 case .failure(let error):
                     XCTFail("Query contract cant fail \(error)")
                 }
+                exp.fulfill()
             }
         }
         
@@ -2083,10 +2086,10 @@ class ECHOInterfaceTests: XCTestCase {
             switch result {
             case .success(let userAccounts):
                 account = userAccounts[accountName]
-                exp.fulfill()
             case .failure(let error):
                 XCTFail("Getting account cant fail \(error)")
             }
+            exp.fulfill()
         }
         
         //act
@@ -2124,12 +2127,11 @@ class ECHOInterfaceTests: XCTestCase {
                     XCTFail("Getting new account must fail")
                 } else {
                     errorMessage = "Account didn't got"
-                    exp.fulfill()
                 }
             case .failure(let error):
                 errorMessage = error.localizedDescription
-                exp.fulfill()
             }
+            exp.fulfill()
         }
         
         //act
@@ -2160,10 +2162,10 @@ class ECHOInterfaceTests: XCTestCase {
                 switch result {
                 case .success(let globalProperties):
                     properties = globalProperties
-                    exp.fulfill()
                 case .failure(let error):
                     XCTFail("Error in getting global properties \(error)")
                 }
+                exp.fulfill()
             })
         }
         
@@ -2192,10 +2194,10 @@ class ECHOInterfaceTests: XCTestCase {
                 switch result {
                 case .success(let findedBlock):
                     block = findedBlock
-                    exp.fulfill()
                 case .failure(let error):
                     XCTFail("Error in getting block \(error)")
                 }
+                exp.fulfill()
             })
         }
         
@@ -2226,8 +2228,8 @@ class ECHOInterfaceTests: XCTestCase {
 //                                         sendCompletion: { (result) in
 //
 //                switch result {
-//                case .success(let result):
-//                    isSuccess = result
+//                case .success:
+//                    isSuccess = true
 //                case .failure(let error):
 //                    XCTFail("Generate eth address must be valid \(error)")
 //                }
@@ -2256,14 +2258,16 @@ class ECHOInterfaceTests: XCTestCase {
         //act
         echo.start { [unowned self] (result) in
             
-            self.echo.getEthAddress(nameOrId: Constants.defaultName, completion: { (result) in
+            self.echo.getEthAddress(
+                nameOrId: Constants.defaultName,
+                completion: { (result) in
                 switch result {
                 case .success(let result):
                     addresses = result
-                    exp.fulfill()
                 case .failure(let error):
                     XCTFail("Get eth address must be valid \(error)")
                 }
+                exp.fulfill()
             })
         }
         
@@ -2292,10 +2296,10 @@ class ECHOInterfaceTests: XCTestCase {
                 switch result {
                 case .success(let aFee):
                     fee = aFee
-                    exp.fulfill()
                 case .failure(let error):
                     XCTFail("testGetFeeWithdrawEth failed \(error)")
                 }
+                exp.fulfill()
             }
         }
         
@@ -2367,10 +2371,10 @@ class ECHOInterfaceTests: XCTestCase {
                 switch result {
                 case .success(let result):
                     deposits = result
-                    exp.fulfill()
                 case .failure(let error):
                     XCTFail("testGetAccountDeposits must be valid \(error)")
                 }
+                exp.fulfill()
             })
         }
         
@@ -2400,10 +2404,10 @@ class ECHOInterfaceTests: XCTestCase {
                 switch result {
                 case .success(let result):
                     withdrawals = result
-                    exp.fulfill()
                 case .failure(let error):
                     XCTFail("testGetAccountWithdrawals must be valid \(error)")
                 }
+                exp.fulfill()
             })
         }
         
@@ -2436,8 +2440,8 @@ class ECHOInterfaceTests: XCTestCase {
 //                                         sendCompletion: { (result) in
 //
 //                switch result {
-//                case .success(let result):
-//                    isSuccess = result
+//                case .success:
+//                    isSuccess = true
 //                case .failure(let error):
 //                    XCTFail("Generate btc address must be valid \(error)")
 //                }
@@ -2470,10 +2474,10 @@ class ECHOInterfaceTests: XCTestCase {
                 switch result {
                 case .success(let result):
                     addresses = result
-                    exp.fulfill()
                 case .failure(let error):
                     XCTFail("testGetBtcAddress must be valid \(error)")
                 }
+                exp.fulfill()
             })
         }
         
@@ -2500,10 +2504,10 @@ class ECHOInterfaceTests: XCTestCase {
                 switch result {
                 case .success(let result):
                     deposits = result
-                    exp.fulfill()
                 case .failure(let error):
                     XCTFail("testGetAccountDeposits must be valid \(error)")
                 }
+                exp.fulfill()
             })
         }
             
@@ -2535,10 +2539,10 @@ class ECHOInterfaceTests: XCTestCase {
                 switch result {
                 case .success(let result):
                     withdrawals = result
-                    exp.fulfill()
                 case .failure(let error):
                     XCTFail("testGetAccountWithdrawals must be valid \(error)")
                 }
+                exp.fulfill()
             })
         }
         
@@ -2568,10 +2572,10 @@ class ECHOInterfaceTests: XCTestCase {
                 switch result {
                 case .success(let aFee):
                     fee = aFee
-                    exp.fulfill()
                 case .failure(let error):
                     XCTFail("testGetFeeWithdrawBtc failed \(error)")
                 }
+                exp.fulfill()
             }
         }
         
@@ -2650,8 +2654,8 @@ class ECHOInterfaceTests: XCTestCase {
 //                                         sendCompletion: { (result) in
 //
 //                 switch result {
-//                 case .success(let result):
-//                     isSuccess = result
+//                 case .success:
+//                     isSuccess = true
 //                 case .failure(let error):
 //                     XCTFail("testRegisterERC20Token must be valid \(error)")
 //                 }
@@ -2683,10 +2687,10 @@ class ECHOInterfaceTests: XCTestCase {
                 switch result {
                 case .success(let result):
                     token = result
-                    exp.fulfill()
                 case .failure(let error):
                     XCTFail("testNotRegisteredERC20Token must be valid \(error)")
                 }
+                exp.fulfill()
             }
         }
         
@@ -2712,10 +2716,10 @@ class ECHOInterfaceTests: XCTestCase {
                 switch result {
                 case .success(let result):
                     token = result
-                    exp.fulfill()
                 case .failure(let error):
                     XCTFail("testGetERC20Token must be valid \(error)")
                 }
+                exp.fulfill()
             }
         }
         
@@ -2740,10 +2744,38 @@ class ECHOInterfaceTests: XCTestCase {
                 switch result {
                 case .success(let result):
                     token = result
-                    exp.fulfill()
                 case .failure(let error):
                     XCTFail("testGetERC20Token must be valid \(error)")
                 }
+                exp.fulfill()
+            }
+        }
+        
+        //assert
+        waitForExpectations(timeout: Constants.timeout) { error in
+            XCTAssertNotNil(token)
+        }
+    }
+    
+    func testGetERC20TokenByContractId() {
+        echo = ECHO(settings: Settings(build: {
+            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+            $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
+        }))
+        let exp = expectation(description: "testGetERC20TokenById")
+        var token: ERC20Token? = nil
+        
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.getERC20Token(contractId: Constants.erc20TokenEchoContract) { (result) in
+                switch result {
+                case .success(let result):
+                    token = result
+                case .failure(let error):
+                    XCTFail("testGetERC20Token must be valid \(error)")
+                }
+                exp.fulfill()
             }
         }
         
@@ -2770,10 +2802,10 @@ class ECHOInterfaceTests: XCTestCase {
                 switch result {
                 case .success(let result):
                     isERC20 = result
-                    exp.fulfill()
                 case .failure(let error):
                     XCTFail("testCheckERC20Token must be valid \(error)")
                 }
+                exp.fulfill()
             }
         }
         
@@ -2803,10 +2835,10 @@ class ECHOInterfaceTests: XCTestCase {
                 switch result {
                 case .success(let aFee):
                     fee = aFee
-                    exp.fulfill()
                 case .failure(let error):
                     XCTFail("testGetFeeWithdrawERC20 failed \(error)")
                 }
+                exp.fulfill()
             }
         }
         
@@ -2880,10 +2912,10 @@ class ECHOInterfaceTests: XCTestCase {
                 switch result {
                 case .success(let result):
                     deposits = result
-                    exp.fulfill()
                 case .failure(let error):
                     XCTFail("testGetAccountDeposits must be valid \(error)")
                 }
+                exp.fulfill()
             })
         }
         
@@ -2913,10 +2945,10 @@ class ECHOInterfaceTests: XCTestCase {
                 switch result {
                 case .success(let result):
                     withdrawals = result
-                    exp.fulfill()
                 case .failure(let error):
                     XCTFail("testGetAccountWithdrawals must be valid \(error)")
                 }
+                exp.fulfill()
             })
         }
         

@@ -55,10 +55,10 @@ public struct BtcAddress: ECHOObject, Decodable {
 }
 
 public struct BtcDepositAddress: Decodable {
-    let address: String
+    public let address: String
 }
 
 public struct BtcCommitteeMemberIdInScript {
-    let accountId: String
-    let script: String
+    public let accountId: String
+    public let script: String
 }

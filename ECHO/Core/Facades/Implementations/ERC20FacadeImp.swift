@@ -39,7 +39,6 @@ final public class ERC20FacadeImp: ERC20Facade, ECHOQueueble, NoticeEventDelegat
     }
     
     public func getERC20Token(tokenAddress: String, completion: @escaping Completion<ERC20Token?>) {
-        
         // Validate Ethereum address
         let ethValidator = ETHAddressValidator(cryptoCore: cryptoCore)
         guard ethValidator.isValidETHAddress(tokenAddress) else {
@@ -49,11 +48,11 @@ final public class ERC20FacadeImp: ERC20Facade, ECHOQueueble, NoticeEventDelegat
         }
         
         let address = tokenAddress.replacingOccurrences(of: "0x", with: "")
-        services.databaseService.getERC20Token(tokenAddressOrId: address, completion: completion)
+        services.databaseService.getERC20Token(by: address, completion: completion)
     }
     
     public func getERC20Token(tokenId: String, completion: @escaping Completion<ERC20Token?>) {
-        // Validate tokenId
+        // Validate token id
         do {
             let validator = IdentifierValidator()
             try validator.validateId(tokenId, for: .erc20Token)
@@ -63,11 +62,24 @@ final public class ERC20FacadeImp: ERC20Facade, ECHOQueueble, NoticeEventDelegat
             completion(result)
             return
         }
-        services.databaseService.getERC20Token(tokenAddressOrId: tokenId, completion: completion)
+        services.databaseService.getERC20Token(by: tokenId, completion: completion)
+    }
+    
+    public func getERC20Token(contractId: String, completion: @escaping Completion<ERC20Token?>) {
+        // Validate contract id
+        do {
+            let validator = IdentifierValidator()
+            try validator.validateId(contractId, for: .contract)
+        } catch let error {
+            let echoError = (error as? ECHOError) ?? ECHOError.undefined
+            let result = Result<ERC20Token?, ECHOError>(error: echoError)
+            completion(result)
+            return
+        }
+        services.databaseService.getERC20Token(by: contractId, completion: completion)
     }
     
     public func checkERC20Token(contractId: String, completion: @escaping Completion<Bool>) {
-        
         // Validate contract id
         do {
             let validator = IdentifierValidator()
