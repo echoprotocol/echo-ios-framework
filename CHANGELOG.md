@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## Changelog 5.1.0 - 2020-09-04
+Support 0.22 Echo version.
+
+### Added
+* LastBlockOfPreviousInterval field in DynamicGlobalProperties object
+* BalanceUnfreezingTime field in GlobalProperties object
+* EconomyConfig object. And economyConfig field in GlobalProperties object
+* RequestBalanceUnfreezeOperation type in OperationType enum
+* Getting erc20 token by echo contract id
+
+### Changed
+* Fields in BtcDepositAddress and BtcCommitteeMemberIdInScript objects in public now
+
 ## Changelog 5.0.0 - 2020-08-25
 Support 0.21 Echo version.
 
