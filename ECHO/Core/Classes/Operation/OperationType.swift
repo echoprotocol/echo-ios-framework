@@ -104,6 +104,10 @@ struct OperationDecoder {
         case .transferOperation: return decode(TransferOperation.self, container: container)
         case .assetCreateOperation: return decode(CreateAssetOperation.self, container: container)
         case .assetIssueOperation: return decode(IssueAssetOperation.self, container: container)
+        case .balanceClaimOperation: return decode(BalanceClaimOperation.self, container: container)
+        case .balanceFreezeOperation: return decode(BalanceFreezeOperation.self, container: container)
+        case .balanceUnfreezeOperation: return decode(BalanceUnfreezeOperation.self, container: container)
+        case .requestBalanceUnfreezeOperation: return decode(RequestBalanceUnfreezeOperation.self, container: container)
         case .contractCreateOperation: return decode(CreateContractOperation.self, container: container)
         case .contractCallOperation: return decode(CallContractOperation.self, container: container)
         case .contractInternalCallOperation: return decode(ContractInternalCallOperation.self, container: container)
@@ -127,9 +131,11 @@ struct OperationDecoder {
         }
     }
     
+    // swiftlint:disable function_body_length
     func decode(operations: [Any]) -> [BaseOperation] {
         
         var baseOperations = [BaseOperation]()
+        let decoder = JSONDecoder()
         
         for array in operations {
             
@@ -143,53 +149,61 @@ struct OperationDecoder {
             
             switch type {
             case .accountCreateOperation:
-                baseOperation = try? JSONDecoder().decode(AccountCreateOperation.self, from: data)
+                baseOperation = try? decoder.decode(AccountCreateOperation.self, from: data)
             case .accountUpdateOperation:
-                baseOperation = try? JSONDecoder().decode(AccountUpdateOperation.self, from: data)
+                baseOperation = try? decoder.decode(AccountUpdateOperation.self, from: data)
             case .transferOperation:
-                baseOperation = try? JSONDecoder().decode(TransferOperation.self, from: data)
+                baseOperation = try? decoder.decode(TransferOperation.self, from: data)
             case .assetCreateOperation:
-                baseOperation = try? JSONDecoder().decode(CreateAssetOperation.self, from: data)
+                baseOperation = try? decoder.decode(CreateAssetOperation.self, from: data)
             case .assetIssueOperation:
-                baseOperation = try? JSONDecoder().decode(IssueAssetOperation.self, from: data)
+                baseOperation = try? decoder.decode(IssueAssetOperation.self, from: data)
+            case .balanceClaimOperation:
+                baseOperation = try? decoder.decode(BalanceClaimOperation.self, from: data)
+            case .balanceFreezeOperation:
+                baseOperation = try? decoder.decode(BalanceFreezeOperation.self, from: data)
+            case .balanceUnfreezeOperation:
+                baseOperation = try? decoder.decode(BalanceUnfreezeOperation.self, from: data)
+            case .requestBalanceUnfreezeOperation:
+                baseOperation = try? decoder.decode(RequestBalanceUnfreezeOperation.self, from: data)
             case .contractCreateOperation:
-                baseOperation = try? JSONDecoder().decode(CreateContractOperation.self, from: data)
+                baseOperation = try? decoder.decode(CreateContractOperation.self, from: data)
             case .contractCallOperation:
-                baseOperation = try? JSONDecoder().decode(CallContractOperation.self, from: data)
+                baseOperation = try? decoder.decode(CallContractOperation.self, from: data)
             case .contractInternalCallOperation:
-                baseOperation = try? JSONDecoder().decode(ContractInternalCallOperation.self, from: data)
+                baseOperation = try? decoder.decode(ContractInternalCallOperation.self, from: data)
             case .sidechainETHCreateAddressOperation:
-                baseOperation = try? JSONDecoder().decode(SidechainETHCreateAddressOperation.self, from: data)
+                baseOperation = try? decoder.decode(SidechainETHCreateAddressOperation.self, from: data)
             case .blockRewardOperation:
-                baseOperation = try? JSONDecoder().decode(BlockRewardOperation.self, from: data)
+                baseOperation = try? decoder.decode(BlockRewardOperation.self, from: data)
             case .contractFundPoolOperation:
-                baseOperation = try? JSONDecoder().decode(ContractFundPoolOperation.self, from: data)
+                baseOperation = try? decoder.decode(ContractFundPoolOperation.self, from: data)
             case .sidechainETHDepositOperation:
-                baseOperation = try? JSONDecoder().decode(SidechainETHDepositOperation.self, from: data)
+                baseOperation = try? decoder.decode(SidechainETHDepositOperation.self, from: data)
             case .sidechainETHWithdrawOperation:
-                baseOperation = try? JSONDecoder().decode(SidechainETHWithdrawOperation.self, from: data)
+                baseOperation = try? decoder.decode(SidechainETHWithdrawOperation.self, from: data)
             case .sidechainETHApproveAddressOperation:
-                baseOperation = try? JSONDecoder().decode(SidechainETHApproveAddressOperation.self, from: data)
+                baseOperation = try? decoder.decode(SidechainETHApproveAddressOperation.self, from: data)
             case .sidechainIssueOperation:
-                baseOperation = try? JSONDecoder().decode(SidechainIssueOperation.self, from: data)
+                baseOperation = try? decoder.decode(SidechainIssueOperation.self, from: data)
             case .sidechainBurnOperation:
-                baseOperation = try? JSONDecoder().decode(SidechainBurnOperation.self, from: data)
+                baseOperation = try? decoder.decode(SidechainBurnOperation.self, from: data)
             case .sidechainBTCCreateAddressOperation:
-                baseOperation = try? JSONDecoder().decode(SidechainBTCCreateAddressOperation.self, from: data)
+                baseOperation = try? decoder.decode(SidechainBTCCreateAddressOperation.self, from: data)
             case .sidechainBTCCreateIntermediateDepositOperation:
-                baseOperation = try? JSONDecoder().decode(SidechainBTCCreateIntermediateDepositOperation.self, from: data)
+                baseOperation = try? decoder.decode(SidechainBTCCreateIntermediateDepositOperation.self, from: data)
             case .sidechainBTCWithdrawOperation:
-                baseOperation = try? JSONDecoder().decode(SidechainBTCWithdrawOperation.self, from: data)
+                baseOperation = try? decoder.decode(SidechainBTCWithdrawOperation.self, from: data)
             case .sidechainERC20RegisterTokenOperation:
-                baseOperation = try? JSONDecoder().decode(SidechainERC20RegisterTokenOperation.self, from: data)
+                baseOperation = try? decoder.decode(SidechainERC20RegisterTokenOperation.self, from: data)
             case .sidechainERC20WithdrawTokenOperation:
-                baseOperation = try? JSONDecoder().decode(SidechainERC20WithdrawTokenOperation.self, from: data)
+                baseOperation = try? decoder.decode(SidechainERC20WithdrawTokenOperation.self, from: data)
             case .sidechainERC20IssueOperation:
-                baseOperation = try? JSONDecoder().decode(SidechainERC20IssueOperation.self, from: data)
+                baseOperation = try? decoder.decode(SidechainERC20IssueOperation.self, from: data)
             case .sidechainERC20BurnOperation:
-                baseOperation = try? JSONDecoder().decode(SidechainERC20BurnOperation.self, from: data)
+                baseOperation = try? decoder.decode(SidechainERC20BurnOperation.self, from: data)
             case .sidechainERC20DepositTokenOperation:
-                baseOperation = try? JSONDecoder().decode(SidechainERC20DepositTokenOperation.self, from: data)
+                baseOperation = try? decoder.decode(SidechainERC20DepositTokenOperation.self, from: data)
             default:
                 break
             }
@@ -201,6 +215,7 @@ struct OperationDecoder {
         
         return baseOperations
     }
+    // swiftlint:enable function_body_length
     
     fileprivate func decode<T>(_ type: T.Type, container: UnkeyedDecodingContainer) -> T? where T: Decodable {
         

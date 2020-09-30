@@ -8,6 +8,10 @@
 
 import Foundation
 
+/**
+   Struct used to encapsulate operations related to the
+   [OperationType.balanceFreezeOperation](OperationType.balanceFreezeOperation)
+*/
 public struct BalanceFreezeOperation: BaseOperation {
     enum BalanceFreezeOperationCodingKeys: String, CodingKey {
         case fee

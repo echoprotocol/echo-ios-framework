@@ -283,11 +283,11 @@ class ECHOInterfaceTests: XCTestCase {
         //arrange
         echo = ECHO(settings: Settings(build: {
             $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
-            $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.network = ECHONetwork(url: "wss://devnet.echo-dev.io/ws", prefix: .echo, echorandPrefix: .echo)
             $0.debug = true
         }))
         let exp = expectation(description: "testGettingAccountHistory")
-        let userId = Constants.defaultName
+        let userId = "nathan"
         let startId = "1.6.0"
         let stopId = "1.6.0"
         let limit = 100
@@ -324,7 +324,7 @@ class ECHOInterfaceTests: XCTestCase {
         }
         
         //assert
-        waitForExpectations(timeout: Constants.timeout) { error in
+        waitForExpectations(timeout: 100) { error in
             XCTAssertTrue(history?.count ?? 0 > 0)
         }
     }

@@ -51,6 +51,7 @@ enum SocketOperationKeys: String {
     case getERC20AccountWithdrawals = "get_erc20_account_withdrawals"
     case requestRegistrationTask = "request_registration_task"
     case submitRegistrationSolution = "submit_registration_solution"
+    case getFrozenBalances = "get_frozen_balances"
 }
 
 typealias OperationResult<T> = (operation: SocketOperation, result: Result<T, ECHOError>)

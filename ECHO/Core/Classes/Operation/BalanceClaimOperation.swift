@@ -8,6 +8,10 @@
 
 import Foundation
 
+/**
+   Struct used to encapsulate operations related to the
+   [OperationType.balanceClaimOperation](OperationType.balanceClaimOperation)
+*/
 public struct BalanceClaimOperation: BaseOperation {
     enum BalanceClaimOperationCodingKeys: String, CodingKey {
         case fee
@@ -22,8 +26,8 @@ public struct BalanceClaimOperation: BaseOperation {
     public var type: OperationType
     public var extensions: Extensions = Extensions()
     public var fee: AssetAmount
-     
-    public let depositToAccount: Account
+    
+    public var depositToAccount: Account
     public let balanceToClaim: BalanceObject
     public let balanceOwnerKey: Address
     public let totalClaimed: AssetAmount
@@ -43,6 +47,12 @@ public struct BalanceClaimOperation: BaseOperation {
         balanceOwnerKey = Address(balanceOwnerAddress, data: nil)
         
         totalClaimed = try values.decode(AssetAmount.self, forKey: .totalClaimed)
+    }
+    
+    mutating func changeAccount(account: Account?) {
+        if let account = account {
+            self.depositToAccount = account
+        }
     }
     
     // MARK: ECHOCodable

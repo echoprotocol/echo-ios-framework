@@ -17,6 +17,7 @@ private typealias SidechainService = DatabaseApiServiceImp
 private typealias EthService = DatabaseApiServiceImp
 private typealias BtcService = DatabaseApiServiceImp
 private typealias ERC20Service = DatabaseApiServiceImp
+private typealias BalanceService = DatabaseApiServiceImp
 
 /**
      Implementation of [DatabaseApiService](DatabaseApiService)
@@ -398,6 +399,20 @@ extension ERC20Service {
                                                                   apiId: apiIdentifire,
                                                                   accountId: accountId,
                                                                   completion: completion)
+        
+        socketCore.send(operation: operation)
+    }
+}
+
+extension BalanceService {
+    func getFrozenBalances(accountID: String, completion: @escaping Completion<[FrozenBalanceObject]>) {
+        let operation = GetFrozenBalancesSocketOperation(
+            method: .call,
+            operationId: socketCore.nextOperationId(),
+            apiId: apiIdentifire,
+            accountID: accountID,
+            completion: completion
+        )
         
         socketCore.send(operation: operation)
     }

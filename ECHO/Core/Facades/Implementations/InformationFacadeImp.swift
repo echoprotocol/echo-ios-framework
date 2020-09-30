@@ -963,6 +963,13 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble, Notice
                     historyItem.operation = operation
                 }
                 
+                if var operation = operation as? BalanceClaimOperation {
+                    let account = self?.findAccountIn(accounts, accountId: operation.depositToAccount.id)
+                    operation.changeAccount(account: account)
+                    historyItem.operation = operation
+                    print(operation)
+                }
+                
                 history[index] = historyItem
             }
             

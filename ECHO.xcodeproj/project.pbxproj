@@ -13,6 +13,7 @@
 		2E4A1BD82524AAA700049447 /* BalanceUnfreezeOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4A1BD72524AAA600049447 /* BalanceUnfreezeOperation.swift */; };
 		2E4A1BDA2524AD9A00049447 /* RequestBalanceUnfreezeOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4A1BD92524AD9A00049447 /* RequestBalanceUnfreezeOperation.swift */; };
 		2E4A1BDC2524C40300049447 /* FrozenBalanceObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4A1BDB2524C40300049447 /* FrozenBalanceObject.swift */; };
+		2E683C3C25250B78002E6C39 /* GetFrozenBalancesSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E683C3B25250B78002E6C39 /* GetFrozenBalancesSocketOperation.swift */; };
 		B30AFDB12191BD9300A657D8 /* SubscribeToAccountStubHodler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30AFDB02191BD9300A657D8 /* SubscribeToAccountStubHodler.swift */; };
 		B30CACFA20FF74C80048E33E /* NetworkNodesApiServiceImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30CACEE20FF74C70048E33E /* NetworkNodesApiServiceImp.swift */; };
 		B30CACFB20FF74C80048E33E /* NetworkBroadcastApiServiceImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30CACEF20FF74C70048E33E /* NetworkBroadcastApiServiceImp.swift */; };
@@ -340,6 +341,7 @@
 		2E4A1BD72524AAA600049447 /* BalanceUnfreezeOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceUnfreezeOperation.swift; sourceTree = "<group>"; };
 		2E4A1BD92524AD9A00049447 /* RequestBalanceUnfreezeOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestBalanceUnfreezeOperation.swift; sourceTree = "<group>"; };
 		2E4A1BDB2524C40300049447 /* FrozenBalanceObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrozenBalanceObject.swift; sourceTree = "<group>"; };
+		2E683C3B25250B78002E6C39 /* GetFrozenBalancesSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFrozenBalancesSocketOperation.swift; sourceTree = "<group>"; };
 		B30AFDB02191BD9300A657D8 /* SubscribeToAccountStubHodler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribeToAccountStubHodler.swift; sourceTree = "<group>"; };
 		B30CACEA20FF74840048E33E /* Starscream.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Starscream.framework; path = Carthage/Build/iOS/Starscream.framework; sourceTree = "<group>"; };
 		B30CACEE20FF74C70048E33E /* NetworkNodesApiServiceImp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkNodesApiServiceImp.swift; sourceTree = "<group>"; };
@@ -993,6 +995,7 @@
 				D0CF3F5823914760005811F7 /* CheckERC20TokenSocketOperation.swift */,
 				D0CF3F5A23914D92005811F7 /* GetERC20AccountDepositsSocketOperation.swift */,
 				D0CF3F602391531F005811F7 /* GetERC20AccountWithdrawalsSocketOperation.swift */,
+				2E683C3B25250B78002E6C39 /* GetFrozenBalancesSocketOperation.swift */,
 			);
 			path = SocketOperation;
 			sourceTree = "<group>";
@@ -1681,6 +1684,7 @@
 				D0B6A0CA2126BA9300A78E4B /* OperationType.swift in Sources */,
 				E717CC2724ED375200C6F1BB /* WaitQueueOperation.swift in Sources */,
 				B3CA701E20F49C6800511F6A /* ReslutHandler.swift in Sources */,
+				2E683C3C25250B78002E6C39 /* GetFrozenBalancesSocketOperation.swift in Sources */,
 				B3E9A35721A2A40E001A95B4 /* NoticeEventProxy.swift in Sources */,
 				D0CB0F1B236AF7EF00A7184F /* GetERC20TokenSocketOperation.swift in Sources */,
 				D0CF3F57239115F7005811F7 /* ERC20FacadeImp.swift in Sources */,
