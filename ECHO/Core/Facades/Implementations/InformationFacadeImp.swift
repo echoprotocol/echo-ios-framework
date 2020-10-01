@@ -418,6 +418,7 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble, Notice
         let getERC20TokensOperation = createGetSidechainERC20TokensOperation(accountHistoryQueue, completion)
         let getERC20DepositsOperation = createGetSidechainERC20DepositsOperation(accountHistoryQueue, completion)
         let getERC20WithdrawsOperation = createGetSidechainERC20WithdrawsOperation(accountHistoryQueue, completion)
+
         let mergeBlocksToHistoryOperation = createMergeBlocksInHistoryOperation(accountHistoryQueue, completion)
         let mergeAccountsToHistoryOperation = createMergeAccountsInHistoryOperation(accountHistoryQueue, completion)
         let mergeAssetsToHistoryOperation = createMergeAssetsInHistoryOperation(accountHistoryQueue, completion)
@@ -441,6 +442,7 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble, Notice
         accountHistoryQueue.addOperation(getSidechainWithdrawsOperation)
         accountHistoryQueue.addOperation(getERC20TokensOperation)
         accountHistoryQueue.addOperation(getERC20WithdrawsOperation)
+        
         accountHistoryQueue.addOperation(mergeBlocksToHistoryOperation)
         accountHistoryQueue.addOperation(mergeAccountsToHistoryOperation)
         accountHistoryQueue.addOperation(mergeAssetsToHistoryOperation)
@@ -967,7 +969,24 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble, Notice
                     let account = self?.findAccountIn(accounts, accountId: operation.depositToAccount.id)
                     operation.changeAccount(account: account)
                     historyItem.operation = operation
-                    print(operation)
+                }
+                
+                if var operation = operation as? BalanceFreezeOperation {
+                    let account = self?.findAccountIn(accounts, accountId: operation.account.id)
+                    operation.changeAccount(account: account)
+                    historyItem.operation = operation
+                }
+                
+                if var operation = operation as? BalanceUnfreezeOperation {
+                    let account = self?.findAccountIn(accounts, accountId: operation.account.id)
+                    operation.changeAccount(account: account)
+                    historyItem.operation = operation
+                }
+                
+                if var operation = operation as? RequestBalanceUnfreezeOperation {
+                    let account = self?.findAccountIn(accounts, accountId: operation.account.id)
+                    operation.changeAccount(account: account)
+                    historyItem.operation = operation
                 }
                 
                 history[index] = historyItem
@@ -1337,6 +1356,32 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble, Notice
                     historyItem.operation = operation
                 }
                 
+                if var operation = operation as? BalanceClaimOperation {
+                    let feeAsset = self?.findAssetsIn(assets, assetId: operation.fee.asset.id)
+                    let totalClaimedAsset = self?.findAssetsIn(assets, assetId: operation.totalClaimed.asset.id)
+                    operation.changeAssets(totalClaimedAsset: totalClaimedAsset, feeAsset: feeAsset)
+                    historyItem.operation = operation
+                }
+                
+                if var operation = operation as? BalanceFreezeOperation {
+                    let amountAsset = self?.findAssetsIn(assets, assetId: operation.amount.asset.id)
+                    let feeAsset = self?.findAssetsIn(assets, assetId: operation.fee.asset.id)
+                    operation.changeAssets(amountAsset: amountAsset, feeAsset: feeAsset)
+                    historyItem.operation = operation
+                }
+                
+                if var operation = operation as? BalanceUnfreezeOperation {
+                    let amountAsset = self?.findAssetsIn(assets, assetId: operation.amount.asset.id)
+                    operation.changeAssets(amountAsset: amountAsset)
+                    historyItem.operation = operation
+                }
+                
+                if var operation = operation as? RequestBalanceUnfreezeOperation {
+                    let feeAsset = self?.findAssetsIn(assets, assetId: operation.fee.asset.id)
+                    operation.changeAssets(feeAsset: feeAsset)
+                    historyItem.operation = operation
+                }
+                
                 history[index] = historyItem
             }
             
@@ -1412,26 +1457,40 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble, Notice
         return array.first(where: { $0.id == withdrawId })
     }
     
-    fileprivate func findDataToLoadFromHistoryItems(_ items: [HistoryItem]) -> (blockNums: Set<Int>,
-                                                                                accountIds: Set<String>,
-                                                                                assetIds: Set<String>,
-                                                                                depositsIds: Set<String>,
-                                                                                withdrawsIds: Set<String>,
-                                                                                erc20TokensIds: Set<String>,
-                                                                                erc20DepositsIds: Set<String>,
-                                                                                erc20WithdrawsIds: Set<String>) {
-        
-        let blockNums = fingBlockNumsFromHistoryItems(items)
-        let accountIds = findAccountsIds(items)
-        let assetIds = findAssetsIds(items)
-        let depositsIds = findSidechainDeposits(items)
-        let withdrawsIds = findSidechainWithdrawals(items)
-        let erc20TokensIds = findSidechainERC20Tokens(items)
-        let erc20WithdrawsIds = findSidechainERC20Withdrawals(items)
-        let erc20DepositsIds = findSidechainERC20Deposits(items)
-        return (blockNums, accountIds, assetIds,
-                depositsIds, withdrawsIds,
-                erc20TokensIds, erc20DepositsIds, erc20WithdrawsIds)
+    fileprivate func findBalanceObject(in balances: [BalanceObject], key: String) -> BalanceObject? {
+        return balances.first(where: { $0.ownerKey == key })
+    }
+    
+    fileprivate func findDataToLoadFromHistoryItems(_ items: [HistoryItem]) -> (
+        blockNums: Set<Int>,
+        accountIds: Set<String>,
+        assetIds: Set<String>,
+        depositsIds: Set<String>,
+        withdrawsIds: Set<String>,
+        erc20TokensIds: Set<String>,
+        erc20DepositsIds: Set<String>,
+        erc20WithdrawsIds: Set<String>
+        ) {
+            
+            let blockNums = fingBlockNumsFromHistoryItems(items)
+            let accountIds = findAccountsIds(items)
+            let assetIds = findAssetsIds(items)
+            let depositsIds = findSidechainDeposits(items)
+            let withdrawsIds = findSidechainWithdrawals(items)
+            let erc20TokensIds = findSidechainERC20Tokens(items)
+            let erc20WithdrawsIds = findSidechainERC20Withdrawals(items)
+            let erc20DepositsIds = findSidechainERC20Deposits(items)
+            
+            return (
+                blockNums,
+                accountIds,
+                assetIds,
+                depositsIds,
+                withdrawsIds,
+                erc20TokensIds,
+                erc20DepositsIds,
+                erc20WithdrawsIds
+            )
     }
     
     fileprivate func fingBlockNumsFromHistoryItems(_ items: [HistoryItem]) -> Set<Int> {
@@ -1577,6 +1636,26 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble, Notice
                 accountsIds.insert(operation.account.id)
                 return
             }
+            
+            if let operation = operation as? BalanceClaimOperation {
+                accountsIds.insert(operation.depositToAccount.id)
+                return
+            }
+            
+            if let operation = operation as? BalanceFreezeOperation {
+                accountsIds.insert(operation.account.id)
+                return
+            }
+            
+            if let operation = operation as? BalanceUnfreezeOperation {
+                accountsIds.insert(operation.account.id)
+                return
+            }
+            
+            if let operation = operation as? RequestBalanceUnfreezeOperation {
+                accountsIds.insert(operation.account.id)
+                return
+            }
         }
         
         return accountsIds
@@ -1642,6 +1721,21 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble, Notice
             
             if let operation = operation as? SidechainBurnOperation {
                 assetsIds.insert(operation.value.asset.id)
+                return
+            }
+            
+            if let operation = operation as? BalanceClaimOperation {
+                assetsIds.insert(operation.totalClaimed.asset.id)
+                return
+            }
+            
+            if let operation = operation as? BalanceFreezeOperation {
+                assetsIds.insert(operation.amount.asset.id)
+                return
+            }
+            
+            if let operation = operation as? BalanceUnfreezeOperation {
+                assetsIds.insert(operation.amount.asset.id)
                 return
             }
         }

@@ -16,7 +16,7 @@ public struct BalanceClaimOperation: BaseOperation {
     enum BalanceClaimOperationCodingKeys: String, CodingKey {
         case fee
         case depositToAccount = "deposit_to_account"
-        case balanceToClaim = "balance_to_claim"
+        case balanceToClaimId = "balance_to_claim"
         case balanceOwnerKey = "balance_owner_key"
         case totalClaimed = "total_claimed"
         case extensions
@@ -28,9 +28,9 @@ public struct BalanceClaimOperation: BaseOperation {
     public var fee: AssetAmount
     
     public var depositToAccount: Account
-    public let balanceToClaim: BalanceObject
-    public let balanceOwnerKey: Address
-    public let totalClaimed: AssetAmount
+    public var balanceToClaimId: String
+    public let balanceOwnerKey: String
+    public var totalClaimed: AssetAmount
     
     public init(from decoder: Decoder) throws {
         type = .balanceClaimOperation
@@ -40,18 +40,24 @@ public struct BalanceClaimOperation: BaseOperation {
         let accountId = try values.decode(String.self, forKey: .depositToAccount)
         depositToAccount = Account(accountId)
         
-        let balanceId = try values.decode(String.self, forKey: .balanceToClaim)
-        balanceToClaim = BalanceObject(balanceId)
+        balanceToClaimId = try values.decode(String.self, forKey: .balanceToClaimId)
         
-        let balanceOwnerAddress = try values.decode(String.self, forKey: .balanceOwnerKey)
-        balanceOwnerKey = Address(balanceOwnerAddress, data: nil)
-        
+        balanceOwnerKey = try values.decode(String.self, forKey: .balanceOwnerKey)
         totalClaimed = try values.decode(AssetAmount.self, forKey: .totalClaimed)
     }
     
     mutating func changeAccount(account: Account?) {
         if let account = account {
             self.depositToAccount = account
+        }
+    }
+    
+    mutating func changeAssets(totalClaimedAsset: Asset?, feeAsset: Asset?) {
+        if let feeAsset = feeAsset {
+            fee = AssetAmount(amount: fee.amount, asset: feeAsset)
+        }
+        if let totalClaimedAsset = totalClaimedAsset {
+            totalClaimed = AssetAmount(amount: totalClaimed.amount, asset: totalClaimedAsset)
         }
     }
     

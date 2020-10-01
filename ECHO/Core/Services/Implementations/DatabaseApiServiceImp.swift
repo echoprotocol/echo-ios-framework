@@ -405,6 +405,18 @@ extension ERC20Service {
 }
 
 extension BalanceService {
+    func getBalanceObjects(publicKeys: [String], completion: @escaping Completion<[BalanceObject]>) {
+        let operation = GetBalanceObjectsSocketOperation(
+            method: .call,
+            operationId: socketCore.nextOperationId(),
+            apiId: apiIdentifire,
+            publicKeys: publicKeys,
+            completion: completion
+        )
+        
+        socketCore.send(operation: operation)
+    }
+    
     func getFrozenBalances(accountID: String, completion: @escaping Completion<[FrozenBalanceObject]>) {
         let operation = GetFrozenBalancesSocketOperation(
             method: .call,

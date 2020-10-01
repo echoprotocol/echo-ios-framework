@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E46424A252610E200CA27AE /* GetBalanceObjectsSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E464249252610E200CA27AE /* GetBalanceObjectsSocketOperation.swift */; };
 		2E4A1BD225248FD700049447 /* BalanceClaimOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4A1BD125248FD700049447 /* BalanceClaimOperation.swift */; };
 		2E4A1BD425249FCE00049447 /* BalanceObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4A1BD325249FCE00049447 /* BalanceObject.swift */; };
 		2E4A1BD62524A2D100049447 /* BalanceFreezeOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4A1BD52524A2D100049447 /* BalanceFreezeOperation.swift */; };
@@ -335,6 +336,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2E464249252610E200CA27AE /* GetBalanceObjectsSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetBalanceObjectsSocketOperation.swift; sourceTree = "<group>"; };
 		2E4A1BD125248FD700049447 /* BalanceClaimOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceClaimOperation.swift; sourceTree = "<group>"; };
 		2E4A1BD325249FCE00049447 /* BalanceObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceObject.swift; sourceTree = "<group>"; };
 		2E4A1BD52524A2D100049447 /* BalanceFreezeOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceFreezeOperation.swift; sourceTree = "<group>"; };
@@ -996,6 +998,7 @@
 				D0CF3F5A23914D92005811F7 /* GetERC20AccountDepositsSocketOperation.swift */,
 				D0CF3F602391531F005811F7 /* GetERC20AccountWithdrawalsSocketOperation.swift */,
 				2E683C3B25250B78002E6C39 /* GetFrozenBalancesSocketOperation.swift */,
+				2E464249252610E200CA27AE /* GetBalanceObjectsSocketOperation.swift */,
 			);
 			path = SocketOperation;
 			sourceTree = "<group>";
@@ -1732,6 +1735,7 @@
 				D0C911F6238FF304000B2AE2 /* SidechainBTCCreateAddressOperation.swift in Sources */,
 				D094704C212D9C7400B55A37 /* IssueAssetOperation.swift in Sources */,
 				B30CACFE20FF74C80048E33E /* DatabaseApiServiceImp.swift in Sources */,
+				2E46424A252610E200CA27AE /* GetBalanceObjectsSocketOperation.swift in Sources */,
 				B30CC365214A5B05003953E3 /* AbiCoderImp.swift in Sources */,
 				D0414AF6216758BD00CD0322 /* SetBlockAppliedCollbackSocketOperation.swift in Sources */,
 				D061330C21A2C836009EC456 /* CustomOperationsFacade.swift in Sources */,

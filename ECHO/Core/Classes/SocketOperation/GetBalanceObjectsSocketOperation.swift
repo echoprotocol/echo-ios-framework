@@ -1,30 +1,30 @@
 //
-//  GetFrozenBalances.swift
+//  GetBalanceObjectsSocketOperation.swift
 //  ECHO
 //
-//  Created by Alexander Eskin on 9/30/20.
+//  Created by Alexander Eskin on 10/1/20.
 //  Copyright © 2020 PixelPlex. All rights reserved.
 //
 
 import Foundation
 
 /**
-   Return an array of frozen balances for a set of addresses ID.
+   Return all unclaimed balance objects for a set of public keys.
 
-   - Return: [[FrozenBalanceObject]](FrozenBalanceObject)
+   - Return: [[BalanceObject]](BalanceObject)
 */
-struct GetFrozenBalancesSocketOperation: SocketOperation {
+struct GetBalanceObjectsSocketOperation: SocketOperation {
     var method: SocketOperationType
     var operationId: Int
     var apiId: Int
-    var accountID: String
-    var completion: Completion<[FrozenBalanceObject]>
+    var publicKeys: [String]
+    var completion: Completion<[BalanceObject]>
     
     func createParameters() -> [Any] {
         let array: [Any] = [
             apiId,
-            SocketOperationKeys.getFrozenBalances.rawValue,
-            [accountID]
+            SocketOperationKeys.getBalanceObjects.rawValue,
+            [publicKeys]
         ]
         
         return array
@@ -34,15 +34,15 @@ struct GetFrozenBalancesSocketOperation: SocketOperation {
         do {
             switch response.response {
             case .error(let error):
-                let result = Result<[FrozenBalanceObject], ECHOError>(error: ECHOError.internalError(error))
+                let result = Result<[BalanceObject], ECHOError>(error: ECHOError.internalError(error))
                 completion(result)
                 
             case .result(let result):
                 switch result {
                 case .array(let array):
                     let data = try JSONSerialization.data(withJSONObject: array, options: [])
-                    let balances = try JSONDecoder().decode([FrozenBalanceObject].self, from: data)
-                    let result = Result<[FrozenBalanceObject], ECHOError>(value: balances)
+                    let balances = try JSONDecoder().decode([BalanceObject].self, from: data)
+                    let result = Result<[BalanceObject], ECHOError>(value: balances)
                     completion(result)
                     
                 default:
@@ -50,13 +50,13 @@ struct GetFrozenBalancesSocketOperation: SocketOperation {
                 }
             }
         } catch {
-            let result = Result<[FrozenBalanceObject], ECHOError>(error: ECHOError.encodableMapping)
+            let result = Result<[BalanceObject], ECHOError>(error: ECHOError.encodableMapping)
             completion(result)
         }
     }
     
     func forceEnd(error: ECHOError) {
-        let result = Result<[FrozenBalanceObject], ECHOError>(error: ECHOError.connectionLost)
+        let result = Result<[BalanceObject], ECHOError>(error: ECHOError.connectionLost)
         completion(result)
     }
 }

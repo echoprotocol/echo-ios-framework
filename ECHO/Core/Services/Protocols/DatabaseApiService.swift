@@ -248,5 +248,19 @@ protocol DatabaseApiService: BaseApiService {
     func getERC20AccountWithdrawals(accountId: String,
                                     completion: @escaping Completion<[ERC20Withdrawal]>)
     
+    /**
+    Return all unclaimed balance objects for a set of public keys.
+    
+    - Parameter publicKeys: An array of ed25519 public keys
+    - Returns: An array of balances objects.
+    */
+    func getBalanceObjects(publicKeys: [String], completion: @escaping Completion<[BalanceObject]>)
+    
+    /**
+    Return an array of frozen balances for a set of addresses ID.
+    
+    - Parameter accountID: The id of account to use
+    - Returns: An array of frozen balances.
+    */
     func getFrozenBalances(accountID: String, completion: @escaping Completion<[FrozenBalanceObject]>)
 }

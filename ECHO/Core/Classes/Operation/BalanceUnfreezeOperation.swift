@@ -23,8 +23,8 @@ public struct BalanceUnfreezeOperation: BaseOperation {
     public var extensions: Extensions = Extensions()
     public var fee: AssetAmount
     
-    public let account: Account
-    public let amount: AssetAmount
+    public var account: Account
+    public var amount: AssetAmount
     
     public init(from decoder: Decoder) throws {
         type = .balanceUnfreezeOperation
@@ -35,6 +35,18 @@ public struct BalanceUnfreezeOperation: BaseOperation {
         account = Account(accountId)
         
         amount = try values.decode(AssetAmount.self, forKey: .amount)
+    }
+    
+    mutating func changeAccount(account: Account?) {
+        if let account = account {
+            self.account = account
+        }
+    }
+    
+    mutating func changeAssets(amountAsset: Asset?) {
+        if let amountAsset = amountAsset {
+            amount = AssetAmount(amount: amount.amount, asset: amountAsset)
+        }
     }
     
     // MARK: ECHOCodable
