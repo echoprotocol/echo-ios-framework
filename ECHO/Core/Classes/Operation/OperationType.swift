@@ -83,11 +83,12 @@ public enum OperationType: Int {
     case sidechainBTCWithdrawOperation
     case sidechainBTCAggregateOperation
     case sidechainBTCApproveAggregateOperation
+    case sidechainBTCBlockProcessOperation
     case blockRewardOperation                       // VIRTUAL
     case evmAddressRegisterOperation
     case didCreateOperation
     case didUpdateOperation
-    case didDeleteOperation                         //69
+    case didDeleteOperation                         //70
 }
 
 struct OperationDecoder {
