@@ -1372,7 +1372,8 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble, Notice
                 
                 if var operation = operation as? BalanceUnfreezeOperation {
                     let amountAsset = self?.findAssetsIn(assets, assetId: operation.amount.asset.id)
-                    operation.changeAssets(amountAsset: amountAsset)
+                    let feeAsset = self?.findAssetsIn(assets, assetId: operation.fee.asset.id)
+                    operation.changeAssets(amountAsset: amountAsset, feeAssset: feeAsset)
                     historyItem.operation = operation
                 }
                 
@@ -1457,11 +1458,9 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble, Notice
         return array.first(where: { $0.id == withdrawId })
     }
     
-    fileprivate func findBalanceObject(in balances: [BalanceObject], key: String) -> BalanceObject? {
-        return balances.first(where: { $0.ownerKey == key })
-    }
-    
-    fileprivate func findDataToLoadFromHistoryItems(_ items: [HistoryItem]) -> (
+    fileprivate func findDataToLoadFromHistoryItems(
+        _ items: [HistoryItem]
+    ) -> (
         blockNums: Set<Int>,
         accountIds: Set<String>,
         assetIds: Set<String>,
@@ -1470,27 +1469,26 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble, Notice
         erc20TokensIds: Set<String>,
         erc20DepositsIds: Set<String>,
         erc20WithdrawsIds: Set<String>
-        ) {
-            
-            let blockNums = fingBlockNumsFromHistoryItems(items)
-            let accountIds = findAccountsIds(items)
-            let assetIds = findAssetsIds(items)
-            let depositsIds = findSidechainDeposits(items)
-            let withdrawsIds = findSidechainWithdrawals(items)
-            let erc20TokensIds = findSidechainERC20Tokens(items)
-            let erc20WithdrawsIds = findSidechainERC20Withdrawals(items)
-            let erc20DepositsIds = findSidechainERC20Deposits(items)
-            
-            return (
-                blockNums,
-                accountIds,
-                assetIds,
-                depositsIds,
-                withdrawsIds,
-                erc20TokensIds,
-                erc20DepositsIds,
-                erc20WithdrawsIds
-            )
+    ) {
+        let blockNums = fingBlockNumsFromHistoryItems(items)
+        let accountIds = findAccountsIds(items)
+        let assetIds = findAssetsIds(items)
+        let depositsIds = findSidechainDeposits(items)
+        let withdrawsIds = findSidechainWithdrawals(items)
+        let erc20TokensIds = findSidechainERC20Tokens(items)
+        let erc20WithdrawsIds = findSidechainERC20Withdrawals(items)
+        let erc20DepositsIds = findSidechainERC20Deposits(items)
+        
+        return (
+            blockNums,
+            accountIds,
+            assetIds,
+            depositsIds,
+            withdrawsIds,
+            erc20TokensIds,
+            erc20DepositsIds,
+            erc20WithdrawsIds
+        )
     }
     
     fileprivate func fingBlockNumsFromHistoryItems(_ items: [HistoryItem]) -> Set<Int> {

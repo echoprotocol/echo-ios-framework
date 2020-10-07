@@ -43,9 +43,13 @@ public struct BalanceUnfreezeOperation: BaseOperation {
         }
     }
     
-    mutating func changeAssets(amountAsset: Asset?) {
+    mutating func changeAssets(amountAsset: Asset?, feeAssset: Asset?) {
         if let amountAsset = amountAsset {
             amount = AssetAmount(amount: amount.amount, asset: amountAsset)
+        }
+        
+        if let feeAssset = feeAssset {
+            fee = AssetAmount(amount: fee.amount, asset: feeAssset)
         }
     }
     

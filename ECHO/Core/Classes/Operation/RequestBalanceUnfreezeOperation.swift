@@ -24,8 +24,8 @@ public struct RequestBalanceUnfreezeOperation: BaseOperation {
     public var extensions: Extensions = Extensions()
     public var fee: AssetAmount
     
-    public var account: Account!
-    public let objectsToUnfreeze: [FrozenBalanceObject]
+    public var account: Account
+    public let objectsToUnfreezeIds: [String]
     
     public init(from decoder: Decoder) throws {
         type = .requestBalanceUnfreezeOperation
@@ -35,8 +35,7 @@ public struct RequestBalanceUnfreezeOperation: BaseOperation {
         let accountID = try values.decode(String.self, forKey: .account)
         account = Account(accountID)
         
-        let objectsID = try values.decode([String].self, forKey: .objectsToUnfreeze)
-        objectsToUnfreeze = objectsID.map { FrozenBalanceObject($0) }
+        objectsToUnfreezeIds = try values.decode([String].self, forKey: .objectsToUnfreeze)
     }
     
     mutating func changeAccount(account: Account?) {

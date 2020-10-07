@@ -20,7 +20,6 @@ public struct BalanceClaimOperation: BaseOperation {
         case balanceOwnerKey = "balance_owner_key"
         case totalClaimed = "total_claimed"
         case extensions
-        
     }
     
     public var type: OperationType
