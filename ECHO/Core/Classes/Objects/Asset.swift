@@ -11,7 +11,7 @@
  
     [Asset model documentation](https://dev-doc.myecho.app/structgraphene_1_1chain_1_1asset.html)
  */
-public struct Asset: ECHOObject, BytesCodable, Decodable {
+public struct Asset: ECHOObject, Decodable {
     
     enum AssetCodingKeys: String, CodingKey {
         case issuer

@@ -375,14 +375,12 @@ public struct EconomyConfig: Decodable {
     
     private enum EconomyConfigCodingKeys: String, CodingKey {
         case blocksInInterval = "blocks_in_interval"
-        case maintenancesInInterval = "maintenances_in_interval"
         case blockEmissionAmount = "block_emission_amount"
         case blockProducerRewardRatio = "block_producer_reward_ratio"
         case poolDivider = "pool_divider"
     }
     
     public let blocksInInterval: IntOrString
-    public let maintenancesInInterval: IntOrString
     public let blockEmissionAmount: IntOrString
     public let blockProducerRewardRatio: IntOrString
     public let poolDivider: IntOrString
@@ -394,7 +392,6 @@ public struct EconomyConfig: Decodable {
                 poolDivider: IntOrString) {
         
         self.blocksInInterval = blocksInInterval
-        self.maintenancesInInterval = maintenancesInInterval
         self.blockEmissionAmount = blockEmissionAmount
         self.blockProducerRewardRatio = blockProducerRewardRatio
         self.poolDivider = poolDivider
@@ -405,7 +402,6 @@ public struct EconomyConfig: Decodable {
         let values = try decoder.container(keyedBy: EconomyConfigCodingKeys.self)
         
         blocksInInterval = try values.decode(IntOrString.self, forKey: .blocksInInterval)
-        maintenancesInInterval = try values.decode(IntOrString.self, forKey: .maintenancesInInterval)
         blockEmissionAmount = try values.decode(IntOrString.self, forKey: .blockEmissionAmount)
         blockProducerRewardRatio = try values.decode(IntOrString.self, forKey: .blockProducerRewardRatio)
         poolDivider = try values.decode(IntOrString.self, forKey: .poolDivider)
