@@ -1245,7 +1245,7 @@ class ECHOInterfaceTests: XCTestCase {
 //        var asset = Asset("")
 //        asset.symbol = "SHARAEVTEST"
 //        asset.precision = 4
-//        asset.issuer = Account("1.2.17")
+//        asset.issuer = Account("1.2.62")
 ////        asset.setBitsassetOptions(BitassetOptions(feedLifetimeSec: 86400,
 ////                                                  minimumFeeds: 7,
 ////                                                  forceSettlementDelaySec: 86400,

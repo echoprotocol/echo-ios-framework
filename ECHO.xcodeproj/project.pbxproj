@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E46424A252610E200CA27AE /* GetBalanceObjectsSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E464249252610E200CA27AE /* GetBalanceObjectsSocketOperation.swift */; };
+		2E4A1BD225248FD700049447 /* BalanceClaimOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4A1BD125248FD700049447 /* BalanceClaimOperation.swift */; };
+		2E4A1BD425249FCE00049447 /* BalanceObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4A1BD325249FCE00049447 /* BalanceObject.swift */; };
+		2E4A1BD62524A2D100049447 /* BalanceFreezeOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4A1BD52524A2D100049447 /* BalanceFreezeOperation.swift */; };
+		2E4A1BD82524AAA700049447 /* BalanceUnfreezeOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4A1BD72524AAA600049447 /* BalanceUnfreezeOperation.swift */; };
+		2E4A1BDA2524AD9A00049447 /* RequestBalanceUnfreezeOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4A1BD92524AD9A00049447 /* RequestBalanceUnfreezeOperation.swift */; };
+		2E4A1BDC2524C40300049447 /* FrozenBalanceObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4A1BDB2524C40300049447 /* FrozenBalanceObject.swift */; };
+		2E683C3C25250B78002E6C39 /* GetFrozenBalancesSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E683C3B25250B78002E6C39 /* GetFrozenBalancesSocketOperation.swift */; };
 		B30AFDB12191BD9300A657D8 /* SubscribeToAccountStubHodler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30AFDB02191BD9300A657D8 /* SubscribeToAccountStubHodler.swift */; };
 		B30CACFA20FF74C80048E33E /* NetworkNodesApiServiceImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30CACEE20FF74C70048E33E /* NetworkNodesApiServiceImp.swift */; };
 		B30CACFB20FF74C80048E33E /* NetworkBroadcastApiServiceImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30CACEF20FF74C70048E33E /* NetworkBroadcastApiServiceImp.swift */; };
@@ -328,6 +336,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2E464249252610E200CA27AE /* GetBalanceObjectsSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetBalanceObjectsSocketOperation.swift; sourceTree = "<group>"; };
+		2E4A1BD125248FD700049447 /* BalanceClaimOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceClaimOperation.swift; sourceTree = "<group>"; };
+		2E4A1BD325249FCE00049447 /* BalanceObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceObject.swift; sourceTree = "<group>"; };
+		2E4A1BD52524A2D100049447 /* BalanceFreezeOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceFreezeOperation.swift; sourceTree = "<group>"; };
+		2E4A1BD72524AAA600049447 /* BalanceUnfreezeOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceUnfreezeOperation.swift; sourceTree = "<group>"; };
+		2E4A1BD92524AD9A00049447 /* RequestBalanceUnfreezeOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestBalanceUnfreezeOperation.swift; sourceTree = "<group>"; };
+		2E4A1BDB2524C40300049447 /* FrozenBalanceObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrozenBalanceObject.swift; sourceTree = "<group>"; };
+		2E683C3B25250B78002E6C39 /* GetFrozenBalancesSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFrozenBalancesSocketOperation.swift; sourceTree = "<group>"; };
 		B30AFDB02191BD9300A657D8 /* SubscribeToAccountStubHodler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribeToAccountStubHodler.swift; sourceTree = "<group>"; };
 		B30CACEA20FF74840048E33E /* Starscream.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Starscream.framework; path = Carthage/Build/iOS/Starscream.framework; sourceTree = "<group>"; };
 		B30CACEE20FF74C70048E33E /* NetworkNodesApiServiceImp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkNodesApiServiceImp.swift; sourceTree = "<group>"; };
@@ -782,6 +798,7 @@
 				B38596F920F6003500B55E59 /* AssetAmount.swift */,
 				B385970120F620B700B55E59 /* AssetOptions.swift */,
 				B30CAD1B20FFD5A10048E33E /* Authority.swift */,
+				2E4A1BD325249FCE00049447 /* BalanceObject.swift */,
 				D01BF7D7212AE77B00917DB8 /* BitassetOptions.swift */,
 				D0A1B446212FF04600294683 /* Block.swift */,
 				D0116C5B21358F120004A491 /* BlockData.swift */,
@@ -789,6 +806,7 @@
 				D0B6A0C72126B39100A78E4B /* Extensions.swift */,
 				B348D0AB210207ED00C29AE4 /* Encoding.swift */,
 				B3CA703720F4A72C00511F6A /* Error.swift */,
+				2E4A1BDB2524C40300049447 /* FrozenBalanceObject.swift */,
 				B3CA703B20F4AA3700511F6A /* HistoryItem.swift */,
 				D0814E8B2154DD6600E248AA /* ObjectType.swift */,
 				D01BF7D1212ABE4E00917DB8 /* OptionalValue.swift */,
@@ -979,6 +997,8 @@
 				D0CF3F5823914760005811F7 /* CheckERC20TokenSocketOperation.swift */,
 				D0CF3F5A23914D92005811F7 /* GetERC20AccountDepositsSocketOperation.swift */,
 				D0CF3F602391531F005811F7 /* GetERC20AccountWithdrawalsSocketOperation.swift */,
+				2E683C3B25250B78002E6C39 /* GetFrozenBalancesSocketOperation.swift */,
+				2E464249252610E200CA27AE /* GetBalanceObjectsSocketOperation.swift */,
 			);
 			path = SocketOperation;
 			sourceTree = "<group>";
@@ -1245,8 +1265,12 @@
 				D09D745D21EF58F700E0F46D /* CreateContractOperation.swift */,
 				D09D745F21EF590500E0F46D /* CallContractOperation.swift */,
 				D0D5711D224BA58B007F6CC3 /* ContractTransferOperation.swift */,
+				2E4A1BD125248FD700049447 /* BalanceClaimOperation.swift */,
+				2E4A1BD52524A2D100049447 /* BalanceFreezeOperation.swift */,
+				2E4A1BD72524AAA600049447 /* BalanceUnfreezeOperation.swift */,
 				D04DAC8723954FC000D5AF87 /* BlockRewardOperation.swift */,
 				D04DAC8D2395742900D5AF87 /* ContractFundPoolOperation.swift */,
+				2E4A1BD92524AD9A00049447 /* RequestBalanceUnfreezeOperation.swift */,
 				D0ED8C1D2292A1EF002EC3EA /* SidechainETHCreateAddressOperation.swift */,
 				D03890FA239651F6005DE0B4 /* SidechainETHApproveAddressOperation.swift */,
 				D03890F823964DE1005DE0B4 /* SidechainETHDepositOperation.swift */,
@@ -1534,6 +1558,7 @@
 				D094703E212D3ECC00B55A37 /* TransferOperation.swift in Sources */,
 				B30CC37D214A6C59003953E3 /* ECHOData.m in Sources */,
 				D01AD066221C15800062A74D /* ContractResultEnum.swift in Sources */,
+				2E4A1BD82524AAA700049447 /* BalanceUnfreezeOperation.swift in Sources */,
 				B3CA704720F532E600511F6A /* AccessSocketOperation.swift in Sources */,
 				D0ED8C222292B4E3002EC3EA /* EthFacadeImp.swift in Sources */,
 				D0CF8EE5213926CF000CA6E0 /* SocketMessengerImp.swift in Sources */,
@@ -1541,6 +1566,7 @@
 				B30CACFA20FF74C80048E33E /* NetworkNodesApiServiceImp.swift in Sources */,
 				D08B2BCD21342444000F7A9B /* FeeFacadeImp.swift in Sources */,
 				D061330A21A2BD41009EC456 /* BaseApiService.swift in Sources */,
+				2E4A1BDA2524AD9A00049447 /* RequestBalanceUnfreezeOperation.swift in Sources */,
 				B3CA704020F4FB0200511F6A /* ECHOSerializable.swift in Sources */,
 				D0C911F2238FD82B000B2AE2 /* BtcAddress.swift in Sources */,
 				D04DAC8E2395742900D5AF87 /* ContractFundPoolOperation.swift in Sources */,
@@ -1549,6 +1575,7 @@
 				D0E158E2221FDF9B004B44FF /* GetKeyReferencesSocketOperation.swift in Sources */,
 				B39554B1213E70DB00CE2647 /* AssetsFacade.swift in Sources */,
 				B3CA702020F4A3A900511F6A /* ECHO.swift in Sources */,
+				2E4A1BD62524A2D100049447 /* BalanceFreezeOperation.swift in Sources */,
 				D09D745E21EF58F700E0F46D /* CreateContractOperation.swift in Sources */,
 				D0ED8C1E2292A1EF002EC3EA /* SidechainETHCreateAddressOperation.swift in Sources */,
 				B3965B182125954200029585 /* PointerArray.swift in Sources */,
@@ -1625,6 +1652,7 @@
 				D0A4933D22AFA029006DF77B /* SidechainIssueOperation.swift in Sources */,
 				D0C911F8239010B0000B2AE2 /* BTCAddressValidator.swift in Sources */,
 				D0C911F4238FF1D8000B2AE2 /* GetBtcAddressSocketOperation.swift in Sources */,
+				2E4A1BD225248FD700049447 /* BalanceClaimOperation.swift in Sources */,
 				D0A4933322AF8DB4006DF77B /* GetAccountWithdrawalsSocketOperation.swift in Sources */,
 				D00C3D282147B4F90053A636 /* Contract.swift in Sources */,
 				D0D8CA462141847900F0646D /* GetTransactionQueueOperation.swift in Sources */,
@@ -1659,6 +1687,7 @@
 				D0B6A0CA2126BA9300A78E4B /* OperationType.swift in Sources */,
 				E717CC2724ED375200C6F1BB /* WaitQueueOperation.swift in Sources */,
 				B3CA701E20F49C6800511F6A /* ReslutHandler.swift in Sources */,
+				2E683C3C25250B78002E6C39 /* GetFrozenBalancesSocketOperation.swift in Sources */,
 				B3E9A35721A2A40E001A95B4 /* NoticeEventProxy.swift in Sources */,
 				D0CB0F1B236AF7EF00A7184F /* GetERC20TokenSocketOperation.swift in Sources */,
 				D0CF3F57239115F7005811F7 /* ERC20FacadeImp.swift in Sources */,
@@ -1673,6 +1702,7 @@
 				D04835E923573E640071B6C6 /* RequestRegistrationTaskSocketOperation.swift in Sources */,
 				B385970220F620B700B55E59 /* AssetOptions.swift in Sources */,
 				B30CAD0220FF74C80048E33E /* DatabaseApiService.swift in Sources */,
+				2E4A1BDC2524C40300049447 /* FrozenBalanceObject.swift in Sources */,
 				D04835EF23575B7D0071B6C6 /* UInt8+Bits.swift in Sources */,
 				D01BF7D2212ABE4E00917DB8 /* OptionalValue.swift in Sources */,
 				D00A58E9222522C40089FC18 /* GetGlobalPropertiesSocketOperation.swift in Sources */,
@@ -1682,6 +1712,7 @@
 				D0D8CA492141847900F0646D /* SendTransactionQueueOperation.swift in Sources */,
 				B30FE903212ECD780009BF57 /* ECHODirectResponse.swift in Sources */,
 				B3A7AA4920F8C247002D569D /* RevealSocketApiFacade.swift in Sources */,
+				2E4A1BD425249FCE00049447 /* BalanceObject.swift in Sources */,
 				B30CACFB20FF74C80048E33E /* NetworkBroadcastApiServiceImp.swift in Sources */,
 				D061330E21A2C99F009EC456 /* CustomOperationsFacadeImp.swift in Sources */,
 				D0B05874214689F600A80CDE /* GetContractsSocketOperation.swift in Sources */,
@@ -1704,6 +1735,7 @@
 				D0C911F6238FF304000B2AE2 /* SidechainBTCCreateAddressOperation.swift in Sources */,
 				D094704C212D9C7400B55A37 /* IssueAssetOperation.swift in Sources */,
 				B30CACFE20FF74C80048E33E /* DatabaseApiServiceImp.swift in Sources */,
+				2E46424A252610E200CA27AE /* GetBalanceObjectsSocketOperation.swift in Sources */,
 				B30CC365214A5B05003953E3 /* AbiCoderImp.swift in Sources */,
 				D0414AF6216758BD00CD0322 /* SetBlockAppliedCollbackSocketOperation.swift in Sources */,
 				D061330C21A2C836009EC456 /* CustomOperationsFacade.swift in Sources */,
@@ -1978,7 +2010,7 @@
 					"$(SRCROOT)/Libraries/openssl/lib",
 					"$(SRCROOT)/Libraries/ed25519/lib/SimulatorRelease/",
 				);
-				MARKETING_VERSION = 5.1.0;
+				MARKETING_VERSION = 5.1.1;
 				MODULEMAP_FILE = "./ECHO/Supports Files/ECHO.modulemap";
 				PRODUCT_BUNDLE_IDENTIFIER = org.echo.mobile.framework;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -2026,7 +2058,7 @@
 					"$(SRCROOT)/Libraries/openssl/lib",
 					"$(SRCROOT)/Libraries/ed25519/lib/SimulatorRelease/",
 				);
-				MARKETING_VERSION = 5.1.0;
+				MARKETING_VERSION = 5.1.1;
 				MODULEMAP_FILE = "./ECHO/Supports Files/ECHO.modulemap";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = org.echo.mobile.framework;

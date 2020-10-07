@@ -1,5 +1,20 @@
 # CHANGELOG
 
+## Changelog 5.1.1 - 2020-10-07
+Support 0.22.3 Echo version.
+### Added
+* BalanceClaimOperation
+* BalanceFreezeOperation
+* BalanceUnfreezeOperation
+* RequestBalanceUnfreezeOperation
+
+### Changed
+* OperationType enum
+
+### Removed
+* maintenancesInInterval field from EconomyConfig object
+
+
 ## Changelog 5.1.0 - 2020-09-04
 Support 0.22 Echo version.
 
