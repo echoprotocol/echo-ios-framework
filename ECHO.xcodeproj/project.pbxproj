@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -75,7 +75,6 @@
 		B358CD08213978800046327F /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B358CD07213978800046327F /* Settings.swift */; };
 		B358CD0A213978990046327F /* ECHONetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = B358CD09213978990046327F /* ECHONetwork.swift */; };
 		B35D4C0D215248BF00FC7B27 /* ErrorSocketRequestStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35D4C0C215248BF00FC7B27 /* ErrorSocketRequestStub.swift */; };
-		B35D4C2521525DBC00FC7B27 /* Starscream.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = B30CACEA20FF74840048E33E /* Starscream.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B370BB5920F7623F004C4A26 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = B370BB5820F7623F004C4A26 /* API.swift */; };
 		B370BB5B20F76853004C4A26 /* SocketCoreComponentImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B370BB5A20F76853004C4A26 /* SocketCoreComponentImp.swift */; };
 		B370BB5D20F768B1004C4A26 /* CryptoCoreComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B370BB5C20F768B1004C4A26 /* CryptoCoreComponent.swift */; };
@@ -303,6 +302,8 @@
 		D0FAC41722AE3E5300C8BF49 /* CallContractFee.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FAC41622AE3E5300C8BF49 /* CallContractFee.swift */; };
 		E717CC2724ED375200C6F1BB /* WaitQueueOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E717CC2624ED375200C6F1BB /* WaitQueueOperation.swift */; };
 		E717CC2924ED3D1000C6F1BB /* NoticeHandleQueueOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E717CC2824ED3D1000C6F1BB /* NoticeHandleQueueOperation.swift */; };
+		E7A506CD260A423C00B9AF64 /* Starscream.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7A506CC260A423C00B9AF64 /* Starscream.xcframework */; };
+		E7A506CE260A423C00B9AF64 /* Starscream.xcframework in CopyFiles */ = {isa = PBXBuildFile; fileRef = E7A506CC260A423C00B9AF64 /* Starscream.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -329,7 +330,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				B35D4C2521525DBC00FC7B27 /* Starscream.framework in CopyFiles */,
+				E7A506CE260A423C00B9AF64 /* Starscream.xcframework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -637,6 +638,7 @@
 		D0FAC41622AE3E5300C8BF49 /* CallContractFee.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallContractFee.swift; sourceTree = "<group>"; };
 		E717CC2624ED375200C6F1BB /* WaitQueueOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitQueueOperation.swift; sourceTree = "<group>"; };
 		E717CC2824ED3D1000C6F1BB /* NoticeHandleQueueOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeHandleQueueOperation.swift; sourceTree = "<group>"; };
+		E7A506CC260A423C00B9AF64 /* Starscream.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Starscream.xcframework; path = Carthage/Build/Starscream.xcframework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -644,6 +646,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E7A506CD260A423C00B9AF64 /* Starscream.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -828,6 +831,7 @@
 		B356019520F38D170097FD38 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E7A506CC260A423C00B9AF64 /* Starscream.xcframework */,
 				B30CACEA20FF74840048E33E /* Starscream.framework */,
 			);
 			name = Frameworks;
