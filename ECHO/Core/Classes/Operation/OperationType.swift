@@ -64,7 +64,8 @@ public enum OperationType: Int {
     // swiftlint:enable variable_name
     case sidechainIssueOperation                    // VIRTUAL
     case sidechainBurnOperation                     // VIRTUAL
-    case sidechainERC20RegisterTokenOperation       // 50
+    case sidechainERC20RegisterContractOperation    // 50
+    case sidechainERC20RegisterTokenOperation
     case sidechainERC20DepositTokenOperation
     case sidechainERC20SendDepositTokenOperation
     case sidechainERC20WithdrawTokenOperation
@@ -74,21 +75,24 @@ public enum OperationType: Int {
     // swiftlint:enable variable_name
     case sidechainERC20IssueOperation               // VIRTUAL
     case sidechainERC20BurnOperation                // VIRTUAL
-    case sidechainBTCCreateAddressOperation
+    case sidechainERC20TransferAssetOperation
+    case sidechainBTCCreateAddressOperation         // 60
     // swiftlint:disable variable_name
     case sidechainBTCCreateIntermediateDepositOperation
     // swiftlint:enable variable_name
-    case sidechainBTCIntermediateDepositOperation   // 60
+    case sidechainBTCIntermediateDepositOperation
     case sidechainBTCDepositOperation
     case sidechainBTCWithdrawOperation
     case sidechainBTCAggregateOperation
     case sidechainBTCApproveAggregateOperation
-    case sidechainBTCBlockProcessOperation
-    case blockRewardOperation                       // VIRTUAL
+    case sidechainStakeETHUpdateOperation
+    case sidechainBTCCreateStakeScriptOperation
+    case sidechainStakeBTCUpdateOperation
+    case blockRewardOperation                       // 70 // VIRTUAL
     case evmAddressRegisterOperation
     case didCreateOperation
     case didUpdateOperation
-    case didDeleteOperation                         //70
+    case didDeleteOperation
 }
 
 struct OperationDecoder {

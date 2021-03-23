@@ -6,14 +6,12 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
-public enum AssetOptionIssuerPermissions: Int {
-    case chargeMarketFee     = 0x01 /**< an issuer-specified percentage of all market trades in this asset is paid to the issuer */
-    case whiteList           = 0x02 /**< accounts must be whitelisted in order to hold this asset */
-    case overrideAuthority   = 0x04 /**< issuer may transfer asset back to himself */
-    case transferRestricted  = 0x08 /**< require the issuer to be one party to every transfer */
-    case disableForceSettle  = 0x10 /**< disable force settling */
-    case globalSettle        = 0x20 /**< allow the bitasset issuer to force a global settling -- this may be set in permissions, but not flags */
-    case committeeFedAsset   = 0x40 /**< allow the asset to be fed by the committee */
+public enum AssetOptionIssuerPermissions: Int, Decodable {
+    case whiteList           = 0x01 /**< accounts must be whitelisted in order to hold this asset */
+    case overrideAuthority   = 0x02 /**< issuer may transfer asset back to himself */
+    case transferRestricted  = 0x04 /**< require the issuer to be one party to every transfer */
+    case committeeFedAsset   = 0x08 /**< allow the asset to be fed by the committee */
+    case stakeAsset          = 0x10 /**<no one can transfer tihs asset */
 }
 
 /**
@@ -35,7 +33,7 @@ public struct AssetOptions: ECHOCodable, Decodable {
     }
     
     public let maxSupply: UInt
-    public let issuerPermissions: Int
+    public let issuerPermissions: AssetOptionIssuerPermissions
     public let flags: Int
     public var coreExchangeRate = [Price]()
     public let description: String?
@@ -44,7 +42,7 @@ public struct AssetOptions: ECHOCodable, Decodable {
     public let extensions = Extensions()
     
     public init(maxSupply: UInt,
-                issuerPermissions: Int,
+                issuerPermissions: AssetOptionIssuerPermissions,
                 flags: Int,
                 coreExchangeRate: Price,
                 description: String?) {
@@ -63,7 +61,7 @@ public struct AssetOptions: ECHOCodable, Decodable {
         
         let values = try decoder.container(keyedBy: AssetOptionsCodingKeys.self)
         maxSupply = UInt(try values.decode(IntOrString.self, forKey: .maxSupply).intValue)
-        issuerPermissions = try values.decode(IntOrString.self, forKey: .issuerPermissions).intValue
+        issuerPermissions = try values.decode(AssetOptionIssuerPermissions.self, forKey: .issuerPermissions)
         flags = try values.decode(IntOrString.self, forKey: .flags).intValue
         description = try values.decode(String.self, forKey: .description)
         let coreExchangeRateValue = try values.decode(Price.self, forKey: .coreExchangRate)
@@ -100,10 +98,9 @@ public struct AssetOptions: ECHOCodable, Decodable {
     }
     
     public func toData() -> Data? {
-        
         var data = Data()
         data.append(optional: Data.fromUint64(maxSupply))
-        data.append(optional: Data.fromInt16(issuerPermissions))
+        data.append(optional: Data.fromInt16(issuerPermissions.rawValue))
         data.append(optional: Data.fromInt16(flags))
         data.append(optional: coreExchangeRate[safe: 0]?.toData())
         
