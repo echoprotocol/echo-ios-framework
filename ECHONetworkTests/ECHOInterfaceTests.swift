@@ -2270,40 +2270,40 @@ class ECHOInterfaceTests: XCTestCase {
     
     // MARK: ETH
     
-//    func testGenerateEthAddress() {
-//
-//        //arrange
-//        echo = ECHO(settings: Settings(build: {
-//            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
-//            $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
-//            $0.debug = true
-//        }))
-//        let exp = expectation(description: "testGenerateEthAddress")
-//        var isSuccess = false
-//
-//        //act
-//        echo.start { [unowned self] (result) in
-//            self.echo.generateEthAddress(nameOrId: Constants.defaultName,
-//                                         wif: Constants.defaultWIF,
-//                                         assetForFee: nil,
-//                                         sendCompletion: { (result) in
-//
-//                switch result {
-//                case .success:
-//                    isSuccess = true
-//                case .failure(let error):
-//                    XCTFail("Generate eth address must be valid \(error)")
-//                }
-//            }, confirmNoticeHandler: { (_) in
-//                exp.fulfill()
-//            })
-//        }
-//
-//        //assert
-//        waitForExpectations(timeout: Constants.timeout) { error in
-//            XCTAssertTrue(isSuccess)
-//        }
-//    }
+    func testGenerateEthAddress() {
+
+        //arrange
+        echo = ECHO(settings: Settings(build: {
+            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+            $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+            $0.debug = true
+        }))
+        let exp = expectation(description: "testGenerateEthAddress")
+        var isSuccess = false
+
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.generateEthAddress(nameOrId: Constants.defaultName,
+                                         wif: Constants.defaultWIF,
+                                         assetForFee: nil,
+                                         sendCompletion: { (result) in
+
+                switch result {
+                case .success:
+                    isSuccess = true
+                case .failure(let error):
+                    XCTFail("Generate eth address must be valid \(error)")
+                }
+            }, confirmNoticeHandler: { (_) in
+                exp.fulfill()
+            })
+        }
+
+        //assert
+        waitForExpectations(timeout: Constants.timeout) { error in
+            XCTAssertTrue(isSuccess)
+        }
+    }
 
     func testGetEthAddress() {
         
