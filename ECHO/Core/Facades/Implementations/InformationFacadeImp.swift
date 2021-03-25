@@ -49,6 +49,14 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble, Notice
         services.databaseService.getBlock(blockNumber: blockNumber, completion: completion)
     }
     
+    public func getTransaction(blockNum: Int, transactionIndex: Int, completion: @escaping Completion<Transaction>) {
+        services.databaseService.getTransaction(blockNum: blockNum, transactionIndex: transactionIndex, completion: completion)
+    }
+    
+    public func getTransaction(transactionID: String, completion: @escaping Completion<Transaction>) {
+        services.databaseService.getTransaction(transactionID: transactionID, completion: completion)
+    }
+    
     private enum CreationAccountResultsKeys: String {
         case isReserved
         case account

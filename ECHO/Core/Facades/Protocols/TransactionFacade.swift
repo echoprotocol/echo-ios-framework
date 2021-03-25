@@ -20,8 +20,8 @@ public protocol TransactionFacade {
      - Parameter amount: Amount
      - Parameter asset: Id of asset which is sent
      - Parameter assetForFee: Id of asset which is pay fee
-     - Parameter sendCompletion: Callback in which the information will return whether the transaction was successful send to chain.
-     - Parameter confirmNoticeHandler: Callback in which the information will return whether the transaction was confirmed or not.
+     - Parameter sendCompletion: Callback in which the information will return transaction ID or errror
+     - Parameter confirmNoticeHandler: Callback in which the information will return whether the transaction was confirmed or not
      
      - Remark:
      Default asset is **"1.3.0"**
@@ -33,7 +33,7 @@ public protocol TransactionFacade {
         amount: UInt,
         asset: String,
         assetForFee: String?,
-        sendCompletion: @escaping Completion<Void>,
+        sendCompletion: @escaping Completion<String>,
         confirmNoticeHandler: NoticeHandler?
     )
 }

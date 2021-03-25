@@ -44,6 +44,30 @@ protocol DatabaseApiService: BaseApiService {
     func getBlock(blockNumber: Int, completion: @escaping Completion<Block>)
     
     /**
+     Function for getting transaction by index in block
+     
+     - Parameter blockNum: Number of block with transaction
+     - Parameter transactionIndex: Transaction index in block
+     - Parameter completion: Callback which returns transaction or error
+     */
+    func getTransaction(
+        blockNum: Int,
+        transactionIndex: Int,
+        completion: @escaping Completion<Transaction>
+    )
+    
+    /**
+     Function for getting transaction by transaction ID
+     
+     - Parameter transactionID: id of transaction to get
+     - Parameter completion: Callback which returns transaction or error
+     */
+    func getTransaction(
+        transactionID: String,
+        completion: @escaping Completion<Transaction>
+    )
+    
+    /**
      Retrieves blockchain chain id
      
      - Parameter completion: Callback which returns chain id string or error
@@ -66,6 +90,7 @@ protocol DatabaseApiService: BaseApiService {
      - Parameter completion: Callback which returns array of arrays of id for each key or error
      */
     func getKeyReferences(keys: [String], completion: @escaping Completion<[[String]]>)
+    
     /**
      Retrieves required fee by asset for ech operation
      

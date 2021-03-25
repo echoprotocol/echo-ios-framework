@@ -48,14 +48,14 @@ public protocol AuthentificationFacade {
      - Parameter oldWIF: Old account WIF
      - Parameter newWIF: New account WIF
      - Parameter name: Account name or id
-     - Parameter sendCompletion: Callback in which the information will return whether the transaction was successful send to chain.
+     - Parameter sendCompletion: Callback in which the information will return transaction ID or error
      - Parameter confirmNoticeHandler: Callback in which the information will return whether the transaction was confirmed or not.
  */
     func changeKeys(
         oldWIF: String,
         newWIF: String,
         name: String,
-        sendCompletion: @escaping Completion<Void>,
+        sendCompletion: @escaping Completion<String>,
         confirmNoticeHandler: NoticeHandler?
     )
 }

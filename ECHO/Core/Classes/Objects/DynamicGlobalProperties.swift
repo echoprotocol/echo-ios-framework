@@ -21,36 +21,36 @@ public struct DynamicGlobalProperties: ECHOObject, Decodable {
         case headBlockId = "head_block_id"
         case time
         case nextMaintenanceTime = "next_maintenance_time"
-        case lastBudgetTime = "last_budget_time"
-        case committeeBudget = "committee_budget"
-        case dynamicFlags = "dynamic_flags"
+        case lastMaintenanceTime = "last_maintenance_time"
         case lastIrreversibleBlockNum = "last_irreversible_block_num"
         case lastBlockOfPreviousInterval = "last_block_of_previous_interval"
+        case payedBlocksInInterval = "payed_blocks_in_interval"
+        case lastProcessedBTCBlock = "last_processed_btc_block"
     }
     
     public let id: String
-    public let dynamicFlags: Int
-    public let headBlockId: String
     public let headBlockNumber: Int
-    public let lastBudgetTime: String
+    public let headBlockId: String
+    public let time: String
+    public let nextMaintenanceTime: String
+    public let lastMaintenanceTime: String
     public let lastIrreversibleBlockNum: Int
     public let lastBlockOfPreviousInterval: Int
-    public let nextMaintenanceTime: String
-    public let time: String
-    public let committeeBudget: Int
+    public let payedBlocksInInterval: Int
+    public let lastProcessedBTCBlock: Int
     
     public init(from decoder: Decoder) throws {
         
         let values = try decoder.container(keyedBy: DynamicGlobalPropertiesCodingKeys.self)
         id = try values.decode(String.self, forKey: .id)
-        dynamicFlags = try values.decode(Int.self, forKey: .dynamicFlags)
         headBlockNumber = try values.decode(Int.self, forKey: .headBlockNumber)
+        headBlockId = try values.decode(String.self, forKey: .headBlockId)
+        time = try values.decode(String.self, forKey: .time)
+        nextMaintenanceTime = try values.decode(String.self, forKey: .nextMaintenanceTime)
+        lastMaintenanceTime = try values.decode(String.self, forKey: .lastMaintenanceTime)
         lastIrreversibleBlockNum = try values.decode(Int.self, forKey: .lastIrreversibleBlockNum)
         lastBlockOfPreviousInterval = try values.decode(Int.self, forKey: .lastBlockOfPreviousInterval)
-        committeeBudget = try values.decode(Int.self, forKey: .committeeBudget)
-        headBlockId = try values.decode(String.self, forKey: .headBlockId)
-        lastBudgetTime = try values.decode(String.self, forKey: .lastBudgetTime)
-        nextMaintenanceTime = try values.decode(String.self, forKey: .nextMaintenanceTime)
-        time = try values.decode(String.self, forKey: .time)
+        payedBlocksInInterval = try values.decode(Int.self, forKey: .payedBlocksInInterval)
+        lastProcessedBTCBlock = try values.decode(Int.self, forKey: .lastProcessedBTCBlock)
     }
 }

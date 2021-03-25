@@ -103,6 +103,30 @@ public protocol InformationFacade {
         limit: Int,
         completion: @escaping Completion<[HistoryItem]>
     )
+   
+/**
+     Function for getting transaction by index in block
+     
+     - Parameter blockNum: Number of block with transaction
+     - Parameter transactionIndex: Transaction index in block
+     - Parameter completion: Callback which returns transaction or error
+ */
+    func getTransaction(
+        blockNum: Int,
+        transactionIndex: Int,
+        completion: @escaping Completion<Transaction>
+    )
+    
+/**
+     Function for getting transaction by transaction ID
+     
+     - Parameter transactionID: id of transaction to get
+     - Parameter completion: Callback which returns transaction or error
+ */
+    func getTransaction(
+        transactionID: String,
+        completion: @escaping Completion<Transaction>
+    )
     
 /**
      Retrieve the current global property object.

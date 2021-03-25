@@ -302,6 +302,8 @@
 		D0FAC41722AE3E5300C8BF49 /* CallContractFee.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FAC41622AE3E5300C8BF49 /* CallContractFee.swift */; };
 		E717CC2724ED375200C6F1BB /* WaitQueueOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E717CC2624ED375200C6F1BB /* WaitQueueOperation.swift */; };
 		E717CC2924ED3D1000C6F1BB /* NoticeHandleQueueOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E717CC2824ED3D1000C6F1BB /* NoticeHandleQueueOperation.swift */; };
+		E7495BC5260CB5ED003B8965 /* GetTransactionInBlockSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7495BC4260CB5ED003B8965 /* GetTransactionInBlockSocketOperation.swift */; };
+		E7495BC9260CB870003B8965 /* GetTransactionInByIDSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7495BC8260CB870003B8965 /* GetTransactionInByIDSocketOperation.swift */; };
 		E7A506CD260A423C00B9AF64 /* Starscream.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7A506CC260A423C00B9AF64 /* Starscream.xcframework */; };
 		E7A506CE260A423C00B9AF64 /* Starscream.xcframework in CopyFiles */ = {isa = PBXBuildFile; fileRef = E7A506CC260A423C00B9AF64 /* Starscream.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
@@ -638,6 +640,8 @@
 		D0FAC41622AE3E5300C8BF49 /* CallContractFee.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallContractFee.swift; sourceTree = "<group>"; };
 		E717CC2624ED375200C6F1BB /* WaitQueueOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitQueueOperation.swift; sourceTree = "<group>"; };
 		E717CC2824ED3D1000C6F1BB /* NoticeHandleQueueOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeHandleQueueOperation.swift; sourceTree = "<group>"; };
+		E7495BC4260CB5ED003B8965 /* GetTransactionInBlockSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTransactionInBlockSocketOperation.swift; sourceTree = "<group>"; };
+		E7495BC8260CB870003B8965 /* GetTransactionInByIDSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTransactionInByIDSocketOperation.swift; sourceTree = "<group>"; };
 		E7A506CC260A423C00B9AF64 /* Starscream.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Starscream.xcframework; path = Carthage/Build/Starscream.xcframework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1003,6 +1007,8 @@
 				D0CF3F602391531F005811F7 /* GetERC20AccountWithdrawalsSocketOperation.swift */,
 				2E683C3B25250B78002E6C39 /* GetFrozenBalancesSocketOperation.swift */,
 				2E464249252610E200CA27AE /* GetBalanceObjectsSocketOperation.swift */,
+				E7495BC4260CB5ED003B8965 /* GetTransactionInBlockSocketOperation.swift */,
+				E7495BC8260CB870003B8965 /* GetTransactionInByIDSocketOperation.swift */,
 			);
 			path = SocketOperation;
 			sourceTree = "<group>";
@@ -1568,6 +1574,7 @@
 				D0CF8EE5213926CF000CA6E0 /* SocketMessengerImp.swift in Sources */,
 				D03890FB239651F6005DE0B4 /* SidechainETHApproveAddressOperation.swift in Sources */,
 				B30CACFA20FF74C80048E33E /* NetworkNodesApiServiceImp.swift in Sources */,
+				E7495BC5260CB5ED003B8965 /* GetTransactionInBlockSocketOperation.swift in Sources */,
 				D08B2BCD21342444000F7A9B /* FeeFacadeImp.swift in Sources */,
 				D061330A21A2BD41009EC456 /* BaseApiService.swift in Sources */,
 				2E4A1BDA2524AD9A00049447 /* RequestBalanceUnfreezeOperation.swift in Sources */,
@@ -1578,6 +1585,7 @@
 				D061331321A2E93F009EC456 /* ContractLogEVM.swift in Sources */,
 				D0E158E2221FDF9B004B44FF /* GetKeyReferencesSocketOperation.swift in Sources */,
 				B39554B1213E70DB00CE2647 /* AssetsFacade.swift in Sources */,
+				E7495BC9260CB870003B8965 /* GetTransactionInByIDSocketOperation.swift in Sources */,
 				B3CA702020F4A3A900511F6A /* ECHO.swift in Sources */,
 				2E4A1BD62524A2D100049447 /* BalanceFreezeOperation.swift in Sources */,
 				D09D745E21EF58F700E0F46D /* CreateContractOperation.swift in Sources */,

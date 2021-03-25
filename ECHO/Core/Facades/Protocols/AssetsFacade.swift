@@ -17,14 +17,14 @@ public protocol AssetsFacade {
      - Parameter nameOrId: Creator name or id
      - Parameter wif: Creator wif from account
      - Parameter asset: Asset object for create
-     - Parameter sendCompletion: Callback in which the information will return whether the transaction was successful send to chain.
+     - Parameter sendCompletion: Callback in which the information will return transaction ID or error
      - Parameter confirmNoticeHandler: Callback in which the information will return whether the transaction was confirmed or not.
 */
     func createAsset(
         nameOrId: String,
         wif: String,
         asset: Asset,
-        sendCompletion: @escaping Completion<Void>,
+        sendCompletion: @escaping Completion<String>,
         confirmNoticeHandler: NoticeHandler?
     )
     
@@ -36,7 +36,7 @@ public protocol AssetsFacade {
      - Parameter asset: Asset object for issue
      - Parameter amount: Amount for issue
      - Parameter destinationIdOrName: Issue destination name or id
-     - Parameter sendCompletion: Callback in which the information will return whether the transaction was successful send to chain.
+     - Parameter sendCompletion: Callback in which the information will return transaction ID or error
      - Parameter confirmNoticeHandler: Callback in which the information will return whether the transaction was confirmed or not.
  */
     func issueAsset(
@@ -45,7 +45,7 @@ public protocol AssetsFacade {
         asset: String,
         amount: UInt,
         destinationIdOrName: String,
-        sendCompletion: @escaping Completion<Void>,
+        sendCompletion: @escaping Completion<String>,
         confirmNoticeHandler: NoticeHandler?
     )
     
