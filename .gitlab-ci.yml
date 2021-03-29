@@ -9,7 +9,6 @@ variables:
 
 before_script:
   - bundle install
-  - brew install carthage
 
 unit_tests:
   stage: unit_tests
