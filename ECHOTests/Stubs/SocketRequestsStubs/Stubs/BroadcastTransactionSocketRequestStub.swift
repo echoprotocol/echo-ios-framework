@@ -13,6 +13,6 @@ struct BroadcastTransactionSocketRequestStub: SocketRequestStub {
     var operationType = "broadcast_transaction_with_callback"
     
     func createResponce(id: Int) -> String {
-        return "{\"id\":\(id),\"jsonrpc\":\"2.0\",\"result\":null}"
+        return "{\"id\":\(id),\"jsonrpc\":\"2.0\",\"result\":\"d47462032bd5b67254715d7ca2fbebf47ddac920\"}"
     }
 }

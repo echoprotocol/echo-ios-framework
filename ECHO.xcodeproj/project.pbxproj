@@ -302,6 +302,10 @@
 		D0FAC41722AE3E5300C8BF49 /* CallContractFee.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FAC41622AE3E5300C8BF49 /* CallContractFee.swift */; };
 		E717CC2724ED375200C6F1BB /* WaitQueueOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E717CC2624ED375200C6F1BB /* WaitQueueOperation.swift */; };
 		E717CC2924ED3D1000C6F1BB /* NoticeHandleQueueOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E717CC2824ED3D1000C6F1BB /* NoticeHandleQueueOperation.swift */; };
+		E73E3C08261207F000DDB521 /* GetTransactionInBlockStubHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E73E3C07261207F000DDB521 /* GetTransactionInBlockStubHolder.swift */; };
+		E73E3C0C2612080800DDB521 /* GetTransactionByIDStubHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E73E3C0B2612080800DDB521 /* GetTransactionByIDStubHolder.swift */; };
+		E73E3C102612083800DDB521 /* GetTransactionInBlockRequestStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = E73E3C0F2612083800DDB521 /* GetTransactionInBlockRequestStub.swift */; };
+		E73E3C142612084A00DDB521 /* GetTransactionByIDRequestStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = E73E3C132612084A00DDB521 /* GetTransactionByIDRequestStub.swift */; };
 		E7495BC5260CB5ED003B8965 /* GetTransactionInBlockSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7495BC4260CB5ED003B8965 /* GetTransactionInBlockSocketOperation.swift */; };
 		E7495BC9260CB870003B8965 /* GetTransactionInByIDSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7495BC8260CB870003B8965 /* GetTransactionInByIDSocketOperation.swift */; };
 		E7A506CD260A423C00B9AF64 /* Starscream.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7A506CC260A423C00B9AF64 /* Starscream.xcframework */; };
@@ -640,6 +644,10 @@
 		D0FAC41622AE3E5300C8BF49 /* CallContractFee.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallContractFee.swift; sourceTree = "<group>"; };
 		E717CC2624ED375200C6F1BB /* WaitQueueOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitQueueOperation.swift; sourceTree = "<group>"; };
 		E717CC2824ED3D1000C6F1BB /* NoticeHandleQueueOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeHandleQueueOperation.swift; sourceTree = "<group>"; };
+		E73E3C07261207F000DDB521 /* GetTransactionInBlockStubHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTransactionInBlockStubHolder.swift; sourceTree = "<group>"; };
+		E73E3C0B2612080800DDB521 /* GetTransactionByIDStubHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTransactionByIDStubHolder.swift; sourceTree = "<group>"; };
+		E73E3C0F2612083800DDB521 /* GetTransactionInBlockRequestStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTransactionInBlockRequestStub.swift; sourceTree = "<group>"; };
+		E73E3C132612084A00DDB521 /* GetTransactionByIDRequestStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTransactionByIDRequestStub.swift; sourceTree = "<group>"; };
 		E7495BC4260CB5ED003B8965 /* GetTransactionInBlockSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTransactionInBlockSocketOperation.swift; sourceTree = "<group>"; };
 		E7495BC8260CB870003B8965 /* GetTransactionInByIDSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTransactionInByIDSocketOperation.swift; sourceTree = "<group>"; };
 		E7A506CC260A423C00B9AF64 /* Starscream.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Starscream.xcframework; path = Carthage/Build/Starscream.xcframework; sourceTree = "<group>"; };
@@ -1213,6 +1221,8 @@
 				D097081C22942191009DF152 /* GetEthAddressRequestStub.swift */,
 				D0A4933422AF9543006DF77B /* GetAccountDepositsRequestStub.swift */,
 				D0A4933622AF9552006DF77B /* GetAccountWithdrawalsRequestStub.swift */,
+				E73E3C0F2612083800DDB521 /* GetTransactionInBlockRequestStub.swift */,
+				E73E3C132612084A00DDB521 /* GetTransactionByIDRequestStub.swift */,
 			);
 			path = Stubs;
 			sourceTree = "<group>";
@@ -1237,6 +1247,8 @@
 				D097082022942304009DF152 /* WithdrawalEthStubHolder.swift */,
 				D0A4933822AF95B0006DF77B /* GetAccountDepositsStubHolder.swift */,
 				D0A4933A22AF95BD006DF77B /* GetAccountWithdrawalsStubHolder.swift */,
+				E73E3C07261207F000DDB521 /* GetTransactionInBlockStubHolder.swift */,
+				E73E3C0B2612080800DDB521 /* GetTransactionByIDStubHolder.swift */,
 			);
 			path = StubsHolders;
 			sourceTree = "<group>";
@@ -1781,6 +1793,7 @@
 				D0A0C4EF225E242B000BA64D /* BroadcastTransactionSocketRequestStub.swift in Sources */,
 				B3C365442134116800FC60F4 /* CryptoCoreComponentTests.swift in Sources */,
 				D08230482236BA19003A4BDC /* ETHAddressValidatorTests.swift in Sources */,
+				E73E3C102612083800DDB521 /* GetTransactionInBlockRequestStub.swift in Sources */,
 				B328FC31213FEA510022292C /* ChangePasswordSocketRequestStubHodler.swift in Sources */,
 				D0A4933522AF9543006DF77B /* GetAccountDepositsRequestStub.swift in Sources */,
 				B3DA875E2146C32E000EA228 /* GetContractInfoStubHodler.swift in Sources */,
@@ -1793,6 +1806,7 @@
 				B30FE909212F1AEA0009BF57 /* SocketMessengerStub.swift in Sources */,
 				B3D1C58E212DA92500D1A7E6 /* JsonEncodingTests.swift in Sources */,
 				B358CD0421392DFD0046327F /* TransferSocketRequestStubHodler.swift in Sources */,
+				E73E3C08261207F000DDB521 /* GetTransactionInBlockStubHolder.swift in Sources */,
 				B390C2C621411FF600BD6CDC /* RevealAPISocketStubs.swift in Sources */,
 				D0A0C505225E2844000BA64D /* CallContractNoChangingStateSocketRequestStub.swift in Sources */,
 				B3D1C582212DA10400D1A7E6 /* FullAccountStub.swift in Sources */,
@@ -1805,9 +1819,11 @@
 				B30CC38F214AA870003953E3 /* AbiCoderTests.swift in Sources */,
 				B390C2CB2141403000BD6CDC /* CreateAssetSocketRequestStubHodler.swift in Sources */,
 				B3306DF9214BB6A9002CFFF2 /* CallContractStubHolder.swift in Sources */,
+				E73E3C0C2612080800DDB521 /* GetTransactionByIDStubHolder.swift in Sources */,
 				B30AFDB12191BD9300A657D8 /* SubscribeToAccountStubHodler.swift in Sources */,
 				B3D1C58C212DA6E700D1A7E6 /* OptionsStub.swift in Sources */,
 				B3B0C7A9219054970088D018 /* AbiArgumentDecoderTest.swift in Sources */,
+				E73E3C142612084A00DDB521 /* GetTransactionByIDRequestStub.swift in Sources */,
 				D0A0C4F1225E2475000BA64D /* GetDynamicGlobalPropertiesSocketRequestStub.swift in Sources */,
 				D097081F229421BD009DF152 /* GetEthAddressStubHolder.swift in Sources */,
 				D0B26FAB22D72E0D00E88205 /* WIFValidatorTests.swift in Sources */,
