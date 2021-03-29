@@ -11,7 +11,7 @@
     The [transaction] will be checked for validity in the local database prior to broadcasting. If it
     fails to apply locally, an error will be thrown and the transaction will not be broadcast.
  
-    - Return: [Bool](Bool)
+    - Return: Transaction ID [String](String)
  */
 struct TransactionSocketOperation: SocketOperation {
     
@@ -19,7 +19,7 @@ struct TransactionSocketOperation: SocketOperation {
     var operationId: Int
     var apiId: Int
     var transaction: Transaction
-    var completion: Completion<Void>
+    var completion: Completion<String>
     
     func createParameters() -> [Any] {
         
@@ -33,23 +33,24 @@ struct TransactionSocketOperation: SocketOperation {
         
         switch response.response {
         case .error(let error):
-            let result = Result<Void, ECHOError>(error: ECHOError.internalError(error))
+            let result = Result<String, ECHOError>(error: ECHOError.internalError(error))
             completion(result)
         case .result(let result):
             
             switch result {
-            case .undefined:
-                let result = Result<Void, ECHOError>(value: ())
+            case .string(let transactionID):
+                let result = Result<String, ECHOError>(value: transactionID)
                 completion(result)
+            
             default:
-                let result = Result<Void, ECHOError>(error: ECHOError.encodableMapping)
+                let result = Result<String, ECHOError>(error: ECHOError.encodableMapping)
                 completion(result)
             }
         }
     }
     
     func forceEnd(error: ECHOError) {
-        let result = Result<Void, ECHOError>(error: error)
+        let result = Result<String, ECHOError>(error: error)
         completion(result)
     }
 }

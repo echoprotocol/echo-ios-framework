@@ -163,6 +163,31 @@ extension BlocksAndTransactionsService {
         
         socketCore.send(operation: operation)
     }
+    
+    func getTransaction(blockNum: Int, transactionIndex: Int, completion: @escaping Completion<Transaction>) {
+        let operation = GetTransactionInBlockSocketOperation(
+            method: .call,
+            operationId: socketCore.nextOperationId(),
+            apiId: apiIdentifire,
+            blockNumber: blockNum,
+            transactionIndex: transactionIndex,
+            completion: completion
+        )
+        
+        socketCore.send(operation: operation)
+    }
+    
+    func getTransaction(transactionID: String, completion: @escaping Completion<Transaction>) {
+        let operation = GetTransactionInByIDSocketOperation(
+            method: .call,
+            operationId: socketCore.nextOperationId(),
+            apiId: apiIdentifire,
+            transactionID: transactionID,
+            completion: completion
+        )
+        
+        socketCore.send(operation: operation)
+    }
 }
 
 extension SubscriptionService {

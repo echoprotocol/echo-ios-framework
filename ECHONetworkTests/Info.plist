@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>DEFAULT_TRANSACTION_ID</key>
+	<string>$(DEFAULT_TRANSACTION_ID)</string>
 	<key>NODE_URL</key>
 	<string>$(NODE_URL)</string>
 	<key>TIMEOUT</key>

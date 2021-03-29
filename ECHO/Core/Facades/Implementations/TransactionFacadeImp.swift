@@ -56,7 +56,7 @@ final public class TransactionFacadeImp: TransactionFacade, ECHOQueueble, Notice
                                       amount: UInt,
                                       asset: String,
                                       assetForFee: String?,
-                                      sendCompletion: @escaping Completion<Void>,
+                                      sendCompletion: @escaping Completion<String>,
                                       confirmNoticeHandler: NoticeHandler?) {
         
         // if we don't hace assetForFee, we use asset.
@@ -69,7 +69,7 @@ final public class TransactionFacadeImp: TransactionFacade, ECHOQueueble, Notice
             try validator.validateId(assetForFee, for: .asset)
         } catch let error {
             let echoError = (error as? ECHOError) ?? ECHOError.undefined
-            let result = Result<Void, ECHOError>(error: echoError)
+            let result = Result<String, ECHOError>(error: echoError)
             sendCompletion(result)
             return
         }
@@ -83,8 +83,8 @@ final public class TransactionFacadeImp: TransactionFacade, ECHOQueueble, Notice
         let getAccountsOperationInitParams = (transferQueue,
                                               services.databaseService,
                                               getAccountsNamesOrIdsWithKeys)
-        let getAccountsOperation = GetAccountsQueueOperation<Void>(initParams: getAccountsOperationInitParams,
-                                                                          completion: sendCompletion)
+        let getAccountsOperation = GetAccountsQueueOperation<String>(initParams: getAccountsOperationInitParams,
+                                                                     completion: sendCompletion)
         
         let bildTransferOperation = createBildTransferOperation(transferQueue, amount, asset, sendCompletion)
         
@@ -95,18 +95,18 @@ final public class TransactionFacadeImp: TransactionFacade, ECHOQueueble, Notice
                                                  TransferResultsKeys.operation.rawValue,
                                                  TransferResultsKeys.fee.rawValue,
                                                  UInt(1))
-        let getRequiredFeeOperation = GetRequiredFeeQueueOperation<Void>(initParams: getRequiredFeeOperationInitParams,
-                                                                         completion: sendCompletion)
+        let getRequiredFeeOperation = GetRequiredFeeQueueOperation<String>(initParams: getRequiredFeeOperationInitParams,
+                                                                           completion: sendCompletion)
         
         // ChainId
         let getChainIdInitParams = (transferQueue, services.databaseService, TransferResultsKeys.chainId.rawValue)
-        let getChainIdOperation = GetChainIdQueueOperation<Void>(initParams: getChainIdInitParams,
-                                                                 completion: sendCompletion)
+        let getChainIdOperation = GetChainIdQueueOperation<String>(initParams: getChainIdInitParams,
+                                                                   completion: sendCompletion)
     
         // BlockData
         let getBlockDataInitParams = (transferQueue, services.databaseService, TransferResultsKeys.blockData.rawValue)
-        let getBlockDataOperation = GetBlockDataQueueOperation<Void>(initParams: getBlockDataInitParams,
-                                                                     completion: sendCompletion)
+        let getBlockDataOperation = GetBlockDataQueueOperation<String>(initParams: getBlockDataInitParams,
+                                                                       completion: sendCompletion)
         
         // Transaciton
         let transactionOperationInitParams = (queue: transferQueue,
@@ -120,8 +120,8 @@ final public class TransactionFacadeImp: TransactionFacade, ECHOQueueble, Notice
                                               blockDataKey: TransferResultsKeys.blockData.rawValue,
                                               feeKey: TransferResultsKeys.fee.rawValue,
                                               expirationOffset: transactionExpirationOffset)
-        let bildTransactionOperation = GetTransactionQueueOperation<Void>(initParams: transactionOperationInitParams,
-                                                                          completion: sendCompletion)
+        let bildTransactionOperation = GetTransactionQueueOperation<String>(initParams: transactionOperationInitParams,
+                                                                            completion: sendCompletion)
         
         // Send transaction
         let sendTransacionOperationInitParams = (transferQueue,
@@ -172,7 +172,7 @@ final public class TransactionFacadeImp: TransactionFacade, ECHOQueueble, Notice
     fileprivate func createBildTransferOperation(_ queue: ECHOQueue,
                                                  _ amount: UInt,
                                                  _ asset: String,
-                                                 _ completion: @escaping Completion<Void>) -> Operation {
+                                                 _ completion: @escaping Completion<String>) -> Operation {
         
         let bildTransferOperation = BlockOperation()
         
@@ -185,10 +185,12 @@ final public class TransactionFacadeImp: TransactionFacade, ECHOQueueble, Notice
             
             let fee = AssetAmount(amount: 0, asset: Asset(asset))
             let amount = AssetAmount(amount: amount, asset: Asset(asset))
-            let extractedExpr: TransferOperation = TransferOperation(fromAccount: fromAccount,
-                                                                     toAccount: toAccount,
-                                                                     transferAmount: amount,
-                                                                     fee: fee)
+            let extractedExpr: TransferOperation = TransferOperation(
+                fromAccount: fromAccount,
+                toAccount: toAccount,
+                transferAmount: amount,
+                fee: fee
+            )
             let transferOperation = extractedExpr
             
             queue?.saveValue(transferOperation, forKey: TransferResultsKeys.operation.rawValue)

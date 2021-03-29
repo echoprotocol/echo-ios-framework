@@ -18,7 +18,7 @@ public protocol BtcFacade {
      - Parameter wif: Sender wif from account
      - Parameter backupAddress: Bitcoin address to possibility of a refund
      - Parameter assetForFee: Id of asset which is pay fee
-     - Parameter sendCompletion: Callback in which the information will return whether the transaction was successful send to chain.
+     - Parameter sendCompletion: Callback in which the information will return transaction ID or error
      - Parameter confirmNoticeHandler: Callback in which the information will return whether the transaction was confirmed or not.
      
      - Remark:
@@ -29,7 +29,7 @@ public protocol BtcFacade {
         wif: String,
         backupAddress: String,
         assetForFee: String?,
-        sendCompletion: @escaping Completion<Void>,
+        sendCompletion: @escaping Completion<String>,
         confirmNoticeHandler: NoticeHandler?
     )
     
@@ -41,7 +41,7 @@ public protocol BtcFacade {
     - Parameter toBtcAddress: Receiver bitcoin address
     - Parameter amount: Amount
     - Parameter assetForFee: Id of asset which is pay fee
-    - Parameter sendCompletion: Callback in which the information will return whether the transaction was successful send to chain.
+    - Parameter sendCompletion: Callback in which the information will return transaction ID or error
     - Parameter confirmNoticeHandler: Callback in which the information will return whether the transaction was confirmed or not.
 */
     func withdrawBtc(
@@ -50,7 +50,7 @@ public protocol BtcFacade {
         toBtcAddress: String,
         amount: UInt,
         assetForFee: String?,
-        sendCompletion: @escaping Completion<Void>,
+        sendCompletion: @escaping Completion<String>,
         confirmNoticeHandler: NoticeHandler?
     )
     

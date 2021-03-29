@@ -44,6 +44,7 @@ struct ConstantsKeys {
     static let counterContractByteCode = "COUNTER_CONTRACT_BYTECODE"
     
     static let defaultBlockNumber = "DEFAULT_BLOCK_NUMBER"
+    static let defaultTransactionID = "DEFAULT_TRANSACTION_ID"
     
     static let erc20Token = "ERC20_TOKEN"
     static let erc20TokenEchoId = "ERC20_TOKEN_ECHO_ID"
@@ -149,6 +150,10 @@ struct Constants {
     
     static var defaultBlockNumber: Int {
         return Int(Constants.infoForKey(ConstantsKeys.defaultBlockNumber)!)!
+    }
+    
+    static var defaultTransactionID: String {
+        return Constants.infoForKey(ConstantsKeys.defaultTransactionID)!
     }
     
     static var erc20Token: String {

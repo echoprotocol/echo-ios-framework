@@ -17,8 +17,8 @@ protocol NetworkBroadcastApiService: BaseApiService {
     Broadcast a transaction to the network.
  
     - Parameter transaction: Transaction whitch need to send to the netword
-    - Parameter completion: Callback which returns bool result of send transaction
+    - Parameter completion: Callback which returns transaction ID or error
     - Returns: ID of operation
      */
-    func broadcastTransactionWithCallback(transaction: Transaction, completion: @escaping Completion<Void>) -> Int
+    func broadcastTransactionWithCallback(transaction: Transaction, completion: @escaping Completion<String>) -> Int
 }

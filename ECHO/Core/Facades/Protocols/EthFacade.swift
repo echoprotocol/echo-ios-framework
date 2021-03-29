@@ -17,7 +17,7 @@ public protocol EthFacade {
      - Parameter nameOrId: Name or id
      - Parameter wif: Sender wif from account
      - Parameter assetForFee: Id of asset which is pay fee
-     - Parameter sendCompletion: Callback in which the information will return whether the transaction was successful send to chain.
+     - Parameter sendCompletion: Callback in which the information will return transaction ID or error
      - Parameter confirmNoticeHandler: Callback in which the information will return whether the transaction was confirmed or not.
      
      - Remark:
@@ -27,7 +27,7 @@ public protocol EthFacade {
         nameOrId: String,
         wif: String,
         assetForFee: String?,
-        sendCompletion: @escaping Completion<Void>,
+        sendCompletion: @escaping Completion<String>,
         confirmNoticeHandler: NoticeHandler?
     )
     
@@ -50,7 +50,7 @@ public protocol EthFacade {
      - Parameter toEthAddress: Receiver ethereum address
      - Parameter amount: Amount
      - Parameter assetForFee: Id of asset which is pay fee
-     - Parameter sendCompletion: Callback in which the information will return whether the transaction was successful send to chain.
+     - Parameter sendCompletion: Callback in which the information will return transaction ID or error
      - Parameter confirmNoticeHandler: Callback in which the information will return whether the transaction was confirmed or not.
  */
     func withdrawEth(
@@ -59,7 +59,7 @@ public protocol EthFacade {
         toEthAddress: String,
         amount: UInt,
         assetForFee: String?,
-        sendCompletion: @escaping Completion<Void>,
+        sendCompletion: @escaping Completion<String>,
         confirmNoticeHandler: NoticeHandler?
     )
     

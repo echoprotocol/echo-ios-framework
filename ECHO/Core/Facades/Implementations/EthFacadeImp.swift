@@ -157,7 +157,7 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble, NoticeEventDelegate {
     public func generateEthAddress(nameOrId: String,
                                    wif: String,
                                    assetForFee: String?,
-                                   sendCompletion: @escaping Completion<Void>,
+                                   sendCompletion: @escaping Completion<String>,
                                    confirmNoticeHandler: NoticeHandler?) {
         
         // if we don't hace assetForFee, we use asset.
@@ -169,7 +169,7 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble, NoticeEventDelegate {
             try validator.validateId(assetForFee, for: .asset)
         } catch let error {
             let echoError = (error as? ECHOError) ?? ECHOError.undefined
-            let result = Result<Void, ECHOError>(error: echoError)
+            let result = Result<String, ECHOError>(error: echoError)
             sendCompletion(result)
             return
         }
@@ -182,8 +182,8 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble, NoticeEventDelegate {
         let getAccountsOperationInitParams = (generateQueue,
                                               services.databaseService,
                                               getAccountsNamesOrIdsWithKeys)
-        let getAccountsOperation = GetAccountsQueueOperation<Void>(initParams: getAccountsOperationInitParams,
-                                                                   completion: sendCompletion)
+        let getAccountsOperation = GetAccountsQueueOperation<String>(initParams: getAccountsOperationInitParams,
+                                                                     completion: sendCompletion)
         
         let bildTransferOperation = createBildGenerationOperation(generateQueue, Asset(assetForFee), sendCompletion)
         
@@ -194,18 +194,18 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble, NoticeEventDelegate {
                                                  EthFacadeResultKeys.operation.rawValue,
                                                  EthFacadeResultKeys.fee.rawValue,
                                                  UInt(1))
-        let getRequiredFeeOperation = GetRequiredFeeQueueOperation<Void>(initParams: getRequiredFeeOperationInitParams,
-                                                                         completion: sendCompletion)
+        let getRequiredFeeOperation = GetRequiredFeeQueueOperation<String>(initParams: getRequiredFeeOperationInitParams,
+                                                                           completion: sendCompletion)
         
         // ChainId
         let getChainIdInitParams = (generateQueue, services.databaseService, EthFacadeResultKeys.chainId.rawValue)
-        let getChainIdOperation = GetChainIdQueueOperation<Void>(initParams: getChainIdInitParams,
-                                                                 completion: sendCompletion)
+        let getChainIdOperation = GetChainIdQueueOperation<String>(initParams: getChainIdInitParams,
+                                                                   completion: sendCompletion)
         
         // BlockData
         let getBlockDataInitParams = (generateQueue, services.databaseService, EthFacadeResultKeys.blockData.rawValue)
-        let getBlockDataOperation = GetBlockDataQueueOperation<Void>(initParams: getBlockDataInitParams,
-                                                                     completion: sendCompletion)
+        let getBlockDataOperation = GetBlockDataQueueOperation<String>(initParams: getBlockDataInitParams,
+                                                                       completion: sendCompletion)
         
         // Transaciton
         let transactionOperationInitParams = (queue: generateQueue,
@@ -219,8 +219,8 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble, NoticeEventDelegate {
                                               blockDataKey: EthFacadeResultKeys.blockData.rawValue,
                                               feeKey: EthFacadeResultKeys.fee.rawValue,
                                               expirationOffset: transactionExpirationOffset)
-        let bildTransactionOperation = GetTransactionQueueOperation<Void>(initParams: transactionOperationInitParams,
-                                                                          completion: sendCompletion)
+        let bildTransactionOperation = GetTransactionQueueOperation<String>(initParams: transactionOperationInitParams,
+                                                                            completion: sendCompletion)
         
         // Send transaction
         let sendTransacionOperationInitParams = (generateQueue,
@@ -272,7 +272,7 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble, NoticeEventDelegate {
                             toEthAddress: String,
                             amount: UInt,
                             assetForFee: String?,
-                            sendCompletion: @escaping Completion<Void>,
+                            sendCompletion: @escaping Completion<String>,
                             confirmNoticeHandler: NoticeHandler?) {
         
         // if we don't hace assetForFee, we use asset.
@@ -284,7 +284,7 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble, NoticeEventDelegate {
             try validator.validateId(assetForFee, for: .asset)
         } catch let error {
             let echoError = (error as? ECHOError) ?? ECHOError.undefined
-            let result = Result<Void, ECHOError>(error: echoError)
+            let result = Result<String, ECHOError>(error: echoError)
             sendCompletion(result)
             return
         }
@@ -292,7 +292,7 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble, NoticeEventDelegate {
         // Validate Ethereum address
         let ethValidator = ETHAddressValidator(cryptoCore: cryptoCore)
         guard ethValidator.isValidETHAddress(toEthAddress) else {
-            let result = Result<Void, ECHOError>(error: .invalidETHAddress)
+            let result = Result<String, ECHOError>(error: .invalidETHAddress)
             sendCompletion(result)
             return
         }
@@ -305,8 +305,8 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble, NoticeEventDelegate {
         let getAccountsOperationInitParams = (withdrawalQueue,
                                               services.databaseService,
                                               getAccountsNamesOrIdsWithKeys)
-        let getAccountsOperation = GetAccountsQueueOperation<Void>(initParams: getAccountsOperationInitParams,
-                                                                   completion: sendCompletion)
+        let getAccountsOperation = GetAccountsQueueOperation<String>(initParams: getAccountsOperationInitParams,
+                                                                     completion: sendCompletion)
         
         let bildWithdrawOperation = createBildWithdrawOperation(withdrawalQueue, Asset(assetForFee), amount, toEthAddress, sendCompletion)
         
@@ -317,18 +317,18 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble, NoticeEventDelegate {
                                                  EthFacadeResultKeys.operation.rawValue,
                                                  EthFacadeResultKeys.fee.rawValue,
                                                  UInt(1))
-        let getRequiredFeeOperation = GetRequiredFeeQueueOperation<Void>(initParams: getRequiredFeeOperationInitParams,
-                                                                         completion: sendCompletion)
+        let getRequiredFeeOperation = GetRequiredFeeQueueOperation<String>(initParams: getRequiredFeeOperationInitParams,
+                                                                           completion: sendCompletion)
         
         // ChainId
         let getChainIdInitParams = (withdrawalQueue, services.databaseService, EthFacadeResultKeys.chainId.rawValue)
-        let getChainIdOperation = GetChainIdQueueOperation<Void>(initParams: getChainIdInitParams,
-                                                                 completion: sendCompletion)
+        let getChainIdOperation = GetChainIdQueueOperation<String>(initParams: getChainIdInitParams,
+                                                                   completion: sendCompletion)
         
         // BlockData
         let getBlockDataInitParams = (withdrawalQueue, services.databaseService, EthFacadeResultKeys.blockData.rawValue)
-        let getBlockDataOperation = GetBlockDataQueueOperation<Void>(initParams: getBlockDataInitParams,
-                                                                     completion: sendCompletion)
+        let getBlockDataOperation = GetBlockDataQueueOperation<String>(initParams: getBlockDataInitParams,
+                                                                       completion: sendCompletion)
         
         // Transaciton
         let transactionOperationInitParams = (queue: withdrawalQueue,
@@ -342,8 +342,8 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble, NoticeEventDelegate {
                                               blockDataKey: EthFacadeResultKeys.blockData.rawValue,
                                               feeKey: EthFacadeResultKeys.fee.rawValue,
                                               expirationOffset: transactionExpirationOffset)
-        let bildTransactionOperation = GetTransactionQueueOperation<Void>(initParams: transactionOperationInitParams,
-                                                                          completion: sendCompletion)
+        let bildTransactionOperation = GetTransactionQueueOperation<String>(initParams: transactionOperationInitParams,
+                                                                            completion: sendCompletion)
         
         // Send transaction
         let sendTransacionOperationInitParams = (withdrawalQueue,
@@ -393,7 +393,7 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble, NoticeEventDelegate {
     
     fileprivate func createBildGenerationOperation(_ queue: ECHOQueue,
                                                    _ asset: Asset,
-                                                   _ completion: @escaping Completion<Void>) -> Operation {
+                                                   _ completion: @escaping Completion<String>) -> Operation {
         
         let generationOperation = BlockOperation()
         
@@ -417,7 +417,7 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble, NoticeEventDelegate {
                                                  _ asset: Asset,
                                                  _ amount: UInt,
                                                  _ toEthAddress: String,
-                                                 _ completion: @escaping Completion<Void>) -> Operation {
+                                                 _ completion: @escaping Completion<String>) -> Operation {
         
         let bildWithdrawOperation = BlockOperation()
         
@@ -430,10 +430,12 @@ final public class EthFacadeImp: EthFacade, ECHOQueueble, NoticeEventDelegate {
             let fee = AssetAmount(amount: 0, asset: asset)
             let address = toEthAddress.replacingOccurrences(of: "0x", with: "")
             
-            let withdrawOperation = SidechainETHWithdrawOperation(account: account,
-                                                                  value: amount,
-                                                                  ethAddress: address,
-                                                                  fee: fee)
+            let withdrawOperation = SidechainETHWithdrawOperation(
+                account: account,
+                value: amount,
+                ethAddress: address,
+                fee: fee
+            )
             
             queue?.saveValue(withdrawOperation, forKey: EthFacadeResultKeys.operation.rawValue)
         }

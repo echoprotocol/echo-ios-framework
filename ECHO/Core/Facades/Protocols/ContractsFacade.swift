@@ -21,7 +21,7 @@ public protocol ContractsFacade {
      - Parameter supportedAssetId: If you dont want to link the contract with the specified asset
      - Parameter ethAccuracy: If true all balances passing to contract with ethereum accuracy
      - Parameter parameters: Parameters of constructor
-     - Parameter sendCompletion: Callback in which the information will return whether the transaction was successful send to chain.
+     - Parameter sendCompletion: Callback in which the information will return transaction ID or error
      - Parameter confirmNoticeHandler: Callback in which the information will return whether the transaction was confirmed or not.
  */
     func createContract(
@@ -34,7 +34,7 @@ public protocol ContractsFacade {
         supportedAssetId: String?,
         ethAccuracy: Bool,
         parameters: [AbiTypeValueInputModel]?,
-        sendCompletion: @escaping Completion<Void>,
+        sendCompletion: @escaping Completion<String>,
         confirmNoticeHandler: NoticeHandler?
     )
     
@@ -47,7 +47,7 @@ public protocol ContractsFacade {
      - Parameter byteCode: Full bytecode for contract creation
      - Parameter supportedAssetId: If you dont want to link the contract with the specified asset
      - Parameter ethAccuracy: If true all balances passing to contract with ethereum accuracy
-     - Parameter sendCompletion: Callback in which the information will return whether the transaction was successful send to chain.
+     - Parameter sendCompletion: Callback in which the information will return transaction ID or error
      - Parameter confirmNoticeHandler: Callback in which the information will return whether the transaction was confirmed or not.
  */
     func createContract(
@@ -59,7 +59,7 @@ public protocol ContractsFacade {
         byteCode: String,
         supportedAssetId: String?,
         ethAccuracy: Bool,
-        sendCompletion: @escaping Completion<Void>,
+        sendCompletion: @escaping Completion<String>,
         confirmNoticeHandler: NoticeHandler?
     )
     
@@ -73,7 +73,7 @@ public protocol ContractsFacade {
      - Parameter contratId: Id of called contract
      - Parameter methodName: Name of called method
      - Parameter methodParams: Parameters of called method
-     - Parameter sendCompletion: Callback in which the information will return whether the transaction was successful send to chain.
+     - Parameter sendCompletion: Callback in which the information will return transaction ID or error
      - Parameter confirmNoticeHandler: Callback in which the information will return whether the transaction was confirmed or not.
  */
     func callContract(
@@ -85,7 +85,7 @@ public protocol ContractsFacade {
         contratId: String,
         methodName: String,
         methodParams: [AbiTypeValueInputModel],
-        sendCompletion: @escaping Completion<Void>,
+        sendCompletion: @escaping Completion<String>,
         confirmNoticeHandler: NoticeHandler?
     )
     
@@ -98,7 +98,7 @@ public protocol ContractsFacade {
      - Parameter amount: Amount
      - Parameter contratId: Id of called contract
      - Parameter byteCode: Code which will be execute
-     - Parameter sendCompletion: Callback in which the information will return whether the transaction was successful send to chain.
+     - Parameter sendCompletion: Callback in which the information will return transaction ID or error
      - Parameter confirmNoticeHandler: Callback in which the information will return whether the transaction was confirmed or not.
  */
     func callContract(
@@ -109,7 +109,7 @@ public protocol ContractsFacade {
         assetForFee: String?,
         contratId: String,
         byteCode: String,
-        sendCompletion: @escaping Completion<Void>,
+        sendCompletion: @escaping Completion<String>,
         confirmNoticeHandler: NoticeHandler?
     )
     

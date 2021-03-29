@@ -46,6 +46,9 @@ public enum ObjectType: Int {
     case btcAggregating             
     case evmAddress
     case didObject                  //25
+    case stakeBTCScript
+    case stakeBtCVout
+    case stakeETHUpdateObjectType   //28
     case globalProperty             //0
     case dynamicGlobalProperty
     case assetDynamicData
@@ -62,7 +65,9 @@ public enum ObjectType: Int {
     case contractStatistics
     case accountAddress
     case contractPool
-    case maliciousCommitteemen      //16
+    case maliciousCommitteemen
+    case incentives
+    case verifiers                  //18
     case undefined
     
     func getGenericObjectId() -> String? {
@@ -105,7 +110,10 @@ public enum ObjectType: Int {
              .btcWithdraw,
              .btcAggregating,
              .evmAddress,
-             .didObject:
+             .didObject,
+             .stakeBTCScript,
+             .stakeBtCVout,
+             .stakeETHUpdateObjectType:
             space = .protocolSpace
         case .globalProperty,
              .dynamicGlobalProperty,
@@ -123,7 +131,9 @@ public enum ObjectType: Int {
              .contractStatistics,
              .accountAddress,
              .contractPool,
-             .maliciousCommitteemen:
+             .maliciousCommitteemen,
+             .incentives,
+             .verifiers:
             space = .implementationSpace
         case .undefined:
             space = .undefined

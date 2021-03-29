@@ -21,7 +21,7 @@ public protocol ERC20Facade {
     - Parameter tokenSymbol: Token symbol in Ethereum network
     - Parameter tokenDecimals: Token decimals in Ethereum network
     - Parameter assetForFee: Id of asset which is pay fee
-    - Parameter sendCompletion: Callback in which the information will return whether the transaction was successful send to chain.
+    - Parameter sendCompletion: Callback in which the information will return transaction ID or error
     - Parameter confirmNoticeHandler: Callback in which the information will return whether the transaction was confirmed or not.
     
     - Remark:
@@ -35,7 +35,7 @@ public protocol ERC20Facade {
         tokenSymbol: String,
         tokenDecimals: UInt8,
         assetForFee: String?,
-        sendCompletion: @escaping Completion<Void>,
+        sendCompletion: @escaping Completion<String>,
         confirmNoticeHandler: NoticeHandler?
     )
     
@@ -92,7 +92,7 @@ public protocol ERC20Facade {
     - Parameter tokenId: Echo token id for withdraw
     - Parameter value: Amount
     - Parameter assetForFee:Id of asset which is pay fee
-    - Parameter sendCompletion: Callback in which the information will return whether the transaction was successful send to chain.
+    - Parameter sendCompletion: Callback in which the information will return transaction ID or error
     - Parameter confirmNoticeHandler: Callback in which the information will return whether the transaction was confirmed or not.
 */
     func withdrawERC20(
@@ -102,7 +102,7 @@ public protocol ERC20Facade {
         tokenId: String,
         value: String,
         assetForFee: String?,
-        sendCompletion: @escaping Completion<Void>,
+        sendCompletion: @escaping Completion<String>,
         confirmNoticeHandler: NoticeHandler?
     )
     

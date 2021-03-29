@@ -186,6 +186,7 @@ class SocketCoreComponentTests: XCTestCase {
         let messenger = SocketMessengerStub(state: .changePassword)
         echo = ECHO(settings: Settings(build: {
             $0.socketMessenger = messenger
+            $0.debug = true
         }))
         let exp = expectation(description: "Change password")
         let userName = "vsharaev"
@@ -267,7 +268,7 @@ class SocketCoreComponentTests: XCTestCase {
         asset.issuer = Account("1.2.95")
         
         asset.options = AssetOptions(maxSupply: 100000,
-                                     issuerPermissions: AssetOptionIssuerPermissions.committeeFedAsset.rawValue,
+                                     issuerPermissions: AssetOptionIssuerPermissions.committeeFedAsset,
                                      flags: AssetOptionIssuerPermissions.committeeFedAsset.rawValue,
                                      coreExchangeRate: Price(base: AssetAmount(amount: 1, asset: Asset("1.3.0")), quote: AssetAmount(amount: 1, asset: Asset("1.3.1"))),
                                      description: "description")
@@ -735,6 +736,62 @@ class SocketCoreComponentTests: XCTestCase {
         waitForExpectations(timeout: 1) { error in
             XCTAssertNotNil(withdrawals)
             XCTAssertTrue(withdrawals?.count != 0)
+        }
+    }
+    
+    func testFakeGetTransactionInBlock() {
+        //arrange
+        let messenger = SocketMessengerStub(state: .getTransactionInBlock)
+        echo = ECHO(settings: Settings(build: {
+            $0.socketMessenger = messenger
+        }))
+        let exp = expectation(description: "testFakeGetTransactionInBlock")
+        var transaction: Transaction?
+        
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.getTransaction(blockNum: 1, transactionIndex: 0) { result in
+                switch result {
+                case .success(let result):
+                    transaction = result
+                    exp.fulfill()
+                case .failure(let error):
+                    XCTFail("testFakeGetTransactionInBlock must be valid \(error)")
+                }
+            }
+        }
+        
+        //assert
+        waitForExpectations(timeout: 1) { error in
+            XCTAssertNotNil(transaction)
+        }
+    }
+    
+    func testFakeGetTransactionByID() {
+        //arrange
+        let messenger = SocketMessengerStub(state: .getTransactionById)
+        echo = ECHO(settings: Settings(build: {
+            $0.socketMessenger = messenger
+        }))
+        let exp = expectation(description: "testFakeGetTransactionByID")
+        var transaction: Transaction?
+        
+        //act
+        echo.start { [unowned self] (result) in
+            self.echo.getTransaction(transactionID: "test") { result in
+                switch result {
+                case .success(let result):
+                    transaction = result
+                    exp.fulfill()
+                case .failure(let error):
+                    XCTFail("testFakeGetTransactionByID must be valid \(error)")
+                }
+            }
+        }
+        
+        //assert
+        waitForExpectations(timeout: 1) { error in
+            XCTAssertNotNil(transaction)
         }
     }
 }

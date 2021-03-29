@@ -155,7 +155,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble, NoticeEven
         supportedAssetId: String?,
         ethAccuracy: Bool,
         parameters: [AbiTypeValueInputModel]?,
-        sendCompletion: @escaping Completion<Void>,
+        sendCompletion: @escaping Completion<String>,
         confirmNoticeHandler: NoticeHandler?
     ) {
         var completedBytecode = byteCode
@@ -185,7 +185,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble, NoticeEven
                                byteCode: String,
                                supportedAssetId: String?,
                                ethAccuracy: Bool,
-                               sendCompletion: @escaping Completion<Void>,
+                               sendCompletion: @escaping Completion<String>,
                                confirmNoticeHandler: NoticeHandler?) {
         
         let assetForFee = assetForFee ?? Settings.defaultAsset
@@ -198,7 +198,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble, NoticeEven
             
         } catch let error {
             let echoError = (error as? ECHOError) ?? ECHOError.undefined
-            let result = Result<Void, ECHOError>(error: echoError)
+            let result = Result<String, ECHOError>(error: echoError)
             sendCompletion(result)
             return
         }
@@ -211,8 +211,8 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble, NoticeEven
         let getAccountsOperationInitParams = (createQueue,
                                               services.databaseService,
                                               getAccountsNamesOrIdsWithKeys)
-        let getAccountsOperation = GetAccountsQueueOperation<Void>(initParams: getAccountsOperationInitParams,
-                                                                   completion: sendCompletion)
+        let getAccountsOperation = GetAccountsQueueOperation<String>(initParams: getAccountsOperationInitParams,
+                                                                     completion: sendCompletion)
         
         // Operation
         createQueue.saveValue(byteCode, forKey: ContractKeys.byteCode.rawValue)
@@ -231,18 +231,18 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble, NoticeEven
                                                  ContractKeys.operation.rawValue,
                                                  ContractKeys.fee.rawValue,
                                                  UInt(1))
-        let getRequiredFeeOperation = GetRequiredFeeQueueOperation<Void>(initParams: getRequiredFeeOperationInitParams,
-                                                                         completion: sendCompletion)
+        let getRequiredFeeOperation = GetRequiredFeeQueueOperation<String>(initParams: getRequiredFeeOperationInitParams,
+                                                                           completion: sendCompletion)
         
         // ChainId
         let getChainIdInitParams = (createQueue, services.databaseService, ContractKeys.chainId.rawValue)
-        let getChainIdOperation = GetChainIdQueueOperation<Void>(initParams: getChainIdInitParams,
-                                                                 completion: sendCompletion)
+        let getChainIdOperation = GetChainIdQueueOperation<String>(initParams: getChainIdInitParams,
+                                                                   completion: sendCompletion)
         
         // BlockData
         let getBlockDataInitParams = (createQueue, services.databaseService, ContractKeys.blockData.rawValue)
-        let getBlockDataOperation = GetBlockDataQueueOperation<Void>(initParams: getBlockDataInitParams,
-                                                                     completion: sendCompletion)
+        let getBlockDataOperation = GetBlockDataQueueOperation<String>(initParams: getBlockDataInitParams,
+                                                                       completion: sendCompletion)
         
         // Transaciton
         let transactionOperationInitParams = (queue: createQueue,
@@ -256,8 +256,8 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble, NoticeEven
                                               blockDataKey: ContractKeys.blockData.rawValue,
                                               feeKey: ContractKeys.fee.rawValue,
                                               expirationOffset: settings.transactionExpirationTime)
-        let bildTransactionOperation = GetTransactionQueueOperation<Void>(initParams: transactionOperationInitParams,
-                                                                          completion: sendCompletion)
+        let bildTransactionOperation = GetTransactionQueueOperation<String>(initParams: transactionOperationInitParams,
+                                                                            completion: sendCompletion)
         
         // Send transaction
         let sendTransacionOperationInitParams = (createQueue,
@@ -312,7 +312,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble, NoticeEven
                              contratId: String,
                              methodName: String,
                              methodParams: [AbiTypeValueInputModel],
-                             sendCompletion: @escaping Completion<Void>,
+                             sendCompletion: @escaping Completion<String>,
                              confirmNoticeHandler: NoticeHandler?) {
         
         callContract(registrarNameOrId: registrarNameOrId,
@@ -333,7 +333,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble, NoticeEven
                              assetForFee: String?,
                              contratId: String,
                              byteCode: String,
-                             sendCompletion: @escaping Completion<Void>,
+                             sendCompletion: @escaping Completion<String>,
                              confirmNoticeHandler: NoticeHandler?) {
         
         callContract(registrarNameOrId: registrarNameOrId,
@@ -354,7 +354,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble, NoticeEven
                                   assetForFee: String?,
                                   contratId: String,
                                   executeType: ContractExecuteType,
-                                  completion: @escaping Completion<Void>,
+                                  completion: @escaping Completion<String>,
                                   noticeHandler: NoticeHandler?) {
         
         let assetForFee = assetForFee ?? Settings.defaultAsset
@@ -368,7 +368,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble, NoticeEven
             
         } catch let error {
             let echoError = (error as? ECHOError) ?? ECHOError.undefined
-            let result = Result<Void, ECHOError>(error: echoError)
+            let result = Result<String, ECHOError>(error: echoError)
             completion(result)
             return
         }
@@ -381,8 +381,8 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble, NoticeEven
         let getAccountsOperationInitParams = (callQueue,
                                               services.databaseService,
                                               getAccountsNamesOrIdsWithKeys)
-        let getAccountsOperation = GetAccountsQueueOperation<Void>(initParams: getAccountsOperationInitParams,
-                                                                   completion: completion)
+        let getAccountsOperation = GetAccountsQueueOperation<String>(initParams: getAccountsOperationInitParams,
+                                                                     completion: completion)
         
         // ByteCode
         var byteCodeOperation: Operation?
@@ -408,18 +408,18 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble, NoticeEven
                                                  ContractKeys.operation.rawValue,
                                                  ContractKeys.fee.rawValue,
                                                  settings.callContractFeeMultiplier)
-        let getRequiredFeeOperation = GetRequiredFeeQueueOperation<Void>(initParams: getRequiredFeeOperationInitParams,
-                                                                         completion: completion)
+        let getRequiredFeeOperation = GetRequiredFeeQueueOperation<String>(initParams: getRequiredFeeOperationInitParams,
+                                                                           completion: completion)
         
         // ChainId
         let getChainIdInitParams = (callQueue, services.databaseService, ContractKeys.chainId.rawValue)
-        let getChainIdOperation = GetChainIdQueueOperation<Void>(initParams: getChainIdInitParams,
-                                                                 completion: completion)
+        let getChainIdOperation = GetChainIdQueueOperation<String>(initParams: getChainIdInitParams,
+                                                                   completion: completion)
         
         // BlockData
         let getBlockDataInitParams = (callQueue, services.databaseService, ContractKeys.blockData.rawValue)
-        let getBlockDataOperation = GetBlockDataQueueOperation<Void>(initParams: getBlockDataInitParams,
-                                                                     completion: completion)
+        let getBlockDataOperation = GetBlockDataQueueOperation<String>(initParams: getBlockDataInitParams,
+                                                                       completion: completion)
         
         // Transaciton
         let transactionOperationInitParams = (queue: callQueue,
@@ -433,8 +433,8 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble, NoticeEven
                                               blockDataKey: ContractKeys.blockData.rawValue,
                                               feeKey: ContractKeys.fee.rawValue,
                                               expirationOffset: settings.transactionExpirationTime)
-        let bildTransactionOperation = GetTransactionQueueOperation<Void>(initParams: transactionOperationInitParams,
-                                                                          completion: completion)
+        let bildTransactionOperation = GetTransactionQueueOperation<String>(initParams: transactionOperationInitParams,
+                                                                            completion: completion)
         
         // Send transaction
         let sendTransacionOperationInitParams = (callQueue,
@@ -576,7 +576,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble, NoticeEven
                                                      _ amount: UInt,
                                                      _ assetId: String,
                                                      _ assetForFee: String,
-                                                     _ completion: @escaping Completion<Void>) -> Operation {
+                                                     _ completion: @escaping Completion<String>) -> Operation {
         
         let contractOperation = BlockOperation()
         
@@ -608,7 +608,7 @@ final public class ContractsFacadeImp: ContractsFacade, ECHOQueueble, NoticeEven
                                                        _ assetForFee: String,
                                                        _ supportedAssetId: String?,
                                                        _ ethAccuracy: Bool,
-                                                       _ completion: @escaping Completion<Void>) -> Operation {
+                                                       _ completion: @escaping Completion<String>) -> Operation {
         
         let contractOperation = BlockOperation()
         

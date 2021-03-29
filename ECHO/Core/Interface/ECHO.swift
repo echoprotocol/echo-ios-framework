@@ -317,7 +317,7 @@ final public class ECHO: InterfaceFacades, Startable, Disconnectable {
         oldWIF: String,
         newWIF: String,
         name: String,
-        sendCompletion: @escaping Completion<Void>,
+        sendCompletion: @escaping Completion<String>,
         confirmNoticeHandler: NoticeHandler?
     ) {
         authentificationFacade.changeKeys(
@@ -365,6 +365,14 @@ final public class ECHO: InterfaceFacades, Startable, Disconnectable {
     
     public func getAccountHistroy(nameOrID: String, startId: String, stopId: String, limit: Int, completion: @escaping Completion<[HistoryItem]>) {
         informationFacade.getAccountHistroy(nameOrID: nameOrID, startId: startId, stopId: stopId, limit: limit, completion: completion)
+    }
+    
+    public func getTransaction(blockNum: Int, transactionIndex: Int, completion: @escaping Completion<Transaction>) {
+        informationFacade.getTransaction(blockNum: blockNum, transactionIndex: transactionIndex, completion: completion)
+    }
+    
+    public func getTransaction(transactionID: String, completion: @escaping Completion<Transaction>) {
+        informationFacade.getTransaction(transactionID: transactionID, completion: completion)
     }
     
     public func getGlobalProperties(completion: @escaping Completion<GlobalProperties>) {
@@ -507,22 +515,26 @@ final public class ECHO: InterfaceFacades, Startable, Disconnectable {
     
     // MARK: TransactionFacade
     
-    public func sendTransferOperation(fromNameOrId: String,
-                                      wif: String,
-                                      toNameOrId: String,
-                                      amount: UInt,
-                                      asset: String,
-                                      assetForFee: String?,
-                                      sendCompletion: @escaping Completion<Void>,
-                                      confirmNoticeHandler: NoticeHandler?) {
-        
-        transactionFacade.sendTransferOperation(fromNameOrId: fromNameOrId,
-                                                wif: wif,
-                                                toNameOrId: toNameOrId,
-                                                amount: amount,
-                                                asset: asset,
-                                                assetForFee: assetForFee,
-                                                sendCompletion: sendCompletion, confirmNoticeHandler: confirmNoticeHandler)
+    public func sendTransferOperation(
+        fromNameOrId: String,
+        wif: String,
+        toNameOrId: String,
+        amount: UInt,
+        asset: String,
+        assetForFee: String?,
+        sendCompletion: @escaping Completion<String>,
+        confirmNoticeHandler: NoticeHandler?
+    ) {
+        transactionFacade.sendTransferOperation(
+            fromNameOrId: fromNameOrId,
+            wif: wif,
+            toNameOrId: toNameOrId,
+            amount: amount,
+            asset: asset,
+            assetForFee: assetForFee,
+            sendCompletion: sendCompletion,
+            confirmNoticeHandler: confirmNoticeHandler
+        )
     }
     
     // MARK: AssetsFacade
@@ -531,7 +543,7 @@ final public class ECHO: InterfaceFacades, Startable, Disconnectable {
         nameOrId: String,
         wif: String,
         asset: Asset,
-        sendCompletion: @escaping Completion<Void>,
+        sendCompletion: @escaping Completion<String>,
         confirmNoticeHandler: NoticeHandler?
     ) {
         assetsFacade.createAsset(
@@ -549,7 +561,7 @@ final public class ECHO: InterfaceFacades, Startable, Disconnectable {
         asset: String,
         amount: UInt,
         destinationIdOrName: String,
-        sendCompletion: @escaping Completion<Void>,
+        sendCompletion: @escaping Completion<String>,
         confirmNoticeHandler: NoticeHandler?
     ) {
         assetsFacade.issueAsset(
@@ -607,7 +619,7 @@ final public class ECHO: InterfaceFacades, Startable, Disconnectable {
                                supportedAssetId: String?,
                                ethAccuracy: Bool,
                                parameters: [AbiTypeValueInputModel]?,
-                               sendCompletion: @escaping Completion<Void>,
+                               sendCompletion: @escaping Completion<String>,
                                confirmNoticeHandler: NoticeHandler?) {
         
         contractsFacade.createContract(registrarNameOrId: registrarNameOrId,
@@ -631,7 +643,7 @@ final public class ECHO: InterfaceFacades, Startable, Disconnectable {
                                byteCode: String,
                                supportedAssetId: String?,
                                ethAccuracy: Bool,
-                               sendCompletion: @escaping Completion<Void>,
+                               sendCompletion: @escaping Completion<String>,
                                confirmNoticeHandler: NoticeHandler?) {
         
         contractsFacade.createContract(registrarNameOrId: registrarNameOrId,
@@ -654,7 +666,7 @@ final public class ECHO: InterfaceFacades, Startable, Disconnectable {
                              contratId: String,
                              methodName: String,
                              methodParams: [AbiTypeValueInputModel],
-                             sendCompletion: @escaping Completion<Void>,
+                             sendCompletion: @escaping Completion<String>,
                              confirmNoticeHandler: NoticeHandler?) {
         
         contractsFacade.callContract(registrarNameOrId: registrarNameOrId,
@@ -676,7 +688,7 @@ final public class ECHO: InterfaceFacades, Startable, Disconnectable {
                              assetForFee: String?,
                              contratId: String,
                              byteCode: String,
-                             sendCompletion: @escaping Completion<Void>,
+                             sendCompletion: @escaping Completion<String>,
                              confirmNoticeHandler: NoticeHandler?) {
         
         contractsFacade.callContract(registrarNameOrId: registrarNameOrId,
@@ -727,7 +739,7 @@ final public class ECHO: InterfaceFacades, Startable, Disconnectable {
     public func generateEthAddress(nameOrId: String,
                                    wif: String,
                                    assetForFee: String?,
-                                   sendCompletion: @escaping Completion<Void>,
+                                   sendCompletion: @escaping Completion<String>,
                                    confirmNoticeHandler: NoticeHandler?) {
         
         ethFacade.generateEthAddress(nameOrId: nameOrId,
@@ -747,7 +759,7 @@ final public class ECHO: InterfaceFacades, Startable, Disconnectable {
                             toEthAddress: String,
                             amount: UInt,
                             assetForFee: String?,
-                            sendCompletion: @escaping Completion<Void>,
+                            sendCompletion: @escaping Completion<String>,
                             confirmNoticeHandler: NoticeHandler?) {
         
         ethFacade.withdrawEth(nameOrId: nameOrId,
@@ -775,7 +787,7 @@ final public class ECHO: InterfaceFacades, Startable, Disconnectable {
                                    wif: String,
                                    backupAddress: String,
                                    assetForFee: String?,
-                                   sendCompletion: @escaping Completion<Void>,
+                                   sendCompletion: @escaping Completion<String>,
                                    confirmNoticeHandler: NoticeHandler?) {
         
         btcFacade.generateBtcAddress(nameOrId: nameOrId,
@@ -796,7 +808,7 @@ final public class ECHO: InterfaceFacades, Startable, Disconnectable {
                             toBtcAddress: String,
                             amount: UInt,
                             assetForFee: String?,
-                            sendCompletion: @escaping Completion<Void>,
+                            sendCompletion: @escaping Completion<String>,
                             confirmNoticeHandler: NoticeHandler?) {
         
         btcFacade.withdrawBtc(nameOrId: nameOrId,
@@ -827,7 +839,7 @@ final public class ECHO: InterfaceFacades, Startable, Disconnectable {
                                    tokenSymbol: String,
                                    tokenDecimals: UInt8,
                                    assetForFee: String?,
-                                   sendCompletion: @escaping Completion<Void>,
+                                   sendCompletion: @escaping Completion<String>,
                                    confirmNoticeHandler: NoticeHandler?) {
         
         erc20Facade.registerERC20Token(nameOrId: nameOrId,
@@ -867,7 +879,7 @@ final public class ECHO: InterfaceFacades, Startable, Disconnectable {
                               tokenId: String,
                               value: String,
                               assetForFee: String?,
-                              sendCompletion: @escaping Completion<Void>,
+                              sendCompletion: @escaping Completion<String>,
                               confirmNoticeHandler: NoticeHandler?) {
         
         erc20Facade.withdrawERC20(nameOrId: nameOrId,
