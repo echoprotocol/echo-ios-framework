@@ -15,9 +15,7 @@ For setup framework use this simple code:
 ```swift
 // Create and Setup framework main class
 let echo = ECHO(settings: Settings(build: {
-
     /** Here you can put your custom settings for our framework
-
         Example: 
         Custom api options which can be used
     */
@@ -26,7 +24,6 @@ let echo = ECHO(settings: Settings(build: {
 
 // Start framwork. Connect to nodes and setup public apis
 echo.start { (result) in
-
     switch result {
     case .success(let result):
         print(result)
@@ -55,7 +52,6 @@ func login() {
 
 ```swift
 func getInfo() {
-
     let name = "some name"
 
     echo.getAccount(nameOrID: name) { (result) in
@@ -80,12 +76,12 @@ func getInfo() {
 
 ```swift
 func getHistory() {
-
-    echo.getAccountHistroy(nameOrID: "some ID", 
-                           startId: "1.11.0", 
-                           stopId: "1.11.0", 
-                           limit: 100) { (result) in
-    
+    echo.getAccountHistroy(
+        nameOrID: "some ID", 
+        startId: "1.11.0", 
+        stopId: "1.11.0", 
+        limit: 100
+    ) { (result) in
         switch result {
         case .success(let history):
             print(history)
@@ -103,14 +99,12 @@ func getHistory() {
 
 ```swift
 func setSubscriber() {
-
     let name = "some name"
 
     echo.subscribeToAccount(nameOrId: name, delegate: self)
 }
 
 extension YourClass: SubscribeAccountDelegate {
-
     func didUpdateAccount(userAccount: UserAccount) {
         print("Account updated \(userAccount)")
     }
@@ -121,16 +115,27 @@ extension YourClass: SubscribeAccountDelegate {
 
 ```swift
 func changeKeys() {
-
-    echo.changeKeys(oldWIF: "your old wif", newWIF: "your new wif", name: "some name") { (result) in
-
-        switch result {
-        case .success(let success):
-            print(success)
-        case .failure(let error):
-            print(error)
+    echo.changeKeys(
+        oldWIF: "your old wif", 
+        newWIF: "your new wif", 
+        name: "some name",
+        sendCompletion: { (result) in
+            switch result {
+            case .success(let success):
+                print("Success send transaction")
+            case .failure(let error):
+                print("Error while sending transaction")
+            }
+        }, 
+        confirmNoticeHandler: { (notice) in
+            switch notice {
+            case .success(let success):
+                print("Transaction confirmed")
+            case .failure(let error):
+                print("Transaction didn't confirmed")
+            }
         }
-    }
+    )
 }
 ```
 
@@ -138,13 +143,13 @@ func changeKeys() {
 
 ```swift
 func feeForTransfer() {
-
-    echo.getFeeForTransferOperation(fromNameOrId: "some name", 
-                                    toNameOrId: "some name", 
-                                    amount: 300, 
-                                    asset: "1.3.0", 
-                                    assetForFee: nil) { (result) in
-                                    
+    echo.getFeeForTransferOperation(
+        fromNameOrId: "some name", 
+        toNameOrId: "some name", 
+        amount: 300, 
+        asset: "1.3.0", 
+        assetForFee: nil
+    ) { (result) in                                
         switch result {
         case .success(let fee):
             print(fee)
@@ -160,24 +165,30 @@ func feeForTransfer() {
 ```swift
 
 funс transfer() {
-
-    echo.sendTransferOperation(fromNameOrId: "some name",
-                               wif: "some wif",
-                               toNameOrId: "some name",
-                               amount: 300,
-                               asset: "1.3.0",
-                               assetForFee: nil,
-                               completion: { (result) in
-
-        switch result {
-        case .success(let success):
-            print(success)
-        case .failure(let error):
-            print(error)
+    echo.sendTransferOperation(
+        fromNameOrId: "some name",
+        wif: "some wif",
+        toNameOrId: "some name",
+        amount: 300,
+        asset: "1.3.0",
+        assetForFee: nil,
+        sendCompletion: { (result) in
+            switch result {
+            case .success(let success):
+                print("Success send transaction")
+            case .failure(let error):
+                print("Error while sending transaction")
+            }
+        }, 
+        confirmNoticeHandler: { (notice) in
+            switch notice {
+            case .success(let success):
+                print("Transaction confirmed")
+            case .failure(let error):
+                print("Transaction didn't confirmed")
+            }
         }
-    }, noticeHandler: { notice in
-        print(notice)
-    })
+    )
 }
 ```
 
@@ -187,35 +198,48 @@ funс transfer() {
 
 ```swift
 func createAsset() {
-
     var asset = Asset("")
     asset.symbol = "some symbol"
     asset.precision = 4
     asset.issuer = Account("some account id")
     asset.predictionMarket = false
 
-    let price = Price(base: AssetAmount(amount: 1, asset: Asset("1.3.0")), 
-                      quote: AssetAmount(amount: 1, asset: Asset("1.3.1")))
+    let price = Price(
+        base: AssetAmount(amount: 1, asset: Asset("1.3.0")), 
+        quote: AssetAmount(amount: 1, asset: Asset("1.3.1"))
+    )
 
-    asset.options = AssetOptions(maxSupply: 100000,
-                                 marketFeePercent: 0,
-                                 maxMarketFee: 0,
-                                 issuerPermissions: AssetOptionIssuerPermissions.committeeFedAsset.rawValue,
-                                 flags: AssetOptionIssuerPermissions.committeeFedAsset.rawValue,
-                                 coreExchangeRate: price,
-                                 description: "some description")
+    asset.options = AssetOptions(
+        maxSupply: 100000,
+        marketFeePercent: 0,
+        maxMarketFee: 0,
+        issuerPermissions: AssetOptionIssuerPermissions.overrideAuthority,
+        flags: AssetOptionIssuerPermissions.committeeFedAsset.rawValue,
+        coreExchangeRate: price,
+        description: "some description"
+    )
 
-    echo.createAsset(nameOrId: "some name", 
-                     wif: "some wif", 
-                     asset: asset) { (result) in
-
-        switch result {
-        case .success(let success):
-            print(success)
-        case .failure(let error):
-            print(error)
+    echo.createAsset(
+        nameOrId: "some name", 
+        wif: "some wif", 
+        asset: asset,
+        sendCompletion: { (result) in
+            switch result {
+            case .success(let success):
+                print("Success send transaction")
+            case .failure(let error):
+                print("Error while sending transaction")
+            }
+        }, 
+        confirmNoticeHandler: { (notice) in
+            switch notice {
+            case .success(let success):
+                print("Transaction confirmed")
+            case .failure(let error):
+                print("Transaction didn't confirmed")
+            }
         }
-    }
+    )
 }
 ```
 
@@ -223,20 +247,29 @@ func createAsset() {
 
 ```swift
 func issueAsset() {
-
-    echo.issueAsset(issuerNameOrId: "some name",
-                    wif: "some wif",
-                    asset: "1.3.87",
-                    amount: 1,
-                    destinationIdOrName: "some name") { (result) in
-
-        switch result {
-        case .success(let success):
-            print(success)
-        case .failure(let error):
-            print(error)
+    echo.issueAsset(
+        issuerNameOrId: "some name",
+        wif: "some wif",
+        asset: "1.3.87",
+        amount: 1,
+        destinationIdOrName: "some name"
+        sendCompletion: { (result) in
+            switch result {
+            case .success(let success):
+                print("Success send transaction")
+            case .failure(let error):
+                print("Error while sending transaction")
+            }
+        }, 
+        confirmNoticeHandler: { (notice) in
+            switch notice {
+            case .success(let success):
+                print("Transaction confirmed")
+            case .failure(let error):
+                print("Transaction didn't confirmed")
+            }
         }
-    }
+    )
 }
 ```
 
@@ -246,29 +279,35 @@ func issueAsset() {
 
 ```swift
 func createContract() {
-
     let byteCode = "some bytecode"
 
-    echo.createContract(registrarNameOrId: "some name",
-                        wif: "some wif",
-                        assetId: "1.3.0",
-                        amount: nil,
-                        assetForFee: nil,
-                        byteCode: byteCode,
-                        supportedAssetId: nil,
-                        ethAccuracy: nil,
-                        parameters: nil,
-                        completion: { (result) in
-
-        switch result {
-        case .success(let success):
-            print(success)
-        case .failure(let error):
-            print(error)
+    echo.createContract(
+        registrarNameOrId: "some name",
+        wif: "some wif",
+        assetId: "1.3.0",
+        amount: nil,
+        assetForFee: nil,
+        byteCode: byteCode,
+        supportedAssetId: nil,
+        ethAccuracy: nil,
+        parameters: nil,
+        sendCompletion: { (result) in
+            switch result {
+            case .success(let success):
+                print("Success send transaction")
+            case .failure(let error):
+                print("Error while sending transaction")
+            }
+        }, 
+        confirmNoticeHandler: { (notice) in
+            switch notice {
+            case .success(let success):
+                print("Transaction confirmed")
+            case .failure(let error):
+                print("Transaction didn't confirmed")
+            }
         }
-    }, noticeHandler: { notice in
-        print(notice)
-    })
+    )
 }
 ```
 
@@ -276,25 +315,31 @@ func createContract() {
 
 ```swift
 func callContract() {
-
-    echo.callContract(registrarNameOrId: "some name",
-                      wif: "some wif",
-                      assetId: "1.3.0",
-                      assetForFee: nil,
-                      contratId: "1.16.1",
-                      methodName: "some name",
-                      methodParams: [],
-                      completion: { (result) in
-
-        switch result {
-        case .success(let success):
-            print(success)
-        case .failure(let error):
-            print(error)
+    echo.callContract(
+        registrarNameOrId: "some name",
+        wif: "some wif",
+        assetId: "1.3.0",
+        assetForFee: nil,
+        contratId: "1.16.1",
+        methodName: "some name",
+        methodParams: [],
+        sendCompletion: { (result) in
+            switch result {
+            case .success(let success):
+                print("Success send transaction")
+            case .failure(let error):
+                print("Error while sending transaction")
+            }
+        }, 
+        confirmNoticeHandler: { (notice) in
+            switch notice {
+            case .success(let success):
+                print("Transaction confirmed")
+            case .failure(let error):
+                print("Transaction didn't confirmed")
+            }
         }
-    }, noticeHandler: { (notice) in
-        print(notice)
-    })
+    )
 }
 ```
 
@@ -302,13 +347,13 @@ func callContract() {
 
 ```swift
 func queryContract() {
-
-    echo.queryContract(registrarNameOrId: "some name", 
-                       assetId: "1.3.0", 
-                       contratId: "1.16.1", 
-                       methodName: "some name", 
-                       methodParams: []) { (result) in
-
+    echo.queryContract(
+        registrarNameOrId: "some name", 
+        assetId: "1.3.0", 
+        contratId: "1.16.1", 
+        methodName: "some name", 
+        methodParams: []
+    ) { (result) in
         switch result {
         case .success(let success):
             print(success)

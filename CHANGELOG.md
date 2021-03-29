@@ -1,7 +1,24 @@
 # CHANGELOG
 
+## Changelog 6.0.0 - 2020-03-29
+Support [0.23](https://docs.echo.org/changelogs/0.23) and [0.24](https://docs.echo.org/changelogs/0.24) Echo version.
+
+### Added
+* Get transaction by block number and transaction index in block method in InformationFacade
+* Get transaction by transaction identifier method in InformationFacade
+
+### Changed
+* README.md
+* OperationType enum
+* ObjectType enum
+* AssetOptionIssuerPermissions enum
+* DynamicGlobalProperties object according to changelog
+* All methods that send a transaction to the network now return transaction identifier
+
+Fixed local and network tests
+
 ## Changelog 5.1.1 - 2020-10-07
-Support 0.22.3 Echo version.
+Support [0.22.3](https://docs.echo.org/changelogs/0.22) Echo version.
 ### Added
 * BalanceClaimOperation
 * BalanceFreezeOperation
@@ -16,7 +33,7 @@ Support 0.22.3 Echo version.
 
 
 ## Changelog 5.1.0 - 2020-09-04
-Support 0.22 Echo version.
+Support [0.22](https://docs.echo.org/changelogs/0.22) Echo version.
 
 ### Added
 * LastBlockOfPreviousInterval field in DynamicGlobalProperties object
@@ -29,7 +46,7 @@ Support 0.22 Echo version.
 * Fields in BtcDepositAddress and BtcCommitteeMemberIdInScript objects in public now
 
 ## Changelog 5.0.0 - 2020-08-25
-Support 0.21 Echo version.
+Support [0.21](https://docs.echo.org/changelogs/0.21) Echo version.
 
 ### Added
 * Notice handler param in createAsset method
@@ -50,7 +67,7 @@ Support 0.21 Echo version.
 * Support Swift 5
 
 ## Changelog 4.2.1 - 2020-05-29
-Integration with chain version 0.19
+Integration with chain version [0.19](https://docs.echo.org/changelogs/0.19)
 
 ### Added
 * TransactionHash field to BtcWithdrawal, ERC20Withdrawal, ErhAddress, EthDeposit, ETHWithdrawal, SidechainETHApproveAddressOperation, SidechainETHDepositOperation objects
