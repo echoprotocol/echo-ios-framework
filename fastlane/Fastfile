@@ -53,7 +53,8 @@ platform :ios do
 
     carthage(
       command: "update",
-      platform: "iOS"
+      platform: "iOS",
+      use_xcframeworks: true
     )
 
   end
