@@ -86,7 +86,7 @@ public struct AssetOptions: ECHOCodable, Decodable {
         }
         
         let dictionary: [AnyHashable: Any?] = [AssetOptionsCodingKeys.maxSupply.rawValue: maxSupply,
-                                               AssetOptionsCodingKeys.issuerPermissions.rawValue: issuerPermissions,
+                                               AssetOptionsCodingKeys.issuerPermissions.rawValue: issuerPermissions.rawValue,
                                                AssetOptionsCodingKeys.flags.rawValue: flags,
                                                AssetOptionsCodingKeys.coreExchangRate.rawValue: coreExchangeRate[safe: 0]?.toJSON(),
                                                AssetOptionsCodingKeys.whitelistAuthorities.rawValue: whitelistAuthoritiesArray,

@@ -1245,7 +1245,7 @@ class ECHOInterfaceTests: XCTestCase {
 //        var asset = Asset("")
 //        asset.symbol = "SHARAEVTEST"
 //        asset.precision = 4
-//        asset.issuer = Account("1.2.62")
+//        asset.issuer = Account("1.2.61")
 ////        asset.setBitsassetOptions(BitassetOptions(feedLifetimeSec: 86400,
 ////                                                  minimumFeeds: 7,
 ////                                                  forceSettlementDelaySec: 86400,
@@ -1254,11 +1254,10 @@ class ECHOInterfaceTests: XCTestCase {
 ////                                                  shortBackingAsset: Constants.defaultAsset))
 //
 //        asset.options = AssetOptions(maxSupply: 10000000,
-//                                     issuerPermissions: AssetOptionIssuerPermissions.chargeMarketFee.rawValue,
+//                                     issuerPermissions: AssetOptionIssuerPermissions.overrideAuthority,
 //                                     flags: AssetOptionIssuerPermissions.committeeFedAsset.rawValue,
-//                                     coreExchangeRate: Price(base: AssetAmount(amount: 1,
-//                                                                               asset: Asset(Constants.defaultAsset)),
-//                                                             quote: AssetAmount(amount: 1, asset: Asset("1.3.1"))),
+//                                     coreExchangeRate: Price(base: AssetAmount(amount: 1, asset: Asset("1.3.1")),
+//                                                             quote: AssetAmount(amount: 1, asset: Asset(Constants.defaultAsset))),
 //                                     description: "description")
 //        let nameOrId = Constants.defaultName
 //        let wif = Constants.defaultWIF
@@ -2270,40 +2269,46 @@ class ECHOInterfaceTests: XCTestCase {
     
     // MARK: ETH
     
-    func testGenerateEthAddress() {
-
-        //arrange
-        echo = ECHO(settings: Settings(build: {
-            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
-            $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
-            $0.debug = true
-        }))
-        let exp = expectation(description: "testGenerateEthAddress")
-        var isSuccess = false
-
-        //act
-        echo.start { [unowned self] (result) in
-            self.echo.generateEthAddress(nameOrId: Constants.defaultName,
-                                         wif: Constants.defaultWIF,
-                                         assetForFee: nil,
-                                         sendCompletion: { (result) in
-
-                switch result {
-                case .success:
-                    isSuccess = true
-                case .failure(let error):
-                    XCTFail("Generate eth address must be valid \(error)")
-                }
-            }, confirmNoticeHandler: { (_) in
-                exp.fulfill()
-            })
-        }
-
-        //assert
-        waitForExpectations(timeout: Constants.timeout) { error in
-            XCTAssertTrue(isSuccess)
-        }
-    }
+//    func testGenerateEthAddress() {
+//
+//        //arrange
+//        echo = ECHO(settings: Settings(build: {
+//            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
+//            $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
+//            $0.debug = true
+//        }))
+//        let exp = expectation(description: "testGenerateEthAddress")
+//        var isSuccess = false
+//
+//        //act
+//        echo.start { [unowned self] (result) in
+//            self.echo.generateEthAddress(nameOrId: Constants.defaultName,
+//                                         wif: Constants.defaultWIF,
+//                                         assetForFee: nil,
+//                                         sendCompletion: { (result) in
+//
+//                switch result {
+//                case .success:
+//                    print("Generate ETH address transaction send success")
+//                case .failure(let error):
+//                    XCTFail("Generate eth address must be valid \(error)")
+//                }
+//            }, confirmNoticeHandler: { notificationResult in
+//                switch notificationResult {
+//                case .success:
+//                    isSuccess = true
+//                case .failure(let error):
+//                    XCTFail("Generate eth address must be valid \(error)")
+//                }
+//                exp.fulfill()
+//            })
+//        }
+//
+//        //assert
+//        waitForExpectations(timeout: Constants.timeout) { error in
+//            XCTAssertTrue(isSuccess)
+//        }
+//    }
 
     func testGetEthAddress() {
         
