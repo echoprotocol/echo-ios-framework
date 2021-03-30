@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name = "ECHO"
-  spec.version = "6.0.0"
+  spec.version = "6.0.1"
   spec.summary = "Echo iOS Framework"
   spec.homepage = "https://github.com/echoprotocol/echo-ios-framework"
   spec.license = { :type => 'MIT', :file => 'LICENSE' }
@@ -8,6 +8,7 @@ Pod::Spec.new do |spec|
     "Fedorenko Nikita" => 'n.fedorenko@pixelplex.io',
     "Sharaev Vladimir" => 'v.sharaev@pixelplex.io',
   }
+  spec.swift_version = '5.0'
   spec.source = { :git => 'https://github.com/echoprotocol/echo-ios-framework' }
   spec.requires_arc = true
   spec.platform     = :ios
@@ -19,7 +20,9 @@ Pod::Spec.new do |spec|
 	'SWIFT_WHOLE_MODULE_OPTIMIZATION' => 'YES',
 	'HEADER_SEARCH_PATHS' => '$(SRCROOT)/ECHO/Libraries/openssl/include $(SRCROOT)/ECHO/Libraries/ed25519/include',
 	'LIBRARY_SEARCH_PATHS[sdk=iphoneos*]' => '$(SRCROOT)/ECHO/Libraries/openssl/lib $(SRCROOT)/ECHO/Libraries/ed25519/lib/OSRelease',
-	'LIBRARY_SEARCH_PATHS[sdk=iphonesimulator*]' => '$(SRCROOT)/ECHO/Libraries/openssl/lib $(SRCROOT)/ECHO/Libraries/ed25519/lib/SimulatorRelease'}
+	'LIBRARY_SEARCH_PATHS[sdk=iphonesimulator*]' => '$(SRCROOT)/ECHO/Libraries/openssl/lib $(SRCROOT)/ECHO/Libraries/ed25519/lib/SimulatorRelease',
+  'ARCHS[sdk=iphonesimulator*]' => '$(ARCHS_STANDARD_64_BIT)'
+  }
   spec.preserve_paths = ['Libraries']
   spec.dependency "Starscream", '~> 3.0.2'
   spec.source_files  = 'ECHO/**/*.{h,swift,m}'
