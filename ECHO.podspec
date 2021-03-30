@@ -18,13 +18,14 @@ Pod::Spec.new do |spec|
   spec.pod_target_xcconfig = {  
 	'SWIFT_INCLUDE_PATHS' => '$(SRCROOT)/ECHO/Libraries',
 	'SWIFT_WHOLE_MODULE_OPTIMIZATION' => 'YES',
-	'HEADER_SEARCH_PATHS' => '$(SRCROOT)/ECHO/Libraries/openssl/include $(SRCROOT)/ECHO/Libraries/ed25519/include',
-	'LIBRARY_SEARCH_PATHS[sdk=iphoneos*]' => '$(SRCROOT)/ECHO/Libraries/openssl/lib $(SRCROOT)/ECHO/Libraries/ed25519/lib/OSRelease',
-	'LIBRARY_SEARCH_PATHS[sdk=iphonesimulator*]' => '$(SRCROOT)/ECHO/Libraries/openssl/lib $(SRCROOT)/ECHO/Libraries/ed25519/lib/SimulatorRelease',
+	'HEADER_SEARCH_PATHS' => '$(SRCROOT)/ECHO/Libraries/ed25519/include',
+	'LIBRARY_SEARCH_PATHS[sdk=iphoneos*]' => '$(SRCROOT)/ECHO/Libraries/ed25519/lib/OSRelease',
+	'LIBRARY_SEARCH_PATHS[sdk=iphonesimulator*]' => '$(SRCROOT)/ECHO/Libraries/ed25519/lib/SimulatorRelease',
   'ARCHS[sdk=iphonesimulator*]' => '$(ARCHS_STANDARD_64_BIT)'
   }
   spec.preserve_paths = ['Libraries']
   spec.dependency "Starscream", '~> 3.0.2'
+  spec.dependency "OpenSSL-Universal", '~> 1.1.1100'
   spec.source_files  = 'ECHO/**/*.{h,swift,m}'
 
 end
