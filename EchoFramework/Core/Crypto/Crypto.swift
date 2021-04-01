@@ -6,7 +6,7 @@
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
 
-import ECHO.Private
+import EchoFramework.Private
 
 /// Helper class for cryptographic algorithms.
 final class Crypto {

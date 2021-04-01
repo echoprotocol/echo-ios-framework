@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:ECHO.xcodeproj">
+      location = "self:/Users/vladimir/Documents/PixelPlex/Echo_ios_lib_gitlab_new/EchoFramework.xcodeproj">
    </FileRef>
 </Workspace>

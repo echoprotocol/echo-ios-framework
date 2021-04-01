@@ -6,7 +6,7 @@ Pure Swift Echo framework for iOS mobile development. Can be used to work with a
 
 This framework can be obtained through CocoaPods:
 ```
-pod 'ECHO', :git => 'https://github.com/echoprotocol/echo-ios-framework.git'
+pod 'EchoFramework'
 ```
 
 ## Setup

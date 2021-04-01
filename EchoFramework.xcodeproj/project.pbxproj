@@ -57,10 +57,7 @@
 		B30FE907212EFA0D0009BF57 /* FullHistoryStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30FE906212EFA0D0009BF57 /* FullHistoryStub.swift */; };
 		B30FE909212F1AEA0009BF57 /* SocketMessengerStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30FE908212F1AEA0009BF57 /* SocketMessengerStub.swift */; };
 		B30FE90E212F2DAE0009BF57 /* FakeSocketCoreComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30FE90D212F2DAE0009BF57 /* FakeSocketCoreComponentTests.swift */; };
-		B313B8D32130411D0052B266 /* Internal.m in Sources */ = {isa = PBXBuildFile; fileRef = B313B8D22130411D0052B266 /* Internal.m */; };
-		B313B8D5213041250052B266 /* Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = B313B8D4213041250052B266 /* Internal.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		B313B8DD21305A080052B266 /* Crypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = B313B8DB21305A080052B266 /* Crypto.swift */; };
-		B31CB1A520F3772C00FA5532 /* ECHO.h in Headers */ = {isa = PBXBuildFile; fileRef = B31CB1A320F3772C00FA5532 /* ECHO.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B31CB1A520F3772C00FA5532 /* EchoFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = B31CB1A320F3772C00FA5532 /* EchoFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B328FC31213FEA510022292C /* ChangePasswordSocketRequestStubHodler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B328FC30213FEA510022292C /* ChangePasswordSocketRequestStubHodler.swift */; };
 		B3306DF7214BA25E002CFFF2 /* QueryContractStubHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3306DF6214BA25E002CFFF2 /* QueryContractStubHolder.swift */; };
 		B3306DF9214BB6A9002CFFF2 /* CallContractStubHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3306DF8214BB6A9002CFFF2 /* CallContractStubHolder.swift */; };
@@ -124,7 +121,7 @@
 		B3CA704920F5358400511F6A /* BlockDataSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3CA704820F5358400511F6A /* BlockDataSocketOperation.swift */; };
 		B3CA704B20F5363F00511F6A /* FullAccountSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3CA704A20F5363F00511F6A /* FullAccountSocketOperation.swift */; };
 		B3CA704D20F53A4500511F6A /* GetAccountHistorySocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3CA704C20F53A4500511F6A /* GetAccountHistorySocketOperation.swift */; };
-		B3D1C566212C9CCA00D1A7E6 /* ECHO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B31CB1A020F3772C00FA5532 /* ECHO.framework */; };
+		B3D1C566212C9CCA00D1A7E6 /* EchoFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B31CB1A020F3772C00FA5532 /* EchoFramework.framework */; };
 		B3D1C57A212C9D4900D1A7E6 /* JsonDecodingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D1C579212C9D4900D1A7E6 /* JsonDecodingTests.swift */; };
 		B3D1C57C212D4D8100D1A7E6 /* DataEncodingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D1C57B212D4D8100D1A7E6 /* DataEncodingTests.swift */; };
 		B3D1C57E212D94B500D1A7E6 /* BinaryConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D1C57D212D94B500D1A7E6 /* BinaryConvertible.swift */; };
@@ -198,7 +195,7 @@
 		D073F516224CD7F50025AE6A /* SubscribeAccountDelegateStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = D073F515224CD7F50025AE6A /* SubscribeAccountDelegateStub.swift */; };
 		D073F518224CD8530025AE6A /* SubscribeContractLogsDelegateStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = D073F517224CD8530025AE6A /* SubscribeContractLogsDelegateStub.swift */; };
 		D073F51A224CDB420025AE6A /* SubscribeToLogsStubHodler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D073F519224CDB420025AE6A /* SubscribeToLogsStubHodler.swift */; };
-		D077FE09224CC080009F2F27 /* ECHO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B31CB1A020F3772C00FA5532 /* ECHO.framework */; };
+		D077FE09224CC080009F2F27 /* EchoFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B31CB1A020F3772C00FA5532 /* EchoFramework.framework */; };
 		D07EBA08224CC30F0005C00C /* ECHOInterfaceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B313B8C0212FF9850052B266 /* ECHOInterfaceTests.swift */; };
 		D07EBA09224CC4240005C00C /* CustomGetFullAccountSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D061330F21A2D073009EC456 /* CustomGetFullAccountSocketOperation.swift */; };
 		D0814E8C2154DD6600E248AA /* ObjectType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0814E8B2154DD6600E248AA /* ObjectType.swift */; };
@@ -302,6 +299,9 @@
 		D0FAC41722AE3E5300C8BF49 /* CallContractFee.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FAC41622AE3E5300C8BF49 /* CallContractFee.swift */; };
 		E717CC2724ED375200C6F1BB /* WaitQueueOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E717CC2624ED375200C6F1BB /* WaitQueueOperation.swift */; };
 		E717CC2924ED3D1000C6F1BB /* NoticeHandleQueueOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E717CC2824ED3D1000C6F1BB /* NoticeHandleQueueOperation.swift */; };
+		E7358E522615CA4300494E2E /* Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = E7358E502615CA4300494E2E /* Internal.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		E7358E532615CA4300494E2E /* Internal.m in Sources */ = {isa = PBXBuildFile; fileRef = E7358E512615CA4300494E2E /* Internal.m */; };
+		E7358E572615CA4B00494E2E /* Crypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7358E562615CA4B00494E2E /* Crypto.swift */; };
 		E73E3C08261207F000DDB521 /* GetTransactionInBlockStubHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E73E3C07261207F000DDB521 /* GetTransactionInBlockStubHolder.swift */; };
 		E73E3C0C2612080800DDB521 /* GetTransactionByIDStubHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E73E3C0B2612080800DDB521 /* GetTransactionByIDStubHolder.swift */; };
 		E73E3C102612083800DDB521 /* GetTransactionInBlockRequestStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = E73E3C0F2612083800DDB521 /* GetTransactionInBlockRequestStub.swift */; };
@@ -397,12 +397,9 @@
 		B30FE908212F1AEA0009BF57 /* SocketMessengerStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketMessengerStub.swift; sourceTree = "<group>"; };
 		B30FE90D212F2DAE0009BF57 /* FakeSocketCoreComponentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeSocketCoreComponentTests.swift; sourceTree = "<group>"; };
 		B313B8C0212FF9850052B266 /* ECHOInterfaceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ECHOInterfaceTests.swift; sourceTree = "<group>"; };
-		B313B8D22130411D0052B266 /* Internal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Internal.m; path = ECHO/Core/Crypto/Internal.m; sourceTree = SOURCE_ROOT; };
-		B313B8D4213041250052B266 /* Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Internal.h; path = ECHO/Core/Crypto/Internal.h; sourceTree = SOURCE_ROOT; };
-		B313B8D9213044390052B266 /* ECHO.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = ECHO.modulemap; sourceTree = "<group>"; };
-		B313B8DB21305A080052B266 /* Crypto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Crypto.swift; path = ECHO/Core/Crypto/Crypto.swift; sourceTree = SOURCE_ROOT; };
-		B31CB1A020F3772C00FA5532 /* ECHO.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ECHO.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B31CB1A320F3772C00FA5532 /* ECHO.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ECHO.h; sourceTree = "<group>"; };
+		B313B8D9213044390052B266 /* EchoFramework.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = EchoFramework.modulemap; sourceTree = "<group>"; };
+		B31CB1A020F3772C00FA5532 /* EchoFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = EchoFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B31CB1A320F3772C00FA5532 /* EchoFramework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EchoFramework.h; sourceTree = "<group>"; };
 		B31CB1A420F3772C00FA5532 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B328FC30213FEA510022292C /* ChangePasswordSocketRequestStubHodler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordSocketRequestStubHodler.swift; sourceTree = "<group>"; };
 		B3306DF6214BA25E002CFFF2 /* QueryContractStubHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryContractStubHolder.swift; sourceTree = "<group>"; };
@@ -466,7 +463,7 @@
 		B3CA704820F5358400511F6A /* BlockDataSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockDataSocketOperation.swift; sourceTree = "<group>"; };
 		B3CA704A20F5363F00511F6A /* FullAccountSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullAccountSocketOperation.swift; sourceTree = "<group>"; };
 		B3CA704C20F53A4500511F6A /* GetAccountHistorySocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAccountHistorySocketOperation.swift; sourceTree = "<group>"; };
-		B3D1C561212C9CCA00D1A7E6 /* ECHOTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ECHOTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B3D1C561212C9CCA00D1A7E6 /* EchoFrameworkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EchoFrameworkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3D1C565212C9CCA00D1A7E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B3D1C579212C9D4900D1A7E6 /* JsonDecodingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonDecodingTests.swift; sourceTree = "<group>"; };
 		B3D1C57B212D4D8100D1A7E6 /* DataEncodingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataEncodingTests.swift; sourceTree = "<group>"; };
@@ -542,7 +539,7 @@
 		D073F515224CD7F50025AE6A /* SubscribeAccountDelegateStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribeAccountDelegateStub.swift; sourceTree = "<group>"; };
 		D073F517224CD8530025AE6A /* SubscribeContractLogsDelegateStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribeContractLogsDelegateStub.swift; sourceTree = "<group>"; };
 		D073F519224CDB420025AE6A /* SubscribeToLogsStubHodler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribeToLogsStubHodler.swift; sourceTree = "<group>"; };
-		D077FE04224CC080009F2F27 /* ECHONetworkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ECHONetworkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D077FE04224CC080009F2F27 /* EchoFrameworkNetworkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EchoFrameworkNetworkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D077FE08224CC080009F2F27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D0814E8B2154DD6600E248AA /* ObjectType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectType.swift; sourceTree = "<group>"; };
 		D082304522368EB6003A4BDC /* ETHAddressValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETHAddressValidator.swift; sourceTree = "<group>"; };
@@ -646,6 +643,9 @@
 		D0FAC41622AE3E5300C8BF49 /* CallContractFee.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallContractFee.swift; sourceTree = "<group>"; };
 		E717CC2624ED375200C6F1BB /* WaitQueueOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitQueueOperation.swift; sourceTree = "<group>"; };
 		E717CC2824ED3D1000C6F1BB /* NoticeHandleQueueOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeHandleQueueOperation.swift; sourceTree = "<group>"; };
+		E7358E502615CA4300494E2E /* Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Internal.h; sourceTree = "<group>"; };
+		E7358E512615CA4300494E2E /* Internal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Internal.m; sourceTree = "<group>"; };
+		E7358E562615CA4B00494E2E /* Crypto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Crypto.swift; sourceTree = "<group>"; };
 		E73E3C07261207F000DDB521 /* GetTransactionInBlockStubHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTransactionInBlockStubHolder.swift; sourceTree = "<group>"; };
 		E73E3C0B2612080800DDB521 /* GetTransactionByIDStubHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTransactionByIDStubHolder.swift; sourceTree = "<group>"; };
 		E73E3C0F2612083800DDB521 /* GetTransactionInBlockRequestStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTransactionInBlockRequestStub.swift; sourceTree = "<group>"; };
@@ -670,7 +670,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B3D1C566212C9CCA00D1A7E6 /* ECHO.framework in Frameworks */,
+				B3D1C566212C9CCA00D1A7E6 /* EchoFramework.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -678,7 +678,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D077FE09224CC080009F2F27 /* ECHO.framework in Frameworks */,
+				D077FE09224CC080009F2F27 /* EchoFramework.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -756,12 +756,12 @@
 			children = (
 				B30CC37A214A6C59003953E3 /* ECHOData.h */,
 				B30CC37B214A6C59003953E3 /* ECHOData.m */,
-				B313B8DB21305A080052B266 /* Crypto.swift */,
 				B30CC380214A745D003953E3 /* SHA3.swift */,
 				B30CC384214A755D003953E3 /* BatchedCollection.swift */,
 				B30CC382214A74B1003953E3 /* Utils.swift */,
-				B313B8D4213041250052B266 /* Internal.h */,
-				B313B8D22130411D0052B266 /* Internal.m */,
+				E7358E502615CA4300494E2E /* Internal.h */,
+				E7358E512615CA4300494E2E /* Internal.m */,
+				E7358E562615CA4B00494E2E /* Crypto.swift */,
 			);
 			path = Crypto;
 			sourceTree = "<group>";
@@ -769,9 +769,9 @@
 		B31CB19620F3772C00FA5532 = {
 			isa = PBXGroup;
 			children = (
-				B31CB1A220F3772C00FA5532 /* ECHO */,
-				B3D1C562212C9CCA00D1A7E6 /* ECHOTests */,
-				D077FE05224CC080009F2F27 /* ECHONetworkTests */,
+				B31CB1A220F3772C00FA5532 /* EchoFramework */,
+				B3D1C562212C9CCA00D1A7E6 /* EchoFrameworkTests */,
+				D077FE05224CC080009F2F27 /* EchoFrameworkNetworkTests */,
 				B31CB1A120F3772C00FA5532 /* Products */,
 				B356019520F38D170097FD38 /* Frameworks */,
 			);
@@ -780,22 +780,22 @@
 		B31CB1A120F3772C00FA5532 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				B31CB1A020F3772C00FA5532 /* ECHO.framework */,
-				B3D1C561212C9CCA00D1A7E6 /* ECHOTests.xctest */,
-				D077FE04224CC080009F2F27 /* ECHONetworkTests.xctest */,
+				B31CB1A020F3772C00FA5532 /* EchoFramework.framework */,
+				B3D1C561212C9CCA00D1A7E6 /* EchoFrameworkTests.xctest */,
+				D077FE04224CC080009F2F27 /* EchoFrameworkNetworkTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		B31CB1A220F3772C00FA5532 /* ECHO */ = {
+		B31CB1A220F3772C00FA5532 /* EchoFramework */ = {
 			isa = PBXGroup;
 			children = (
 				B3CA702120F4A3CA00511F6A /* Core */,
-				B31CB1A320F3772C00FA5532 /* ECHO.h */,
+				B31CB1A320F3772C00FA5532 /* EchoFramework.h */,
 				B31CB1A420F3772C00FA5532 /* Info.plist */,
 				B3CA702220F4A3D200511F6A /* Supports Files */,
 			);
-			path = ECHO;
+			path = EchoFramework;
 			sourceTree = "<group>";
 		};
 		B348D09E21011FCC00C29AE4 /* Objects */ = {
@@ -870,7 +870,7 @@
 		B3CA702220F4A3D200511F6A /* Supports Files */ = {
 			isa = PBXGroup;
 			children = (
-				B313B8D9213044390052B266 /* ECHO.modulemap */,
+				B313B8D9213044390052B266 /* EchoFramework.modulemap */,
 			);
 			path = "Supports Files";
 			sourceTree = "<group>";
@@ -1025,7 +1025,7 @@
 			path = SocketOperation;
 			sourceTree = "<group>";
 		};
-		B3D1C562212C9CCA00D1A7E6 /* ECHOTests */ = {
+		B3D1C562212C9CCA00D1A7E6 /* EchoFrameworkTests */ = {
 			isa = PBXGroup;
 			children = (
 				B3D1C57F212DA09500D1A7E6 /* Stubs */,
@@ -1045,7 +1045,7 @@
 				B3405CB72135BB3F00C18FE6 /* SubscribtionTests.swift */,
 				B3D1C565212C9CCA00D1A7E6 /* Info.plist */,
 			);
-			path = ECHOTests;
+			path = EchoFrameworkTests;
 			sourceTree = "<group>";
 		};
 		B3D1C57F212DA09500D1A7E6 /* Stubs */ = {
@@ -1157,7 +1157,7 @@
 			path = SubscribeStubs;
 			sourceTree = "<group>";
 		};
-		D077FE05224CC080009F2F27 /* ECHONetworkTests */ = {
+		D077FE05224CC080009F2F27 /* EchoFrameworkNetworkTests */ = {
 			isa = PBXGroup;
 			children = (
 				D00CD39523794BB300BD576D /* Subscribe */,
@@ -1168,7 +1168,7 @@
 				D077FE08224CC080009F2F27 /* Info.plist */,
 				D0A0C50A225E2D5A000BA64D /* TestConstantsConfig.xcconfig */,
 			);
-			path = ECHONetworkTests;
+			path = EchoFrameworkNetworkTests;
 			sourceTree = "<group>";
 		};
 		D07EBA0B224CD2BF0005C00C /* JSONCodingStubs */ = {
@@ -1382,18 +1382,18 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B31CB1A520F3772C00FA5532 /* ECHO.h in Headers */,
+				E7358E522615CA4300494E2E /* Internal.h in Headers */,
+				B31CB1A520F3772C00FA5532 /* EchoFramework.h in Headers */,
 				B30CC37C214A6C59003953E3 /* ECHOData.h in Headers */,
-				B313B8D5213041250052B266 /* Internal.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		B31CB19F20F3772C00FA5532 /* ECHO */ = {
+		B31CB19F20F3772C00FA5532 /* EchoFramework */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B31CB1A820F3772C00FA5532 /* Build configuration list for PBXNativeTarget "ECHO" */;
+			buildConfigurationList = B31CB1A820F3772C00FA5532 /* Build configuration list for PBXNativeTarget "EchoFramework" */;
 			buildPhases = (
 				B31CB19B20F3772C00FA5532 /* Sources */,
 				B31CB19C20F3772C00FA5532 /* Frameworks */,
@@ -1407,14 +1407,14 @@
 			);
 			dependencies = (
 			);
-			name = ECHO;
+			name = EchoFramework;
 			productName = ECHO;
-			productReference = B31CB1A020F3772C00FA5532 /* ECHO.framework */;
+			productReference = B31CB1A020F3772C00FA5532 /* EchoFramework.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		B3D1C560212C9CCA00D1A7E6 /* ECHOTests */ = {
+		B3D1C560212C9CCA00D1A7E6 /* EchoFrameworkTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B3D1C56B212C9CCA00D1A7E6 /* Build configuration list for PBXNativeTarget "ECHOTests" */;
+			buildConfigurationList = B3D1C56B212C9CCA00D1A7E6 /* Build configuration list for PBXNativeTarget "EchoFrameworkTests" */;
 			buildPhases = (
 				B3D1C55D212C9CCA00D1A7E6 /* Sources */,
 				B3D1C55E212C9CCA00D1A7E6 /* Frameworks */,
@@ -1425,14 +1425,14 @@
 			dependencies = (
 				B3D1C568212C9CCA00D1A7E6 /* PBXTargetDependency */,
 			);
-			name = ECHOTests;
+			name = EchoFrameworkTests;
 			productName = ECHOTests;
-			productReference = B3D1C561212C9CCA00D1A7E6 /* ECHOTests.xctest */;
+			productReference = B3D1C561212C9CCA00D1A7E6 /* EchoFrameworkTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		D077FE03224CC080009F2F27 /* ECHONetworkTests */ = {
+		D077FE03224CC080009F2F27 /* EchoFrameworkNetworkTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D077FE0C224CC080009F2F27 /* Build configuration list for PBXNativeTarget "ECHONetworkTests" */;
+			buildConfigurationList = D077FE0C224CC080009F2F27 /* Build configuration list for PBXNativeTarget "EchoFrameworkNetworkTests" */;
 			buildPhases = (
 				D077FE00224CC080009F2F27 /* Sources */,
 				D077FE01224CC080009F2F27 /* Frameworks */,
@@ -1443,9 +1443,9 @@
 			dependencies = (
 				D077FE0B224CC080009F2F27 /* PBXTargetDependency */,
 			);
-			name = ECHONetworkTests;
+			name = EchoFrameworkNetworkTests;
 			productName = ECHONetworkTests;
-			productReference = D077FE04224CC080009F2F27 /* ECHONetworkTests.xctest */;
+			productReference = D077FE04224CC080009F2F27 /* EchoFrameworkNetworkTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -1471,7 +1471,7 @@
 					};
 				};
 			};
-			buildConfigurationList = B31CB19A20F3772C00FA5532 /* Build configuration list for PBXProject "ECHO" */;
+			buildConfigurationList = B31CB19A20F3772C00FA5532 /* Build configuration list for PBXProject "EchoFramework" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -1483,9 +1483,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				B31CB19F20F3772C00FA5532 /* ECHO */,
-				B3D1C560212C9CCA00D1A7E6 /* ECHOTests */,
-				D077FE03224CC080009F2F27 /* ECHONetworkTests */,
+				B31CB19F20F3772C00FA5532 /* EchoFramework */,
+				B3D1C560212C9CCA00D1A7E6 /* EchoFrameworkTests */,
+				D077FE03224CC080009F2F27 /* EchoFrameworkNetworkTests */,
 			);
 		};
 /* End PBXProject section */
@@ -1606,6 +1606,7 @@
 				2E4A1BD62524A2D100049447 /* BalanceFreezeOperation.swift in Sources */,
 				D09D745E21EF58F700E0F46D /* CreateContractOperation.swift in Sources */,
 				D0ED8C1E2292A1EF002EC3EA /* SidechainETHCreateAddressOperation.swift in Sources */,
+				E7358E572615CA4B00494E2E /* Crypto.swift in Sources */,
 				B3965B182125954200029585 /* PointerArray.swift in Sources */,
 				D061331521A2EC53009EC456 /* GetContractLogsSocketOperation.swift in Sources */,
 				B3CA704D20F53A4500511F6A /* GetAccountHistorySocketOperation.swift in Sources */,
@@ -1628,7 +1629,6 @@
 				D043C915237AD243006ADD26 /* BtcWithdrawal.swift in Sources */,
 				D0814E8C2154DD6600E248AA /* ObjectType.swift in Sources */,
 				D0D8CA472141847900F0646D /* GetRequiredFeeQueueOperation.swift in Sources */,
-				B313B8D32130411D0052B266 /* Internal.m in Sources */,
 				D048BA982149403B0098AEBF /* QueryContractSocketOperation.swift in Sources */,
 				B30CACFC20FF74C80048E33E /* AccountHistoryApiServiceImp.swift in Sources */,
 				B3D1C57E212D94B500D1A7E6 /* BinaryConvertible.swift in Sources */,
@@ -1700,6 +1700,7 @@
 				D0B6A0D22126EE3600A78E4B /* Data+Extension.swift in Sources */,
 				D01BF7D6212AC81000917DB8 /* AddressAuthority.swift in Sources */,
 				B30CC387214A761D003953E3 /* Integer+Extension.swift in Sources */,
+				E7358E532615CA4300494E2E /* Internal.m in Sources */,
 				D01AD060221C0DCE0062A74D /* ContractStructx86.swift in Sources */,
 				B38596F620F5EEAC00B55E59 /* RequiredFeeSocketOperation.swift in Sources */,
 				D0CF3F612391531F005811F7 /* GetERC20AccountWithdrawalsSocketOperation.swift in Sources */,
@@ -1748,7 +1749,6 @@
 				B3CA704920F5358400511F6A /* BlockDataSocketOperation.swift in Sources */,
 				B30FE905212ECDAD0009BF57 /* Codable+Extension.swift in Sources */,
 				B30CC373214A5C29003953E3 /* AbiInterfaceModel.swift in Sources */,
-				B313B8DD21305A080052B266 /* Crypto.swift in Sources */,
 				B30CAD2820FFF9E70048E33E /* ECHOKeychain.swift in Sources */,
 				D0880DE1228FF8F6003B9E28 /* ContractHistory.swift in Sources */,
 				B39554B3213E822B00CE2647 /* AssetsFacadeImp.swift in Sources */,
@@ -1871,12 +1871,12 @@
 /* Begin PBXTargetDependency section */
 		B3D1C568212C9CCA00D1A7E6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = B31CB19F20F3772C00FA5532 /* ECHO */;
+			target = B31CB19F20F3772C00FA5532 /* EchoFramework */;
 			targetProxy = B3D1C567212C9CCA00D1A7E6 /* PBXContainerItemProxy */;
 		};
 		D077FE0B224CC080009F2F27 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = B31CB19F20F3772C00FA5532 /* ECHO */;
+			target = B31CB19F20F3772C00FA5532 /* EchoFramework */;
 			targetProxy = D077FE0A224CC080009F2F27 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -2022,7 +2022,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/Libraries/ed25519/include";
-				INFOPLIST_FILE = ECHO/Info.plist;
+				INFOPLIST_FILE = EchoFramework/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2034,7 +2034,7 @@
 				"LIBRARY_SEARCH_PATHS[sdk=iphoneos*]" = "$(SRCROOT)/Libraries/ed25519/lib/OsRelease/";
 				"LIBRARY_SEARCH_PATHS[sdk=iphonesimulator*]" = "$(SRCROOT)/Libraries/ed25519/lib/SimulatorRelease/";
 				MARKETING_VERSION = 6.0.0;
-				MODULEMAP_FILE = "./ECHO/Supports Files/ECHO.modulemap";
+				MODULEMAP_FILE = "./EchoFramework/Supports Files/EchoFramework.modulemap";
 				PRODUCT_BUNDLE_IDENTIFIER = org.echo.mobile.framework;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -2061,7 +2061,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/Libraries/ed25519/include";
-				INFOPLIST_FILE = ECHO/Info.plist;
+				INFOPLIST_FILE = EchoFramework/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2073,7 +2073,7 @@
 				"LIBRARY_SEARCH_PATHS[sdk=iphoneos*]" = "$(SRCROOT)/Libraries/ed25519/lib/OsRelease/";
 				"LIBRARY_SEARCH_PATHS[sdk=iphonesimulator*]" = "$(SRCROOT)/Libraries/ed25519/lib/SimulatorRelease/";
 				MARKETING_VERSION = 6.0.0;
-				MODULEMAP_FILE = "./ECHO/Supports Files/ECHO.modulemap";
+				MODULEMAP_FILE = "./EchoFramework/Supports Files/EchoFramework.modulemap";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = org.echo.mobile.framework;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -2178,7 +2178,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		B31CB19A20F3772C00FA5532 /* Build configuration list for PBXProject "ECHO" */ = {
+		B31CB19A20F3772C00FA5532 /* Build configuration list for PBXProject "EchoFramework" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B31CB1A620F3772C00FA5532 /* Debug */,
@@ -2187,7 +2187,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B31CB1A820F3772C00FA5532 /* Build configuration list for PBXNativeTarget "ECHO" */ = {
+		B31CB1A820F3772C00FA5532 /* Build configuration list for PBXNativeTarget "EchoFramework" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B31CB1A920F3772C00FA5532 /* Debug */,
@@ -2196,7 +2196,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B3D1C56B212C9CCA00D1A7E6 /* Build configuration list for PBXNativeTarget "ECHOTests" */ = {
+		B3D1C56B212C9CCA00D1A7E6 /* Build configuration list for PBXNativeTarget "EchoFrameworkTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B3D1C569212C9CCA00D1A7E6 /* Debug */,
@@ -2205,7 +2205,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D077FE0C224CC080009F2F27 /* Build configuration list for PBXNativeTarget "ECHONetworkTests" */ = {
+		D077FE0C224CC080009F2F27 /* Build configuration list for PBXNativeTarget "EchoFrameworkNetworkTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D077FE0D224CC080009F2F27 /* Debug */,

@@ -5,7 +5,8 @@
 //  Created by Fedorenko Nikita on 02.03.2018.
 //  Copyright © 2018 PixelPlex. All rights reserved.
 //
-import ECHO.Private
+
+import EchoFramework.Private
 
 class ArrayOfData {
     var array = [Data]()

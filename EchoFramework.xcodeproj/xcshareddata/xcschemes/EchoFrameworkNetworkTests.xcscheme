@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0940"
+   LastUpgradeVersion = "1240"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -16,15 +16,13 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B3D1C560212C9CCA00D1A7E6"
-               BuildableName = "ECHOTests.xctest"
-               BlueprintName = "ECHOTests"
-               ReferencedContainer = "container:ECHO.xcodeproj">
+               BlueprintIdentifier = "D077FE03224CC080009F2F27"
+               BuildableName = "EchoFrameworkNetworkTests.xctest"
+               BlueprintName = "EchoFrameworkNetworkTests"
+               ReferencedContainer = "container:EchoFramework.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
-      <AdditionalOptions>
-      </AdditionalOptions>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
@@ -36,8 +34,6 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <AdditionalOptions>
-      </AdditionalOptions>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"

@@ -1,5 +1,5 @@
 Pod::Spec.new do |spec|
-  spec.name = "ECHO"
+  spec.name = "EchoFramework"
   spec.version = "6.0.0"
   spec.summary = "Echo iOS Framework"
   spec.homepage = "https://github.com/echoprotocol/echo-ios-framework"
@@ -14,17 +14,17 @@ Pod::Spec.new do |spec|
   spec.platform     = :ios
   spec.ios.deployment_target = "9.0"
 
-  spec.module_map = 'ECHO/Supports Files/ECHO.modulemap'
+  spec.module_map = 'EchoFramework/Supports Files/EchoFramework.modulemap'
   spec.pod_target_xcconfig = {  
-  'SWIFT_INCLUDE_PATHS' => '${SRCROOT} $(SRCROOT)/ECHO/Libraries',
+  'SWIFT_INCLUDE_PATHS' => '${SRCROOT} $(SRCROOT)/EchoFramework/Libraries',
   'SWIFT_WHOLE_MODULE_OPTIMIZATION' => 'YES',
-  'HEADER_SEARCH_PATHS' => '$(SRCROOT)/ECHO/Libraries/ed25519/include',
-  'LIBRARY_SEARCH_PATHS[sdk=iphoneos*]' => '$(SRCROOT)/ECHO/Libraries/ed25519/lib/OSRelease',
-  'LIBRARY_SEARCH_PATHS[sdk=iphonesimulator*]' => '$(SRCROOT)/ECHO/Libraries/ed25519/lib/SimulatorRelease',
+  'HEADER_SEARCH_PATHS' => '$(SRCROOT)/EchoFramework/Libraries/ed25519/include',
+  'LIBRARY_SEARCH_PATHS[sdk=iphoneos*]' => '$(SRCROOT)/EchoFramework/Libraries/ed25519/lib/OSRelease',
+  'LIBRARY_SEARCH_PATHS[sdk=iphonesimulator*]' => '$(SRCROOT)/EchoFramework/Libraries/ed25519/lib/SimulatorRelease',
   'ARCHS[sdk=iphonesimulator*]' => 'x86_64'
   }
-  spec.preserve_paths = ['Libraries', 'ECHO/Supports Files/ECHO.modulemap']
-  spec.source_files  = 'ECHO/**/*.{h,swift,m,a}'
+  spec.preserve_paths = ['Libraries', 'EchoFramework/Supports Files/EchoFramework.modulemap']
+  spec.source_files  = 'EchoFramework/**/*.{h,swift,m,a}'
   spec.user_target_xcconfig = { 'ARCHS[sdk=iphonesimulator*]' => 'x86_64' }
 
   spec.dependency "Starscream", '~> 3.0.2'

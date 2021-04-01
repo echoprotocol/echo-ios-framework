@@ -1,5 +1,5 @@
-framework module ECHO {
-    umbrella header "ECHO.h"
+framework module EchoFramework {
+    umbrella header "EchoFramework.h"
     
     export *
     module * { export * }
