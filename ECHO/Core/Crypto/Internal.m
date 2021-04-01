@@ -78,11 +78,11 @@
 
 @end
 
-#define ECHOBigNumberCompare(a, b) (BN_cmp(&(a->_bignum), &(b->_bignum)))
+#define ECHOBigNumberCompare(a, b) (BN_cmp((a->_bignum), (b->_bignum)))
 
 @implementation ECHOBigNumber {
     @package
-    BIGNUM _bignum;
+    BIGNUM *_bignum;
     
     // Used as a guard in case a private setter is called on immutable instance after initialization.
     BOOL _immutable;
@@ -105,7 +105,7 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         bn = [[self alloc] init];
-        BN_zero(&(bn->_bignum));
+        BN_zero(bn->_bignum);
     });
     return bn;
 }
@@ -115,7 +115,7 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         bn = [[self alloc] init];
-        BN_one(&(bn->_bignum));
+        BN_one(bn->_bignum);
     });
     return bn;
 }
@@ -131,17 +131,17 @@
 
 - (id) init {
     if (self = [super init]) {
-        BN_init(&_bignum);
+        _bignum = BN_new();
     }
     return self;
 }
 
 - (void) dealloc {
-    BN_clear_free(&_bignum);
+    BN_clear_free(_bignum);
 }
 
 - (void) clear {
-    BN_clear(&_bignum);
+    BN_clear(_bignum);
 }
 
 - (void) throwIfImmutable {
@@ -217,21 +217,21 @@
 
 - (id) initWithBIGNUM:(const BIGNUM*)otherBIGNUM {
     if (self = [self init]) {
-        BN_copy(&_bignum, otherBIGNUM);
+        BN_copy(_bignum, otherBIGNUM);
     }
     return self;
 }
 
 - (const BIGNUM*) BIGNUM {
-    return &_bignum;
+    return _bignum;
 }
 
 - (BOOL) isZero {
-    return BN_is_zero(&_bignum);
+    return BN_is_zero(_bignum);
 }
 
 - (BOOL) isOne {
-    return BN_is_one(&_bignum);
+    return BN_is_one(_bignum);
 }
 
 
@@ -249,7 +249,7 @@
 
 - (ECHOBigNumber*) copyWithZone:(NSZone *)zone {
     ECHOBigNumber* to = [[ECHOBigNumber alloc] init];
-    if (BN_copy(&(to->_bignum), &_bignum)) {
+    if (BN_copy((to->_bignum), _bignum)) {
         return to;
     }
     return nil;
@@ -257,7 +257,7 @@
 
 - (ECHOMutableBigNumber*) mutableCopyWithZone:(NSZone *)zone {
     ECHOMutableBigNumber* to = [[ECHOMutableBigNumber alloc] init];
-    if (BN_copy(&(to->_bignum), &_bignum)) {
+    if (BN_copy((to->_bignum), _bignum)) {
         return to;
     }
     return nil;
@@ -273,7 +273,7 @@
 }
 
 - (NSUInteger)hash {
-    return (NSUInteger)BN_get_word(&_bignum);
+    return (NSUInteger)BN_get_word(_bignum);
 }
 
 - (NSString*) description {
@@ -319,7 +319,7 @@
     [self throwIfImmutable];
     if (base > 36 || base < 2) return;
     
-    BN_set_word(&_bignum, 0);
+    BN_set_word(_bignum, 0);
     
     if (string.length == 0) return;
     
@@ -365,7 +365,7 @@
     };
     
     BN_CTX* pctx = NULL;
-    BIGNUM bnBase; BN_init(&bnBase); BN_set_word(&bnBase, (BN_ULONG)base);
+    BIGNUM *bnBase = BN_new(); BN_set_word(bnBase, (BN_ULONG)base);
     
     while (1) {
         unsigned char c = (unsigned char)*psz++;
@@ -378,29 +378,29 @@
             if (n >= base) break; // discard character outside the base range.
             
             if (base == 16) {
-                BN_lshift(&_bignum, &_bignum, 4);
+                BN_lshift(_bignum, _bignum, 4);
             } else if (base == 8) {
-                BN_lshift(&_bignum, &_bignum, 3);
+                BN_lshift(_bignum, _bignum, 3);
             } else if (base == 4) {
-                BN_lshift(&_bignum, &_bignum, 2);
+                BN_lshift(_bignum, _bignum, 2);
             } else if (base == 2) {
-                BN_lshift(&_bignum, &_bignum, 1);
+                BN_lshift(_bignum, _bignum, 1);
             } else if (base == 32) {
-                BN_lshift(&_bignum, &_bignum, 5);
+                BN_lshift(_bignum, _bignum, 5);
             } else {
                 if (!pctx) pctx = BN_CTX_new();
-                BN_mul(&_bignum, &_bignum, &bnBase, pctx);
+                BN_mul(_bignum, _bignum, bnBase, pctx);
             }
             
-            BN_add_word(&_bignum, n);
+            BN_add_word(_bignum, n);
         }
     }
     
     if (isNegative) {
-        BN_set_negative(&_bignum, 1);
+        BN_set_negative(_bignum, 1);
     }
     
-    BN_free(&bnBase);
+    BN_free(bnBase);
     if (pctx) BN_CTX_free(pctx);
 }
 
@@ -410,25 +410,25 @@
     NSMutableData* resultData = nil;
     
     BN_CTX* pctx = BN_CTX_new();
-    BIGNUM bnBase; BN_init(&bnBase); BN_set_word(&bnBase, (BN_ULONG)base);
-    BIGNUM bn0;    BN_init(&bn0);    BN_zero(&bn0);
-    BIGNUM bn;     BN_init(&bn);     BN_copy(&bn, &_bignum);
+    BIGNUM *bnBase = BN_new(); BN_set_word(bnBase, (BN_ULONG)base);
+    BIGNUM *bn0 = BN_new();    BN_zero(bn0);
+    BIGNUM *bn = BN_new();     BN_copy(bn, _bignum);
     
-    BN_set_negative(&bn, false);
+    BN_set_negative(bn, false);
     
-    BIGNUM dv;  BN_init(&dv);
-    BIGNUM rem; BN_init(&rem);
+    BIGNUM *dv = BN_new();
+    BIGNUM *rem = BN_new();
     
-    if (BN_cmp(&bn, &bn0) == 0) {
+    if (BN_cmp(bn, bn0) == 0) {
         resultData = [NSMutableData dataWithBytes:"0" length:1];
     } else {
-        while (BN_cmp(&bn, &bn0) > 0) {
-            if (!BN_div(&dv, &rem, &bn, &bnBase, pctx)) {
+        while (BN_cmp(bn, bn0) > 0) {
+            if (!BN_div(dv, rem, bn, bnBase, pctx)) {
                 NSLog(@"ECHOBigNumber: stringInBase failed to BN_div");
                 break;
             }
-            BN_copy(&bn, &dv);
-            BN_ULONG c = BN_get_word(&rem);
+            BN_copy(bn, dv);
+            BN_ULONG c = BN_get_word(rem);
             
             if (!resultData) resultData = [NSMutableData data];
             
@@ -437,17 +437,17 @@
             
             [resultData replaceBytesInRange:NSMakeRange(0, 0) withBytes:&ch length:1];
         }
-        if (resultData && BN_is_negative(&_bignum)) {
+        if (resultData && BN_is_negative(_bignum)) {
             unsigned char ch = '-';
             [resultData replaceBytesInRange:NSMakeRange(0, 0) withBytes:&ch length:1];
         }
     }
     
-    BN_clear_free(&dv);
-    BN_clear_free(&rem);
-    BN_clear_free(&bn);
-    BN_free(&bn0);
-    BN_free(&bnBase);
+    BN_clear_free(dv);
+    BN_clear_free(rem);
+    BN_clear_free(bn);
+    BN_free(bn0);
+    BN_free(bnBase);
     BN_CTX_free(pctx);
     return resultData ? [[NSString alloc] initWithData:resultData encoding:NSASCIIStringEncoding] : nil;
 }
@@ -476,15 +476,14 @@
 // This implementation directly uses shifts instead of going
 // through an intermediate MPI representation.
 - (uint32_t) compact {
-    uint32_t size = BN_num_bytes(&_bignum);
+    uint32_t size = BN_num_bytes(_bignum);
     uint32_t result = 0;
     if (size <= 3) {
-        result = (uint32_t)(BN_get_word(&_bignum) << 8*(3-size));
+        result = (uint32_t)(BN_get_word(_bignum) << 8*(3-size));
     } else {
-        BIGNUM bn;
-        BN_init(&bn);
-        BN_rshift(&bn, &_bignum, 8*(size-3));
-        result = (uint32_t)BN_get_word(&bn);
+        BIGNUM *bn = BN_new();
+        BN_rshift(bn, _bignum, 8*(size-3));
+        result = (uint32_t)BN_get_word(bn);
     }
     // The 0x00800000 bit denotes the sign.
     // Thus, if it is already set, divide the mantissa by 256 and increase the exponent.
@@ -493,7 +492,7 @@
         size++;
     }
     result |= size << 24;
-    result |= (BN_is_negative(&_bignum) ? 0x00800000 : 0);
+    result |= (BN_is_negative(_bignum) ? 0x00800000 : 0);
     return result;
 }
 
@@ -504,26 +503,26 @@
     unsigned int word = value & 0x007fffff;
     if (size <= 3) {
         word >>= 8*(3-size);
-        BN_set_word(&_bignum, word);
+        BN_set_word(_bignum, word);
     } else {
-        BN_set_word(&_bignum, word);
-        BN_lshift(&_bignum, &_bignum, 8*(size-3));
+        BN_set_word(_bignum, word);
+        BN_lshift(_bignum, _bignum, 8*(size-3));
     }
-    BN_set_negative(&_bignum, isNegative);
+    BN_set_negative(_bignum, isNegative);
 }
 
 - (uint32_t) uint32value {
-    return (uint32_t)BN_get_word(&_bignum);
+    return (uint32_t)BN_get_word(_bignum);
 }
 
 - (void) setUint32value:(uint32_t)value {
     [self throwIfImmutable];
-    BN_set_word(&_bignum, value);
+    BN_set_word(_bignum, value);
 }
 
 - (int32_t) int32value {
     uint32_t value = [self uint32value];
-    if (!BN_is_negative(&_bignum)) {
+    if (!BN_is_negative(_bignum)) {
         if (value > INT32_MAX)
             return INT32_MAX;
         else
@@ -546,11 +545,11 @@
 }
 
 - (uint64_t) uint64value {
-    return (uint64_t)BN_get_word(&_bignum);
+    return (uint64_t)BN_get_word(_bignum);
 }
 
 - (int64_t) int64value {
-    return (int64_t)BN_get_word(&_bignum);
+    return (int64_t)BN_get_word(_bignum);
 }
 
 - (void) setUint64value:(uint64_t)value {
@@ -605,16 +604,16 @@
     rawMPI[1] = (size >> 16) & 0xff;
     rawMPI[2] = (size >> 8) & 0xff;
     rawMPI[3] = (size) & 0xff;
-    BN_mpi2bn(rawMPI, (int)(currentByte - rawMPI), &_bignum);
+    BN_mpi2bn(rawMPI, (int)(currentByte - rawMPI), _bignum);
 }
 
 - (NSData*) signedLittleEndian {
-    size_t size = BN_bn2mpi(&_bignum, NULL);
+    size_t size = BN_bn2mpi(_bignum, NULL);
     if (size <= 4) {
         return [NSData data];
     }
     NSMutableData* data = [NSMutableData dataWithLength:size];
-    BN_bn2mpi(&_bignum, data.mutableBytes);
+    BN_bn2mpi(_bignum, data.mutableBytes);
     [data replaceBytesInRange:NSMakeRange(0, 4) withBytes:NULL length:0];
     ECHODataReverse(data);
     return data;
@@ -635,7 +634,7 @@
     bytes[2] = (size >> 8) & 0xff;
     bytes[3] = (size >> 0) & 0xff;
     
-    BN_mpi2bn(bytes, (int)mdata.length, &_bignum);
+    BN_mpi2bn(bytes, (int)mdata.length, _bignum);
 }
 
 // deprecated
@@ -649,9 +648,9 @@
 }
 
 - (NSData*) unsignedBigEndian {
-    int num_bytes = BN_num_bytes(&_bignum);
+    int num_bytes = BN_num_bytes(_bignum);
     NSMutableData* data = [[NSMutableData alloc] initWithLength:32]; // zeroed data
-    int copied_bytes = BN_bn2bin(&_bignum, &data.mutableBytes[32 - num_bytes]); // fill the tail of the data so it's zero-padded to the left
+    int copied_bytes = BN_bn2bin(_bignum, &data.mutableBytes[32 - num_bytes]); // fill the tail of the data so it's zero-padded to the left
     if (copied_bytes != num_bytes) return nil;
     return data;
 }
@@ -659,7 +658,7 @@
 - (void) setUnsignedBigEndian:(NSData *)data {
     [self throwIfImmutable];
     if (!data) return;
-    if (!BN_bin2bn(data.bytes, (int)data.length, &_bignum)) {
+    if (!BN_bin2bn(data.bytes, (int)data.length, _bignum)) {
         return;
     }
 }
@@ -681,7 +680,7 @@
     BN_CTX* pctx = BN_CTX_new();
     ECHOBigNumber* r = [ECHOBigNumber new];
     ECHOBigNumber* m = [ECHOBigNumber new];
-    BN_div(&(r->_bignum), &(m->_bignum), &(self->_bignum), &(other->_bignum), pctx);
+    BN_div((r->_bignum), (m->_bignum), (self->_bignum), (other->_bignum), pctx);
     BN_CTX_free(pctx);
     return @[r, m];
 }
@@ -713,7 +712,7 @@
 @dynamic unsignedData;
 
 - (BIGNUM*) mutableBIGNUM {
-    return &(self->_bignum);
+    return (self->_bignum);
 }
 
 + (instancetype) zero {
@@ -739,59 +738,59 @@
 #pragma mark - Operations
 
 - (instancetype) add:(ECHOBigNumber*)other { // +=
-    BN_add(&(self->_bignum), &(self->_bignum), &(other->_bignum));
+    BN_add((self->_bignum), (self->_bignum), (other->_bignum));
     return self;
 }
 
 - (instancetype) add:(ECHOBigNumber*)other mod:(ECHOBigNumber*)mod {
     BN_CTX* pctx = BN_CTX_new();
-    BN_mod_add(&(self->_bignum), &(self->_bignum), &(other->_bignum), &(mod->_bignum), pctx);
+    BN_mod_add((self->_bignum), (self->_bignum), (other->_bignum), (mod->_bignum), pctx);
     BN_CTX_free(pctx);
     return self;
 }
 
 - (instancetype) subtract:(ECHOBigNumber *)other { // -=
-    BN_sub(&(self->_bignum), &(self->_bignum), &(other->_bignum));
+    BN_sub((self->_bignum), (self->_bignum), (other->_bignum));
     return self;
 }
 
 - (instancetype) subtract:(ECHOBigNumber*)other mod:(ECHOBigNumber*)mod {
     BN_CTX* pctx = BN_CTX_new();
-    BN_mod_sub(&(self->_bignum), &(self->_bignum), &(other->_bignum), &(mod->_bignum), pctx);
+    BN_mod_sub((self->_bignum), (self->_bignum), (other->_bignum), (mod->_bignum), pctx);
     BN_CTX_free(pctx);
     return self;
 }
 
 - (instancetype) multiply:(ECHOBigNumber*)other { // *=
     BN_CTX* pctx = BN_CTX_new();
-    BN_mul(&(self->_bignum), &(self->_bignum), &(other->_bignum), pctx);
+    BN_mul((self->_bignum), (self->_bignum), (other->_bignum), pctx);
     BN_CTX_free(pctx);
     return self;
 }
 
 - (instancetype) multiply:(ECHOBigNumber*)other mod:(ECHOBigNumber *)mod {
     BN_CTX* pctx = BN_CTX_new();
-    BN_mod_mul(&(self->_bignum), &(self->_bignum), &(other->_bignum), &(mod->_bignum), pctx);
+    BN_mod_mul((self->_bignum), (self->_bignum), (other->_bignum), (mod->_bignum), pctx);
     BN_CTX_free(pctx);
     return self;
 }
 
 - (instancetype) divide:(ECHOBigNumber*)other { // /=
     BN_CTX* pctx = BN_CTX_new();
-    BN_div(&(self->_bignum), NULL, &(self->_bignum), &(other->_bignum), pctx);
+    BN_div((self->_bignum), NULL, (self->_bignum), (other->_bignum), pctx);
     BN_CTX_free(pctx);
     return self;
 }
 
 - (instancetype) mod:(ECHOBigNumber*)other { // %=
     BN_CTX* pctx = BN_CTX_new();
-    BN_div(NULL, &(self->_bignum), &(self->_bignum), &(other->_bignum), pctx);
+    BN_div(NULL, (self->_bignum), (self->_bignum), (other->_bignum), pctx);
     BN_CTX_free(pctx);
     return self;
 }
 
 - (instancetype) lshift:(unsigned int)shift { // <<=
-    BN_lshift(&(self->_bignum), &(self->_bignum), shift);
+    BN_lshift((self->_bignum), (self->_bignum), shift);
     return self;
 }
 
@@ -800,32 +799,32 @@
     //   if built on ubuntu 9.04 or 9.10, probably depends on version of OpenSSL
     ECHOMutableBigNumber* a = [ECHOMutableBigNumber one];
     [a lshift:shift];
-    if (BN_cmp(&(a->_bignum), &(self->_bignum)) > 0) {
-        BN_zero(&(self->_bignum));
+    if (BN_cmp((a->_bignum), (self->_bignum)) > 0) {
+        BN_zero((self->_bignum));
         return self;
     }
     
-    BN_rshift(&(self->_bignum), &(self->_bignum), shift);
+    BN_rshift((self->_bignum), (self->_bignum), shift);
     return self;
 }
 
 - (instancetype) inverseMod:(ECHOBigNumber*)mod { // (a^-1) mod n
     BN_CTX* pctx = BN_CTX_new();
-    BN_mod_inverse(&(self->_bignum), &(self->_bignum), &(mod->_bignum), pctx);
+    BN_mod_inverse((self->_bignum), (self->_bignum), (mod->_bignum), pctx);
     BN_CTX_free(pctx);
     return self;
 }
 
 - (instancetype) exp:(ECHOBigNumber*)power { // pow(self, p)
     BN_CTX* pctx = BN_CTX_new();
-    BN_exp(&(self->_bignum), &(self->_bignum), &(power->_bignum), pctx);
+    BN_exp((self->_bignum), (self->_bignum), (power->_bignum), pctx);
     BN_CTX_free(pctx);
     return self;
 }
 
 - (instancetype) exp:(ECHOBigNumber*)power mod:(ECHOBigNumber *)mod { // pow(self,p) % m
     BN_CTX* pctx = BN_CTX_new();
-    BN_mod_exp(&(self->_bignum), &(self->_bignum), &(power->_bignum), &(mod->_bignum), pctx);
+    BN_mod_exp((self->_bignum), (self->_bignum), (power->_bignum), (mod->_bignum), pctx);
     BN_CTX_free(pctx);
     return self;
 }

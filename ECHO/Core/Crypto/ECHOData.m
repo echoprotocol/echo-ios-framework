@@ -827,10 +827,3 @@ NSMutableData* ECHOLocustKDF256(NSData* password, NSData* salt, unsigned int num
 NSMutableData* ECHOLocustKDF512(NSData* password, NSData* salt, unsigned int numberOfBytes) {
     return ECHOLocustKDF(password, salt, numberOfBytes, 64);
 }
-
-
-
-
-
-
-

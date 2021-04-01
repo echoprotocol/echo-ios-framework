@@ -306,6 +306,8 @@
 		E73E3C0C2612080800DDB521 /* GetTransactionByIDStubHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E73E3C0B2612080800DDB521 /* GetTransactionByIDStubHolder.swift */; };
 		E73E3C102612083800DDB521 /* GetTransactionInBlockRequestStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = E73E3C0F2612083800DDB521 /* GetTransactionInBlockRequestStub.swift */; };
 		E73E3C142612084A00DDB521 /* GetTransactionByIDRequestStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = E73E3C132612084A00DDB521 /* GetTransactionByIDRequestStub.swift */; };
+		E73E3DBD26136B4200DDB521 /* OpenSSL.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = E73E3DBC26136B4200DDB521 /* OpenSSL.xcframework */; };
+		E73E3DBE26136B4200DDB521 /* OpenSSL.xcframework in CopyFiles */ = {isa = PBXBuildFile; fileRef = E73E3DBC26136B4200DDB521 /* OpenSSL.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E7495BC5260CB5ED003B8965 /* GetTransactionInBlockSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7495BC4260CB5ED003B8965 /* GetTransactionInBlockSocketOperation.swift */; };
 		E7495BC9260CB870003B8965 /* GetTransactionInByIDSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7495BC8260CB870003B8965 /* GetTransactionInByIDSocketOperation.swift */; };
 		E7A506CD260A423C00B9AF64 /* Starscream.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7A506CC260A423C00B9AF64 /* Starscream.xcframework */; };
@@ -336,6 +338,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				E73E3DBE26136B4200DDB521 /* OpenSSL.xcframework in CopyFiles */,
 				E7A506CE260A423C00B9AF64 /* Starscream.xcframework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -352,7 +355,6 @@
 		2E4A1BDB2524C40300049447 /* FrozenBalanceObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrozenBalanceObject.swift; sourceTree = "<group>"; };
 		2E683C3B25250B78002E6C39 /* GetFrozenBalancesSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFrozenBalancesSocketOperation.swift; sourceTree = "<group>"; };
 		B30AFDB02191BD9300A657D8 /* SubscribeToAccountStubHodler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribeToAccountStubHodler.swift; sourceTree = "<group>"; };
-		B30CACEA20FF74840048E33E /* Starscream.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Starscream.framework; path = Carthage/Build/iOS/Starscream.framework; sourceTree = "<group>"; };
 		B30CACEE20FF74C70048E33E /* NetworkNodesApiServiceImp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkNodesApiServiceImp.swift; sourceTree = "<group>"; };
 		B30CACEF20FF74C70048E33E /* NetworkBroadcastApiServiceImp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkBroadcastApiServiceImp.swift; sourceTree = "<group>"; };
 		B30CACF020FF74C70048E33E /* AccountHistoryApiServiceImp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountHistoryApiServiceImp.swift; sourceTree = "<group>"; };
@@ -648,6 +650,7 @@
 		E73E3C0B2612080800DDB521 /* GetTransactionByIDStubHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTransactionByIDStubHolder.swift; sourceTree = "<group>"; };
 		E73E3C0F2612083800DDB521 /* GetTransactionInBlockRequestStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTransactionInBlockRequestStub.swift; sourceTree = "<group>"; };
 		E73E3C132612084A00DDB521 /* GetTransactionByIDRequestStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTransactionByIDRequestStub.swift; sourceTree = "<group>"; };
+		E73E3DBC26136B4200DDB521 /* OpenSSL.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = OpenSSL.xcframework; path = Carthage/Build/OpenSSL.xcframework; sourceTree = "<group>"; };
 		E7495BC4260CB5ED003B8965 /* GetTransactionInBlockSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTransactionInBlockSocketOperation.swift; sourceTree = "<group>"; };
 		E7495BC8260CB870003B8965 /* GetTransactionInByIDSocketOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTransactionInByIDSocketOperation.swift; sourceTree = "<group>"; };
 		E7A506CC260A423C00B9AF64 /* Starscream.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Starscream.xcframework; path = Carthage/Build/Starscream.xcframework; sourceTree = "<group>"; };
@@ -658,6 +661,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E73E3DBD26136B4200DDB521 /* OpenSSL.xcframework in Frameworks */,
 				E7A506CD260A423C00B9AF64 /* Starscream.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -843,8 +847,8 @@
 		B356019520F38D170097FD38 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E73E3DBC26136B4200DDB521 /* OpenSSL.xcframework */,
 				E7A506CC260A423C00B9AF64 /* Starscream.xcframework */,
-				B30CACEA20FF74840048E33E /* Starscream.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -2017,10 +2021,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
-				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/Libraries/ed25519/include",
-					"$(SRCROOT)/Libraries/openssl/include",
-				);
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/Libraries/ed25519/include";
 				INFOPLIST_FILE = ECHO/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -2030,14 +2031,8 @@
 					"@loader_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "";
-				"LIBRARY_SEARCH_PATHS[sdk=iphoneos*]" = (
-					"$(SRCROOT)/Libraries/openssl/lib",
-					"$(SRCROOT)/Libraries/ed25519/lib/OsRelease/",
-				);
-				"LIBRARY_SEARCH_PATHS[sdk=iphonesimulator*]" = (
-					"$(SRCROOT)/Libraries/openssl/lib",
-					"$(SRCROOT)/Libraries/ed25519/lib/SimulatorRelease/",
-				);
+				"LIBRARY_SEARCH_PATHS[sdk=iphoneos*]" = "$(SRCROOT)/Libraries/ed25519/lib/OsRelease/";
+				"LIBRARY_SEARCH_PATHS[sdk=iphonesimulator*]" = "$(SRCROOT)/Libraries/ed25519/lib/SimulatorRelease/";
 				MARKETING_VERSION = 6.0.0;
 				MODULEMAP_FILE = "./ECHO/Supports Files/ECHO.modulemap";
 				PRODUCT_BUNDLE_IDENTIFIER = org.echo.mobile.framework;
@@ -2065,10 +2060,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
-				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/Libraries/ed25519/include",
-					"$(SRCROOT)/Libraries/openssl/include",
-				);
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/Libraries/ed25519/include";
 				INFOPLIST_FILE = ECHO/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -2078,14 +2070,8 @@
 					"@loader_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "";
-				"LIBRARY_SEARCH_PATHS[sdk=iphoneos*]" = (
-					"$(SRCROOT)/Libraries/openssl/lib",
-					"$(SRCROOT)/Libraries/ed25519/lib/OsRelease/",
-				);
-				"LIBRARY_SEARCH_PATHS[sdk=iphonesimulator*]" = (
-					"$(SRCROOT)/Libraries/openssl/lib",
-					"$(SRCROOT)/Libraries/ed25519/lib/SimulatorRelease/",
-				);
+				"LIBRARY_SEARCH_PATHS[sdk=iphoneos*]" = "$(SRCROOT)/Libraries/ed25519/lib/OsRelease/";
+				"LIBRARY_SEARCH_PATHS[sdk=iphonesimulator*]" = "$(SRCROOT)/Libraries/ed25519/lib/SimulatorRelease/";
 				MARKETING_VERSION = 6.0.0;
 				MODULEMAP_FILE = "./ECHO/Supports Files/ECHO.modulemap";
 				ONLY_ACTIVE_ARCH = YES;
