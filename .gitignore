@@ -42,6 +42,7 @@ fastlane/test_output
 
 # Carthage
 Carthage/
+Cartfile.resolved
 
 # .lock
 *.lock
