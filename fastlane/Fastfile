@@ -11,7 +11,7 @@ platform :ios do
     run_tests(
 	     scheme: "ECHO",
 	     sdk: "iphonesimulator",
-	     devices: ["iPhone X"],
+	     devices: ["iPhone 12"],
 	     clean: true
     )
 
@@ -26,7 +26,7 @@ platform :ios do
     run_tests(
        scheme: "ECHONetworkTests",
        sdk: "iphonesimulator",
-       devices: ["iPhone X"],
+       devices: ["iPhone 12"],
        clean: true
     )
 
