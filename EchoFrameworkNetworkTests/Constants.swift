@@ -187,7 +187,7 @@ struct Constants {
     static func infoForKey(_ key: String) -> String? {
         
         let findedBundle = Bundle.allBundles.first { (bundle) -> Bool in
-            return bundle.bundlePath.contains("ECHONetworkTests.xctest")
+            return bundle.bundlePath.contains("EchoFrameworkNetworkTests.xctest")
         }
         
         guard let infoPlist = findedBundle?.infoDictionary else {

@@ -191,7 +191,6 @@
 		D061331321A2E93F009EC456 /* ContractLogEVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = D061331221A2E93F009EC456 /* ContractLogEVM.swift */; };
 		D061331521A2EC53009EC456 /* GetContractLogsSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D061331421A2EC53009EC456 /* GetContractLogsSocketOperation.swift */; };
 		D061331721A30052009EC456 /* SubscribeContractLogsSocketOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D061331621A30052009EC456 /* SubscribeContractLogsSocketOperation.swift */; };
-		D071EE042268B4F600928D86 /* TestConstantsConfig.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = D0A0C50A225E2D5A000BA64D /* TestConstantsConfig.xcconfig */; };
 		D073F516224CD7F50025AE6A /* SubscribeAccountDelegateStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = D073F515224CD7F50025AE6A /* SubscribeAccountDelegateStub.swift */; };
 		D073F518224CD8530025AE6A /* SubscribeContractLogsDelegateStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = D073F517224CD8530025AE6A /* SubscribeContractLogsDelegateStub.swift */; };
 		D073F51A224CDB420025AE6A /* SubscribeToLogsStubHodler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D073F519224CDB420025AE6A /* SubscribeToLogsStubHodler.swift */; };
@@ -302,6 +301,7 @@
 		E7358E522615CA4300494E2E /* Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = E7358E502615CA4300494E2E /* Internal.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		E7358E532615CA4300494E2E /* Internal.m in Sources */ = {isa = PBXBuildFile; fileRef = E7358E512615CA4300494E2E /* Internal.m */; };
 		E7358E572615CA4B00494E2E /* Crypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7358E562615CA4B00494E2E /* Crypto.swift */; };
+		E7358E6C2615D73900494E2E /* TestConstantsConfig.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = D0A0C50A225E2D5A000BA64D /* TestConstantsConfig.xcconfig */; };
 		E73E3C08261207F000DDB521 /* GetTransactionInBlockStubHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E73E3C07261207F000DDB521 /* GetTransactionInBlockStubHolder.swift */; };
 		E73E3C0C2612080800DDB521 /* GetTransactionByIDStubHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E73E3C0B2612080800DDB521 /* GetTransactionByIDStubHolder.swift */; };
 		E73E3C102612083800DDB521 /* GetTransactionInBlockRequestStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = E73E3C0F2612083800DDB521 /* GetTransactionInBlockRequestStub.swift */; };
@@ -1509,7 +1509,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D071EE042268B4F600928D86 /* TestConstantsConfig.xcconfig in Resources */,
+				E7358E6C2615D73900494E2E /* TestConstantsConfig.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2090,7 +2090,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = Q7Q43CUMWT;
 				HEADER_SEARCH_PATHS = "";
-				INFOPLIST_FILE = ECHOTests/Info.plist;
+				INFOPLIST_FILE = EchoFrameworkTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2114,7 +2114,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = Q7Q43CUMWT;
 				HEADER_SEARCH_PATHS = "";
-				INFOPLIST_FILE = ECHOTests/Info.plist;
+				INFOPLIST_FILE = EchoFrameworkTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2137,8 +2137,9 @@
 			baseConfigurationReference = D0A0C50A225E2D5A000BA64D /* TestConstantsConfig.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				DEFAULT_ASSET_LOWER_BOUND = ECHO;
 				DEVELOPMENT_TEAM = Q7Q43CUMWT;
-				INFOPLIST_FILE = ECHONetworkTests/Info.plist;
+				INFOPLIST_FILE = EchoFrameworkNetworkTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2159,8 +2160,9 @@
 			baseConfigurationReference = D0A0C50A225E2D5A000BA64D /* TestConstantsConfig.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				DEFAULT_ASSET_LOWER_BOUND = ECHO;
 				DEVELOPMENT_TEAM = Q7Q43CUMWT;
-				INFOPLIST_FILE = ECHONetworkTests/Info.plist;
+				INFOPLIST_FILE = EchoFrameworkNetworkTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

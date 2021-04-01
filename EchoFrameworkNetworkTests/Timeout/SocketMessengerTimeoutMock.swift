@@ -6,7 +6,7 @@
 //  Copyright © 2019 PixelPlex. All rights reserved.
 //
 
-@testable import ECHO
+@testable import EchoFramework
 
 class SocketMessengerTimeoutMock: SocketMessengerImp {
     

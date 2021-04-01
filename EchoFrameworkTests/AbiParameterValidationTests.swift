@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import ECHO
+@testable import EchoFramework
 
 class AbiParameterValidationTests: XCTestCase {
     

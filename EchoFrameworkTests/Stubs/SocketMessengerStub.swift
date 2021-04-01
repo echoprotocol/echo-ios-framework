@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import ECHO
+import EchoFramework
 
 enum OperationsState {
     case reveal
