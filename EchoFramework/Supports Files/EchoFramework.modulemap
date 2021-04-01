@@ -1,0 +1,13 @@
+framework module EchoFramework {
+    umbrella header "EchoFramework.h"
+    
+    export *
+    module * { export * }
+    
+    explicit module Private {
+        header "Internal.h"
+        header "ECHOData.h"
+        link "crypto"
+        link "ed25519"
+    }
+}

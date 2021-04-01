@@ -1,13 +1,13 @@
 
 included:
-  - ECHO
+  - EchoFramework
 excluded:
   - Pods
-  - ECHOTests
-  - ECHO/Other/R.generated.swift
-  - ECHO/Core/Classes/Objects/Encoding.swift
-  - ECHO/Core/Classes/Extensions/
-  - ECHO/Core/Crypto/
+  - EchoFrameworkTests
+  - EchoFramework/Other/R.generated.swift
+  - EchoFramework/Core/Classes/Objects/Encoding.swift
+  - EchoFramework/Core/Classes/Extensions/
+  - EchoFramework/Core/Crypto/
 
 disabled_rules:
   - trailing_whitespace

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PATH="../ECHONetworkTests/TestConstantsConfig.xcconfig"
+PATH="../EchoFrameworkNetworkTests/TestConstantsConfig.xcconfig"
 
 if [ $# -ge 2 ]; then
     KEY=$1

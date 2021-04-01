@@ -9,7 +9,7 @@ platform :ios do
     libraries
     
     run_tests(
-	     scheme: "ECHO",
+	     scheme: "EchoFramework",
 	     sdk: "iphonesimulator",
 	     devices: ["iPhone 12"],
 	     clean: true
@@ -24,7 +24,7 @@ platform :ios do
     libraries
     
     run_tests(
-       scheme: "ECHONetworkTests",
+       scheme: "EchoFrameworkNetworkTests",
        sdk: "iphonesimulator",
        devices: ["iPhone 12"],
        clean: true
@@ -105,9 +105,9 @@ platform :ios do
       path: "docs/*"
     )
 
-    git_commit(path: ["ECHO.podspec",
-                      "ECHO/Info.plist",
-                      "ECHOTests/Info.plist",
+    git_commit(path: ["EchoFramework.podspec",
+                      "EchoFramework/Info.plist",
+                      "EchoFrameworkTests/Info.plist",
                       "docs/*"], 
               message: "Version: #{options[:version_number]}")
 
