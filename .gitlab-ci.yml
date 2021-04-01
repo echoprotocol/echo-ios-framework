@@ -8,7 +8,8 @@ variables:
   LANG: "en_US.UTF-8"
 
 before_script:
-  - bundle install
+  - gem install bundler
+  - bundle install --path vendor/bundle
 
 unit_tests:
   stage: unit_tests
