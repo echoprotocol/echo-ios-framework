@@ -8,6 +8,7 @@ variables:
   LANG: "en_US.UTF-8"
 
 before_script:
+  - brew install sqlite3
   - unlock_ci_keychain.sh
   - gem install bundler
   - bundle install --path vendor/bundle
