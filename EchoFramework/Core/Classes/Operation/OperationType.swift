@@ -10,7 +10,7 @@
   Represents all blockchain operation types [Operations](https://dev-doc.myecho.app/group__operations.html#details)
  */
 public enum OperationType: Int {
-    case transferOperation                          // 0
+    case transferOperation                              // 0
     case transferToAddressOperation
     case overrideTransferOperation
     case accountCreateOperation
@@ -20,7 +20,7 @@ public enum OperationType: Int {
     case assetCreateOperation
     case assetUpdateOperation
     case assetUpdateBitassetOperation
-    case assetUpdateFeedProducersOperation          // 10
+    case assetUpdateFeedProducersOperation              // 10
     case assetIssueOperation
     case assetReserveOperation
     case assetFundFeePoolOperation
@@ -30,7 +30,7 @@ public enum OperationType: Int {
     case proposalUpdateOperation
     case proposalDeleteOperation
     case committeeMemberCreateOperation
-    case committeeMemberUpdateOperation             // 20
+    case committeeMemberUpdateOperation                 // 20
     // swiftlint:disable variable_name
     case committeeMemberUpdateGlobalParametersOperation
     // swiftlint:enable variable_name
@@ -42,57 +42,60 @@ public enum OperationType: Int {
     case vestingBalanceWithdrawOperation
     case balanceClaimOperation
     case balanceFreezeOperation
-    case balanceUnfreezeOperation                   // 30 // VIRTUAL
+    case balanceUnfreezeOperation                       // 30
     case requestBalanceUnfreezeOperation
     case contractCreateOperation
     case contractCallOperation
-    case contractInternalCreateOperation            // VIRTUAL
-    case contractInternalCallOperation              // VIRTUAL
-    case contractSelfdestructOperation              // VIRTUAL
+    case contractInternalCreateOperation                // VIRTUAL
+    case contractInternalCallOperation                  // VIRTUAL
+    case contractSelfdestructOperation                  // VIRTUAL
     case contractUpdateOperation
     case contractFundPoolOperation
     case contractWhitelistOperation
-    case sidechainETHCreateAddressOperation         // 40
-    case sidechainETHApproveAddressOperation
-    case sidechainETHDepositOperation
+    case sidechainIssueOperation                        // 40 // VIRTUAL
+    case sidechainBurnOperation                         // VIRTUAL
+    case sidechainETHSpvCreateOperation
+    // swiftlint:disable variable_name
+    case sidechainETHSpvAddMissedTxReceiptOperation
+    // swiftlint:enable variable_name
+    case sidechainETHCreateAddressOperation
+    case sidechainETHApproveAddressOperation            // VIRTUAL
+    case sidechainETHDepositOperation                   // VIRTUAL
     case sidechainETHSendDepositOperation
     case sidechainETHWithdrawOperation
     case sidechainETHSendWithdrawOperation
-    case sidechainETHApproveWithdrawOperation
+    case sidechainETHApproveWithdrawOperation           // 50
     // swiftlint:disable variable_name
     case sidechainETHUpdateContractAddressOperation
     // swiftlint:enable variable_name
-    case sidechainIssueOperation                    // VIRTUAL
-    case sidechainBurnOperation                     // VIRTUAL
-    case sidechainERC20RegisterContractOperation    // 50
+    case sidechainERC20RegisterContractOperation
     case sidechainERC20RegisterTokenOperation
     case sidechainERC20DepositTokenOperation
-    case sidechainERC20SendDepositTokenOperation
+    case sidechainERC20SendDepositTokenOperation        // VIRTUAL
     case sidechainERC20WithdrawTokenOperation
     case sidechainERC20SendWithdrawTokenOperation
     // swiftlint:disable variable_name
-    case sidechainERC20ApproveTokenWithdrawOperation
+    case sidechainERC20ApproveTokenWithdrawOperation    // VIRTUAL
     // swiftlint:enable variable_name
-    case sidechainERC20IssueOperation               // VIRTUAL
-    case sidechainERC20BurnOperation                // VIRTUAL
+    case sidechainERC20IssueOperation                   // VIRTUAL
+    case sidechainERC20BurnOperation                    // 60 // VIRTUAL
     case sidechainERC20TransferAssetOperation
-    case sidechainBTCCreateAddressOperation         // 60
-    // swiftlint:disable variable_name
-    case sidechainBTCCreateIntermediateDepositOperation
-    // swiftlint:enable variable_name
-    case sidechainBTCIntermediateDepositOperation
-    case sidechainBTCDepositOperation
+    case sidechainBTCCreateAddressOperation
+    case sidechainBTCDepositOperation                   // VIRTUAL
     case sidechainBTCWithdrawOperation
     case sidechainBTCAggregateOperation
-    case sidechainBTCApproveAggregateOperation
-    case sidechainStakeETHUpdateOperation
+    case sidechainBTCApproveAggregateOperation          // VIRTUAL
+    case sidechainBTCSpvCreateOperation
+    case sidechainBTCSpvAddMissedTxOperation
+    case sidechainSpvExchangeExcessFundsOperation
+    case sidechainStakeETHUpdateOperation               // 70 // VIRTUAL
     case sidechainBTCCreateStakeScriptOperation
     case sidechainStakeBTCUpdateOperation
-    case blockRewardOperation                       // 70 // VIRTUAL
+    case blockRewardOperation                           // VIRTUAL
     case evmAddressRegisterOperation
     case didCreateOperation
     case didUpdateOperation
-    case didDeleteOperation
+    case didDeleteOperation                             // 77
 }
 
 struct OperationDecoder {
@@ -125,7 +128,6 @@ struct OperationDecoder {
         case .sidechainIssueOperation: return decode(SidechainIssueOperation.self, container: container)
         case .sidechainBurnOperation: return decode(SidechainBurnOperation.self, container: container)
         case .sidechainBTCCreateAddressOperation: return decode(SidechainBTCCreateAddressOperation.self, container: container)
-        case .sidechainBTCCreateIntermediateDepositOperation: return decode(SidechainBTCCreateIntermediateDepositOperation.self, container: container)
         case .sidechainBTCWithdrawOperation: return decode(SidechainBTCWithdrawOperation.self, container: container)
         case .sidechainERC20RegisterTokenOperation: return decode(SidechainERC20RegisterTokenOperation.self, container: container)
         case .sidechainERC20WithdrawTokenOperation: return decode(SidechainERC20WithdrawTokenOperation.self, container: container)
@@ -195,8 +197,6 @@ struct OperationDecoder {
                 baseOperation = try? decoder.decode(SidechainBurnOperation.self, from: data)
             case .sidechainBTCCreateAddressOperation:
                 baseOperation = try? decoder.decode(SidechainBTCCreateAddressOperation.self, from: data)
-            case .sidechainBTCCreateIntermediateDepositOperation:
-                baseOperation = try? decoder.decode(SidechainBTCCreateIntermediateDepositOperation.self, from: data)
             case .sidechainBTCWithdrawOperation:
                 baseOperation = try? decoder.decode(SidechainBTCWithdrawOperation.self, from: data)
             case .sidechainERC20RegisterTokenOperation:

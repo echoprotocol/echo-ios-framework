@@ -929,13 +929,6 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble, Notice
                     historyItem.operation = operation
                 }
                 
-                if var operation = operation as? SidechainBTCCreateIntermediateDepositOperation {
-                    let account = self?.findAccountIn(accounts, accountId: operation.account.id)
-                    let committeeMember = self?.findAccountIn(accounts, accountId: operation.committeeMember.id)
-                    operation.changeAccounts(committeeMember: committeeMember, account: account)
-                    historyItem.operation = operation
-                }
-                
                 if var operation = operation as? SidechainBTCWithdrawOperation {
                     let account = self?.findAccountIn(accounts, accountId: operation.account.id)
                     operation.changeAccount(account: account)
@@ -1322,12 +1315,6 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble, Notice
                     historyItem.operation = operation
                 }
                 
-                if var operation = operation as? SidechainBTCCreateIntermediateDepositOperation {
-                    let feeAsset = self?.findAssetsIn(assets, assetId: operation.fee.asset.id)
-                    operation.changeAssets(feeAsset: feeAsset)
-                    historyItem.operation = operation
-                }
-                
                 if var operation = operation as? SidechainBTCWithdrawOperation {
                     let feeAsset = self?.findAssetsIn(assets, assetId: operation.fee.asset.id)
                     operation.changeAssets(feeAsset: feeAsset)
@@ -1603,12 +1590,6 @@ final public class InformationFacadeImp: InformationFacade, ECHOQueueble, Notice
             
             if let operation = operation as? SidechainBTCCreateAddressOperation {
                 accountsIds.insert(operation.account.id)
-                return
-            }
-            
-            if let operation = operation as? SidechainBTCCreateIntermediateDepositOperation {
-                accountsIds.insert(operation.account.id)
-                accountsIds.insert(operation.committeeMember.id)
                 return
             }
             

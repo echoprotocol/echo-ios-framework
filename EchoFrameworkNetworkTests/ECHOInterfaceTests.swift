@@ -1245,7 +1245,7 @@ class ECHOInterfaceTests: XCTestCase {
 //        var asset = Asset("")
 //        asset.symbol = "SHARAEVTEST"
 //        asset.precision = 4
-//        asset.issuer = Account("1.2.61")
+//        asset.issuer = Account("1.2.18")
 ////        asset.setBitsassetOptions(BitassetOptions(feedLifetimeSec: 86400,
 ////                                                  minimumFeeds: 7,
 ////                                                  forceSettlementDelaySec: 86400,
@@ -2237,36 +2237,6 @@ class ECHOInterfaceTests: XCTestCase {
         }
     }
     
-    func testGetTransactionByID() {
-        //arrange
-        echo = ECHO(settings: Settings(build: {
-            $0.apiOptions = [.database, .networkBroadcast, .networkNodes, .accountHistory]
-            $0.network = ECHONetwork(url: Constants.nodeUrl, prefix: .echo, echorandPrefix: .echo)
-            $0.debug = true
-        }))
-        let exp = expectation(description: "testGetTransactionByID")
-        let transactionID = Constants.defaultTransactionID
-        var transaction: Transaction?
-        
-        //act
-        echo.start { [unowned self] (result) in
-            self.echo.getTransaction(transactionID: transactionID) { (result) in
-                switch result {
-                case .success(let findedTransaction):
-                    transaction = findedTransaction
-                case .failure(let error):
-                    XCTFail("Error in transaction by ID \(error)")
-                }
-                exp.fulfill()
-            }
-        }
-        
-        //assert
-        waitForExpectations(timeout: Constants.timeout) { error in
-            XCTAssertNotNil(transaction)
-        }
-    }
-    
     // MARK: ETH
     
 //    func testGenerateEthAddress() {
@@ -2510,6 +2480,7 @@ class ECHOInterfaceTests: XCTestCase {
 //                    isSuccess = true
 //                case .failure(let error):
 //                    XCTFail("Generate btc address must be valid \(error)")
+//                    exp.fulfill()
 //                }
 //            }, confirmNoticeHandler: { (_) in
 //                exp.fulfill()

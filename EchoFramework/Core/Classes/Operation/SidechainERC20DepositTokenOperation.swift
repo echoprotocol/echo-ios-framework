@@ -14,7 +14,6 @@ public struct SidechainERC20DepositTokenOperation: BaseOperation {
     
     enum SidechainERC20DepositTokenOperationCodingKeys: String, CodingKey {
         case committeeMember = "committee_member_id"
-        case maliciousCommitteemen = "malicious_committeemen"
         case account
         case tokenAddress = "erc20_token_addr"
         case value
@@ -28,7 +27,6 @@ public struct SidechainERC20DepositTokenOperation: BaseOperation {
     public var fee: AssetAmount
     
     public var committeeMember: Account
-    public let maliciousCommitteemen: [String]
     public var account: Account
     public let tokenAddress: String
     public let value: String
@@ -40,7 +38,6 @@ public struct SidechainERC20DepositTokenOperation: BaseOperation {
         
         let values = try decoder.container(keyedBy: SidechainERC20DepositTokenOperationCodingKeys.self)
         fee = try values.decode(AssetAmount.self, forKey: .fee)
-        maliciousCommitteemen = try values.decode([String].self, forKey: .maliciousCommitteemen)
         tokenAddress = try values.decode(String.self, forKey: .tokenAddress)
         value = try values.decode(String.self, forKey: .value)
         transactionHash = try values.decode(String.self, forKey: .transactionHash)

@@ -17,7 +17,6 @@ public struct BtcAddress: ECHOObject, Decodable {
         case depositAddress = "deposit_address"
         case committeeMemberIdsInScript = "committee_member_ids_in_script"
         case isRelevant = "is_relevant"
-        case backupAddress = "backup_address"
         case extensions
     }
     
@@ -26,7 +25,6 @@ public struct BtcAddress: ECHOObject, Decodable {
     public let depositAddress: BtcDepositAddress
     public let committeeMemberIdsInScript: [BtcCommitteeMemberIdInScript]
     public let isRelevant: Bool
-    public let backupAddress: String
     public let extensions: Extensions
     
     public init(from decoder: Decoder) throws {
@@ -37,7 +35,6 @@ public struct BtcAddress: ECHOObject, Decodable {
         depositAddress = try values.decode(BtcDepositAddress.self, forKey: .depositAddress)
         let members = try values.decode([[String]].self, forKey: .committeeMemberIdsInScript)
         isRelevant = try values.decode(Bool.self, forKey: .isRelevant)
-        backupAddress = try values.decode(String.self, forKey: .backupAddress)
         extensions = Extensions()
         
         var committeeMemberIdsInScript = [BtcCommitteeMemberIdInScript]()

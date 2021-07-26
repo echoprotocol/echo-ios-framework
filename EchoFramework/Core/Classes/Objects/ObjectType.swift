@@ -48,7 +48,11 @@ public enum ObjectType: Int {
     case didObject                  //25
     case stakeBTCScript
     case stakeBtCVout
-    case stakeETHUpdateObjectType   //28
+    case stakeETHUpdate
+    case btcBlock
+    case btcTx                      // 30
+    case ethBlock
+    case ethTxReceipt               // 32
     case globalProperty             //0
     case dynamicGlobalProperty
     case assetDynamicData
@@ -113,7 +117,11 @@ public enum ObjectType: Int {
              .didObject,
              .stakeBTCScript,
              .stakeBtCVout,
-             .stakeETHUpdateObjectType:
+             .stakeETHUpdate,
+             .btcBlock,
+             .btcTx,
+             .ethBlock,
+             .ethTxReceipt:
             space = .protocolSpace
         case .globalProperty,
              .dynamicGlobalProperty,
