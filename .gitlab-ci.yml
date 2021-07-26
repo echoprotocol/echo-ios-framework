@@ -19,7 +19,7 @@ unit_tests:
   script:
     - fastlane tests
   tags:
-    - ios
+    - xcode
 
 network_tests:
   stage: network_tests
@@ -33,14 +33,14 @@ network_tests:
   only:
     - schedules
   tags:
-    - ios
+    - xcode
 
 release:
   stage: release
   script:
     - fastlane release
   tags:
-    - ios
+    - xcode
   only:
     - /^release-[0-9]+(?:.[0-9]+)+$/
   when: manual
