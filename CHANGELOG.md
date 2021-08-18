@@ -1,5 +1,21 @@
 # CHANGELOG
 
+## Changelog 6.0.1 - 2020-08-18
+Support [0.23](https://docs.echo.org/v/version-0.25/changelogs/0.25) Echo version.
+
+### Changed
+* OperationType enum
+* ObjectType enum
+* EthAddress object
+* SidechainBTCCreateAddressOperation object
+* SidechainERC20DepositTokenOperation object
+* BtcDeposit object
+* EthDeposit object
+* EthWithdrawal object
+
+### Removed
+* SidechainBTCCreateIntermediateDepositOperation object
+
 ## Changelog 6.0.0 - 2020-03-29
 Support [0.23](https://docs.echo.org/changelogs/0.23) and [0.24](https://docs.echo.org/changelogs/0.24) Echo version.
 
