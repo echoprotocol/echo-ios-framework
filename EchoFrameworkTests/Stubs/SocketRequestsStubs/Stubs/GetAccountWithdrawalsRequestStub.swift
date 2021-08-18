@@ -15,7 +15,7 @@ struct GetAccountWithdrawalsRequestStub: SocketRequestStub {
     func createResponce(id: Int) -> String {
         
         return """
-        {"id":\(id),"jsonrpc":"2.0","result":[{"id":"1.19.8","withdraw_id":8,"account":"1.2.48","eth_addr":"46Ba2677a1c982B329A81f60Cf90fBA2E8CA9fA8","value":1,"is_approved":false,"approves":[]},{"id":"1.19.9","withdraw_id":9,"account":"1.2.48","eth_addr":"46Ba2677a1c982B329A81f60Cf90fBA2E8CA9fA8","value":1,"is_approved":false,"approves":[]},{"id":"1.19.10","withdraw_id":10,"account":"1.2.48","eth_addr":"46Ba2677a1c982B329A81f60Cf90fBA2E8CA9fA8","value":1,"is_approved":false,"approves":[]}]}
+        {"id":\(id),"result":[{"id":"1.15.0","withdraw_id":0,"account":"1.2.34","eth_addr":"46Ba2677a1c982B329A81f60Cf90fBA2E8CA9fA8","value":10000,"fee":4000,"is_approved":false,"is_sent":true,"echo_block_number":16048,"approves":["1.2.7"],"extensions":[]}]}
         """
     }
 }

@@ -57,7 +57,7 @@ struct ConstantsKeys {
 
 struct Constants {
     static var nodeUrl: String {
-        return "wss://" + Constants.infoForKey(ConstantsKeys.nodeUrlKey)! + "/ws"
+        return "ws://" + Constants.infoForKey(ConstantsKeys.nodeUrlKey)! + "/ws"
     }
     
     static var timeout: Double {

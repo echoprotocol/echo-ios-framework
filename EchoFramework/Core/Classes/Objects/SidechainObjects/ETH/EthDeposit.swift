@@ -16,8 +16,8 @@ public struct EthDeposit: ECHOObject, Decodable {
         case depositId = "deposit_id"
         case account
         case value
-        case isApproved = "is_approved"
-        case approves
+        case isSent = "is_sent"
+        case echoBlockNumber = "echo_block_number"
         case transactionHash = "transaction_hash"
     }
     
@@ -25,8 +25,8 @@ public struct EthDeposit: ECHOObject, Decodable {
     public let depositId: UInt
     public let account: Account
     public let value: UInt
-    public let isApproved: Bool
-    public let approves: [String]
+    public let isSent: Bool
+    public let echoBlockNumber: UInt
     public let transactionHash: String
     
     public init(from decoder: Decoder) throws {
@@ -37,8 +37,8 @@ public struct EthDeposit: ECHOObject, Decodable {
         let accountId = try values.decode(String.self, forKey: .account)
         account = Account(accountId)
         value = try values.decode(UInt.self, forKey: .value)
-        isApproved = try values.decode(Bool.self, forKey: .isApproved)
-        approves = try values.decode([String].self, forKey: .approves)
+        isSent = try values.decode(Bool.self, forKey: .isSent)
+        echoBlockNumber = try values.decode(UInt.self, forKey: .echoBlockNumber)
         transactionHash = try values.decode(String.self, forKey: .transactionHash)
     }
 }
