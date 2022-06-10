@@ -1,0 +1,6 @@
+[submodule "Carthage/Checkouts/Starscream"]
+	path = Carthage/Checkouts/Starscream
+	url = https://github.com/daltoniam/Starscream.git
+[submodule "Carthage/Checkouts/OpenSSL"]
+	path = Carthage/Checkouts/OpenSSL
+	url = https://github.com/krzyzanowskim/OpenSSL.git
